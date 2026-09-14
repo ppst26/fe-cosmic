@@ -1,0 +1,21 @@
+---
+description: โครงสร้าง component Cosmicbet — แยกชิ้น, data arrays, link vs button
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Frontend Components
+
+แยก reusable components อย่างน้อยตามนี้เมื่อสร้างหน้าเต็มหรือส่วนที่เกี่ยวข้อง:
+
+- SectionHeader, CarouselControls
+- GameCard, ProviderCard, FeatureActionCard
+- JackpotWinnerCard, HallOfFame, FloatingBottomNav
+
+กฎ:
+
+- Render รายการจาก data arrays ที่มี stable IDs — ห้ามคัดลอก markup ทีละหมวดโดยไม่จำเป็น
+- แยก mock data ออกจาก service/API; ห้ามนำยอดเงิน/ผู้ชนะตัวอย่างขึ้นเป็นข้อมูล live
+- ลิงก์ (`<a>` / Next `Link`) สำหรับ navigation; `button` สำหรับ action; ห้าม nested interactive
+- ใช้ asset จริงที่ได้รับ; ถ้าขาดให้ใช้ placeholder ที่สื่อชนิดข้อมูล — ห้ามเปลี่ยนโลโก้แบรนด์หรือ provider เอง
+- ถ้ายังไม่มี route/backend ให้แยก callback/contract และแจ้งส่วนที่ยังไม่เชื่อม — ห้ามสร้างผลธุรกรรมสำเร็จปลอม

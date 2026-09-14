@@ -1,0 +1,18 @@
+---
+description: สรุป design system Cosmicbet — tokens, layout, ข้อห้าม; รายละเอียดเต็มใน design.md
+globs: "**/*.{tsx,css}"
+alwaysApply: false
+---
+
+# Design System (summary)
+
+ต้นฉบับเต็ม: `design.md` ที่ root — อ่านก่อนลงมือทำ UI ที่เกี่ยวกับ layout / visual
+
+- พื้นผิวม่วงเข้มเริ่ม `#19183B` ไล่ไปม่วงเกือบดำ; ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex ซ้ำ
+- **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
+- Primary CTA ส่วนบนใช้ Indigo → Blue ได้; แยกจาก gradient พื้นผิว
+- Feature cards, Jackpot, Bottom Nav: ไอคอนเรียบสีลาเวนเดอร์ — ห้าม 3D / neon / glow / ม่วงสด
+- การกำหนด style และการออกแบบเริ่มต้นต้องเริ่มที่การออกแบบหน้าจอมือถือก่อนเป็นหลักเสมอ (Mobile-first); content กึ่งกลาง; `max-width` 1200px; gutter จาก tokens ใน `design.md`
+- ลำดับ section ของหน้าเต็มตามหมวด 5 ใน `design.md`; อย่าเพิ่ม Header/Nav ซ้ำเมื่อประกอบจากภาพแยกส่วน
+- Mockup เป็นแนวทางภาพรวม ไม่ใช่ขนาด CSS จริง — ห้ามยืดหน้าตามความสูงภาพ
+- เกณฑ์ตรวจก่อนส่ง: หมวด 10 ใน `design.md` หรือ skill `ui-qa-checklist`

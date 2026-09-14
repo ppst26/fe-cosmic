@@ -1,26 +1,385 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --bg-page: #090b18;
+  --surface-start: #19183b;
+  --surface-mid: #121127;
+  --surface-end: #090810;
+  --surface-hover: #232145;
+  --surface-selected: #29264f;
+  --surface-gradient: linear-gradient(
+    110deg,
+    var(--surface-start) 0%,
+    var(--surface-mid) 58%,
+    var(--surface-end) 100%
+  );
+
+  --text-primary: #f5f4fc;
+  --text-secondary: #b9b5cf;
+  --text-muted: #9792b3;
+  --icon-default: #b9b5df;
+  --icon-active: #efedff;
+  --border-subtle: #34304e;
+  --border-active: #7770b7;
+  --focus-ring: #c4b5fd;
+
+  /* ใช้เฉพาะ CTA หลักและหมวดเกม active ของส่วนบน */
+  --action-gradient: linear-gradient(90deg, #4930df, #0968f8);
+  --category-active-gradient: linear-gradient(110deg, #26205b, #202d65);
+  --gold-gradient: linear-gradient(180deg, #ffe66d, #d99a08);
+  --success: #41d995;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  --radius-control: 4px;
+  --radius-card: 6px;
+  --radius-panel: 8px;
+  --radius-pill: 999px;
+  --page-gutter: clamp(16px, 3vw, 24px);
+  --content-max: 1200px;
+  --nav-height: 72px;
+  --nav-offset: 16px;
+  --motion-fast: 160ms;
+
+  /* Placeholder ปกเกมเมื่อยังไม่มี asset จริง — ใช้ผ่าน .cover-tone-* เท่านั้น */
+  --cover-indigo: linear-gradient(160deg, #3730a3, #1e1b4b);
+  --cover-rose: linear-gradient(160deg, #be123c, #4c0519);
+  --cover-emerald: linear-gradient(160deg, #047857, #022c22);
+  --cover-amber: linear-gradient(160deg, #b45309, #431407);
+  --cover-sky: linear-gradient(160deg, #0369a1, #0c1a3a);
+  --cover-violet: linear-gradient(160deg, #6d28d9, #2e1065);
+
+  /* Cosmic background — ใช้เฉพาะ Intro ตาม design.md หมวด 6 */
+  --nebula-violet: rgb(124 58 237 / 0.35);
+  --nebula-blue: rgb(37 99 235 / 0.3);
+
+  /* shadcn ↔ Cosmicbet bridge */
+  --background: var(--bg-page);
+  --foreground: var(--text-primary);
+  --card: var(--surface-mid);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-mid);
+  --popover-foreground: var(--text-primary);
+  --primary: #4930df;
+  --primary-foreground: #f5f4fc;
+  --secondary: var(--surface-hover);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--surface-hover);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--surface-selected);
+  --accent-foreground: var(--text-primary);
+  --destructive: #ef4444;
+  --border: var(--border-subtle);
+  --input: var(--border-subtle);
+  --ring: var(--focus-ring);
+  --chart-1: #4930df;
+  --chart-2: #0968f8;
+  --chart-3: #7770b7;
+  --chart-4: #41d995;
+  --chart-5: #d99a08;
+  --radius: var(--radius-control);
+  --sidebar: var(--surface-start);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: #4930df;
+  --sidebar-primary-foreground: var(--text-primary);
+  --sidebar-accent: var(--surface-hover);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--border-subtle);
+  --sidebar-ring: var(--focus-ring);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-page: var(--bg-page);
+  --color-surface-start: var(--surface-start);
+  --color-surface-mid: var(--surface-mid);
+  --color-surface-end: var(--surface-end);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-selected: var(--surface-selected);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-icon-default: var(--icon-default);
+  --color-icon-active: var(--icon-active);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-active: var(--border-active);
+  --color-focus-ring: var(--focus-ring);
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Base shell layout */
+.page-shell {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+  padding-bottom: calc(
+    var(--nav-height) + var(--nav-offset) + env(safe-area-inset-bottom, 0px) + 24px
+  );
+}
+
+.surface {
+  background: var(--surface-gradient);
+}
+
+/* Native scroll snap styling for carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/*
+ * Carousel track — native horizontal scroll + scroll-snap
+ * จำนวนคอลัมน์และช่องว่างกำหนดผ่าน --carousel-cols / --carousel-gap แบบ mobile-first
+ * ใช้โดย app/components/ui/Carousel.tsx; แต่ละ section เลือก preset .carousel-games / -popular / -providers
+ */
+.carousel-track {
+  display: flex;
+  gap: var(--carousel-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  padding-block: var(--space-1);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+.carousel-track > * {
+  min-width: 0;
+  flex: 0 0
+    max(
+      var(--carousel-min),
+      calc(
+        (100% - (var(--carousel-cols) - 1) * var(--carousel-gap)) /
+          var(--carousel-cols)
+      )
+    );
+  scroll-snap-align: start;
+}
+
+/* การ์ดเกม: 3 ใบต่อแถวที่ ~550px; ต่ำกว่านั้นกว้างอย่างน้อย 140px เห็นใบถัดไปบางส่วน */
+.carousel-games {
+  --carousel-cols: 3;
+  --carousel-gap: var(--space-2);
+  --carousel-min: 140px;
+}
+/* ยอดนิยม: Swipe Bet + DEXY RACE คู่กัน */
+.carousel-popular {
+  --carousel-cols: 2;
+  --carousel-gap: var(--space-2);
+  --carousel-min: 160px;
+}
+/* Providers: ช่องโลโก้เตี้ย */
+.carousel-providers {
+  --carousel-cols: 3;
+  --carousel-gap: var(--space-2);
+  --carousel-min: 128px;
+}
+@media (min-width: 768px) {
+  .carousel-games,
+  .carousel-popular,
+  .carousel-providers {
+    --carousel-gap: var(--space-4);
+  }
+  .carousel-games {
+    --carousel-cols: 4;
+  }
+  .carousel-popular {
+    --carousel-cols: 3;
+  }
+  .carousel-providers {
+    --carousel-cols: 4;
+  }
+}
+@media (min-width: 1024px) {
+  .carousel-games {
+    --carousel-cols: 6;
+  }
+  .carousel-popular {
+    --carousel-cols: 4;
+  }
+  .carousel-providers {
+    --carousel-cols: 6;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    scroll-behavior: auto;
+  }
+}
+
+/* Placeholder ปกเกม — ใช้โดย GameCard.tsx เมื่อ coverSrc ว่าง */
+.cover-tone-indigo {
+  background: var(--cover-indigo);
+}
+.cover-tone-rose {
+  background: var(--cover-rose);
+}
+.cover-tone-emerald {
+  background: var(--cover-emerald);
+}
+.cover-tone-amber {
+  background: var(--cover-amber);
+}
+.cover-tone-sky {
+  background: var(--cover-sky);
+}
+.cover-tone-violet {
+  background: var(--cover-violet);
+}
+
+/* พื้นหลัง Cosmic Intro — nebula สองจุด + ดาวเล็กแบบคงที่ ไม่มี animation */
+.cosmic-intro-bg {
+  background:
+    radial-gradient(60% 80% at 12% 45%, var(--nebula-violet), transparent 70%),
+    radial-gradient(50% 70% at 88% 55%, var(--nebula-blue), transparent 70%),
+    var(--surface-gradient);
+}
+.cosmic-intro-stars {
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 18%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 22% 78%, #fff 100%, transparent),
+    radial-gradient(1.5px 1.5px at 35% 30%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 48% 85%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 62% 14%, #fff 100%, transparent),
+    radial-gradient(1.5px 1.5px at 74% 66%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 90% 24%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 95% 80%, #fff 100%, transparent);
+  opacity: 0.55;
+}
+
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* เมนูล่าง fixed — ตาม design.md หมวด 7 */
+.floating-nav {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(var(--nav-offset) + env(safe-area-inset-bottom, 0px));
+  width: min(calc(100% - 32px), 640px);
+  min-height: var(--nav-height);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: var(--surface-gradient);
+  border-radius: var(--radius-panel);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
+}
+.floating-nav > a,
+.floating-nav > button {
+  min-width: 0;
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 4px;
+  color: var(--icon-default);
+}
+
+/* Cosmicbet ใช้ธีมมืดตลอด — ค่าเดียวกับ :root */
+.dark {
+  --background: var(--bg-page);
+  --foreground: var(--text-primary);
+  --card: var(--surface-mid);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-mid);
+  --popover-foreground: var(--text-primary);
+  --primary: #4930df;
+  --primary-foreground: #f5f4fc;
+  --secondary: var(--surface-hover);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--surface-hover);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--surface-selected);
+  --accent-foreground: var(--text-primary);
+  --destructive: #ef4444;
+  --border: var(--border-subtle);
+  --input: var(--border-subtle);
+  --ring: var(--focus-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
 }

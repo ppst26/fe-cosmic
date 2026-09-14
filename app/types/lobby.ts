@@ -1,0 +1,136 @@
+/**
+ * Types และ Interfaces สำหรับหน้าหลัก Cosmicbet Lobby
+ * ถูกนำไปใช้ร่วมกับ Component ใน app/components/home และ app/data/lobbyMockData.ts
+ */
+
+export type CategoryId =
+  | "lobby"
+  | "originals"
+  | "slots"
+  | "live-casino"
+  | "game-shows"
+  | "table-games";
+
+export interface CategoryItem {
+  id: CategoryId;
+  label: string;
+  href: string;
+}
+
+export interface PromoItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  href: string;
+  accentColor?: string;
+}
+
+export interface HighlightItem {
+  id: string;
+  title: string;
+  type: "swipe_bet" | "event_banner";
+  href: string;
+  tag?: string;
+}
+
+/**
+ * สถิติที่แสดงใน Cosmic Intro (อาณาจักรแห่งความมันส์)
+ * ตัวเลขต้องมาจากแหล่งข้อมูลจริง — ค่าใน mock เป็นตัวอย่างจัดวางเท่านั้น
+ */
+export interface IntroStats {
+  gamesCount: number;
+  providersCount: number;
+}
+
+/**
+ * ไอคอนประจำหัวข้อ section — แมปเป็น SVG ใน app/components/ui/Icons.tsx ผ่าน SectionIcon
+ */
+export type SectionIconId =
+  | "sparkle"
+  | "flame"
+  | "cherries"
+  | "cards"
+  | "fish"
+  | "football"
+  | "network";
+
+/**
+ * โทนสีของ placeholder ปกเกมเมื่อยังไม่มี asset จริง
+ * ค่าสีจริงกำหนดครั้งเดียวใน app/globals.css (.cover-tone-*)
+ */
+export type CoverTone =
+  | "indigo"
+  | "rose"
+  | "emerald"
+  | "amber"
+  | "sky"
+  | "violet";
+
+export interface GameItem {
+  id: string;
+  title: string;
+  provider: string;
+  href: string;
+  /** path รูปปกจริง — ถ้าไม่มีให้ GameCard แสดง placeholder ตาม coverTone */
+  coverSrc?: string;
+  coverTone?: CoverTone;
+  /** ป้ายกำกับเล็กบนการ์ด เช่น EXCLUSIVE */
+  badge?: string;
+}
+
+export interface GameSectionData {
+  id: string;
+  title: string;
+  icon: SectionIconId;
+  viewAllHref: string;
+  games: GameItem[];
+}
+
+export interface ProviderItem {
+  id: string;
+  name: string;
+  href: string;
+  /** path โลโก้จริง — ถ้าไม่มีให้ ProviderCard แสดงชื่อค่ายแทน */
+  logoSrc?: string;
+}
+
+/** ไอคอนประจำการ์ดฟีเจอร์ — ร้านค้าเพชร / ภารกิจ / วงล้อ */
+export type FeatureActionIconId = "diamond-shop" | "missions" | "prize-wheel";
+
+export interface FeatureActionItem {
+  id: string;
+  title: string;
+  href: string;
+  icon: FeatureActionIconId;
+}
+
+export type JackpotCategory = "casino" | "sports" | "slots";
+
+/** ผู้ชนะ Jackpot — ข้อมูล mock สำหรับจัดวาง */
+export interface JackpotWinner {
+  id: string;
+  maskedUsername: string;
+  amount: number;
+  currency: string;
+  categoryLabel: string;
+  gameName: string;
+  providerName: string;
+  category: JackpotCategory;
+}
+
+export type HallOfFameTabId = "live-bets" | "high-rollers" | "lucky-wins";
+
+/** แถว Hall of Fame — ใช้ icon แทน thumbnail ตาม design.md */
+export interface HallOfFameRow {
+  id: string;
+  gameName: string;
+  payout: number;
+  gameIcon: SectionIconId;
+}
+
+export interface BottomNavItem {
+  id: string;
+  label: string;
+  href: string;
+  icon: "profile" | "deposit" | "withdraw" | "bonus" | "contact";
+}

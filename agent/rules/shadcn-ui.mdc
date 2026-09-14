@@ -1,0 +1,14 @@
+---
+description: แนวทางใช้ shadcn/ui ใน Cosmicbet — CLI, compose, tokens
+globs: "**/*.{ts,tsx,css}"
+alwaysApply: false
+---
+
+# shadcn/ui
+
+- เพิ่ม component ด้วย `pnpm dlx shadcn@latest add <name>` — อย่า copy จากอินเทอร์เน็ตคนละเวอร์ชัน
+- ใช้ primitive ที่มีใน `components/ui` ก่อนเขียน markup เอง (Button, Dialog, Tabs, …)
+- Base = Radix: ใช้ `asChild` เมื่อต้องประกอบ trigger/custom element
+- สไตล์: semantic tokens (`bg-background`, `text-muted-foreground`, `border-border`) ที่ bridge กับ Cosmicbet แล้ว; layout ระยะ/surface พิเศษใช้ Cosmicbet vars จาก `design.md`
+- ห้าม override สี component ด้วย hex กระจาย; ห้ามนำ HeroUI / library UI อื่นเข้ามาแทน
+- Icons: ชุดเดียวทั้งโปรเจกต์ (lucide จาก shadcn หรือ SVG ตาม `design.md`) — น้ำหนักสม่ำเสมอ ไม่ผสม 3D/emoji ใน nav/feature/jackpot

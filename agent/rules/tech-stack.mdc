@@ -1,0 +1,15 @@
+---
+description: Tech stack Cosmicbet — Next.js, shadcn/ui, Tailwind และวิธีอ่าน docs ก่อนเขียนโค้ด
+alwaysApply: true
+---
+
+# Tech Stack
+
+- Front-end: Next.js 16 (App Router) + React 19 + TypeScript
+- UI: shadcn/ui (Radix) + Tailwind CSS 4
+- Package manager: pnpm
+- ก่อนเขียนหรือแก้โค้ด Next — อ่านคู่มือใน `node_modules/next/dist/docs/` เพราะ API อาจต่างจากความรู้เดิม; เคารพ deprecation notices
+- ก่อนเพิ่ม UI primitive — อ่าน `components.json` และใช้ `pnpm dlx shadcn@latest` (อย่าเดา API)
+- อย่าเปลี่ยน stack หรือเพิ่ม UI library อื่น (รวม HeroUI) โดยไม่ได้รับคำสั่ง
+- Cosmicbet design tokens ใน `design.md` / `app/globals.css` เป็นต้นฉบับ; shadcn semantic colors ต้องใช้ค่าที่ bridge แล้ว — ห้ามใช้ธีมม่วงสด default
+- shadcn components อยู่ที่ `components/ui` (`@/components/ui`); custom Cosmicbet อยู่ที่ `app/components/` — อย่าปนหรือทับกันโดยไม่ตั้งใจ
