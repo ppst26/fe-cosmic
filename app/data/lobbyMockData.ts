@@ -16,6 +16,9 @@ import { SPORT_FEATURED_ITEMS } from "./sportFeaturedData";
 import { FISHING_FEATURED_ITEMS } from "./fishingFeaturedData";
 import { GRID_SLOT_PROVIDERS } from "./slotProvidersData";
 
+/** จำนวนการ์ดสูงสุดต่อแถว carousel หน้าแรก desktop */
+export const HOME_LOBBY_CAROUSEL_MAX = 15;
+
 /** แถว SLOTS หน้าแรก — รูปค่ายจาก public/slots (สูงสุด 15 ใบต่อ carousel) */
 export const HOME_SLOTS_PROVIDER_ITEMS: GameItem[] = GRID_SLOT_PROVIDERS.slice(0, 15).map(
   (provider) => ({

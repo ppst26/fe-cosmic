@@ -17,7 +17,7 @@ const SEGMENT_DEG = 360 / LUCKY_WHEEL_SEGMENTS.length;
 /**
  * เนื้อหาหน้าวงล้อจักรวาล — ใช้ใน /wheel
  */
-export function LuckyWheelPageContent() {
+export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean }) {
   const [spinsLeft, setSpinsLeft] = useState(LUCKY_WHEEL_INITIAL_SPINS);
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
@@ -55,18 +55,25 @@ export function LuckyWheelPageContent() {
 
   return (
     <div className="lucky-wheel-page flex flex-col gap-5 pb-4">
-      <header className="text-center">
-        <h1 className="text-xl font-extrabold text-[var(--text-primary)] drop-shadow-[0_0_24px_rgba(167,139,250,0.35)] sm:text-2xl">
-          วงล้อจักรวาล
-        </h1>
-        <p className="mt-1.5 text-xs text-[var(--text-secondary)] sm:text-sm">
-          หมุนวงล้อ ลุ้นรับเครดิตและ Gems
-        </p>
-        <p className="lucky-wheel-page__badge mt-3 inline-flex items-center gap-1 rounded-[var(--radius-pill)] px-3 py-1.5 text-xs font-semibold text-[var(--text-secondary)]">
+      {!embedded ? (
+        <header className="text-center">
+          <h1 className="text-xl font-extrabold text-[var(--text-primary)] drop-shadow-[0_0_24px_rgba(167,139,250,0.35)] sm:text-2xl">
+            วงล้อจักรวาล
+          </h1>
+          <p className="mt-1.5 text-xs text-[var(--text-secondary)] sm:text-sm">
+            หมุนวงล้อ ลุ้นรับเครดิตและ Gems
+          </p>
+          <p className="lucky-wheel-page__badge mt-3 inline-flex items-center gap-1 rounded-[var(--radius-pill)] px-3 py-1.5 text-xs font-semibold text-[var(--text-secondary)]">
+            สิทธิ์คงเหลือ{" "}
+            <span className="text-base font-extrabold text-[#facc15]">{spinsLeft}</span> ครั้ง
+          </p>
+        </header>
+      ) : (
+        <p className="lucky-wheel-page__badge mx-auto inline-flex items-center gap-1 rounded-[var(--radius-pill)] px-3 py-1.5 text-xs font-semibold text-[var(--text-secondary)]">
           สิทธิ์คงเหลือ{" "}
           <span className="text-base font-extrabold text-[#facc15]">{spinsLeft}</span> ครั้ง
         </p>
-      </header>
+      )}
 
       <CosmicFortuneWheel segments={LUCKY_WHEEL_SEGMENTS} rotationDeg={rotation} spinning={spinning} />
 
@@ -94,7 +101,7 @@ export function LuckyWheelPageContent() {
           {history.map((item) => (
             <li
               key={item.id}
-              className="flex items-center gap-3 cosmic-inset-card bg-[var(--surface-hover)]/35 px-3 py-2.5"
+              className="flex items-center gap-3 rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/45 bg-[var(--surface-hover)]/35 px-3 py-2.5"
             >
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--surface-mid)]">
                 {item.kind === "credit" ? (
@@ -112,7 +119,7 @@ export function LuckyWheelPageContent() {
         </ul>
       </section>
 
-      <section className="overflow-hidden cosmic-inset-card bg-[var(--surface-hover)]/35">
+      <section className="overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/35">
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}

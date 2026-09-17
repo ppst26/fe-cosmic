@@ -151,6 +151,8 @@ export interface HallOfFameRow {
   playerMasked: string;
   payout?: number;
   winMultiple?: number;
+  /** เวลาชนะ — แสดงแท็บ Latest Winner (รูปแบบ DD/MM/YYYY HH:mm:ss) */
+  wonAtLabel?: string;
   /** รูปเกมมุมซ้าย — ไม่มีใช้ gameIcon + coverTone */
   coverSrc?: string;
   coverTone?: "indigo" | "rose" | "emerald" | "amber" | "sky" | "violet";

@@ -272,6 +272,7 @@ function SidebarDockIcon({ className }: { className?: string }) {
 
 /**
  * โหลด/บันทึกสถานะย่อ sidebar — ใช้ใน app/page.tsx
+ * ค่าเริ่มต้นต้องตรง SSR; อ่าน localStorage หลัง hydrate เท่านั้น
  */
 function readSidebarCollapsedFromStorage(fallback: boolean): boolean {
   if (typeof window === "undefined") return fallback;
@@ -286,9 +287,11 @@ function readSidebarCollapsedFromStorage(fallback: boolean): boolean {
 }
 
 export function useLobbySidebarCollapsed(defaultCollapsed = false) {
-  const [collapsed, setCollapsedState] = useState(() =>
-    readSidebarCollapsedFromStorage(defaultCollapsed),
-  );
+  const [collapsed, setCollapsedState] = useState(defaultCollapsed);
+
+  React.useEffect(() => {
+    setCollapsedState(readSidebarCollapsedFromStorage(defaultCollapsed));
+  }, [defaultCollapsed]);
 
   const setCollapsed = (next: boolean) => {
     setCollapsedState(next);

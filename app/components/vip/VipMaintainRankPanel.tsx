@@ -19,7 +19,7 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
   const tier = getVipRankTier(activeRankId);
 
   return (
-    <section className="cosmic-inset-card w-full bg-[var(--surface-hover)]/25 p-3">
+    <section className="w-full rounded-[10px] border border-[var(--border-active)]/45 bg-[var(--surface-hover)]/25 p-3">
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-sm font-extrabold text-[var(--text-primary)]">รักษาระดับ VIP</h3>
         <span className="shrink-0 text-[11px] font-semibold tabular-nums text-[var(--text-primary)]">
@@ -30,7 +30,7 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
         ทำครบทั้งสองเงื่อนไขเพื่อรักษาระดับ {tier.label.charAt(0) + tier.label.slice(1).toLowerCase()}
       </p>
 
-      <div className="mt-3 flex flex-col gap-2">
+      <div className="mt-3 grid grid-cols-2 gap-2">
         <MaintainMetricCard
           label="ฝาก"
           iconKind="deposit"

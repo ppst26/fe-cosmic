@@ -16,12 +16,14 @@ import {
 import { ChevronDownIcon } from "../ui/Icons";
 
 /**
- * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store
+ * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal
  */
 export function GemsStorePageContent({
   initialBalance = GEMS_STORE_BALANCE_MOCK,
+  embedded = false,
 }: {
   initialBalance?: number;
+  embedded?: boolean;
 }) {
   const [gemsBalance, setGemsBalance] = useState(initialBalance);
   const [termsOpen, setTermsOpen] = useState(false);
@@ -33,16 +35,17 @@ export function GemsStorePageContent({
 
   return (
     <div className="flex flex-col gap-5 pb-4">
-      <header className="flex flex-col gap-3">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0 flex-1 pr-1">
-            <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">
-              ร้านค้า <span className="text-[#c4b5fd]">Gems</span>
-            </h1>
-            <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
-              ใช้ Gems แลกรับเครดิตเข้ากระเป๋าของคุณ
-            </p>
-          </div>
+      {!embedded ? (
+        <header className="flex flex-col gap-3">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 flex-1 pr-1">
+              <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">
+                ร้านค้า <span className="text-[#c4b5fd]">Gems</span>
+              </h1>
+              <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
+                ใช้ Gems แลกรับเครดิตเข้ากระเป๋าของคุณ
+              </p>
+            </div>
 
           <aside
             className="flex shrink-0 items-center gap-2.5 cosmic-inset-card bg-[var(--surface-mid)]/75 px-2.5 py-2 sm:gap-3 sm:px-3 sm:py-2.5"
@@ -72,6 +75,7 @@ export function GemsStorePageContent({
 
         <p className="text-[11px] text-[var(--text-muted)]">{GEMS_STORE_EXCHANGE_RATE_LABEL}</p>
       </header>
+      ) : null}
 
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
         {GEMS_STORE_PACKAGES.map((pkg) => {

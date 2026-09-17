@@ -11,6 +11,12 @@ alwaysApply: false
 - พื้นผิวม่วงเข้มเริ่ม `#19183B` ไล่ไปม่วงเกือบดำ; ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex ซ้ำ
 - **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
 - **Modal / bottom sheet / slide-over และการ์ดใน grid ทุกหน้า** — ไม่ใส่ stroke; มุมใช้ `var(--radius-panel)` (class `cosmic-modal-shell`, `cosmic-sheet-shell`, `cosmic-inset-card` ใน `globals.css`)
+- **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
+- **Modal / bottom sheet / slide-over และการ์ดใน grid ทุกหน้า** — ไม่ใส่ stroke; มุมใช้ `var(--radius-panel)` (class `cosmic-modal-shell`, `cosmic-sheet-shell`, `cosmic-inset-card` ใน `globals.css`)
+- **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
+- **Modal / bottom sheet / slide-over และการ์ดใน grid ทุกหน้า** — ไม่ใส่ stroke; มุมใช้ `var(--radius-panel)` (class `cosmic-modal-shell`, `cosmic-sheet-shell`, `cosmic-inset-card` ใน `globals.css`)
+- **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
+- **Modal / bottom sheet / slide-over และการ์ดใน grid ทุกหน้า** — ไม่ใส่ stroke; มุมใช้ `var(--radius-panel)` (class `cosmic-modal-shell`, `cosmic-sheet-shell`, `cosmic-inset-card` ใน `globals.css`)
 - **Search bar (ช่องค้นหา)**: ห้ามใส่ ring หรือ outline ทั้งตอนคลิก (focus) และ hover เพื่อความเรียบเนียนกลมกลืนกับพื้นผิว
 - Primary CTA ส่วนบนใช้ Indigo → Blue ได้; แยกจาก gradient พื้นผิว
 - Feature cards, Jackpot, Bottom Nav: ไอคอนเรียบสีลาเวนเดอร์ — ห้าม 3D / neon / glow / ม่วงสด

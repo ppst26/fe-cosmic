@@ -30,12 +30,12 @@ export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModal
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[65] bg-black/78 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className="fixed inset-0 z-[65] bg-black/78 backdrop-blur-[2px] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
 
         {content && (
           <Dialog.Content
             aria-describedby={undefined}
-            className="cosmic-modal-shell fixed left-1/2 top-1/2 z-[70] flex max-h-[min(92dvh,680px)] w-[min(calc(100vw-1.25rem),420px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden bg-[#0d0b1a] text-[var(--text-primary)] shadow-[0_0_40px_rgba(124,58,237,0.22),0_24px_56px_rgba(0,0,0,0.6)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
+            className="cosmic-modal-shell fixed left-1/2 top-1/2 z-[80] flex max-h-[min(92dvh,680px)] w-[min(calc(100vw-1.25rem),420px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden bg-[#0d0b1a] text-[var(--text-primary)] shadow-[0_0_40px_rgba(124,58,237,0.22),0_24px_56px_rgba(0,0,0,0.6)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
           >
             <div className="relative shrink-0 px-3 pb-2 pt-3">
               <div className="mx-auto flex max-w-[92%] justify-center">

@@ -72,23 +72,28 @@ export default function HomePage() {
       <div
         className={`lobby-desktop-shell${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
       >
-        <LobbyDesktopSidebar
-          categories={CATEGORIES_DATA}
-          activeCategoryId={activeCategoryId}
-          onSelectCategory={setActiveCategoryId}
-          navigationMode="none"
-          collapsed={isSidebarCollapsed}
-          onCollapsedChange={setSidebarCollapsed}
-          onMenuAction={handleSidebarMenuAction}
-          onLogout={() => void logout()}
+        <Header
+          onSignUpClick={openSignUp}
+          onLoginClick={openLogin}
+          onDesktopMenuClick={() => setSidebarCollapsed(!isSidebarCollapsed)}
         />
 
-        <div className="lobby-desktop-main min-w-0 flex-1">
-          <div className="lobby-desktop-workspace">
-            <div className="lobby-desktop-center min-w-0 flex-1">
-              <Header onSignUpClick={openSignUp} onLoginClick={openLogin} />
+        <div className="lobby-desktop-shell__row">
+          <LobbyDesktopSidebar
+            categories={CATEGORIES_DATA}
+            activeCategoryId={activeCategoryId}
+            onSelectCategory={setActiveCategoryId}
+            navigationMode="none"
+            collapsed={isSidebarCollapsed}
+            onCollapsedChange={setSidebarCollapsed}
+            onMenuAction={handleSidebarMenuAction}
+            onLogout={() => void logout()}
+          />
 
-              <RightMenuDrawer
+          <div className="lobby-desktop-main min-w-0 flex-1">
+            <div className="lobby-desktop-workspace">
+              <div className="lobby-desktop-center min-w-0 flex-1">
+                <RightMenuDrawer
                 isOpen={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}
               />
@@ -164,18 +169,21 @@ export default function HomePage() {
                     <JackpotSection winners={JACKPOT_WINNERS_DATA} />
                   </AuthGate>
 
-                  <HallOfFame datasets={HALL_OF_FAME_DATA} />
-
                   <FloatingBottomNav
                     items={BOTTOM_NAV_DATA}
                     isMenuOpen={isMenuOpen}
                     onMenuClick={() => setIsMenuOpen(true)}
                   />
                 </div>
+
+                <div className={isHomeLobby ? undefined : "lg:hidden"}>
+                  <HallOfFame datasets={HALL_OF_FAME_DATA} />
+                </div>
               </main>
-            </div>
+              </div>
 
             <LobbyDesktopRightRail onMenuAction={handleSidebarMenuAction} />
+            </div>
           </div>
         </div>
       </div>

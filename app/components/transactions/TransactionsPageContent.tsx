@@ -13,6 +13,7 @@ interface TransactionsPageContentProps {
   activeKind: TransactionKind;
   onSelectKind: (kind: TransactionKind) => void;
   isAuthenticated: boolean;
+  embedded?: boolean;
 }
 
 /**
@@ -22,12 +23,15 @@ export function TransactionsPageContent({
   activeKind,
   onSelectKind,
   isAuthenticated,
+  embedded = false,
 }: TransactionsPageContentProps) {
   const items = isAuthenticated ? getTransactionsByKind(activeKind) : [];
 
   return (
     <>
-      <p className="mt-1 text-sm text-[var(--text-secondary)]">ฝากและถอนของคุณ</p>
+      {!embedded ? (
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">ฝากและถอนของคุณ</p>
+      ) : null}
 
       <div className="mt-4">
         <TransactionKindTabs

@@ -4,6 +4,7 @@ import React from "react";
 import { AuthProvider } from "@/app/components/auth/AuthProvider";
 import { TransactionsProvider } from "@/app/components/transactions/TransactionsProvider";
 import { VipModalProvider } from "@/app/components/vip/VipModalProvider";
+import { DesktopHubModalProvider } from "@/app/components/hub/DesktopHubModalProvider";
 import { CouponRedeemProvider } from "@/app/components/coupon/CouponRedeemProvider";
 import { DepositProvider } from "@/app/components/deposit/DepositProvider";
 import { WithdrawProvider } from "@/app/components/withdraw/WithdrawProvider";
@@ -20,7 +21,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           <DepositProvider>
             <WithdrawProvider>
               <VipModalProvider>
-                <TransactionsProvider>{children}</TransactionsProvider>
+                <DesktopHubModalProvider>
+                  <TransactionsProvider>{children}</TransactionsProvider>
+                </DesktopHubModalProvider>
               </VipModalProvider>
             </WithdrawProvider>
           </DepositProvider>

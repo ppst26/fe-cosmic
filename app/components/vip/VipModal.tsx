@@ -50,7 +50,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[65] bg-black/75 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className="fixed inset-0 z-[65] bg-black/75 backdrop-blur-[2px] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
 
         <Dialog.Content
           aria-describedby={undefined}
@@ -138,7 +138,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
                   playerRankId={player.currentRankId}
                 />
 
-                <div className="w-full pt-2">
+                <div className="w-full border-t border-[var(--border-subtle)]/50 pt-4">
                   <VipRankRequirementsPanel
                     player={player}
                     focusRankId={VIP_RANK_TIERS[rankFocusIndex]?.id ?? player.currentRankId}

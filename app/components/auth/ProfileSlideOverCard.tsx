@@ -7,6 +7,8 @@ import type { ProfileUser } from "@/app/types/auth";
 import { fetchProfile } from "@/lib/auth/client";
 import { useAuth } from "./AuthProvider";
 import { useVipModal } from "../vip/VipModalProvider";
+import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
+import { getIsDesktopViewport } from "../hub/useIsDesktop";
 import { ProfileHubBody } from "../profile/ProfileHubBody";
 
 interface ProfileSlideOverCardProps {
@@ -22,6 +24,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
   const router = useRouter();
   const { logout } = useAuth();
   const { openVipModal } = useVipModal();
+  const { openHub } = useDesktopHubModal();
   const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
   const fetchGenRef = React.useRef(0);
 
@@ -52,12 +55,16 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
 
   const handleOpenTransactions = () => {
     onClose();
+    if (getIsDesktopViewport()) {
+      openHub("transactions");
+      return;
+    }
     router.push("/transactions");
   };
 
   const handleOpenLossRebate = () => {
     onClose();
-    router.push("/cashback?tab=loss");
+    router.push("/loss-rebate");
   };
 
   const handleOpenVip = () => {
@@ -67,13 +74,17 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
 
   const handleOpenAccountPage = () => {
     onClose();
+    if (getIsDesktopViewport()) {
+      openHub("account");
+      return;
+    }
     router.push("/profile/account");
   };
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange} modal={false}>
       <Dialog.Portal>
-        <div className="fixed inset-x-0 top-14 z-[60] pointer-events-none px-[var(--page-gutter)] sm:top-16">
+        <div className="fixed inset-x-0 top-14 z-[60] pointer-events-none px-[var(--page-gutter)] sm:top-16 lg:top-[calc(env(safe-area-inset-top,0px)+var(--header-desktop-bar-height))]">
           <div className="mx-auto flex w-full max-w-[var(--content-max)] justify-end">
             <Dialog.Content
               aria-describedby={undefined}

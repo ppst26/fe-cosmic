@@ -46,7 +46,13 @@ function TabIcon({ tab }: { tab: ReferralTabId }) {
 /**
  * เนื้อหาหน้าแนะนำเพื่อน — ใช้ใน /referral
  */
-export function ReferralPageContent({ refCode = REFERRAL_MOCK_REF_CODE }: { refCode?: string }) {
+export function ReferralPageContent({
+  refCode = REFERRAL_MOCK_REF_CODE,
+  embedded = false,
+}: {
+  refCode?: string;
+  embedded?: boolean;
+}) {
   const [tab, setTab] = useState<ReferralTabId>("overview");
   const [copied, setCopied] = useState(false);
   const referralLink = buildReferralLink(refCode);
@@ -64,12 +70,14 @@ export function ReferralPageContent({ refCode = REFERRAL_MOCK_REF_CODE }: { refC
 
   return (
     <div className="flex flex-col gap-5 pb-4">
-      <div>
-        <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">
-          แนะนำเพื่อน
-        </h1>
-        <p className="mt-0.5 text-xs text-[var(--text-muted)]">Referral Program</p>
-      </div>
+      {!embedded ? (
+        <div>
+          <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">
+            แนะนำเพื่อน
+          </h1>
+          <p className="mt-0.5 text-xs text-[var(--text-muted)]">Referral Program</p>
+        </div>
+      ) : null}
 
       <div
         role="tablist"
@@ -101,7 +109,7 @@ export function ReferralPageContent({ refCode = REFERRAL_MOCK_REF_CODE }: { refC
       {tab === "overview" && (
         <div className="flex flex-col gap-5">
           <section
-            className="relative overflow-hidden cosmic-inset-card px-4 py-5 sm:px-5 sm:py-6"
+            className="relative overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 px-4 py-5 sm:px-5 sm:py-6"
             aria-label="โปรโมชันแนะนำเพื่อน"
           >
             <div
@@ -196,7 +204,7 @@ export function ReferralPageContent({ refCode = REFERRAL_MOCK_REF_CODE }: { refC
             </div>
           </section>
 
-          <section className="cosmic-inset-card bg-[var(--surface-hover)]/30 px-4 py-4">
+          <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-4 py-4">
             <h2 className="text-sm font-extrabold text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
             <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
               แชร์ลิงก์แล้วรับส่วนแบ่งจากยอดเทิร์นของเครือข่าย
@@ -273,7 +281,7 @@ function StatCard({
   valueClassName?: string;
 }) {
   return (
-    <div className="flex items-center gap-3 cosmic-inset-card bg-[var(--surface-hover)]/35 px-3 py-3">
+    <div className="flex items-center gap-3 rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/35 px-3 py-3">
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]">
         {icon}
       </div>

@@ -14,7 +14,7 @@ import { ChevronDownIcon, ChevronRightIcon } from "../ui/Icons";
 /**
  * เนื้อหาเช็คอินรายวัน — ใช้ใน /missions/check-in
  */
-export function DailyCheckInPageContent() {
+export function DailyCheckInPageContent({ embedded = false }: { embedded?: boolean }) {
   const [days, setDays] = useState<DailyCheckInDayReward[]>(DAILY_CHECKIN_INITIAL);
   const [termsOpen, setTermsOpen] = useState(false);
   const [claimMessage, setClaimMessage] = useState<string | null>(null);
@@ -46,18 +46,22 @@ export function DailyCheckInPageContent() {
       <header className="relative">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <h1 className="text-xl font-extrabold text-[var(--text-primary)] drop-shadow-[0_0_20px_rgba(167,139,250,0.25)] sm:text-2xl">
-              เช็คอินรายวัน
-            </h1>
-            <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
-              เข้าเช็คอิน รับรางวัลเครดิตฟรี
-            </p>
+            {!embedded ? (
+              <>
+                <h1 className="text-xl font-extrabold text-[var(--text-primary)] drop-shadow-[0_0_20px_rgba(167,139,250,0.25)] sm:text-2xl">
+                  เช็คอินรายวัน
+                </h1>
+                <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
+                  เข้าเช็คอิน รับรางวัลเครดิตฟรี
+                </p>
+              </>
+            ) : null}
           </div>
           <DailyCheckInCalendarGraphic className="h-20 w-24 shrink-0 sm:h-24 sm:w-28" />
         </div>
       </header>
 
-      <section className="cosmic-inset-card bg-[var(--surface-hover)]/30 px-3 py-3.5 sm:px-4">
+      <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-3 py-3.5 sm:px-4">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-xs">
           <p className="font-bold text-[var(--text-primary)]">
             เช็คอินแล้ว {checkedInCount} / 7 วัน
@@ -96,7 +100,7 @@ export function DailyCheckInPageContent() {
 
       <p className="text-center text-[10px] text-[var(--text-muted)]">ตัวอย่างรางวัลสำหรับการออกแบบ</p>
 
-      <section className="overflow-hidden cosmic-inset-card bg-[var(--surface-hover)]/35">
+      <section className="overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/35">
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}

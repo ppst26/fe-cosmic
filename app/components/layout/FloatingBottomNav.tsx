@@ -6,10 +6,10 @@ import { BottomNavItem } from "../../types/lobby";
 import { useDeposit } from "../deposit/DepositProvider";
 import { useWithdraw } from "../withdraw/WithdrawProvider";
 import {
+  BonusNavIcon,
   ContactNavIcon,
   DepositNavIcon,
   HamburgerMenuIcon,
-  RefundIcon,
   WithdrawNavIcon,
 } from "../ui/Icons";
 import { cn } from "@/lib/utils";
@@ -35,7 +35,7 @@ function BottomNavIcon({ icon, className }: { icon: BottomNavItem["icon"]; class
     case "withdraw":
       return <WithdrawNavIcon className={className} />;
     case "cashback":
-      return <RefundIcon className={className} />;
+      return <BonusNavIcon className={className} />;
     case "contact":
       return <ContactNavIcon className={className} />;
     default:

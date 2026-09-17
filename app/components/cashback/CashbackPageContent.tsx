@@ -14,13 +14,18 @@ import { RefundIcon } from "../ui/Icons";
 
 interface CashbackPageContentProps {
   initialTab?: CashbackTabId;
+  /** แสดงใน DesktopHubModal — ซ่อนหัวข้อซ้ำกับ chrome modal */
+  embedded?: boolean;
 }
 
 /**
  * เนื้อหาหน้าคืนยอด — แท็บเล่น / เสีย ตาม mock UI
- * ใช้ใน app/cashback/page.tsx
+ * ใช้ใน app/cashback/page.tsx และ DesktopHubModal
  */
-export function CashbackPageContent({ initialTab = "play" }: CashbackPageContentProps) {
+export function CashbackPageContent({
+  initialTab = "play",
+  embedded = false,
+}: CashbackPageContentProps) {
   const [tab, setTab] = useState<CashbackTabId>(initialTab);
   const [playPanel, setPlayPanel] = useState(CASHBACK_PLAY_PANEL_MOCK);
   const [lossPanel, setLossPanel] = useState(CASHBACK_LOSS_PANEL_MOCK);
@@ -56,12 +61,14 @@ export function CashbackPageContent({ initialTab = "play" }: CashbackPageContent
 
   return (
     <div className="flex flex-col gap-5 pb-6">
-      <header>
-        <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">คืนยอด</h1>
-        <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
-          ตรวจสอบยอดคืนและกดรับเข้ากระเป๋า
-        </p>
-      </header>
+      {!embedded ? (
+        <header>
+          <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">คืนยอด</h1>
+          <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
+            ตรวจสอบยอดคืนและกดรับเข้ากระเป๋า
+          </p>
+        </header>
+      ) : null}
 
       <div
         role="tablist"

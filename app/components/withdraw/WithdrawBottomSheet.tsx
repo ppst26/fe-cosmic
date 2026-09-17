@@ -79,10 +79,10 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[70] bg-[var(--surface-end)]/85 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className="fixed inset-0 z-[70] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
         <Dialog.Content
           aria-describedby="withdraw-sheet-desc"
-          className="cosmic-sheet-shell fixed inset-x-0 bottom-0 z-[70] flex max-h-[min(88dvh,680px)] min-h-[min(70dvh,520px)] flex-col bg-[#121127] px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)] shadow-[0_-16px_48px_rgba(0,0,0,0.55)] outline-none data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300 sm:px-5"
+          className="fixed inset-x-0 bottom-0 z-[70] flex max-h-[min(88dvh,680px)] min-h-[min(70dvh,520px)] flex-col rounded-t-[20px] border-t border-[var(--border-subtle)]/50 bg-[#121127]/98 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)] shadow-[0_-16px_48px_rgba(0,0,0,0.55)] outline-none backdrop-blur-xl data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300 sm:px-5"
         >
           <div className="mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-white/20" aria-hidden="true" />
 

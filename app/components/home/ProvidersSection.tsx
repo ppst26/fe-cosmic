@@ -1,5 +1,6 @@
 import React from "react";
 import { ProviderItem } from "../../types/lobby";
+import { HOME_LOBBY_CAROUSEL_MAX } from "../../data/lobbyMockData";
 import { Carousel } from "../ui/Carousel";
 import { ProviderCard } from "../ui/ProviderCard";
 import { SectionIcon } from "../ui/SectionIcon";
@@ -14,6 +15,8 @@ interface ProvidersSectionProps {
  * ถูกเรียกใช้ใน app/page.tsx
  */
 export function ProvidersSection({ providers }: ProvidersSectionProps) {
+  const carouselProviders = providers.slice(0, HOME_LOBBY_CAROUSEL_MAX);
+
   return (
     <Carousel
       title="Providers"
@@ -21,10 +24,10 @@ export function ProvidersSection({ providers }: ProvidersSectionProps) {
       viewAllHref="/providers"
       trackClassName="carousel-providers"
       className="mt-12 sm:mt-14"
-      isEmpty={providers.length === 0}
+      isEmpty={carouselProviders.length === 0}
       emptyMessage="ยังไม่มีผู้ให้บริการ"
     >
-      {providers.map((provider) => (
+      {carouselProviders.map((provider) => (
         <ProviderCard key={provider.id} provider={provider} />
       ))}
     </Carousel>

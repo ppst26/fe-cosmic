@@ -111,7 +111,7 @@ export function LossRebatePageContent({
           </label>
         </div>
 
-        <div className="cosmic-inset-card bg-[var(--surface-hover)]/25">
+        <div className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/25">
           <Table className="text-sm">
             <TableHeader>
               <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
@@ -201,7 +201,7 @@ export function LossRebatePageContent({
         </div>
       </section>
 
-      <section className="overflow-hidden cosmic-inset-card bg-[var(--surface-hover)]/35">
+      <section className="overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/35">
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}
@@ -243,7 +243,7 @@ function LossRebateHeroCard({
   onClaim: () => void;
 }) {
   return (
-    <section className="relative overflow-hidden cosmic-inset-card bg-[var(--surface-hover)]/35 px-4 py-4 sm:px-5 sm:py-5">
+    <section className="relative overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/35 px-4 py-4 sm:px-5 sm:py-5">
       <div
         className="pointer-events-none absolute inset-0 opacity-90"
         style={{
@@ -307,7 +307,7 @@ function LossRebateHeroCard({
 
 function LossRebateFormulaSection({ summary }: { summary: LossRebateSummaryMock }) {
   return (
-    <section className="cosmic-inset-card bg-[var(--surface-hover)]/30 px-4 py-4 sm:px-5">
+    <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-4 py-4 sm:px-5">
       <h2 className="text-sm font-extrabold text-[var(--text-primary)]">รายละเอียดการคำนวณ</h2>
       <div className="mt-4 flex flex-row items-center gap-1.5 sm:gap-2">
         <FormulaBlock

@@ -57,7 +57,7 @@ export function LoginBottomDrawer({
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[60] bg-[var(--surface-end)]/85 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className="fixed inset-0 z-[60] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
         <Dialog.Content
           aria-describedby={undefined}
           className="cosmic-sheet-shell fixed inset-x-0 bottom-0 z-[60] flex max-h-[min(70dvh,480px)] flex-col overflow-hidden bg-[var(--surface-mid)] px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-14 text-[var(--text-primary)] shadow-[0_-12px_40px_rgba(0,0,0,0.45)] outline-none data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300 sm:px-5"
@@ -108,7 +108,7 @@ export function LoginBottomDrawer({
               <label htmlFor="login-password" className="text-sm font-medium text-[var(--text-secondary)]">
                 รหัสผ่าน
               </label>
-              <div className="flex h-12 items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3">
+              <div className="flex h-12 items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3 focus-within:ring-1 focus-within:ring-[var(--focus-ring)]">
                 <LockIcon className="h-5 w-5 text-[var(--icon-default)]" />
                 <input
                   id="login-password"

@@ -3,7 +3,6 @@
 import React, { useId, useState } from "react";
 import Image from "next/image";
 import type { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
-import { SectionHeader } from "../ui/SectionHeader";
 import { SectionIcon } from "../ui/SectionIcon";
 
 const TAB_LABELS: { id: HallOfFameTabId; label: string }[] = [
@@ -21,50 +20,45 @@ const payoutFormatter = new Intl.NumberFormat("en-US", {
 });
 
 /**
- * ไอคอนหัวข้อ Top Performance — โทนทองตามธีม ไม่ใช้กรอบการ์ด
+ * ไอคอนหัวข้อ Top Performance — โทนทองตามธีม
  */
 function TopPerformanceBadge({ className = "h-8 w-8" }: { className?: string }) {
   return (
-    <span
-      className={`inline-flex shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--surface-hover)] ring-1 ring-[var(--border-subtle)] ${className}`}
+    <svg
+      viewBox="0 0 32 32"
+      className={`shrink-0 ${className}`}
+      fill="none"
       aria-hidden="true"
     >
-      <svg viewBox="0 0 32 32" className="h-5 w-5" fill="none">
-        <path
-          d="M16 4l2.2 6.8H25l-5.6 4.1 2.2 6.8L16 17.6l-5.6 4.1 2.2-6.8L7 10.8h6.8L16 4Z"
-          fill="url(#top-perf-star)"
-        />
-        <text
-          x="16"
-          y="21"
-          textAnchor="middle"
-          fill="#090810"
-          fontSize="7"
-          fontWeight="800"
-        >
-          TOP
-        </text>
-        <defs>
-          <linearGradient id="top-perf-star" x1="8" y1="4" x2="24" y2="22">
-            <stop offset="0%" stopColor="#ffe66d" />
-            <stop offset="100%" stopColor="#d99a08" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </span>
+      <path
+        d="M16 4l2.2 6.8H25l-5.6 4.1 2.2 6.8L16 17.6l-5.6 4.1 2.2-6.8L7 10.8h6.8L16 4Z"
+        fill="url(#top-perf-star)"
+      />
+      <text
+        x="16"
+        y="21"
+        textAnchor="middle"
+        fill="#090810"
+        fontSize="7"
+        fontWeight="800"
+      >
+        TOP
+      </text>
+      <defs>
+        <linearGradient id="top-perf-star" x1="8" y1="4" x2="24" y2="22">
+          <stop offset="0%" stopColor="#ffe66d" />
+          <stop offset="100%" stopColor="#d99a08" />
+        </linearGradient>
+      </defs>
+    </svg>
   );
 }
 
-/**
- * จัดรูปแบบยอดชนะ THB (+80,060.00฿)
- */
+/** จัดรูปแบบยอดชนะ THB (+80,060.00฿) */
 function formatPayoutThb(amount: number): string {
   return `+${payoutFormatter.format(amount)}฿`;
 }
 
-/**
- * รูปเกม — coverSrc หรือ placeholder tone + icon
- */
 function HallOfFameGameThumb({ row }: { row: HallOfFameRow }) {
   const toneClass = row.coverTone ? `cover-tone-${row.coverTone}` : "cover-tone-indigo";
 
@@ -92,126 +86,141 @@ function HallOfFameGameThumb({ row }: { row: HallOfFameRow }) {
 }
 
 /**
- * HallOfFame (Top Performance) — 2 แท็บ + ตารางเต็มความกว้าง ไม่มีกรอบการ์ด
- * ถูกเรียกใช้ใน app/page.tsx
+ * HallOfFame (Top Performance) — 2 แท็บ · ตารางเต็มความกว้าง · ธีม Cosmicbet
+ * ถูกเรียกใช้ใน app/page.tsx (โฮม lobby มือถือ + desktop)
  */
 export function HallOfFame({ datasets }: HallOfFameProps) {
   const [activeTab, setActiveTab] = useState<HallOfFameTabId>("latest-winner");
   const panelId = useId();
-  const rows = datasets[activeTab] ?? [];
   const isLatestWinner = activeTab === "latest-winner";
   const valueColumnLabel = isLatestWinner ? "Payout" : "Multiple";
+  const rows = datasets[activeTab] ?? [];
 
   return (
     <section
       className="hall-of-fame mt-10 w-full min-w-0 sm:mt-12"
       aria-labelledby="top-performance-title"
     >
-      <SectionHeader
-        icon={<TopPerformanceBadge />}
-        title="Top Performance"
-      />
-
-      <div
-        className="inline-flex max-w-full gap-1 rounded-[var(--radius-control)] bg-[var(--surface-mid)] p-1 ring-1 ring-[var(--border-subtle)]"
-        role="tablist"
-        aria-label="เลือกตาราง Top Performance"
-      >
-        {TAB_LABELS.map((tab) => {
-          const selected = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              role="tab"
-              id={`${panelId}-tab-${tab.id}`}
-              aria-selected={selected}
-              aria-controls={`${panelId}-panel`}
-              onClick={() => setActiveTab(tab.id)}
-              className={`min-h-[36px] whitespace-nowrap rounded-[var(--radius-control)] px-3.5 text-[11px] font-bold transition-colors sm:min-h-[40px] sm:px-4 sm:text-xs ${
-                selected
-                  ? "text-[var(--text-primary)]"
-                  : "text-[var(--text-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-secondary)]"
-              }`}
-              style={selected ? { background: "var(--category-active-gradient)" } : undefined}
-            >
-              {tab.label}
-            </button>
-          );
-        })}
+      <div className="hall-of-fame__head mb-3 flex items-center gap-2">
+        <TopPerformanceBadge className="hall-of-fame__title-icon h-7 w-7 sm:h-8 sm:w-8" />
+        <h2
+          id="top-performance-title"
+          className="text-[18px] font-bold tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
+        >
+          Top Performance
+        </h2>
       </div>
 
-      {/* แถบตารางเต็มความกว้าง — ทะลุ gutter ของ page-shell */}
+      <div className="hall-of-fame__toolbar mt-4">
+        <div
+          className="hall-of-fame__tabs inline-flex max-w-full flex-wrap gap-2"
+          role="tablist"
+          aria-label="เลือกตาราง Top Performance"
+        >
+          {TAB_LABELS.map((tab) => {
+            const selected = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                id={`${panelId}-tab-${tab.id}`}
+                aria-selected={selected}
+                aria-controls={`${panelId}-panel`}
+                onClick={() => setActiveTab(tab.id)}
+                className={`hall-of-fame__tab-btn ${selected ? "is-active" : ""}`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <div
         id={`${panelId}-panel`}
         role="tabpanel"
         aria-labelledby={`${panelId}-tab-${activeTab}`}
-        className="hall-of-fame__table-band relative mt-4 -mx-[var(--page-gutter)] w-[calc(100%+2*var(--page-gutter))] max-w-none bg-[color-mix(in_srgb,var(--surface-mid)_88%,transparent)]"
+        className={`hall-of-fame__table-band hall-of-fame__table-band--borderless relative mt-4 -mx-[var(--page-gutter)] w-[calc(100%+2*var(--page-gutter))] max-w-none lg:mx-0 lg:w-full ${
+          isLatestWinner ? "hall-of-fame__table-band--with-time" : ""
+        }`}
       >
-        <table className="hall-of-fame-table w-full min-w-0 border-collapse text-left text-sm">
-          <thead>
-            <tr className="border-b border-[var(--border-subtle)] text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] sm:text-[11px]">
-              <th scope="col" className="py-3 pl-[var(--page-gutter)] pr-2 font-bold">
-                Game
-              </th>
-              <th scope="col" className="px-2 py-3 font-bold">
-                Player
-              </th>
-              <th scope="col" className="py-3 pl-2 pr-[var(--page-gutter)] text-right font-bold">
-                {valueColumnLabel}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={3}
-                  className="px-[var(--page-gutter)] py-8 text-center text-sm text-[var(--text-muted)]"
-                >
-                  ยังไม่มีรายการ
-                </td>
+        <div className="hall-of-fame-table-wrap px-[var(--page-gutter)] lg:px-0">
+          <table className="hall-of-fame-table w-full min-w-0 border-collapse text-left text-sm">
+            <thead>
+              <tr className="hall-of-fame-table__head-row text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] sm:text-[11px]">
+                <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--game">
+                  Game
+                </th>
+                <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--player">
+                  Player
+                </th>
+                {isLatestWinner ? (
+                  <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--time">
+                    Time
+                  </th>
+                ) : null}
+                <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--value">
+                  {valueColumnLabel}
+                </th>
               </tr>
-            ) : (
-              rows.map((row, index) => (
-                <tr
-                  key={row.id}
-                  className={
-                    index % 2 === 0
-                      ? "bg-[color-mix(in_srgb,var(--surface-hover)_42%,transparent)]"
-                      : "bg-transparent"
-                  }
-                >
-                  <td className="py-3 pl-[var(--page-gutter)] pr-2 align-middle">
-                    <div className="flex min-w-0 items-center gap-2.5">
-                      <HallOfFameGameThumb row={row} />
-                      <span className="line-clamp-2 text-xs font-semibold leading-snug text-[var(--text-primary)] sm:text-sm">
-                        {row.gameName}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-2 py-3 align-middle">
-                    <span className="block truncate text-xs tabular-nums text-[var(--text-secondary)] sm:text-sm">
-                      {row.playerMasked}
-                    </span>
-                  </td>
-                  <td className="py-3 pl-2 pr-[var(--page-gutter)] text-right align-middle">
-                    {isLatestWinner && row.payout != null ? (
-                      <span className="text-xs font-bold tabular-nums text-[#ffe66d] sm:text-sm">
-                        {formatPayoutThb(row.payout)}
-                      </span>
-                    ) : null}
-                    {!isLatestWinner && row.winMultiple != null ? (
-                      <span className="text-xs font-extrabold tabular-nums text-[#ffe66d] sm:text-sm">
-                        {row.winMultiple}x
-                      </span>
-                    ) : null}
+            </thead>
+            <tbody className="hall-of-fame-table__body">
+              {rows.length === 0 ? (
+                <tr className="hall-of-fame-table__row hall-of-fame-table__row--empty">
+                  <td
+                    className="hall-of-fame-table__empty py-8 text-center text-sm text-[var(--text-muted)]"
+                    style={{ gridColumn: "1 / -1" }}
+                  >
+                    ยังไม่มีรายการ
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                rows.map((row, index) => (
+                  <tr
+                    key={row.id}
+                    className={`hall-of-fame-table__row ${
+                      index % 2 === 0 ? "hall-of-fame-table__row--alt" : ""
+                    }`}
+                  >
+                    <td className="hall-of-fame-table__td hall-of-fame-table__td--game">
+                      <div className="flex min-w-0 items-center gap-2.5">
+                        <HallOfFameGameThumb row={row} />
+                        <span className="line-clamp-2 text-xs font-semibold leading-snug text-[var(--text-primary)] sm:text-sm">
+                          {row.gameName}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="hall-of-fame-table__td hall-of-fame-table__td--player">
+                      <span className="block truncate text-xs tabular-nums text-[var(--text-secondary)] sm:text-sm">
+                        {row.playerMasked}
+                      </span>
+                    </td>
+                    {isLatestWinner ? (
+                      <td className="hall-of-fame-table__td hall-of-fame-table__td--time">
+                        <span className="block truncate text-[10px] tabular-nums text-[var(--text-secondary)] sm:text-xs">
+                          {row.wonAtLabel ?? "—"}
+                        </span>
+                      </td>
+                    ) : null}
+                    <td className="hall-of-fame-table__td hall-of-fame-table__td--value">
+                      {isLatestWinner && row.payout != null ? (
+                        <span className="hall-of-fame-table__payout text-xs font-bold tabular-nums sm:text-sm">
+                          {formatPayoutThb(row.payout)}
+                        </span>
+                      ) : null}
+                      {!isLatestWinner && row.winMultiple != null ? (
+                        <span className="hall-of-fame-table__payout text-xs font-extrabold tabular-nums sm:text-sm">
+                          {row.winMultiple}x
+                        </span>
+                      ) : null}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );

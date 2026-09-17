@@ -338,7 +338,7 @@ export function SignUpBottomDrawer({
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[60] bg-[var(--surface-end)]/85 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className="fixed inset-0 z-[60] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
 
         <Dialog.Content
           aria-describedby={undefined}
@@ -349,7 +349,7 @@ export function SignUpBottomDrawer({
           <Dialog.Close asChild>
             <button
               type="button"
-              className={`absolute right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface-hover)]/90 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-selected)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
+              className={`absolute right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface-hover)]/90 text-[var(--text-primary)] backdrop-blur-sm transition-colors hover:bg-[var(--surface-selected)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                 step === 1 ? "top-3" : "top-4"
               }`}
               aria-label="ปิดหน้าสมัครสมาชิก"

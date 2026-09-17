@@ -16,6 +16,9 @@ import {
   type MenuDialogAction,
   type MenuDialogTile,
 } from "../../data/menuMockData";
+import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
+import { parseHubFromHref } from "../hub/hubModalRegistry";
+import { getIsDesktopViewport } from "../hub/useIsDesktop";
 
 interface RightMenuDrawerProps {
   isOpen: boolean;
@@ -32,9 +35,17 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const router = useRouter();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
+  const { openHub } = useDesktopHubModal();
 
   const navigateAndClose = (href: string) => {
     onClose();
+    if (getIsDesktopViewport()) {
+      const parsed = parseHubFromHref(href);
+      if (parsed.id) {
+        openHub(parsed.id, parsed.options);
+        return;
+      }
+    }
     if (href.startsWith("/")) {
       router.push(href);
     }

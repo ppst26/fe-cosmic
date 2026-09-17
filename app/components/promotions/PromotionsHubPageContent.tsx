@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   PROMOTIONS_HUB_ACTIVITIES,
+  PROMOTIONS_HUB_CATEGORY_TABS,
   PROMOTIONS_HUB_FEATURED,
   PROMOTIONS_HUB_HERO,
+  matchesPromoHubCategory,
+  type PromoHubCategoryFilterId,
   type PromoHubFeaturedItem,
 } from "@/app/data/promotionsHubMockData";
 import type { PromotionDetailId } from "@/app/data/promotionDetailMockData";
@@ -12,55 +15,140 @@ import { PromotionDetailModal } from "./PromotionDetailModal";
 import { ChevronRightIcon } from "../ui/Icons";
 
 /**
+ * แถบฟิลเตอร์หมวดโปรโมชั่น — All / Slots / Casino / Sport
+ */
+function PromotionsCategoryTabs({
+  activeId,
+  onSelect,
+}: {
+  activeId: PromoHubCategoryFilterId;
+  onSelect: (id: PromoHubCategoryFilterId) => void;
+}) {
+  return (
+    <div
+      className="-mx-[var(--page-gutter)] flex gap-2 overflow-x-auto px-[var(--page-gutter)] pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      role="tablist"
+      aria-label="กรองโปรโมชั่นตามหมวด"
+    >
+      {PROMOTIONS_HUB_CATEGORY_TABS.map((tab) => {
+        const selected = activeId === tab.id;
+        return (
+          <button
+            key={tab.id}
+            type="button"
+            role="tab"
+            aria-selected={selected}
+            onClick={() => onSelect(tab.id)}
+            className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-bold transition-colors sm:px-5 sm:py-2.5 ${
+              selected
+                ? "text-[var(--text-primary)]"
+                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+            }`}
+            style={selected ? { background: "var(--category-active-gradient)" } : undefined}
+          >
+            {tab.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
  * เนื้อหาหน้าโปรโมชั่นและกิจกรรม — ใช้ใน /promotions
  */
-export function PromotionsHubPageContent() {
+export function PromotionsHubPageContent({ embedded = false }: { embedded?: boolean }) {
   const [detailId, setDetailId] = useState<PromotionDetailId | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
 
   const openDetail = (id: PromotionDetailId) => setDetailId(id);
   const closeDetail = () => setDetailId(null);
 
+  const showHero = useMemo(
+    () => matchesPromoHubCategory(PROMOTIONS_HUB_HERO.categories, categoryFilter),
+    [categoryFilter],
+  );
+
+  const featuredItems = useMemo(
+    () =>
+      PROMOTIONS_HUB_FEATURED.filter((item) =>
+        matchesPromoHubCategory(item.categories, categoryFilter),
+      ),
+    [categoryFilter],
+  );
+
+  const activityItems = useMemo(
+    () =>
+      PROMOTIONS_HUB_ACTIVITIES.filter((item) =>
+        matchesPromoHubCategory(item.categories, categoryFilter),
+      ),
+    [categoryFilter],
+  );
+
+  const hasAnyPromo = showHero || featuredItems.length > 0 || activityItems.length > 0;
+
   return (
     <>
       <div className="flex flex-col gap-5 pb-4">
-        <PromoHubHeroBanner hero={PROMOTIONS_HUB_HERO} onOpenDetail={openDetail} />
+        <header className="flex flex-col gap-3">
+          {!embedded ? (
+            <h1 className="text-xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-2xl">
+              Promotions
+            </h1>
+          ) : null}
+          <PromotionsCategoryTabs activeId={categoryFilter} onSelect={setCategoryFilter} />
+        </header>
 
-        <section aria-labelledby="promo-for-you-heading" className="flex flex-col gap-3">
-          <h2 id="promo-for-you-heading" className="text-base font-extrabold text-[var(--text-primary)] sm:text-lg">
-            โปรโมชั่นสำหรับคุณ
-          </h2>
-          <ul className="flex flex-col gap-3">
-            {PROMOTIONS_HUB_FEATURED.map((item) => (
-              <li key={item.id}>
-                <FeaturedPromoCard item={item} onOpenDetail={openDetail} />
-              </li>
-            ))}
-          </ul>
-        </section>
+        {!hasAnyPromo ? (
+          <p className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-8 text-center text-sm text-[var(--text-secondary)]">
+            ยังไม่มีโปรโมชั่นในหมวดนี้ — ลองเลือก All Promotions
+          </p>
+        ) : null}
 
-        <section aria-labelledby="daily-activities-heading" className="flex flex-col gap-3">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <h2 id="daily-activities-heading" className="text-base font-extrabold text-[var(--text-primary)] sm:text-lg">
-                กิจกรรม ลุ้นสนุกทุกวัน
-              </h2>
-              <p className="mt-0.5 text-xs text-[var(--text-secondary)] sm:text-sm">
-                เลื่อนดู แล้วเลือกกิจกรรมที่คุณชอบ
-              </p>
+        {showHero ? (
+          <PromoHubHeroBanner hero={PROMOTIONS_HUB_HERO} onOpenDetail={openDetail} />
+        ) : null}
+
+        {featuredItems.length > 0 ? (
+          <section aria-labelledby="promo-for-you-heading" className="flex flex-col gap-3">
+            <h2 id="promo-for-you-heading" className="text-base font-extrabold text-[var(--text-primary)] sm:text-lg">
+              โปรโมชั่นสำหรับคุณ
+            </h2>
+            <ul className="flex flex-col gap-3">
+              {featuredItems.map((item) => (
+                <li key={item.id}>
+                  <FeaturedPromoCard item={item} onOpenDetail={openDetail} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {activityItems.length > 0 ? (
+          <section aria-labelledby="daily-activities-heading" className="flex flex-col gap-3">
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <h2 id="daily-activities-heading" className="text-base font-extrabold text-[var(--text-primary)] sm:text-lg">
+                  กิจกรรม ลุ้นสนุกทุกวัน
+                </h2>
+                <p className="mt-0.5 text-xs text-[var(--text-secondary)] sm:text-sm">
+                  เลื่อนดู แล้วเลือกกิจกรรมที่คุณชอบ
+                </p>
+              </div>
+              <ChevronRightIcon className="mt-1 h-5 w-5 shrink-0 text-[var(--icon-default)]" aria-hidden="true" />
             </div>
-            <ChevronRightIcon className="mt-1 h-5 w-5 shrink-0 text-[var(--icon-default)]" aria-hidden="true" />
-          </div>
 
-          <div
-            className="-mx-[var(--page-gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--page-gutter)] pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-            role="list"
-            aria-label="กิจกรรมรายวัน"
-          >
-            {PROMOTIONS_HUB_ACTIVITIES.map((activity) => (
-              <ActivityPromoCard key={activity.id} activity={activity} onOpenDetail={openDetail} />
-            ))}
-          </div>
-        </section>
+            <div
+              className="-mx-[var(--page-gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--page-gutter)] pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              role="list"
+              aria-label="กิจกรรมรายวัน"
+            >
+              {activityItems.map((activity) => (
+                <ActivityPromoCard key={activity.id} activity={activity} onOpenDetail={openDetail} />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
 
       <PromotionDetailModal detailId={detailId} onClose={closeDetail} />
@@ -110,9 +198,9 @@ function PromoHubHeroBanner({
       />
       <div className="relative z-[1] flex h-full min-h-[168px] items-stretch sm:min-h-[188px]">
         <div className="flex min-w-0 flex-1 flex-col justify-center px-4 py-4 sm:px-5 sm:py-5">
-          <h1 className="text-lg font-extrabold leading-snug text-[var(--text-primary)] drop-shadow-sm sm:text-xl">
+          <h2 className="text-lg font-extrabold leading-snug text-[var(--text-primary)] drop-shadow-sm sm:text-xl">
             {hero.title}
-          </h1>
+          </h2>
           <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">{hero.subtitle}</p>
           <div className="mt-3">
             <PromoHubPillLabel label={hero.ctaLabel} />
