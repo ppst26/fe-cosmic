@@ -18,6 +18,7 @@ import {
   SignUpPickerSheet,
 } from "./SignUpPickerSheet";
 import { SIGNUP_BANKS, SIGNUP_CHANNELS } from "../../data/signupMockData";
+import { responsiveAuthSheetContentClass, responsiveSheetOverlayClass } from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
 
 interface SignUpBottomDrawerProps {
@@ -338,11 +339,13 @@ export function SignUpBottomDrawer({
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[60] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className={responsiveSheetOverlayClass("z-[60]")} />
 
         <Dialog.Content
           aria-describedby={undefined}
-          className="cosmic-sheet-shell fixed inset-x-0 bottom-0 z-[60] flex max-h-[min(92dvh,720px)] flex-col overflow-hidden bg-[var(--surface-mid)] text-[var(--text-primary)] shadow-[0_-12px_40px_rgba(0,0,0,0.45)] outline-none data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300"
+          className={responsiveAuthSheetContentClass(
+            "z-[60] max-h-[min(92dvh,720px)] flex-col overflow-hidden",
+          )}
         >
           {step === 1 && <SignUpDrawerHero />}
 

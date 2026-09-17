@@ -11,6 +11,11 @@ import {
   formatWithdrawMoney,
 } from "@/app/data/withdrawMockData";
 import { ChevronRightIcon, CloseIcon } from "../ui/Icons";
+import {
+  RESPONSIVE_SHEET_HANDLE_CLASS,
+  responsiveSheetContentClass,
+  responsiveSheetOverlayClass,
+} from "../ui/responsiveSheetDialog";
 
 interface WithdrawBottomSheetProps {
   isOpen: boolean;
@@ -79,12 +84,14 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[70] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className={responsiveSheetOverlayClass()} />
         <Dialog.Content
           aria-describedby="withdraw-sheet-desc"
-          className="fixed inset-x-0 bottom-0 z-[70] flex max-h-[min(88dvh,680px)] min-h-[min(70dvh,520px)] flex-col rounded-t-[20px] border-t border-[var(--border-subtle)]/50 bg-[#121127]/98 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)] shadow-[0_-16px_48px_rgba(0,0,0,0.55)] outline-none backdrop-blur-xl data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300 sm:px-5"
+          className={responsiveSheetContentClass(
+            "max-h-[min(88dvh,680px)] min-h-[min(70dvh,520px)] lg:min-h-0",
+          )}
         >
-          <div className="mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-white/20" aria-hidden="true" />
+          <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
           <div className="relative flex shrink-0 items-center justify-center px-12 pt-1 pb-2">
             <WithdrawSheetMarkIcon className="absolute left-0 top-1 h-9 w-9 text-[var(--icon-default)]" />

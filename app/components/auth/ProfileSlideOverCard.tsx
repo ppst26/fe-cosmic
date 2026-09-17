@@ -17,8 +17,8 @@ interface ProfileSlideOverCardProps {
 }
 
 /**
- * การ์ดโปรไฟล์ยึดมุมขวาบน (ใต้ปุ่มโปรไฟล์ใน Header) — hub เท่านั้น
- * ข้อมูลบัญชี → หน้า /profile/account
+ * การ์ดโปรไฟล์ยึดมุมขวาบน (ใต้ปุ่มโปรไฟล์ใน Header) — ทุก breakpoint
+ * ไม่ใช้ overlay/backdrop · รายละเอียดบัญชีเต็ม → hub modal บน desktop
  */
 export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardProps) {
   const router = useRouter();
@@ -89,15 +89,15 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange} modal={false}>
       <Dialog.Portal>
         <div className="fixed inset-x-0 top-14 z-[60] pointer-events-none px-[var(--page-gutter)] sm:top-16 lg:top-[calc(env(safe-area-inset-top,0px)+var(--header-desktop-bar-height))]">
-          <div className="mx-auto flex w-full max-w-[var(--content-max)] justify-end">
+          <div className="mx-auto flex w-full max-w-[var(--content-max)] justify-end lg:max-w-[min(1680px,calc(100%-2*var(--page-gutter)))]">
             <Dialog.Content
               aria-describedby={undefined}
               onOpenAutoFocus={(event) => event.preventDefault()}
-              className="pointer-events-auto cosmic-modal-shell flex max-h-[min(calc(100dvh-4rem),440px)] w-[min(100%,300px)] flex-col overflow-hidden bg-[var(--surface-mid)] text-[var(--text-primary)] shadow-[0_8px_24px_rgba(0,0,0,0.35)] outline-none origin-top-right data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-1 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-1 duration-150"
+              className="pointer-events-auto cosmic-modal-shell flex max-h-[min(calc(100dvh-4rem),440px)] w-[min(100%,300px)] flex-col overflow-hidden bg-[var(--surface-mid)] px-3 pb-3 pt-3 text-[var(--text-primary)] shadow-[0_8px_24px_rgba(0,0,0,0.35)] outline-none origin-top-right data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-1 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-1 duration-150 lg:max-h-[min(calc(100dvh-6rem),480px)]"
             >
               <Dialog.Title className="sr-only">โปรไฟล์</Dialog.Title>
 
-              <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-3 pt-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              <div className="min-h-0 flex-1 overflow-y-auto px-0 pb-0 pt-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 {loading && (
                   <p className="py-6 text-center text-xs text-[var(--text-muted)]">กำลังโหลด...</p>
                 )}

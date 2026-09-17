@@ -3,6 +3,11 @@
 import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { CloseIcon, PromoTicketIcon } from "../ui/Icons";
+import {
+  RESPONSIVE_SHEET_HANDLE_CLASS,
+  responsiveSheetContentClass,
+  responsiveSheetOverlayClass,
+} from "../ui/responsiveSheetDialog";
 
 interface CouponRedeemBottomSheetProps {
   isOpen: boolean;
@@ -61,12 +66,12 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[70] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className={responsiveSheetOverlayClass()} />
         <Dialog.Content
           aria-describedby="coupon-redeem-desc"
-          className="fixed inset-x-0 bottom-0 z-[70] flex max-h-[min(85dvh,520px)] flex-col overflow-y-auto rounded-t-[20px] border-t border-[var(--border-subtle)]/50 bg-[#121127]/98 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)] shadow-[0_-16px_48px_rgba(0,0,0,0.55)] outline-none backdrop-blur-xl data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300 sm:px-5"
+          className={responsiveSheetContentClass("max-h-[min(85dvh,520px)] overflow-y-auto")}
         >
-          <div className="mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-white/20" aria-hidden="true" />
+          <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
           <Dialog.Close asChild>
             <button

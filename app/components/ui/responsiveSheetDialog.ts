@@ -1,0 +1,64 @@
+import { cn } from "@/lib/utils";
+
+type ResponsiveSheetVariant = "default" | "auth" | "signup" | "wide" | "profile";
+
+/**
+ * Overlay — มือถือ sheet · desktop modal (lg+)
+ * ใช้กับ Deposit / Withdraw / Coupon / Login / SignUp / Transactions drawer
+ */
+export function responsiveSheetOverlayClass(zIndexClass = "z-[70]") {
+  return cn(
+    "fixed inset-0 bg-[var(--surface-end)]/85 backdrop-blur-sm",
+    "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0",
+    zIndexClass,
+    "lg:bg-black/75 lg:backdrop-blur-[2px]",
+  );
+}
+
+/**
+ * Dialog.Content — bottom sheet มือถือ · modal กลางจอ desktop
+ */
+export function responsiveSheetContentClass(
+  extra?: string,
+  options?: { variant?: ResponsiveSheetVariant },
+) {
+  const variant = options?.variant ?? "default";
+  const lgWidth =
+    variant === "wide"
+      ? "lg:w-[min(92vw,520px)]"
+      : variant === "signup"
+        ? "lg:w-[min(92vw,480px)]"
+        : variant === "profile"
+          ? "lg:w-[min(92vw,360px)]"
+          : "lg:w-[min(92vw,440px)]";
+
+  return cn(
+    "cosmic-modal-shell fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
+    "rounded-t-[20px] border-t border-[var(--border-subtle)]/50 bg-[#121127]/98",
+    "px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)]",
+    "shadow-[0_-16px_48px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:px-5",
+    "data-[state=closed]:animate-out data-[state=open]:animate-in duration-300",
+    "max-lg:data-[state=closed]:slide-out-to-bottom max-lg:data-[state=open]:slide-in-from-bottom",
+    "lg:inset-auto lg:left-1/2 lg:top-1/2 lg:bottom-auto lg:-translate-x-1/2 lg:-translate-y-1/2",
+    lgWidth,
+    "lg:max-h-[min(90dvh,680px)] lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
+    "lg:bg-[var(--surface-mid)] lg:backdrop-blur-none",
+    "lg:shadow-[0_0_32px_rgba(119,112,183,0.2),0_24px_48px_rgba(0,0,0,0.55)]",
+    "lg:data-[state=closed]:zoom-out-95 lg:data-[state=open]:zoom-in-95 lg:duration-200",
+    extra,
+  );
+}
+
+/** มือถือ — แถบลาก sheet · desktop ซ่อน */
+export const RESPONSIVE_SHEET_HANDLE_CLASS =
+  "mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-white/20 lg:hidden";
+
+/** cosmic-sheet-shell + responsive modal desktop */
+export function responsiveAuthSheetContentClass(extra?: string) {
+  return cn(
+    responsiveSheetContentClass(undefined, { variant: "signup" }),
+    "cosmic-sheet-shell bg-[var(--surface-mid)] shadow-[0_-12px_40px_rgba(0,0,0,0.45)]",
+    "lg:shadow-[0_0_32px_rgba(119,112,183,0.2),0_24px_48px_rgba(0,0,0,0.55)]",
+    extra,
+  );
+}

@@ -12,6 +12,11 @@ import {
   type DepositMethodId,
 } from "@/app/data/depositMockData";
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon, CopyIcon } from "../ui/Icons";
+import {
+  RESPONSIVE_SHEET_HANDLE_CLASS,
+  responsiveSheetContentClass,
+  responsiveSheetOverlayClass,
+} from "../ui/responsiveSheetDialog";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 
@@ -131,18 +136,19 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[70] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className={responsiveSheetOverlayClass()} />
         <Dialog.Content
           aria-describedby={ariaDescribedBy}
-          className={`fixed inset-x-0 bottom-0 z-[70] flex flex-col rounded-t-[20px] border-t border-[var(--border-subtle)]/50 bg-[#121127]/98 px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)] shadow-[0_-16px_48px_rgba(0,0,0,0.55)] outline-none backdrop-blur-xl data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300 sm:px-5 ${
+          className={responsiveSheetContentClass(
             isTallStep
               ? step === "confirm"
-                ? "max-h-[min(92dvh,720px)] min-h-[min(78dvh,560px)]"
-                : "max-h-[min(88dvh,680px)] min-h-[min(72dvh,520px)]"
-              : "max-h-[min(70dvh,520px)] min-h-[min(58dvh,440px)]"
-          }`}
+                ? "max-h-[min(92dvh,720px)] min-h-[min(78dvh,560px)] lg:min-h-0"
+                : "max-h-[min(88dvh,680px)] min-h-[min(72dvh,520px)] lg:min-h-0"
+              : "max-h-[min(70dvh,520px)] min-h-[min(58dvh,440px)] lg:min-h-0",
+            { variant: "default" },
+          )}
         >
-          <div className="mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-white/20" aria-hidden="true" />
+          <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
           {step === "methods" && <DepositMethodsStep onSelectMethod={handleSelectMethod} />}
           {step === "bank" && (

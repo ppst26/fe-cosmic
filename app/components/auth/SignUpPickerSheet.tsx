@@ -37,10 +37,10 @@ export function SignUpPickerSheet({
   if (!isOpen) return null;
 
   return (
-    <div className="absolute inset-0 z-30 flex flex-col justify-end pointer-events-auto">
+    <div className="absolute inset-0 z-30 flex flex-col justify-end pointer-events-auto lg:items-center lg:justify-center lg:p-4">
       <button
         type="button"
-        className="absolute inset-0 bg-[var(--surface-end)]/80 backdrop-blur-sm animate-in fade-in-0"
+        className="absolute inset-0 bg-[var(--surface-end)]/80 backdrop-blur-sm animate-in fade-in-0 lg:bg-black/50"
         aria-label="ปิดตัวเลือก"
         onClick={onClose}
       />
@@ -48,10 +48,10 @@ export function SignUpPickerSheet({
         role="dialog"
         aria-modal="true"
         aria-label={ariaLabel}
-        className="relative z-10 flex max-h-[min(72dvh,520px)] flex-col overflow-hidden rounded-t-[var(--radius-panel)] bg-[var(--surface-mid)] pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-8px_32px_rgba(0,0,0,0.45)] animate-in slide-in-from-bottom duration-300"
+        className="relative z-10 flex max-h-[min(72dvh,520px)] w-full flex-col overflow-hidden rounded-t-[var(--radius-panel)] bg-[var(--surface-mid)] pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-8px_32px_rgba(0,0,0,0.45)] animate-in slide-in-from-bottom duration-300 lg:max-h-[min(70dvh,420px)] lg:max-w-sm lg:rounded-[var(--radius-panel)] lg:shadow-[0_0_32px_rgba(119,112,183,0.18),0_16px_40px_rgba(0,0,0,0.5)] lg:zoom-in-95"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex shrink-0 justify-center pt-3 pb-2">
+        <div className="flex shrink-0 justify-center pt-3 pb-2 lg:hidden">
           <span
             className="h-1 w-10 rounded-full bg-[var(--border-subtle)]"
             aria-hidden="true"

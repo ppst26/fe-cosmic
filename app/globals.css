@@ -2569,6 +2569,77 @@ body {
   color: var(--text-primary);
 }
 
+.hall-of-fame__toolbar {
+  align-items: center;
+}
+
+.hall-of-fame__row-limit-btn {
+  display: inline-flex;
+  min-height: 2.25rem;
+  min-width: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 80%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface-mid) 72%, transparent);
+  padding: 0.35rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.hall-of-fame__row-limit-btn:hover {
+  border-color: color-mix(in srgb, var(--border-active) 35%, var(--border-subtle));
+  background: var(--surface-hover);
+}
+
+.hall-of-fame__row-limit-menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  z-index: 20;
+  min-width: 3.25rem;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--surface-mid) 92%, var(--bg-page));
+  box-shadow: 0 12px 32px rgb(0 0 0 / 45%);
+}
+
+.hall-of-fame__row-limit-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: calc(var(--radius-panel) - 4px);
+  background: transparent;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--motion-fast) ease, color var(--motion-fast) ease;
+}
+
+.hall-of-fame__row-limit-option:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.hall-of-fame__row-limit-option.is-selected {
+  background: color-mix(in srgb, var(--action-solid) 18%, var(--surface-hover));
+  color: var(--text-primary);
+}
+
 .hall-of-fame__table-band {
   background: transparent;
   padding-block: 0.25rem 0;
@@ -2622,28 +2693,25 @@ body {
 .hall-of-fame-table__body {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  margin-top: 0.15rem;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
 }
 
 .hall-of-fame-table__row {
-  border-radius: 0;
-  background: transparent;
-  padding: 0.5rem 0;
   border: 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+  border-radius: var(--radius-panel);
+  background: transparent;
+  padding: 0.55rem 0.65rem;
+  box-shadow: none;
 }
 
-.hall-of-fame-table__row--alt {
-  background: color-mix(in srgb, var(--surface-hover) 22%, transparent);
-}
-
-.hall-of-fame-table__row:last-child {
-  border-bottom: 0;
+/** แถวสลับ — พื้นอ่อนกว่า + มุมโค้ม (borderless) */
+.hall-of-fame-table__row--framed {
+  background: color-mix(in srgb, var(--surface-hover) 42%, var(--surface-mid));
 }
 
 .hall-of-fame-table__td {
-  padding: 0.35rem 0;
+  padding: 0.2rem 0;
   vertical-align: middle;
 }
 

@@ -1,14 +1,18 @@
 "use client";
 
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import type { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
 import { SectionIcon } from "../ui/SectionIcon";
+import { ChevronDownIcon } from "../ui/Icons";
 
 const TAB_LABELS: { id: HallOfFameTabId; label: string }[] = [
   { id: "latest-winner", label: "Latest Winner" },
   { id: "top-win-multiple", label: "Top Win Multiple" },
 ];
+
+const ROW_LIMIT_OPTIONS = [10, 30, 50] as const;
+type HallOfFameRowLimit = (typeof ROW_LIMIT_OPTIONS)[number];
 
 interface HallOfFameProps {
   datasets: Record<HallOfFameTabId, HallOfFameRow[]>;
@@ -86,15 +90,94 @@ function HallOfFameGameThumb({ row }: { row: HallOfFameRow }) {
 }
 
 /**
+ * เลือกจำนวนแถวที่แสดงในตาราง — 10 / 30 / 50
+ */
+function HallOfFameRowLimitSelect({
+  value,
+  onChange,
+}: {
+  value: HallOfFameRowLimit;
+  onChange: (limit: HallOfFameRowLimit) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const listId = useId();
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  return (
+    <div ref={rootRef} className="hall-of-fame__row-limit relative shrink-0">
+      <button
+        type="button"
+        className="hall-of-fame__row-limit-btn"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <span className="tabular-nums">{value}</span>
+        <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 opacity-80" aria-hidden />
+      </button>
+
+      {open ? (
+        <ul
+          id={listId}
+          role="listbox"
+          aria-label="จำนวนแถวที่แสดง"
+          className="hall-of-fame__row-limit-menu"
+        >
+          {ROW_LIMIT_OPTIONS.map((option) => {
+            const selected = option === value;
+            return (
+              <li key={option} role="presentation">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  className={`hall-of-fame__row-limit-option${selected ? " is-selected" : ""}`}
+                  onClick={() => {
+                    onChange(option);
+                    setOpen(false);
+                  }}
+                >
+                  {option}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
+/**
  * HallOfFame (Top Performance) — 2 แท็บ · ตารางเต็มความกว้าง · ธีม Cosmicbet
  * ถูกเรียกใช้ใน app/page.tsx (โฮม lobby มือถือ + desktop)
  */
 export function HallOfFame({ datasets }: HallOfFameProps) {
   const [activeTab, setActiveTab] = useState<HallOfFameTabId>("latest-winner");
+  const [rowLimit, setRowLimit] = useState<HallOfFameRowLimit>(10);
   const panelId = useId();
   const isLatestWinner = activeTab === "latest-winner";
   const valueColumnLabel = isLatestWinner ? "Payout" : "Multiple";
-  const rows = datasets[activeTab] ?? [];
+  const rows = (datasets[activeTab] ?? []).slice(0, rowLimit);
 
   return (
     <section
@@ -111,7 +194,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
         </h2>
       </div>
 
-      <div className="hall-of-fame__toolbar mt-4">
+      <div className="hall-of-fame__toolbar mt-4 flex flex-wrap items-center justify-between gap-3">
         <div
           className="hall-of-fame__tabs inline-flex max-w-full flex-wrap gap-2"
           role="tablist"
@@ -135,15 +218,15 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
             );
           })}
         </div>
+
+        <HallOfFameRowLimitSelect value={rowLimit} onChange={setRowLimit} />
       </div>
 
       <div
         id={`${panelId}-panel`}
         role="tabpanel"
         aria-labelledby={`${panelId}-tab-${activeTab}`}
-        className={`hall-of-fame__table-band hall-of-fame__table-band--borderless relative mt-4 -mx-[var(--page-gutter)] w-[calc(100%+2*var(--page-gutter))] max-w-none lg:mx-0 lg:w-full ${
-          isLatestWinner ? "hall-of-fame__table-band--with-time" : ""
-        }`}
+        className="hall-of-fame__table-band hall-of-fame__table-band--borderless hall-of-fame__table-band--with-time relative mt-4 -mx-[var(--page-gutter)] w-[calc(100%+2*var(--page-gutter))] max-w-none lg:mx-0 lg:w-full"
       >
         <div className="hall-of-fame-table-wrap px-[var(--page-gutter)] lg:px-0">
           <table className="hall-of-fame-table w-full min-w-0 border-collapse text-left text-sm">
@@ -155,11 +238,9 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                 <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--player">
                   Player
                 </th>
-                {isLatestWinner ? (
-                  <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--time">
-                    Time
-                  </th>
-                ) : null}
+                <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--time">
+                  Time
+                </th>
                 <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--value">
                   {valueColumnLabel}
                 </th>
@@ -180,7 +261,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                   <tr
                     key={row.id}
                     className={`hall-of-fame-table__row ${
-                      index % 2 === 0 ? "hall-of-fame-table__row--alt" : ""
+                      index % 2 === 0 ? "hall-of-fame-table__row--framed" : ""
                     }`}
                   >
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--game">
@@ -196,13 +277,11 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                         {row.playerMasked}
                       </span>
                     </td>
-                    {isLatestWinner ? (
-                      <td className="hall-of-fame-table__td hall-of-fame-table__td--time">
-                        <span className="block truncate text-[10px] tabular-nums text-[var(--text-secondary)] sm:text-xs">
-                          {row.wonAtLabel ?? "—"}
-                        </span>
-                      </td>
-                    ) : null}
+                    <td className="hall-of-fame-table__td hall-of-fame-table__td--time">
+                      <span className="block truncate text-[10px] tabular-nums text-[var(--text-secondary)] sm:text-xs">
+                        {row.wonAtLabel ?? "—"}
+                      </span>
+                    </td>
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--value">
                       {isLatestWinner && row.payout != null ? (
                         <span className="hall-of-fame-table__payout text-xs font-bold tabular-nums sm:text-sm">

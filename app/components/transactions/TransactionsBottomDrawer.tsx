@@ -10,6 +10,10 @@ import {
 import { TransactionKindTabs } from "./TransactionKindTabs";
 import { TransactionList } from "./TransactionList";
 import { CloseIcon } from "../ui/Icons";
+import {
+  responsiveSheetContentClass,
+  responsiveSheetOverlayClass,
+} from "../ui/responsiveSheetDialog";
 import { useAuth } from "../auth/AuthProvider";
 
 interface TransactionsBottomDrawerProps {
@@ -43,11 +47,14 @@ export function TransactionsBottomDrawer({
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[60] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className={responsiveSheetOverlayClass("z-[60]")} />
 
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed inset-x-0 bottom-0 z-[60] flex max-h-[min(92dvh,720px)] flex-col overflow-hidden rounded-t-[20px] bg-[var(--surface-mid)] text-[var(--text-primary)] shadow-[0_-12px_40px_rgba(0,0,0,0.45)] outline-none data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300"
+          className={responsiveSheetContentClass(
+            "z-[60] max-h-[min(92dvh,720px)] flex-col overflow-hidden",
+            { variant: "wide" },
+          )}
         >
           <Dialog.Close asChild>
             <button

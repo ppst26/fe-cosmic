@@ -3,6 +3,10 @@
 import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { CloseIcon, LockIcon, PhoneIcon } from "../ui/Icons";
+import {
+  responsiveAuthSheetContentClass,
+  responsiveSheetOverlayClass,
+} from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
 
 interface LoginBottomDrawerProps {
@@ -57,10 +61,12 @@ export function LoginBottomDrawer({
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[60] bg-[var(--surface-end)]/85 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <Dialog.Overlay className={responsiveSheetOverlayClass("z-[60]")} />
         <Dialog.Content
           aria-describedby={undefined}
-          className="cosmic-sheet-shell fixed inset-x-0 bottom-0 z-[60] flex max-h-[min(70dvh,480px)] flex-col overflow-hidden bg-[var(--surface-mid)] px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-14 text-[var(--text-primary)] shadow-[0_-12px_40px_rgba(0,0,0,0.45)] outline-none data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom duration-300 sm:px-5"
+          className={responsiveAuthSheetContentClass(
+            "z-[60] max-h-[min(70dvh,480px)] flex-col overflow-hidden pt-14",
+          )}
         >
           <Dialog.Close asChild>
             <button

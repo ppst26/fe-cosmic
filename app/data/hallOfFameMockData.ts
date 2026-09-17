@@ -83,13 +83,14 @@ const LATEST_WINNER_ROWS: HallOfFameRow[] = [
   },
 ];
 
-/** แท็บ Top Win Multiple — Game / Player / Multiple */
+/** แท็บ Top Win Multiple — Game / Player / Time / Multiple */
 const TOP_WIN_MULTIPLE_ROWS: HallOfFameRow[] = [
   {
     id: "hof-twm-1",
     gameName: "Epic Dreams",
     playerMasked: "kok***tc",
     winMultiple: 100,
+    wonAtLabel: "18/09/2026 05:12:41",
     coverSrc: thumb("Hacksaw.webp"),
     gameIcon: "sparkle",
   },
@@ -98,6 +99,7 @@ const TOP_WIN_MULTIPLE_ROWS: HallOfFameRow[] = [
     gameName: "Tropical Tiki",
     playerMasked: "ivz***168",
     winMultiple: 87,
+    wonAtLabel: "18/09/2026 05:11:18",
     coverSrc: thumb("Jili.webp"),
     coverTone: "emerald",
     gameIcon: "flame",
@@ -107,6 +109,7 @@ const TOP_WIN_MULTIPLE_ROWS: HallOfFameRow[] = [
     gameName: "Wanted Dead or Wild",
     playerMasked: "bmn***4rs",
     winMultiple: 72,
+    wonAtLabel: "18/09/2026 05:09:55",
     coverSrc: thumb("Nolimit City.webp"),
     gameIcon: "flame",
   },
@@ -115,6 +118,7 @@ const TOP_WIN_MULTIPLE_ROWS: HallOfFameRow[] = [
     gameName: "Starlight Princess",
     playerMasked: "tqa***9lm",
     winMultiple: 65,
+    wonAtLabel: "18/09/2026 05:08:02",
     coverSrc: thumb("PG Soft.webp"),
     gameIcon: "sparkle",
   },
@@ -123,6 +127,7 @@ const TOP_WIN_MULTIPLE_ROWS: HallOfFameRow[] = [
     gameName: "Sugar Rush",
     playerMasked: "wop***2jk",
     winMultiple: 58,
+    wonAtLabel: "18/09/2026 05:06:33",
     coverSrc: thumb("Relax Gaming.webp"),
     coverTone: "rose",
     gameIcon: "cherries",
@@ -132,6 +137,7 @@ const TOP_WIN_MULTIPLE_ROWS: HallOfFameRow[] = [
     gameName: "Gates of Olympus",
     playerMasked: "dke***7xy",
     winMultiple: 51,
+    wonAtLabel: "18/09/2026 05:04:47",
     coverSrc: thumb("Pragmatic Play.webp"),
     gameIcon: "sparkle",
   },
@@ -140,6 +146,7 @@ const TOP_WIN_MULTIPLE_ROWS: HallOfFameRow[] = [
     gameName: "Mahjong Ways",
     playerMasked: "fgh***3pp",
     winMultiple: 46,
+    wonAtLabel: "18/09/2026 05:03:12",
     coverSrc: thumb("microslot.webp"),
     coverTone: "amber",
     gameIcon: "cherries",
@@ -149,6 +156,7 @@ const TOP_WIN_MULTIPLE_ROWS: HallOfFameRow[] = [
     gameName: "Wild West Gold",
     playerMasked: "nmr***0zt",
     winMultiple: 40,
+    wonAtLabel: "18/09/2026 05:01:28",
     coverSrc: thumb("playngo.webp"),
     coverTone: "indigo",
     gameIcon: "flame",
