@@ -2,14 +2,17 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   CosmicbetLogo,
+  ChevronDownIcon,
+  DepositNavIcon,
   HeaderWalletIcon,
   ProfileNavIcon,
+  WithdrawNavIcon,
 } from "../ui/Icons";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
+import { useWithdraw } from "../withdraw/WithdrawProvider";
 import { VipRankEmblem } from "../vip/VipRankEmblem";
 import type { VipRankId } from "@/app/types/vip";
 import { DESKTOP_PLAYER_PANEL_MOCK } from "@/app/data/desktopLobbyMockData";
@@ -18,21 +21,20 @@ import {
   MOCK_MAIN_WALLET_BALANCE,
 } from "@/app/data/walletMockData";
 
-const GEMS_ASSET_SRC = "/assets/gems/gems.webp";
-
 interface HeaderProps {
   onLoginClick?: () => void;
   onSignUpClick?: () => void;
 }
 
 /**
- * Header — มือถือ: notch · Desktop lg+: แถบเต็มความกว้าง (โฮม: พื้นหลังเต็มจอ · เนื้อหาใน __inner กว้างเท่า lobby frame)
+ * Header — มือถือ: notch · Desktop lg+: ยอดคงเหลือ · ฝาก · ถอน · โปรไฟล์ (borderless pill)
  * ย่อ/ขยาย sidebar ใช้ปุ่มที่แถบซ้ายล่าง — ไม่มี hamburger ใน header
  */
 export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
-  const { isAuthenticated, isLoading, user, openProfile, closeProfile, isProfileOpen } =
+  const { isAuthenticated, isLoading, openProfile, closeProfile, isProfileOpen } =
     useAuth();
   const { openDeposit } = useDeposit();
+  const { openWithdraw } = useWithdraw();
 
   const handleProfileClick = () => {
     if (isAuthenticated) {
@@ -48,15 +50,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
 
   const showWallet = !isLoading && isAuthenticated;
   const balanceLabel = formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE);
-  const displayName = user
-    ? [user.firstName, user.lastName].filter(Boolean).join(" ") || user.phone
-    : "";
   const rankId = DESKTOP_PLAYER_PANEL_MOCK.rankId as VipRankId;
-  const rankLabel = DESKTOP_PLAYER_PANEL_MOCK.rankLabel;
-  const gemsLabel = DESKTOP_PLAYER_PANEL_MOCK.gems.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
 
   return (
     <>
@@ -143,59 +137,54 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 aria-hidden="true"
               />
             ) : showWallet ? (
-              <>
-                <div className="header-desktop-bar__stat" aria-live="polite">
-                  <span className="header-desktop-bar__stat-text">
-                    <span className="header-desktop-bar__stat-label">THB</span>
-                    <span className="header-desktop-bar__stat-value">{balanceLabel}</span>
-                  </span>
+              <div className="header-desktop-bar__actions">
+                <div className="header-desktop-bar__wallet-pill">
+                  <div className="header-desktop-bar__wallet-segment" aria-live="polite">
+                    <span className="header-desktop-bar__wallet-segment-icon" aria-hidden="true">
+                      <HeaderWalletIcon className="h-[18px] w-[18px]" />
+                    </span>
+                    <span className="header-desktop-bar__wallet-balance">{balanceLabel}</span>
+                  </div>
+
+                  <span className="header-desktop-bar__wallet-rule" aria-hidden="true" />
+
+                  <button
+                    type="button"
+                    onClick={openDeposit}
+                    className="header-desktop-bar__wallet-segment header-desktop-bar__wallet-segment--action"
+                    aria-label="ฝากเงิน"
+                    aria-haspopup="dialog"
+                  >
+                    <DepositNavIcon className="header-desktop-bar__action-icon h-[18px] w-[18px]" />
+                    <span>ฝาก</span>
+                  </button>
+
+                  <span className="header-desktop-bar__wallet-rule" aria-hidden="true" />
+
+                  <button
+                    type="button"
+                    onClick={openWithdraw}
+                    className="header-desktop-bar__wallet-segment header-desktop-bar__wallet-segment--action"
+                    aria-label="ถอนเงิน"
+                    aria-haspopup="dialog"
+                  >
+                    <WithdrawNavIcon className="header-desktop-bar__action-icon h-[18px] w-[18px]" />
+                    <span>ถอน</span>
+                  </button>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={openDeposit}
-                  className="header-desktop-bar__deposit"
-                  aria-label="เปิดหน้าฝากเงิน"
-                  aria-haspopup="dialog"
-                >
-                  <HeaderWalletIcon className="h-4 w-4 shrink-0" />
-                  <span>ฝากเงิน</span>
-                </button>
-
-                <div className="header-desktop-bar__divider" aria-hidden="true" />
-
-                <div className="header-desktop-bar__stat">
-                  <Image
-                    src={GEMS_ASSET_SRC}
-                    alt=""
-                    width={28}
-                    height={28}
-                    className="header-desktop-bar__gems-img"
-                    aria-hidden="true"
-                  />
-                  <span className="header-desktop-bar__stat-text">
-                    <span className="header-desktop-bar__stat-label">Gems</span>
-                    <span className="header-desktop-bar__stat-value">{gemsLabel}</span>
-                  </span>
-                </div>
-
-                <div className="header-desktop-bar__divider" aria-hidden="true" />
 
                 <button
                   type="button"
                   onClick={handleProfileClick}
-                  className="header-desktop-bar__user"
+                  className={`header-desktop-bar__profile-pill${isProfileOpen ? " is-active" : ""}`}
                   aria-label="โปรไฟล์"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
                 >
                   <VipRankEmblem rankId={rankId} size="sm" playing={false} />
-                  <span className="header-desktop-bar__user-text">
-                    <span className="header-desktop-bar__user-name">{displayName}</span>
-                    <span className="header-desktop-bar__user-rank">{rankLabel}</span>
-                  </span>
+                  <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 text-[var(--icon-default)]" aria-hidden />
                 </button>
-              </>
+              </div>
             ) : (
               <div className="flex items-center gap-2">
                 <button
@@ -214,17 +203,6 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 </button>
               </div>
             )}
-
-            <button
-              type="button"
-              onClick={handleProfileClick}
-              className={`header-desktop-bar__icon-btn${isProfileOpen ? " is-active" : ""}`}
-              aria-label="โปรไฟล์"
-              aria-expanded={isProfileOpen}
-              aria-haspopup="dialog"
-            >
-              <ProfileNavIcon className="h-[18px] w-[18px]" />
-            </button>
           </div>
         </div>
       </header>
