@@ -34,7 +34,7 @@ export function JackpotWinnerCard({ winner }: JackpotWinnerCardProps) {
   }).format(winner.amount);
 
   return (
-    <article className="surface flex min-w-0 flex-col items-center rounded-[var(--radius-card)] px-2 py-3 text-center sm:px-3 sm:py-4">
+    <article className="surface flex min-w-0 flex-col items-center rounded-[var(--radius-panel)] px-2 py-3 text-center sm:px-3 sm:py-4">
       <JackpotCategoryIcon category={winner.category} />
       <p className="mt-2 w-full truncate text-[11px] font-semibold text-[var(--text-secondary)]">
         {winner.maskedUsername}

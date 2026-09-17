@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Noto_Sans_Thai } from "next/font/google";
+import { AppProviders } from "./providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+/** ฟอนต์หลักไทย/ลatin — โหลด self-host ผ่าน next/font จาก Google Fonts */
+const notoSansThai = Noto_Sans_Thai({
+  variable: "--font-noto-sans-thai",
+  subsets: ["thai", "latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -28,10 +32,10 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
+      className={`${notoSansThai.variable} ${geistMono.variable} dark h-full antialiased`}
     >
-      <body className="flex min-h-full min-w-0 flex-col overflow-x-hidden bg-[var(--bg-page)] text-[var(--text-primary)]">
-        {children}
+      <body className="flex min-h-full min-w-0 flex-col text-[var(--text-primary)]">
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

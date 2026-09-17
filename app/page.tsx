@@ -1,17 +1,33 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Header } from "./components/layout/Header";
+import { LobbyDesktopRightRail } from "./components/layout/LobbyDesktopRightRail";
+import { RightMenuDrawer } from "./components/layout/RightMenuDrawer";
+import { SignUpBottomDrawer } from "./components/auth/SignUpBottomDrawer";
+import { LoginBottomDrawer } from "./components/auth/LoginBottomDrawer";
+import { AuthGate, useAuth } from "./components/auth/AuthProvider";
+import {
+  LobbyDesktopSidebar,
+  useLobbySidebarCollapsed,
+} from "./components/layout/LobbyDesktopSidebar";
+import { HomeDesktopHeroRow } from "./components/home/HomeDesktopHeroRow";
+import { HomeDesktopFeaturePromos } from "./components/home/HomeDesktopFeaturePromos";
 import { WelcomeBanner } from "./components/home/WelcomeBanner";
 import { PromoCarousel } from "./components/home/PromoCarousel";
 import { CosmicIntro } from "./components/home/CosmicIntro";
 import { PopularHighlights } from "./components/home/PopularHighlights";
 import { CategoryNav } from "./components/home/CategoryNav";
-import { GameSearchBar } from "./components/home/GameSearchBar";
+import { LobbyCategoryProviders } from "./components/home/LobbyCategoryProviders";
 import { GameSection } from "./components/home/GameSection";
 import { ProvidersSection } from "./components/home/ProvidersSection";
 import { FeatureActionCards } from "./components/home/FeatureActionCards";
 import { JackpotSection } from "./components/home/JackpotSection";
 import { HallOfFame } from "./components/home/HallOfFame";
 import { FloatingBottomNav } from "./components/layout/FloatingBottomNav";
+import { useVipModal } from "./components/vip/VipModalProvider";
+import { useCouponRedeem } from "./components/coupon/CouponRedeemProvider";
+import type { CategoryId } from "./types/lobby";
 import {
   CATEGORIES_DATA,
   PROMO_CAROUSEL_DATA,
@@ -27,62 +43,142 @@ import {
 
 /**
  * Cosmicbet Home Lobby Page
- * ประกอบ Components ตามลำดับหน้าใน design.md หมวด 5 (ข้อ 1–13 ตามภาพ mockup):
- * 1. Header (โลโก้ · Log in / Sign up กลาง · เมนูแฮมเบอร์ger)
- * 2. Welcome Banner (Welcome Pack, Rakeback Up to 100%, Sign Up CTA)
- * 3. Promotional Carousel (Loyalty v2.0, Dots Pagination)
- * 4. Cosmic Intro (อาณาจักรแห่งความมันส์)
- * 5. ยอดนิยม (Swipe Bet, DEXY RACE)
- * 6. หมวดหมู่เกม 6 หมวด (Lobby, Originals, Slots, Live Casino, Game Shows, Table Games)
- * 7. Game Searchbar (Game | Provider)
- * 8–12. หมวดเกม: เกมยอดฮิต / SLOTS / คาสิโน / ยิงปลา / กีฬา
- * 13. Providers
- * 14–17. Feature cards, Jackpot, Hall of Fame, Floating Bottom Nav
+ * มือถือ: design.md หมวด 5 · Desktop (lg+): mock 3 คอลัมน์ sidebar · กลาง · แถบขวา
  */
 export default function HomePage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [activeCategoryId, setActiveCategoryId] = useState<CategoryId>("home");
+  const { collapsed: isSidebarCollapsed, setCollapsed: setSidebarCollapsed } =
+    useLobbySidebarCollapsed(false);
+  const { logout } = useAuth();
+  const { openVipModal } = useVipModal();
+  const { openCouponRedeem } = useCouponRedeem();
+
+  const openSignUp = () => setIsSignUpOpen(true);
+  const openLogin = () => setIsLoginOpen(true);
+
+  const handleSidebarMenuAction = (action: "vip-rank" | "coupon") => {
+    if (action === "vip-rank") openVipModal();
+    if (action === "coupon") openCouponRedeem();
+  };
+
+  const isHomeLobby = activeCategoryId === "home";
+  const showMobileLobbySections = isHomeLobby ? "" : "lg:hidden";
+
   return (
     <>
-      <Header />
+      <div
+        className={`lobby-desktop-shell${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
+      >
+        <LobbyDesktopSidebar
+          categories={CATEGORIES_DATA}
+          activeCategoryId={activeCategoryId}
+          onSelectCategory={setActiveCategoryId}
+          navigationMode="none"
+          collapsed={isSidebarCollapsed}
+          onCollapsedChange={setSidebarCollapsed}
+          onMenuAction={handleSidebarMenuAction}
+          onLogout={() => void logout()}
+        />
 
-      <main className="page-shell flex min-h-screen min-w-0 max-w-full flex-col justify-start overflow-x-clip">
-      {/* 2. Welcome Hero Banner */}
-      <WelcomeBanner />
+        <div className="lobby-desktop-main min-w-0 flex-1">
+          <div className="lobby-desktop-workspace">
+            <div className="lobby-desktop-center min-w-0 flex-1">
+              <Header onSignUpClick={openSignUp} onLoginClick={openLogin} />
 
-      {/* 3. Promotional Carousel แบนเนอร์โปรโมชัน */}
-      <PromoCarousel items={PROMO_CAROUSEL_DATA} />
+              <RightMenuDrawer
+                isOpen={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+              />
 
-      {/* 4. Cosmic Intro — ดาวซ้าย ดาวเสาร์ขวา และข้อความแนะนำ */}
-      <CosmicIntro stats={INTRO_STATS_DATA} />
+              <SignUpBottomDrawer
+                isOpen={isSignUpOpen}
+                onClose={() => setIsSignUpOpen(false)}
+                onLoginClick={openLogin}
+              />
 
-      {/* 5. รายการ "ยอดนิยม" (Swipe Bet & DEXY RACE) */}
-      <PopularHighlights items={POPULAR_HIGHLIGHTS_DATA} />
+              <LoginBottomDrawer
+                isOpen={isLoginOpen}
+                onClose={() => setIsLoginOpen(false)}
+                onSignUpClick={openSignUp}
+              />
 
-      {/* 6. แถบหมวดหมู่เกม 6 หมวด */}
-      <CategoryNav categories={CATEGORIES_DATA} defaultActiveId="lobby" />
+              <main className="page-shell page-shell--lobby flex min-h-0 min-w-0 flex-col overflow-x-clip pb-0 lg:pb-4">
+                <div className="lg:hidden">
+                  <WelcomeBanner onCtaClick={openSignUp} />
+                  <PromoCarousel items={PROMO_CAROUSEL_DATA} />
+                </div>
 
-      {/* 7. ช่องค้นหาเกมและค่ายเกม */}
-      <GameSearchBar />
+                <HomeDesktopHeroRow onCtaClick={openSignUp} />
 
-      {/* 8–12. แถวเกมแต่ละหมวด render จาก data array */}
-      {GAME_SECTIONS_DATA.map((section) => (
-        <GameSection key={section.id} section={section} />
-      ))}
+                <div className="relative -mx-[var(--page-gutter)] flex flex-col gap-4 overflow-hidden rounded-none px-[var(--page-gutter)] pb-6 pt-1 lg:mx-0 lg:px-0">
+                  <div
+                    className="lobby-zone-bg pointer-events-none absolute inset-0 lg:opacity-80"
+                    aria-hidden="true"
+                  />
+                  <div className="relative flex min-w-0 flex-col gap-4">
+                    <div className={showMobileLobbySections}>
+                      <CosmicIntro stats={INTRO_STATS_DATA} />
+                      {/* ยอดนิยม 2 การ์ด — โฮม: เฉพาะมือถือ · หมวดอื่น: มือถือ (ซ่อน lg ผ่าน showMobileLobbySections) */}
+                      <div className={isHomeLobby ? "lg:hidden" : undefined}>
+                        <PopularHighlights items={POPULAR_HIGHLIGHTS_DATA} />
+                      </div>
+                    </div>
 
-      {/* 13. Providers — เว้นด้านบนมากกว่า section ปกติ */}
-      <ProvidersSection providers={PROVIDERS_DATA} />
+                    <div className="lobby-category-stack">
+                      <CategoryNav
+                        categories={CATEGORIES_DATA}
+                        activeId={activeCategoryId}
+                        defaultActiveId={activeCategoryId}
+                        navigationMode="none"
+                        onSelectCategory={setActiveCategoryId}
+                      />
+                      <LobbyCategoryProviders categoryId={activeCategoryId} />
+                    </div>
 
-      {/* 14. การ์ดฟีเจอร์ — หัวข้อซ้าย ไอคอนขวา */}
-      <FeatureActionCards items={FEATURE_ACTIONS_DATA} />
+                    {!isHomeLobby ? <HomeDesktopFeaturePromos /> : null}
 
-      {/* 15. Jackpot — grid 3 คอลัมน์ */}
-      <JackpotSection winners={JACKPOT_WINNERS_DATA} />
+                    <div className={showMobileLobbySections}>
+                      {GAME_SECTIONS_DATA.map((section) => (
+                        <GameSection key={section.id} section={section} />
+                      ))}
+                      <ProvidersSection providers={PROVIDERS_DATA} />
+                    </div>
+                  </div>
+                </div>
 
-      {/* 16. Hall of Fame — tabs + ตาราง */}
-      <HallOfFame datasets={HALL_OF_FAME_DATA} />
+                <div className="lg:hidden">
+                  <FeatureActionCards items={FEATURE_ACTIONS_DATA} />
 
-      {/* 17. เมนูล่าง fixed */}
-      <FloatingBottomNav items={BOTTOM_NAV_DATA} />
-      </main>
+                  <AuthGate
+                    fallback={
+                      <section className="mt-8 w-full px-[var(--page-gutter)] sm:mt-10">
+                        <p className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-6 text-center text-sm text-[var(--text-secondary)]">
+                          เข้าสู่ระบบหรือสมัครสมาชิกเพื่อดูรายชื่อผู้ชนะ Jackpot
+                        </p>
+                      </section>
+                    }
+                  >
+                    <JackpotSection winners={JACKPOT_WINNERS_DATA} />
+                  </AuthGate>
+
+                  <HallOfFame datasets={HALL_OF_FAME_DATA} />
+
+                  <FloatingBottomNav
+                    items={BOTTOM_NAV_DATA}
+                    isMenuOpen={isMenuOpen}
+                    onMenuClick={() => setIsMenuOpen(true)}
+                  />
+                </div>
+              </main>
+            </div>
+
+            <LobbyDesktopRightRail onMenuAction={handleSidebarMenuAction} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

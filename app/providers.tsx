@@ -1,0 +1,31 @@
+"use client";
+
+import React from "react";
+import { AuthProvider } from "@/app/components/auth/AuthProvider";
+import { TransactionsProvider } from "@/app/components/transactions/TransactionsProvider";
+import { VipModalProvider } from "@/app/components/vip/VipModalProvider";
+import { CouponRedeemProvider } from "@/app/components/coupon/CouponRedeemProvider";
+import { DepositProvider } from "@/app/components/deposit/DepositProvider";
+import { WithdrawProvider } from "@/app/components/withdraw/WithdrawProvider";
+import { PendingTransactionProvider } from "@/app/components/transactions/PendingTransactionProvider";
+
+/**
+ * ครอบ client providers — Auth + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
+ */
+export function AppProviders({ children }: { children: React.ReactNode }) {
+  return (
+    <AuthProvider>
+      <CouponRedeemProvider>
+        <PendingTransactionProvider>
+          <DepositProvider>
+            <WithdrawProvider>
+              <VipModalProvider>
+                <TransactionsProvider>{children}</TransactionsProvider>
+              </VipModalProvider>
+            </WithdrawProvider>
+          </DepositProvider>
+        </PendingTransactionProvider>
+      </CouponRedeemProvider>
+    </AuthProvider>
+  );
+}

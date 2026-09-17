@@ -19,14 +19,14 @@ export function GameCard({ game }: GameCardProps) {
     <Link
       href={href}
       aria-label={`${title} — ${provider}`}
-      className="group relative block aspect-[3/4] overflow-hidden rounded-[var(--radius-card)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110"
+      className="group relative block aspect-[3/4] w-full min-w-0 overflow-hidden rounded-[var(--radius-panel)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110"
     >
       {coverSrc ? (
         <Image
           src={coverSrc}
           alt=""
           fill
-          sizes="(min-width: 1024px) 16vw, (min-width: 768px) 25vw, 33vw"
+          sizes="(min-width: 1024px) 11vw, (min-width: 768px) 18vw, 33vw"
           className="object-cover"
         />
       ) : (

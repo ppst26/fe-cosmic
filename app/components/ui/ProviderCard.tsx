@@ -19,7 +19,7 @@ export function ProviderCard({ provider }: ProviderCardProps) {
     <Link
       href={href}
       aria-label={`ผู้ให้บริการ ${name}`}
-      className="relative flex h-16 items-center justify-center rounded-[var(--radius-card)] bg-[var(--surface-mid)] px-4 py-4 transition-colors duration-[var(--motion-fast)] hover:bg-[var(--surface-hover)] sm:h-20 sm:px-5"
+      className="relative flex h-16 items-center justify-center rounded-[var(--radius-panel)] bg-[var(--surface-mid)] px-4 py-4 transition-colors duration-[var(--motion-fast)] hover:bg-[var(--surface-hover)] sm:h-20 sm:px-5"
     >
       {logoSrc ? (
         <Image

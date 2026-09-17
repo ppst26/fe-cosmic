@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -63,6 +65,27 @@ export function LobbyIcon({ className = "w-6 h-6" }: { className?: string }) {
       <rect x="13.5" y="3" width="7.5" height="7.5" rx="2" />
       <rect x="3" y="13.5" width="7.5" height="7.5" rx="2" />
       <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนโฮม — ใช้ใน CategoryNav / sidebar หมวดหน้าแรก
+ */
+export function HomeNavIcon({ className = "w-6 h-6" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.85"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M4.5 10.5 12 4l7.5 6.5" />
+      <path d="M6.5 10v9.5h11V10" />
     </svg>
   );
 }
@@ -157,6 +180,43 @@ export function SearchIcon({ className = "w-5 h-5" }: { className?: string }) {
 }
 
 /**
+ * ไอคอนตัวกรองแบบสไลด์ — แถบมินิมอลค้นหา/หมวดย่อยค่ายเกม
+ */
+export function FilterSlidersIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <line x1="4" y1="18" x2="20" y2="18" />
+      <circle cx="8" cy="6" r="2" fill="currentColor" stroke="none" />
+      <circle cx="16" cy="12" r="2" fill="currentColor" stroke="none" />
+      <circle cx="10" cy="18" r="2" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+/** ไอคอนเครื่องหมายถูก — ปิด dialog ตัวกรอง */
+export function CheckIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
+/** ไอคอน grid 4 ช่อง — แถวค่ายเกมใน dialog ตัวกรอง */
+export function FilterProvidersGridIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <rect x="4" y="4" width="7" height="7" rx="1.5" opacity="0.95" />
+      <rect x="13" y="4" width="7" height="7" rx="1.5" opacity="0.75" />
+      <rect x="4" y="13" width="7" height="7" rx="1.5" opacity="0.75" />
+      <rect x="13" y="13" width="7" height="7" rx="1.5" opacity="0.55" />
+    </svg>
+  );
+}
+
+/**
  * ไอคอนลูกศรชี้ขวา Chevron Right
  */
 export function ChevronRightIcon({ className = "w-4 h-4" }: { className?: string }) {
@@ -216,6 +276,46 @@ export function ChevronLeftIcon({ className = "w-4 h-4" }: { className?: string 
   );
 }
 
+/** ไอคอนคัดลอก — ID สมาชิก */
+export function CopyIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <rect x="9" y="9" width="11" height="11" rx="2" />
+      <path d="M5 15V6a2 2 0 0 1 2-2h9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** ไอคอนยืนยัน — badge เบอร์โทร */
+export function VerifiedCheckIcon({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={className} aria-hidden="true">
+      <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** ไอคอนออกจากระบบ */
+export function LogOutIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" strokeLinecap="round" />
+      <path d="M16 17l5-5-5-5M21 12H9" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** อวatar placeholder วงกลม */
+export function ProfileAvatarIcon({ className = "w-10 h-10" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="10" r="3.5" />
+      <path d="M6.5 19.5c1.5-3 4-4.5 5.5-4.5s4 1.5 5.5 4.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 /**
  * ไอคอนเปลวไฟ — หัวข้อ "เกมยอดฮิต"
  */
@@ -266,6 +366,47 @@ export function FootballIcon({ className = "w-6 h-6" }: { className?: string }) 
     </svg>
   );
 }
+
+/**
+ * ไอคอนลูกบาสเกตบอล
+ */
+export function BasketballIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="12" y1="3" x2="12" y2="21" />
+      <path d="M5.6 5.6C8.5 8.5 8.5 15.5 5.6 18.4M18.4 5.6c-2.9 2.9-2.9 9.9 0 12.8" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนนวมมวย / มวยไทย
+ */
+export function BoxingIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M19 10c0-3.5-2.5-6-6.5-6S6 6.5 6 10c0 2 .8 3.5 2 4.5V18a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-3.5c1.2-1 2-2.5 2-4.5Z" />
+      <path d="M6 10h4c1 0 2 1 2 2s-1 2-2 2H8" />
+      <line x1="8" y1="17" x2="14" y2="17" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนลูกเทนนิส / ไม้เทนนิส
+ */
+export function TennisIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3a9 9 0 0 0 0 18M12 3a9 9 0 0 1 0 18" strokeDasharray="2 2" opacity="0.3" />
+      <path d="M5.6 5.6c4.5 4.5 4.5 8.3 0 12.8M18.4 5.6c-4.5 4.5-4.5 8.3 0 12.8" />
+    </svg>
+  );
+}
+
 
 /**
  * ไอคอนเครือข่าย (node เชื่อมกัน) — หัวข้อ "Providers"
@@ -452,6 +593,22 @@ export function ProfileNavIcon({ className = "w-6 h-6" }: { className?: string }
   );
 }
 
+/**
+ * ไอคอนกระเป๋าเงินแบบเส้น — ใช้ใน Header notch ยอดคงเหลือ
+ */
+export function HeaderWalletIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path
+        d="M4 8.5V17a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-1.5H6a2 2 0 0 1-2-2v-1.5Z"
+        strokeLinejoin="round"
+      />
+      <path d="M19 13.5h1.5a1.5 1.5 0 1 0 0-3H19" strokeLinecap="round" />
+      <path d="M6 8.5V7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1.5" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function DepositNavIcon({ className = "w-6 h-6" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
@@ -488,3 +645,508 @@ export function ContactNavIcon({ className = "w-6 h-6" }: { className?: string }
     </svg>
   );
 }
+
+/**
+ * ไอคอนกากบาท (Close / X)
+ * ใช้ในปุ่มปิดของ RightMenuDrawer (มุมบนซ้าย)
+ */
+export function CloseIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
+
+/** ไอคอนมือถือ — ฟอร์มสมัครสมาชิก */
+export function PhoneIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <rect x="7" y="2.5" width="10" height="19" rx="2" />
+      <path d="M11 18.5h2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** ไอคอนกุญแจ — รหัสผ่าน */
+export function LockIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <rect x="5" y="11" width="14" height="10" rx="2" />
+      <path d="M8 11V8a4 4 0 0 1 8 0v3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** แสดงรหัสผ่าน */
+export function EyeIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+
+/** ซ่อนรหัสผ่าน */
+export function EyeOffIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path d="M3 3l18 18" strokeLinecap="round" />
+      <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 5.1A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.2 18.2 0 0 1-4.1 5.2M6.2 6.2C3.4 8.4 2 12 2 12a18.5 18.5 0 0 0 7.9 6.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** ไอคอนธนาคาร — trigger เลือกธนาคาร */
+export function BankBuildingIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path d="M4 10 12 4l8 6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 10v8h14v-8" />
+      <path d="M9 18v-4h6v4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** ไอคอนช่องทาง / broadcast */
+export function BroadcastChannelIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="2" />
+      <path d="M5.5 8.5a7 7 0 0 0 0 7M18.5 8.5a7 7 0 0 1 0 7" strokeLinecap="round" />
+      <path d="M2 5.5a11 11 0 0 0 0 13M22 5.5a11 11 0 0 1 0 13" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนลูกเต๋าคู่ (Casino Dice)
+ * ใช้ในเมนูนำทาง "คาสิโน" ของ RightMenuDrawer
+ */
+export function CasinoDiceIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <rect x="3" y="7" width="12" height="12" rx="2.5" />
+      <path d="M7 7V4.5A1.5 1.5 0 0 1 8.5 3h11A1.5 1.5 0 0 1 21 4.5V15a1.5 1.5 0 0 1-1.5 1.5H15" />
+      <circle cx="6.5" cy="10.5" r="0.8" fill="currentColor" />
+      <circle cx="11.5" cy="10.5" r="0.8" fill="currentColor" />
+      <circle cx="9" cy="13" r="0.8" fill="currentColor" />
+      <circle cx="6.5" cy="15.5" r="0.8" fill="currentColor" />
+      <circle cx="11.5" cy="15.5" r="0.8" fill="currentColor" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนตั๋วคูปอง (Promo Ticket)
+ * ใช้ในเมนู "โปรโมชั่น" ของ RightMenuDrawer
+ */
+export function PromoTicketIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M3 8a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a3 3 0 0 0 0-6V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3Z" />
+      <path d="M12 7v2M12 11v2M12 15v2" strokeDasharray="1 1" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอน NFT หกเหลี่ยมตัว N (NFT Hexagon)
+ * ใช้ในเมนู "NFT" ของ RightMenuDrawer
+ */
+export function NftHexIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M12 2.5l7.5 4.3v8.6L12 21.5l-7.5-4.3V6.8L12 2.5Z" />
+      <path d="M9 8.5v7l6-7v7" strokeWidth="2" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนกลุ่มเพื่อน (Invite Friends)
+ * ใช้ในเมนู "ชวนเพื่อน" ของ RightMenuDrawer
+ */
+export function InviteFriendsIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนชุดหูฟังแชทสด (Support Headset)
+ * ใช้ในแถบเมนูฟังก์ชันเสริม "แชทสด" ของ RightMenuDrawer
+ */
+export function SupportHeadsetIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+      <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5Z" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนดาวน์โหลดแอป (Download App)
+ * ใช้ในแถบเมนูฟังก์ชันเสริม "ติดตั้งแอป" ของ RightMenuDrawer
+ */
+export function DownloadAppIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนลูกโลก (Language Globe)
+ * ใช้ในตัวเลือกภาษา "ภาษาไทย" ของ RightMenuDrawer
+ */
+export function LanguageGlobeIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3.6 9h16.8M3.6 15h16.8" />
+      <path d="M12 3a14.5 14.5 0 0 0 0 18M12 3a14.5 14.5 0 0 1 0 18" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนลูกศรชี้ลง (Chevron Down)
+ * ใช้ใน Dropdown หมวดหมู่ย่อยและเลือกภาษาของ RightMenuDrawer
+ */
+export function ChevronDownIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
+/** มงกุฎ VIP */
+export function CrownIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path d="M4 18h16l-2-9-4 3-2-5-2 5-4-3-2 9Z" strokeLinejoin="round" />
+      <path d="M4 18v2h16v-2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** นาฬิกา / ประวัติ */
+export function HistoryIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** เพชร */
+export function DiamondGemIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path d="M6 3h12l4 7-10 11L2 10l4-7Z" strokeLinejoin="round" />
+      <path d="M2 10h20M12 21 6 3m6 18 6-18M8.5 3l3.5 7m3.5-7-3.5 7" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** โบนัสยอดเสีย / คืนยอด */
+export function RefundIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path d="M3 12a9 9 0 0 1 15-6.7L21 8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3 21v-5h5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Affiliate / กลุ่ม */
+export function UsersGroupIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <circle cx="9" cy="8" r="3" />
+      <circle cx="17" cy="9" r="2.5" />
+      <path d="M3 19c0-3 3-5 6-5s6 2 6 5M14 19c0-2 2-3.5 4-3.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** ป้ายโปรโมชั่น */
+export function PromoTagIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">
+      <path d="M20 12l-8 8-8-8 8-8 8 8Z" strokeLinejoin="round" />
+      <circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนกล่องของขวัญ / ริบบิ้น (Gift Voucher)
+ * ใช้ในการ์ด "บัตรของขวัญ" ของ RightMenuDrawer
+ */
+export function GiftVoucherIcon({ className = "w-8 h-8" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+      <rect x="4" y="11" width="24" height="17" rx="3" fill="#818cf8" fillOpacity="0.25" stroke="#a5b4fc" strokeWidth="1.5" />
+      <rect x="2" y="9" width="28" height="6" rx="2" fill="#6366f1" />
+      <path d="M16 9v19" stroke="#e0e7ff" strokeWidth="2.5" />
+      <path d="M16 9C14 5 10 4 9 6s2 3 7 3Zm0 0c2-4 6-5 7-3s-2 3-7 3Z" fill="#c7d2fe" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนกระเป๋าเงินคริปโต (Wallet Crypto)
+ * ใช้ในการ์ด "ยังไม่มีคริปโต?" ของ RightMenuDrawer
+ */
+export function WalletCryptoIcon({ className = "w-7 h-7" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+      <rect x="2" y="6" width="24" height="16" rx="3.5" fill="#3b82f6" fillOpacity="0.2" stroke="#60a5fa" strokeWidth="1.5" />
+      <path d="M2 10.5C4 9 7 9 26 9" stroke="#93c5fd" strokeWidth="1.5" />
+      <rect x="18" y="12" width="7" height="6" rx="1.5" fill="#2563eb" stroke="#bfdbfe" strokeWidth="1" />
+      <circle cx="21" cy="15" r="1" fill="#ffffff" />
+    </svg>
+  );
+}
+
+/**
+ * กราฟิกวงล้อรางวัลสีสันสดใส (Wheel of Fortune Graphic)
+ * ใช้ในการ์ด "วงล้อ" มุมบนซ้ายของ RightMenuDrawer
+ */
+export function WheelGraphic({ className = "w-12 h-12" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+      <circle cx="32" cy="32" r="30" fill="url(#wheel-outer-rim)" stroke="#fcd34d" strokeWidth="2" />
+      <defs>
+        <radialGradient id="wheel-outer-rim" cx="50%" cy="50%" r="50%">
+          <stop offset="70%" stopColor="#4c1d95" />
+          <stop offset="100%" stopColor="#831843" />
+        </radialGradient>
+      </defs>
+      {/* 8 ช่องสีวงล้อ */}
+      <path d="M32 32 L32 4 A28 28 0 0 1 52 12 Z" fill="#ef4444" />
+      <path d="M32 32 L52 12 A28 28 0 0 1 60 32 Z" fill="#f59e0b" />
+      <path d="M32 32 L60 32 A28 28 0 0 1 52 52 Z" fill="#10b981" />
+      <path d="M32 32 L52 52 A28 28 0 0 1 32 60 Z" fill="#3b82f6" />
+      <path d="M32 32 L32 60 A28 28 0 0 1 12 52 Z" fill="#8b5cf6" />
+      <path d="M32 32 L12 52 A28 28 0 0 1 4 32 Z" fill="#ec4899" />
+      <path d="M32 32 L4 32 A28 28 0 0 1 12 12 Z" fill="#06b6d4" />
+      <path d="M32 32 L12 12 A28 28 0 0 1 32 4 Z" fill="#eab308" />
+      {/* วงแหวนทองขอบใน */}
+      <circle cx="32" cy="32" r="28" fill="none" stroke="#fef08a" strokeWidth="1" strokeDasharray="3 3" />
+      {/* ดุมกึ่งกลาง */}
+      <circle cx="32" cy="32" r="8" fill="#fbbf24" stroke="#78350f" strokeWidth="1.5" />
+      <circle cx="32" cy="32" r="4" fill="#ffffff" />
+      {/* เข็มชี้บน */}
+      <polygon points="32,2 28,10 36,10" fill="#fef08a" stroke="#b45309" strokeWidth="1" />
+    </svg>
+  );
+}
+
+/**
+ * กราฟิกเพชรประกายและหีบสมบัติ (Diamond & Treasure Chest Graphic)
+ * ใช้ในการ์ด "ร้านค้าเพชร" มุมบนขวาของ RightMenuDrawer
+ */
+export function DiamondChestGraphic({ className = "w-12 h-12" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="diamond-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#67e8f9" />
+          <stop offset="50%" stopColor="#06b6d4" />
+          <stop offset="100%" stopColor="#0284c7" />
+        </linearGradient>
+        <linearGradient id="chest-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#fde047" />
+          <stop offset="100%" stopColor="#ca8a04" />
+        </linearGradient>
+      </defs>
+      {/* หีบสมบัติ */}
+      <rect x="20" y="34" width="38" height="24" rx="4" fill="#7c2d12" stroke="#d97706" strokeWidth="1.5" />
+      <path d="M18 34c0-5 6-10 20-10s20 5 20 10H18Z" fill="#9a3412" stroke="#d97706" strokeWidth="1.5" />
+      <rect x="36" y="32" width="6" height="8" rx="1.5" fill="url(#chest-gold)" />
+      {/* เพชรสีฟ้าประกายใหญ่ */}
+      <polygon points="26,6 40,6 48,16 26,38 4,16" fill="url(#diamond-glow)" stroke="#bae6fd" strokeWidth="1.5" />
+      <polygon points="26,6 40,6 36,16 16,16" fill="#e0f2fe" opacity="0.85" />
+      <polygon points="16,16 36,16 26,38" fill="#38bdf8" />
+      <polygon points="4,16 16,16 26,38" fill="#0284c7" opacity="0.9" />
+      <polygon points="48,16 36,16 26,38" fill="#0369a1" opacity="0.9" />
+      {/* ประกายดาววิบวับ */}
+      <path d="M48 6L50 10L54 12L50 14L48 18L46 14L42 12L46 10Z" fill="#ffffff" />
+      <circle cx="12" cy="8" r="1.5" fill="#ffffff" />
+    </svg>
+  );
+}
+
+/**
+ * กราฟิกกระดานภารกิจและดาวทอง (Mission Clipboard Graphic)
+ * ใช้ในการ์ด "ภารกิจ" ของ RightMenuDrawer
+ */
+export function MissionClipboardGraphic({ className = "w-12 h-12" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="board-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#3b82f6" />
+          <stop offset="100%" stopColor="#1d4ed8" />
+        </linearGradient>
+      </defs>
+      {/* แผ่นกระดานคลิปบอร์ด */}
+      <rect x="8" y="12" width="38" height="46" rx="5" fill="url(#board-grad)" stroke="#93c5fd" strokeWidth="1.5" />
+      <rect x="18" y="6" width="18" height="10" rx="3" fill="#cbd5e1" stroke="#475569" strokeWidth="1.5" />
+      <circle cx="27" cy="11" r="2" fill="#1e293b" />
+      {/* รายการบรรทัดและเครื่องหมายถูก */}
+      <rect x="14" y="24" width="7" height="7" rx="1.5" fill="#10b981" />
+      <path d="M15.5 27.5L17.5 29.5L20 25.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="24" y1="28" x2="38" y2="28" stroke="#e2e8f0" strokeWidth="2.5" strokeLinecap="round" />
+
+      <rect x="14" y="36" width="7" height="7" rx="1.5" fill="#10b981" />
+      <path d="M15.5 39.5L17.5 41.5L20 37.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="24" y1="40" x2="38" y2="40" stroke="#e2e8f0" strokeWidth="2.5" strokeLinecap="round" />
+
+      {/* เหรียญดาวทองลอยเด่น */}
+      <circle cx="46" cy="44" r="14" fill="#fbbf24" stroke="#d97706" strokeWidth="2" />
+      <path d="M46 34L49 41L56 42L51 47L52 54L46 50L40 54L41 47L36 42L43 41Z" fill="#fef08a" stroke="#b45309" strokeWidth="1" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/**
+ * กราฟิกถ้วยรางวัลและการแข่งขัน (Trophy & Racing Graphic)
+ * ใช้ในการ์ด "การแข่งขัน" ของ RightMenuDrawer
+ */
+export function TrophyRacingGraphic({ className = "w-12 h-12" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="trophy-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#fde047" />
+          <stop offset="60%" stopColor="#eab308" />
+          <stop offset="100%" stopColor="#ca8a04" />
+        </linearGradient>
+      </defs>
+      {/* ริบบิ้นแข่งรถ / ธงตาหมากรุกด้านหลัง */}
+      <path d="M38 18C44 14 56 16 60 22L54 36C50 32 44 32 38 34Z" fill="#e2e8f0" stroke="#0f172a" strokeWidth="1" />
+      <rect x="42" y="17" width="5" height="5" fill="#0f172a" />
+      <rect x="52" y="19" width="5" height="5" fill="#0f172a" />
+      <rect x="47" y="24" width="5" height="5" fill="#0f172a" />
+      {/* ถ้วยรางวัลทองคำ */}
+      <path d="M18 16H40V28C40 35 34 38 29 38C24 38 18 35 18 28V16Z" fill="url(#trophy-gold)" stroke="#78350f" strokeWidth="1.5" />
+      <path d="M18 19H12C9 19 8 26 12 28C15 29 18 27 18 25" stroke="url(#trophy-gold)" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M40 19H46C49 19 50 26 46 28C43 29 40 27 40 25" stroke="url(#trophy-gold)" strokeWidth="2.5" strokeLinecap="round" />
+      {/* ฐานถ้วยรางวัล */}
+      <path d="M26 38H32V46H26V38Z" fill="#eab308" stroke="#78350f" strokeWidth="1" />
+      <rect x="20" y="46" width="18" height="8" rx="2" fill="#451a03" stroke="#d97706" strokeWidth="1.5" />
+      <circle cx="29" cy="24" r="3" fill="#ffffff" opacity="0.6" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนจอยเกมคอนโซล (Gamepad)
+ * ใช้ในแท็บ "ค่ายเกมทั้งหมด" ของหน้าค่ายเกมสล็อต (/category/slots)
+ */
+export function GamepadIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <rect x="2" y="6" width="20" height="12" rx="4" />
+      <path d="M6 12h4M8 10v4" />
+      <circle cx="15.5" cy="10.5" r="0.8" fill="currentColor" />
+      <circle cx="17.5" cy="13.5" r="0.8" fill="currentColor" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนหยดน้ำ (Water Drop)
+ * ใช้ในแท็บ "Drops & Wins" ของหน้าค่ายเกมสล็อต (/category/slots)
+ */
+export function WaterDropIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M12 2.5C12 2.5 5 10 5 15.5a7 7 0 0 0 14 0C19 10 12 2.5 12 2.5Z" />
+      <path d="M12 8c0 3 2 5 4 6" strokeLinecap="round" opacity="0.6" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนไก่ (Rooster / Chicken)
+ * ใช้ในแท็บ "ไก่" ของหน้าค่ายเกมสล็อต (/category/slots)
+ */
+export function ChickenIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      {/* หงอนไก่ */}
+      <path d="M14 3.5c.5-1 2-1 2.5 0 .5-.8 1.8-.8 2.2 0" />
+      {/* ตัวไก่และจะงอยปาก */}
+      <path d="M18 5.5c-1 0-3 1-3.5 3-.5 2 1 4 0 6.5s-3 3-5 3c-3 0-5.5-2-5.5-5 0-4 4-7 8.5-7.5" />
+      <path d="M18 7l2.5 1.5-2.5 1.5" />
+      <circle cx="16" cy="7.5" r="0.8" fill="currentColor" />
+      {/* ขาไก่ */}
+      <path d="M10 18v3M12 18v3M9 21h3M11 21h3" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนเปลวไฟสีสดใสสำหรับป้าย HOT
+ * ใช้บนแบนเนอร์ JILI ของหน้าค่ายเกมสล็อต (/category/slots)
+ */
+export function FlameHotIcon({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M12 2c.6 3.2 2.4 4.9 4.3 6.8C18.2 10.7 19 12.5 19 14.5A7 7 0 0 1 5 14.5c0-1.6.5-3 1.4-4.2.4 1 1.1 1.7 2.1 2.1C8.2 8.2 9.8 4.6 12 2Zm0 9c-1.4 1.6-2.2 3-2.2 4.3a2.2 2.2 0 1 0 4.4 0c0-1.3-.8-2.7-2.2-4.3Z" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนกล่องของขวัญ (Gift Box)
+ * ใช้ในแท็บ "ศูนย์รวม" ของหน้าค่ายเกมสล็อต (/slots)
+ */
+export function GiftIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      {/* ริบบิ้นโบว์ด้านบน */}
+      <path d="M12 7a2.5 2.5 0 0 0-2.45-3 2.5 2.5 0 0 0-2.5 2.5c0 1.5 2.5 3 4.95 3.5H12Zm0 0a2.5 2.5 0 0 1 2.45-3 2.5 2.5 0 0 1 2.5 2.5c0 1.5-2.5 3-4.95 3.5H12Z" fill="none" />
+      {/* ฝากล่อง */}
+      <rect x="3" y="7" width="18" height="4" rx="1.5" />
+      {/* ตัวกล่อง */}
+      <path d="M5 11v8.5a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V11" />
+      {/* เส้นริบบิ้นผ่ากลาง */}
+      <line x1="12" y1="7" x2="12" y2="21" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนประกายดาวเมกะเวย์ (Sparkle)
+ * ใช้ในแท็บ "เมกะเวย์" ของหน้าค่ายเกมสล็อต (/slots)
+ */
+export function SparkleSlotIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
+    </svg>
+  );
+}
+
+
+

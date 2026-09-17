@@ -49,7 +49,7 @@ export function GameSearchBar({
       role="search"
       aria-label="แบบฟอร์มค้นหาเกมและผู้ให้บริการ"
     >
-      <div className="relative flex h-[46px] w-full items-center rounded-[var(--radius-control)] bg-[#121127] px-3.5 transition-all duration-150 focus-within:ring-1 focus-within:ring-[var(--focus-ring)]">
+      <div className="relative flex h-[46px] w-full items-center rounded-[var(--radius-control)] bg-[#121127] px-3.5 transition-all duration-150 border-none shadow-none outline-none ring-0 focus-within:outline-none focus-within:ring-0 hover:outline-none hover:ring-0">
         {/* Label สำหรับ Screen Reader เท่านั้น */}
         <label htmlFor="game-search-input" className="sr-only">
           ค้นหาเกมหรือผู้ให้บริการ
@@ -67,7 +67,8 @@ export function GameSearchBar({
           value={query}
           onChange={handleChange}
           placeholder={placeholder}
-          className="w-full h-full bg-transparent text-sm sm:text-base text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none"
+          className="w-full h-full bg-transparent text-sm sm:text-base text-[var(--text-primary)] placeholder-[var(--text-muted)] !outline-none !ring-0 focus:!outline-none focus:!ring-0 focus-visible:!outline-none focus-visible:!ring-0"
+          style={{ outline: "none", boxShadow: "none" }}
           autoComplete="off"
           spellCheck="false"
         />

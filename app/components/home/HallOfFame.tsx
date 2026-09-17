@@ -1,122 +1,217 @@
 "use client";
 
 import React, { useId, useState } from "react";
-import { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
-import { DollarBadgeIcon, HallOfFameEmblemIcon } from "../ui/Icons";
+import Image from "next/image";
+import type { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
+import { SectionHeader } from "../ui/SectionHeader";
 import { SectionIcon } from "../ui/SectionIcon";
 
 const TAB_LABELS: { id: HallOfFameTabId; label: string }[] = [
-  { id: "live-bets", label: "Live Bets" },
-  { id: "high-rollers", label: "High Rollers" },
-  { id: "lucky-wins", label: "Lucky Wins" },
+  { id: "latest-winner", label: "Latest Winner" },
+  { id: "top-win-multiple", label: "Top Win Multiple" },
 ];
 
 interface HallOfFameProps {
   datasets: Record<HallOfFameTabId, HallOfFameRow[]>;
 }
 
+const payoutFormatter = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
 /**
- * HallOfFame — tabs + ตาราง GAME / PAYOUT ใช้ icon แทน thumbnail
+ * ไอคอนหัวข้อ Top Performance — โทนทองตามธีม ไม่ใช้กรอบการ์ด
+ */
+function TopPerformanceBadge({ className = "h-8 w-8" }: { className?: string }) {
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--surface-hover)] ring-1 ring-[var(--border-subtle)] ${className}`}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 32 32" className="h-5 w-5" fill="none">
+        <path
+          d="M16 4l2.2 6.8H25l-5.6 4.1 2.2 6.8L16 17.6l-5.6 4.1 2.2-6.8L7 10.8h6.8L16 4Z"
+          fill="url(#top-perf-star)"
+        />
+        <text
+          x="16"
+          y="21"
+          textAnchor="middle"
+          fill="#090810"
+          fontSize="7"
+          fontWeight="800"
+        >
+          TOP
+        </text>
+        <defs>
+          <linearGradient id="top-perf-star" x1="8" y1="4" x2="24" y2="22">
+            <stop offset="0%" stopColor="#ffe66d" />
+            <stop offset="100%" stopColor="#d99a08" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </span>
+  );
+}
+
+/**
+ * จัดรูปแบบยอดชนะ THB (+80,060.00฿)
+ */
+function formatPayoutThb(amount: number): string {
+  return `+${payoutFormatter.format(amount)}฿`;
+}
+
+/**
+ * รูปเกม — coverSrc หรือ placeholder tone + icon
+ */
+function HallOfFameGameThumb({ row }: { row: HallOfFameRow }) {
+  const toneClass = row.coverTone ? `cover-tone-${row.coverTone}` : "cover-tone-indigo";
+
+  if (row.coverSrc) {
+    return (
+      <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[var(--radius-control)] bg-[var(--surface-mid)]">
+        <Image
+          src={row.coverSrc}
+          alt=""
+          fill
+          sizes="40px"
+          className="object-cover object-center"
+        />
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-control)] ${toneClass} text-[var(--icon-default)]`}
+    >
+      <SectionIcon id={row.gameIcon} className="h-5 w-5" />
+    </span>
+  );
+}
+
+/**
+ * HallOfFame (Top Performance) — 2 แท็บ + ตารางเต็มความกว้าง ไม่มีกรอบการ์ด
  * ถูกเรียกใช้ใน app/page.tsx
  */
 export function HallOfFame({ datasets }: HallOfFameProps) {
-  const [activeTab, setActiveTab] = useState<HallOfFameTabId>("live-bets");
+  const [activeTab, setActiveTab] = useState<HallOfFameTabId>("latest-winner");
   const panelId = useId();
   const rows = datasets[activeTab] ?? [];
-
-  const payoutFormatter = new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  const isLatestWinner = activeTab === "latest-winner";
+  const valueColumnLabel = isLatestWinner ? "Payout" : "Multiple";
 
   return (
-    <section className="mt-10 w-full min-w-0 sm:mt-12" aria-labelledby="hall-of-fame-title">
-      <div className="mb-3 flex items-center gap-2">
-        <HallOfFameEmblemIcon className="h-7 w-7 shrink-0" />
-        <h2 id="hall-of-fame-title" className="text-lg font-bold text-[var(--text-primary)] sm:text-xl">
-          Hall of Fame
-        </h2>
-      </div>
+    <section
+      className="hall-of-fame mt-10 w-full min-w-0 sm:mt-12"
+      aria-labelledby="top-performance-title"
+    >
+      <SectionHeader
+        icon={<TopPerformanceBadge />}
+        title="Top Performance"
+      />
 
       <div
-        className="rounded-[var(--radius-panel)] bg-[var(--surface-mid)] p-3 sm:p-4"
-        role="region"
-        aria-label="Hall of Fame"
+        className="inline-flex max-w-full gap-1 rounded-[var(--radius-control)] bg-[var(--surface-mid)] p-1 ring-1 ring-[var(--border-subtle)]"
+        role="tablist"
+        aria-label="เลือกตาราง Top Performance"
       >
-        <div className="flex gap-1 rounded-[var(--radius-control)] bg-[#121127] p-1" role="tablist" aria-label="เลือกประเภท Hall of Fame">
-          {TAB_LABELS.map((tab) => {
-            const selected = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                role="tab"
-                id={`${panelId}-tab-${tab.id}`}
-                aria-selected={selected}
-                aria-controls={`${panelId}-panel`}
-                onClick={() => setActiveTab(tab.id)}
-                className={`min-h-[40px] flex-1 rounded-[var(--radius-control)] px-1 text-[10px] font-bold transition-colors sm:text-xs ${
-                  selected ? "text-white" : "text-[var(--text-muted)] hover:bg-[#19183b] hover:text-[var(--text-secondary)]"
-                }`}
-                style={selected ? { background: "var(--category-active-gradient)" } : undefined}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
+        {TAB_LABELS.map((tab) => {
+          const selected = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              id={`${panelId}-tab-${tab.id}`}
+              aria-selected={selected}
+              aria-controls={`${panelId}-panel`}
+              onClick={() => setActiveTab(tab.id)}
+              className={`min-h-[36px] whitespace-nowrap rounded-[var(--radius-control)] px-3.5 text-[11px] font-bold transition-colors sm:min-h-[40px] sm:px-4 sm:text-xs ${
+                selected
+                  ? "text-[var(--text-primary)]"
+                  : "text-[var(--text-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-secondary)]"
+              }`}
+              style={selected ? { background: "var(--category-active-gradient)" } : undefined}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
 
-        <div
-          id={`${panelId}-panel`}
-          role="tabpanel"
-          aria-labelledby={`${panelId}-tab-${activeTab}`}
-          className="mt-3 overflow-hidden rounded-[var(--radius-control)] bg-[#121127]/80"
-        >
-          <table className="w-full min-w-0 border-collapse text-left text-sm">
-            <thead>
-              <tr className="bg-[#121127] text-[11px] font-bold uppercase tracking-wide text-[var(--text-muted)]">
-                <th scope="col" className="px-3 py-2.5">
-                  Game
-                </th>
-                <th scope="col" className="px-3 py-2.5 text-right">
-                  Payout
-                </th>
+      {/* แถบตารางเต็มความกว้าง — ทะลุ gutter ของ page-shell */}
+      <div
+        id={`${panelId}-panel`}
+        role="tabpanel"
+        aria-labelledby={`${panelId}-tab-${activeTab}`}
+        className="hall-of-fame__table-band relative mt-4 -mx-[var(--page-gutter)] w-[calc(100%+2*var(--page-gutter))] max-w-none bg-[color-mix(in_srgb,var(--surface-mid)_88%,transparent)]"
+      >
+        <table className="hall-of-fame-table w-full min-w-0 border-collapse text-left text-sm">
+          <thead>
+            <tr className="border-b border-[var(--border-subtle)] text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] sm:text-[11px]">
+              <th scope="col" className="py-3 pl-[var(--page-gutter)] pr-2 font-bold">
+                Game
+              </th>
+              <th scope="col" className="px-2 py-3 font-bold">
+                Player
+              </th>
+              <th scope="col" className="py-3 pl-2 pr-[var(--page-gutter)] text-right font-bold">
+                {valueColumnLabel}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={3}
+                  className="px-[var(--page-gutter)] py-8 text-center text-sm text-[var(--text-muted)]"
+                >
+                  ยังไม่มีรายการ
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {rows.length === 0 ? (
-                <tr>
-                  <td colSpan={2} className="px-3 py-8 text-center text-sm text-[var(--text-muted)]">
-                    ยังไม่มีรายการ
+            ) : (
+              rows.map((row, index) => (
+                <tr
+                  key={row.id}
+                  className={
+                    index % 2 === 0
+                      ? "bg-[color-mix(in_srgb,var(--surface-hover)_42%,transparent)]"
+                      : "bg-transparent"
+                  }
+                >
+                  <td className="py-3 pl-[var(--page-gutter)] pr-2 align-middle">
+                    <div className="flex min-w-0 items-center gap-2.5">
+                      <HallOfFameGameThumb row={row} />
+                      <span className="line-clamp-2 text-xs font-semibold leading-snug text-[var(--text-primary)] sm:text-sm">
+                        {row.gameName}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-2 py-3 align-middle">
+                    <span className="block truncate text-xs tabular-nums text-[var(--text-secondary)] sm:text-sm">
+                      {row.playerMasked}
+                    </span>
+                  </td>
+                  <td className="py-3 pl-2 pr-[var(--page-gutter)] text-right align-middle">
+                    {isLatestWinner && row.payout != null ? (
+                      <span className="text-xs font-bold tabular-nums text-[#ffe66d] sm:text-sm">
+                        {formatPayoutThb(row.payout)}
+                      </span>
+                    ) : null}
+                    {!isLatestWinner && row.winMultiple != null ? (
+                      <span className="text-xs font-extrabold tabular-nums text-[#ffe66d] sm:text-sm">
+                        {row.winMultiple}x
+                      </span>
+                    ) : null}
                   </td>
                 </tr>
-              ) : (
-                rows.map((row, index) => (
-                  <tr
-                    key={row.id}
-                    className={`min-h-[52px] ${
-                      index % 2 === 0 ? "bg-[#121127]/60" : "bg-[#19183b]/40"
-                    }`}
-                  >
-                    <td className="px-3 py-2.5">
-                      <div className="flex min-w-0 items-center gap-2.5">
-                        <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[#232145] text-[var(--icon-default)]">
-                          <SectionIcon id={row.gameIcon} className="h-5 w-5" />
-                        </span>
-                        <span className="truncate font-semibold text-[var(--text-primary)]">{row.gameName}</span>
-                      </div>
-                    </td>
-                    <td className="px-3 py-2.5 text-right">
-                      <span className="inline-flex items-center gap-1 rounded-[var(--radius-control)] bg-[#0f3d2e] px-2.5 py-1 text-xs font-bold tabular-nums text-[#41d995]">
-                        <DollarBadgeIcon className="h-3.5 w-3.5" />$ {payoutFormatter.format(row.payout)}
-                      </span>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </section>
   );

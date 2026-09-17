@@ -194,6 +194,7 @@
 - เริ่มจาก `aspect-ratio: 3/4` และใช้ ratio เดียวกันในชุด; ภาพที่มีข้อความฝังต้องตรวจ crop ก่อนใช้ `object-fit: cover`
 - ProviderCard เป็นช่องแนวนอนพื้นเข้มเตี้ย ใช้ `object-fit: contain` และ padding 16–20px เพื่อไม่ตัดโลโก้
 - Searchbar สูง 44–48px, icon ซ้าย, placeholder “Game | Provider”; มี label สำหรับ assistive technology
+- Searchbar **ไม่ใช้ ring หรือ outline ทั้งตอนคลิก (focus) และ hover** เพื่อให้ดูเรียบเนียนกลมกลืนกับพื้นผิว
 - ค้นจากชื่อเกมและ provider ได้; กรอกแล้วมี clear action และแสดงสถานะไม่พบผลลัพธ์
 - ข้อมูลภาพตัวอย่างใช้จัดวางเท่านั้น หมวดจริงต้องอ้าง taxonomy ของระบบ ห้ามจัดเกมตามภาพที่อาจผิดหมวดโดยอัตโนมัติ
 

@@ -1,28 +1,98 @@
 import {
   CategoryItem,
   PromoItem,
+  WelcomeBannerSlide,
   HighlightItem,
   IntroStats,
   GameSectionData,
+  GameItem,
   ProviderItem,
   FeatureActionItem,
   JackpotWinner,
-  HallOfFameTabId,
-  HallOfFameRow,
   BottomNavItem,
 } from "../types/lobby";
+import { CASINO_FEATURED_ITEMS } from "./casinoFeaturedData";
+import { SPORT_FEATURED_ITEMS } from "./sportFeaturedData";
+import { FISHING_FEATURED_ITEMS } from "./fishingFeaturedData";
+import { GRID_SLOT_PROVIDERS } from "./slotProvidersData";
+
+/** แถว SLOTS หน้าแรก — รูปค่ายจาก public/slots (สูงสุด 15 ใบต่อ carousel) */
+export const HOME_SLOTS_PROVIDER_ITEMS: GameItem[] = GRID_SLOT_PROVIDERS.slice(0, 15).map(
+  (provider) => ({
+    id: `home-slots-${provider.id}`,
+    title: provider.name,
+    provider: provider.name,
+    href: provider.href,
+    coverSrc: provider.coverSrc,
+  }),
+);
 
 /**
- * ข้อมูลจำลองสำหรับหมวดหมู่เกม 6 หมวดหลัก (Categories)
- * ถูกเรียกใช้โดย CategoryNav.tsx เพื่อแสดงผลตามลำดับในภาพตัวอย่าง
+ * ข้อมูลจำลองหมวดหมู่เกม — แถบ CategoryNav / sidebar desktop (โฮม + 6 หมวด)
  */
 export const CATEGORIES_DATA: CategoryItem[] = [
-  { id: "lobby", label: "LOBBY", href: "/" },
-  { id: "originals", label: "ORIGINALS", href: "/category/originals" },
-  { id: "slots", label: "SLOTS", href: "/category/slots" },
-  { id: "live-casino", label: "LIVE CASINO", href: "/category/live-casino" },
-  { id: "game-shows", label: "GAME SHOWS", href: "/category/game-shows" },
-  { id: "table-games", label: "TABLE GAMES", href: "/category/table-games" },
+  { id: "home", label: "โฮม", href: "/" },
+  { id: "casino", label: "คาสิโน", href: "/casino" },
+  { id: "slots", label: "สล็อต", href: "/slots" },
+  { id: "fishing", label: "ยิงปลา", href: "/fishing" },
+  { id: "sports", label: "กีฬา", href: "/sport" },
+  { id: "lottery", label: "หวย", href: "#lottery" },
+  { id: "games", label: "เกมส์", href: "#games" },
+];
+
+/**
+ * แบนเนอร์โปรโมหน้าแรก — public/HomeProBanner (เรียงตาม PROMO_CAROUSEL_DATA 4 ใบแรก)
+ */
+export const HOME_PRO_BANNER_ASSETS = [
+  "/HomeProBanner/HomeProBanner1.webp",
+  "/HomeProBanner/HomeProBanner2.webp",
+  "/HomeProBanner/HomeProBanner3.webp",
+  "/HomeProBanner/HomeProBanner4.webp",
+] as const;
+
+/** แบนเนอร์ Welcome Pack หน้าแรก */
+export const MAIN_HOME_BANNER_SRC = "/HomeProBanner/MainHomeBannner.webp";
+
+/**
+ * สไลด์ Welcome Hero — WelcomeBanner carousel
+ * ถูกเรียกใช้ใน WelcomeBanner.tsx และ app/page.tsx
+ */
+export const WELCOME_BANNER_SLIDES: WelcomeBannerSlide[] = [
+  {
+    id: "welcome-pack",
+    bannerSrc: MAIN_HOME_BANNER_SRC,
+    title: "Welcome Pack",
+    subtitle: "Rakeback Up to 100%",
+    ctaText: "Sign Up",
+  },
+  {
+    id: "welcome-loyalty",
+    bannerSrc: HOME_PRO_BANNER_ASSETS[0],
+    title: "Loyalty v2.0",
+    subtitle: "Easy start & more rewards",
+    ctaText: "Sign Up",
+  },
+  {
+    id: "welcome-gift-cards",
+    bannerSrc: HOME_PRO_BANNER_ASSETS[1],
+    title: "Play with Gift Cards",
+    subtitle: "Buy & redeem instantly",
+    ctaText: "Sign Up",
+  },
+  {
+    id: "welcome-vip",
+    bannerSrc: HOME_PRO_BANNER_ASSETS[2],
+    title: "VIP Cashback",
+    subtitle: "Up to 25% weekly rebate",
+    ctaText: "Sign Up",
+  },
+  {
+    id: "welcome-race",
+    bannerSrc: HOME_PRO_BANNER_ASSETS[3],
+    title: "Weekly Race",
+    subtitle: "Prize pool 100,000 USDT",
+    ctaText: "Sign Up",
+  },
 ];
 
 /**
@@ -35,24 +105,28 @@ export const PROMO_CAROUSEL_DATA: PromoItem[] = [
     title: "Loyalty v2.0",
     subtitle: "Easy start & more rewards",
     href: "/promotions/loyalty-v2",
+    bannerSrc: HOME_PRO_BANNER_ASSETS[0],
   },
   {
     id: "promo-gift-cards",
     title: "Play with ...",
     subtitle: "Buy Gift Cards",
     href: "/promotions/gift-cards",
+    bannerSrc: HOME_PRO_BANNER_ASSETS[1],
   },
   {
     id: "promo-vip-cashback",
     title: "VIP Cashback",
     subtitle: "Up to 25% weekly rebate",
     href: "/promotions/cashback",
+    bannerSrc: HOME_PRO_BANNER_ASSETS[2],
   },
   {
     id: "promo-weekly-race",
     title: "Weekly Race",
     subtitle: "Prize pool 100,000 USDT",
     href: "/promotions/weekly-race",
+    bannerSrc: HOME_PRO_BANNER_ASSETS[3],
   },
   {
     id: "promo-daily-drops",
@@ -82,12 +156,14 @@ export const POPULAR_HIGHLIGHTS_DATA: HighlightItem[] = [
     title: "Swipe Bet",
     type: "swipe_bet",
     href: "/games/swipe-bet",
+    imageSrc: "/HomeProBanner/left.webp",
   },
   {
     id: "highlight-dexy-race",
     title: "DEXY RACE",
     type: "event_banner",
     href: "/events/dexy-race",
+    imageSrc: "/HomeProBanner/right.webp",
   },
 ];
 
@@ -131,117 +207,29 @@ export const GAME_SECTIONS_DATA: GameSectionData[] = [
     id: "section-slots",
     title: "SLOTS",
     icon: "cherries",
-    viewAllHref: "/category/slots",
-    games: [
-      {
-        id: "game-gates-of-olympus",
-        title: "Gates of Olympus Super Scatter",
-        provider: "Pragmatic Play",
-        href: "/games/gates-of-olympus-super-scatter",
-        coverTone: "indigo",
-      },
-      {
-        id: "game-wanted-dead-or-a-wild",
-        title: "Wanted Dead or a Wild",
-        provider: "Hacksaw Gaming",
-        href: "/games/wanted-dead-or-a-wild",
-        coverTone: "amber",
-      },
-      {
-        id: "game-sweet-bonanza-1000",
-        title: "Sweet Bonanza 1000",
-        provider: "Pragmatic Play",
-        href: "/games/sweet-bonanza-1000",
-        coverTone: "rose",
-      },
-    ],
+    viewAllHref: "/slots",
+    games: HOME_SLOTS_PROVIDER_ITEMS,
   },
   {
     id: "section-casino",
     title: "คาสิโน",
     icon: "cards",
-    viewAllHref: "/category/live-casino",
-    games: [
-      {
-        id: "game-live-pragmatic",
-        title: "Pragmatic Play Live Casino",
-        provider: "Pragmatic Play",
-        href: "/casino/pragmatic-play",
-        coverTone: "violet",
-      },
-      {
-        id: "game-live-pretty",
-        title: "Pretty Gaming",
-        provider: "Pretty Gaming",
-        href: "/casino/pretty-gaming",
-        coverTone: "amber",
-      },
-      {
-        id: "game-live-sa",
-        title: "SA Gaming",
-        provider: "SA Gaming",
-        href: "/casino/sa-gaming",
-        coverTone: "indigo",
-      },
-    ],
+    viewAllHref: "/casino",
+    games: CASINO_FEATURED_ITEMS,
   },
   {
     id: "section-fishing",
     title: "ยิงปลา",
     icon: "fish",
-    viewAllHref: "/category/fishing",
-    games: [
-      {
-        id: "game-sweet-bonanza-2500",
-        title: "Sweet Bonanza 2500",
-        provider: "Pragmatic Play",
-        href: "/games/sweet-bonanza-2500",
-        coverTone: "rose",
-      },
-      {
-        id: "game-le-fisherman",
-        title: "Le Fisherman",
-        provider: "Hacksaw Gaming",
-        href: "/games/le-fisherman",
-        coverTone: "emerald",
-      },
-      {
-        id: "game-duck-hunters",
-        title: "Duck Hunters",
-        provider: "Nolimit City",
-        href: "/games/duck-hunters",
-        coverTone: "sky",
-      },
-    ],
+    viewAllHref: "/fishing",
+    games: FISHING_FEATURED_ITEMS,
   },
   {
     id: "section-sports",
     title: "กีฬา",
     icon: "football",
-    viewAllHref: "/category/sports",
-    games: [
-      {
-        id: "game-askmebet",
-        title: "askmebet",
-        provider: "askmebet",
-        href: "/sports/askmebet",
-        coverTone: "emerald",
-      },
-      {
-        id: "game-afb88",
-        title: "AFB88",
-        provider: "AFB88",
-        href: "/sports/afb88",
-        coverTone: "indigo",
-      },
-      {
-        id: "game-fb-sports",
-        title: "FB Sports",
-        provider: "FB Sports",
-        href: "/sports/fb-sports",
-        coverTone: "violet",
-      },
-    ],
+    viewAllHref: "/sport",
+    games: SPORT_FEATURED_ITEMS,
   },
 ];
 
@@ -261,7 +249,7 @@ export const PROVIDERS_DATA: ProviderItem[] = [
  */
 export const FEATURE_ACTIONS_DATA: FeatureActionItem[] = [
   { id: "feature-diamond-shop", title: "ร้านค้าเพชร", href: "/shop/diamonds", icon: "diamond-shop" },
-  { id: "feature-missions", title: "ภารกิจ", href: "/missions", icon: "missions" },
+  { id: "feature-missions", title: "ภารกิจ", href: "/missions/check-in", icon: "missions" },
   { id: "feature-prize-wheel", title: "วงล้อ", href: "/wheel", icon: "prize-wheel" },
 ];
 
@@ -302,43 +290,16 @@ export const JACKPOT_WINNERS_DATA: JackpotWinner[] = [
   },
 ];
 
-const LIVE_BETS_ROWS: HallOfFameRow[] = [
-  { id: "hof-live-1", gameName: "Sweet Bonanza", payout: 17.25, gameIcon: "cherries" },
-  { id: "hof-live-2", gameName: "Gates of Olympus", payout: 67.05, gameIcon: "cherries" },
-  { id: "hof-live-3", gameName: "Wanted Dead or a Wild", payout: 0.46, gameIcon: "flame" },
-  { id: "hof-live-4", gameName: "Sugar Rush Xmas", payout: 51.67, gameIcon: "cherries" },
-];
-
-const HIGH_ROLLERS_ROWS: HallOfFameRow[] = [
-  { id: "hof-hr-1", gameName: "Moon Rush", payout: 1240.0, gameIcon: "cherries" },
-  { id: "hof-hr-2", gameName: "Pragmatic Play Live", payout: 890.5, gameIcon: "cards" },
-  { id: "hof-hr-3", gameName: "AFB88 Sports", payout: 2100.75, gameIcon: "football" },
-];
-
-const LUCKY_WINS_ROWS: HallOfFameRow[] = [
-  { id: "hof-lw-1", gameName: "Hamster-Dam", payout: 320.12, gameIcon: "flame" },
-  { id: "hof-lw-2", gameName: "Duck Hunters", payout: 88.0, gameIcon: "fish" },
-  { id: "hof-lw-3", gameName: "Le Fisherman", payout: 156.4, gameIcon: "fish" },
-];
+export { HALL_OF_FAME_DATA } from "./hallOfFameMockData";
 
 /**
- * Hall of Fame แยก dataset ตาม tab
- * ถูกเรียกใช้โดย HallOfFame.tsx
- */
-export const HALL_OF_FAME_DATA: Record<HallOfFameTabId, HallOfFameRow[]> = {
-  "live-bets": LIVE_BETS_ROWS,
-  "high-rollers": HIGH_ROLLERS_ROWS,
-  "lucky-wins": LUCKY_WINS_ROWS,
-};
-
-/**
- * เมนูล่าง — โปรไฟล์ / ฝาก / ถอน / โบนัส / ติดต่อ
+ * เมนูล่าง — ถอน / ฝาก / เมนู (กลาง) / คืนยอด / ติดต่อ
  * ถูกเรียกใช้โดย FloatingBottomNav.tsx
  */
 export const BOTTOM_NAV_DATA: BottomNavItem[] = [
-  { id: "nav-profile", label: "โปรไฟล์", href: "/profile", icon: "profile" },
-  { id: "nav-deposit", label: "ฝากเงิน", href: "/deposit", icon: "deposit" },
   { id: "nav-withdraw", label: "ถอนเงิน", href: "/withdraw", icon: "withdraw" },
-  { id: "nav-bonus", label: "โบนัส", href: "/bonus", icon: "bonus" },
+  { id: "nav-deposit", label: "ฝากเงิน", href: "/deposit", icon: "deposit" },
+  { id: "nav-menu", label: "เมนู", href: "#menu", icon: "menu" },
+  { id: "nav-cashback", label: "คืนยอด", href: "/cashback", icon: "cashback" },
   { id: "nav-contact", label: "ติดต่อ", href: "/support", icon: "contact" },
 ];

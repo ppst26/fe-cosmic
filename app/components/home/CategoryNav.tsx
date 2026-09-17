@@ -1,67 +1,113 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { CategoryItem, CategoryId } from "../../types/lobby";
 import {
-  LobbyIcon,
-  OriginalsIcon,
-  SlotsIcon,
-  LiveCasinoIcon,
+  FishIcon,
+  FootballIcon,
   GameShowsIcon,
-  TableGamesIcon,
+  HomeNavIcon,
+  LiveCasinoIcon,
+  PromoTicketIcon,
+  SlotsIcon,
 } from "../ui/Icons";
 
 interface CategoryNavProps {
   categories: CategoryItem[];
   defaultActiveId?: CategoryId;
+  /** ซิงก์ highlight กับ sidebar / state ภายนอก (หน้าแรก desktop) */
+  activeId?: CategoryId;
   onSelectCategory?: (id: CategoryId) => void;
+  className?: string;
+  /** route = ไปหน้า /casino ฯลฯ · none = สลับ state บนหน้าเดียว (หน้าแรก) */
+  navigationMode?: "route" | "none";
 }
 
 /**
- * แมปไอคอนสำหรับแต่ละหมวดหมู่ตาม category ID
+ * ไอคอนหมวดหมู่เกม mock (คาสิโน / สล็อต / ยิงปลา / กีฬา / หวย / เกมส์)
  */
 function getCategoryIcon(id: CategoryId, className = "w-6 h-6") {
   switch (id) {
-    case "lobby":
-      return <LobbyIcon className={className} />;
-    case "originals":
-      return <OriginalsIcon className={className} />;
+    case "home":
+      return <HomeNavIcon className={className} />;
+    case "casino":
+      return <LiveCasinoIcon className={className} />;
     case "slots":
       return <SlotsIcon className={className} />;
-    case "live-casino":
-      return <LiveCasinoIcon className={className} />;
-    case "game-shows":
+    case "fishing":
+      return <FishIcon className={className} />;
+    case "sports":
+      return <FootballIcon className={className} />;
+    case "lottery":
+      return <PromoTicketIcon className={className} />;
+    case "games":
       return <GameShowsIcon className={className} />;
-    case "table-games":
-      return <TableGamesIcon className={className} />;
     default:
-      return <LobbyIcon className={className} />;
+      return <LiveCasinoIcon className={className} />;
   }
 }
 
+/** หา id ที่ตรง route ปัจจุบัน — path ยาวก่อน เพื่อไม่ให้ "/" match ทุกหน้า */
+function resolveActiveFromPath(pathname: string, categories: CategoryItem[]): CategoryId | null {
+  const sorted = [...categories].sort((a, b) => b.href.length - a.href.length);
+
+  for (const category of sorted) {
+    if (!category.href.startsWith("/")) continue;
+    if (category.href === "/") {
+      if (pathname === "/") return category.id;
+      continue;
+    }
+    if (pathname === category.href || pathname.startsWith(`${category.href}/`)) {
+      return category.id;
+    }
+  }
+  return null;
+}
+
 /**
- * CategoryNav แถบหมวดหมู่เกม 6 รายการหลัก
- * (LOBBY, ORIGINALS, SLOTS, LIVE CASINO, GAME SHOWS, TABLE GAMES)
- * รองรับการเลื่อนแนวนอน + ช่องว่างระหว่างปุ่ม (กันกดผิด); touch target ≥ 44px
+ * CategoryNav — แถบหมวดหมู่เกม (โฮม + 6 หมวด) ไอคอนบน + ข้อความไทยล่าง
  * ถูกเรียกใช้ใน app/page.tsx
  */
 export function CategoryNav({
   categories,
-  defaultActiveId = "lobby",
+  defaultActiveId = "home",
+  activeId: activeIdProp,
   onSelectCategory,
+  navigationMode = "route",
+  className = "",
 }: CategoryNavProps) {
-  const [activeId, setActiveId] = useState<CategoryId>(defaultActiveId);
+  const router = useRouter();
+  const pathname = usePathname();
+  const routeActiveId = useMemo(
+    () => resolveActiveFromPath(pathname, categories),
+    [pathname, categories],
+  );
+  const [pickedId, setPickedId] = useState<CategoryId>(defaultActiveId);
 
-  const handleCategoryClick = (id: CategoryId) => {
-    setActiveId(id);
-    if (onSelectCategory) {
-      onSelectCategory(id);
+  useEffect(() => {
+    if (activeIdProp) {
+      setPickedId(activeIdProp);
+    }
+  }, [activeIdProp]);
+
+  const activeId =
+    navigationMode === "none"
+      ? (activeIdProp ?? pickedId)
+      : (routeActiveId ?? activeIdProp ?? pickedId);
+
+  const handleCategoryClick = (category: CategoryItem) => {
+    setPickedId(category.id);
+    onSelectCategory?.(category.id);
+    if (navigationMode === "route" && category.href.startsWith("/")) {
+      if (category.href === "/" && pathname === "/") return;
+      router.push(category.href);
     }
   };
 
   return (
-    <nav className="my-3.5 w-full min-w-0 overflow-hidden" aria-label="แถบเลือกหมวดหมู่เกม">
-      <div className="flex gap-3 overflow-x-auto overscroll-x-contain scroll-smooth py-1 no-scrollbar sm:gap-3.5">
+    <nav className={`category-nav w-full min-w-0 ${className}`.trim()} aria-label="แถบเลือกหมวดหมู่เกม">
+      <div className="category-nav__track no-scrollbar">
         {categories.map((category) => {
           const isActive = category.id === activeId;
 
@@ -69,32 +115,14 @@ export function CategoryNav({
             <button
               key={category.id}
               type="button"
-              onClick={() => handleCategoryClick(category.id)}
-              className={`flex w-[76px] shrink-0 cursor-pointer select-none flex-col items-center justify-center rounded-[var(--radius-control)] px-1 py-2 transition-all duration-150 min-h-[64px] sm:min-h-[70px] sm:w-[84px] ${
-                isActive
-                  ? "text-white shadow-[0_4px_16px_rgba(32,45,101,0.5)] scale-[1.02]"
-                  : "bg-[#121127] text-[var(--icon-default)] hover:text-white hover:bg-[#19183b]"
-              }`}
-              style={
-                isActive
-                  ? { background: "var(--category-active-gradient)" }
-                  : undefined
-              }
+              onClick={() => handleCategoryClick(category)}
+              className={`category-nav__chip ${isActive ? "is-active" : ""}`}
               aria-pressed={isActive}
             >
-              {/* ไอคอนหมวดหมู่ */}
-              <div
-                className={`mb-1.5 transition-transform duration-150 ${
-                  isActive ? "text-[#efedff] scale-105" : "text-[var(--icon-default)]"
-                }`}
-              >
-                {getCategoryIcon(category.id, "w-5 h-5 sm:w-6 sm:h-6")}
-              </div>
-
-              {/* ข้อความชื่อหมวดหมู่ */}
-              <span className="text-[9.5px] sm:text-[11px] font-bold tracking-tight text-center leading-tight">
-                {category.label}
+              <span className="category-nav__icon" aria-hidden="true">
+                {getCategoryIcon(category.id, "h-[22px] w-[22px] sm:h-6 sm:w-6")}
               </span>
+              <span className="category-nav__label">{category.label}</span>
             </button>
           );
         })}

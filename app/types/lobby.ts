@@ -4,12 +4,13 @@
  */
 
 export type CategoryId =
-  | "lobby"
-  | "originals"
+  | "home"
+  | "casino"
   | "slots"
-  | "live-casino"
-  | "game-shows"
-  | "table-games";
+  | "fishing"
+  | "sports"
+  | "lottery"
+  | "games";
 
 export interface CategoryItem {
   id: CategoryId;
@@ -23,6 +24,26 @@ export interface PromoItem {
   subtitle: string;
   href: string;
   accentColor?: string;
+  /** รูปแบนเนอร์เต็มการ์ด — จาก public/HomeProBanner */
+  bannerSrc?: string;
+}
+
+/** สไลด์ Welcome Hero หน้าแรก — WelcomeBanner carousel */
+export interface WelcomeBannerSlide {
+  id: string;
+  bannerSrc: string;
+  title: string;
+  subtitle: string;
+  ctaText?: string;
+}
+
+/** สไลด์ Welcome Hero หน้าแรก — WelcomeBanner.tsx */
+export interface WelcomeBannerSlide {
+  id: string;
+  bannerSrc: string;
+  title: string;
+  subtitle: string;
+  ctaText?: string;
 }
 
 export interface HighlightItem {
@@ -31,6 +52,8 @@ export interface HighlightItem {
   type: "swipe_bet" | "event_banner";
   href: string;
   tag?: string;
+  /** รูปการ์ดเต็มช่อง — public/HomeProBanner */
+  imageSrc?: string;
 }
 
 /**
@@ -118,13 +141,19 @@ export interface JackpotWinner {
   category: JackpotCategory;
 }
 
-export type HallOfFameTabId = "live-bets" | "high-rollers" | "lucky-wins";
+export type HallOfFameTabId = "latest-winner" | "top-win-multiple";
 
-/** แถว Hall of Fame — ใช้ icon แทน thumbnail ตาม design.md */
+/** แถว Hall of Fame — แท็บ Latest Winner (payout) / Top Win Multiple (winMultiple) */
 export interface HallOfFameRow {
   id: string;
   gameName: string;
-  payout: number;
+  /** ชื่อผู้เล่นปิดบัง เช่น mfx***832 */
+  playerMasked: string;
+  payout?: number;
+  winMultiple?: number;
+  /** รูปเกมมุมซ้าย — ไม่มีใช้ gameIcon + coverTone */
+  coverSrc?: string;
+  coverTone?: "indigo" | "rose" | "emerald" | "amber" | "sky" | "violet";
   gameIcon: SectionIconId;
 }
 
@@ -132,5 +161,5 @@ export interface BottomNavItem {
   id: string;
   label: string;
   href: string;
-  icon: "profile" | "deposit" | "withdraw" | "bonus" | "contact";
+  icon: "menu" | "deposit" | "withdraw" | "cashback" | "contact";
 }
