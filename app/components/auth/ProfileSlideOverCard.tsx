@@ -64,6 +64,10 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
 
   const handleOpenLossRebate = () => {
     onClose();
+    if (getIsDesktopViewport()) {
+      openHub("cashback", { cashbackTab: "loss" });
+      return;
+    }
     router.push("/loss-rebate");
   };
 

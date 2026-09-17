@@ -22,6 +22,8 @@ import {
   type MenuDialogTile,
 } from "@/app/data/menuMockData";
 import { MenuItemIcon } from "./MenuItemIcon";
+import { HubNavLink } from "@/app/components/hub/HubNavLink";
+import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
 import { cn } from "@/lib/utils";
 
 const SIDEBAR_STORAGE_KEY = "cosmicbet-lobby-sidebar-collapsed";
@@ -87,8 +89,16 @@ function renderMenuTile(
   }
 
   if (tile.href) {
+    const linkClass = "lobby-desktop-sidebar__link";
+    if (hrefToHubId(tile.href)) {
+      return (
+        <HubNavLink href={tile.href} className={linkClass} title={tile.label}>
+          {inner}
+        </HubNavLink>
+      );
+    }
     return (
-      <Link href={tile.href} className="lobby-desktop-sidebar__link" title={tile.label}>
+      <Link href={tile.href} className={linkClass} title={tile.label}>
         {inner}
       </Link>
     );
