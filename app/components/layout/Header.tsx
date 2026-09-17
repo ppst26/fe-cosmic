@@ -3,11 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { HubNavLink } from "../hub/HubNavLink";
 import {
   CosmicbetLogo,
-  GiftIcon,
-  HamburgerMenuIcon,
   HeaderWalletIcon,
   ProfileNavIcon,
 } from "../ui/Icons";
@@ -26,15 +23,13 @@ const GEMS_ASSET_SRC = "/assets/gems/gems.webp";
 interface HeaderProps {
   onLoginClick?: () => void;
   onSignUpClick?: () => void;
-  /** Desktop lg+ — ปุ่มเมนูซ้าย (เช่น toggle sidebar หน้า lobby) */
-  onDesktopMenuClick?: () => void;
 }
 
 /**
- * Header — มือถือ: notch · Desktop lg+: แถบเต็มความกว้าง (โลโก้ซ้าย · กระเป๋า/ฝาก/Gems/โปรไฟล์ขวา)
- * ใช้ใน page หลักและหน้าหมวดเกม
+ * Header — มือถือ: notch · Desktop lg+: แถบเต็มความกว้าง (โฮม: พื้นหลังเต็มจอ · เนื้อหาใน __inner กว้างเท่า lobby frame)
+ * ย่อ/ขยาย sidebar ใช้ปุ่มที่แถบซ้ายล่าง — ไม่มี hamburger ใน header
  */
-export function Header({ onLoginClick, onSignUpClick, onDesktopMenuClick }: HeaderProps) {
+export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
   const { isAuthenticated, isLoading, user, openProfile, closeProfile, isProfileOpen } =
     useAuth();
   const { openDeposit } = useDeposit();
@@ -132,16 +127,6 @@ export function Header({ onLoginClick, onSignUpClick, onDesktopMenuClick }: Head
       <header className="header-desktop-bar hidden lg:block">
         <div className="header-desktop-bar__inner">
           <div className="header-desktop-bar__start">
-            {onDesktopMenuClick ? (
-              <button
-                type="button"
-                className="header-desktop-bar__menu-btn"
-                aria-label="เปิด/ปิดเมนูด้านซ้าย"
-                onClick={onDesktopMenuClick}
-              >
-                <HamburgerMenuIcon className="h-5 w-5" />
-              </button>
-            ) : null}
             <Link
               href="/"
               className="header-desktop-bar__logo outline-none transition-transform hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
@@ -152,14 +137,6 @@ export function Header({ onLoginClick, onSignUpClick, onDesktopMenuClick }: Head
           </div>
 
           <div className="header-desktop-bar__end">
-            <HubNavLink
-              href="/promotions"
-              className="header-desktop-bar__icon-btn"
-              aria-label="โปรโมชั่น"
-            >
-              <GiftIcon className="h-[18px] w-[18px]" />
-            </HubNavLink>
-
             {isLoading ? (
               <div
                 className="h-11 w-48 animate-pulse rounded-[var(--radius-pill)] bg-[var(--surface-hover)]"
@@ -168,9 +145,6 @@ export function Header({ onLoginClick, onSignUpClick, onDesktopMenuClick }: Head
             ) : showWallet ? (
               <>
                 <div className="header-desktop-bar__stat" aria-live="polite">
-                  <span className="header-desktop-bar__stat-icon header-desktop-bar__stat-icon--wallet">
-                    <HeaderWalletIcon className="h-4 w-4" />
-                  </span>
                   <span className="header-desktop-bar__stat-text">
                     <span className="header-desktop-bar__stat-label">THB</span>
                     <span className="header-desktop-bar__stat-value">{balanceLabel}</span>
@@ -243,34 +217,17 @@ export function Header({ onLoginClick, onSignUpClick, onDesktopMenuClick }: Head
 
             <button
               type="button"
-              className="header-desktop-bar__icon-btn"
-              aria-label="การแจ้งเตือน"
+              onClick={handleProfileClick}
+              className={`header-desktop-bar__icon-btn${isProfileOpen ? " is-active" : ""}`}
+              aria-label="โปรไฟล์"
+              aria-expanded={isProfileOpen}
+              aria-haspopup="dialog"
             >
-              <HeaderBellIcon />
-              <span className="header-desktop-bar__badge" aria-hidden />
+              <ProfileNavIcon className="h-[18px] w-[18px]" />
             </button>
           </div>
         </div>
       </header>
     </>
-  );
-}
-
-function HeaderBellIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" aria-hidden>
-      <path
-        d="M12 3a4.5 4.5 0 0 0-4.5 4.5v2.1c0 .5-.2 1-.55 1.35L5.8 13.2A1.2 1.2 0 0 0 6.75 15h10.5a1.2 1.2 0 0 0 .95-1.8l-1.15-2.25a2 2 0 0 1-.55-1.35V7.5A4.5 4.5 0 0 0 12 3Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 17a2 2 0 0 0 4 0"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }

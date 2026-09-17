@@ -43,7 +43,7 @@ import {
 
 /**
  * Cosmicbet Home Lobby Page
- * มือถือ: design.md หมวด 5 · Desktop (lg+): mock 3 คอลัมน์ sidebar · กลาง · แถบขวา
+ * มือถือ: design.md หมวด 5 · Desktop (lg+): frame กลาง max 1680 — sidebar · main · แถบขวา
  */
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -72,12 +72,11 @@ export default function HomePage() {
       <div
         className={`lobby-desktop-shell${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
       >
-        <Header
-          onSignUpClick={openSignUp}
-          onLoginClick={openLogin}
-          onDesktopMenuClick={() => setSidebarCollapsed(!isSidebarCollapsed)}
-        />
+        <div className="lobby-desktop-shell__header-band">
+          <Header onSignUpClick={openSignUp} onLoginClick={openLogin} />
+        </div>
 
+        <div className="lobby-desktop-shell__frame">
         <div className="lobby-desktop-shell__row">
           <LobbyDesktopSidebar
             categories={CATEGORIES_DATA}
@@ -185,6 +184,7 @@ export default function HomePage() {
             <LobbyDesktopRightRail onMenuAction={handleSidebarMenuAction} />
             </div>
           </div>
+        </div>
         </div>
       </div>
     </>
