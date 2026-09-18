@@ -115,9 +115,9 @@
   --header-top-line: color-mix(in srgb, var(--border-active) 38%, var(--border-subtle));
 
   /* Menu dialog (RightMenuDrawer) — mock ติ่ง「เมนู」+ panel ชิดเหนือ bottom nav */
-  --menu-top: #19183b;
-  /* พื้น panel เมนู (RightMenuDrawer) — ตรงกับ shell dialog */
-  --menu-panel-bg: var(--cosmic-dialog-shell-bg);
+  /* พื้น panel เมนู — โทนเดียวกับ .cosmic-bg */
+  --menu-top: var(--cosmic-page-base);
+  --menu-panel-bg: var(--cosmic-page-base);
   --menu-bottom: #0d0c20;
   --menu-border: #a483ee;
   --menu-text: #f5f2ff;
@@ -593,7 +593,7 @@ html {
  */
 .cosmic-bg {
   min-height: 100dvh;
-  background-color: #0d0814;
+  background-color: var(--cosmic-page-base);
   background-image:
     radial-gradient(
       ellipse 55% 38% at 42% 0%,
@@ -2204,18 +2204,37 @@ body {
     inset 0 1px 0 rgb(255 255 255 / 4%);
 }
 
-/** พื้นผิว glass — panel เมนูมือถือ (RightMenuDrawer) */
+/** Panel เมนูมือถือ — พื้น cosmic-bg · ช่องเมนูยังเป็น glass-menu-tile */
 .menu-panel.glass-menu-panel {
-  --menu-top: rgb(42 38 66 / 0.82);
+  --menu-top: var(--cosmic-page-base);
   overflow: hidden;
-  background: rgb(255 255 255 / 0.08);
-  -webkit-backdrop-filter: blur(23px) saturate(1.18);
-  backdrop-filter: blur(23px) saturate(1.18);
-  border: 1px solid rgb(255 255 255 / 0.26);
-  box-shadow:
-    0 24px 64px rgb(0 0 0 / 0.48),
-    inset 0 1px 0 rgb(255 255 255 / 0.38),
-    inset 0 -1px 0 rgb(255 255 255 / 0.06);
+  background-color: var(--cosmic-page-base);
+  background-image:
+    radial-gradient(
+      ellipse 55% 38% at 42% 0%,
+      rgba(65, 19, 100, 0.28),
+      transparent 75%
+    ),
+    radial-gradient(
+      ellipse 42% 32% at 75% 0%,
+      rgba(83, 14, 53, 0.22),
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 30% 32% at 29% 55%,
+      rgba(26, 49, 80, 0.38),
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 32% 34% at 65% 54%,
+      rgba(48, 22, 79, 0.32),
+      transparent 80%
+    );
+  background-repeat: no-repeat;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: 0;
+  box-shadow: 0 24px 64px rgb(0 0 0 / 0.48);
 }
 
 .menu-panel.glass-menu-panel::before {
@@ -2236,11 +2255,11 @@ body {
 }
 
 .menu-panel.glass-menu-panel .menu-tab {
-  -webkit-backdrop-filter: blur(23px) saturate(1.18);
-  backdrop-filter: blur(23px) saturate(1.18);
-  border: 1px solid rgb(255 255 255 / 0.26);
-  border-bottom: 0;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28);
+  background: var(--menu-top);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: 0;
+  box-shadow: none;
 }
 
 .menu-tab {
@@ -2799,51 +2818,46 @@ body {
   }
 }
 
-/* แถบมินิมอลค้นหา + ตัวกรองหมวดย่อย (ค่ายเกม) */
+/* แถบค้นหา + ตัวกรองหมวดย่อย (ค่ายเกม) — glass-control */
 .provider-category-toolbar {
   margin-block: 0 0.625rem;
 }
 
-.provider-category-toolbar__actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+.provider-category-toolbar .glass-control {
+  border: 0;
+  border-radius: var(--radius-sm);
+  box-shadow: none;
 }
 
-.provider-category-toolbar__icon-btn {
-  display: inline-flex;
+.provider-category-toolbar .glass-control:hover:not(:disabled):not(.is-active) {
+  border: 0;
+}
+
+.provider-category-toolbar .glass-control.is-filter-active,
+.provider-category-toolbar .glass-control.is-active {
+  border: 0;
+  color: var(--icon-active);
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.28),
+    rgb(90 70 130 / 0.18)
+  );
+}
+
+.provider-category-toolbar__mobile-row {
+  display: flex;
+  min-width: 0;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+}
+
+.provider-category-toolbar__filter-btn {
   width: 44px;
   height: 44px;
   flex-shrink: 0;
-  border: 0;
-  border-radius: 9999px;
-  background: color-mix(in srgb, var(--surface-mid) 88%, #000);
+  border-radius: var(--radius-sm);
   color: var(--text-secondary);
   cursor: pointer;
-  transition:
-    color 160ms ease,
-    background 160ms ease,
-    box-shadow 160ms ease;
-}
-
-.provider-category-toolbar__icon-btn:hover {
-  color: var(--text-primary);
-  background: var(--surface-hover);
-}
-
-.provider-category-toolbar__icon-btn.is-filter-active {
-  color: var(--nav-active);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--border-active) 55%, transparent);
-}
-
-.provider-category-toolbar__search-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  animation: provider-toolbar-search-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .provider-category-toolbar__search-field {
@@ -2854,8 +2868,8 @@ body {
   gap: 10px;
   height: 44px;
   padding-inline: 14px;
-  border-radius: 9999px;
-  background: #1d1c2b;
+  border-radius: var(--radius-sm);
+  background: var(--glass-fill-subtle);
 }
 
 .provider-category-toolbar__search-input {
@@ -2874,23 +2888,6 @@ body {
   color: var(--text-muted);
 }
 
-.provider-category-toolbar__cancel {
-  flex-shrink: 0;
-  border: 0;
-  background: transparent;
-  padding: 8px 2px;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: color 160ms ease;
-}
-
-.provider-category-toolbar__cancel:hover {
-  color: var(--text-primary);
-}
-
 @media (min-width: 1024px) {
   .provider-category-toolbar__desktop-row {
     align-items: center;
@@ -2902,8 +2899,6 @@ body {
     min-width: 0;
     height: 46px;
     padding-inline: 16px;
-    border: 0;
-    background: color-mix(in srgb, var(--surface-hover) 78%, var(--surface-mid));
   }
 
   .provider-category-toolbar__pill-btn {
@@ -2914,9 +2909,7 @@ body {
     gap: 8px;
     height: 46px;
     padding-inline: 16px;
-    border: 0;
-    border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--surface-hover) 78%, var(--surface-mid));
+    border-radius: var(--radius-sm);
     font: inherit;
     font-size: 11px;
     font-weight: 800;
@@ -2931,12 +2924,6 @@ body {
 
   .provider-category-toolbar__pill-btn:hover {
     color: var(--text-primary);
-    background: var(--surface-hover);
-  }
-
-  .provider-category-toolbar__pill-btn.is-filter-active {
-    color: var(--icon-active);
-    background: color-mix(in srgb, var(--action-solid) 22%, var(--surface-hover));
   }
 }
 
