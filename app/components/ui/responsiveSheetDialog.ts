@@ -33,7 +33,7 @@ export function responsiveSheetContentClass(
           : "lg:w-[min(92vw,440px)]";
 
   return cn(
-    "cosmic-modal-shell fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
+    "cosmic-mobile-sheet cosmic-modal-shell fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
     "rounded-t-[20px] border-t border-[var(--border-subtle)]/50 bg-[#121127]/98",
     "px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)]",
     "shadow-[0_-16px_48px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:px-5",
@@ -52,6 +52,19 @@ export function responsiveSheetContentClass(
 /** มือถือ — แถบลาก sheet · desktop ซ่อน */
 export const RESPONSIVE_SHEET_HANDLE_CLASS =
   "mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-white/20 lg:hidden";
+
+/**
+ * ปุ่มปิด sheet — ไม่ใช้ Tailwind ring (โฟกัสดูแลใน globals ภายใน .cosmic-mobile-sheet)
+ */
+export function responsiveSheetCloseButtonClass(extra?: string) {
+  return cn(
+    "flex h-9 w-9 items-center justify-center rounded-full",
+    "bg-[var(--surface-hover)]/90 text-[var(--text-primary)]",
+    "transition-colors hover:bg-[var(--surface-selected)]",
+    "outline-none focus-visible:outline-none",
+    extra,
+  );
+}
 
 /** cosmic-sheet-shell + responsive modal desktop */
 export function responsiveAuthSheetContentClass(extra?: string) {

@@ -28,13 +28,26 @@ import { BonusNavIcon } from "../ui/Icons";
 export function ReferralEarningPanel({
   summary = REFERRAL_EARNING_SUMMARY_MOCK,
   history = REFERRAL_EARNING_HISTORY_MOCK,
+  showSummary = true,
+  sectionTitle = "ประวัติรับโบนัส",
+  received: receivedProp,
+  claimable: claimableProp,
+  onClaim,
 }: {
   summary?: ReferralEarningSummaryMock;
   history?: ReferralEarningHistoryRow[];
+  showSummary?: boolean;
+  sectionTitle?: string;
+  received?: number;
+  claimable?: number;
+  onClaim?: () => void;
 }) {
   const [page, setPage] = useState(1);
-  const [claimable, setClaimable] = useState(summary.bonusClaimableThb);
-  const [received, setReceived] = useState(summary.bonusReceivedThb);
+  const [claimableInternal, setClaimableInternal] = useState(summary.bonusClaimableThb);
+  const [receivedInternal, setReceivedInternal] = useState(summary.bonusReceivedThb);
+
+  const claimable = claimableProp ?? claimableInternal;
+  const received = receivedProp ?? receivedInternal;
 
   const total = history.length;
   const pageSize = REFERRAL_EARNING_PAGE_SIZE;
@@ -46,6 +59,10 @@ export function ReferralEarningPanel({
     return history.slice(start, start + pageSize);
   }, [history, currentPage, pageSize]);
 
+  React.useEffect(() => {
+    setPage(1);
+  }, [history]);
+
   const rangeStart = total === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const rangeEnd = Math.min(currentPage * pageSize, total);
 
@@ -55,12 +72,17 @@ export function ReferralEarningPanel({
 
   const handleClaimBonus = () => {
     if (claimable <= 0) return;
-    setReceived((prev) => prev + claimable);
-    setClaimable(0);
+    if (onClaim) {
+      onClaim();
+      return;
+    }
+    setReceivedInternal((prev) => prev + claimable);
+    setClaimableInternal(0);
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex min-h-0 flex-col gap-3">
+      {showSummary ? (
       <div className="flex flex-col gap-2.5">
         <EarningSummaryCard
           icon={<WalletCheckIcon className="h-7 w-7 text-[#c4b5fd]" />}
@@ -87,8 +109,16 @@ export function ReferralEarningPanel({
           }
         />
       </div>
+      ) : (
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm font-extrabold text-[var(--text-primary)]">{sectionTitle}</h2>
+          <p className="text-[11px] text-[var(--text-muted)]">
+            รับสะสม {formatReferralCurrency(received)}
+          </p>
+        </div>
+      )}
 
-      <section className="cosmic-inset-card bg-[var(--surface-hover)]/25">
+      <section className="hub-desktop-card cosmic-inset-card min-h-0">
         <Table className="text-sm">
           <TableHeader>
             <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">

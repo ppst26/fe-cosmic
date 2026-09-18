@@ -42,7 +42,7 @@ interface LobbyDesktopSidebarProps {
 }
 
 /** ไอคอนหมวด — ใช้ชุดเดียวกับ CategoryNav */
-function getCategoryIcon(id: CategoryId, className = "h-5 w-5") {
+function getCategoryIcon(id: CategoryId, className = "h-[18px] w-[18px]") {
   switch (id) {
     case "home":
       return <HomeNavIcon className={className} />;
@@ -72,7 +72,7 @@ function renderMenuTile(
   const inner = (
     <>
       <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
-        <MenuItemIcon iconId={tile.iconId} className="h-6 w-6 shrink-0 text-current" />
+        <MenuItemIcon iconId={tile.iconId} className="h-[18px] w-[18px] shrink-0 text-current" />
       </span>
       <span className="lobby-desktop-sidebar__link-label">{tile.label}</span>
     </>
@@ -153,8 +153,9 @@ export function LobbyDesktopSidebar({
         className={cn("lobby-desktop-sidebar", collapsed && "is-collapsed")}
         data-collapsed={collapsed ? "true" : "false"}
       >
+      <div className="lobby-desktop-sidebar__body">
       <nav
-        className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--primary min-h-0 flex-1 overflow-y-auto"
+        className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--primary"
         aria-label="หมวดเกม"
       >
         <p className="lobby-desktop-sidebar__section-label">เกม</p>
@@ -174,7 +175,7 @@ export function LobbyDesktopSidebar({
                   title={category.label}
                 >
                   <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
-                    {getCategoryIcon(category.id, "h-6 w-6")}
+                    {getCategoryIcon(category.id)}
                   </span>
                   <span className="lobby-desktop-sidebar__link-label">{category.label}</span>
                 </button>
@@ -207,7 +208,7 @@ export function LobbyDesktopSidebar({
           <li>
             <Link href="/support" className="lobby-desktop-sidebar__link" title="ติดต่อเรา">
               <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
-                <ContactNavIcon className="h-6 w-6" />
+                <ContactNavIcon className="h-[18px] w-[18px]" />
               </span>
               <span className="lobby-desktop-sidebar__link-label">ติดต่อเรา</span>
             </Link>
@@ -221,7 +222,7 @@ export function LobbyDesktopSidebar({
                 onClick={onLogout}
               >
                 <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
-                  <LogOutIcon className="h-6 w-6" />
+                  <LogOutIcon className="h-[18px] w-[18px]" />
                 </span>
                 <span className="lobby-desktop-sidebar__link-label">ออกจากระบบ</span>
               </button>
@@ -229,6 +230,7 @@ export function LobbyDesktopSidebar({
           ) : null}
         </ul>
       </nav>
+      </div>
 
       <div className="lobby-desktop-sidebar__foot">
         <button

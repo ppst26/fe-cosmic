@@ -45,4 +45,4 @@ export const FOOTER_LEGAL_LINKS: FooterNavLink[] = [
 
 export const FOOTER_COPYRIGHT = "© 2026 cosmicbet. All rights reserved.";
 
-export const FOOTER_TAGLINE = "อีกมิติของความบันเทิง\nรวมเกมและกิจกรรมไว้ในที่เดียว";
+export const FOOTER_TAGLINE = "รวมเกมและกิจกรรมไว้ในที่เดียว";

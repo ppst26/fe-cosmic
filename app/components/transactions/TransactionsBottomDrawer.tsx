@@ -11,6 +11,7 @@ import { TransactionKindTabs } from "./TransactionKindTabs";
 import { TransactionList } from "./TransactionList";
 import { CloseIcon } from "../ui/Icons";
 import {
+  responsiveSheetCloseButtonClass,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
@@ -59,7 +60,7 @@ export function TransactionsBottomDrawer({
           <Dialog.Close asChild>
             <button
               type="button"
-              className="absolute right-3 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface-hover)]/90 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-selected)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+              className={responsiveSheetCloseButtonClass("absolute right-3 top-4 z-20")}
               aria-label="ปิดรายการธุรกรรม"
             >
               <CloseIcon className="h-4 w-4" />

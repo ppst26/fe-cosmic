@@ -13,6 +13,7 @@ import {
 import { ChevronRightIcon, CloseIcon } from "../ui/Icons";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
+  responsiveSheetCloseButtonClass,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
@@ -98,7 +99,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
             <Dialog.Close asChild>
               <button
                 type="button"
-                className="absolute right-0 top-0 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface-hover)]/90 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-selected)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+                className={responsiveSheetCloseButtonClass("absolute right-0 top-0")}
                 aria-label="ปิดหน้าถอนเงิน"
               >
                 <CloseIcon className="h-4 w-4" />

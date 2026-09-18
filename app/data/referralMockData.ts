@@ -153,3 +153,44 @@ export function formatReferralEarningDateTime(iso: string): string {
 export function formatReferralRecordCount(value: number): string {
   return `${new Intl.NumberFormat("th-TH").format(value)} รายการ`;
 }
+
+/** ช่วงเวลาฟิลเตอร์รายได้ — dialog desktop แนะนำเพื่อน */
+export type ReferralEarningPeriodId = "all" | "today" | "week" | "month";
+
+export const REFERRAL_EARNING_PERIOD_OPTIONS: { id: ReferralEarningPeriodId; label: string }[] = [
+  { id: "all", label: "ทั้งหมด" },
+  { id: "today", label: "วันนี้" },
+  { id: "week", label: "สัปดาห์ที่แล้ว" },
+  { id: "month", label: "เดือนที่แล้ว" },
+];
+
+function startOfLocalDay(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+/** กรองประวัติรายได้ตามช่วงเวลา (mock client-side) */
+export function filterReferralEarningHistoryByPeriod(
+  rows: ReferralEarningHistoryRow[],
+  period: ReferralEarningPeriodId,
+  now: Date = new Date(),
+): ReferralEarningHistoryRow[] {
+  if (period === "all") return rows;
+
+  const todayStart = startOfLocalDay(now).getTime();
+  const msDay = 24 * 60 * 60 * 1000;
+
+  return rows.filter((row) => {
+    const at = new Date(row.occurredAt).getTime();
+    if (period === "today") {
+      return at >= todayStart;
+    }
+    if (period === "week") {
+      const weekStart = todayStart - 7 * msDay;
+      const weekEnd = todayStart;
+      return at >= weekStart && at < weekEnd;
+    }
+    const monthStart = todayStart - 30 * msDay;
+    const monthEnd = todayStart - 7 * msDay;
+    return at >= monthStart && at < monthEnd;
+  });
+}

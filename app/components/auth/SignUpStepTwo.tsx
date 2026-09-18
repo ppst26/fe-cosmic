@@ -82,7 +82,7 @@ function SignUpPickerTrigger({
         id={id}
         aria-labelledby={`${id}-label`}
         onClick={onClick}
-        className="flex h-12 w-full items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3 text-left outline-none focus-visible:ring-1 focus-visible:ring-[var(--focus-ring)]"
+        className="flex h-12 w-full items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3 text-left outline-none focus-visible:outline-none"
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)] text-[var(--icon-default)]">
           {icon}

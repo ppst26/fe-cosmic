@@ -7,14 +7,16 @@ import {
   REFERRAL_MOCK_REF_CODE,
   REFERRAL_STATS_MOCK,
   REFERRAL_STEPS,
-  buildReferralLink,
-  formatReferralCount,
-  formatReferralCurrency,
 } from "@/app/data/referralMockData";
-import { CopyIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
+import { UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 import { ReferralUsersPanel } from "./ReferralUsersPanel";
 import { ReferralEarningPanel } from "./ReferralEarningPanel";
-
+import { ReferralDesktopHubLayout } from "./ReferralDesktopHubLayout";
+import {
+  ReferralLinkSection,
+  ReferralPromoBanner,
+  ReferralStatsSection,
+} from "./ReferralOverviewSections";
 type ReferralTabId = "overview" | "users" | "earning";
 
 const TABS: { id: ReferralTabId; label: string }[] = [
@@ -44,7 +46,7 @@ function TabIcon({ tab }: { tab: ReferralTabId }) {
 }
 
 /**
- * เนื้อหาหน้าแนะนำเพื่อน — ใช้ใน /referral
+ * เนื้อหาหน้าแนะนำเพื่อน — ใช้ใน /referral และ DesktopHubModal
  */
 export function ReferralPageContent({
   refCode = REFERRAL_MOCK_REF_CODE,
@@ -55,12 +57,11 @@ export function ReferralPageContent({
 }) {
   const [tab, setTab] = useState<ReferralTabId>("overview");
   const [copied, setCopied] = useState(false);
-  const referralLink = buildReferralLink(refCode);
   const stats = REFERRAL_STATS_MOCK;
 
-  const handleCopy = async () => {
+  const handleCopy = async (link: string) => {
     try {
-      await navigator.clipboard.writeText(referralLink);
+      await navigator.clipboard.writeText(link);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -68,9 +69,59 @@ export function ReferralPageContent({
     }
   };
 
+  if (embedded) {
+    return (
+      <>
+        <div className="hidden lg:block">
+          <ReferralDesktopHubLayout refCode={refCode} />
+        </div>
+        <div className="lg:hidden">
+          <ReferralMobileTabs
+            refCode={refCode}
+            tab={tab}
+            setTab={setTab}
+            copied={copied}
+            onCopy={(link) => void handleCopy(link)}
+            stats={stats}
+          />
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <ReferralMobileTabs
+      refCode={refCode}
+      tab={tab}
+      setTab={setTab}
+      copied={copied}
+      onCopy={(link) => void handleCopy(link)}
+      stats={stats}
+      showPageTitle
+    />
+  );
+}
+
+function ReferralMobileTabs({
+  refCode,
+  tab,
+  setTab,
+  copied,
+  onCopy,
+  stats,
+  showPageTitle = false,
+}: {
+  refCode: string;
+  tab: ReferralTabId;
+  setTab: (tab: ReferralTabId) => void;
+  copied: boolean;
+  onCopy: (link: string) => void;
+  stats: typeof REFERRAL_STATS_MOCK;
+  showPageTitle?: boolean;
+}) {
   return (
     <div className="flex flex-col gap-5 pb-4">
-      {!embedded ? (
+      {showPageTitle ? (
         <div>
           <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">
             แนะนำเพื่อน
@@ -108,101 +159,9 @@ export function ReferralPageContent({
 
       {tab === "overview" && (
         <div className="flex flex-col gap-5">
-          <section
-            className="relative overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 px-4 py-5 sm:px-5 sm:py-6"
-            aria-label="โปรโมชันแนะนำเพื่อน"
-          >
-            <div
-              className="pointer-events-none absolute inset-0 opacity-95"
-              style={{
-                background:
-                  "radial-gradient(ellipse 80% 70% at 70% 40%, rgba(124,108,255,0.35) 0%, rgba(13,12,34,0.95) 55%, rgba(9,11,24,1) 100%)",
-              }}
-            />
-            <div className="relative z-[1] flex gap-3">
-              <div className="min-w-0 flex-1">
-                <h2 className="text-lg font-extrabold leading-snug text-[var(--text-primary)] sm:text-xl">
-                  ชวนเพื่อน รับรายได้ 2 ต่อ
-                </h2>
-                <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
-                  แชร์ลิงก์ให้เพื่อน แล้วรับส่วนแบ่งจากยอดเล่น
-                </p>
-                <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--border-active)]">
-                  Play together · Earn together
-                </p>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#ffe66d]">
-                  More play · More rewards
-                </p>
-              </div>
-              <div className="relative hidden w-24 shrink-0 sm:block sm:w-28" aria-hidden="true">
-                <div className="absolute inset-0 rounded-full bg-violet-500/20 blur-2xl" />
-                <svg viewBox="0 0 120 120" className="relative h-full w-full drop-shadow-[0_8px_24px_rgba(124,108,255,0.45)]">
-                  <path
-                    d="M35 85 45 35h30l10 50H35Z"
-                    fill="url(#refMegaphone)"
-                    stroke="#c4b5fd"
-                    strokeWidth="2"
-                  />
-                  <path d="M75 45 95 35v50L75 75Z" fill="#7c6cff" opacity="0.9" />
-                  <circle cx="92" cy="28" r="8" fill="#4ade80" opacity="0.9" />
-                  <circle cx="100" cy="52" r="6" fill="#facc15" opacity="0.85" />
-                  <defs>
-                    <linearGradient id="refMegaphone" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#a78bfa" />
-                      <stop offset="100%" stopColor="#5b21b6" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <p className="mb-2 text-sm font-bold text-[var(--text-primary)]">ลิงก์แนะนำของคุณ</p>
-            <div className="flex gap-2">
-              <div className="min-w-0 flex-1 truncate rounded-[var(--radius-control)] bg-[var(--surface-hover)]/50 px-3 py-2.5 text-xs text-[var(--text-secondary)] sm:text-sm">
-                {referralLink}
-              </div>
-              <button
-                type="button"
-                onClick={() => void handleCopy()}
-                className="cosmic-action-btn flex shrink-0 items-center gap-1.5 px-3.5 py-2.5 text-xs sm:text-sm"
-              >
-                <CopyIcon className="h-4 w-4" />
-                {copied ? "คัดลอกแล้ว" : "Copy"}
-              </button>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="mb-3 text-sm font-extrabold text-[var(--text-primary)]">สถิติของคุณ</h2>
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-              <StatCard
-                icon={<UsersGroupIcon className="h-5 w-5 text-[var(--border-active)]" />}
-                label="เพื่อนที่สมัคร"
-                value={formatReferralCount(stats.friendsCount)}
-              />
-              <StatCard
-                icon={<WalletCryptoIcon className="h-5 w-5 text-[var(--border-active)]" />}
-                label="ยอดเล่นรวม"
-                value={formatReferralCurrency(stats.totalTurnoverThb)}
-                valueClassName="text-[var(--success)]"
-              />
-              <StatCard
-                icon={
-                  <svg viewBox="0 0 24 24" className="h-5 w-5 text-[var(--border-active)]" aria-hidden="true">
-                    <path
-                      d="M4 18V6h16v12H4Zm2-2h12V8H6v8Zm2-6h2v4H8v-4Zm4 0h4v4h-4v-4Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                }
-                label="รายได้สะสม"
-                value={formatReferralCurrency(stats.totalEarningsThb)}
-                valueClassName="text-[#c4b5fd]"
-              />
-            </div>
-          </section>
+          <ReferralPromoBanner />
+          <ReferralLinkSection refCode={refCode} copied={copied} onCopy={onCopy} />
+          <ReferralStatsSection stats={stats} />
 
           <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-4 py-4">
             <h2 className="text-sm font-extrabold text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
@@ -230,9 +189,7 @@ export function ReferralPageContent({
                   key={line}
                   className="flex items-center gap-1.5 text-[11px] text-[var(--text-secondary)]"
                 >
-                  <span className="text-[var(--success)]" aria-hidden="true">
-                    ✓
-                  </span>
+                  <span className="text-[var(--success)]" aria-hidden="true">✓</span>
                   {line}
                 </li>
               ))}
@@ -250,11 +207,6 @@ export function ReferralPageContent({
                     {String(index + 1).padStart(2, "0")}
                   </div>
                   <p className="mt-2 text-[11px] font-semibold text-[var(--text-primary)]">{step.label}</p>
-                  {index < REFERRAL_STEPS.length - 1 && (
-                    <span className="mt-1 hidden text-[var(--text-muted)] sm:inline" aria-hidden="true">
-                      ›
-                    </span>
-                  )}
                 </div>
               ))}
             </div>
@@ -265,30 +217,6 @@ export function ReferralPageContent({
       {tab === "users" && <ReferralUsersPanel />}
 
       {tab === "earning" && <ReferralEarningPanel />}
-    </div>
-  );
-}
-
-function StatCard({
-  icon,
-  label,
-  value,
-  valueClassName = "text-[var(--text-primary)]",
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  valueClassName?: string;
-}) {
-  return (
-    <div className="flex items-center gap-3 rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/35 px-3 py-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]">
-        {icon}
-      </div>
-      <div className="min-w-0">
-        <p className="text-[11px] text-[var(--text-muted)]">{label}</p>
-        <p className={`text-sm font-extrabold tabular-nums ${valueClassName}`}>{value}</p>
-      </div>
     </div>
   );
 }

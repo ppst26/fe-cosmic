@@ -33,13 +33,13 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${notoSansThai.variable} ${geistMono.variable} dark h-full antialiased`}
+      className={`${notoSansThai.variable} ${geistMono.variable} dark cosmic-page h-full antialiased`}
     >
-      <body className="flex min-h-full min-w-0 flex-col text-[var(--text-primary)]">
+      <body className="flex min-h-dvh min-w-0 flex-col text-[var(--text-primary)]">
         <AppProviders>
-          <div className="flex min-h-full min-w-0 flex-1 flex-col">
-            {children}
-            <CosmicFooter className="mt-auto" />
+          <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
+            <div className="flex min-h-0 min-w-0 flex-1 flex-col">{children}</div>
+            <CosmicFooter />
           </div>
         </AppProviders>
       </body>

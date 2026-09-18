@@ -18,7 +18,11 @@ import {
   SignUpPickerSheet,
 } from "./SignUpPickerSheet";
 import { SIGNUP_BANKS, SIGNUP_CHANNELS } from "../../data/signupMockData";
-import { responsiveAuthSheetContentClass, responsiveSheetOverlayClass } from "../ui/responsiveSheetDialog";
+import {
+  responsiveAuthSheetContentClass,
+  responsiveSheetCloseButtonClass,
+  responsiveSheetOverlayClass,
+} from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
 
 interface SignUpBottomDrawerProps {
@@ -352,9 +356,9 @@ export function SignUpBottomDrawer({
           <Dialog.Close asChild>
             <button
               type="button"
-              className={`absolute right-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface-hover)]/90 text-[var(--text-primary)] backdrop-blur-sm transition-colors hover:bg-[var(--surface-selected)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
-                step === 1 ? "top-3" : "top-4"
-              }`}
+              className={responsiveSheetCloseButtonClass(
+                `absolute right-3 z-20 backdrop-blur-sm ${step === 1 ? "top-3" : "top-4"}`,
+              )}
               aria-label="ปิดหน้าสมัครสมาชิก"
             >
               <CloseIcon className="h-4 w-4" />

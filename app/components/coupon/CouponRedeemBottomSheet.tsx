@@ -5,6 +5,7 @@ import { Dialog } from "radix-ui";
 import { CloseIcon, PromoTicketIcon } from "../ui/Icons";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
+  responsiveSheetCloseButtonClass,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
@@ -76,7 +77,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
           <Dialog.Close asChild>
             <button
               type="button"
-              className="absolute right-3 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface-hover)]/90 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-selected)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+              className={responsiveSheetCloseButtonClass("absolute right-3 top-4")}
               aria-label="ปิดหน้าแลกคูปอง"
             >
               <CloseIcon className="h-4 w-4" />

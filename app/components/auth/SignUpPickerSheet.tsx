@@ -48,7 +48,7 @@ export function SignUpPickerSheet({
         role="dialog"
         aria-modal="true"
         aria-label={ariaLabel}
-        className="relative z-10 flex max-h-[min(72dvh,520px)] w-full flex-col overflow-hidden rounded-t-[var(--radius-panel)] bg-[var(--surface-mid)] pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-8px_32px_rgba(0,0,0,0.45)] animate-in slide-in-from-bottom duration-300 lg:max-h-[min(70dvh,420px)] lg:max-w-sm lg:rounded-[var(--radius-panel)] lg:shadow-[0_0_32px_rgba(119,112,183,0.18),0_16px_40px_rgba(0,0,0,0.5)] lg:zoom-in-95"
+        className="sign-up-picker-sheet relative z-10 flex max-h-[min(72dvh,520px)] w-full flex-col overflow-hidden rounded-t-[var(--radius-panel)] bg-[var(--surface-mid)] pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-8px_32px_rgba(0,0,0,0.45)] animate-in slide-in-from-bottom duration-300 lg:max-h-[min(70dvh,420px)] lg:max-w-sm lg:rounded-[var(--radius-panel)] lg:shadow-[0_0_32px_rgba(119,112,183,0.18),0_16px_40px_rgba(0,0,0,0.5)] lg:zoom-in-95"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex shrink-0 justify-center pt-3 pb-2 lg:hidden">
@@ -85,8 +85,8 @@ export function SignUpPickerGridItem({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex aspect-square flex-col items-center justify-center gap-2 rounded-[var(--radius-panel)] bg-[var(--surface-hover)] p-2 transition-colors hover:bg-[var(--surface-selected)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
-        selected ? "ring-1 ring-[var(--border-active)]" : ""
+      className={`flex aspect-square flex-col items-center justify-center gap-2 rounded-[var(--radius-panel)] bg-[var(--surface-hover)] p-2 transition-colors outline-none hover:bg-[var(--surface-selected)] focus-visible:outline-none ${
+        selected ? "bg-[var(--surface-selected)] shadow-[inset_0_0_0_1px_var(--border-active)]" : ""
       }`}
     >
       <span

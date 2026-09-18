@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
+import Link from "next/link";
 import type { LotteryFlagTone } from "@/app/types/lottery";
 import type {
   YikiBetEntry,
@@ -337,6 +338,20 @@ export function YikiBetBoard({
             <p className="thai-lotto-feedback" aria-live="polite">
               {feedback}
             </p>
+
+            <div className="yiki-pick-actions" aria-label="ดำเนินการต่อ">
+              <Link href={backHref} className="yiki-pick-actions__back">
+                กลับหน้าก่อนหน้า
+              </Link>
+              <button
+                type="button"
+                className="cosmic-action-btn yiki-pick-actions__primary"
+                disabled={entries.length === 0 || isClosed}
+                onClick={handleGoToPrice}
+              >
+                ใส่ราคา
+              </button>
+            </div>
           </section>
         ) : null}
 
@@ -349,6 +364,7 @@ export function YikiBetBoard({
 
       {step === "pick" ? (
         <YikiActionBar
+          className="yiki-action-bar--mobile-only"
           secondary={{ label: "กลับหน้าก่อนหน้า", href: backHref }}
           primary={{ label: "ใส่ราคา", onClick: handleGoToPrice, disabled: entries.length === 0 || isClosed }}
         />

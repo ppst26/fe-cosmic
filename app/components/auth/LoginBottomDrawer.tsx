@@ -5,6 +5,7 @@ import { Dialog } from "radix-ui";
 import { CloseIcon, LockIcon, PhoneIcon } from "../ui/Icons";
 import {
   responsiveAuthSheetContentClass,
+  responsiveSheetCloseButtonClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
@@ -71,7 +72,7 @@ export function LoginBottomDrawer({
           <Dialog.Close asChild>
             <button
               type="button"
-              className="absolute right-3 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface-hover)]/90 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-selected)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+              className={responsiveSheetCloseButtonClass("absolute right-3 top-4")}
               aria-label="ปิดหน้าเข้าสู่ระบบ"
             >
               <CloseIcon className="h-4 w-4" />
@@ -114,7 +115,7 @@ export function LoginBottomDrawer({
               <label htmlFor="login-password" className="text-sm font-medium text-[var(--text-secondary)]">
                 รหัสผ่าน
               </label>
-              <div className="flex h-12 items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3 focus-within:ring-1 focus-within:ring-[var(--focus-ring)]">
+              <div className="flex h-12 items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3">
                 <LockIcon className="h-5 w-5 text-[var(--icon-default)]" />
                 <input
                   id="login-password"

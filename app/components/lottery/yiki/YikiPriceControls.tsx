@@ -85,7 +85,7 @@ export function YikiPriceControls({
 
       <div className="yiki-price-controls__actions">
         <button type="button" className="yiki-price-controls__back" onClick={onBack}>
-          กลับแก้ไขเลข
+          แก้ไข
         </button>
         <button
           type="button"
