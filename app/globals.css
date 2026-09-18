@@ -4187,12 +4187,17 @@ body {
 }
 
 @media (min-width: 1024px) {
+  /*
+   * จอใหญ่: แบนเนอร์งวดเต็มความกว้างด้านบน จากนั้นโพย (คอลัมน์ซ้าย กว้าง) คู่กับเลือกเลข (คอลัมน์ขวา แคบคงที่)
+   * แล้วตามด้วยแถบ "วิธีการแทงหวย" เต็มความกว้างด้านล่าง — โทนสีทั้งหมดยังคงตาม design tokens เดิม
+   */
   .yiki-layout {
     grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
     grid-template-areas:
-      "round slip"
-      "input slip";
-    grid-template-rows: auto 1fr;
+      "round round"
+      "slip input"
+      "howto howto";
+    grid-template-rows: auto 1fr auto;
     gap: var(--space-4) var(--space-6);
   }
 }
@@ -4214,6 +4219,19 @@ body {
 
 .yiki-layout__round { grid-area: round; min-width: 0; }
 .yiki-layout__input { grid-area: input; min-width: 0; }
+
+/* แถบ "วิธีการแทงหวย" — เฉพาะจอใหญ่ตามที่ระบุ ไม่แสดงบนมือถือ */
+.yiki-layout__howto {
+  display: none;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .yiki-layout__howto {
+    display: block;
+    grid-area: howto;
+  }
+}
 
 .yiki-layout__slip {
   grid-area: slip;
@@ -4452,6 +4470,23 @@ body {
   border-top: 1px solid var(--border-subtle);
 }
 
+@media (min-width: 1024px) {
+  /* จัดปุ่มให้กว้างตรงกับคอลัมน์โพย/เลือกเลขด้านบน แทนแบ่งครึ่งเท่ากัน */
+  .yiki-action-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+    gap: var(--space-6);
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  /* ขั้นใส่ราคา — แผงคอลัมน์เดียวกึ่งกลาง ปุ่มจึงกึ่งกลางแคบตามแทนแบบกว้างเต็ม */
+  .yiki-action-bar--centered {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 480px;
+  }
+}
+
 .yiki-action-bar__secondary {
   display: grid;
   flex: 1 1 0;
@@ -4532,6 +4567,65 @@ body {
   .yiki-round-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+/* "วิธีการแทงหวย" — จอใหญ่เท่านั้น สีตามธีมเดิมทั้งหมด (ไม่ใช้โทนทอง/ดำจากภาพอ้างอิง) */
+.yiki-howto {
+  padding: var(--space-5);
+  border-radius: var(--radius-panel);
+  background: var(--surface-mid);
+  text-align: center;
+}
+
+.yiki-howto__title {
+  margin: 0 0 var(--space-4);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.yiki-howto__list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.yiki-howto__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.yiki-howto__badge {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  background: var(--action-solid);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.yiki-howto__icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--surface-hover) 60%, transparent);
+  color: var(--icon-default);
+}
+
+.yiki-howto__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 @media (prefers-reduced-motion: reduce) {

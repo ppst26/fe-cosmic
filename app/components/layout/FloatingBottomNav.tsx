@@ -68,7 +68,7 @@ function BottomNavSurface({ gradientId }: { gradientId: string }) {
 
 /**
  * FloatingBottomNav — เมนูล่าง .bottom-nav (ฝาก/ถอน = sheet · อื่น ๆ = ลิงก์)
- * บน desktop หน้า lobby ความกว้างจำกัดตาม .lobby-desktop-center — ดู globals.css
+ * มือถือเท่านั้น — desktop (lg+) ใช้ sidebar/header แทน จึงซ่อนทั้งก้อน
  */
 export function FloatingBottomNav({
   items,
@@ -140,7 +140,7 @@ export function FloatingBottomNav({
   };
 
   return (
-    <div className="bottom-nav-shell">
+    <div className="bottom-nav-shell lg:hidden">
       <nav className="bottom-nav" aria-label="เมนูหลักด้านล่าง">
         <BottomNavSurface gradientId={surfaceGradientId} />
         {items.map(renderItem)}

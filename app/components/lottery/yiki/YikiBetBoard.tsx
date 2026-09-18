@@ -18,6 +18,7 @@ import { YikiTypeChips } from "./YikiTypeChips";
 import { YikiSlip } from "./YikiSlip";
 import { YikiPricePanel } from "./YikiPricePanel";
 import { YikiActionBar } from "./YikiActionBar";
+import { YikiHowToBet } from "./YikiHowToBet";
 import { uniquePermutations } from "../lotteryUtils";
 
 interface YikiBetBoardProps {
@@ -312,6 +313,12 @@ export function YikiBetBoard({
             </p>
           </section>
         ) : null}
+
+        {step === "pick" ? (
+          <div className="yiki-layout__howto">
+            <YikiHowToBet />
+          </div>
+        ) : null}
       </div>
 
       <YikiActionBar
@@ -323,6 +330,7 @@ export function YikiBetBoard({
             ? { label: "ใส่ราคา", onClick: handleGoToPrice, disabled: entries.length === 0 || isClosed }
             : { label: "ยืนยันการแทง", onClick: () => onSubmit?.(entries), disabled: !canConfirm }
         }
+        variant={step === "price" ? "centered" : "columns"}
       />
     </>
   );
