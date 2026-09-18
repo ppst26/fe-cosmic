@@ -89,26 +89,6 @@ export function CategoryNav({
   );
   const [pickedId, setPickedId] = useState<CategoryId>(defaultActiveId);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [isScrollable, setIsScrollable] = useState(false);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const updateScrollable = () => {
-      setIsScrollable(track.scrollWidth > track.clientWidth + 2);
-    };
-
-    updateScrollable();
-    const observer = new ResizeObserver(updateScrollable);
-    observer.observe(track);
-    window.addEventListener("resize", updateScrollable);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", updateScrollable);
-    };
-  }, [categories]);
 
   useEffect(() => {
     if (activeIdProp) {
@@ -132,11 +112,7 @@ export function CategoryNav({
 
   return (
     <nav
-      className={cn(
-        "category-nav w-full min-w-0",
-        isScrollable && "category-nav--scrollable",
-        className,
-      )}
+      className={cn("category-nav w-full min-w-0", className)}
       aria-label="แถบเลือกหมวดหมู่เกม"
     >
       <div ref={trackRef} className="category-nav__track">

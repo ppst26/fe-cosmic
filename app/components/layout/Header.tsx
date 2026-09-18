@@ -27,8 +27,8 @@ interface HeaderProps {
 }
 
 /**
- * Header — มือถือ: notch · Desktop lg+: ยอดคงเหลือ · ฝาก · ถอน · โปรไฟล์ (borderless pill)
- * ย่อ/ขยาย sidebar ใช้ปุ่มที่แถบซ้ายล่าง — ไม่มี hamburger ใน header
+ * Header — มือถือ: .cosmic-nav (โลโก้ · กระเป๋า/ล็อกอิน · โปรไฟล์)
+ * Desktop lg+: ยอดคงเหลือ · ฝาก · ถอน · โปรไฟล์ (borderless pill)
  */
 export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
   const { isAuthenticated, isLoading, openProfile, closeProfile, isProfileOpen } =
@@ -54,65 +54,40 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
 
   return (
     <>
-      <header className="header-notch-shell w-full min-w-0 lg:hidden">
-        <div className="header-notch-inner">
-          <div className="header-notch-wing min-w-0">
-            <Link
-              href="/"
-              className="block min-w-0 max-w-[min(100%,140px)] outline-none transition-transform hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] active:scale-95 rounded-[var(--radius-control)] sm:max-w-[160px]"
-              aria-label="Cosmicbet หน้าแรก"
-            >
-              <CosmicbetLogo />
-            </Link>
-          </div>
+      <header className="cosmic-nav-shell w-full min-w-0 lg:hidden">
+        <div className="cosmic-nav">
+          <Link href="/" className="cosmic-logo" aria-label="Cosmicbet หน้าแรก">
+            <CosmicbetLogo className="!h-auto !max-w-none w-[clamp(112px,25vw,150px)] object-contain" />
+          </Link>
 
-          <div className="header-notch-center">
-            <div className="header-notch-tab" aria-live="polite">
-              <div className="flex w-full max-w-full items-center justify-center">
-                {isLoading ? (
-                  <div
-                    className="h-6 w-[7.5rem] animate-pulse rounded-[var(--radius-pill)] bg-[var(--surface-hover)]/80 sm:h-7 sm:w-[8.5rem]"
-                    aria-hidden="true"
-                  />
-                ) : showWallet ? (
-                  <>
-                    <HeaderWalletIcon className="h-[18px] w-[18px] shrink-0 text-[var(--icon-default)] sm:h-5 sm:w-5" />
-                    <span className="truncate text-sm font-extrabold tabular-nums tracking-tight sm:text-base">
-                      {balanceLabel}
-                    </span>
-                  </>
-                ) : (
-                  <div className="flex max-w-full items-center justify-center gap-1 sm:gap-1.5">
-                    <button
-                      type="button"
-                      onClick={onLoginClick}
-                      className="shrink-0 whitespace-nowrap px-1 py-1 text-[10px] font-bold uppercase tracking-wide text-[var(--text-primary)] transition-colors hover:text-white active:opacity-80 sm:px-1.5 sm:text-[11px]"
-                    >
-                      LOG IN
-                    </button>
-                    <button
-                      type="button"
-                      onClick={onSignUpClick}
-                      className="cosmic-action-btn shrink-0 cursor-pointer whitespace-nowrap px-2.5 py-1 text-[10px] uppercase tracking-wide sm:px-3.5 sm:py-1.5 sm:text-[11px]"
-                    >
-                      SIGN UP
-                    </button>
-                  </div>
-                )}
+          <div className="cosmic-actions">
+            {isLoading ? (
+              <div className="wallet-button wallet-button--skeleton" aria-hidden="true" />
+            ) : showWallet ? (
+              <div className="wallet-button" aria-live="polite">
+                <HeaderWalletIcon aria-hidden="true" />
+                <span>{balanceLabel}</span>
               </div>
-            </div>
-          </div>
+            ) : (
+              <div className="cosmic-nav__auth">
+                <button type="button" onClick={onLoginClick} className="cosmic-nav__auth-login">
+                  LOG IN
+                </button>
+                <button type="button" onClick={onSignUpClick} className="cosmic-nav__auth-signup">
+                  SIGN UP
+                </button>
+              </div>
+            )}
 
-          <div className="header-notch-wing header-notch-wing--end">
             <button
               type="button"
               onClick={handleProfileClick}
-              className="header-notch-profile-btn"
+              className={`profile-button${isProfileOpen ? " is-active" : ""}`}
               aria-label="โปรไฟล์"
               aria-expanded={isProfileOpen}
               aria-haspopup="dialog"
             >
-              <ProfileNavIcon className="h-5 w-5" />
+              <ProfileNavIcon aria-hidden="true" />
             </button>
           </div>
         </div>

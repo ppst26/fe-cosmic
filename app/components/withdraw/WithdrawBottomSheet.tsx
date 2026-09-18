@@ -94,7 +94,6 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
           <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
           <div className="relative flex shrink-0 items-center justify-center px-12 pt-1 pb-2">
-            <WithdrawSheetMarkIcon className="absolute left-0 top-1 h-9 w-9 text-[var(--icon-default)]" />
             <Dialog.Title className="text-xl font-extrabold sm:text-2xl">ถอนเงิน</Dialog.Title>
             <Dialog.Close asChild>
               <button
@@ -168,7 +167,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
             </div>
 
             <div className="mt-4">
-              <div className="-mx-1 flex items-center gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              <div className="flex flex-wrap items-center justify-center gap-2 px-1 pb-1">
                 {WITHDRAW_QUICK_AMOUNTS.map((value) => {
                   const active = amount === value;
                   return (
@@ -186,7 +185,6 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                     </button>
                   );
                 })}
-                <ChevronRightIcon className="h-4 w-4 shrink-0 text-[var(--icon-default)] opacity-60" aria-hidden="true" />
               </div>
               <p className="mt-2 text-center text-[11px] text-[var(--text-muted)]">แตะยอดเงินเพื่อแก้ไข</p>
             </div>
@@ -224,15 +222,6 @@ function KbankLogoGraphic({ className }: { className?: string }) {
       <circle cx="24" cy="24" r="22" fill="#fff" />
       <path d="M24 8c-6 4-10 10-10 16 0 8 6 14 10 16 4-2 10-8 10-16 0-6-4-12-10-16Z" fill="#138f4a" />
       <path d="M24 12c-4 3-7 8-7 12 0 5 4 9 7 11 3-2 7-6 7-11 0-4-3-9-7-12Z" fill="#e11d48" opacity="0.85" />
-    </svg>
-  );
-}
-
-function WithdrawSheetMarkIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 36 36" className={className} aria-hidden="true">
-      <rect x="6" y="6" width="24" height="24" rx="6" fill="currentColor" opacity="0.15" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M14 22 22 14M22 14h-6M22 14v6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

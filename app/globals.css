@@ -19,7 +19,7 @@
     var(--surface-end) 100%
   );
   /* โซน lobby หน้าแรก — พื้น solid (app/page.tsx) */
-  --lobby-zone-solid: #110c1d;
+  --lobby-zone-solid: #191927;
 
   --text-primary: #f5f4fc;
   --text-secondary: #b9b5cf;
@@ -73,6 +73,8 @@
   --header-notch-curve: 16px;
   --header-wing-bar: 44px;
   --header-notch-extra: 14px;
+  --header-mobile-bar-height: 76px;
+  --profile-popover-width: 292px;
   --header-desktop-bar-height: 72px;
   --header-top-line: color-mix(in srgb, var(--border-active) 38%, var(--border-subtle));
 
@@ -1217,8 +1219,26 @@ body {
 }
 
 /**
- * การ์ดโปรไฟล์มุมขวาบน — ProfileSlideOverCard.tsx · เมนูหลัก/ย่อย + ตัวอักษร
+ * การ์ดโปรไฟล์มุมขวาบน — ProfileSlideOverCard.tsx
  */
+.profile-slideover-card {
+  width: min(100%, var(--profile-popover-width));
+  max-height: min(calc(100dvh - var(--header-mobile-bar-height) - env(safe-area-inset-top, 0px) - 1rem), 520px);
+  padding: 10px 10px 12px;
+  background: var(--menu-panel-bg);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 5%),
+    0 12px 32px rgb(0 0 0 / 45%);
+}
+
+@media (min-width: 1024px) {
+  .profile-slideover-card {
+    width: min(100%, 420px);
+    max-height: min(calc(100dvh - var(--header-desktop-bar-height) - env(safe-area-inset-top, 0px) - 1.5rem), 720px);
+    padding: 14px 14px 16px;
+  }
+}
+
 .profile-hub-accordion {
   background: color-mix(in srgb, var(--surface-hover) 40%, transparent);
 }
@@ -1254,68 +1274,68 @@ body {
 }
 
 .profile-slideover-card .profile-hub-body {
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .profile-slideover-card .profile-hub-header {
-  gap: 1rem;
-  padding-bottom: 1rem;
+  gap: 0.65rem;
+  padding-bottom: 0.65rem;
 }
 
 .profile-slideover-card .profile-hub-header__avatar {
-  height: 3.5rem;
-  width: 3.5rem;
+  height: 2.75rem;
+  width: 2.75rem;
 }
 
 .profile-slideover-card .profile-hub-header__avatar svg {
-  height: 1.75rem;
-  width: 1.75rem;
+  height: 1.35rem;
+  width: 1.35rem;
 }
 
 .profile-slideover-card .profile-hub-header__name {
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
 }
 
 .profile-slideover-card .profile-hub-header__meta,
 .profile-slideover-card .profile-hub-header__id span {
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
 }
 
 .profile-slideover-card .profile-hub-accordion__trigger {
-  padding: 0.75rem 1rem;
-}
-
-.profile-slideover-card .profile-hub-accordion__title {
-  font-size: 0.9375rem;
-}
-
-.profile-slideover-card .profile-hub-accordion__icon {
-  height: 2.25rem;
-  width: 2.25rem;
-}
-
-.profile-slideover-card .profile-hub-accordion__panel {
-  padding: 0.4rem 0.55rem 0.55rem;
-}
-
-.profile-slideover-card .profile-hub-row {
-  gap: 0.625rem;
   padding: 0.55rem 0.65rem;
 }
 
-.profile-slideover-card .profile-hub-row__icon {
-  height: 2rem;
-  width: 2rem;
-}
-
-.profile-slideover-card .profile-hub-row__title {
+.profile-slideover-card .profile-hub-accordion__title {
   font-size: 0.8125rem;
 }
 
+.profile-slideover-card .profile-hub-accordion__icon {
+  height: 1.75rem;
+  width: 1.75rem;
+}
+
+.profile-slideover-card .profile-hub-accordion__panel {
+  padding: 0.25rem 0.35rem 0.4rem;
+}
+
+.profile-slideover-card .profile-hub-row {
+  gap: 0.45rem;
+  padding: 0.4rem 0.45rem;
+}
+
+.profile-slideover-card .profile-hub-row__icon {
+  height: 1.65rem;
+  width: 1.65rem;
+}
+
+.profile-slideover-card .profile-hub-row__title {
+  font-size: 0.75rem;
+}
+
 .profile-slideover-card .profile-hub-logout {
-  margin-top: 0.5rem;
-  padding: 0.5rem 0.25rem;
-  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  padding: 0.35rem 0.2rem;
+  font-size: 0.75rem;
 }
 
 .profile-slideover-card .profile-hub-logout svg {
@@ -1851,31 +1871,7 @@ body {
 .category-nav {
   position: relative;
   margin-block: 0.875rem;
-  overflow: hidden;
-}
-
-/* ขอบมืดขวา — แสดงเมื่อเลื่อนได้ (class จาก CategoryNav.tsx) */
-.category-nav::after {
-  content: "";
-  position: absolute;
-  top: 4px;
-  right: 0;
-  bottom: 4px;
-  z-index: 2;
-  width: 2.5rem;
-  pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(
-    270deg,
-    var(--bg-page) 0%,
-    color-mix(in srgb, var(--bg-page) 82%, transparent) 45%,
-    transparent 100%
-  );
-  transition: opacity 180ms ease;
-}
-
-.category-nav.category-nav--scrollable::after {
-  opacity: 1;
+  overflow: visible;
 }
 
 /* หน้าแรก — แถบค้นหา/ตัวกรองใต้ CategoryNav */
@@ -1916,9 +1912,23 @@ body {
     min-width: 0;
     max-width: none;
   }
+}
 
-  .lobby-category-stack .category-nav.category-nav--scrollable::after {
-    opacity: 0;
+/* CategoryNav มือถือ — พื้นปุ่มให้ตรงโซน lobby (ไม่ใช้ fade ขอบ) */
+@media (max-width: 1023px) {
+  .category-nav__chip {
+    background: color-mix(in srgb, #292641 90%, var(--lobby-zone-solid));
+    color: var(--nav-text);
+  }
+
+  .category-nav__chip:hover:not(.is-active) {
+    color: var(--nav-hover);
+    background: color-mix(in srgb, #252044 88%, var(--lobby-zone-solid));
+  }
+
+  .category-nav__chip.is-active {
+    color: var(--text-primary);
+    background: var(--action-solid);
   }
 }
 
@@ -2046,7 +2056,7 @@ body {
   height: 44px;
   padding-inline: 14px;
   border-radius: 9999px;
-  background: #121127;
+  background: #1d1c2b;
 }
 
 .provider-category-toolbar__search-input {
@@ -3094,8 +3104,257 @@ body {
 
 
 /*
- * Header notch — ปีกเข้ม + แท็บยอดเครดิตกลาง (concave ไหล่)
- * ใช้โดย app/components/layout/Header.tsx
+ * Mobile header — cosmic-nav (Header.tsx · lg:hidden)
+ */
+.cosmic-nav-shell {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: var(--cosmic-nav-bg, #121023);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 22%);
+}
+
+.cosmic-nav {
+  --nav-bg: #121023;
+  --wallet-bg: #1b1738;
+  --text: #f7f5ff;
+  --border: rgb(170 133 235 / 45%);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  min-height: var(--header-mobile-bar-height);
+  padding: 12px 20px;
+  box-sizing: border-box;
+  background: var(--nav-bg);
+  color: var(--text);
+}
+
+.cosmic-nav,
+.cosmic-nav * {
+  box-sizing: border-box;
+}
+
+.cosmic-logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  outline: none;
+  border-radius: var(--radius-control);
+}
+
+.cosmic-logo:focus-visible {
+  outline: 2px solid #bca4ff;
+  outline-offset: 4px;
+}
+
+.cosmic-logo img {
+  display: block;
+  width: clamp(112px, 25vw, 150px);
+  height: auto;
+}
+
+.cosmic-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.wallet-button,
+.profile-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  padding: 0;
+  border: 0;
+  color: var(--text);
+  font: inherit;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.wallet-button {
+  gap: 6px;
+  min-width: 0;
+  max-width: min(42vw, 9.25rem);
+  min-height: 40px;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: var(--wallet-bg);
+}
+
+.wallet-button--skeleton {
+  width: 6.5rem;
+  max-width: min(42vw, 9.25rem);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background: color-mix(in srgb, var(--wallet-bg) 70%, #2a2548);
+}
+
+.wallet-button span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.profile-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cosmic-nav__auth {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.cosmic-nav__auth-login {
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cosmic-nav__auth-signup {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--action-solid);
+  color: #fff;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cosmic-actions svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .wallet-button:hover {
+    background: #252044;
+  }
+
+  .profile-button:hover,
+  .profile-button.is-active {
+    background: #1b1738;
+    border-color: #ac87ea;
+  }
+
+  .cosmic-nav__auth-login:hover {
+    color: #fff;
+  }
+
+  .cosmic-nav__auth-signup:hover {
+    background: var(--action-solid-hover);
+  }
+}
+
+.profile-button.is-active {
+  background: #1b1738;
+  border-color: #ac87ea;
+}
+
+.cosmic-nav a:focus-visible,
+.cosmic-nav button:focus-visible {
+  outline: 2px solid #bca4ff;
+  outline-offset: 4px;
+}
+
+@media (max-width: 420px) {
+  :root {
+    --header-mobile-bar-height: 68px;
+  }
+
+  .cosmic-nav {
+    min-height: 68px;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .cosmic-actions {
+    gap: 6px;
+  }
+
+  .wallet-button {
+    max-width: min(40vw, 8.5rem);
+    min-height: 38px;
+    padding: 0 8px;
+    gap: 5px;
+  }
+
+  .wallet-button span {
+    font-size: 13px;
+  }
+
+  .wallet-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .profile-button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .cosmic-nav__auth {
+    gap: 6px;
+  }
+
+  .cosmic-nav__auth-login {
+    font-size: 10px;
+  }
+
+  .cosmic-nav__auth-signup {
+    min-height: 38px;
+    padding: 0 10px;
+    font-size: 9px;
+  }
+}
+
+/*
+ * Header notch — legacy (desktop lobby overrides) · มือถือใช้ .cosmic-nav แทน
  */
 .header-notch-shell {
   position: sticky;
