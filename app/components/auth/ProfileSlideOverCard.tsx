@@ -93,7 +93,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
             <Dialog.Content
               aria-describedby={undefined}
               onOpenAutoFocus={(event) => event.preventDefault()}
-              className="profile-slideover-card pointer-events-auto cosmic-modal-shell flex max-h-[min(calc(100dvh-4rem),620px)] w-[min(100%,380px)] flex-col overflow-hidden bg-[var(--surface-mid)] px-3 pb-3 pt-3 text-[var(--text-primary)] shadow-[0_8px_24px_rgba(0,0,0,0.35)] outline-none origin-top-right data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-1 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-1 duration-150 lg:max-h-[min(calc(100dvh-5.5rem),780px)] lg:w-[min(100%,440px)] lg:px-4 lg:pb-4 lg:pt-4"
+              className="profile-slideover-card pointer-events-auto cosmic-modal-shell flex max-h-[min(calc(100dvh-4rem),620px)] w-[min(100%,380px)] flex-col overflow-hidden px-3 pb-3 pt-3 text-[var(--text-primary)] outline-none origin-top-right data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-1 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-1 duration-150 lg:max-h-[min(calc(100dvh-5.5rem),780px)] lg:w-[min(100%,440px)] lg:px-4 lg:pb-4 lg:pt-4"
             >
               <Dialog.Title className="sr-only">โปรไฟล์</Dialog.Title>
 

@@ -20,7 +20,7 @@ export function ProfileHubRow({
   showChevron?: boolean;
 }) {
   const className =
-    "profile-hub-row flex w-full items-center gap-2 rounded-[var(--radius-control)] px-2 py-1.5 text-left transition-colors hover:bg-[var(--surface-selected)]/25";
+    "profile-hub-row flex w-full items-center gap-2 rounded-[var(--radius-control)] px-2 py-1.5 text-left transition-colors";
 
   const inner = (
     <>
