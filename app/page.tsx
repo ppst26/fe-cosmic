@@ -117,14 +117,16 @@ export default function HomePage() {
 
                 <HomeDesktopHeroRow onCtaClick={openSignUp} />
 
-                <div className="relative -mx-[var(--page-gutter)] flex flex-col gap-4 overflow-hidden rounded-none px-[var(--page-gutter)] pb-6 pt-1 lg:mx-0 lg:px-0">
+                <div className="relative -mx-[var(--page-gutter)] flex flex-col gap-4 overflow-hidden rounded-none px-[var(--page-gutter)] pb-6 pt-1 lg:mx-0 lg:gap-3 lg:px-0 lg:pb-0 lg:pt-0">
                   <div
-                    className="lobby-zone-bg pointer-events-none absolute inset-0 lg:opacity-80"
+                    className="lobby-zone-bg pointer-events-none absolute inset-0 lg:hidden"
                     aria-hidden="true"
                   />
-                  <div className="relative flex min-w-0 flex-col gap-4">
+                  <div className="relative flex min-w-0 flex-col gap-4 lg:gap-3">
                     <div className={showMobileLobbySections}>
-                      <CosmicIntro stats={INTRO_STATS_DATA} />
+                      <div className="lg:hidden">
+                        <CosmicIntro stats={INTRO_STATS_DATA} />
+                      </div>
                       {/* ยอดนิยม 2 การ์ด — โฮม: เฉพาะมือถือ · หมวดอื่น: มือถือ (ซ่อน lg ผ่าน showMobileLobbySections) */}
                       <div className={isHomeLobby ? "lg:hidden" : undefined}>
                         <PopularHighlights items={POPULAR_HIGHLIGHTS_DATA} />

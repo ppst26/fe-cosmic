@@ -28,6 +28,7 @@ import {
   FISHING_ITEMS,
   type FishingCardItem,
 } from "../../data/fishingProvidersData";
+import { LotteryHubContent } from "../lottery/LotteryHubContent";
 
 interface LobbyCategoryProvidersProps {
   categoryId: CategoryId;
@@ -183,6 +184,14 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
         : list.length;
     return { list, totalCount };
   }, [activeFilterId, searchQuery]);
+
+  if (categoryId === "lottery") {
+    return (
+      <section className="lobby-category-providers mt-1 min-w-0">
+        <LotteryHubContent />
+      </section>
+    );
+  }
 
   const hasProviderGrid =
     categoryId === "casino" ||
