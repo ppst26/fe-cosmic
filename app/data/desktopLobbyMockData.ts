@@ -54,7 +54,7 @@ export const DESKTOP_FEATURE_PROMOS = [
   },
 ] as const;
 
-/** การ์ดเมนูแถบขวา desktop — variant hero | cell + tone สำหรับ CSS */
+/** การ์ดเมนูแถบขวา desktop — variant hero = feature สูง x2 · tone สำหรับ CSS */
 export const DESKTOP_RIGHT_MENU_TILES = [
   {
     id: "menu-referral",
@@ -97,14 +97,33 @@ export const DESKTOP_RIGHT_MENU_TILES = [
     ariaLabel: "โปรโมชั่น PROMOTION",
   },
   {
-    id: "menu-vip",
+    id: "menu-gems",
     variant: "cell" as const,
+    tone: "gems" as const,
+    iconId: "gems",
+    title: "ร้านค้าเพชร",
+    subtitle: "GEMS SHOP",
+    href: "/gems-store",
+    ariaLabel: "ร้านค้าเพชร GEMS SHOP",
+  },
+  {
+    id: "menu-coupon",
+    variant: "cell" as const,
+    tone: "coupon" as const,
+    iconId: "coupon",
+    title: "คูปอง",
+    subtitle: "COUPON",
+    action: "coupon" as const,
+    ariaLabel: "แลกคูปอง COUPON",
+  },
+  {
+    id: "menu-vip",
+    variant: "hero" as const,
     tone: "vip" as const,
     iconId: "rank",
-    title: "ยศวีไอพี",
-    subtitle: "VIP CLUB",
-    href: "#",
+    title: "ยศ VIP",
+    subtitle: "สิทธิพิเศษสมาชิก",
     action: "vip-rank" as const,
-    ariaLabel: "ยศวีไอพี VIP CLUB",
+    ariaLabel: "ยศ VIP สิทธิพิเศษสมาชิก",
   },
 ] as const;

@@ -146,6 +146,8 @@ function SportCardGraphic({ artType }: { artType: string }) {
 interface SportProviderCardsProps {
   items: SportCardItem[];
   totalCount: number;
+  hideTitleRow?: boolean;
+  sectionTitle?: string;
 }
 
 /**
@@ -158,18 +160,21 @@ interface SportProviderCardsProps {
 export function SportProviderCards({
   items,
   totalCount,
+  hideTitleRow = false,
+  sectionTitle = "กีฬา",
 }: SportProviderCardsProps) {
   return (
     <div className="space-y-3.5">
-      {/* หัวข้อบอกจำนวนรายการกีฬา */}
+      {!hideTitleRow ? (
       <div className="flex items-baseline gap-2 pt-1">
         <h2 className="text-lg font-extrabold text-white sm:text-xl">
-          กีฬา
+          {sectionTitle}
         </h2>
         <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
           ({totalCount} รายการ/ค่ายเกม)
         </span>
       </div>
+      ) : null}
 
       {/* กริดแสดงผล 3 คอลัมน์แนวตั้งตามแบบภาพอ้างอิง */}
       <div className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">

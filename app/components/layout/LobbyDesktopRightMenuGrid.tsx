@@ -12,89 +12,85 @@ interface LobbyDesktopRightMenuGridProps {
   onMenuAction?: (action: MenuDialogAction) => void;
 }
 
-/** เนื้อหาการ์d เมนู — hero กลาง · cell ไอคอนซ้ายข้อความขวา */
-function RightMenuCardContent({
-  variant,
+/** แบนเนอร์เมนูแนวนอน — ไอคอนซ้าย · ข้อความขวา */
+function RightMenuBannerContent({
   iconId,
   title,
   subtitle,
+  emphasis,
 }: {
-  variant: "hero" | "cell";
   iconId: string;
   title: string;
   subtitle: string;
+  emphasis?: boolean;
 }) {
-  const iconClass =
-    variant === "hero"
-      ? "h-8 w-8 text-white drop-shadow-sm"
-      : "h-7 w-7 text-white drop-shadow-sm";
-
   return (
     <>
       <span className="lobby-right-menu-card__pattern" aria-hidden="true" />
-      {variant === "hero" ? (
-        <>
-          <span className="lobby-right-menu-card__icon lobby-right-menu-card__icon--hero">
-            <MenuItemIcon iconId={iconId} className={iconClass} />
-          </span>
-          <span className="lobby-right-menu-card__title lobby-right-menu-card__title--hero">
-            {title}
-          </span>
-          <span className="lobby-right-menu-card__subtitle">{subtitle}</span>
-        </>
-      ) : (
-        <>
-          <span className="lobby-right-menu-card__icon">
-            <MenuItemIcon iconId={iconId} className={iconClass} />
-          </span>
-          <span className="lobby-right-menu-card__text min-w-0">
-            <span className="lobby-right-menu-card__title">{title}</span>
-            <span className="lobby-right-menu-card__subtitle-en">{subtitle}</span>
-          </span>
-        </>
-      )}
+      <span
+        className={`lobby-right-menu-card__icon ${emphasis ? "lobby-right-menu-card__icon--emphasis" : ""}`}
+      >
+        <MenuItemIcon iconId={iconId} className="h-7 w-7 shrink-0 text-white drop-shadow-sm" />
+      </span>
+      <span className="lobby-right-menu-card__text min-w-0">
+        <span
+          className={`lobby-right-menu-card__title ${emphasis ? "lobby-right-menu-card__title--emphasis" : ""}`}
+        >
+          {title}
+        </span>
+        <span
+          className={
+            emphasis
+              ? "lobby-right-menu-card__subtitle"
+              : "lobby-right-menu-card__subtitle-en"
+          }
+        >
+          {subtitle}
+        </span>
+      </span>
     </>
   );
 }
 
 /**
- * กริดเมนูแถบขวา desktop — แบนเนอร์แนะนำเพื่อน + 2×2 (CSS ตาม mock ไม่ใช่รูปรวม)
- * ถูกเรียกใช้ใน LobbyDesktopRightRail.tsx
+ * แถบเมนูขวา desktop — แบนเนอร์เรียงลง 1 คอลัมน์ (LobbyDesktopRightRail.tsx)
  */
 export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMenuGridProps) {
   return (
-    <div className="lobby-right-menu-grid w-full min-w-0" aria-label="เมนูด่วน">
+    <div className="lobby-right-menu-stack w-full min-w-0" aria-label="เมนูด่วน">
       {DESKTOP_RIGHT_MENU_TILES.map((tile) => {
         const className = [
           "lobby-right-menu-card",
-          `lobby-right-menu-card--${tile.variant}`,
           `lobby-right-menu-card--${tile.tone}`,
-        ].join(" ");
+          tile.variant === "hero" ? "lobby-right-menu-card--emphasis" : "",
+        ]
+          .filter(Boolean)
+          .join(" ");
 
         const body = (
-          <RightMenuCardContent
-            variant={tile.variant}
+          <RightMenuBannerContent
             iconId={tile.iconId}
             title={tile.title}
             subtitle={tile.subtitle}
+            emphasis={tile.variant === "hero"}
           />
         );
 
-        if ("action" in tile && tile.action === "vip-rank") {
+        if ("action" in tile && tile.action) {
           return (
             <button
               key={tile.id}
               type="button"
               className={className}
               aria-label={tile.ariaLabel}
-              onClick={() => onMenuAction?.("vip-rank")}
+              onClick={() => onMenuAction?.(tile.action!)}
             >
               {body}
             </button>
           );
         }
 
-        if (hrefToHubId(tile.href)) {
+        if ("href" in tile && hrefToHubId(tile.href)) {
           return (
             <HubNavLink key={tile.id} href={tile.href} className={className} title={tile.ariaLabel}>
               {body}
@@ -102,11 +98,15 @@ export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMen
           );
         }
 
-        return (
-          <Link key={tile.id} href={tile.href} className={className} title={tile.ariaLabel}>
-            {body}
-          </Link>
-        );
+        if ("href" in tile) {
+          return (
+            <Link key={tile.id} href={tile.href} className={className} title={tile.ariaLabel}>
+              {body}
+            </Link>
+          );
+        }
+
+        return null;
       })}
     </div>
   );

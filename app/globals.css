@@ -252,8 +252,8 @@ body {
 
   /** Desktop lobby — กรอบกลาง max 1680 · 3 คอลัมน์ flex (sidebar หด/ขยาย → main ปรับตาม) */
   .lobby-desktop-shell {
-    --lobby-sidebar-card-width: 272px;
-    --lobby-sidebar-card-width-collapsed: 80px;
+    --lobby-sidebar-card-width: 288px;
+    --lobby-sidebar-card-width-collapsed: 96px;
     --lobby-desktop-frame-max: 1680px;
     --lobby-bottom-nav-inset-left: var(--lobby-sidebar-card-width);
     --lobby-desktop-side-rail-offset: 0px;
@@ -686,12 +686,8 @@ body {
     padding-top: 0.85rem;
   }
 
-  .lobby-desktop-sidebar__nav--primary {
-    padding-top: 0.85rem;
-  }
-
   .lobby-desktop-sidebar__nav {
-    padding: 0.4rem 0.7rem 0.5rem;
+    padding: 0.45rem 0.85rem 0.55rem;
   }
 
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__nav {
@@ -723,13 +719,14 @@ body {
   }
 
   .lobby-desktop-sidebar__section-label {
-    margin-bottom: 0.4rem;
-    padding-inline: 0.7rem;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--text-muted) 76%, transparent);
+    margin-bottom: 0.55rem;
+    padding-inline: 0.65rem 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-align: right;
+    text-transform: none;
+    color: color-mix(in srgb, var(--text-muted) 88%, var(--text-secondary));
     transition: opacity 200ms ease;
   }
 
@@ -745,7 +742,7 @@ body {
   .lobby-desktop-sidebar__list {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -756,12 +753,12 @@ body {
     display: flex;
     width: 100%;
     align-items: center;
-    gap: 0.65rem;
+    gap: 0.85rem;
     border: 0;
     border-radius: 10px;
-    padding: 0.45rem 0.65rem;
-    min-height: 3.25rem;
-    font-size: 14px;
+    padding: 0.55rem 0.65rem;
+    min-height: 3.875rem;
+    font-size: 1rem;
     font-weight: 600;
     text-align: left;
     color: var(--text-secondary);
@@ -783,8 +780,8 @@ body {
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    width: 2.35rem;
-    height: 2.35rem;
+    width: 3.125rem;
+    height: 3.125rem;
     border-radius: var(--radius-pill);
     background: color-mix(in srgb, var(--surface-hover) 62%, transparent);
     color: var(--icon-default);
@@ -793,34 +790,53 @@ body {
       color var(--motion-fast) ease;
   }
 
+  .lobby-desktop-sidebar:not(.is-collapsed) .lobby-desktop-sidebar__link-icon-wrap svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.35rem;
-    padding: 0.4rem 0.25rem;
-    min-height: 3.25rem;
+    gap: 0.4rem;
+    padding: 0.45rem 0.2rem;
+    min-height: 4rem;
     text-align: center;
   }
 
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link-icon-wrap {
-    width: 2.35rem;
-    height: 2.35rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link-icon-wrap svg {
+    width: 1.375rem;
+    height: 1.375rem;
   }
 
   .lobby-desktop-sidebar__link-label {
     min-width: 0;
-    line-height: 1.25;
+    flex: 1;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
   }
 
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link-label {
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
+    flex: 0 1 auto;
+    width: 100%;
     max-width: 100%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
     overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .lobby-desktop-sidebar__link:hover {
@@ -836,19 +852,6 @@ body {
 
   .lobby-desktop-sidebar:not(.is-collapsed) .lobby-desktop-sidebar__link.is-active {
     font-weight: 700;
-  }
-
-  /* แถบ accent ด้านซ้าย — อยู่ใน padding การ์ด ไม่ทะลุมุมโค้ง */
-  .lobby-desktop-sidebar:not(.is-collapsed) .lobby-desktop-sidebar__link.is-active::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0.35rem;
-    width: 3px;
-    height: 1.35rem;
-    border-radius: var(--radius-pill);
-    background: var(--action-solid-hover);
-    transform: translateY(-50%);
   }
 
   .lobby-desktop-sidebar__link.is-active .lobby-desktop-sidebar__link-icon-wrap {
@@ -936,9 +939,12 @@ body {
     height: auto;
     overflow: visible;
     clip: auto;
-    font-size: 9px;
+    font-size: 0.6875rem;
     font-weight: 700;
-    white-space: nowrap;
+    line-height: 1.25;
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
   }
 
   .page-shell--lobby {
@@ -953,38 +959,65 @@ body {
   }
 
   .lobby-desktop-right-rail {
-    position: relative;
-    top: auto;
+    position: sticky;
+    top: var(--lobby-sidebar-sticky-top);
+    z-index: 5;
+    box-sizing: border-box;
     align-self: flex-start;
+    max-height: var(--lobby-sidebar-panel-height);
     margin-top: 0;
-    max-height: none;
+    padding-bottom: 1rem;
     overflow-x: hidden;
-    overflow-y: visible;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--border-subtle) 70%, transparent) transparent;
   }
 
-  /* กริดเมนูแถบขวา desktop — 1 แบนเนอร์ + 2×2 ตาม mock (CSS ไม่ใช่รูปรวม) */
-  .lobby-right-menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .lobby-desktop-right-rail::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .lobby-desktop-right-rail::-webkit-scrollbar-thumb {
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--border-subtle) 65%, transparent);
+  }
+
+  /* แถบเมนูขวา desktop — แบนเนอร์เรียงลง 1 คอลัมน์ */
+  .lobby-right-menu-stack {
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
     width: 100%;
     min-width: 0;
+    --lobby-right-menu-banner-height: 5rem;
   }
 
   .lobby-right-menu-card {
     position: relative;
+    display: flex;
+    width: 100%;
+    min-height: var(--lobby-right-menu-banner-height);
+    align-items: center;
+    gap: 0.65rem;
     overflow: hidden;
     margin: 0;
-    padding: 0;
+    padding: 0.65rem 0.75rem;
     border: 0;
     border-radius: calc(var(--radius-panel) - 2px);
     font: inherit;
     color: #fff;
+    text-align: left;
     text-decoration: none;
     cursor: pointer;
     transition:
       filter var(--motion-fast) ease,
       transform var(--motion-fast) ease;
+  }
+
+  .lobby-right-menu-card--emphasis {
+    min-height: calc(var(--lobby-right-menu-banner-height) * 2);
+    padding: 0.85rem 0.9rem;
   }
 
   .lobby-right-menu-card:hover {
@@ -993,25 +1026,6 @@ body {
 
   .lobby-right-menu-card:active {
     transform: scale(0.99);
-  }
-
-  .lobby-right-menu-card--hero {
-    grid-column: 1 / -1;
-    display: flex;
-    min-height: 5.25rem;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.85rem 0.75rem;
-    text-align: center;
-  }
-
-  .lobby-right-menu-card--cell {
-    display: flex;
-    min-height: 4.35rem;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.45rem 0.5rem;
   }
 
   .lobby-right-menu-card__pattern {
@@ -1038,10 +1052,9 @@ body {
     box-shadow: inset 0 1px 0 rgb(255 255 255 / 22%);
   }
 
-  .lobby-right-menu-card__icon--hero {
-    width: 2.85rem;
-    height: 2.85rem;
-    margin-bottom: 0.2rem;
+  .lobby-right-menu-card__icon--emphasis {
+    width: 3rem;
+    height: 3rem;
   }
 
   .lobby-right-menu-card__text {
@@ -1062,8 +1075,8 @@ body {
     text-shadow: 0 1px 2px rgb(0 0 0 / 28%);
   }
 
-  .lobby-right-menu-card__title--hero {
-    font-size: 1.0625rem;
+  .lobby-right-menu-card__title--emphasis {
+    font-size: 0.9375rem;
     letter-spacing: -0.02em;
   }
 
@@ -1114,13 +1127,21 @@ body {
     background: linear-gradient(155deg, #fb923c 0%, #ea580c 45%, #dc2626 100%);
   }
 
+  .lobby-right-menu-card--gems {
+    background: linear-gradient(155deg, #5eead4 0%, #14b8a6 48%, #0f766e 100%);
+  }
+
+  .lobby-right-menu-card--coupon {
+    background: linear-gradient(155deg, #f472b6 0%, #db2777 50%, #9d174d 100%);
+  }
+
   .lobby-category-stack .category-nav {
     margin-top: 0.25rem;
   }
 
-  /* โฮม desktop — ไม่มี intro / โซนพื้นหลัง ชิดแถบหมวดกับเกม */
+  /* โฮม desktop — ไม่มี intro / โซนพื้นหลัง */
   .lobby-desktop-shell .lobby-category-stack .category-nav {
-    margin-block: 0.5rem 0.125rem;
+    margin-block: 0;
   }
 
   .lobby-desktop-shell .page-shell--lobby section[aria-label="เกมยอดฮิต"] {
@@ -1148,6 +1169,113 @@ body {
 .cosmic-inset-card {
   border: 0;
   border-radius: var(--radius-panel);
+}
+
+/**
+ * การ์ดโปรไฟล์มุมขวาบน — ProfileSlideOverCard.tsx · เมนูหลัก/ย่อย + ตัวอักษร
+ */
+.profile-hub-accordion {
+  background: color-mix(in srgb, var(--surface-hover) 40%, transparent);
+}
+
+.profile-hub-accordion__trigger {
+  background: color-mix(in srgb, var(--surface-hover) 95%, var(--surface-mid));
+}
+
+.profile-hub-accordion__trigger:hover {
+  background: color-mix(in srgb, var(--surface-selected) 28%, var(--surface-hover));
+}
+
+.profile-hub-accordion__icon {
+  background: color-mix(in srgb, var(--surface-mid) 88%, transparent);
+}
+
+.profile-hub-accordion__title {
+  font-size: 0.875rem;
+}
+
+.profile-hub-accordion__panel {
+  padding: 0.35rem 0.5rem 0.5rem;
+  background: color-mix(in srgb, var(--bg-page) 72%, var(--surface-mid));
+  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+}
+
+.profile-hub-row__icon {
+  background: color-mix(in srgb, var(--surface-hover) 70%, var(--surface-mid));
+}
+
+.profile-hub-row__title {
+  font-size: 0.75rem;
+}
+
+.profile-slideover-card .profile-hub-body {
+  gap: 0.75rem;
+}
+
+.profile-slideover-card .profile-hub-header {
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.profile-slideover-card .profile-hub-header__avatar {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+.profile-slideover-card .profile-hub-header__avatar svg {
+  height: 1.75rem;
+  width: 1.75rem;
+}
+
+.profile-slideover-card .profile-hub-header__name {
+  font-size: 1.0625rem;
+}
+
+.profile-slideover-card .profile-hub-header__meta,
+.profile-slideover-card .profile-hub-header__id span {
+  font-size: 0.8125rem;
+}
+
+.profile-slideover-card .profile-hub-accordion__trigger {
+  padding: 0.75rem 1rem;
+}
+
+.profile-slideover-card .profile-hub-accordion__title {
+  font-size: 0.9375rem;
+}
+
+.profile-slideover-card .profile-hub-accordion__icon {
+  height: 2.25rem;
+  width: 2.25rem;
+}
+
+.profile-slideover-card .profile-hub-accordion__panel {
+  padding: 0.4rem 0.55rem 0.55rem;
+}
+
+.profile-slideover-card .profile-hub-row {
+  gap: 0.625rem;
+  padding: 0.55rem 0.65rem;
+}
+
+.profile-slideover-card .profile-hub-row__icon {
+  height: 2rem;
+  width: 2rem;
+}
+
+.profile-slideover-card .profile-hub-row__title {
+  font-size: 0.8125rem;
+}
+
+.profile-slideover-card .profile-hub-logout {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.25rem;
+  font-size: 0.875rem;
+}
+
+.profile-slideover-card .profile-hub-logout svg {
+  height: 1rem;
+  width: 1rem;
 }
 
 /**
@@ -1710,15 +1838,15 @@ body {
   opacity: 1;
 }
 
-/* หน้าแรก — แถบค้นหา/ตัวกรองชิดใต้ CategoryNav */
+/* หน้าแรก — แถบค้นหา/ตัวกรองใต้ CategoryNav */
 .lobby-category-stack {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: var(--space-3);
 }
 
 .lobby-category-stack .category-nav {
-  margin-bottom: 0.25rem;
+  margin-block: 0;
 }
 
 .lobby-category-stack .provider-category-toolbar {
@@ -1728,6 +1856,30 @@ body {
 
 .lobby-category-stack .lobby-category-providers {
   gap: 0.625rem;
+}
+
+@media (min-width: 1024px) {
+  .lobby-category-stack {
+    gap: var(--space-4);
+  }
+
+  /* ปุ่มหมวดเท่ากันเต็มความกว้างคอลัมนกลาง desktop */
+  .lobby-category-stack .category-nav .category-nav__track {
+    justify-content: stretch;
+    gap: var(--space-2);
+    overflow-x: visible;
+    padding-inline: 0;
+  }
+
+  .lobby-category-stack .category-nav .category-nav__chip {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .lobby-category-stack .category-nav.category-nav--scrollable::after {
+    opacity: 0;
+  }
 }
 
 .category-nav__icon {
@@ -1758,8 +1910,12 @@ body {
   }
 }
 
-/* กริดค่ายใต้ CategoryNav หน้าแรก — ขยายเล็ก→ใหญ่เมื่อสลับหมวด */
+/* กริดค่ายใต้ CategoryNav — animate เฉพาะส่วนใต้ toolbar */
 .lobby-category-providers {
+  transform-origin: top center;
+}
+
+.lobby-category-providers__swap {
   transform-origin: top center;
   animation: lobby-category-providers-in 360ms cubic-bezier(0.22, 1.08, 0.36, 1) both;
 }
@@ -1780,7 +1936,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lobby-category-providers {
+  .lobby-category-providers__swap {
     animation: lobby-category-providers-in-reduced 180ms ease-out both;
   }
 
@@ -4235,18 +4391,31 @@ body {
   }
 }
 
-/* ขั้นใส่ราคา — ไม่มีคอลัมน์เลือกเลขแล้ว ให้แผงราคาคอลัมน์เดียวเต็มความกว้าง จำกัดขนาดให้อ่านง่ายบนจอใหญ่ */
-.yiki-layout--price {
+/*
+ * ขั้นใส่ราคา — มือถือ/แท็บเล็ต: คอลัมน์เดียวเต็มความกว้าง (โพยแล้วตามด้วยแผงใส่ราคาซึ่ง auto-place ต่อท้าย
+ * เพราะ template นี้ไม่มี area "input" ให้) จอใหญ่ (≥1024px): กำหนดค่าเดียวกับ template ปกติของ .yiki-layout
+ * ซ้ำไว้ตรงๆ (โพยกว้างซ้าย + แผงใส่ราคาแคบขวา) กัน source order ชนะทับกันเอง
+ */
+/*
+ * ใช้ selector คู่ .yiki-layout.yiki-layout--price (specificity สูงกว่า .yiki-layout เฉยๆ) เพื่อไม่ให้
+ * ผลลัพธ์ขึ้นกับลำดับไฟล์ที่ CSS minifier อาจจัดเรียงต่างจากที่เขียนไว้
+ * ระบุ area "input" ไว้ตรงๆ เป็นแถวที่ 3 (ไม่พึ่ง auto-placement) กัน browser วาง input เป็นคอลัมน์แยกแทนที่จะซ้อนลงมา
+ */
+.yiki-layout.yiki-layout--price {
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
     "round"
-    "slip";
+    "slip"
+    "input";
 }
 
 @media (min-width: 1024px) {
-  .yiki-layout--price {
-    grid-template-columns: minmax(0, 480px);
-    justify-content: center;
+  .yiki-layout.yiki-layout--price {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+    grid-template-areas:
+      "round round"
+      "slip input";
+    grid-template-rows: auto 1fr;
   }
 }
 
@@ -4471,7 +4640,10 @@ body {
   cursor: not-allowed;
 }
 
-/* แถวราคาต่อรายการในขั้นใส่ราคา — เลข/ยอดชนะ ซ้าย ช่องราคาขวา */
+/*
+ * แถวใส่ราคาต่อรายการ — ลำดับ · เลข · ช่องราคา · อัตราจ่าย · ยอดชนะที่คำนวณได้ (—/ตัวเลข) · ลบ
+ * คลิกทั้งแถวเพื่อเลือกเป็นเป้าหมายของชิปราคาด่วนใน YikiPriceControls (ไฮไลต์กรอบทองเมื่อเลือกอยู่)
+ */
 .yiki-price-row {
   display: flex;
   align-items: center;
@@ -4479,13 +4651,61 @@ body {
   padding: 0.4rem var(--space-2) 0.4rem var(--space-3);
   border-radius: calc(var(--radius-panel) - 14px);
   background: color-mix(in srgb, var(--surface-hover) 45%, var(--surface-mid));
+  box-shadow: inset 0 0 0 1.5px transparent;
+  cursor: pointer;
+  transition: box-shadow var(--motion-fast) ease;
+}
+
+.yiki-price-row.is-selected {
+  box-shadow: inset 0 0 0 1.5px var(--focus-ring);
+}
+
+.yiki-price-row__index {
+  flex-shrink: 0;
+  width: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-price-row__number {
+  flex-shrink: 0;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-price-row__input {
+  flex: 1 1 5.5rem;
+  min-width: 0;
+}
+
+.yiki-price-row__input .thai-lotto-amount__input {
+  width: 100%;
+  text-align: left;
+}
+
+.yiki-price-row__input .thai-lotto-amount__input::placeholder {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.yiki-price-row__rate {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .yiki-price-row__payout {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  flex-shrink: 0;
+  min-width: 3.25rem;
+  text-align: right;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #ffe66d;
   font-variant-numeric: tabular-nums;
 }
 
@@ -4511,12 +4731,6 @@ body {
     gap: var(--space-6);
     max-width: var(--content-max);
     margin-inline: auto;
-  }
-
-  /* ขั้นใส่ราคา — แผงคอลัมน์เดียวกึ่งกลาง ปุ่มจึงกึ่งกลางแคบตามแทนแบบกว้างเต็ม */
-  .yiki-action-bar--centered {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 480px;
   }
 }
 
@@ -4661,11 +4875,138 @@ body {
   color: var(--text-secondary);
 }
 
+/*
+ * แผงใส่ราคา (YikiPriceControls) — พรีวิวเลขที่เลือก + ติ๊กราคาเท่ากัน + ชิปราคาด่วน + ปุ่มแก้ไข + ยอดรวม
+ * สีชิปราคาแต่ละใบต่างกันเพื่อแยกมูลค่าด้วยตา (ธรรมเนียมชิปคาสิโน) แต่คุมโทนให้เข้ากับพื้นเข้มของธีม ไม่ใช้สีจากภาพอ้างอิง
+ */
+.yiki-price-controls {
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.yiki-price-controls__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.yiki-price-controls__preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: var(--space-4);
+  border-radius: calc(var(--radius-panel) - 8px);
+  background: var(--surface-end);
+}
+
+.yiki-price-controls__preview-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.yiki-price-controls__preview-number {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffe66d;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-price-controls__preview-rate {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.yiki-price-controls__checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.yiki-price-controls__checkbox input[type="checkbox"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--action-solid);
+}
+
+.yiki-price-controls__chips {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.yiki-price-chip {
+  min-height: 2.75rem;
+  border-radius: calc(var(--radius-panel) - 10px);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 1.5px transparent;
+  transition: box-shadow var(--motion-fast) ease;
+}
+
+.yiki-price-chip.is-active {
+  box-shadow: inset 0 0 0 2px var(--focus-ring);
+}
+
+.yiki-price-chip--5 { background: color-mix(in srgb, #38bdf8 55%, var(--surface-hover)); }
+.yiki-price-chip--10 { background: color-mix(in srgb, var(--success) 55%, var(--surface-hover)); }
+.yiki-price-chip--20 { background: color-mix(in srgb, #d99a08 65%, var(--surface-hover)); }
+.yiki-price-chip--50 { background: color-mix(in srgb, #f97316 55%, var(--surface-hover)); }
+.yiki-price-chip--100 { background: color-mix(in srgb, #f43f5e 55%, var(--surface-hover)); }
+
+.yiki-price-controls__apply {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  border-radius: var(--radius-panel);
+  background: var(--gold-gradient);
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: #3a2400;
+  transition: opacity var(--motion-fast) ease;
+}
+
+.yiki-price-controls__apply:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.yiki-price-controls__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.yiki-price-controls__total span:last-child {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .yiki-type-chip,
   .yiki-slip__remove,
   .yiki-slip__tool-btn,
-  .yiki-round-card {
+  .yiki-round-card,
+  .yiki-price-row,
+  .yiki-price-chip,
+  .yiki-price-controls__apply {
     transition: none;
   }
 }

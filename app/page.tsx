@@ -12,7 +12,6 @@ import {
   useLobbySidebarCollapsed,
 } from "./components/layout/LobbyDesktopSidebar";
 import { HomeDesktopHeroRow } from "./components/home/HomeDesktopHeroRow";
-import { HomeDesktopFeaturePromos } from "./components/home/HomeDesktopFeaturePromos";
 import { WelcomeBanner } from "./components/home/WelcomeBanner";
 import { PromoCarousel } from "./components/home/PromoCarousel";
 import { CosmicIntro } from "./components/home/CosmicIntro";
@@ -143,8 +142,6 @@ export default function HomePage() {
                       />
                       <LobbyCategoryProviders categoryId={activeCategoryId} />
                     </div>
-
-                    {!isHomeLobby ? <HomeDesktopFeaturePromos /> : null}
 
                     <div className={showMobileLobbySections}>
                       {GAME_SECTIONS_DATA.map((section) => (

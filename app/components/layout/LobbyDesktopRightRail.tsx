@@ -9,7 +9,7 @@ interface LobbyDesktopRightRailProps {
 }
 
 /**
- * แถบขวา desktop lobby — กริดรูปเมนู (แนะนำเพื่อน · เช็คอิน · วงล้อ · โปร · VIP)
+ * แถบขวา desktop lobby — แบนเนอร์เมนู sticky ใต้ header (เหมือน sidebar ซ้าย)
  * ถูกเรียกใช้ใน app/page.tsx
  */
 export function LobbyDesktopRightRail({ onMenuAction }: LobbyDesktopRightRailProps) {

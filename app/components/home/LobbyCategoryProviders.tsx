@@ -112,7 +112,7 @@ export function LobbyCategoryProviders({ categoryId }: LobbyCategoryProvidersPro
   if (categoryId === "home") {
     return null;
   }
-  return <LobbyCategoryProvidersContent key={categoryId} categoryId={categoryId} />;
+  return <LobbyCategoryProvidersContent categoryId={categoryId} />;
 }
 
 function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersProps) {
@@ -274,6 +274,7 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
       aria-label="รายการค่ายเกมตามหมวดที่เลือก"
     >
       <ProviderCategoryToolbar
+        scopeKey={categoryId}
         tabs={filterTabs}
         activeTabId={activeFilterId}
         onSelectTab={setActiveFilterId}
@@ -299,7 +300,10 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
         }
       />
 
-      {hasProviderGrid ? (
+      <div
+        key={categoryId}
+        className="lobby-category-providers__swap flex min-w-0 flex-col gap-3"
+      >
         <CategorySectionHead
           start={
             <h2 className="text-lg font-extrabold text-[var(--text-primary)] sm:text-xl">
@@ -312,32 +316,42 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
             </span>
           }
         />
-      ) : null}
 
-      {categoryId === "slots" ? (
-        <SlotProviderCards
-          featuredProviders={slotsContent.featured}
-          gridProviders={slotsContent.grid}
-          totalCount={slotsContent.totalCount}
-          hideTitleRow
-          onProviderSelect={handleSlotProviderSelect}
-        />
-      ) : null}
+        {categoryId === "slots" ? (
+          <SlotProviderCards
+            featuredProviders={slotsContent.featured}
+            gridProviders={slotsContent.grid}
+            totalCount={slotsContent.totalCount}
+            hideTitleRow
+            onProviderSelect={handleSlotProviderSelect}
+          />
+        ) : null}
 
-      {categoryId === "casino" ? (
-        <CasinoProviderCards items={casinoContent.list} totalCount={casinoContent.totalCount} />
-      ) : null}
+        {categoryId === "casino" ? (
+          <CasinoProviderCards
+            items={casinoContent.list}
+            totalCount={casinoContent.totalCount}
+            hideTitleRow
+          />
+        ) : null}
 
-      {categoryId === "sports" ? (
-        <SportProviderCards items={sportContent.list} totalCount={sportContent.totalCount} />
-      ) : null}
+        {categoryId === "sports" ? (
+          <SportProviderCards
+            items={sportContent.list}
+            totalCount={sportContent.totalCount}
+            hideTitleRow
+          />
+        ) : null}
 
-      {categoryId === "fishing" ? (
-        <SportProviderCards
-          items={fishingContent.list}
-          totalCount={fishingContent.totalCount}
-        />
-      ) : null}
+        {categoryId === "fishing" ? (
+          <SportProviderCards
+            items={fishingContent.list}
+            totalCount={fishingContent.totalCount}
+            hideTitleRow
+            sectionTitle="ยิงปลา"
+          />
+        ) : null}
+      </div>
     </section>
   );
 }

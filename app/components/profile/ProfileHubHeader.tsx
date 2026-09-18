@@ -21,19 +21,19 @@ export function ProfileHubHeader({ profile }: { profile: ProfileUser }) {
   };
 
   return (
-    <section className="flex gap-3 pb-3">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--surface-hover)] text-[var(--icon-default)]">
+    <section className="profile-hub-header flex gap-3 pb-3">
+      <div className="profile-hub-header__avatar flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--surface-hover)] text-[var(--icon-default)]">
         <ProfileAvatarIcon className="h-6 w-6" />
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-extrabold text-[var(--text-primary)]">
+        <p className="profile-hub-header__name truncate text-sm font-extrabold text-[var(--text-primary)]">
           สวัสดี {profile.displayName}
         </p>
-        <p className="mt-0.5 text-[11px] leading-snug text-[var(--text-secondary)]">
+        <p className="profile-hub-header__meta mt-0.5 text-[11px] leading-snug text-[var(--text-secondary)]">
           เข้าร่วมเมื่อ: {profile.joinedLabel}
         </p>
-        <div className="mt-1 flex items-center gap-1.5">
+        <div className="profile-hub-header__id mt-1 flex items-center gap-1.5">
           <span className="truncate text-[11px] text-[var(--text-muted)]">
             ID ผู้เล่น: {profile.memberId}
           </span>

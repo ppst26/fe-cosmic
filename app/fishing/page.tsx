@@ -68,7 +68,7 @@ export default function FishingProvidersPage() {
           categoryGroupLabel="ประเภทยิงปลา"
         />
 
-        <SportProviderCards items={filteredItems} totalCount={totalCount} />
+        <SportProviderCards items={filteredItems} totalCount={totalCount} sectionTitle="ยิงปลา" />
       </main>
 
       <FloatingBottomNav

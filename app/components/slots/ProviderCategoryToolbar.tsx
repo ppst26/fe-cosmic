@@ -14,6 +14,8 @@ export interface ProviderCategoryToolbarProps {
   searchPlaceholder?: string;
   filterAriaLabel?: string;
   categoryGroupLabel?: string;
+  /** เปลี่ยนหมวด — ปิด dialog/search overlay โดยไม่ remount แถบ */
+  scopeKey?: string;
 }
 
 /**
@@ -29,6 +31,7 @@ export function ProviderCategoryToolbar({
   searchPlaceholder = "Game | Provider",
   filterAriaLabel = "ตัวกรองหมวดย่อย",
   categoryGroupLabel = "หมวดย่อย",
+  scopeKey,
 }: ProviderCategoryToolbarProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
@@ -41,6 +44,11 @@ export function ProviderCategoryToolbar({
       inputRef.current?.focus();
     }
   }, [isSearchOpen]);
+
+  useEffect(() => {
+    setIsFilterDialogOpen(false);
+    setIsSearchOpen(false);
+  }, [scopeKey]);
 
   const openSearch = () => {
     setIsFilterDialogOpen(false);

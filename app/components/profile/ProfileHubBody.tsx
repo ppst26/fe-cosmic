@@ -65,7 +65,7 @@ export function ProfileHubBody({
   };
 
   return (
-    <div className="flex flex-col gap-2 pb-1">
+    <div className="profile-hub-body flex flex-col gap-2 pb-1">
       <ProfileHubHeader profile={profile} />
 
       <ProfileHubAccordion
@@ -154,7 +154,7 @@ export function ProfileHubBody({
       <button
         type="button"
         onClick={onLogout}
-        className="mt-1 flex w-fit items-center gap-1.5 px-0.5 py-1 text-xs font-semibold text-[#e8c547] transition-opacity hover:opacity-85"
+        className="profile-hub-logout mt-1 flex w-fit items-center gap-1.5 px-0.5 py-1 text-xs font-semibold text-[#e8c547] transition-opacity hover:opacity-85"
       >
         <LogOutIcon className="h-3.5 w-3.5" />
         ออกจากระบบ

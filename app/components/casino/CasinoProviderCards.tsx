@@ -214,6 +214,9 @@ function CasinoCardGraphic({ artType }: { artType: string }) {
 interface CasinoProviderCardsProps {
   items: CasinoCardItem[];
   totalCount: number;
+  /** ซ่อนหัวเมื่อใช้ CategorySectionHead ใน LobbyCategoryProviders */
+  hideTitleRow?: boolean;
+  sectionTitle?: string;
 }
 
 /**
@@ -226,18 +229,21 @@ interface CasinoProviderCardsProps {
 export function CasinoProviderCards({
   items,
   totalCount,
+  hideTitleRow = false,
+  sectionTitle = "คาสิโนสด",
 }: CasinoProviderCardsProps) {
   return (
     <div className="space-y-3.5">
-      {/* หัวข้อบอกจำนวนค่ายเกม/โต๊ะ */}
+      {!hideTitleRow ? (
       <div className="flex items-baseline gap-2 pt-1">
         <h2 className="text-lg font-extrabold text-white sm:text-xl">
-          คาสิโนสด
+          {sectionTitle}
         </h2>
         <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
           ({totalCount} โต๊ะ/ค่ายเกม)
         </span>
       </div>
+      ) : null}
 
       {/* กริดแสดงผล 3 คอลัมน์แนวตั้งตามแบบภาพอ้างอิง */}
       <div className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
