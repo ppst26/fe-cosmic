@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useId } from "react";
+import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BottomNavItem } from "../../types/lobby";
 import { useDeposit } from "../deposit/DepositProvider";
 import { useWithdraw } from "../withdraw/WithdrawProvider";
@@ -19,9 +20,6 @@ interface FloatingBottomNavProps {
   onMenuClick?: () => void;
   isMenuOpen?: boolean;
 }
-
-const NAV_PLATE_PATH =
-  "M 0 0 L 262 0 C 278 0 290 20 320 20 C 350 20 362 0 378 0 L 640 0 L 640 80 L 0 80 Z";
 
 /**
  * แมปไอคอนเมนูล่าง
@@ -44,40 +42,47 @@ function BottomNavIcon({ icon, className }: { icon: BottomNavItem["icon"]; class
 }
 
 /**
- * พื้น nav โค้ง concave กลาง — วางใน .bottom-nav__surface
+ * สถานะ active ตาม route หรือเมนูที่เปิดอยู่
  */
-function BottomNavSurface({ gradientId }: { gradientId: string }) {
-  return (
-    <svg
-      className="bottom-nav__surface"
-      viewBox="0 0 640 80"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#19183b" />
-          <stop offset="58%" stopColor="#121127" />
-          <stop offset="100%" stopColor="#090810" />
-        </linearGradient>
-      </defs>
-      <path d={NAV_PLATE_PATH} fill={`url(#${gradientId})`} />
-    </svg>
-  );
+function isNavItemActive(
+  item: BottomNavItem,
+  pathname: string,
+  isMenuOpen: boolean,
+): boolean {
+  if (item.icon === "menu") return isMenuOpen;
+  if (item.icon === "cashback") {
+    return pathname === "/cashback" || pathname.startsWith("/cashback/");
+  }
+  if (item.icon === "contact") {
+    return pathname === "/support" || pathname.startsWith("/support/");
+  }
+  return false;
 }
 
 /**
- * FloatingBottomNav — เมนูล่าง .bottom-nav (ฝาก/ถอน = sheet · อื่น ๆ = ลิงก์)
- * มือถือเท่านั้น — desktop (lg+) ใช้ sidebar/header แทน จึงซ่อนทั้งก้อน
+ * FloatingBottomNav — แคปซูลลอยมือถือ (ฝาก/ถอน = sheet · อื่น ๆ = ลิงก์)
+ * desktop (lg+) ซ่อน — ใช้ sidebar/header แทน
  */
 export function FloatingBottomNav({
   items,
   onMenuClick,
   isMenuOpen = false,
 }: FloatingBottomNavProps) {
+  const pathname = usePathname();
   const { openDeposit } = useDeposit();
   const { openWithdraw } = useWithdraw();
-  const surfaceGradientId = useId().replace(/:/g, "");
+
+  const itemClass = (item: BottomNavItem) =>
+    cn("bottom-nav__item", isNavItemActive(item, pathname, isMenuOpen) && "is-active");
+
+  const itemContent = (item: BottomNavItem) => (
+    <>
+      <span className="bottom-nav__icon" aria-hidden="true">
+        <BottomNavIcon icon={item.icon} />
+      </span>
+      <span className="bottom-nav__label">{item.label}</span>
+    </>
+  );
 
   const renderItem = (item: BottomNavItem) => {
     if (item.icon === "menu") {
@@ -86,15 +91,12 @@ export function FloatingBottomNav({
           key={item.id}
           type="button"
           onClick={onMenuClick}
-          className={cn("bottom-nav__item bottom-nav__item--center", isMenuOpen && "is-active")}
+          className={itemClass(item)}
           aria-label="เปิดเมนูหลัก"
           aria-haspopup="dialog"
           aria-expanded={isMenuOpen}
         >
-          <span className="bottom-nav__orb">
-            <HamburgerMenuIcon />
-          </span>
-          <span className="bottom-nav__label">{item.label}</span>
+          {itemContent(item)}
         </button>
       );
     }
@@ -105,12 +107,11 @@ export function FloatingBottomNav({
           key={item.id}
           type="button"
           onClick={openDeposit}
-          className="bottom-nav__item"
+          className={itemClass(item)}
           aria-label="เปิดหน้าฝากเงิน"
           aria-haspopup="dialog"
         >
-          <BottomNavIcon icon={item.icon} />
-          {item.label}
+          {itemContent(item)}
         </button>
       );
     }
@@ -121,20 +122,18 @@ export function FloatingBottomNav({
           key={item.id}
           type="button"
           onClick={openWithdraw}
-          className="bottom-nav__item"
+          className={itemClass(item)}
           aria-label="เปิดหน้าถอนเงิน"
           aria-haspopup="dialog"
         >
-          <BottomNavIcon icon={item.icon} />
-          {item.label}
+          {itemContent(item)}
         </button>
       );
     }
 
     return (
-      <Link key={item.id} href={item.href} className="bottom-nav__item">
-        <BottomNavIcon icon={item.icon} />
-        {item.label}
+      <Link key={item.id} href={item.href} className={itemClass(item)}>
+        {itemContent(item)}
       </Link>
     );
   };
@@ -142,7 +141,6 @@ export function FloatingBottomNav({
   return (
     <div className="bottom-nav-shell lg:hidden">
       <nav className="bottom-nav" aria-label="เมนูหลักด้านล่าง">
-        <BottomNavSurface gradientId={surfaceGradientId} />
         {items.map(renderItem)}
       </nav>
     </div>
