@@ -19,10 +19,14 @@ export interface WheelHistoryEntry {
 
 export interface WheelBenefitCard {
   id: string;
-  title: string;
-  subtitle: string;
-  iconId: "prize" | "check-in" | "fair" | "vip";
+  titleLines: readonly [string, string];
+  iconId: "prize" | "check-in" | "crown";
 }
+
+export const LUCKY_WHEEL_INTRO_LEAD: readonly [string, string] = [
+  "ของรางวัลสุดพิเศษ รอคุณอยู่",
+  "หมุนเลย.. โชคดีอาจเป็นของคุณ!",
+];
 
 export interface WheelLiveWinnerEntry {
   id: string;
@@ -62,27 +66,18 @@ export const LUCKY_WHEEL_SEGMENTS: WheelSegment[] = [
 export const LUCKY_WHEEL_BENEFITS: WheelBenefitCard[] = [
   {
     id: "b1",
-    title: "รางวัลจัดเต็ม",
-    subtitle: "เพชรและเครดิตสลับรอบวงล้อ",
+    titleLines: ["รางวัล", "จัดเต็ม"],
     iconId: "prize",
   },
   {
     id: "b2",
-    title: "เช็คอินหมุนฟรี",
-    subtitle: "รับตั๋วหมุนทุกวัน",
+    titleLines: ["เช็คอิน", "หมุนฟรีทุกวัน"],
     iconId: "check-in",
   },
   {
     id: "b3",
-    title: "โชคดีมีสิทธิ์",
-    subtitle: "ทุกคนหมุนได้เท่าเทียม",
-    iconId: "fair",
-  },
-  {
-    id: "b4",
-    title: "สิทธิ VIP",
-    subtitle: "โบนัสเพิ่มตามระดับสมาชิก",
-    iconId: "vip",
+    titleLines: ["โชคดีมีสิทธิ์", "ทุกคน"],
+    iconId: "crown",
   },
 ];
 

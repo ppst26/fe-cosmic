@@ -23,7 +23,7 @@ import { LuckyWheelWalletPanel } from "./LuckyWheelWalletPanel";
 const SEGMENT_DEG = 360 / LUCKY_WHEEL_SEGMENTS.length;
 
 /**
- * เนื้อหาหน้าวงล้อพารวย — ใช้ใน /wheel และ DesktopHubModal
+ * เนื้อหาหน้าวงล้อพารวย — ใช้ใน /wheel
  */
 export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean }) {
   const [gemsBalance, setGemsBalance] = useState(LUCKY_WHEEL_INITIAL_GEMS);

@@ -9,7 +9,6 @@ import { ReferralPageContent } from "@/app/components/referral/ReferralPageConte
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { DesktopHubAccountBody } from "./DesktopHubAccountBody";
 import { DesktopHubTransactionsBody } from "./DesktopHubTransactionsBody";
-import { LuckyWheelPageContent } from "@/app/components/wheel/LuckyWheelPageContent";
 import { DailyCheckInPageContent } from "@/app/components/missions/DailyCheckInPageContent";
 import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
 import { HUB_MODAL_TITLES } from "./hubModalRegistry";
@@ -72,11 +71,6 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                 key={`tx-${options?.transactionKind ?? "deposit"}`}
                 initialKind={options?.transactionKind ?? "deposit"}
               />
-            ) : null}
-            {hubId === "wheel" ? (
-              <div className="cosmic-bg-shell -mx-[var(--page-gutter)] px-[var(--page-gutter)]">
-                <LuckyWheelPageContent embedded />
-              </div>
             ) : null}
             {hubId === "check-in" ? <DailyCheckInPageContent embedded /> : null}
           </div>

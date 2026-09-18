@@ -50,7 +50,10 @@ export function LuckyWheelWalletPanel({
   };
 
   return (
-    <aside className="lucky-wheel-wallet cosmic-inset-card lg:sticky lg:top-4 lg:self-start" aria-label="กระเป๋าและการหมุน">
+    <aside
+      className="lucky-wheel-wallet cosmic-inset-card lg:self-center"
+      aria-label="กระเป๋าและการหมุน"
+    >
       <div className="lucky-wheel-wallet__head">
         <div className="flex items-center gap-2">
           <WalletIcon className="h-5 w-5 text-[var(--icon-active)]" />
@@ -179,9 +182,9 @@ function MethodOption({
       <span className="lucky-wheel-wallet__method-check" aria-hidden="true">
         {selected ? "✓" : ""}
       </span>
-      <span className="min-w-0 flex-1 text-left">
-        <span className="block text-sm font-bold text-[var(--text-primary)]">{title}</span>
-        <span className="block text-[11px] text-[var(--text-muted)]">{detail}</span>
+      <span className="lucky-wheel-wallet__method-body">
+        <span className="block text-xs font-bold leading-tight text-[var(--text-primary)] sm:text-sm">{title}</span>
+        <span className="block text-[10px] leading-snug text-[var(--text-muted)]">{detail}</span>
       </span>
     </button>
   );

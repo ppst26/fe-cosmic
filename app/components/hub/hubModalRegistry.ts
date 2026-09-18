@@ -9,7 +9,6 @@ export type DesktopHubId =
   | "account"
   | "referral"
   | "transactions"
-  | "wheel"
   | "check-in";
 
 export interface OpenHubOptions {
@@ -24,7 +23,6 @@ export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
   account: "ข้อมูลบัญชี",
   referral: "ชวนเพื่อน",
   transactions: "ธุรกรรม",
-  wheel: "วงล้อพารวย",
   "check-in": "เช็คอินรายวัน",
 };
 
@@ -35,7 +33,6 @@ const PATH_TO_HUB: Record<string, DesktopHubId> = {
   "/profile/account": "account",
   "/referral": "referral",
   "/transactions": "transactions",
-  "/wheel": "wheel",
   "/missions/check-in": "check-in",
 };
 

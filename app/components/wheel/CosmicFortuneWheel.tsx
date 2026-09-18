@@ -14,10 +14,18 @@ interface CosmicFortuneWheelProps {
   centerDisabled?: boolean;
 }
 
+/** ปัดพิกัด SVG ให้ SSR/client ตรงกัน (ลด hydration mismatch จาก float) */
+function roundSvgCoord(value: number) {
+  return Math.round(value * 1000) / 1000;
+}
+
 /** แปลงมุมเป็น x,y รอบวง */
 function polar(cx: number, cy: number, r: number, deg: number) {
   const rad = ((deg - 90) * Math.PI) / 180;
-  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+  return {
+    x: roundSvgCoord(cx + r * Math.cos(rad)),
+    y: roundSvgCoord(cy + r * Math.sin(rad)),
+  };
 }
 
 /** path ช่องวงล้อ */
@@ -100,7 +108,7 @@ export function CosmicFortuneWheel({
                   d={wedgePath(cx, cy, r, start, end)}
                   className={index % 2 === 0 ? "lucky-wheel__slice lucky-wheel__slice--a" : "lucky-wheel__slice lucky-wheel__slice--b"}
                 />
-                <g transform={`translate(${labelPos.x} ${labelPos.y}) rotate(${mid})`}>
+                <g transform={`translate(${labelPos.x} ${labelPos.y}) rotate(${roundSvgCoord(mid)})`}>
                   <text
                     y={4}
                     textAnchor="middle"
