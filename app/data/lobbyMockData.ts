@@ -16,7 +16,10 @@ import { SPORT_FEATURED_ITEMS } from "./sportFeaturedData";
 import { FISHING_FEATURED_ITEMS } from "./fishingFeaturedData";
 import { GRID_SLOT_PROVIDERS } from "./slotProvidersData";
 
-/** จำนวนการ์ดสูงสุดต่อแถว carousel หน้าแรก desktop */
+/** จำนวนการ์ดสูงสุดต่อ carousel หมวดเกมหน้าแรก (ทุกประเภทเกม) */
+export const HOME_LOBBY_GAME_CAROUSEL_MAX = 8;
+
+/** จำนวนการ์ดสูงสุด carousel ผู้ให้บริการหน้าแรก */
 export const HOME_LOBBY_CAROUSEL_MAX = 15;
 
 /** แถว SLOTS หน้าแรก — รูปค่ายจาก public/slots (สูงสุด 15 ใบต่อ carousel) */
@@ -31,7 +34,7 @@ export const HOME_SLOTS_PROVIDER_ITEMS: GameItem[] = GRID_SLOT_PROVIDERS.slice(0
 );
 
 /**
- * ข้อมูลจำลองหมวดหมู่เกม — แถบ CategoryNav / sidebar desktop (โฮม + 6 หมวด)
+ * ข้อมูลจำลองหมวดหมู่เกม — แถบ CategoryNav / sidebar desktop
  */
 export const CATEGORIES_DATA: CategoryItem[] = [
   { id: "home", label: "โฮม", href: "/" },
@@ -41,6 +44,7 @@ export const CATEGORIES_DATA: CategoryItem[] = [
   { id: "sports", label: "กีฬา", href: "/sport" },
   { id: "lottery", label: "หวย", href: "/lottery" },
   { id: "games", label: "เกมส์", href: "#games" },
+  { id: "cards", label: "เกมไพ่", href: "/cards" },
 ];
 
 /**

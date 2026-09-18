@@ -1,6 +1,6 @@
 import React from "react";
 import { GameSectionData } from "../../types/lobby";
-import { HOME_LOBBY_CAROUSEL_MAX } from "../../data/lobbyMockData";
+import { HOME_LOBBY_GAME_CAROUSEL_MAX } from "../../data/lobbyMockData";
 import { Carousel } from "../ui/Carousel";
 import { GameCard } from "../ui/GameCard";
 import { SectionIcon } from "../ui/SectionIcon";
@@ -12,12 +12,12 @@ interface GameSectionProps {
 
 /**
  * GameSection — แถวเกมหนึ่งหมวด (เกมยอดฮิต / SLOTS / คาสิโน / ยิงปลา / กีฬา)
- * SectionHeader + View All + arrows — desktop (lg+): 9 ใบต่อแถว สไลด์ได้สูงสุด 15 ใบ
+ * SectionHeader + View All + arrows — desktop (lg+): 7 ใบต่อแถว
  * Render จาก GAME_SECTIONS_DATA ใน app/page.tsx — ไม่คัดลอก markup ทีละหมวด
  */
 export function GameSection({ section, className = "mt-6 sm:mt-8" }: GameSectionProps) {
   const { id, title, icon, viewAllHref, games } = section;
-  const carouselGames = games.slice(0, HOME_LOBBY_CAROUSEL_MAX);
+  const carouselGames = games.slice(0, HOME_LOBBY_GAME_CAROUSEL_MAX);
 
   return (
     <Carousel

@@ -10,7 +10,8 @@ export type CategoryId =
   | "fishing"
   | "sports"
   | "lottery"
-  | "games";
+  | "games"
+  | "cards";
 
 export interface CategoryItem {
   id: CategoryId;

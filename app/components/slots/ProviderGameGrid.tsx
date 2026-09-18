@@ -397,8 +397,8 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
 }
 
 /**
- * กริดเกม 4 คอลัมน์สำหรับหน้ารายการเกมของค่าย (/slots/[provider])
- * ออกแบบตามภาพตัวอย่าง: 4 คอลัมน์บนมือถือ, ภาพ Thumbnail คมชัด, ปุ่มหัวใจมุมขวาบน, ชื่อเกมสีขาวด้านล่าง
+ * กริดเกมค่าย — 4 คอลัมน์มือถือ · 8 คอลัมน์ desktop (LobbySlotProviderView, /slots/[provider])
+ * ภาพ Thumbnail คมชัด, ปุ่มหัวใจมุมขวาบน, ชื่อเกมสีขาวด้านล่าง
  */
 export function ProviderGameGrid({
   games,
@@ -439,7 +439,7 @@ export function ProviderGameGrid({
   return (
     <div className="my-4">
       {/* กริด 4 คอลัมน์บนมือถือ ตามภาพตัวอย่าง */}
-      <div className="grid grid-cols-4 gap-2 sm:gap-3">
+      <div className="provider-game-grid grid grid-cols-4 gap-2 sm:gap-3 lg:grid-cols-8">
         {games.map((game) => {
           const isFav = !!favorites[game.id];
 

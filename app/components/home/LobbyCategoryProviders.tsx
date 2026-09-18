@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import type { CategoryId } from "../../types/lobby";
+import { CategorySectionHead } from "./CategorySectionHead";
 import { ProviderCategoryToolbar } from "../slots/ProviderCategoryToolbar";
-import { SlotProviderCards } from "../slots/SlotProviderCards";
+import { SlotProviderCards, type SlotProviderPick } from "../slots/SlotProviderCards";
+import { LobbySlotProviderView } from "../slots/LobbySlotProviderView";
 import { CasinoProviderCards } from "../casino/CasinoProviderCards";
 import { SportProviderCards } from "../sport/SportProviderCards";
 import {
@@ -116,6 +118,13 @@ export function LobbyCategoryProviders({ categoryId }: LobbyCategoryProvidersPro
 function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersProps) {
   const [activeFilterId, setActiveFilterId] = useState("all-in-one");
   const [searchQuery, setSearchQuery] = useState("");
+  const [slotProviderId, setSlotProviderId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSlotProviderId(null);
+    setActiveFilterId("all-in-one");
+    setSearchQuery("");
+  }, [categoryId]);
 
   const slotsContent = useMemo(() => {
     let grid = GRID_SLOT_PROVIDERS.filter((p) => matchesGridFilter(p, activeFilterId));
@@ -241,19 +250,29 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
             ? sportContent.totalCount
             : 0;
 
+  const handleSlotProviderSelect = (provider: SlotProviderPick) => {
+    setSlotProviderId(provider.id);
+  };
+
+  if (categoryId === "slots" && slotProviderId) {
+    return (
+      <section
+        className="lobby-category-providers flex min-w-0 flex-col gap-3"
+        aria-label="รายการเกมสล็อตตามค่ายที่เลือก"
+      >
+        <LobbySlotProviderView
+          providerId={slotProviderId}
+          onBack={() => setSlotProviderId(null)}
+        />
+      </section>
+    );
+  }
+
   return (
     <section
       className="lobby-category-providers flex min-w-0 flex-col gap-3"
       aria-label="รายการค่ายเกมตามหมวดที่เลือก"
     >
-      <div className="lobby-desktop-category-head hidden min-w-0 items-end justify-between gap-3 lg:flex">
-        <h2 className="text-lg font-extrabold text-[var(--text-primary)]">
-          {sectionTitle}{" "}
-          <span className="font-semibold text-[var(--text-muted)]">
-            ({providerTotal} ค่ายเกม)
-          </span>
-        </h2>
-      </div>
       <ProviderCategoryToolbar
         tabs={filterTabs}
         activeTabId={activeFilterId}
@@ -280,11 +299,28 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
         }
       />
 
+      {hasProviderGrid ? (
+        <CategorySectionHead
+          start={
+            <h2 className="text-lg font-extrabold text-[var(--text-primary)] sm:text-xl">
+              {sectionTitle}
+            </h2>
+          }
+          meta={
+            <span className="text-xs font-semibold text-[var(--text-muted)] sm:text-sm">
+              ({providerTotal} ค่ายเกม)
+            </span>
+          }
+        />
+      ) : null}
+
       {categoryId === "slots" ? (
         <SlotProviderCards
           featuredProviders={slotsContent.featured}
           gridProviders={slotsContent.grid}
           totalCount={slotsContent.totalCount}
+          hideTitleRow
+          onProviderSelect={handleSlotProviderSelect}
         />
       ) : null}
 

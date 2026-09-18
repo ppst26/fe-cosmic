@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { CategoryId, CategoryItem } from "@/app/types/lobby";
 import {
+  CardsIcon,
   ChevronRightIcon,
   ContactNavIcon,
   FishIcon,
@@ -57,6 +58,8 @@ function getCategoryIcon(id: CategoryId, className = "h-5 w-5") {
       return <PromoTicketIcon className={className} />;
     case "games":
       return <GameShowsIcon className={className} />;
+    case "cards":
+      return <CardsIcon className={className} />;
     default:
       return <LiveCasinoIcon className={className} />;
   }
@@ -118,8 +121,7 @@ function sidebarSectionLabel(id: string, fallback: string) {
 }
 
 /**
- * แถบนำทางซ้ายแบบไร้ขอบ (borderless) — ไม่มีกรอบ/เงาการ์ด ใช้ไล่สีกลืนกับพื้นหน้า
- * collapse เป็นไอคอน+ชื่อใต้ไอคอน · expand แสดงเมนูเต็ม
+ * แถบนำทางซ้าย desktop — sticky ใต้ header · สูงไม่เกิน viewport · พื้น solid
  * ถูกเรียกใช้ใน app/page.tsx ภายใน lobby-desktop-shell
  */
 export function LobbyDesktopSidebar({

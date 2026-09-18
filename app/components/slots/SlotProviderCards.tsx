@@ -291,10 +291,30 @@ function ProviderLogoBrand({ item }: { item: GridSlotProviderItem }) {
   }
 }
 
+export type SlotProviderPick = {
+  id: string;
+  name: string;
+  href: string;
+};
+
 interface SlotProviderCardsProps {
   featuredProviders: FeaturedSlotProviderItem[];
   gridProviders: GridSlotProviderItem[];
   totalCount: number;
+  /** ซ่อนหัว "สล็อต (N ค่าย)" เมื่อใช้ CategorySectionHead ด้านบน */
+  hideTitleRow?: boolean;
+  /** ซ่อนแบนเนอร์ JILI / Pragmatic (มุมมองใน lobby หลังเลือกค่าย) */
+  hideFeatured?: boolean;
+  /** เลือกค่ายใน lobby ไม่เปลี่ยนหน้า — ถูกส่งจาก LobbyCategoryProviders */
+  onProviderSelect?: (provider: SlotProviderPick) => void;
+}
+
+function providerRouteId(item: { id: string; href?: string }) {
+  if (item.href) {
+    const segment = item.href.split("/").filter(Boolean).pop();
+    if (segment) return segment;
+  }
+  return item.id;
 }
 
 /**
@@ -304,35 +324,39 @@ export function SlotProviderCards({
   featuredProviders,
   gridProviders,
   totalCount,
+  hideTitleRow = false,
+  hideFeatured = false,
+  onProviderSelect,
 }: SlotProviderCardsProps) {
+  const cardSurfaceClass =
+    "group relative flex w-full transition-all duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.99]";
+
   return (
     <div className="space-y-4">
-      {/* หัวข้อบอกจำนวนค่ายเกม */}
-      <div className="flex items-baseline gap-2 pt-1">
-        <h2 className="text-lg font-extrabold text-white sm:text-xl">
-          สล็อต
-        </h2>
-        <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
-          ({totalCount} ค่ายเกม)
-        </span>
-      </div>
+      {!hideTitleRow ? (
+        <div className="flex items-baseline gap-2 pt-1">
+          <h2 className="text-lg font-extrabold text-white sm:text-xl">สล็อต</h2>
+          <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
+            ({totalCount} ค่ายเกม)
+          </span>
+        </div>
+      ) : null}
 
       {/* 1. 2 แบนเนอร์ใหญ่พิเศษด้านบน (JILI & PRAGMATIC PLAY) */}
+      {!hideFeatured ? (
       <div className="space-y-2.5">
         {featuredProviders.map((feat) => {
           const isJili = feat.id === "jili";
           const hasCover = Boolean(feat.coverSrc);
 
-          return (
-            <Link
-              key={feat.id}
-              href={feat.href}
-              className={`group relative flex h-28 w-full items-center justify-between overflow-hidden rounded-[var(--radius-panel)] px-4 py-3 transition-all duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.99] sm:h-32 sm:px-6 ${
+          const featClasses = `${cardSurfaceClass} flex h-28 items-center justify-between overflow-hidden rounded-[var(--radius-panel)] px-4 py-3 sm:h-32 sm:px-6 ${
                 hasCover
                   ? "bg-[var(--surface-mid)]"
                   : `bg-gradient-to-r ${feat.bgGradient}`
-              }`}
-            >
+              }`;
+
+          const featInner = (
+            <>
               {hasCover && feat.coverSrc && (
                 <>
                   <Image
@@ -386,27 +410,51 @@ export function SlotProviderCards({
               )}
 
               {!hasCover && (isJili ? <JiliArtwork /> : <PragmaticArtwork />)}
+            </>
+          );
+
+          if (onProviderSelect) {
+            return (
+              <button
+                key={feat.id}
+                type="button"
+                onClick={() =>
+                  onProviderSelect({
+                    id: providerRouteId(feat),
+                    name: feat.name,
+                    href: feat.href,
+                  })
+                }
+                className={featClasses}
+              >
+                {featInner}
+              </button>
+            );
+          }
+
+          return (
+            <Link key={feat.id} href={feat.href} className={featClasses}>
+              {featInner}
             </Link>
           );
         })}
       </div>
+      ) : null}
 
       {/* 2. กริดค่ายเกม 3 คอลัมน์ */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+      <div className="slot-provider-grid grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-8">
         {gridProviders.map((item) => {
           const hasCover = Boolean(item.coverSrc);
 
-          return (
-          <Link
-            key={item.id}
-            href={item.href || `/slots/${item.id}`}
-            aria-label={`${item.name} — สล็อต`}
-            className={`group relative flex aspect-square w-full flex-col overflow-hidden rounded-[var(--radius-panel)] transition-all duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.98] ${
+          const href = item.href || `/slots/${item.id}`;
+          const gridClasses = `${cardSurfaceClass} flex aspect-square flex-col overflow-hidden rounded-[var(--radius-panel)] active:scale-[0.98] ${
               hasCover
                 ? "bg-[var(--surface-mid)]"
                 : `bg-gradient-to-b ${item.bgGradient}`
-            }`}
-          >
+            }`;
+
+          const gridInner = (
+            <>
             {hasCover && item.coverSrc && (
               <Image
                 src={item.coverSrc}
@@ -439,7 +487,38 @@ export function SlotProviderCards({
             </div>
             </>
             )}
-          </Link>
+            </>
+          );
+
+          if (onProviderSelect) {
+            return (
+              <button
+                key={item.id}
+                type="button"
+                aria-label={`${item.name} — สล็อต`}
+                onClick={() =>
+                  onProviderSelect({
+                    id: providerRouteId(item),
+                    name: item.name,
+                    href,
+                  })
+                }
+                className={gridClasses}
+              >
+                {gridInner}
+              </button>
+            );
+          }
+
+          return (
+            <Link
+              key={item.id}
+              href={href}
+              aria-label={`${item.name} — สล็อต`}
+              className={gridClasses}
+            >
+              {gridInner}
+            </Link>
           );
         })}
       </div>

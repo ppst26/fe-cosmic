@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CategoryItem, CategoryId } from "../../types/lobby";
 import {
+  CardsIcon,
   FishIcon,
   FootballIcon,
   GameShowsIcon,
@@ -12,6 +13,7 @@ import {
   PromoTicketIcon,
   SlotsIcon,
 } from "../ui/Icons";
+import { cn } from "@/lib/utils";
 
 interface CategoryNavProps {
   categories: CategoryItem[];
@@ -43,6 +45,8 @@ function getCategoryIcon(id: CategoryId, className = "w-6 h-6") {
       return <PromoTicketIcon className={className} />;
     case "games":
       return <GameShowsIcon className={className} />;
+    case "cards":
+      return <CardsIcon className={className} />;
     default:
       return <LiveCasinoIcon className={className} />;
   }
@@ -66,7 +70,7 @@ function resolveActiveFromPath(pathname: string, categories: CategoryItem[]): Ca
 }
 
 /**
- * CategoryNav — แถบหมวดหมู่เกม (โฮม + 6 หมวด) ไอคอนบน + ข้อความไทยล่าง
+ * CategoryNav — แถบหมวดหมู่เกม ไอคอนบน + ข้อความไทยล่าง
  * ถูกเรียกใช้ใน app/page.tsx
  */
 export function CategoryNav({
@@ -84,6 +88,27 @@ export function CategoryNav({
     [pathname, categories],
   );
   const [pickedId, setPickedId] = useState<CategoryId>(defaultActiveId);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const updateScrollable = () => {
+      setIsScrollable(track.scrollWidth > track.clientWidth + 2);
+    };
+
+    updateScrollable();
+    const observer = new ResizeObserver(updateScrollable);
+    observer.observe(track);
+    window.addEventListener("resize", updateScrollable);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateScrollable);
+    };
+  }, [categories]);
 
   useEffect(() => {
     if (activeIdProp) {
@@ -106,8 +131,15 @@ export function CategoryNav({
   };
 
   return (
-    <nav className={`category-nav w-full min-w-0 ${className}`.trim()} aria-label="แถบเลือกหมวดหมู่เกม">
-      <div className="category-nav__track no-scrollbar">
+    <nav
+      className={cn(
+        "category-nav w-full min-w-0",
+        isScrollable && "category-nav--scrollable",
+        className,
+      )}
+      aria-label="แถบเลือกหมวดหมู่เกม"
+    >
+      <div ref={trackRef} className="category-nav__track">
         {categories.map((category) => {
           const isActive = category.id === activeId;
 
