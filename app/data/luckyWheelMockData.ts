@@ -1,6 +1,8 @@
-/** ข้อมูล mock หน้าวงล้อจักรวาล (/wheel) */
+/** ข้อมูล mock หน้าวงล้อพารวย (/wheel) */
 
 export type WheelPrizeKind = "credit" | "gems";
+
+export type WheelSpinMethod = "gems" | "ticket";
 
 export interface WheelSegment {
   id: string;
@@ -15,17 +17,135 @@ export interface WheelHistoryEntry {
   timeLabel: string;
 }
 
-export const LUCKY_WHEEL_INITIAL_SPINS = 3;
+export interface WheelBenefitCard {
+  id: string;
+  title: string;
+  subtitle: string;
+  iconId: "prize" | "check-in" | "fair" | "vip";
+}
+
+export interface WheelLiveWinnerEntry {
+  id: string;
+  avatarLetter: string;
+  maskedName: string;
+  gemsAmount: number;
+  timeLabel: string;
+}
+
+export interface WheelPrizeHistoryRow {
+  id: string;
+  atLabel: string;
+  prizeKind: WheelPrizeKind;
+  prizeName: string;
+  amount: string;
+  method: WheelSpinMethod;
+}
+
+export const LUCKY_WHEEL_GEMS_PER_SPIN = 10;
+export const LUCKY_WHEEL_TICKETS_PER_SPIN = 1;
+export const LUCKY_WHEEL_INITIAL_GEMS = 49_720;
+export const LUCKY_WHEEL_INITIAL_TICKETS = 0;
+export const LUCKY_WHEEL_HISTORY_PAGE_SIZE = 5;
+export const LUCKY_WHEEL_HISTORY_TOTAL_PAGES = 15;
 
 export const LUCKY_WHEEL_SEGMENTS: WheelSegment[] = [
-  { id: "w1", label: "5 เครดิต", kind: "credit" },
+  { id: "w1", label: "เพชร 3", kind: "gems" },
   { id: "w2", label: "10 เครดิต", kind: "credit" },
-  { id: "w3", label: "20 เครดิต", kind: "credit" },
-  { id: "w4", label: "50 เครดิต", kind: "credit" },
-  { id: "w5", label: "100 เครดิต", kind: "credit" },
-  { id: "w6", label: "50 Gems", kind: "gems" },
-  { id: "w7", label: "100 Gems", kind: "gems" },
-  { id: "w8", label: "200 Gems", kind: "gems" },
+  { id: "w3", label: "เพชร 10", kind: "gems" },
+  { id: "w4", label: "20 เครดิต", kind: "credit" },
+  { id: "w5", label: "เพชร 5", kind: "gems" },
+  { id: "w6", label: "50 เครดิต", kind: "credit" },
+  { id: "w7", label: "เพชร 20", kind: "gems" },
+  { id: "w8", label: "100 เครดิต", kind: "credit" },
+];
+
+export const LUCKY_WHEEL_BENEFITS: WheelBenefitCard[] = [
+  {
+    id: "b1",
+    title: "รางวัลจัดเต็ม",
+    subtitle: "เพชรและเครดิตสลับรอบวงล้อ",
+    iconId: "prize",
+  },
+  {
+    id: "b2",
+    title: "เช็คอินหมุนฟรี",
+    subtitle: "รับตั๋วหมุนทุกวัน",
+    iconId: "check-in",
+  },
+  {
+    id: "b3",
+    title: "โชคดีมีสิทธิ์",
+    subtitle: "ทุกคนหมุนได้เท่าเทียม",
+    iconId: "fair",
+  },
+  {
+    id: "b4",
+    title: "สิทธิ VIP",
+    subtitle: "โบนัสเพิ่มตามระดับสมาชิก",
+    iconId: "vip",
+  },
+];
+
+export const LUCKY_WHEEL_TAGLINE =
+  "ทุกการหมุน คือ โอกาสใหม่ ให้คุณได้มากกว่าเดิม";
+
+export const LUCKY_WHEEL_LIVE_WINNERS: WheelLiveWinnerEntry[] = [
+  { id: "lw1", avatarLetter: "M", maskedName: "m*****l", gemsAmount: 10, timeLabel: "เมื่อสักครู่" },
+  { id: "lw2", avatarLetter: "N", maskedName: "n*****k", gemsAmount: 3, timeLabel: "1 นาทีที่แล้ว" },
+  { id: "lw3", avatarLetter: "I", maskedName: "i*****n", gemsAmount: 20, timeLabel: "2 นาทีที่แล้ว" },
+  { id: "lw4", avatarLetter: "P", maskedName: "p*****t", gemsAmount: 5, timeLabel: "3 นาทีที่แล้ว" },
+  { id: "lw5", avatarLetter: "A", maskedName: "a*****m", gemsAmount: 10, timeLabel: "5 นาทีที่แล้ว" },
+];
+
+export const LUCKY_WHEEL_PRIZE_HISTORY: WheelPrizeHistoryRow[] = [
+  {
+    id: "ph1",
+    atLabel: "18 ก.ย. 13:48",
+    prizeKind: "gems",
+    prizeName: "เพชร",
+    amount: "10.00",
+    method: "gems",
+  },
+  {
+    id: "ph2",
+    atLabel: "18 ก.ย. 11:02",
+    prizeKind: "credit",
+    prizeName: "เครดิต",
+    amount: "20.00",
+    method: "gems",
+  },
+  {
+    id: "ph3",
+    atLabel: "17 ก.ย. 21:15",
+    prizeKind: "gems",
+    prizeName: "เพชร",
+    amount: "3.00",
+    method: "ticket",
+  },
+  {
+    id: "ph4",
+    atLabel: "17 ก.ย. 18:40",
+    prizeKind: "gems",
+    prizeName: "เพชร",
+    amount: "5.00",
+    method: "gems",
+  },
+  {
+    id: "ph5",
+    atLabel: "16 ก.ย. 09:22",
+    prizeKind: "credit",
+    prizeName: "เครดิต",
+    amount: "50.00",
+    method: "gems",
+  },
+  {
+    id: "ph6",
+    atLabel: "15 ก.ย. 14:11",
+    prizeKind: "gems",
+    prizeName: "เพชร",
+    amount: "20.00",
+    method: "gems",
+  },
 ];
 
 export const LUCKY_WHEEL_HISTORY: WheelHistoryEntry[] = [
@@ -34,8 +154,8 @@ export const LUCKY_WHEEL_HISTORY: WheelHistoryEntry[] = [
 ];
 
 export const LUCKY_WHEEL_TERMS: string[] = [
-  "ใช้ 1 สิทธิ์ต่อการหมุน 1 ครั้ง",
-  "รางวัลเครดิตและ Gems เป็นตัวอย่าง — ยอดจริงขึ้นกับระบบหลังบ้าน",
-  "สิทธิ์หมุนอาจรีเซ็ตหรือเพิ่มตามเงื่อนไขโปรโมชัน",
+  "ใช้เพชรหรือตั๋วตามวิธีหมุนที่เลือก — ยอดหักตามจำนวนครั้ง",
+  "รางวัลเครดิตและเพชรเป็นตัวอย่าง — ยอดจริงขึ้นกับระบบหลังบ้าน",
+  "ตั๋วหมุนอาจได้จากเช็คอินหรือโปรโมชัน",
   "ทีมงานขอสงวนสิทธิ์ในการเปลี่ยนแปลงรางวัลและกติกาโดยไม่แจ้งล่วงหน้า",
 ];

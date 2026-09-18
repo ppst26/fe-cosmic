@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useId } from "react";
 import type { WheelSegment } from "@/app/data/luckyWheelMockData";
 
 const SEGMENT_COUNT = 8;
@@ -10,6 +10,8 @@ interface CosmicFortuneWheelProps {
   segments: WheelSegment[];
   rotationDeg: number;
   spinning: boolean;
+  onCenterClick?: () => void;
+  centerDisabled?: boolean;
 }
 
 /** แปลงมุมเป็น x,y รอบวง */
@@ -27,10 +29,18 @@ function wedgePath(cx: number, cy: number, r: number, startDeg: number, endDeg: 
 }
 
 /**
- * วงล้อ 8 ช่อง + ขอบเรืองแสง — หมุนผ่าน rotationDeg
+ * วงล้อ 8 ช่อง — สีจากธีม Cosmicbet (ไม่ใช้สี mock ทอง/ดำ)
  * ใช้ใน LuckyWheelPageContent
  */
-export function CosmicFortuneWheel({ segments, rotationDeg, spinning }: CosmicFortuneWheelProps) {
+export function CosmicFortuneWheel({
+  segments,
+  rotationDeg,
+  spinning,
+  onCenterClick,
+  centerDisabled,
+}: CosmicFortuneWheelProps) {
+  const uid = useId().replace(/:/g, "");
+  const hubGradId = `wheelHub-${uid}`;
   const cx = 200;
   const cy = 200;
   const r = 168;
@@ -49,57 +59,52 @@ export function CosmicFortuneWheel({ segments, rotationDeg, spinning }: CosmicFo
       >
         <svg viewBox="0 0 400 400" className="lucky-wheel__svg" aria-hidden="true">
           <defs>
-            <radialGradient id="luckyWheelHub" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#c4b5fd" />
-              <stop offset="100%" stopColor="#5b21b6" />
+            <radialGradient id={hubGradId} cx="50%" cy="45%" r="55%">
+              <stop offset="0%" stopColor="var(--surface-selected)" />
+              <stop offset="100%" stopColor="var(--surface-mid)" />
             </radialGradient>
-            <filter id="luckyWheelGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#6366f1" floodOpacity="0.55" />
-            </filter>
           </defs>
 
           <circle
             cx={cx}
             cy={cy}
-            r={r + 14}
+            r={r + 12}
             fill="none"
-            stroke="#818cf8"
-            strokeWidth="3"
-            opacity="0.35"
+            className="lucky-wheel__rim"
+            strokeWidth="2"
           />
-          <circle
-            cx={cx}
-            cy={cy}
-            r={r + 8}
-            fill="none"
-            stroke="#a5b4fc"
-            strokeWidth="1.5"
-            filter="url(#luckyWheelGlow)"
-          />
+
+          {Array.from({ length: 24 }).map((_, i) => {
+            const angle = (360 / 24) * i;
+            const dot = polar(cx, cy, r + 10, angle);
+            return (
+              <circle
+                key={`dot-${i}`}
+                cx={dot.x}
+                cy={dot.y}
+                r={2.2}
+                className="lucky-wheel__rim-dot"
+              />
+            );
+          })}
 
           {segments.slice(0, SEGMENT_COUNT).map((segment, index) => {
             const start = index * SEGMENT_DEG;
             const end = start + SEGMENT_DEG;
             const mid = start + SEGMENT_DEG / 2;
-            const labelPos = polar(cx, cy, r * 0.62, mid);
-            const fill = index % 2 === 0 ? "#2e1065" : "#1e1b4b";
+            const labelPos = polar(cx, cy, r * 0.64, mid);
 
             return (
               <g key={segment.id}>
-                <path d={wedgePath(cx, cy, r, start, end)} fill={fill} stroke="#6366f1" strokeWidth="0.75" />
+                <path
+                  d={wedgePath(cx, cy, r, start, end)}
+                  className={index % 2 === 0 ? "lucky-wheel__slice lucky-wheel__slice--a" : "lucky-wheel__slice lucky-wheel__slice--b"}
+                />
                 <g transform={`translate(${labelPos.x} ${labelPos.y}) rotate(${mid})`}>
-                  {segment.kind === "credit" ? (
-                    <CoinStackMini x={-12} y={-18} />
-                  ) : (
-                    <GemMini x={-8} y={-16} />
-                  )}
                   <text
-                    y={10}
+                    y={4}
                     textAnchor="middle"
-                    fill="#f5f4fc"
-                    fontSize="11"
-                    fontWeight="700"
-                    style={{ fontFamily: "var(--font-noto-sans-thai), sans-serif" }}
+                    className="lucky-wheel__slice-label"
                   >
                     {segment.label}
                   </text>
@@ -108,32 +113,21 @@ export function CosmicFortuneWheel({ segments, rotationDeg, spinning }: CosmicFo
             );
           })}
 
-          <circle cx={cx} cy={cy} r={28} fill="url(#luckyWheelHub)" stroke="#c4b5fd" strokeWidth="2" />
-          <path
-            d="M200 188 L204 198 L196 198 Z M200 212 L204 202 L196 202 Z M188 200 L198 204 L198 196 Z M212 200 L202 204 L202 196 Z"
-            fill="#fef9c3"
-          />
+          <circle cx={cx} cy={cy} r={36} fill={`url(#${hubGradId})`} className="lucky-wheel__hub-ring" />
         </svg>
       </div>
+
+      <button
+        type="button"
+        className="lucky-wheel__hub-btn"
+        disabled={centerDisabled || spinning}
+        onClick={onCenterClick}
+        aria-label="หมุนวงล้อ"
+      >
+        SPIN
+      </button>
+
+      <p className="lucky-wheel__caption">หมุนวงล้อเพื่อรับรางวัลสุดพิเศษ</p>
     </div>
-  );
-}
-
-function CoinStackMini({ x, y }: { x: number; y: number }) {
-  return (
-    <g transform={`translate(${x} ${y})`}>
-      <ellipse cx="12" cy="14" rx="10" ry="3" fill="#ca8a04" opacity="0.5" />
-      <ellipse cx="12" cy="10" rx="10" ry="3.5" fill="#eab308" stroke="#fde047" strokeWidth="0.75" />
-      <ellipse cx="12" cy="6" rx="10" ry="3.5" fill="#facc15" stroke="#fef08a" strokeWidth="0.75" />
-    </g>
-  );
-}
-
-function GemMini({ x, y }: { x: number; y: number }) {
-  return (
-    <g transform={`translate(${x} ${y})`}>
-      <path d="M12 2 L20 8 L16 18 L8 18 L4 8 Z" fill="#7c3aed" stroke="#c4b5fd" strokeWidth="0.75" />
-      <path d="M12 2 L16 18 M12 2 L8 18 M4 8 L20 8" stroke="#ddd6fe" strokeWidth="0.5" opacity="0.6" />
-    </g>
   );
 }

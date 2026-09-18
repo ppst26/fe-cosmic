@@ -24,7 +24,7 @@ export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
   account: "ข้อมูลบัญชี",
   referral: "ชวนเพื่อน",
   transactions: "ธุรกรรม",
-  wheel: "วงล้อจักรวาล",
+  wheel: "วงล้อพารวย",
   "check-in": "เช็คอินรายวัน",
 };
 

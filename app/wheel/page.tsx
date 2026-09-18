@@ -9,7 +9,7 @@ import { LuckyWheelPageContent } from "@/app/components/wheel/LuckyWheelPageCont
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 
 /**
- * หน้าวงล้อจักรวาล (/wheel)
+ * หน้าวงล้อพารวย (/wheel)
  */
 export default function LuckyWheelPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,9 +20,9 @@ export default function LuckyWheelPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="กิจกรรม" backHref="/promotions" />
+      <SlotProvidersHeader title="วงล้อพารวย" backHref="/" />
 
-      <main className="mx-auto max-w-[var(--content-max)] px-[var(--page-gutter)] pb-28 pt-4">
+      <main className="lucky-wheel-page-shell mx-auto max-w-[min(100%,1280px)] px-[var(--page-gutter)] pb-28 pt-4">
         <LuckyWheelPageContent />
       </main>
 
