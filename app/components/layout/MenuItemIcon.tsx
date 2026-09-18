@@ -36,6 +36,7 @@ export function MenuItemIcon({
     case "cashback":
       return <RefundIcon className={className} />;
     case "check-in":
+    case "activities":
       return <MissionsIcon className={className} />;
     case "wheel":
       return <PrizeWheelIcon className={className} />;

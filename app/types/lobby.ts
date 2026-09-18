@@ -124,8 +124,16 @@ export type FeatureActionIconId = "diamond-shop" | "missions" | "prize-wheel";
 export interface FeatureActionItem {
   id: string;
   title: string;
+  /** คำอธิบายสั้นใต้หัวข้อ — FeatureActionCard */
+  description: string;
   href: string;
   icon: FeatureActionIconId;
+  /** ปุ่ม CTA ขาวหลัก */
+  ctaPrimaryLabel: string;
+  /** ปุ่มรองโปร่งแสง */
+  ctaSecondaryLabel: string;
+  /** ลิงก์ปุ่มรอง — ไม่ระบุใช้ href หลัก */
+  secondaryHref?: string;
 }
 
 export type JackpotCategory = "casino" | "sports" | "slots";

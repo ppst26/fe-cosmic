@@ -2,12 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   CosmicbetLogo,
   ChevronDownIcon,
-  DepositNavIcon,
   HeaderWalletIcon,
   ProfileNavIcon,
+  SearchIcon,
   WithdrawNavIcon,
 } from "../ui/Icons";
 import { useAuth } from "../auth/AuthProvider";
@@ -16,6 +17,7 @@ import { useWithdraw } from "../withdraw/WithdrawProvider";
 import { VipRankEmblem } from "../vip/VipRankEmblem";
 import type { VipRankId } from "@/app/types/vip";
 import { DESKTOP_PLAYER_PANEL_MOCK } from "@/app/data/desktopLobbyMockData";
+import { HEADER_DESKTOP_NAV } from "@/app/data/lobbyMockData";
 import {
   formatHeaderWalletBalance,
   MOCK_MAIN_WALLET_BALANCE,
@@ -27,10 +29,11 @@ interface HeaderProps {
 }
 
 /**
- * Header — มือถือ: .cosmic-nav (โลโก้ · กระเป๋า/ล็อกอิน · โปรไฟล์)
- * Desktop lg+: ยอดคงเหลือ · ฝาก · ถอน · โปรไฟล์ (borderless pill)
+ * Header — มือถือ: .glass-mobile-nav (โลโก้ · ค้นหา · กระเป๋า+ฝาก · โปรไฟล์)
+ * Desktop lg+: โลโก้ · nav glass · ค้นหา glass · กระเป๋า · CTA ฝาก · ไอคอน · โปรไฟล์
  */
 export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
+  const pathname = usePathname();
   const { isAuthenticated, isLoading, openProfile, closeProfile, isProfileOpen } =
     useAuth();
   const { openDeposit } = useDeposit();
@@ -55,26 +58,56 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
   return (
     <>
       <header className="cosmic-nav-shell w-full min-w-0 lg:hidden">
-        <div className="cosmic-nav">
+        <div className="cosmic-nav glass-mobile-nav">
           <Link href="/" className="cosmic-logo" aria-label="Cosmicbet หน้าแรก">
-            <CosmicbetLogo className="!h-auto !max-w-none w-[clamp(112px,25vw,150px)] object-contain" />
+            <CosmicbetLogo className="!h-auto !max-w-none w-[clamp(96px,22vw,132px)] object-contain" />
           </Link>
 
           <div className="cosmic-actions">
+            <button
+              type="button"
+              className="cosmic-nav__chip glass-control glass-icon-btn"
+              aria-label="ค้นหาเกม"
+            >
+              <SearchIcon className="h-5 w-5" aria-hidden />
+            </button>
+
             {isLoading ? (
-              <div className="wallet-button wallet-button--skeleton" aria-hidden="true" />
+              <div
+                className="cosmic-nav__wallet-cluster glass-control wallet-button--skeleton"
+                aria-hidden="true"
+              />
             ) : showWallet ? (
-              <div className="wallet-button" aria-live="polite">
-                <HeaderWalletIcon aria-hidden="true" />
-                <span>{balanceLabel}</span>
+              <div className="cosmic-nav__wallet-cluster glass-control">
+                <div className="wallet-button wallet-button--cluster" aria-live="polite">
+                  <HeaderWalletIcon aria-hidden="true" />
+                  <span>{balanceLabel}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={openDeposit}
+                  className="cosmic-nav__deposit-cta cosmic-cta-primary"
+                  aria-label="ฝากเงิน"
+                  aria-haspopup="dialog"
+                >
+                  +
+                </button>
               </div>
             ) : (
               <div className="cosmic-nav__auth">
-                <button type="button" onClick={onLoginClick} className="cosmic-nav__auth-login">
-                  LOG IN
+                <button
+                  type="button"
+                  onClick={onLoginClick}
+                  className="cosmic-nav__auth-login glass-control"
+                >
+                  Log in
                 </button>
-                <button type="button" onClick={onSignUpClick} className="cosmic-nav__auth-signup">
-                  SIGN UP
+                <button
+                  type="button"
+                  onClick={onSignUpClick}
+                  className="cosmic-cta-primary cosmic-cta-primary--sm uppercase tracking-wide"
+                >
+                  Sign up
                 </button>
               </div>
             )}
@@ -82,7 +115,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
             <button
               type="button"
               onClick={handleProfileClick}
-              className={`profile-button${isProfileOpen ? " is-active" : ""}`}
+              className={`profile-button cosmic-nav__chip glass-control glass-icon-btn${isProfileOpen ? " is-active" : ""}`}
               aria-label="โปรไฟล์"
               aria-expanded={isProfileOpen}
               aria-haspopup="dialog"
@@ -103,6 +136,39 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
             >
               <CosmicbetLogo className="h-7 w-auto max-w-[min(100%,200px)]" />
             </Link>
+
+            <nav className="header-desktop-bar__nav" aria-label="หมวดหลัก">
+              {HEADER_DESKTOP_NAV.map((item) => {
+                const isActive =
+                  pathname === item.href || pathname.startsWith(`${item.href}/`);
+                const showBadge = "showBadge" in item && item.showBadge;
+                return (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    className={`header-desktop-bar__nav-link glass-control glass-pill${isActive ? " is-active" : ""}`}
+                  >
+                    {item.label}
+                    {showBadge ? (
+                      <span className="header-desktop-bar__nav-badge" aria-hidden />
+                    ) : null}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div className="header-desktop-bar__center">
+            <label className="header-desktop-bar__search glass-control">
+              <span className="sr-only">ค้นหาเกมหรือค่าย</span>
+              <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
+              <input
+                type="search"
+                className="header-desktop-bar__search-input"
+                placeholder="ค้นหาเกม / ค่าย"
+                autoComplete="off"
+              />
+            </label>
           </div>
 
           <div className="header-desktop-bar__end">
@@ -113,45 +179,44 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
               />
             ) : showWallet ? (
               <div className="header-desktop-bar__actions">
-                <div className="header-desktop-bar__wallet-pill">
-                  <div className="header-desktop-bar__wallet-segment" aria-live="polite">
-                    <span className="header-desktop-bar__wallet-segment-icon" aria-hidden="true">
-                      <HeaderWalletIcon className="h-[18px] w-[18px]" />
-                    </span>
-                    <span className="header-desktop-bar__wallet-balance">{balanceLabel}</span>
-                  </div>
-
-                  <span className="header-desktop-bar__wallet-rule" aria-hidden="true" />
-
-                  <button
-                    type="button"
-                    onClick={openDeposit}
-                    className="header-desktop-bar__wallet-segment header-desktop-bar__wallet-segment--action"
-                    aria-label="ฝากเงิน"
-                    aria-haspopup="dialog"
-                  >
-                    <DepositNavIcon className="header-desktop-bar__action-icon h-[18px] w-[18px]" />
-                    <span>ฝาก</span>
-                  </button>
-
-                  <span className="header-desktop-bar__wallet-rule" aria-hidden="true" />
-
-                  <button
-                    type="button"
-                    onClick={openWithdraw}
-                    className="header-desktop-bar__wallet-segment header-desktop-bar__wallet-segment--action"
-                    aria-label="ถอนเงิน"
-                    aria-haspopup="dialog"
-                  >
-                    <WithdrawNavIcon className="header-desktop-bar__action-icon h-[18px] w-[18px]" />
-                    <span>ถอน</span>
-                  </button>
+                <div className="header-desktop-bar__wallet glass-control" aria-live="polite">
+                  <HeaderWalletIcon className="h-[18px] w-[18px] shrink-0 text-[var(--icon-active)]" />
+                  <span className="header-desktop-bar__wallet-balance">{balanceLabel}</span>
                 </div>
 
                 <button
                   type="button"
+                  onClick={openDeposit}
+                  className="cosmic-cta-primary cosmic-cta-primary--sm"
+                  aria-label="ฝากเงิน"
+                  aria-haspopup="dialog"
+                >
+                  ฝาก
+                </button>
+
+                <button
+                  type="button"
+                  onClick={openWithdraw}
+                  className="header-desktop-bar__icon-btn glass-control glass-icon-btn"
+                  aria-label="ถอนเงิน"
+                  aria-haspopup="dialog"
+                >
+                  <WithdrawNavIcon className="h-[18px] w-[18px]" />
+                </button>
+
+                <button
+                  type="button"
+                  className="header-desktop-bar__icon-btn glass-control glass-icon-btn"
+                  aria-label="การแจ้งเตือน"
+                >
+                  <HeaderBellIcon />
+                  <span className="header-desktop-bar__badge" aria-hidden />
+                </button>
+
+                <button
+                  type="button"
                   onClick={handleProfileClick}
-                  className={`header-desktop-bar__profile-pill${isProfileOpen ? " is-active" : ""}`}
+                  className={`header-desktop-bar__profile-pill glass-control${isProfileOpen ? " is-active" : ""}`}
                   aria-label="โปรไฟล์"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
@@ -161,20 +226,28 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="header-desktop-bar__actions">
                 <button
                   type="button"
                   onClick={onLoginClick}
-                  className="px-2 py-1.5 text-xs font-bold uppercase tracking-wide text-[var(--text-secondary)] transition-colors hover:text-white"
+                  className="header-desktop-bar__auth-login glass-control glass-pill"
                 >
                   Log in
                 </button>
                 <button
                   type="button"
                   onClick={onSignUpClick}
-                  className="cosmic-action-btn px-4 py-2 text-xs uppercase"
+                  className="cosmic-cta-primary cosmic-cta-primary--sm uppercase tracking-wide"
                 >
                   Sign up
+                </button>
+                <button
+                  type="button"
+                  onClick={handleProfileClick}
+                  className="header-desktop-bar__icon-btn glass-control glass-icon-btn"
+                  aria-label="บัญชี"
+                >
+                  <ProfileNavIcon className="h-5 w-5" />
                 </button>
               </div>
             )}
@@ -182,5 +255,24 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
         </div>
       </header>
     </>
+  );
+}
+
+function HeaderBellIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+      <path
+        d="M12 3a4.5 4.5 0 0 0-4.5 4.5v2.1c0 .5-.2 1-.55 1.35L5.8 13.2A1.2 1.2 0 0 0 6.75 15h10.5a1.2 1.2 0 0 0 .95-1.8l-1.15-2.25a2 2 0 0 1-.55-1.35V7.5A4.5 4.5 0 0 0 12 3Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 17a2 2 0 0 0 4 0"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }

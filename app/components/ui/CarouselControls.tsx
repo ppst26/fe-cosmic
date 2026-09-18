@@ -27,16 +27,11 @@ export function CarouselControls({
   onPrev,
   onNext,
 }: CarouselControlsProps) {
-  const arrowClass =
-    "relative inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-[var(--surface-hover)] text-[var(--icon-default)] transition-colors duration-[var(--motion-fast)] hover:bg-[var(--surface-selected)] hover:text-[var(--icon-active)] disabled:opacity-40 disabled:pointer-events-none after:absolute after:-inset-1 after:content-['']";
+  const arrowClass = "glass-control glass-icon-btn";
 
   return (
     <div className="flex items-center gap-2">
-      {/* View All — pill พื้นม่วงเข้ม ไปหน้ารวมของหมวด */}
-      <Link
-        href={viewAllHref}
-        className="inline-flex h-9 items-center rounded-full bg-[var(--surface-hover)] px-3.5 text-xs font-semibold text-[var(--text-secondary)] transition-colors duration-[var(--motion-fast)] hover:bg-[var(--surface-selected)] hover:text-[var(--text-primary)]"
-      >
+      <Link href={viewAllHref} className="glass-control glass-pill">
         {viewAllLabel}
       </Link>
 

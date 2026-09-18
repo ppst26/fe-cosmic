@@ -26,7 +26,7 @@ export const FOOTER_GAME_LINKS: FooterNavLink[] = [
 
 export const FOOTER_INFO_LINKS: FooterNavLink[] = [
   { label: "โปรโมชั่น", href: "/promotions" },
-  { label: "กิจกรรม", href: "/wheel" },
+  { label: "กิจกรรม", href: "/activities" },
   { label: "ระดับ VIP", href: "/profile" },
   { label: "ชวนเพื่อน", href: "/referral" },
 ];

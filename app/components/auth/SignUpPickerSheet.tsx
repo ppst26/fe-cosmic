@@ -40,7 +40,7 @@ export function SignUpPickerSheet({
     <div className="absolute inset-0 z-30 flex flex-col justify-end pointer-events-auto lg:items-center lg:justify-center lg:p-4">
       <button
         type="button"
-        className="absolute inset-0 bg-[var(--surface-end)]/80 backdrop-blur-sm animate-in fade-in-0 lg:bg-black/50"
+        className="cosmic-dialog-overlay absolute inset-0 animate-in fade-in-0"
         aria-label="ปิดตัวเลือก"
         onClick={onClose}
       />

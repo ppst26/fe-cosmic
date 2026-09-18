@@ -93,7 +93,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
             <Dialog.Content
               aria-describedby={undefined}
               onOpenAutoFocus={(event) => event.preventDefault()}
-              className="profile-slideover-card pointer-events-auto cosmic-modal-shell flex flex-col overflow-hidden text-[var(--text-primary)] outline-none origin-top-right data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-1 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-1 duration-150"
+              className="profile-slideover-card glass-popover pointer-events-auto flex flex-col text-[var(--text-primary)] outline-none origin-top-right data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-1 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-1 duration-150"
             >
               <Dialog.Title className="sr-only">โปรไฟล์</Dialog.Title>
 

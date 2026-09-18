@@ -97,6 +97,16 @@ export const DESKTOP_RIGHT_MENU_TILES = [
     ariaLabel: "โปรโมชั่น PROMOTION",
   },
   {
+    id: "menu-activities",
+    variant: "cell" as const,
+    tone: "wheel" as const,
+    iconId: "activities",
+    title: "กิจกรรม",
+    subtitle: "ACTIVITIES",
+    href: "/activities",
+    ariaLabel: "กิจกรรม ACTIVITIES",
+  },
+  {
     id: "menu-gems",
     variant: "cell" as const,
     tone: "gems" as const,

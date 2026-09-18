@@ -36,6 +36,13 @@ export const HOME_SLOTS_PROVIDER_ITEMS: GameItem[] = GRID_SLOT_PROVIDERS.slice(0
 /**
  * ข้อมูลจำลองหมวดหมู่เกม — แถบ CategoryNav / sidebar desktop
  */
+/** แถบนำทาง header desktop (Dexsport-style pills) — Header.tsx */
+export const HEADER_DESKTOP_NAV = [
+  { id: "sports", label: "กีฬา", href: "/sport" },
+  { id: "casino", label: "คาสิโน", href: "/casino" },
+  { id: "promotions", label: "โปรโมชัน", href: "/promotions", showBadge: true },
+] as const;
+
 export const CATEGORIES_DATA: CategoryItem[] = [
   { id: "home", label: "โฮม", href: "/" },
   { id: "casino", label: "คาสิโน", href: "/casino" },
@@ -255,9 +262,34 @@ export const PROVIDERS_DATA: ProviderItem[] = [
  * ถูกเรียกใช้โดย FeatureActionCards.tsx
  */
 export const FEATURE_ACTIONS_DATA: FeatureActionItem[] = [
-  { id: "feature-diamond-shop", title: "ร้านค้าเพชร", href: "/shop/diamonds", icon: "diamond-shop" },
-  { id: "feature-missions", title: "ภารกิจ", href: "/missions/check-in", icon: "missions" },
-  { id: "feature-prize-wheel", title: "วงล้อ", href: "/wheel", icon: "prize-wheel" },
+  {
+    id: "feature-diamond-shop",
+    title: "ร้านค้าเพชร",
+    description: "แลก Gems เป็นของรางวัล โบนัส และสิทธิพิเศษสำหรับสมาชิก",
+    href: "/gems-store",
+    icon: "diamond-shop",
+    ctaPrimaryLabel: "เข้าร้านค้า",
+    ctaSecondaryLabel: "ดูรายการแลก",
+  },
+  {
+    id: "feature-missions",
+    title: "ภารกิจ",
+    description: "เช็คอินรายวันและทำภารกิจสะสมเพื่อปลดล็อกรางวัล",
+    href: "/missions/check-in",
+    icon: "missions",
+    ctaPrimaryLabel: "เช็คอินเลย",
+    ctaSecondaryLabel: "กติกากิจกรรม",
+    secondaryHref: "/activities",
+  },
+  {
+    id: "feature-prize-wheel",
+    title: "วงล้อ",
+    description: "หมุนลุ้นเครดิตและของรางวัล — ใช้สิทธิ์ตามเงื่อนไขแต่ละรอบ",
+    href: "/wheel",
+    icon: "prize-wheel",
+    ctaPrimaryLabel: "หมุนเลย",
+    ctaSecondaryLabel: "วิธีเล่น",
+  },
 ];
 
 /**

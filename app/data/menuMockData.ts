@@ -39,6 +39,7 @@ export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
     columns: 3,
     items: [
       { id: "promotions", label: "โปรโมชั่น", href: "/promotions", iconId: "promotions" },
+      { id: "activities", label: "กิจกรรม", href: "/activities", iconId: "activities" },
       { id: "cashback", label: "คืนยอด", href: "/cashback", iconId: "cashback" },
       { id: "check-in", label: "เช็คอิน", href: "/missions/check-in", iconId: "check-in" },
     ],

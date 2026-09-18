@@ -4,6 +4,7 @@ import type { TransactionKind } from "@/app/types/transaction";
 /** หมวด hub ที่เปิดเป็น modal บน desktop (lg+) */
 export type DesktopHubId =
   | "promotions"
+  | "activities"
   | "cashback"
   | "gems-store"
   | "account"
@@ -18,6 +19,7 @@ export interface OpenHubOptions {
 
 export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
   promotions: "Promotions",
+  activities: "กิจกรรม",
   cashback: "คืนยอด",
   "gems-store": "ร้านค้า Gems",
   account: "ข้อมูลบัญชี",
@@ -28,6 +30,7 @@ export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
 
 const PATH_TO_HUB: Record<string, DesktopHubId> = {
   "/promotions": "promotions",
+  "/activities": "activities",
   "/cashback": "cashback",
   "/gems-store": "gems-store",
   "/profile/account": "account",

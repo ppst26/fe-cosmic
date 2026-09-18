@@ -19,9 +19,36 @@
     var(--surface-end) 100%
   );
   /* โซน lobby หน้าแรก — พื้น solid (app/page.tsx) */
-  --lobby-zone-solid: #191927;
-  /* การ์ดใน DesktopHubModal (lg+) — borderless solid */
-  --hub-dialog-card-bg: var(--lobby-zone-solid);
+  /* --lobby-zone-solid: #191927; */
+  /* การ์ดย่อยใน hub modal — ทึบกว่า shell เล็กน้อย อ่านบน glass ได้ */
+  --hub-dialog-card-bg: rgb(25 25 39 / 0.62);
+  /* Shell dialog — โปร่งแบบ glass-card (ไม่ใช่ม่วงทึบ) */
+  --cosmic-dialog-shell-bg: rgb(18 12 26 / 0.42);
+  --glass-blur: 32px;
+  --glass-blur-overlay: 28px;
+  /* Scrim dialog — ไม่ blur (ประหยัด GPU มือถือ) */
+  --dialog-overlay-bg: rgb(0 0 0 / 0.74);
+  --glass-saturate: 1.28;
+  --glass-fill: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.1),
+    rgb(151 112 213 / 0.14)
+  );
+  --glass-fill-subtle: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.07),
+    rgb(120 90 180 / 0.1)
+  );
+  --glass-border: rgb(255 255 255 / 0.11);
+  --glass-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.09),
+    0 20px 48px rgb(0 0 0 / 0.38);
+  /* Lobby catalog modal (Dexsport-style) — design.md § Dialog & Modal */
+  --hub-lobby-shell-bg: #141218;
+  --hub-lobby-chrome: #1e1c24;
+  --hub-lobby-sidebar-width: 208px;
+  --hub-lobby-grid-gap: 12px;
+  --radius-lobby-modal: 22px;
 
   --text-primary: #f5f4fc;
   --text-secondary: #b9b5cf;
@@ -35,7 +62,14 @@
   /* CTA / แท็บ active — สีทึบ (gradient เก็บไว้สำหรับ legacy ที่ยังไม่ migrate) */
   --action-solid: #4930df;
   --action-solid-hover: #5d45eb;
+  /* CTA ปุ่มขาว (primary บน glass card / โปรโมชัน) */
+  --cta-white-bg: #ffffff;
+  --cta-white-fg: #0a0a0f;
+  --cta-white-hover: #f4f2ff;
   --action-gradient: linear-gradient(90deg, #4930df, #0968f8);
+  /* CTA หลักแบบ Deposit — น้ำเงิน → ม่วง */
+  --cta-primary-gradient: linear-gradient(90deg, #6366f1 0%, #7c6cf0 48%, #a855f7 100%);
+  --cta-primary-fg: #ffffff;
   --category-active-gradient: linear-gradient(110deg, #26205b, #202d65);
   --gold-gradient: linear-gradient(180deg, #ffe66d, #d99a08);
   --success: #41d995;
@@ -82,8 +116,8 @@
 
   /* Menu dialog (RightMenuDrawer) — mock ติ่ง「เมนู」+ panel ชิดเหนือ bottom nav */
   --menu-top: #19183b;
-  /* พื้น solid เมนู panel (bottom-nav ใช้ --nav-capsule-bg เทาแยกต่างหาก) */
-  --menu-panel-bg: var(--menu-top);
+  /* พื้น panel เมนู (RightMenuDrawer) — ตรงกับ shell dialog */
+  --menu-panel-bg: var(--cosmic-dialog-shell-bg);
   --menu-bottom: #0d0c20;
   --menu-border: #a483ee;
   --menu-text: #f5f2ff;
@@ -103,10 +137,10 @@
   --cover-sky: linear-gradient(160deg, #0369a1, #0c1a3a);
   --cover-violet: linear-gradient(160deg, #6d28d9, #2e1065);
 
-  /* Cosmic background — nebula ชั้นบน component (Intro) · พื้นหลังหน้า = .cosmic-page */
+  /* Cosmic background — nebula ชั้นบน component (Intro) · พื้นหลังหน้า = .cosmic-bg บน <html> */
   --nebula-violet: rgb(124 58 237 / 0.35);
   --nebula-blue: rgb(37 99 235 / 0.3);
-  --cosmic-page-base: var(--surface-start);
+  --cosmic-page-base: #0d0814;
 
   /* shadcn ↔ Cosmicbet bridge */
   --background: var(--bg-page);
@@ -210,36 +244,379 @@ html {
   background-color: var(--cosmic-page-base);
 }
 
-/**
- * พื้นหลัง cosmic ทั้งหน้า — gradient ม่วงเข้ม (แทน fe-cosmic-bg.webp)
- * ใช้ร่วมกับ class cosmic-page บน <html> (app/layout.tsx)
- */
+/** โทนข้อความเมื่อใช้ร่วมกับ .cosmic-bg บน <html> (app/layout.tsx) */
 .cosmic-page {
-  min-height: 100dvh;
   color: var(--text-primary);
 }
 
-html.cosmic-page::before {
+/** การ์ดกระจกม่วง — FeatureActionCard, HoF row, shell modal */
+.glass-card {
+  padding: 24px;
+  border-radius: 24px;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  color: #f5f3ff;
+}
+
+.glass-card p,
+.glass-card__desc {
+  color: #aaa3bc;
+  line-height: 1.65;
+}
+
+.glass-card--feature-action {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-panel);
+  text-decoration: none;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  transition:
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    background var(--motion-fast) ease;
+}
+
+.glass-card--feature-action:hover {
+  border-color: rgb(255 255 255 / 0.16);
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.12),
+    rgb(151 112 213 / 0.16)
+  );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 16px 40px rgb(0 0 0 / 0.28);
+}
+
+.feature-action-card__ctas .cosmic-cta-white--sm,
+.feature-action-card__ctas .cosmic-cta-muted {
+  flex: 1 1 auto;
+  min-width: min(100%, 8.5rem);
+}
+
+@media (min-width: 1024px) {
+  .feature-action-cards .glass-card--feature-action {
+    height: 100%;
+  }
+
+  .feature-action-card__ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .feature-action-card__ctas .cosmic-cta-white--sm,
+  .feature-action-card__ctas .cosmic-cta-muted {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+.glass-card__title {
+  display: block;
+  font-size: 1.0625rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+@media (min-width: 640px) {
+  .glass-card__title {
+    font-size: 1.125rem;
+  }
+}
+
+.glass-card__desc {
+  margin-top: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+/** แถว Hall of Fame — glass แยกแถว (ไม่ใช้พื้นสลับสี) */
+.glass-card--hof-row {
+  padding: 0.7rem 0.9rem;
+  border-radius: 14px;
+}
+
+/**
+ * ปุ่มเล็กแบบ glass — ไม่ backdrop-blur (CategoryNav, View All, carousel arrows)
+ */
+.glass-control {
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill-subtle);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 4px 14px rgb(0 0 0 / 0.14);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition:
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.glass-control:hover:not(:disabled):not(.is-active) {
+  border-color: rgb(255 255 255 / 0.14);
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.09),
+    rgb(151 112 213 / 0.13)
+  );
+  color: var(--text-primary);
+}
+
+.glass-control.is-active,
+.glass-control--active {
+  border-color: rgb(155 124 240 / 0.42);
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.34),
+    rgb(90 70 130 / 0.22)
+  );
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 6px 18px rgb(73 48 223 / 0.22);
+}
+
+.glass-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding-inline: 0.875rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.glass-pill:hover {
+  color: var(--text-primary);
+}
+
+.glass-icon-btn {
+  position: relative;
+  display: inline-flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--icon-default);
+}
+
+.glass-icon-btn::after {
+  position: absolute;
+  inset: -4px;
   content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
+}
+
+.glass-icon-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
   pointer-events: none;
-  background:
+}
+
+.glass-icon-btn:not(:disabled):hover {
+  color: var(--icon-active);
+}
+
+/**
+ * CTA ปุ่มขาว — ใช้คู่กับ .glass-card หรือพื้นเข้ม (คล้ายปุ่ม Buy ใน mock)
+ * ใช้เป็น <button> / <a> หรือ Button variant="ctaWhite"
+ */
+.cosmic-cta-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: 14px;
+  padding: 0.65rem 1.35rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--cta-white-fg);
+  background: var(--cta-white-bg);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 12%);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-cta-white:hover {
+  background: var(--cta-white-hover);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 16%);
+}
+
+.cosmic-cta-white:active {
+  transform: scale(0.98);
+}
+
+.cosmic-cta-white:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cosmic-cta-white:disabled,
+.cosmic-cta-white[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cosmic-cta-white--sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  border-radius: 12px;
+}
+
+.cosmic-cta-white--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  border-radius: 16px;
+}
+
+/**
+ * CTA รองบน glass card — โปร่งแสง (คู่กับ cosmic-cta-white)
+ */
+.cosmic-cta-muted {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.65rem 1.35rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.cosmic-cta-muted:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.cosmic-cta-muted:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/**
+ * CTA หลัก gradient — ปุ่ม Deposit / Sign up (pill, ขาว, เงา + highlight บน)
+ * ใช้เป็น <button> / <a> หรือ Button variant="ctaPrimary"
+ */
+.cosmic-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 0.55rem 1.35rem;
+  min-height: 2.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--cta-primary-fg);
+  background: var(--cta-primary-gradient);
+  box-shadow:
+    0 6px 22px rgb(99 102 241 / 0.38),
+    inset 0 1px 0 rgb(255 255 255 / 0.38);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    filter var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-cta-primary:hover {
+  filter: brightness(1.07);
+  box-shadow:
+    0 8px 26px rgb(124 58 237 / 0.42),
+    inset 0 1px 0 rgb(255 255 255 / 0.45);
+}
+
+.cosmic-cta-primary:active {
+  transform: scale(0.98);
+  filter: brightness(1.02);
+}
+
+.cosmic-cta-primary:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.45);
+  outline-offset: 2px;
+}
+
+.cosmic-cta-primary:disabled,
+.cosmic-cta-primary[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: none;
+}
+
+.cosmic-cta-primary--sm {
+  min-height: 2rem;
+  padding: 0.45rem 1.05rem;
+  font-size: 0.8125rem;
+}
+
+.cosmic-cta-primary--lg {
+  min-height: 2.625rem;
+  padding: 0.65rem 1.65rem;
+  font-size: 0.9375rem;
+}
+
+/**
+ * พื้นหลัง cosmic ทั้งหน้า — แทน gradient ::before เก่า / fe-cosmic-bg.webp
+ */
+.cosmic-bg {
+  min-height: 100dvh;
+  background-color: #0d0814;
+  background-image:
     radial-gradient(
-      ellipse 70% 24% at 50% 0%,
-      rgb(49 20 104 / 52%) 0%,
-      rgb(30 16 78 / 20%) 40%,
-      transparent 76%
+      ellipse 55% 38% at 42% 0%,
+      rgba(65, 19, 100, 0.28),
+      transparent 75%
     ),
     radial-gradient(
-      ellipse 96% 26% at 50% 100%,
-      rgb(50 12 130 / 62%) 0%,
-      rgb(30 10 78 / 32%) 43%,
+      ellipse 42% 32% at 75% 0%,
+      rgba(83, 14, 53, 0.22),
       transparent 78%
     ),
-    var(--cosmic-page-base);
+    radial-gradient(
+      ellipse 30% 32% at 29% 55%,
+      rgba(26, 49, 80, 0.38),
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 32% 34% at 65% 54%,
+      rgba(48, 22, 79, 0.32),
+      transparent 80%
+    );
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 body {
@@ -270,7 +647,7 @@ body {
 
   /** Desktop lobby — กรอบกลาง max 1680 · 3 คอลัมน์ flex (sidebar หด/ขยาย → main ปรับตาม) */
   .lobby-desktop-shell {
-    --lobby-sidebar-card-width: 252px;
+    --lobby-sidebar-card-width: 220px;
     --lobby-sidebar-card-width-collapsed: 84px;
     --lobby-desktop-frame-max: 1680px;
     --lobby-bottom-nav-inset-left: var(--lobby-sidebar-card-width);
@@ -279,8 +656,9 @@ body {
       var(--header-desktop-bar-height) + env(safe-area-inset-top, 0px) + var(--space-4)
     );
     /* สูงสูงสุดของแผง sidebar — ไม่เกิน viewport ใต้ header (ไม่ยืดตามความยาวหน้า) */
-    --lobby-sidebar-panel-height: calc(
-      100dvh - var(--lobby-sidebar-sticky-top) - 1rem - var(--space-6)
+    --lobby-sidebar-panel-height: min(
+      calc(100dvh - 80px),
+      calc(100dvh - var(--lobby-sidebar-sticky-top) - 1rem - var(--space-6))
     );
     --lobby-workspace-pad-top: var(--space-4);
     display: flex;
@@ -288,7 +666,7 @@ body {
     width: 100%;
     min-height: 100vh;
     align-items: center;
-    background: var(--bg-page);
+    background: transparent;
   }
 
   .lobby-desktop-shell__frame {
@@ -319,18 +697,12 @@ body {
       width: 100%;
       flex-shrink: 0;
       padding-top: env(safe-area-inset-top, 0px);
-      background: var(--header-wing);
-      box-shadow: 0 4px 24px rgb(0 0 0 / 22%);
+      background: transparent;
+      box-shadow: none;
     }
 
     .lobby-desktop-shell__header-band::before {
-      content: "";
-      position: absolute;
-      inset-inline: 0;
-      top: 0;
-      height: 1px;
-      pointer-events: none;
-      background: var(--header-top-line);
+      display: none;
     }
 
     .lobby-desktop-shell__header-band .header-desktop-bar {
@@ -501,7 +873,7 @@ body {
   }
 
   .lobby-desktop-workspace--over-right-rail .lobby-desktop-center--over-rail > main {
-    background: var(--bg-page);
+    background: transparent;
   }
 
   .lobby-desktop-workspace--over-right-rail .lobby-desktop-right-rail {
@@ -672,7 +1044,41 @@ body {
     --lobby-bottom-nav-inset-left: var(--lobby-sidebar-card-width-collapsed);
   }
 
-  /* Sidebar — สูงคงที่ตาม viewport · sticky · พื้น solid (ย่อ/ขยายไม่หด) */
+  /**
+   * Desktop sidebar glass — LobbyDesktopSidebar.tsx
+   * โทน Dexsport: #21182DB2 + blur 30px
+   */
+  .glass-sidebar {
+    --glass-sidebar-bg: #21182db2;
+    --glass-sidebar-bg-light: #e9e9e9b2;
+    position: relative;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: var(--lobby-sidebar-panel-height);
+    min-height: 0;
+    max-height: calc(100dvh - 80px);
+    padding: 0.5rem;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 20px;
+    background: var(--glass-sidebar-bg);
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+    white-space: nowrap;
+    box-shadow: 0 12px 40px rgb(0 0 0 / 28%);
+    transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  :is(.light, html.light) .glass-sidebar {
+    background: var(--glass-sidebar-bg-light);
+    border-color: rgb(0 0 0 / 0.08);
+  }
+
   .lobby-desktop-sidebar {
     position: relative;
     display: flex;
@@ -683,9 +1089,12 @@ body {
     min-width: 0;
     max-width: 100%;
     height: var(--lobby-sidebar-panel-height);
-    min-height: var(--lobby-sidebar-panel-height);
-    max-height: var(--lobby-sidebar-panel-height);
+    min-height: 0;
+    max-height: calc(100dvh - 80px);
     overflow: hidden;
+  }
+
+  .lobby-desktop-sidebar:not(.glass-sidebar) {
     border: 0;
     border-radius: var(--radius-panel);
     background: var(--surface-mid);
@@ -700,8 +1109,12 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in srgb, var(--border-subtle) 65%, transparent) transparent;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .lobby-desktop-sidebar__body::-webkit-scrollbar {
+    display: none;
   }
 
   .lobby-desktop-sidebar__head {
@@ -744,11 +1157,11 @@ body {
   }
 
   .lobby-desktop-sidebar__nav {
-    padding: 0.35rem 0.65rem 0.4rem;
+    padding: 0.2rem 0.15rem 0.35rem;
   }
 
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__nav {
-    padding-inline: 0.4rem;
+    padding-inline: 0.1rem;
   }
 
   .lobby-desktop-sidebar__nav--services {
@@ -1008,6 +1421,130 @@ body {
     max-width: 100%;
   }
 
+  /* Dexsport-like menu rows — ใช้กับ .glass-sidebar */
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__section-label {
+    display: none;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav {
+    padding: 0.15rem 0;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--primary {
+    padding-top: 0.1rem;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--services::before {
+    margin: 0.55rem 0.35rem 0.6rem;
+    height: 1px;
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__list {
+    gap: 1px;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link {
+    gap: 0.65rem;
+    min-height: 2.5rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: rgb(255 255 255 / 0.58);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--primary .lobby-desktop-sidebar__link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgb(255 255 255 / 0.94);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-icon-wrap {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    opacity: 0.95;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-icon-wrap svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-label {
+    font-weight: inherit;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link:hover {
+    background: rgb(255 255 255 / 0.06);
+    color: rgb(255 255 255 / 0.96);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--services .lobby-desktop-sidebar__link:hover {
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link.is-active {
+    background: rgb(255 255 255 / 0.1);
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link.is-active .lobby-desktop-sidebar__link-icon-wrap {
+    background: transparent;
+    color: #fff;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link--danger {
+    color: rgb(248 113 113 / 0.92);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link--danger:hover {
+    background: rgb(248 113 113 / 0.1);
+    color: #fca5a5;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__foot {
+    margin-top: 0.15rem;
+    padding: 0.45rem 0.35rem 0.35rem;
+    border-top: 1px solid rgb(255 255 255 / 0.06);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__toggle {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.45rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgb(255 255 255 / 0.5);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__toggle:hover {
+    background: rgb(255 255 255 / 0.06);
+    color: rgb(255 255 255 / 0.88);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link {
+    min-height: 3rem;
+    padding: 0.35rem 0.2rem;
+    border-radius: 10px;
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link.is-active {
+    background: rgb(255 255 255 / 0.1);
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link-icon-wrap {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
   .page-shell--lobby {
     max-width: none;
     margin-inline: 0;
@@ -1221,10 +1758,34 @@ body {
   background: var(--surface-gradient);
 }
 
-/** โครง modal / bottom sheet — ไม่มี stroke มุมจาก --radius-panel */
+/** Overlay มืดเท่านั้น — ไม่ backdrop-blur (DesktopHubModal, sheet ฯลฯ) */
+.cosmic-dialog-overlay {
+  background: var(--dialog-overlay-bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/** โครง modal / bottom sheet — glass shell มุมจาก --radius-panel */
 .cosmic-modal-shell {
-  border: 0;
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-panel);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
+}
+
+/** มือถือ — shell ไม่ blur พื้นหลัง (โทน glass จาก gradient ทึบขึ้น) */
+@media (max-width: 1023px) {
+  :is(.cosmic-modal-shell, .cosmic-modal-shell--hub, .cosmic-modal-shell--lobby) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: linear-gradient(
+      145deg,
+      rgb(36 32 48 / 0.96),
+      rgb(22 18 32 / 0.98)
+    );
+  }
 }
 
 .cosmic-sheet-shell {
@@ -1255,22 +1816,75 @@ body {
 }
 
 /**
- * การ์ดโปรไฟล์มุมขวาบน — ProfileSlideOverCard.tsx
+ * พื้นผิว glass สำหรับ popover — ใช้คู่กับ profile-slideover-card เท่านั้น
+ * ProfileSlideOverCard.tsx
  */
+.glass-popover {
+  position: relative;
+  overflow: hidden;
+  background: rgb(255 255 255 / 0.1);
+  -webkit-backdrop-filter: blur(23px);
+  backdrop-filter: blur(23px);
+  border-radius: 20px;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.5),
+    inset 0 -1px 0 rgb(255 255 255 / 0.1),
+    inset 0 0 16px 8px rgb(255 255 255 / 0.8);
+  color: var(--text-primary);
+}
+
+.glass-popover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.8),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.glass-popover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.8),
+    transparent,
+    rgb(255 255 255 / 0.3)
+  );
+  pointer-events: none;
+}
+
+.glass-popover > * {
+  position: relative;
+  z-index: 1;
+}
+
+/** การ์ดโปรไฟล์มุมขวาบน — layout (พื้นผิว = .glass-popover) */
 .profile-slideover-card {
   width: min(100%, var(--profile-popover-width));
   max-height: min(calc(100dvh - var(--header-mobile-bar-height) - env(safe-area-inset-top, 0px) - 1rem), 520px);
-  padding: 10px 10px 12px;
-  background: var(--menu-panel-bg);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 5%),
-    0 12px 32px rgb(0 0 0 / 45%);
+  padding: 12px 12px 14px;
 }
 
 @media (min-width: 1024px) {
   .profile-slideover-card {
-    width: min(100%, 420px);
-    max-height: min(calc(100dvh - var(--header-desktop-bar-height) - env(safe-area-inset-top, 0px) - 1.5rem), 720px);
+    width: min(100%, 320px);
+    max-height: min(calc(100dvh - var(--header-desktop-bar-height) - env(safe-area-inset-top, 0px) - 1.5rem), 640px);
     padding: 14px 14px 16px;
   }
 }
@@ -1310,17 +1924,71 @@ body {
 }
 
 .profile-slideover-card .profile-hub-body {
-  gap: 0.5rem;
+  gap: 0.35rem;
 }
 
 .profile-slideover-card .profile-hub-header {
-  gap: 0.65rem;
-  padding-bottom: 0.65rem;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.15rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.06);
+}
+
+.profile-slideover-card .profile-hub-accordion {
+  background: transparent;
+  border-radius: 12px;
+}
+
+.profile-slideover-card .profile-hub-accordion__trigger {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.profile-slideover-card .profile-hub-accordion__trigger:hover {
+  background: rgb(255 255 255 / 0.05);
+}
+
+.profile-slideover-card .profile-hub-accordion__icon {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.profile-slideover-card .profile-hub-accordion__panel {
+  padding: 0.15rem 0.25rem 0.35rem;
+  background: transparent;
+  border-top: 0;
+}
+
+.profile-slideover-card .profile-hub-row {
+  gap: 0.5rem;
+  padding: 0.45rem 0.5rem;
+  border-radius: 10px;
+}
+
+.profile-slideover-card .profile-hub-row:hover,
+.profile-slideover-card .profile-hub-row:focus-visible {
+  background: rgb(255 255 255 / 0.05);
+}
+
+.profile-slideover-card .profile-hub-row__icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.profile-slideover-card .profile-hub-row__title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .profile-slideover-card .profile-hub-header__avatar {
   height: 2.75rem;
   width: 2.75rem;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.06);
 }
 
 .profile-slideover-card .profile-hub-header__avatar svg {
@@ -1350,33 +2018,23 @@ body {
   width: 1.75rem;
 }
 
-.profile-slideover-card .profile-hub-accordion__panel {
-  padding: 0.25rem 0.35rem 0.4rem;
-}
-
-.profile-slideover-card .profile-hub-row {
-  gap: 0.45rem;
-  padding: 0.4rem 0.45rem;
-}
-
-.profile-slideover-card .profile-hub-row__icon {
-  height: 1.65rem;
-  width: 1.65rem;
-}
-
-.profile-slideover-card .profile-hub-row__title {
-  font-size: 0.75rem;
-}
-
 .profile-slideover-card .profile-hub-logout {
-  margin-top: 0.25rem;
-  padding: 0.35rem 0.2rem;
-  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #f87171;
+}
+
+.profile-slideover-card .profile-hub-logout:hover {
+  color: #fca5a5;
+  opacity: 1;
 }
 
 .profile-slideover-card .profile-hub-logout svg {
-  height: 1rem;
-  width: 1rem;
+  height: 1.05rem;
+  width: 1.05rem;
+  color: inherit;
 }
 
 /**
@@ -1546,6 +2204,45 @@ body {
     inset 0 1px 0 rgb(255 255 255 / 4%);
 }
 
+/** พื้นผิว glass — panel เมนูมือถือ (RightMenuDrawer) */
+.menu-panel.glass-menu-panel {
+  --menu-top: rgb(42 38 66 / 0.82);
+  overflow: hidden;
+  background: rgb(255 255 255 / 0.08);
+  -webkit-backdrop-filter: blur(23px) saturate(1.18);
+  backdrop-filter: blur(23px) saturate(1.18);
+  border: 1px solid rgb(255 255 255 / 0.26);
+  box-shadow:
+    0 24px 64px rgb(0 0 0 / 0.48),
+    inset 0 1px 0 rgb(255 255 255 / 0.38),
+    inset 0 -1px 0 rgb(255 255 255 / 0.06);
+}
+
+.menu-panel.glass-menu-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.55), transparent);
+  pointer-events: none;
+}
+
+.menu-panel.glass-menu-panel .menu-content {
+  position: relative;
+  z-index: 1;
+}
+
+.menu-panel.glass-menu-panel .menu-tab {
+  -webkit-backdrop-filter: blur(23px) saturate(1.18);
+  backdrop-filter: blur(23px) saturate(1.18);
+  border: 1px solid rgb(255 255 255 / 0.26);
+  border-bottom: 0;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28);
+}
+
 .menu-tab {
   position: absolute;
   top: -33px;
@@ -1589,6 +2286,7 @@ body {
   position: absolute;
   top: 13px;
   right: 13px;
+  z-index: 2;
   display: grid;
   place-items: center;
   width: 40px;
@@ -1599,6 +2297,32 @@ body {
   background: #27234e;
   color: var(--menu-text);
   cursor: pointer;
+  transition:
+    background var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.menu-close.glass-menu-close {
+  background: rgb(255 255 255 / 0.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  backdrop-filter: blur(18px) saturate(1.15);
+  border: 1px solid rgb(255 255 255 / 0.28);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.42),
+    0 6px 18px rgb(0 0 0 / 0.22);
+}
+
+.menu-close.glass-menu-close:active {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) {
+  .menu-close.glass-menu-close:hover {
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.34);
+    color: #fff;
+  }
 }
 
 .menu-close svg {
@@ -1661,7 +2385,15 @@ body {
   cursor: pointer;
   transition:
     background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
     transform 160ms ease;
+}
+
+.menu-item.glass-menu-tile {
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background: rgb(255 255 255 / 0.06);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
 }
 
 .menu-item svg {
@@ -1695,6 +2427,18 @@ body {
 @media (hover: hover) {
   .menu-item:hover {
     background: linear-gradient(135deg, #302950, #24203e);
+  }
+
+  .menu-item.glass-menu-tile:hover {
+    border-color: rgb(255 255 255 / 0.22);
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 0.11),
+      rgb(151 112 213 / 0.14)
+    );
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.16),
+      0 8px 20px rgb(0 0 0 / 0.18);
   }
 }
 
@@ -1779,15 +2523,45 @@ body {
   flex: 0 0 auto;
   min-width: 76px;
   max-width: none;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill-subtle);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 4px 14px rgb(0 0 0 / 0.14);
+  color: var(--text-secondary);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
-.category-nav__chip:hover:not(.is-active),
+.category-nav__chip:hover:not(.is-active) {
+  border-color: rgb(255 255 255 / 0.14);
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.09),
+    rgb(151 112 213 / 0.13)
+  );
+  color: var(--text-primary);
+}
+
+.category-nav__chip.is-active {
+  border-color: rgb(155 124 240 / 0.42);
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.34),
+    rgb(90 70 130 / 0.22)
+  );
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 6px 18px rgb(73 48 223 / 0.22);
+  transform: none;
+}
+
 .page-subnav__chip:hover:not(.is-active) {
   color: var(--nav-active);
   background: var(--surface-hover);
 }
 
-.category-nav__chip.is-active,
 .page-subnav__chip.is-active {
   color: var(--text-primary);
   background: var(--action-solid);
@@ -1950,21 +2724,10 @@ body {
   }
 }
 
-/* CategoryNav มือถือ — พื้นปุ่มให้ตรงโซน lobby (ไม่ใช้ fade ขอบ) */
+/* CategoryNav มือถือ — glass โทนเดียวกับ desktop (ไม่ blur) */
 @media (max-width: 1023px) {
-  .category-nav__chip {
-    background: color-mix(in srgb, #292641 90%, var(--lobby-zone-solid));
-    color: var(--nav-text);
-  }
-
-  .category-nav__chip:hover:not(.is-active) {
-    color: var(--nav-hover);
-    background: color-mix(in srgb, #252044 88%, var(--lobby-zone-solid));
-  }
-
-  .category-nav__chip.is-active {
-    color: var(--text-primary);
-    background: var(--action-solid);
+  .category-nav__chip:not(.is-active) {
+    color: var(--text-secondary);
   }
 }
 
@@ -3140,36 +3903,66 @@ body {
 
 
 /*
- * Mobile header — cosmic-nav (Header.tsx · lg:hidden)
+ * Mobile header — cosmic-nav + glass-mobile-nav (Header.tsx · lg:hidden)
  */
 .cosmic-nav-shell {
   position: sticky;
   top: 0;
   z-index: 50;
-  padding-top: env(safe-area-inset-top, 0px);
-  background: var(--cosmic-nav-bg, #121023);
-  box-shadow: 0 4px 20px rgb(0 0 0 / 22%);
+  padding: calc(env(safe-area-inset-top, 0px) + 8px) var(--page-gutter) 8px;
+  background: transparent;
+  box-shadow: none;
 }
 
 .cosmic-nav {
-  --nav-bg: #121023;
-  --wallet-bg: #1b1738;
+  --wallet-bg: transparent;
   --text: #f7f5ff;
-  --border: rgb(170 133 235 / 45%);
+  --border: rgb(255 255 255 / 0.22);
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 10px;
 
   width: 100%;
   max-width: var(--content-max);
   margin-inline: auto;
-  min-height: var(--header-mobile-bar-height);
-  padding: 12px 20px;
+  min-height: 52px;
+  padding: 8px 10px 8px 12px;
   box-sizing: border-box;
-  background: var(--nav-bg);
   color: var(--text);
+}
+
+.cosmic-nav.glass-mobile-nav {
+  background: rgb(255 255 255 / 0.08);
+  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  backdrop-filter: blur(20px) saturate(1.15);
+  border: 0;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.2);
+}
+
+/** ชิปในแถบมือถือ — มุม sm, ไม่มีขอบ (ทับ .glass-control / .glass-pill) */
+.cosmic-nav.glass-mobile-nav .glass-control,
+.cosmic-nav.glass-mobile-nav .glass-pill {
+  border: 0;
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+}
+
+.cosmic-nav.glass-mobile-nav .glass-control:hover:not(:disabled):not(.is-active),
+.cosmic-nav.glass-mobile-nav .glass-control.is-active,
+.cosmic-nav.glass-mobile-nav .glass-control--active {
+  border: 0;
+}
+
+.cosmic-nav.glass-mobile-nav .cosmic-nav__chip,
+.cosmic-nav.glass-mobile-nav .cosmic-nav__wallet-cluster,
+.cosmic-nav.glass-mobile-nav .profile-button,
+.cosmic-nav.glass-mobile-nav .cosmic-nav__deposit-cta,
+.cosmic-nav.glass-mobile-nav .cosmic-nav__auth-login,
+.cosmic-nav.glass-mobile-nav .cosmic-cta-primary {
+  border-radius: var(--radius-sm);
 }
 
 .cosmic-nav,
@@ -3199,9 +3992,51 @@ body {
 .cosmic-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
   flex-shrink: 1;
+}
+
+.cosmic-nav__chip {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.cosmic-nav__chip.is-active {
+  color: var(--icon-active);
+  background: rgb(255 255 255 / 0.1);
+}
+
+.cosmic-nav__wallet-cluster {
+  display: inline-flex;
+  max-width: min(52vw, 11.5rem);
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 4px 4px 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.cosmic-nav__wallet-cluster.wallet-button--skeleton {
+  width: 7.5rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.cosmic-nav__deposit-cta {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  min-width: 34px;
+  min-height: 32px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .wallet-button,
@@ -3226,17 +4061,23 @@ body {
   gap: 6px;
   min-width: 0;
   max-width: min(42vw, 9.25rem);
-  min-height: 40px;
-  padding: 0 10px;
-  border-radius: 10px;
+  min-height: 32px;
+  padding: 0 6px 0 0;
+  border-radius: 8px;
   background: var(--wallet-bg);
+}
+
+.wallet-button--cluster {
+  max-width: none;
+  flex: 1 1 auto;
+  padding: 0;
 }
 
 .wallet-button--skeleton {
   width: 6.5rem;
   max-width: min(42vw, 9.25rem);
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  background: color-mix(in srgb, var(--wallet-bg) 70%, #2a2548);
+  background: rgb(255 255 255 / 0.06);
 }
 
 .wallet-button span {
@@ -3253,9 +4094,9 @@ body {
 .profile-button {
   width: 40px;
   height: 40px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: rgb(255 255 255 / 0.04);
   cursor: pointer;
 }
 
@@ -3267,26 +4108,10 @@ body {
 }
 
 .cosmic-nav__auth-login {
-  padding: 0 4px;
+  min-height: 36px;
+  padding: 0 10px;
   border: 0;
-  background: transparent;
-  color: var(--text);
-  font: inherit;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.cosmic-nav__auth-signup {
-  min-height: 40px;
-  padding: 0 12px;
-  border: 0;
-  border-radius: 10px;
-  background: var(--action-solid);
-  color: #fff;
+  color: var(--text-secondary);
   font: inherit;
   font-size: 10px;
   font-weight: 700;
@@ -3294,6 +4119,10 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+
+.cosmic-nav__auth-login:hover {
+  color: var(--text-primary);
 }
 
 .cosmic-actions svg {
@@ -3308,28 +4137,16 @@ body {
 }
 
 @media (hover: hover) {
-  .wallet-button:hover {
-    background: #252044;
-  }
-
   .profile-button:hover,
   .profile-button.is-active {
-    background: #1b1738;
-    border-color: #ac87ea;
-  }
-
-  .cosmic-nav__auth-login:hover {
-    color: #fff;
-  }
-
-  .cosmic-nav__auth-signup:hover {
-    background: var(--action-solid-hover);
+    color: var(--icon-active);
+    background: rgb(255 255 255 / 0.1);
   }
 }
 
 .profile-button.is-active {
-  background: #1b1738;
-  border-color: #ac87ea;
+  color: var(--icon-active);
+  background: rgb(255 255 255 / 0.1);
 }
 
 .cosmic-nav a:focus-visible,
@@ -3340,28 +4157,37 @@ body {
 
 @media (max-width: 420px) {
   :root {
-    --header-mobile-bar-height: 68px;
+    --header-mobile-bar-height: 64px;
+  }
+
+  .cosmic-nav-shell {
+    padding-inline: 10px;
   }
 
   .cosmic-nav {
-    min-height: 68px;
-    padding: 10px 12px;
-    gap: 10px;
+    min-height: 48px;
+    padding: 6px 8px 6px 10px;
+    gap: 8px;
   }
 
   .cosmic-actions {
-    gap: 6px;
+    gap: 4px;
   }
 
-  .wallet-button {
-    max-width: min(40vw, 8.5rem);
-    min-height: 38px;
-    padding: 0 8px;
-    gap: 5px;
+  .cosmic-nav__chip,
+  .profile-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cosmic-nav__wallet-cluster {
+    max-width: min(48vw, 10.5rem);
+    min-height: 36px;
+    padding: 3px 3px 3px 6px;
   }
 
   .wallet-button span {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .wallet-button svg {
@@ -3369,22 +4195,19 @@ body {
     height: 18px;
   }
 
-  .profile-button {
-    width: 38px;
-    height: 38px;
+  .cosmic-nav__deposit-cta {
+    min-width: 30px;
+    min-height: 28px;
+    font-size: 1.125rem;
   }
 
   .cosmic-nav__auth {
-    gap: 6px;
+    gap: 4px;
   }
 
   .cosmic-nav__auth-login {
-    font-size: 10px;
-  }
-
-  .cosmic-nav__auth-signup {
-    min-height: 38px;
-    padding: 0 10px;
+    min-height: 32px;
+    padding-inline: 8px;
     font-size: 9px;
   }
 }
@@ -3576,30 +4399,23 @@ body {
   max-width: 100%;
   flex-shrink: 0;
   padding-top: env(safe-area-inset-top, 0px);
-  background: var(--header-wing);
-  box-shadow: 0 4px 24px rgb(0 0 0 / 22%);
+  background: transparent;
+  box-shadow: none;
 }
 
 .header-desktop-bar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  pointer-events: none;
-  background: var(--header-top-line);
+  display: none;
 }
 
 .header-desktop-bar__inner {
   position: relative;
-  display: flex;
+  display: grid;
   width: 100%;
   max-width: 100%;
   min-height: var(--header-desktop-bar-height);
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.65rem 1rem;
   padding: 0 clamp(12px, 2vw, 28px);
   box-sizing: border-box;
 }
@@ -3609,6 +4425,105 @@ body {
   min-width: 0;
   align-items: center;
   gap: 0.65rem;
+}
+
+.header-desktop-bar__center {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.25rem;
+}
+
+.header-desktop-bar__search {
+  display: flex;
+  width: 100%;
+  max-width: 36rem;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.65rem;
+  border-radius: var(--radius-pill);
+  padding-inline: 1rem;
+}
+
+.header-desktop-bar__search-input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  outline: none;
+  box-shadow: none;
+}
+
+.header-desktop-bar__search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.header-desktop-bar__search-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.header-desktop-bar__nav {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  margin-inline-start: 0.35rem;
+}
+
+@media (min-width: 1280px) {
+  .header-desktop-bar__nav {
+    display: flex;
+  }
+}
+
+.header-desktop-bar__nav-link {
+  position: relative;
+  min-height: 2.25rem;
+  padding-inline: 0.95rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header-desktop-bar__nav-badge {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--destructive);
+  box-shadow: 0 0 0 2px rgb(0 0 0 / 35%);
+}
+
+.header-desktop-bar__wallet {
+  display: inline-flex;
+  max-width: min(100%, 10.5rem);
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: var(--radius-pill);
+  padding: 0.45rem 0.9rem;
+}
+
+.header-desktop-bar__auth-login {
+  min-height: 2.25rem;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.header-desktop-bar__auth-login:hover {
+  color: var(--text-primary);
 }
 
 .header-desktop-bar__menu-btn {
@@ -3731,19 +4646,15 @@ body {
   gap: 0.3rem;
   border: 0;
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--surface-mid) 90%, var(--bg-page));
   padding: 0.2rem 0.55rem 0.2rem 0.2rem;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
-  transition: background var(--motion-fast) ease;
-}
-
-.header-desktop-bar__profile-pill:hover {
-  background: color-mix(in srgb, var(--surface-hover) 65%, var(--surface-mid));
+  transition:
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease;
 }
 
 .header-desktop-bar__profile-pill.is-active {
-  background: color-mix(in srgb, var(--surface-selected) 45%, var(--surface-mid));
+  border-color: rgb(155 124 240 / 0.42);
 }
 
 .header-desktop-bar__stat {
@@ -3886,30 +4797,17 @@ body {
 
 .header-desktop-bar__icon-btn {
   position: relative;
-  display: grid;
+  display: inline-flex;
   flex-shrink: 0;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   width: 2.35rem;
   height: 2.35rem;
   border: 0;
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
   color: var(--icon-default);
   cursor: pointer;
   text-decoration: none;
-  transition:
-    background var(--motion-fast) ease,
-    color var(--motion-fast) ease;
-}
-
-.header-desktop-bar__icon-btn:hover {
-  background: var(--surface-hover);
-  color: var(--icon-active);
-}
-
-.header-desktop-bar__icon-btn.is-active {
-  background: color-mix(in srgb, var(--surface-selected) 55%, var(--surface-hover));
-  color: var(--icon-active);
 }
 
 .header-desktop-bar__badge {
@@ -4069,8 +4967,11 @@ body {
   }
 }
 
-.hall-of-fame-table thead,
-.hall-of-fame-table tbody {
+.hall-of-fame-table {
+  display: block;
+}
+
+.hall-of-fame-table thead {
   display: block;
 }
 
@@ -4100,24 +5001,61 @@ body {
   text-align: right;
 }
 
-.hall-of-fame-table__body {
+.hall-of-fame-table tbody.hall-of-fame-table__body {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  margin-top: 0.35rem;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .hall-of-fame-table tbody.hall-of-fame-table__body {
+    gap: 0.625rem;
+    margin-top: 0.625rem;
+  }
+
+  .glass-card--hof-row {
+    padding: 0.75rem 1rem;
+  }
 }
 
 .hall-of-fame-table__row {
   border: 0;
-  border-radius: var(--radius-panel);
-  background: transparent;
-  padding: 0.55rem 0.65rem;
-  box-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-/** แถวสลับ — พื้นอ่อนกว่า + มุมโค้ม (borderless) */
-.hall-of-fame-table__row--framed {
-  background: color-mix(in srgb, var(--surface-hover) 42%, var(--surface-mid));
+.hall-of-fame-table__row--empty {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 0;
+}
+
+.hall-of-fame-table__avatar {
+  display: inline-flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface-hover) 70%, transparent);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.hall-of-fame-table__coef-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 2.75rem;
+  border-radius: 8px;
+  padding: 0.2rem 0.45rem;
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--text-primary);
 }
 
 .hall-of-fame-table__td {
@@ -4134,14 +5072,310 @@ body {
 }
 
 .cosmic-modal-shell--hub {
-  border: 0;
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-panel);
-  background: var(--surface-mid);
-  box-shadow: 0 22px 48px rgb(0 0 0 / 48%);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
 }
 
 .cosmic-modal-shell--hub__header {
   border-bottom: 0;
+}
+
+/**
+ * Lobby catalog modal — toolbar + sidebar + game grid (HubLobbyModalLayout)
+ * อ้าง design.md § Dialog & Modal — Lobby catalog (XL)
+ */
+.cosmic-modal-shell--lobby {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lobby-modal);
+  background: linear-gradient(
+    145deg,
+    rgb(30 28 38 / 0.55),
+    rgb(14 12 20 / 0.62)
+  );
+  -webkit-backdrop-filter: blur(40px) saturate(var(--glass-saturate));
+  backdrop-filter: blur(40px) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
+}
+
+.hub-lobby-modal {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.hub-lobby-modal__toolbar {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.75rem;
+  padding: 0.75rem 1rem 0.65rem;
+}
+
+.hub-lobby-modal__toolbar-close {
+  margin-left: auto;
+}
+
+.hub-lobby-modal__segment {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--hub-lobby-chrome);
+}
+
+.hub-lobby-modal__segment-btn {
+  min-height: 36px;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.hub-lobby-modal__segment-btn.is-active {
+  background: var(--surface-elevated, #2a2834);
+  color: var(--text-primary);
+}
+
+.hub-lobby-modal__search-wrap {
+  display: flex;
+  min-width: min(100%, 12rem);
+  flex: 1 1 12rem;
+  align-items: center;
+  gap: 0.5rem;
+  height: 42px;
+  padding-inline: 0.85rem;
+  border-radius: 10px;
+  background: var(--hub-lobby-chrome);
+  color: var(--text-muted);
+}
+
+.hub-lobby-modal__search-wrap input {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.hub-lobby-modal__search-wrap input::placeholder {
+  color: var(--text-muted);
+}
+
+.hub-lobby-modal__chrome-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 42px;
+  padding-inline: 0.85rem;
+  border: 0;
+  border-radius: 10px;
+  background: var(--hub-lobby-chrome);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: background var(--motion-fast) ease;
+}
+
+.hub-lobby-modal__chrome-btn:hover {
+  background: color-mix(in srgb, var(--hub-lobby-chrome) 70%, var(--text-primary) 8%);
+}
+
+.hub-lobby-modal__body {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.hub-lobby-modal__sidebar {
+  display: none;
+  width: var(--hub-lobby-sidebar-width);
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 0.65rem 0.5rem 1rem 0.75rem;
+  border-right: 1px solid var(--border-subtle);
+}
+
+@media (min-width: 1024px) {
+  .hub-lobby-modal__sidebar {
+    display: block;
+  }
+}
+
+.hub-lobby-modal__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hub-lobby-modal__nav-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 40px;
+  padding: 0.35rem 0.65rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: left;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.hub-lobby-modal__nav-btn:hover {
+  background: color-mix(in srgb, var(--hub-lobby-chrome) 80%, var(--text-primary) 6%);
+  color: var(--text-primary);
+}
+
+.hub-lobby-modal__nav-btn.is-active {
+  background: var(--surface-selected, #2e2840);
+  color: var(--text-primary);
+}
+
+.hub-lobby-modal__main {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.hub-lobby-modal__categories-mobile {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  scrollbar-width: none;
+}
+
+.hub-lobby-modal__categories-mobile::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hub-lobby-modal__categories-mobile {
+    display: none;
+  }
+}
+
+.hub-lobby-modal__grid-scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0.75rem 1rem 1.25rem;
+}
+
+.hub-lobby-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--hub-lobby-grid-gap);
+}
+
+@media (min-width: 480px) {
+  .hub-lobby-modal__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .hub-lobby-modal__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .hub-lobby-modal__grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .hub-lobby-modal__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.hub-lobby-game-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hub-lobby-game-tile__cover {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--hub-lobby-chrome);
+}
+
+.hub-lobby-game-tile__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hub-lobby-game-tile__badge {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  background: rgb(0 0 0 / 72%);
+  font-size: 0.5625rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.hub-lobby-game-tile__title {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.hub-lobby-game-tile__provider {
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
 /** ฟิลด์/การ์ดย่อยใน hub dialog */
@@ -4154,10 +5388,18 @@ body {
 @media (min-width: 1024px) {
   .cosmic-modal-shell--hub .hub-desktop-card,
   .cosmic-modal-shell--hub .cosmic-inset-card {
-    border: 0;
+    border: 1px solid rgb(255 255 255 / 0.06);
     border-radius: var(--radius-panel);
     background: var(--hub-dialog-card-bg);
-    box-shadow: none;
+    -webkit-backdrop-filter: blur(20px) saturate(1.15);
+    backdrop-filter: blur(20px) saturate(1.15);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  }
+
+  .cosmic-modal-shell--hub .promotions-desktop-hub__tabs {
+    background: rgb(14 10 22 / 0.55);
+    -webkit-backdrop-filter: blur(20px) saturate(1.15);
+    backdrop-filter: blur(20px) saturate(1.15);
   }
 
   .cosmic-modal-shell--hub .hub-desktop-field {
@@ -4176,6 +5418,91 @@ body {
   .cosmic-modal-shell--hub .referral-promo-banner__art svg {
     filter: none;
   }
+
+  .cosmic-modal-shell--hub .promotions-desktop-hub__row--selected {
+    box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
+  }
+
+  .cosmic-modal-shell--hub .promotion-detail-panel--hub .promotion-detail-panel__banner {
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--surface-hover) 40%, var(--hub-dialog-card-bg));
+  }
+
+  .cosmic-modal-shell--hub .activity-hub-master-row--selected {
+    background: color-mix(in srgb, #ef4444 12%, var(--hub-dialog-card-bg));
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, #f87171 65%, transparent);
+  }
+}
+
+.activity-hub-thumb__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  background: rgb(0 0 0 / 55%);
+  text-align: center;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #fecaca;
+}
+
+.activity-hub-cat-tab {
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 80%, transparent);
+  color: var(--text-secondary);
+  background: color-mix(in srgb, var(--surface-hover) 50%, transparent);
+}
+
+.activity-hub-cat-tab--active {
+  border-color: color-mix(in srgb, #ef4444 55%, transparent);
+  color: #fff;
+  background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+}
+
+.activity-hub-progress__track {
+  background: color-mix(in srgb, var(--surface-hover) 70%, #000);
+}
+
+.activity-hub-progress__fill {
+  background: linear-gradient(90deg, #facc15 0%, #fde047 100%);
+}
+
+.activity-hub-tier-table__row:nth-child(even) {
+  background: color-mix(in srgb, var(--surface-hover) 35%, transparent);
+}
+
+.activity-hub-claim-btn {
+  display: inline-flex;
+  min-width: 5.5rem;
+  justify-content: center;
+  border-radius: var(--radius-control);
+  padding: 0.35rem 0.5rem;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media (min-width: 640px) {
+  .activity-hub-claim-btn {
+    font-size: 11px;
+  }
+}
+
+.activity-hub-claim-btn--locked {
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--surface-hover) 80%, transparent);
+}
+
+.activity-hub-claim-btn--ready {
+  color: #fff;
+  background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.activity-hub-claim-btn--done {
+  color: #86efac;
+  background: color-mix(in srgb, #166534 35%, transparent);
 }
 
 /* --- Lottery hub (/lottery + หมวดหวยโฮม) --- */

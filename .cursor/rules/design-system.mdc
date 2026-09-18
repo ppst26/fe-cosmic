@@ -6,21 +6,16 @@ alwaysApply: false
 
 # Design System (summary)
 
-ต้นฉบับเต็ม: `design.md` ที่ root — อ่านก่อนลงมือทำ UI ที่เกี่ยวกับ layout / visual
+ต้นฉบับเต็ม: `design.md` ที่ root — อ่านก่อนลงมือทำ UI ที่เกี่ยวกับ layout / visual  
+**อ้างอิงภาพรวม:** [Dexsport.io](https://dexsport.io/) · สีแบรนด์อ้างอิง: `#0C0713`, `#7747E5`, `#FFFFFF` ([brand resources](https://dexsport.io/brand-resources/))
 
-- พื้นผิวม่วงเข้มเริ่ม `#19183B` ไล่ไปม่วงเกือบดำ; ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex ซ้ำ
-- **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
-- **Modal / bottom sheet / slide-over และการ์ดใน grid ทุกหน้า** — ไม่ใส่ stroke; มุมใช้ `var(--radius-panel)` (class `cosmic-modal-shell`, `cosmic-sheet-shell`, `cosmic-inset-card` ใน `globals.css`)
-- **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
-- **Modal / bottom sheet / slide-over และการ์ดใน grid ทุกหน้า** — ไม่ใส่ stroke; มุมใช้ `var(--radius-panel)` (class `cosmic-modal-shell`, `cosmic-sheet-shell`, `cosmic-inset-card` ใน `globals.css`)
-- **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
-- **Modal / bottom sheet / slide-over และการ์ดใน grid ทุกหน้า** — ไม่ใส่ stroke; มุมใช้ `var(--radius-panel)` (class `cosmic-modal-shell`, `cosmic-sheet-shell`, `cosmic-inset-card` ใน `globals.css`)
-- **Component หลัก lobby เป็น borderless** — แยกชั้นด้วยพื้นผิว/เงา; focus ใช้ ring ตาม tokens
-- **Modal / bottom sheet / slide-over และการ์ดใน grid ทุกหน้า** — ไม่ใส่ stroke; มุมใช้ `var(--radius-panel)` (class `cosmic-modal-shell`, `cosmic-sheet-shell`, `cosmic-inset-card` ใน `globals.css`)
-- **Search bar (ช่องค้นหา)**: ห้ามใส่ ring หรือ outline ทั้งตอนคลิก (focus) และ hover เพื่อความเรียบเนียนกลมกลืนกับพื้นผิว
-- Primary CTA ส่วนบนใช้ Indigo → Blue ได้; แยกจาก gradient พื้นผิว
-- Feature cards, Jackpot, Bottom Nav: ไอคอนเรียบสีลาเวนเดอร์ — ห้าม 3D / neon / glow / ม่วงสด
-- การกำหนด style และการออกแบบเริ่มต้นต้องเริ่มที่การออกแบบหน้าจอมือถือก่อนเป็นหลักเสมอ (Mobile-first); content กึ่งกลาง; `max-width` 1200px; gutter จาก tokens ใน `design.md`
-- ลำดับ section ของหน้าเต็มตามหมวด 5 ใน `design.md`; อย่าเพิ่ม Header/Nav ซ้ำเมื่อประกอบจากภาพแยกส่วน
-- Mockup เป็นแนวทางภาพรวม ไม่ใช่ขนาด CSS จริง — ห้ามยืดหน้าตามความสูงภาพ
-- เกณฑ์ตรวจก่อนส่ง: หมวด 10 ใน `design.md` หรือ skill `ui-qa-checklist`
+- พื้นหลัง graphite `#0C0713`; การ์ด/ชั้นยก `--surface-elevated`; ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex ซ้ำ
+- Primary action / tab active: `#7747E5` (gradient ม่วง→ฟ้าได้เฉพาะ CTA/badge โปรโมชัน)
+- **Component หลัก lobby:** borderless หรือ border จางมาก — แยกชั้นด้วย radius + elevation; หลีกเลี่ยง nebula/cosmic หนา
+- **Modal / sheet / grid cards:** มุม `var(--radius-panel)`; class ใน `globals.css` (`cosmic-modal-shell`, `cosmic-sheet-shell`, …)
+- **Search bar:** pill พื้น elevated; ห้าม ring/outline ตอน focus/hover
+- **Category row:** การ์ดมุมโค้งแบบ Dexsport (ภาพหมวดได้); nav/HoF/Jackpot ยังใช้ icon เรียบ
+- **Hall of Fame:** แถวแยกการ์ด + gap แนวตั้งชัด
+- Mobile-first; `max-width` 1200px; gutter จาก `design.md`
+- ลำดับ section หมวด 6 ใน `design.md`
+- เกณฑ์ตรวจ: หมวด 11 ใน `design.md` หรือ skill `ui-qa-checklist`

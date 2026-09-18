@@ -1,52 +1,82 @@
 # Cosmicbet — Front-end Design Guide
 
-เอกสารสำหรับ agent ออกแบบและพัฒนา Front-end จากดีไซน์ที่ตกลงร่วมกัน  
-**สถานะ:** แนวทางล่าสุด ณ 14 กันยายน 2026
+เอกสารสำหรับ agent ออกแบบและพัฒนา Front-end  
+**สถานะ:** แนวทางล่าสุด ณ 19 กันยายน 2026  
+**อ้างอิงภาพรวม UI:** [Dexsport.io](https://dexsport.io/) (Web3 sportsbook + casino)  
+**อ้างอิงสี/แบรนด์ Dexsport (อ่านเพื่อโทน ไม่ใช่คัดลอกโลโก้):** [Brand resources](https://dexsport.io/brand-resources/)
+
+Cosmicbet ยังใช้โลโก้และ copy ของแบรนด์ตัวเอง — เอกสารนี้กำหนด **ภาษาดีไซน์** ให้ใกล้ Dexsport: พื้นกราไฟต์เข้ม, ม่วง product `#7747E5`, พื้นผิวยกชั้นมุมโค้ง, carousel โปรโมชัน, แถวรายการแยกการ์ด, navigation กระชับแบบ Web3
 
 ---
 
 ## 1. เป้าหมายและลำดับความสำคัญ
 
-- สร้าง UI ที่เรียบง่าย มืออาชีพ อ่านง่าย และเข้าถึงเกม/ฟังก์ชันได้สะดวก
-- **การกำหนด style และการออกแบบเริ่มต้นต้องเริ่มที่การออกแบบหน้าจอมือถือก่อนเป็นหลักเสมอ (Mobile-first design)** วาง layout ขนาดองค์ประกอบ ตัวอักษร และ spacing จากจอมือถือก่อนเป็นอันดับแรก แล้วจึงขยาย (scale up) ไปยังจอขนาดใหญ่
-- ยึดคำสั่งผู้ใช้ล่าสุดก่อนเอกสารนี้ และยึดเอกสารนี้ก่อนภาพเก่าที่มีสไตล์ขัดกัน
-- ธีมพื้นผิวล่าสุดคือม่วงเข้ม `#19183B` ไล่ไปม่วงเกือบดำ ไม่ใช่ม่วงสดหรือพื้นสีน้ำเงินสด
-- การ์ดร้านค้าเพชร ภารกิจ วงล้อ, Jackpot และ Bottom Nav ใช้ไอคอนเรียบสีลาเวนเดอร์แทนกราฟิก 3D สีฉูดฉาด
-- Primary CTA ของส่วนบนยังใช้ Indigo → Blue ได้ตามดีไซน์เดิม แยกจาก gradient พื้นผิว
-- ภาพแยกส่วนเป็นส่วนต่อเนื่องของหน้าเดียวกัน ไม่ต้องสร้าง Header หรือ Navigation ซ้ำ
-- ภาพ mockup เป็นแนวทางภาพรวม ไม่ใช่ขนาด CSS จริง ห้ามนำความสูงของภาพยาวมายืดหน้าเว็บตามสัดส่วนตรง ๆ
-- ค่าระยะ ขนาดตัวอักษร breakpoint และ interaction ที่ระบุด้านล่างเป็นข้อเสนอสำหรับ implementation เพื่อให้ดีไซน์ใช้งานจริงได้ ไม่ใช่ค่าที่วัดจากภาพแบบ pixel-perfect
+- UI เรียบ มืออาชีพ อ่านง่าย — เน้นเข้าถึงเกม/กีฬา/กระเป๋าเงินในไม่กี่คลิก (แนว Dexsport)
+- **Mobile-first เสมอ** — วาง spacing, ตัวอักษร และการ์ดจากจอมือถือก่อน แล้วขยายไป desktop (sidebar + content กว้าง)
+- คำสั่งผู้ใช้ล่าสุด > เอกสารนี้ > mockup เก่าที่ขัดกับ Dexsport reference
+- **พื้นหลังหลัก:** graphite black `#0C0713` (ตาม Dexsport) — ไม่ใช้ม่วงน้ำเงินสดหรือ nebula หนาเต็มจอ
+- **สีเน้น (action):** `#7747E5` สำหรับปุ่มหลัก, tab active, ลิงก์สำคัญ — อนุญาต gradient ม่วง→ฟ้าอ่อนเฉพาะ badge/CTA โปรโมชัน (เทียบป้าย “WEB3 BETTING” บน Dexsport)
+- แยก **พื้นผิวยก** (`--surface-elevated`) จากพื้นหน้า — การ์ดหมวด, แถว HoF, search, wallet pill อยู่บนชั้นที่สว่างขึ้นเล็กน้อย ไม่พึ่ง border หนา
+- ภาพแยกส่วนเป็นส่วนต่อเนื่องของหน้าเดียวกัน ไม่สร้าง Header/Navigation ซ้ำ
+- Mockup เป็นแนวทางภาพรวม ไม่ใช่ขนาด CSS จริง
+- ค่าระยะ/breakpoint ด้านล่างเป็นข้อเสนอ implementation ไม่ใช่ pixel-perfect จากภาพ
 
 ---
 
-## 2. Design tokens
+## 2. สิ่งที่ดึงจาก Dexsport (สรุปสำหรับ agent)
 
-ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex และค่าระยะซ้ำไปทุก component
+| พื้นที่ | ลักษณะที่ต้องเลียนแบบ |
+| :--- | :--- |
+| **Header** | โลโก้ซ้าย; ค้นหาในปุ่ม/ช่องมุมโค้ง; กระเป๋า/ยอดแบบ pill มืด; **Sign up** ม่วงเต็ม; ไอคอนช่วยเหลือ/ภาษา |
+| **Hero** | Carousel การ์ดโปรโมชันมุมโค้งใหญ่; pagination เป็น **เส้นแนวนอน** (ไม่ใช่จุดกลมใหญ่) |
+| **หมวดเกม (Casino)** | การ์ดแนวนอนมุมโค้ง มี label + ภาพประกอบ (Dexsport ใช้ 3D icon — ใช้ได้เฉพาะแถวหมวด ไม่ใช่ทั้งแอป) |
+| **Search** | แถบ pill กว้างเต็ม content, พื้นเข้มกว่าหน้าเล็กน้อย, placeholder สั้น (“Search” / “Game \| Provider”) |
+| **รายการเกม** | แถว section + “See all”; การ์ดปกเกมมุมโค้ง; เลื่อนแนวนอน |
+| **ตาราง/ลีดเดอร์** | แถว **แยกการ์ด** มี `gap` แนวตั้งชัด (ไม่ติดกันเป็นตาราง monolith) |
+| **Desktop** | Sidebar ซ้ายรายการเมนู; เนื้อหากลางกว้าง |
+| **Mobile bottom nav** | 5 ช่อง icon + label; พื้นเข้ม; active เน้นสี product |
+
+---
+
+## 3. Design tokens
+
+ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex ซ้ำใน component
 
 ```css
 :root {
   color-scheme: dark;
-  --bg-page: #090b18;
-  --surface-start: #19183b;
-  --surface-mid: #121127;
-  --surface-end: #090810;
-  --surface-hover: #232145;
-  --surface-selected: #29264f;
-  --surface-gradient: linear-gradient(110deg,
-    var(--surface-start) 0%, var(--surface-mid) 58%, var(--surface-end) 100%);
 
-  --text-primary: #f5f4fc;
-  --text-secondary: #b9b5cf;
-  --text-muted: #9792b3;
-  --icon-default: #b9b5df;
-  --icon-active: #efedff;
-  --border-subtle: #34304e;
-  --border-active: #7770b7;
-  --focus-ring: #c4b5fd;
+  /* พื้นหลัง — อิง Dexsport Black */
+  --bg-page: #0c0713;
+  --surface-start: #16121f;
+  --surface-mid: #121018;
+  --surface-end: #0c0713;
+  --surface-elevated: #1c1826;
+  --surface-hover: #252033;
+  --surface-selected: #2e2840;
+  --surface-gradient: linear-gradient(
+    180deg,
+    var(--surface-elevated) 0%,
+    var(--surface-mid) 100%
+  );
 
-  /* ใช้เฉพาะ CTA หลักและหมวดเกม active ของส่วนบน */
-  --action-gradient: linear-gradient(90deg, #4930df, #0968f8);
-  --category-active-gradient: linear-gradient(110deg, #26205b, #202d65);
+  --text-primary: #ffffff;
+  --text-secondary: #b8b4c8;
+  --text-muted: #7a758c;
+  --icon-default: #a8a3b8;
+  --icon-active: #ffffff;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-active: rgba(119, 71, 229, 0.55);
+  --focus-ring: #9b7cf0;
+
+  /* Product purple — Dexy #7747E5 */
+  --action-solid: #7747e5;
+  --action-gradient: linear-gradient(90deg, #7747e5 0%, #5b8cff 100%);
+  --category-active-gradient: linear-gradient(
+    110deg,
+    color-mix(in srgb, var(--action-solid) 28%, var(--surface-elevated)),
+    var(--surface-selected)
+  );
   --gold-gradient: linear-gradient(180deg, #ffe66d, #d99a08);
   --success: #41d995;
 
@@ -60,179 +90,223 @@
   --space-10: 40px;
   --space-12: 48px;
 
-  --radius-control: 4px;
-  --radius-card: 6px;
-  --radius-panel: 8px;
+  --radius-control: 10px;
+  --radius-card: 12px;
+  --radius-panel: 16px;
   --radius-pill: 999px;
   --page-gutter: clamp(16px, 3vw, 24px);
   --content-max: 1200px;
-  --nav-height: 72px;
-  --nav-offset: 16px;
+  --nav-height: 64px;
+  --nav-offset: 12px;
   --motion-fast: 160ms;
 }
 ```
 
-พื้นหลังแต่ละ section ไม่ต้องใช้ gradient หลายชั้นซ้อนกัน — **component หลักเป็น borderless** แยกชั้นด้วยพื้นผิว/เงาเบา ๆ หลีกเลี่ยง glow, neon outline และแสงฟุ้งรอบตัวหนังสือ
+- พื้นหลังหน้า: `--bg-page` แบบเรียบ หรือ radial ม่วงจางมาก ๆ (opacity ต่ำ) — **ห้าม** cosmic nebula หนาเต็มทุก section
+- Component หลัก: **borderless** หรือ border `1px` ที่ `--border-subtle` — แยกชั้นด้วย elevation + radius
+- หลีกเลี่ยง neon outline, glow รอบข้อความ, ม่วงสดนอก palette
 
 ---
 
-## 3. Typography
+## 4. Typography
 
-ใช้ฟอนต์ที่รองรับไทยและอังกฤษครบ เช่น Noto Sans Thai หรือฟอนต์เดิมของโปรเจกต์ที่ใกล้เคียง ใช้ไม่เกินสองตระกูล ฟอนต์โลโก้เป็น asset ไม่ต้องจำลองด้วยข้อความ
+**อิง Dexsport:** Adieu (display/heading), Object Sans (body) — ในโปรเจกต์ใช้ **Noto Sans Thai** (+ fallback geometric sans ที่มีอยู่) ให้รองรับไทยครบ ไม่เกินสองตระกูล
 
 | บทบาท | มือถือ | จอใหญ่ | Weight / line-height |
 | :--- | :--- | :--- | :--- |
-| **Hero title** | 26–32px | 36–44px | 700 / 1.25 |
-| **Section heading** | 18–20px | 22–24px | 700 / 1.4 |
-| **Feature card title** | 18–20px | 22–24px | 700 / 1.4 |
-| **Jackpot amount** | 14–18px | 20–24px | 700 / 1.35 |
-| **Body / game name** | 14px | 14–16px | 500 / 1.5 |
-| **Secondary / metadata** | 12px | 12–13px | 400–500 / 1.5 |
-| **Bottom Nav label** | 11–12px | 12px | 600 / 1.35 |
+| **Hero / promo title** | 22–28px | 32–40px | 700–800 / 1.2 |
+| **Section heading** | 18–20px | 20–22px | 700 / 1.35 |
+| **Feature / hub title** | 17–18px | 18–20px | 700 / 1.35 |
+| **Body / game name** | 14px | 14–15px | 500–600 / 1.45 |
+| **Secondary / time / odds** | 12px | 12–13px | 400–500 / 1.45 |
+| **Table header** | 10–11px | 11px | 700 / 1.3, uppercase อังกฤษเท่านั้น |
+| **Bottom nav label** | 10–11px | 11–12px | 600 / 1.25 |
 
-- ใช้ `font-variant-numeric: tabular-nums` กับยอดเงินและตาราง
-- ไม่ใช้ uppercase หรือ letter-spacing กว้างกับภาษาไทย
-- ห้ามตัดสระ/วรรณยุกต์ด้วย line-height ต่ำหรือ overflow ของกล่องข้อความ
-- ยอดเงินต้องอ่านครบ ห้าม ellipsis; ชื่อเกมยาวตัดหนึ่งบรรทัดได้ โดยมีชื่อเต็มใน accessible name
+- ยอดเงิน: `tabular-nums`; payout เน้นใช้ gold (`--gold-gradient` หรือ `#ffe66d`) แบบ Dexsport leaderboard
+- ไทย: ไม่ uppercase / letter-spacing กว้าง; ไม่ตัดสระด้วย line-height ต่ำ
 
 ---
 
-## 4. Layout และ responsive
+## 5. Layout และ responsive
 
-- **Mobile first อย่างเคร่งครัด**: การกำหนด style และการออกแบบทั้งหมดต้องเริ่มต้นจากหน้าจอมือถือก่อนเป็นหลักเสมอ; content อยู่กึ่งกลาง ใช้ `max-width: 1200px` และ gutter เดียวกันทั้งหน้า
-- ระหว่าง section ปกติ 24–32px; ก่อน Providers 48–56px เพื่อแยกจากชุดเกมชัดเจน
-- ระหว่าง heading กับรายการ 12–16px; ระหว่างการ์ด 8–12px มือถือ / 16px จอใหญ่
-- ไม่ครอบทุก section ด้วยการ์ดใหญ่: ใช้ panel เฉพาะที่มีความหมาย เช่น Jackpot หรือ Hall of Fame
-- Header และ Welcome ต้องไม่สูงจนหมวด/รายการเกมอยู่ไกลเกินจำเป็น
-- ที่ความกว้างประมาณ 550px แสดงการ์ดเกม 3 ใบต่อแถวเหมือนภาพตัวอย่าง
-- ต่ำกว่า 480px ให้การ์ดเกมกว้างอย่างน้อย 140–150px ใน carousel เห็นใบถัดไปบางส่วนได้ ไม่บีบจนชื่อเกมอ่านไม่ได้
-- ตั้งแต่ 768px ปรับจำนวนการ์ดที่เห็นตามพื้นที่; ตั้งแต่ 1024px แสดงประมาณ 5–6 ใบเมื่อมีข้อมูลจริงเพียงพอ ห้ามสร้างรายการซ้ำเพื่อเติมแถว
-- หมวดเกม 6 รายการอยู่แถวเดียว เลื่อนแนวนอนได้เมื่อพื้นที่ไม่พอ ห้ามบีบ target ต่ำกว่า 44px
-- Feature cards 3 ใบคงการเรียงแนวตั้งตามแบบ จนกว่าผู้ใช้จะสั่งเปลี่ยน
-- Jackpot คง 3 ใบเมื่อยอดเงินอ่านครบได้; บนมือถือแคบใช้แถวเลื่อนที่ card min-width 180px
-- หน้าต้องไม่มี horizontal overflow ยกเว้น carousel ที่ตั้งใจให้เลื่อน
+- Content กึ่งกลาง `max-width: var(--content-max)`; gutter `--page-gutter` เดียวกัน
+- ระหว่าง section: **24–32px**; ก่อน Providers **40–48px**
+- ระหว่าง heading กับรายการ: **12–16px**; ระหว่างการ์ดใน carousel: **8–12px** มือถือ / **12–16px** desktop
+- **Category row (Dexsport-style):** การ์ดมุมโค้ง ~12–16px สูงประมาณ 72–88px มือถือ; gap แนวนอน 8–12px; เลื่อนแนวนอนเมื่อเกินจอ
+- Game grid/carousel: ~550px แสดง 3 ใบ; แคบกว่า 480px min-width การ์ด ~140px เห็นใบถัดไปบางส่วน
+- ตั้งแต่ 1024px: sidebar lobby (ถ้ามี) ~240–280px; เนื้อหาหลักไม่เกิน `--content-max`
+- Hall of Fame / ตารางแถวแยก: **gap แนวตั้ง 8–10px** มือถือ, **10–12px** sm+ ระหว่างแถว glass/elevated
+- ห้าม horizontal overflow นอก carousel ที่ตั้งใจ
 
 ---
 
-## 5. ลำดับหน้า
+## 6. ลำดับหน้า (Cosmicbet lobby)
 
-ลำดับนี้ใช้เมื่อประกอบหน้าเต็ม หากทำเฉพาะบางส่วนให้คงตำแหน่งสัมพัทธ์ ไม่เพิ่มส่วนที่ไม่ได้ร้องขอ
+ลำดับเดิมของโปรเจกต์ — จัดวางและสไตล์ให้ **รู้สึกใกล้ Dexsport casino home** (hero → หมวด → search → รายการเกม)
 
-1. **Header**: cosmicbet, Log in, Sign up, ไอคอนด้านขวา
-2. **Welcome Banner**: ข้อความโปรโมชันและ Sign up
-3. **Promotional carousel**: การ์ดโปรโมชันและ pagination dots ไม่มี arrow
-4. **Cosmic intro**: ดาวซ้าย ดาวเสาร์ขวา และข้อความแนะนำ
-5. **ยอดนิยม**: Swipe Bet และ DEXY RACE
-6. **หมวดเกม**: Lobby, Originals, Slots, Live Casino, Game Shows, Table Games
-7. **Searchbar**: ค้นหาเกมหรือผู้ให้บริการ
-8. **เกมยอดฮิต**
-9. **Slots**
-10. **คาสิโน**
-11. **ยิงปลา**
-12. **กีฬา**
-13. **Providers** — เว้นด้านบนมากกว่า section ปกติ
-14. **Feature cards**: ร้านค้าเพชร → ภารกิจ → วงล้อ
-15. **Jackpot**: เงินรางวัลระดับตำนาน
-16. **Hall of Fame**
-17. **Floating Bottom Nav** — เป็น fixed navigation ไม่ใช่ section ปกติใน document flow
+1. **Header** — โลโก้ Cosmicbet, Log in, Sign up (ม่วง), ไอคอนขวา / wallet (เมื่อมี)
+2. **Welcome / Promotional carousel** — มุมโค้งใหญ่; pagination แบบเส้น
+3. **Cosmic intro** (ถ้ายังใช้) — กระชับ ไม่แย่ง hero
+4. **ยอดนิยม** — Swipe Bet / DEXY RACE
+5. **หมวดเกม** — Lobby, Originals, Slots, Live Casino, … (สไตล์การ์ดหมวด Dexsport)
+6. **Searchbar** — pill กว้าง
+7. **เกมยอดฮิต → Slots → คาสิโน → ยิงปลา → กีฬา**
+8. **Providers**
+9. **Feature cards** — ร้านค้าเพชร / ภารกิจ / วงล้อ (การ์ดยกชั้น + CTA ขาว/ muted)
+10. **Jackpot**
+11. **Hall of Fame (Top Performance)**
+12. **Floating Bottom Nav** — fixed; Cosmicbet: โปรไฟล์ / ฝาก / ถอน / โบนัส / ติดต่อ (โทน Dexsport: พื้นเข้ม, icon เรียบ, active ม่วง)
 
 ---
 
-## 6. Icon system และขอบเขตของภาพสี
+## 7. Icon system และขอบเขตของภาพ
 
-เลือก SVG icon family เดียวที่มีน้ำหนักสม่ำเสมอ ใกล้กับไอคอนหมวดเกมใน mockup ใช้ชุดที่มีในโปรเจกต์ก่อน หากต้องวาดเพิ่มให้ใช้ `viewBox="0 0 24 24"` และสัดส่วนเดียวกัน ไม่ผสม emoji, ภาพ 3D และ icon outline คนละน้ำหนักในชุด navigation
-
-| ตำแหน่ง | ไอคอน |
+| โซน | แนวทาง |
 | :--- | :--- |
-| **ร้านค้าเพชร** | เพชรเจียระไน |
-| **ภารกิจ** | Clipboard / checklist มีเครื่องหมายถูก |
-| **วงล้อ** | วงล้อแบ่งช่องพร้อม pointer |
-| **Jackpot heading** | Trophy |
-| **Jackpot คาสิโน / กีฬา / สล็อต** | ไพ่ / ฟุตบอล / เครื่องสล็อต |
-| **โปรไฟล์** | User bust |
-| **ฝากเงิน** | Wallet + ลูกศรชี้เข้า/ลง |
-| **ถอนเงิน** | Wallet + ลูกศรชี้ออก/ขึ้น |
-| **โบนัส** | Gift |
-| **ติดต่อ** | Headset / support |
-| **ยอดนิยม** | ดาวสี่แฉกคู่ |
-| **เกมยอดฮิต / Slots / คาสิโน / ยิงปลา / กีฬา** | Flame / cherries / cards / fish / football |
-| **Providers** | Network / provider group |
-| **Search / Previous / Next** | Magnifier / chevron-left / chevron-right |
+| **Nav, header, bottom bar** | SVG เรียว น้ำหนักเดียว `currentColor` |
+| **แถวหมวดเกม (CategoryNav)** | อนุญาตภาพประกอบ/3D ค่ายหรือ asset หมวด (เหมือน Dexsport) — ไม่ยัด 3D ลง Jackpot/HoF |
+| **ปกเกม / โปรโมชัน / provider** | สีจริงได้ |
+| **Hall of Fame** | ดาวทองเล็ก ๆ ที่หัวข้อ; payout สีทอง |
 
-- Default icon ใช้ `currentColor = --icon-default`; active ใช้ `--icon-active`
-- Heading icon 20–24px; nav 24px; feature 36–40px; jackpot card 28–32px
-- ไอคอนในสาม feature cards, Jackpot และ Bottom Nav ต้องเรียบและใช้สีเดียว ห้ามเพิ่มเหรียญ กล่องสมบัติ หรือภาพประกอบสีสด
-- ภาพปกเกม โลโก้ค่าย และโปรโมชันยังมีสีจริงได้ ไม่ต้องย้อมทุกภาพเป็นม่วง
-- ดาวของยอดนิยมและเหรียญหัวข้อ Hall of Fame ใช้ gold accent เล็ก ๆ ได้ตามแบบ ไม่ขยายเป็นกราฟิกตกแต่งใหญ่
-- Cosmic background ใช้ใน Intro เท่านั้น ไม่กระจาย nebula ไปทุก card
-- Bottom Nav ล่าสุดใช้พื้นสะอาด ไม่ใส่ดาวระยิบระยับหรือ animation เพิ่มเอง
+Default `--icon-default`; active `--icon-active` หรือ `--action-solid` บน nav
 
 ---
 
-## 7. Component specifications
+## 8. Component specifications
 
-### Header / Welcome / Intro
-- ใช้โลโก้แบรนด์จาก `public/cm-logo.png` (component `CosmicbetLogo`); รักษาสัดส่วนด้วย `object-contain`
-- Header สูงประมาณ 64–72px; Log in เป็น secondary action, Sign up เป็น primary CTA
-- ไอคอนขวาต้องมี accessible name ตามฟังก์ชันจริง ห้ามเดาว่าเป็นการแจ้งเตือนหากยังไม่มีข้อมูล
-- Welcome ใช้ข้อความและภาพที่ได้รับ พื้นที่ข้อความต้องอ่านชัด ไม่ให้ตัวละครทับ CTA
-- Intro ใช้ heading “อาณาจักรแห่งความมันส์” พร้อมข้อมูลเกม/ผู้ให้บริการจากแหล่งข้อมูลจริง; ตัวเลขในภาพเป็นตัวอย่าง ไม่ใช่สถิติยืนยัน
-- ดาวและดาวเสาร์เป็น decorative assets ไม่รับ pointer events และซ่อนจาก screen reader
+### Header
+- สูงประมาณ **56–64px**; พื้น `--bg-page` หรือโปร่งใสบนพื้นเดียวกัน
+- **Sign up:** พื้น `--action-solid` หรือ `--action-gradient`; มุม `--radius-pill` หรือ `--radius-control`
+- **Log in:** ghost / พื้น `--surface-elevated`
+- ค้นหา: ปุ่มหรือช่องมุม `--radius-control` พื้น `--surface-elevated`
+- โลโก้: `CosmicbetLogo` / `public/cm-logo.png`
 
-### SectionHeader และ carousel controls
-- ซ้าย: icon + heading; ขวา: View All → Previous → Next ในบรรทัดเดียวกัน
-- ใช้กับ ยอดนิยม, เกมยอดฮิต, Slots, คาสิโน, ยิงปลา, กีฬา และ Providers
-- View All เป็น pill พื้นม่วงเข้ม; arrow เป็นปุ่มวงกลม ภาพปุ่มประมาณ 32–36px แต่ hit area อย่างน้อย 44px
-- Promotional carousel ส่วนบนใช้ dots เท่านั้น ไม่มี View All/arrow เพิ่มเอง
-- Hall of Fame ใช้ tabs ไม่ต้องเพิ่มชุด View All/arrow; Feature cards และ Jackpot ไม่ต้องมีชุดนี้
-- Carousel ใช้ native horizontal scroll + scroll-snap; previous/next เลื่อนไปกลุ่มถัดไป และ disabled เมื่อสุดรายการ
-- View All ไปหน้ารวมของหมวดนั้น พร้อมคง category filter ไม่ใช่ลิงก์ที่ไม่มีผล
-- ไม่ autoplay โดย default; pagination ต้องเปลี่ยนตาม slide ที่มองเห็น
+### Promotional carousel
+- การ์ด `border-radius: var(--radius-panel)` ขึ้นไป
+- Pagination: **เส้นบาง** ความกว้างเท่ากัน active สีขาว/ม่วง inactive จาง
+- ไม่ autoplay default
 
-### GameCard / ProviderCard / Searchbar
-- GameCard เป็นภาพมุมโค้งที่กดได้ ไม่ซ้อนกรอบ card อีกชั้น ไม่ใส่ metadata ซ้ำกับภาพ
-- เริ่มจาก `aspect-ratio: 3/4` และใช้ ratio เดียวกันในชุด; ภาพที่มีข้อความฝังต้องตรวจ crop ก่อนใช้ `object-fit: cover`
-- ProviderCard เป็นช่องแนวนอนพื้นเข้มเตี้ย ใช้ `object-fit: contain` และ padding 16–20px เพื่อไม่ตัดโลโก้
-- Searchbar สูง 44–48px, icon ซ้าย, placeholder “Game | Provider”; มี label สำหรับ assistive technology
-- Searchbar **ไม่ใช้ ring หรือ outline ทั้งตอนคลิก (focus) และ hover** เพื่อให้ดูเรียบเนียนกลมกลืนกับพื้นผิว
-- ค้นจากชื่อเกมและ provider ได้; กรอกแล้วมี clear action และแสดงสถานะไม่พบผลลัพธ์
-- ข้อมูลภาพตัวอย่างใช้จัดวางเท่านั้น หมวดจริงต้องอ้าง taxonomy ของระบบ ห้ามจัดเกมตามภาพที่อาจผิดหมวดโดยอัตโนมัติ
+### CategoryNav (Dexsport-style tiles)
+- การ์ดแต่ละหมวด: พื้น `--surface-elevated`, radius `--radius-card`, padding 12–16px
+- Label มุมซ้ายบน; ภาพประกอบขวาล่าง (crop ไม่บังข้อความ)
+- Active: border หรือพื้น `--category-active-gradient`
 
-### FeatureActionCard — ร้านค้าเพชร / ภารกิจ / วงล้อ
-- สามใบเรียงแนวตั้ง มีเฉพาะชื่อด้านซ้ายและไอคอนด้านขวา
-- สูงประมาณ 88–104px; padding 20px; gap 12px; radius 8px (`--radius-panel`)
-- พื้น `--surface-gradient`; **ไม่ใช้ border** — hover เปลี่ยน `--surface-hover`
-- ไม่มีคำบรรยาย จำนวนเกม ภาพ 3D แผงเอียง หรือ graphic สีฉูดฉาด
-- ทั้งใบเป็น link ไปหน้าฟังก์ชัน ใช้ `<a>` จริง ไม่ใช้ div ที่กดได้
+### SectionHeader + carousel
+- ซ้าย: icon + heading; ขวา: See all / View All + prev/next
+- View All: pill พื้น `--surface-elevated`
+- ปุ่มเลื่อน: วงกลมหรือสี่เหลี่ยมมุมโค้ง พื้นเข้ม hit area ≥ 44px
+
+### Searchbar
+- สูง **44–48px**; radius `--radius-pill`; พื้น `--surface-elevated`
+- **ไม่ใช้ ring/outline ตอน focus/hover** (เรียบแบบ Dexsport)
+- Placeholder: “Game \| Provider” หรือ “Search”
+
+### GameCard / ProviderCard
+- GameCard: มุม `--radius-card`, ไม่ซ้อนกรอบ; `aspect-ratio: 3/4`
+- ProviderCard: แถบแนวนอนเตี้ย, `object-fit: contain`, padding 16–20px
+
+### FeatureActionCard
+- การ์ดยกชั้น (glass หรือ `--surface-elevated` แบบ Dexsport — โปร่งใสน้อยลงกว่า glass ม่วงเก่า)
+- ชื่อ + คำอธิบายสั้น + CTA ขาว / muted ตาม implementation ปัจจุบัน
+- Desktop: 3 คอลัมน์ใต้ HoF ได้ตาม layout โปรเจกต์
 
 ### JackpotSection
-- หัวข้อ “เงินรางวัลระดับตำนาน” พร้อม trophy สีลาเวนเดอร์
-- WinnerCard เรียง: icon → masked username → amount → category / game
-- ไอคอนอยู่ใน card ไม่ลอยขนาดใหญ่ทับขอบ ยอดเงินเป็นจุดที่เด่นที่สุด
-- พื้น section และ card ไล่สีจาก `#19183B`; ไม่มี crown backdrop, เหรียญ, ribbon หรือแสงฟุ้ง
-- category เป็นสีลาเวนเดอร์ในธีม ไม่ใช้หลายสีสดแข่งกับยอดเงิน
-- currency และ amount มาจากข้อมูล ใช้ formatter ตาม locale; ห้ามแปลง SGD เป็น THB เอง
-- ตัวอย่างจากภาพ: 600,000.00 / 59,704.90 / 450,000.00 SGD ใช้เป็น mock data เท่านั้น
-- ปกปิด username ตามกติกาของระบบ ห้ามสุ่มข้อมูลผู้ชนะแล้วแสดงเป็นข้อมูลจริง
+- หัวข้อ + trophy; การ์ดผู้ชนะบนพื้น `--surface-elevated`
+- ยอดเงินเด่นที่สุด; ไม่ใช้กราฟิกเหรียญ/ribbon ใหญ่
 
-### HallOfFame
-- Heading แยกจาก panel; ภายในเป็น tabs: Live Bets, High Rollers, Lucky Wins
-- Active tab ใช้พื้นม่วงเข้ม gradient + ขอบลาเวนเดอร์ + ตัวอักษรขาว ไม่ใช้ neon blue/green
-- ใช้ semantic table สองคอลัมน์ GAME / PAYOUT; thumbnail 28–32px, row สูง 48–56px
-- ชื่อเกมชิดซ้าย ยอดเงินและไอคอนจัดแนวเดียวกันทุกแถว ใช้เลข tabular และจัดจำนวนเงินชิดขวาภายในกลุ่ม
-- row surface สลับเฉดบาง ๆ ได้ ไม่ทำ border หนาทุกแถว
-- สีเขียวเป็น semantic accent ของเงิน/ผลบวก ไม่ใช่สี navigation
-- เปลี่ยน tab แล้วเปลี่ยน dataset จริง แสดง loading/empty/error ตามสถานะ
-- Live feed ต้องไม่ทำให้ layout กระโดดหรือ screen reader อ่านซ้ำทุกครั้ง
+### HallOfFame (Top Performance)
+- หัวข้อแยกจากตาราง; แท็บ pill: **Latest Winner** / **Top Win Multiple** (หรือชุด tab ตาม product)
+- Active tab: พื้น `--surface-selected` หรือ `--category-active-gradient`; ตัวอักษรขาว
+- คอลัมน์: **Game | Player | Time | Payout/Multiple** (ตาม implementation)
+- แต่ละแถว: **การ์ดแยก** (glass/elevated), `gap` แนวตั้งชัด — **ห้ามแถวติดกัน**
+- Payout: สีทอง; multiple: pill พื้นเข้ม
 
 ### FloatingBottomNav
-- เมนูตามลำดับ: โปรไฟล์ / ฝากเงิน / ถอนเงิน / โบนัส / ติดต่อ
-- Icon บน label ล่าง กว้างเท่ากันทั้ง 5 ช่อง ไม่มีปุ่มกลางยกสูงหรือใหญ่กว่าช่องอื่น
-- พื้น gradient `#19183B` → `#090810`, ขอบบาง, ไอคอนลาเวนเดอร์, ไม่มี glow หรือ star graphic
-- ใช้ fixed bottom พร้อม safe area; ไม่ติดขอบ viewport และไม่บังข้อมูลแถวสุดท้าย
-- หากปลายทางเป็น route ให้ใช้ link และ `aria-current="page"` เมื่อ active; หากเปิด dialog ใช้ button
-- อย่าทำเมนูหนึ่ง active โดยไม่มี state ของ route รองรับ
-- จอใหญ่จำกัดความกว้างประมาณ 640px ตรงกลาง ไม่ยืดเมนูจนเต็มจอ
+- พื้น `--surface-elevated` หรือ gradient เข้ม `#16121f → #0c0713`
+- 5 ช่องเท่ากัน; icon + label; active: สี `--action-solid` หรือขาว
+- fixed + safe area; กว้างสูงสุด ~640px กลางจอบนมือถือ
+- z-index ต่ำกว่า modal/sheet
+
+### Dialog & Modal — ระบบ (อิง Dexsport game lobby)
+
+ใช้ Radix `Dialog` + class `cosmic-modal-shell` ใน `globals.css`  
+มือถือ: sheet เต็มจอ (`cosmic-sheet-shell`) · Desktop: modal กลางจอ
+
+#### ประเภท (เลือกขนาดตามเนื้อหา)
+
+| ประเภท | Class / ขนาด | ใช้เมื่อ |
+| :--- | :--- | :--- |
+| **Compact hub** | `cosmic-modal-shell--hub` · `w-[min(92vw,720px)]` · `max-h-[min(90dvh,800px)]` | บัญชี, ธุรกรรม, เช็คอิน, cashback |
+| **Wide hub** | `cosmic-modal-shell--hub` · `w-[min(94vw,1040px)]` · `max-h-[min(92dvh,880px)]` | โปรโมชัน, กิจกรรม — master–detail |
+| **Lobby catalog (XL)** | `cosmic-modal-shell--lobby` · `w-[min(96vw,1280px)]` · `max-h-[min(92dvh,900px)]` | เลือกเกมทั้งค่าย — แบบภาพอ้างอิง (sidebar + grid) |
+| **Focus** | `cosmic-modal-shell` · ~400px | VIP, ยืนยัน, ฟอร์มสั้น |
+
+- **Overlay:** `cosmic-dialog-overlay` — สีมืด `--dialog-overlay-bg` เท่านั้น **ห้าม backdrop-blur** (ประหยัด GPU มือถือ)
+- **Shell:** พื้น `--hub-lobby-shell-bg` (lobby XL) หรือ `--cosmic-dialog-shell-bg` (hub ทั่วไป); มุม `--radius-lobby-modal` (20–24px); **ไม่ stroke**; เงา `0 22px 48px rgb(0 0 0 / 48%)`
+- **z-index:** overlay `65`, content `70` — สูงกว่า bottom nav
+
+#### โครง Lobby catalog (XL) — toolbar + sidebar + grid
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [Casino│Sports]   [  🔍 Search…………………  ]  Filters  Sort  [×] │
+├──────────┬──────────────────────────────────────────────────┤
+│ All      │  ┌──┐ ┌──┐ ┌──┐ ┌──┐ ┌──┐ ┌──┐                    │
+│ Top ●    │  │  │ │  │ │  │ │  │ │  │ │  │   gap แนวตั้ง/แนวนอน │
+│ New      │  └──┘ └──┘ └──┘ └──┘ └──┘ └──┘                    │
+│ Slots    │  … grid 6 คอลัมน์ (desktop กว้าง) …                 │
+│ …        │                                                    │
+└──────────┴──────────────────────────────────────────────────┘
+```
+
+**Toolbar (แถวบน — ไม่มีหัวข้อใหญ่ซ้ำถ้ามี segment แล้ว)**
+
+| องค์ประกอบ | สเปก |
+| :--- | :--- |
+| **Segment Casino / Sports** | Pill สองช่องในพื้น `--hub-lobby-chrome`; active = พื้น `--surface-elevated` + ตัวอักษรขาว; inactive = `--text-muted` |
+| **Search** | กินพื้นที่ flex 1; สูง 40–44px; radius `--radius-control`; พื้น `--hub-lobby-chrome`; placeholder “Search” — **ไม่ ring ตอน focus** |
+| **Filters / Sort** | ปุ่มรองสูงเท่า search; icon + label; พื้น `--hub-lobby-chrome`; เปิด popover / sheet ย่อย |
+| **ปิด** | มุมขวาบน; ปุ่ม 36–40px; icon X; `aria-label="ปิด"` |
+
+**Sidebar (ซ้าย — desktop ≥1024px)**
+
+- กว้าง `--hub-lobby-sidebar-width` (200–220px); scroll แนวตั้งแยกจาก grid
+- รายการหมวด: icon 20px + label; สูงแถว ~40–44px; radius `--radius-control`
+- **Active:** พื้น `--surface-selected` หรือ pill เต็มความกว้าง (เทียบ “Top” ในภาพ)
+- หมวดตัวอย่าง: All, Top, New, Slots, Live casino, Crash, Table, Roulette, Shows, Bonus buy, …
+
+**Main grid**
+
+- Container: `hub-lobby-modal__grid` — `gap: var(--hub-lobby-grid-gap)` (**12px** desktop, **10px** แคบลง) ทั้งแนวตั้งและแนวนอน — แถวไม่ติดกัน
+- คอลัมน์: `6` ≥1280 · `5` ≥1024 · `4` ≥768 · `3` ≥480 · `2` มือถือใน sheet
+- **Game tile:** มุม `14–16px`; ภาพปก `aspect-ratio: 3/4`; ชื่อเกม bold ใต้ภาพ; provider ตัวเล็ก muted
+- **Badge “TOP”:** มุมซ้ายบนภาพ; พื้นดำโปร่ง; ตัวพิมพ์เล็ก uppercase
+
+**Responsive**
+
+| จอ | พฤติกรรม |
+| :--- | :--- |
+| **&lt;1024px** | ซ่อน sidebar → แถบหมวดเลื่อนแนวนอนใต้ toolbar หรือปุ่ม Filters |
+| **&lt;1024px** | เปิด lobby XL เป็น **sheet เต็มสูง** แทน modal ย่อ (ใช้ `cosmic-sheet-shell`) |
+| **≥1024px** | Modal กลางจอ + sidebar คงที่ |
+
+**Hub ทั่วไป (Promotions / Activities / อื่น ๆ)**
+
+- Header แบบเดิม: `Dialog.Title` + ปิด — ไม่บังคับ toolbar segment
+- การ์ดรายการ: `--hub-dialog-card-bg` / `--surface-elevated`; มุม `--radius-panel`
+- Master–detail: แถวเลือกมี inset accent `--action-solid` (โปรโมชัน) ตาม implementation ปัจจุบัน
+
+**Component ในโค้ด (อ้างอิง)**
+
+- `DesktopHubModal` — compact / wide hub
+- `HubLobbyModalLayout` — โครง toolbar + sidebar + grid สำหรับ lobby XL (ใส่ใน `Dialog.Content`)
+- Class: `hub-lobby-modal__*` ใน `app/globals.css`
+
+**Accessibility**
+
+- `Dialog.Title` ซ่อนด้วย `sr-only` ได้ถ้า toolbar มี segment ที่อ่านชัดแล้ว
+- Focus trap; ปิดด้วย Escape; คืน focus ไป trigger
+- Sidebar: `role="navigation"` + `aria-current` บน active; grid เป็น list ของลิงก์เกม
 
 ```css
 .page-shell {
@@ -243,83 +317,39 @@
     var(--nav-height) + var(--nav-offset) + env(safe-area-inset-bottom, 0px) + 24px
   );
 }
-.surface {
-  background: var(--surface-gradient);
-}
-.floating-nav {
-  position: fixed;
-  z-index: 40;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: calc(var(--nav-offset) + env(safe-area-inset-bottom, 0px));
-  width: min(calc(100% - 32px), 640px);
-  min-height: var(--nav-height);
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  background: var(--surface-gradient);
-  border-radius: var(--radius-panel);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
-}
-.floating-nav > a,
-.floating-nav > button {
-  min-width: 0;
-  min-height: 44px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 10px 4px;
-  color: var(--icon-default);
-}
-:where(a, button, input, [tabindex]):focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 3px;
-}
 ```
 
-- Dialog/overlay ต้องมี z-index สูงกว่า nav จัด focus trap และคืน focus เมื่อปิด ปรับ nav เมื่อ virtual keyboard เปิดเพื่อไม่ให้ทับ input
+---
+
+## 9. Interaction และ accessibility
+
+- ลิงก์ = navigation; ปุ่ม = action
+- keyboard, focus-visible, touch targets ≥ 44px
+- Hall of Fame: tablist + keyboard; live feed ไม่กระโตก layout
+- Contrast: ข้อความบนพื้นเข้ม ≥ 4.5:1
+- `prefers-reduced-motion`: ไม่ pulse/กระพริบต่อเนื่อง
+- loading / empty / error ทุกรายการที่ดึงข้อมูล
 
 ---
 
-## 8. Interaction และ accessibility
+## 10. แนวทางโครงสร้างโค้ดสำหรับ agent
 
-- ลิงก์ใช้สำหรับ navigation; button ใช้สำหรับ action; ห้าม nested interactive elements
-- รองรับ keyboard, touch, hover และ focus-visible โดยไม่อาศัยสีอย่างเดียว
-- ใช้ tablist/tab/tabpanel และ keyboard navigation สำหรับ Hall of Fame; category navigation ไม่ต้องปลอมเป็น tabs หากเป็น route links
-- Icon-only controls ต้องมี accessible name; SVG ตกแต่งตั้ง `aria-hidden="true"`
-- ทดสอบ contrast ของข้อความจริงบนด้านสว่างที่สุดของ gradient: normal text อย่างน้อย 4.5:1; UI indicators/large text 3:1
-- Disabled ลด emphasis พร้อมปิด action จริง; loading รักษาขนาด component ด้วย skeleton ที่ไม่กระพริบแรง
-- Motion ประมาณ 120–180ms สำหรับสี/opacity ไม่ยกการ์ดหรือย่อขยายจน layout ขยับ
-- รองรับ `prefers-reduced-motion`; ไม่ทำดาวกระพริบหรือ pulse ต่อเนื่อง
-- แถว/การ์ดต้องมี loading, empty, error และ image fallback ตามบริบท
+- อ่าน `app/globals.css` และ component ที่มี — migrate token เก่า (`#19183B`, indigo CTA) ไป palette Dexsport ตามเอกสารนี้เมื่อแก้ UI
+- shadcn semantic colors ต้อง bridge กับ tokens ด้านบน
+- แยก mock data จาก API; ห้ามแสดงยอด/ผู้ชนะ mock เป็นข้อมูล live
+- เมื่ออ้างอิง Dexsport ให้เปิด [dexsport.io/casino](https://dexsport.io/casino/) สำหรับ lobby และ [dexsport.io](https://dexsport.io/) สำหรับ sportsbook
 
 ---
 
-## 9. แนวทางโครงสร้างโค้ดสำหรับ agent
+## 11. เกณฑ์ตรวจงานก่อนส่ง
 
-- อ่านโครงสร้างโปรเจกต์และ components ที่มีอยู่ ใช้ framework/router/icon library เดิม ไม่ย้าย stack โดยไม่จำเป็น
-- สร้างหรือรวม tokens ไว้จุดเดียว และใช้ semantic variants เช่น surface, action, selected
-- แยก reusable components: SectionHeader, CarouselControls, GameCard, ProviderCard, FeatureActionCard, JackpotWinnerCard, HallOfFame, FloatingBottomNav
-- Render รายการจาก data arrays ที่มี stable IDs ไม่คัดลอก markup ทีละหมวด
-- แยกข้อมูล mock ออกจาก service/API; ห้ามนำยอดเงินและผู้ชนะตัวอย่างขึ้นเป็นข้อมูล live
-- ใช้ asset จริงที่ได้รับ หาก asset ขาดให้ใช้ placeholder ที่สื่อชนิดข้อมูล ห้ามเปลี่ยนโลโก้แบรนด์หรือ provider เอง
-- โหลดภาพตาม viewport, ระบุ dimensions/aspect-ratio ลด layout shift; hero ที่สำคัญไม่ lazy-load แต่รายการด้านล่างทำได้
-- CSS/SVG ใช้ทำพื้น gradient, icons, controls; ห้ามใช้ภาพ screenshot ของทั้ง component แทน UI ที่ต้องกดหรือค้นหาได้
-- ถ้ายังไม่มี route/backend สำหรับ action ให้แยก callback/contract และแจ้งส่วนที่ยังไม่เชื่อมต่อ ไม่สร้างยอดฝากถอนหรือผลธุรกรรมสำเร็จปลอม
-
----
-
-## 10. เกณฑ์ตรวจงานก่อนส่ง
-
-- [ ] ลำดับ section ตรงตามเอกสาร ไม่มี component หรือ navigation ซ้ำ
-- [ ] พื้นหลักเริ่ม `#19183B`; ไม่มีม่วงสด/neon ใน feature cards, Jackpot และ Bottom Nav
-- [ ] Feature ทั้งสามใช้ icon เรียบถูกความหมาย; ฝาก/ถอนแยกทิศลูกศรชัด
-- [ ] ทุกหมวดเกมและ Providers มี View All + arrows; promo carousel มีเฉพาะ dots
-- [ ] Providers มีช่องว่างด้านบน 48–56px และไม่มี section ติดกันจนแยกไม่ออก
-- [ ] ข้อความไทยไม่ขาด ยอดเงินไม่ตัด โลโก้ไม่ผิดสัดส่วน และภาพปกไม่ถูก crop จนชื่อเกมเสีย
-- [ ] Floating nav ไม่บังแถวท้าย รองรับ safe area และ focus
-- [ ] ตรวจหน้าที่ 360px, 390px, 768px และ 1280px; ไม่มี overflow ที่ไม่ได้ตั้งใจ
-- [ ] Search, tabs, View All และ arrows ทำงานได้; empty/loading/error สอดคล้องกับข้อมูล
-- [ ] ไม่ใส่กราฟิกใหม่ สถิติใหม่ เมนูใหม่ หรือ copy โปรโมชันที่ผู้ใช้ไม่ได้ให้
-- [ ] ให้ agent ใช้ความเรียบง่าย ความสม่ำเสมอ และความอ่านง่ายเป็นเกณฑ์ตัดสินใจ หากภาพเก่ามีกราฟิกสีสดในส่วนที่ถูกแก้เป็นไอคอนแล้ว ให้ยึดเวอร์ชันไอคอนเรียบตามเอกสารนี้
+- [ ] พื้นหลัก `--bg-page` / `#0C0713`; action หลัก `#7747E5` — ไม่มีม่วงสด/neon นอก palette
+- [ ] Hero carousel + pagination แบบเส้น; หมวดเกมเป็นการ์ดมุมโค้งแบบ Dexsport
+- [ ] Search pill พื้น elevated; ไม่มี focus ring รบกวน
+- [ ] Hall of Fame แถวแยกการ์ด มี gap แนวตั้งชัด
+- [ ] ลำดับ section ตามหมวด 6; ไม่ซ้ำ header/nav
+- [ ] ไทยอ่านครบ; ยอดเงินไม่ถูกตัด; โลโก้ไม่เพี้ยน
+- [ ] Bottom nav ไม่บังเนื้อหา; safe area + focus
+- [ ] ทดสอบ 360 / 390 / 768 / 1280px; ไม่ overflow โดยไม่ตั้งใจ
+- [ ] ไม่เพิ่มเมนู/copy/สถิติที่ผู้ใช้ไม่ได้ขอ
+- [ ] Modal lobby XL: toolbar (segment + search + filters) · sidebar/grid แยก scroll · grid มี gap ชัด · มือถือเป็น sheet

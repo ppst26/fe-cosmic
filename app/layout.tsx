@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${notoSansThai.variable} ${geistMono.variable} dark cosmic-page h-full antialiased`}
+      className={`${notoSansThai.variable} ${geistMono.variable} dark cosmic-page cosmic-bg h-full antialiased`}
     >
       <body className="flex min-h-dvh min-w-0 flex-col text-[var(--text-primary)]">
         <AppProviders>

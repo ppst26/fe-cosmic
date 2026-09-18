@@ -69,7 +69,7 @@ export function LobbyDesktopTopBar({
             <button
               type="button"
               onClick={onSignUpClick}
-              className="cosmic-action-btn px-3 py-1.5 text-xs uppercase"
+              className="cosmic-cta-primary cosmic-cta-primary--sm uppercase tracking-wide"
             >
               Sign up
             </button>

@@ -149,12 +149,11 @@ export default function HomePage() {
                       ))}
                       <ProvidersSection providers={PROVIDERS_DATA} />
                     </div>
+
                   </div>
                 </div>
 
                 <div className="lg:hidden">
-                  <FeatureActionCards items={FEATURE_ACTIONS_DATA} />
-
                   <AuthGate
                     fallback={
                       <section className="mt-8 w-full px-[var(--page-gutter)] sm:mt-10">
@@ -177,6 +176,8 @@ export default function HomePage() {
                 <div className={isHomeLobby ? undefined : "lg:hidden"}>
                   <HallOfFame datasets={HALL_OF_FAME_DATA} />
                 </div>
+
+                {isHomeLobby ? <FeatureActionCards items={FEATURE_ACTIONS_DATA} /> : null}
               </main>
               </div>
 

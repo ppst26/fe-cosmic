@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
-import { PromotionsHubPageContent } from "@/app/components/promotions/PromotionsHubPageContent";
+import { ActivitiesHubPageContent } from "@/app/components/activities/ActivitiesHubPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 
 /**
- * หน้าโปรโมชั่น (/promotions)
+ * หน้ากิจกรรม (/activities) — แยกจากโปรโมชั่น
  */
-export default function PromotionsPage() {
+export default function ActivitiesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ export default function PromotionsPage() {
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       <main className="mx-auto max-w-[var(--content-max)] px-[var(--page-gutter)] pb-28 pt-4">
-        <PromotionsHubPageContent />
+        <ActivitiesHubPageContent />
       </main>
 
       <FloatingBottomNav

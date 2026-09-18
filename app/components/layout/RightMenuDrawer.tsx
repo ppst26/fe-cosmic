@@ -77,7 +77,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         <button
           key={tile.id}
           type="button"
-          className="menu-item"
+          className="menu-item glass-menu-tile"
           onClick={() => runAction(tile.action!)}
         >
           {body}
@@ -90,7 +90,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       <Link
         key={tile.id}
         href={href}
-        className="menu-item"
+        className="menu-item glass-menu-tile"
         onClick={(event) => {
           if (href.startsWith("/")) {
             event.preventDefault();
@@ -119,13 +119,13 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
               <img className="menu-model" src={MENU_DIALOG_MODEL_SRC} alt="" />
             ) : null}
 
-            <div className="menu-panel">
+            <div className="menu-panel glass-menu-panel">
               <Dialog.Title id="menu-title" className="menu-tab">
                 เมนู
               </Dialog.Title>
 
               <Dialog.Close asChild>
-                <button type="button" className="menu-close" aria-label="ปิดเมนู">
+                <button type="button" className="menu-close glass-menu-close" aria-label="ปิดเมนู">
                   <CloseIcon />
                 </button>
               </Dialog.Close>

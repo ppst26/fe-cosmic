@@ -257,12 +257,10 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                   </td>
                 </tr>
               ) : (
-                rows.map((row, index) => (
+                rows.map((row) => (
                   <tr
                     key={row.id}
-                    className={`hall-of-fame-table__row ${
-                      index % 2 === 0 ? "hall-of-fame-table__row--framed" : ""
-                    }`}
+                    className="hall-of-fame-table__row glass-card glass-card--hof-row"
                   >
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--game">
                       <div className="flex min-w-0 items-center gap-2.5">
@@ -273,9 +271,17 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                       </div>
                     </td>
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--player">
-                      <span className="block truncate text-xs tabular-nums text-[var(--text-secondary)] sm:text-sm">
-                        {row.playerMasked}
-                      </span>
+                      <div className="flex min-w-0 items-center gap-2">
+                        <span
+                          className="hall-of-fame-table__avatar shrink-0"
+                          aria-hidden="true"
+                        >
+                          {row.playerMasked.charAt(0).toUpperCase()}
+                        </span>
+                        <span className="block truncate text-xs tabular-nums text-[var(--text-secondary)] sm:text-sm">
+                          {row.playerMasked}
+                        </span>
+                      </div>
                     </td>
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--time">
                       <span className="block truncate text-[10px] tabular-nums text-[var(--text-secondary)] sm:text-xs">
@@ -289,8 +295,8 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                         </span>
                       ) : null}
                       {!isLatestWinner && row.winMultiple != null ? (
-                        <span className="hall-of-fame-table__payout text-xs font-extrabold tabular-nums sm:text-sm">
-                          {row.winMultiple}x
+                        <span className="hall-of-fame-table__coef-pill text-xs font-extrabold tabular-nums sm:text-sm">
+                          x{row.winMultiple}
                         </span>
                       ) : null}
                     </td>
