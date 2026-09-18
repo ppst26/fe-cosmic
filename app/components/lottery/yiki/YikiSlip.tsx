@@ -45,20 +45,22 @@ export function YikiSlip({ entries, settlementTypes, canUndo, onRemove, onUndo, 
                   <span>{settlementType.label}</span>
                   <span>{groupEntries.length}</span>
                 </div>
-                {groupEntries.map((entry) => (
-                  <div key={entry.id} className="yiki-slip__row">
-                    <span className="yiki-slip__number">{entry.number}</span>
-                    <span className="yiki-slip__rate">x{settlementType.payoutRate}</span>
-                    <button
-                      type="button"
-                      className="yiki-slip__remove"
-                      onClick={() => onRemove(entry.id)}
-                      aria-label={`ลบ ${settlementType.label} ${entry.number}`}
-                    >
-                      <TrashIcon />
-                    </button>
-                  </div>
-                ))}
+                <div className="yiki-slip-rows">
+                  {groupEntries.map((entry) => (
+                    <div key={entry.id} className="yiki-slip__row">
+                      <span className="yiki-slip__number">{entry.number}</span>
+                      <span className="yiki-slip__rate">x{settlementType.payoutRate}</span>
+                      <button
+                        type="button"
+                        className="yiki-slip__remove"
+                        onClick={() => onRemove(entry.id)}
+                        aria-label={`ลบ ${settlementType.label} ${entry.number}`}
+                      >
+                        <TrashIcon />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             );
           })}

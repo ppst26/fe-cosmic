@@ -57,45 +57,47 @@ export function YikiPricePanel({
                 <span>{settlementType.label}</span>
                 <span>{groupEntries.length}</span>
               </div>
-              {groupEntries.map((entry, index) => {
-                const inputId = `yiki-amount-${entry.id}`;
-                const payout = entry.amount ? formatBaht(entry.amount * settlementType.payoutRate) : "—";
-                return (
-                  // คลิกทั้งแถวเป็นทางลัดเลือก — คีย์บอร์ดเข้าถึงได้ผ่านการโฟกัสช่องราคา <input> ด้านในอยู่แล้ว
-                  <div
-                    key={entry.id}
-                    onClick={() => onSelectEntry(entry.id)}
-                    className={`yiki-price-row${entry.id === selectedEntryId ? " is-selected" : ""}`}
-                  >
-                    <span className="yiki-price-row__index">{index + 1}.</span>
-                    <span className="yiki-price-row__number">{entry.number}</span>
-                    <span className="thai-lotto-amount thai-lotto-amount--sm yiki-price-row__input">
-                      <input
-                        id={inputId}
-                        inputMode="numeric"
-                        placeholder="ใส่ราคา"
-                        value={entry.amount || ""}
-                        onFocus={() => onSelectEntry(entry.id)}
-                        onChange={(event) => onAmountChange(entry.id, parseAmount(event.target.value))}
-                        className="thai-lotto-amount__input"
-                      />
-                    </span>
-                    <span className="yiki-price-row__rate">x{settlementType.payoutRate}</span>
-                    <span className="yiki-price-row__payout">{payout}</span>
-                    <button
-                      type="button"
-                      className="yiki-slip__remove"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        onRemove(entry.id);
-                      }}
-                      aria-label={`ลบ ${settlementType.label} ${entry.number}`}
+              <div className="yiki-slip-rows">
+                {groupEntries.map((entry, index) => {
+                  const inputId = `yiki-amount-${entry.id}`;
+                  const payout = entry.amount ? formatBaht(entry.amount * settlementType.payoutRate) : "—";
+                  return (
+                    // คลิกทั้งแถวเป็นทางลัดเลือก — คีย์บอร์ดเข้าถึงได้ผ่านการโฟกัสช่องราคา <input> ด้านในอยู่แล้ว
+                    <div
+                      key={entry.id}
+                      onClick={() => onSelectEntry(entry.id)}
+                      className={`yiki-price-row${entry.id === selectedEntryId ? " is-selected" : ""}`}
                     >
-                      <TrashIcon />
-                    </button>
-                  </div>
-                );
-              })}
+                      <span className="yiki-price-row__index">{index + 1}.</span>
+                      <span className="yiki-price-row__number">{entry.number}</span>
+                      <span className="thai-lotto-amount thai-lotto-amount--sm yiki-price-row__input">
+                        <input
+                          id={inputId}
+                          inputMode="numeric"
+                          placeholder="ใส่ราคา"
+                          value={entry.amount || ""}
+                          onFocus={() => onSelectEntry(entry.id)}
+                          onChange={(event) => onAmountChange(entry.id, parseAmount(event.target.value))}
+                          className="thai-lotto-amount__input"
+                        />
+                      </span>
+                      <span className="yiki-price-row__rate">x{settlementType.payoutRate}</span>
+                      <span className="yiki-price-row__payout">{payout}</span>
+                      <button
+                        type="button"
+                        className="yiki-slip__remove"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          onRemove(entry.id);
+                        }}
+                        aria-label={`ลบ ${settlementType.label} ${entry.number}`}
+                      >
+                        <TrashIcon />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           );
         })}

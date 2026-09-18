@@ -79,10 +79,9 @@ export function YikiBetBoard({
   const [feedback, setFeedback] = useState("");
   const [remainingMs, setRemainingMs] = useState<number | null>(null);
   const [step, setStep] = useState<"pick" | "price">("pick");
-  // ขั้นใส่ราคา: เลือก 1 รายการ (หรือติ๊ก "ราคาเท่ากันทั้งหมด") แล้วกดชิปราคา + "แก้ไข" เพื่อใส่ราคา
+  // ขั้นใส่ราคา: เลือก 1 รายการ (หรือติ๊ก "ราคาเท่ากันทั้งหมด") แล้วกดชิปราคา — ใส่ราคาทันทีที่กด ไม่ต้องกดยืนยันซ้ำ
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [sameForAll, setSameForAll] = useState(false);
-  const [pendingAmount, setPendingAmount] = useState<number | null>(null);
   const entryCounter = useRef(0);
 
   // นับถอยหลังหลัง mount เท่านั้น เพื่อให้ markup จาก server ตรงกับ client
@@ -219,20 +218,13 @@ export function YikiBetBoard({
     // เข้าขั้นใส่ราคาแบบว่างเปล่าเสมอ (ไม่เติมราคาเริ่มต้นให้) — เลือกรายการแรกไว้ก่อนให้เริ่มใส่ราคาได้ทันที
     setSelectedEntryId(entries[0]?.id ?? null);
     setSameForAll(false);
-    setPendingAmount(null);
     setStep("price");
   };
 
-  /** กดชิปราคา — เก็บเป็นค่าที่ "รอใส่" ยังไม่ลงโพยจนกว่าจะกด "แก้ไข" */
-  const handleSelectPendingAmount = (amount: number) => setPendingAmount(amount);
-
-  /** กด "แก้ไข" — ใส่ราคาที่เลือกไว้ลงรายการที่เลือกอยู่ หรือทุกรายการถ้าติ๊ก "ราคาเท่ากันทั้งหมด" */
-  const handleApplyPendingAmount = () => {
-    if (pendingAmount === null) return;
+  /** กดชิปราคา — ใส่ราคาทันทีให้รายการที่เลือกอยู่ หรือทุกรายการถ้าติ๊ก "ราคาเท่ากันทั้งหมด" */
+  const handleQuickAmount = (amount: number) => {
     setEntries((prev) =>
-      prev.map((entry) =>
-        sameForAll || entry.id === selectedEntryId ? { ...entry, amount: pendingAmount } : entry,
-      ),
+      prev.map((entry) => (sameForAll || entry.id === selectedEntryId ? { ...entry, amount } : entry)),
     );
   };
 
@@ -279,10 +271,10 @@ export function YikiBetBoard({
               settlementTypes={settlementTypes}
               sameForAll={sameForAll}
               onToggleSameForAll={setSameForAll}
-              pendingAmount={pendingAmount}
-              onSelectPendingAmount={handleSelectPendingAmount}
-              onApply={handleApplyPendingAmount}
-              canApply={pendingAmount !== null && (sameForAll || selectedEntryId !== null)}
+              onQuickAmount={handleQuickAmount}
+              onBack={() => setStep("pick")}
+              onSubmit={() => onSubmit?.(entries)}
+              submitDisabled={!canConfirm}
               total={priceTotal}
             />
           </div>
@@ -355,18 +347,12 @@ export function YikiBetBoard({
         ) : null}
       </div>
 
-      <YikiActionBar
-        secondary={
-          step === "pick"
-            ? { label: "กลับหน้าก่อนหน้า", href: backHref }
-            : { label: "กลับแก้ไขเลข", onClick: () => setStep("pick") }
-        }
-        primary={
-          step === "pick"
-            ? { label: "ใส่ราคา", onClick: handleGoToPrice, disabled: entries.length === 0 || isClosed }
-            : { label: "ส่งโพย", onClick: () => onSubmit?.(entries), disabled: !canConfirm }
-        }
-      />
+      {step === "pick" ? (
+        <YikiActionBar
+          secondary={{ label: "กลับหน้าก่อนหน้า", href: backHref }}
+          primary={{ label: "ใส่ราคา", onClick: handleGoToPrice, disabled: entries.length === 0 || isClosed }}
+        />
+      ) : null}
     </>
   );
 }

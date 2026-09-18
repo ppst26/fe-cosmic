@@ -11,27 +11,30 @@ interface YikiPriceControlsProps {
   settlementTypes: Record<YikiSettlementTypeId, YikiSettlementType>;
   sameForAll: boolean;
   onToggleSameForAll: (checked: boolean) => void;
-  pendingAmount: number | null;
-  onSelectPendingAmount: (amount: number) => void;
-  onApply: () => void;
-  canApply: boolean;
+  /** กดชิปราคา — ใส่ราคาทันที (รายการที่เลือกอยู่ หรือทุกรายการถ้าติ๊กราคาเท่ากันทั้งหมด) */
+  onQuickAmount: (amount: number) => void;
+  /** กลับไปแก้เลขต่อ */
+  onBack: () => void;
+  /** ส่งโพย — ยังไม่เชื่อม API ถ้า disabled จริงจะปิดปุ่มไว้ */
+  onSubmit: () => void;
+  submitDisabled: boolean;
   total: number;
 }
 
 /**
- * แผงใส่ราคา — พรีวิวเลขที่กำลังแก้ไข + ติ๊ก "ราคาเท่ากันทั้งหมด" + ชิปราคาด่วน + ปุ่ม "แก้ไข" + ยอดรวม
- * ใช้ใน YikiBetBoard แทนแผงเลือกเลข ในคอลัมน์ขวาหลังกด "ใส่ราคา"
- * เลือกแถวในโพย (YikiPricePanel) ก่อน แล้วกดชิปราคา + "แก้ไข" เพื่อใส่ราคาให้แถวนั้น (หรือทุกแถวถ้าติ๊กราคาเท่ากัน)
+ * แผงใส่ราคา — พรีวิวเลขที่กำลังแก้ไข + ติ๊ก "ราคาเท่ากันทั้งหมด" + ชิปราคาด่วน + ยอดรวม + ปุ่มกลับแก้ไขเลข/ส่งโพย
+ * ใช้ใน YikiBetBoard แทนแผงเลือกเลข ในคอลัมน์ขวาหลังกด "ใส่ราคา" — ทั้งสองปุ่มอยู่ในการ์ดนี้ ไม่มีแถบปุ่มล่างสุดแยกแล้ว
+ * เลือกแถวในโพย (YikiPricePanel) ก่อน แล้วกดชิปราคาเพื่อใส่ราคาให้แถวนั้นทันที (หรือทุกแถวถ้าติ๊กราคาเท่ากัน)
  */
 export function YikiPriceControls({
   selectedEntry,
   settlementTypes,
   sameForAll,
   onToggleSameForAll,
-  pendingAmount,
-  onSelectPendingAmount,
-  onApply,
-  canApply,
+  onQuickAmount,
+  onBack,
+  onSubmit,
+  submitDisabled,
   total,
 }: YikiPriceControlsProps) {
   const selectedRate = selectedEntry ? settlementTypes[selectedEntry.settlementTypeId].payoutRate : null;
@@ -64,38 +67,35 @@ export function YikiPriceControls({
           <button
             key={amount}
             type="button"
-            aria-pressed={pendingAmount === amount}
-            onClick={() => onSelectPendingAmount(amount)}
-            className={`yiki-price-chip yiki-price-chip--${amount}${pendingAmount === amount ? " is-active" : ""}`}
+            aria-pressed={selectedEntry?.amount === amount}
+            onClick={() => onQuickAmount(amount)}
+            className={`yiki-price-chip yiki-price-chip--${amount}${
+              selectedEntry?.amount === amount ? " is-active" : ""
+            }`}
           >
             {amount}
           </button>
         ))}
       </div>
 
-      <button type="button" className="yiki-price-controls__apply" onClick={onApply} disabled={!canApply}>
-        <EditIcon />
-        แก้ไข
-      </button>
-
       <div className="yiki-price-controls__total">
         <span>รวมแทง</span>
         <span>{formatBaht(total)} บาท</span>
       </div>
-    </div>
-  );
-}
 
-function EditIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" aria-hidden>
-      <path
-        d="m13.5 3.5 3 3-9 9-3.75.75.75-3.75 9-9Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+      <div className="yiki-price-controls__actions">
+        <button type="button" className="yiki-price-controls__back" onClick={onBack}>
+          กลับแก้ไขเลข
+        </button>
+        <button
+          type="button"
+          className="cosmic-action-btn yiki-price-controls__submit"
+          onClick={onSubmit}
+          disabled={submitDisabled}
+        >
+          ส่งโพย
+        </button>
+      </div>
+    </div>
   );
 }
