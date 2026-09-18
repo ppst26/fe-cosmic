@@ -53,3 +53,58 @@ export const DESKTOP_FEATURE_PROMOS = [
     tone: "rose" as const,
   },
 ] as const;
+
+/** การ์ดเมนูแถบขวา desktop — variant hero | cell + tone สำหรับ CSS */
+export const DESKTOP_RIGHT_MENU_TILES = [
+  {
+    id: "menu-referral",
+    variant: "hero" as const,
+    tone: "referral" as const,
+    iconId: "referral",
+    title: "แนะนำเพื่อน",
+    subtitle: "สร้างรายได้ 2 ชั้น",
+    href: "/referral",
+    ariaLabel: "แนะนำเพื่อน สร้างรายได้ 2 ชั้น",
+  },
+  {
+    id: "menu-check-in",
+    variant: "cell" as const,
+    tone: "check-in" as const,
+    iconId: "check-in",
+    title: "เช็คอิน",
+    subtitle: "CHECK-IN",
+    href: "/missions/check-in",
+    ariaLabel: "เช็คอิน CHECK-IN",
+  },
+  {
+    id: "menu-wheel",
+    variant: "cell" as const,
+    tone: "wheel" as const,
+    iconId: "wheel",
+    title: "วงล้อ",
+    subtitle: "LUCKY WHEEL",
+    href: "/wheel",
+    ariaLabel: "วงล้อ LUCKY WHEEL",
+  },
+  {
+    id: "menu-promotions",
+    variant: "cell" as const,
+    tone: "promotions" as const,
+    iconId: "promotions",
+    title: "โปรโมชั่น",
+    subtitle: "PROMOTION",
+    href: "/promotions",
+    ariaLabel: "โปรโมชั่น PROMOTION",
+  },
+  {
+    id: "menu-vip",
+    variant: "cell" as const,
+    tone: "vip" as const,
+    iconId: "rank",
+    title: "ยศวีไอพี",
+    subtitle: "VIP CLUB",
+    href: "#",
+    action: "vip-rank" as const,
+    ariaLabel: "ยศวีไอพี VIP CLUB",
+  },
+] as const;

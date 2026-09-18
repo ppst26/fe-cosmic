@@ -50,7 +50,7 @@
 
   --radius-control: 4px;
   --radius-card: 6px;
-  --radius-panel: 22px;
+  --radius-panel: 18px;
   --radius-pill: 999px;
   --page-gutter: clamp(16px, 3vw, 24px);
   --content-max: 1200px;
@@ -958,6 +958,158 @@ body {
     max-height: none;
     overflow-x: hidden;
     overflow-y: visible;
+  }
+
+  /* กริดเมนูแถบขวา desktop — 1 แบนเนอร์ + 2×2 ตาม mock (CSS ไม่ใช่รูปรวม) */
+  .lobby-right-menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .lobby-right-menu-card {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: calc(var(--radius-panel) - 2px);
+    font: inherit;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      filter var(--motion-fast) ease,
+      transform var(--motion-fast) ease;
+  }
+
+  .lobby-right-menu-card:hover {
+    filter: brightness(1.07);
+  }
+
+  .lobby-right-menu-card:active {
+    transform: scale(0.99);
+  }
+
+  .lobby-right-menu-card--hero {
+    grid-column: 1 / -1;
+    display: flex;
+    min-height: 5.25rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 0.75rem;
+    text-align: center;
+  }
+
+  .lobby-right-menu-card--cell {
+    display: flex;
+    min-height: 4.35rem;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.5rem;
+  }
+
+  .lobby-right-menu-card__pattern {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.22;
+    background-image:
+      linear-gradient(135deg, rgb(0 0 0 / 14%) 25%, transparent 25%),
+      linear-gradient(225deg, rgb(0 0 0 / 14%) 25%, transparent 25%);
+    background-size: 10px 10px;
+  }
+
+  .lobby-right-menu-card__icon {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 2.65rem;
+    height: 2.65rem;
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 16%);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 22%);
+  }
+
+  .lobby-right-menu-card__icon--hero {
+    width: 2.85rem;
+    height: 2.85rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .lobby-right-menu-card__text {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  .lobby-right-menu-card__title {
+    position: relative;
+    z-index: 1;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 28%);
+  }
+
+  .lobby-right-menu-card__title--hero {
+    font-size: 1.0625rem;
+    letter-spacing: -0.02em;
+  }
+
+  .lobby-right-menu-card__subtitle {
+    position: relative;
+    z-index: 1;
+    margin-top: 0.1rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: rgb(255 255 255 / 92%);
+    text-shadow: 0 1px 2px rgb(0 0 0 / 22%);
+  }
+
+  .lobby-right-menu-card__subtitle-en {
+    font-size: 0.5625rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    color: rgb(255 255 255 / 88%);
+    text-transform: uppercase;
+  }
+
+  .lobby-right-menu-card--referral {
+    background: linear-gradient(165deg, #ffe566 0%, #f5b800 48%, #e5a500 100%);
+    color: #1a1200;
+  }
+
+  .lobby-right-menu-card--referral .lobby-right-menu-card__title,
+  .lobby-right-menu-card--referral .lobby-right-menu-card__subtitle {
+    color: #1a1200;
+    text-shadow: 0 1px 0 rgb(255 255 255 / 35%);
+  }
+
+  .lobby-right-menu-card--check-in {
+    background: linear-gradient(155deg, #4ade80 0%, #16a34a 55%, #15803d 100%);
+  }
+
+  .lobby-right-menu-card--wheel {
+    background: linear-gradient(155deg, #a78bfa 0%, #7c3aed 52%, #5b21b6 100%);
+  }
+
+  .lobby-right-menu-card--promotions {
+    background: linear-gradient(155deg, #60a5fa 0%, #2563eb 55%, #1d4ed8 100%);
+  }
+
+  .lobby-right-menu-card--vip {
+    background: linear-gradient(155deg, #fb923c 0%, #ea580c 45%, #dc2626 100%);
   }
 
   .lobby-category-stack .category-nav {
