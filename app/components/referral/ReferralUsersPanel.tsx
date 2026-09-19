@@ -46,11 +46,11 @@ export function ReferralUsersPanel({ users = REFERRAL_USERS_MOCK }: { users?: Re
       <div className="flex flex-wrap items-center justify-end gap-2">
         <h2
           id="referral-users-title"
-          className="text-sm font-extrabold text-[var(--text-primary)] sm:text-base"
+          className="text-sm font-medium text-[var(--text-primary)] sm:text-base"
         >
           เพื่อนที่แนะนำ
         </h2>
-        <span className="rounded-full bg-[var(--surface-selected)] px-2.5 py-0.5 text-[11px] font-bold text-[var(--border-active)]">
+        <span className="rounded-full bg-[var(--surface-selected)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--border-active)]">
           {formatReferralCount(total)}
         </span>
       </div>
@@ -62,10 +62,10 @@ export function ReferralUsersPanel({ users = REFERRAL_USERS_MOCK }: { users?: Re
         <Table className="text-sm">
         <TableHeader>
           <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
-            <TableHead className="h-11 px-4 text-xs font-semibold text-[var(--text-muted)] sm:px-5">
+            <TableHead className="h-11 px-4 text-xs font-medium text-[var(--text-muted)] sm:px-5">
               Username
             </TableHead>
-            <TableHead className="h-11 px-4 text-right text-xs font-semibold text-[var(--text-muted)] sm:px-5">
+            <TableHead className="h-11 px-4 text-right text-xs font-medium text-[var(--text-muted)] sm:px-5">
               สมัครเมื่อ
             </TableHead>
           </TableRow>
@@ -88,7 +88,7 @@ export function ReferralUsersPanel({ users = REFERRAL_USERS_MOCK }: { users?: Re
                   index % 2 === 1 ? "bg-[var(--surface-mid)]/45" : "bg-transparent"
                 }`}
               >
-                <TableCell className="px-4 py-3.5 font-semibold text-[var(--text-primary)] sm:px-5">
+                <TableCell className="px-4 py-3.5 font-medium text-[var(--text-primary)] sm:px-5">
                   {row.username}
                 </TableCell>
                 <TableCell className="px-4 py-3.5 text-right text-xs tabular-nums text-[var(--text-secondary)] sm:px-5">

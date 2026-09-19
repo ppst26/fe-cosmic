@@ -71,7 +71,7 @@ export function VipRankRequirementsPanel({
       {isLocked && (
         <p className="mb-3 text-center text-[11px] text-[var(--text-muted)]">
           ถึง{" "}
-          <span className="font-semibold text-[var(--text-secondary)]">
+          <span className="font-medium text-[var(--text-secondary)]">
             {getVipRankTier(focusRankId).label}
           </span>{" "}
           ได้เมื่อเลื่อนจากแรงค์ก่อนหน้า
@@ -89,12 +89,12 @@ export function VipRankRequirementsPanel({
             เทิร์น {formatVipAmount(turnoverProgress)} / {formatVipAmount(req.turnoverTarget)}
           </span>
           {!isLocked && (
-            <span className={`font-bold ${isCleared ? "text-[var(--success)]" : "text-[#f5c542]"}`}>
+            <span className={`font-medium ${isCleared ? "text-[var(--success)]" : "text-[#f5c542]"}`}>
               {isCleared ? "ครบ" : `${Math.round(turnoverPct)}%`}
             </span>
           )}
           {isLocked && (
-            <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--text-muted)]">
+            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
               ล็อก
             </span>
           )}
@@ -134,7 +134,7 @@ export function VipRankRequirementsPanel({
       {showMissions ? (
       <div className={`w-full ${showTurnover ? "pt-4" : ""}`}>
         <h3
-          className={`text-sm font-extrabold ${isLocked ? "text-[var(--text-muted)]" : ""}`}
+          className={`text-sm font-medium ${isLocked ? "text-[var(--text-muted)]" : ""}`}
         >
           {sectionTitle}
         </h3>

@@ -38,7 +38,7 @@ export function PromotionsCategoryTabs({
             role="tab"
             aria-selected={selected}
             onClick={() => onSelect(tab.id)}
-            className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-bold transition-colors sm:px-5 sm:py-2.5 ${
+            className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors sm:px-5 sm:py-2.5 ${
               selected
                 ? "text-[var(--text-primary)]"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"

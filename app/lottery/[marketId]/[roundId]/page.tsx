@@ -31,7 +31,7 @@ export default function LotteryMarketPlayPage() {
       activeCategoryId="lottery"
       subHeader={{ title: market?.title ?? "แทงหวย", backHref: `/lottery/${marketId}` }}
       hideBottomNav
-      mainClassName="yiki-page-main mx-auto max-w-[var(--content-max)] pb-0 pt-4 lg:mx-0 lg:max-w-none lg:pb-4 lg:pt-0"
+      mainClassName="yiki-page-main mx-auto max-w-[var(--content-max)] pb-0 lg:mx-0 lg:max-w-none lg:pb-4 lg:pt-0"
     >
       {market && round ? (
         <YikiBetBoard

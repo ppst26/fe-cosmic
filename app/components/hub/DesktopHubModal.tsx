@@ -57,7 +57,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
             <Dialog.Title className="sr-only">{title}</Dialog.Title>
           ) : (
             <div className="cosmic-modal-shell--hub__header flex shrink-0 items-center justify-between gap-3 px-4 py-3">
-              <Dialog.Title className="text-lg font-extrabold tracking-tight text-[var(--text-primary)]">
+              <Dialog.Title className="text-lg font-medium tracking-tight text-[var(--text-primary)]">
                 {title}
               </Dialog.Title>
               <Dialog.Close asChild>

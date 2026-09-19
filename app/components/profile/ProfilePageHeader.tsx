@@ -16,7 +16,7 @@ export function ProfilePageHeader({ title }: { title: string }) {
         >
           <ChevronLeftIcon className="h-5 w-5" />
         </Link>
-        <h1 className="text-lg font-extrabold text-[var(--text-primary)]">{title}</h1>
+        <h1 className="text-lg font-medium text-[var(--text-primary)]">{title}</h1>
       </div>
     </header>
   );

@@ -54,7 +54,7 @@ export function LobbySlotProviderView({ providerId, onBack }: LobbySlotProviderV
                 <button
                   type="button"
                   onClick={onBack}
-                  className="font-bold text-[var(--text-primary)] transition-colors hover:text-[var(--text-secondary)]"
+                  className="font-medium text-[var(--text-primary)] transition-colors hover:text-[var(--text-secondary)]"
                 >
                   สล็อต
                 </button>
@@ -63,7 +63,7 @@ export function LobbySlotProviderView({ providerId, onBack }: LobbySlotProviderV
                 /
               </li>
               <li
-                className="truncate font-bold uppercase tracking-tight text-[var(--text-primary)]"
+                className="truncate font-medium uppercase tracking-tight text-[var(--text-primary)]"
                 aria-current="page"
               >
                 {providerInfo.name}
@@ -72,7 +72,7 @@ export function LobbySlotProviderView({ providerId, onBack }: LobbySlotProviderV
           </nav>
         }
         meta={
-          <span className="font-semibold text-[var(--text-muted)]">
+          <span className="font-medium text-[var(--text-muted)]">
             ({filteredGames.length} เกม)
           </span>
         }

@@ -37,7 +37,7 @@ export function ProviderBreadcrumb({
           <li>
             <Link
               href={backHref}
-              className="font-bold text-white transition-colors hover:text-white/80 hover:underline"
+              className="font-medium text-white transition-colors hover:text-white/80 hover:underline"
             >
               สล็อต
             </Link>
@@ -46,7 +46,7 @@ export function ProviderBreadcrumb({
             /
           </li>
           <li
-            className="truncate font-bold tracking-tight text-[var(--text-primary)] uppercase"
+            className="truncate font-medium tracking-tight text-[var(--text-primary)] uppercase"
             aria-current="page"
           >
             {providerName}

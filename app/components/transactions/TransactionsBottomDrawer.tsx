@@ -68,7 +68,7 @@ export function TransactionsBottomDrawer({
           </Dialog.Close>
 
           <div className="flex min-h-0 flex-1 flex-col px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-14 sm:px-5">
-            <Dialog.Title className="text-2xl font-extrabold">รายการธุรกรรม</Dialog.Title>
+            <Dialog.Title className="text-2xl font-medium">รายการธุรกรรม</Dialog.Title>
             <p className="mt-1 text-sm text-[var(--text-secondary)]">ฝากและถอนของคุณ</p>
 
             <div className="mt-4 shrink-0">

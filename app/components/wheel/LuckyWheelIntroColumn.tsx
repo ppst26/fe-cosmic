@@ -37,7 +37,7 @@ export function LuckyWheelIntroColumn({ embedded = false }: LuckyWheelIntroColum
         </header>
       ) : (
         <header className="lucky-wheel-intro__hero lucky-wheel-intro__hero--compact">
-          <h2 className="text-base font-extrabold text-[var(--text-primary)] sm:text-lg">หมุนลุ้นรางวัล</h2>
+          <h2 className="text-base font-medium text-[var(--text-primary)] sm:text-lg">หมุนลุ้นรางวัล</h2>
           <p className="mt-1 text-xs text-[var(--text-secondary)]">เลือกวิธีหมุนและจำนวนครั้งด้านขวา</p>
         </header>
       )}

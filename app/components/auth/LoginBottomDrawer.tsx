@@ -73,14 +73,14 @@ export function LoginBottomDrawer({
           <Dialog.Close asChild>
             <button
               type="button"
-              className={responsiveSheetCloseButtonClass("absolute right-3 top-4")}
+              className={responsiveSheetCloseButtonClass("absolute right-3 top-4 z-20")}
               aria-label="ปิดหน้าเข้าสู่ระบบ"
             >
               <CloseIcon className="h-4 w-4" />
             </button>
           </Dialog.Close>
 
-          <Dialog.Title className="text-2xl font-extrabold">เข้าสู่ระบบ</Dialog.Title>
+          <Dialog.Title className="text-2xl font-medium">เข้าสู่ระบบ</Dialog.Title>
           <p className="mt-1 text-sm text-[var(--text-secondary)]">ใช้เบอร์และรหัสผ่านที่สมัครไว้</p>
 
           <form className="mt-5 flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -142,7 +142,7 @@ export function LoginBottomDrawer({
               ยังไม่มีบัญชี?{" "}
               <button
                 type="button"
-                className="font-semibold text-[var(--border-active)] hover:text-[var(--icon-active)]"
+                className="font-medium text-[var(--border-active)] hover:text-[var(--icon-active)]"
                 onClick={() => {
                   reset();
                   onClose();

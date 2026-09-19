@@ -15,7 +15,7 @@ export function LuckyWheelLiveWinners() {
       <header className="lucky-wheel-feed__head">
         <div className="flex min-w-0 items-center gap-2">
           <UsersIcon className="h-5 w-5 shrink-0 text-[var(--icon-active)]" />
-          <h2 id="wheel-live-title" className="truncate text-sm font-bold text-[var(--text-primary)]">
+          <h2 id="wheel-live-title" className="truncate text-sm font-medium text-[var(--text-primary)]">
             ผู้เล่นคนอื่นได้รับรางวัล
           </h2>
         </div>
@@ -35,10 +35,10 @@ export function LuckyWheelLiveWinners() {
               {entry.avatarLetter}
             </span>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-[var(--text-primary)]">{entry.maskedName}</p>
+              <p className="truncate text-sm font-medium text-[var(--text-primary)]">{entry.maskedName}</p>
               <p className="text-xs text-[var(--text-secondary)]">
                 ได้รับ{" "}
-                <span className="font-bold text-[var(--icon-active)] tabular-nums">{entry.gemsAmount}</span> เพชร
+                <span className="font-medium text-[var(--icon-active)] tabular-nums">{entry.gemsAmount}</span> เพชร
               </p>
             </div>
             <span className="shrink-0 text-[11px] text-[var(--text-muted)]">{entry.timeLabel}</span>

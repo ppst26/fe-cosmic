@@ -65,7 +65,7 @@ function SignUpDrawerHero() {
 
       <div className="relative z-10 flex flex-col gap-2 px-4 pb-4 pt-10 sm:px-5">
         <CosmicbetLogo className="h-5 max-w-[90px] sm:h-6 sm:max-w-[100px]" />
-        <p className="text-lg font-extrabold leading-tight text-[var(--text-primary)] sm:text-xl">
+        <p className="text-lg font-medium leading-tight text-[var(--text-primary)] sm:text-xl">
           ยินดีต้อนรับสู่ cosmicbet
         </p>
         <p className="text-xs text-[var(--text-secondary)] sm:text-sm">
@@ -154,7 +154,7 @@ function SignUpStepOne({
       }}
     >
       <div>
-        <Dialog.Title className="text-2xl font-extrabold text-[var(--text-primary)]">สมัครสมาชิก</Dialog.Title>
+        <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">สมัครสมาชิก</Dialog.Title>
         <p className="mt-1 text-sm text-[var(--text-secondary)]">กรอกข้อมูลเพื่อสร้างบัญชี</p>
       </div>
 
@@ -224,7 +224,7 @@ function SignUpStepOne({
         มีบัญชีอยู่แล้ว?{" "}
         <button
           type="button"
-          className="font-semibold text-[var(--border-active)] hover:text-[var(--icon-active)]"
+          className="font-medium text-[var(--border-active)] hover:text-[var(--icon-active)]"
           onClick={onLoginClick}
         >
           เข้าสู่ระบบ

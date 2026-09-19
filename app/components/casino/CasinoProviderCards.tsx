@@ -150,11 +150,11 @@ function CasinoCardGraphic({ artType }: { artType: string }) {
           {/* มือถือไพ่ K, 9, 6 ทางซ้าย */}
           <g transform="translate(18, 48) rotate(-12) scale(0.65)">
             <rect x="0" y="0" width="16" height="22" rx="2" fill="#ffffff" stroke="#1e293b" strokeWidth="1" />
-            <text x="3" y="10" fontSize="8" fontWeight="900" fill="#dc2626">K</text>
+            <text x="3" y="10" fontSize="8" fontWeight="500" fill="#dc2626">K</text>
             <rect x="8" y="2" width="16" height="22" rx="2" fill="#ffffff" stroke="#1e293b" strokeWidth="1" />
-            <text x="11" y="12" fontSize="8" fontWeight="900" fill="#0f172a">9</text>
+            <text x="11" y="12" fontSize="8" fontWeight="500" fill="#0f172a">9</text>
             <rect x="16" y="5" width="16" height="22" rx="2" fill="#ffffff" stroke="#1e293b" strokeWidth="1" />
-            <text x="19" y="15" fontSize="8" fontWeight="900" fill="#dc2626">6</text>
+            <text x="19" y="15" fontSize="8" fontWeight="500" fill="#dc2626">6</text>
           </g>
           {/* ผมยาวตรงสีน้ำตาลเข้ม */}
           <path d="M28 36 C24 16 76 16 72 36 C76 66 70 85 66 95 C56 95 44 95 34 95 C30 85 24 66 28 36 Z" fill="#1c1917" />
@@ -236,7 +236,7 @@ export function CasinoProviderCards({
     <div className="space-y-3.5">
       {!hideTitleRow ? (
       <div className="flex items-baseline gap-2 pt-1">
-        <h2 className="text-lg font-extrabold text-white sm:text-xl">
+        <h2 className="text-lg font-medium text-white sm:text-xl">
           {sectionTitle}
         </h2>
         <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
@@ -280,7 +280,7 @@ export function CasinoProviderCards({
                   return (
                     <span
                       key={idx}
-                      className="rounded bg-[#00f59b] px-1.5 py-0.5 text-[7.5px] font-black uppercase tracking-tight text-black shadow-sm sm:text-[8.5px]"
+                      className="rounded bg-[#00f59b] px-1.5 py-0.5 text-[7.5px] font-medium uppercase tracking-tight text-black shadow-sm sm:text-[8.5px]"
                     >
                       EXCLUSIVE
                     </span>
@@ -290,7 +290,7 @@ export function CasinoProviderCards({
                   return (
                     <span
                       key={idx}
-                      className="rounded bg-[#e91e3a] px-1.5 py-0.5 text-[7.5px] font-bold uppercase tracking-tight text-white shadow-sm sm:text-[8.5px]"
+                      className="rounded bg-[#e91e3a] px-1.5 py-0.5 text-[7.5px] font-medium uppercase tracking-tight text-white shadow-sm sm:text-[8.5px]"
                     >
                       LIVE
                     </span>
@@ -300,7 +300,7 @@ export function CasinoProviderCards({
                   return (
                     <span
                       key={idx}
-                      className="rounded bg-[#f59e0b] px-1.5 py-0.5 text-[7.5px] font-extrabold uppercase tracking-tight text-black shadow-sm sm:text-[8.5px]"
+                      className="rounded bg-[#f59e0b] px-1.5 py-0.5 text-[7.5px] font-medium uppercase tracking-tight text-black shadow-sm sm:text-[8.5px]"
                     >
                       HOT
                     </span>
@@ -320,10 +320,10 @@ export function CasinoProviderCards({
 
             {/* 4. ข้อความหัวข้อสีขาวตัวหนา และชื่อ Provider ด้านล่าง */}
             <div className="z-10 mt-auto flex flex-col items-center pb-2 px-1 text-center">
-              <h3 className="line-clamp-2 text-center text-[10px] sm:text-[11.5px] font-black uppercase leading-tight tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
+              <h3 className="line-clamp-2 text-center text-[10px] sm:text-[11.5px] font-medium uppercase leading-tight tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
                 {item.title}
               </h3>
-              <p className="mt-0.5 truncate text-center text-[8.5px] sm:text-[9.5px] font-semibold text-white/80 drop-shadow">
+              <p className="mt-0.5 truncate text-center text-[8.5px] sm:text-[9.5px] font-medium text-white/80 drop-shadow">
                 {item.provider}
               </p>
             </div>

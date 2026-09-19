@@ -75,8 +75,8 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
           aria-label="รายได้ที่รับได้"
         >
           <div>
-            <p className="text-xs font-semibold text-[var(--text-secondary)]">รายได้ที่รับได้</p>
-            <p className="mt-1 text-2xl font-extrabold tabular-nums text-[#c4b5fd]">
+            <p className="text-xs font-medium text-[var(--text-secondary)]">รายได้ที่รับได้</p>
+            <p className="mt-1 text-2xl font-medium tabular-nums text-[#c4b5fd]">
               {formatReferralCurrency(claimable)}
             </p>
           </div>
@@ -127,7 +127,7 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
         >
           <p className="text-xs text-[var(--text-muted)]">รายได้จากเครือข่าย (ช่วงที่เลือก)</p>
           <div className="mt-1 flex flex-wrap items-end justify-between gap-2">
-            <p className="text-xl font-extrabold tabular-nums text-[var(--text-primary)]">
+            <p className="text-xl font-medium tabular-nums text-[var(--text-primary)]">
               {formatReferralCurrency(periodEarningsTotal)}
             </p>
             <p className="text-xs text-[var(--text-muted)]">

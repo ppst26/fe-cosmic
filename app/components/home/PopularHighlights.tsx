@@ -70,7 +70,7 @@ export function PopularHighlights({
               >
                 <div className="flex min-w-0 items-center gap-3">
                   <SwipeBetEmblem className="h-10 w-10 shrink-0" />
-                  <span className="truncate text-sm font-bold text-[var(--text-primary)] sm:text-base">
+                  <span className="truncate text-sm font-medium text-[var(--text-primary)] sm:text-base">
                     {item.title}
                   </span>
                 </div>
@@ -88,10 +88,10 @@ export function PopularHighlights({
               className="group relative flex min-h-[56px] items-center justify-between overflow-hidden rounded-[var(--radius-panel)] bg-gradient-to-r from-[#181135] via-[#1b1540] to-[#25103a] px-4 py-2.5 transition-colors duration-[var(--motion-fast)] hover:brightness-105"
             >
               <div className="z-10 flex flex-col">
-                <span className="font-mono text-lg font-black italic tracking-tighter text-white drop-shadow sm:text-xl">
+                <span className="font-mono text-lg font-medium italic tracking-tighter text-white drop-shadow sm:text-xl">
                   DEXY
                 </span>
-                <span className="-mt-1 font-mono text-xs font-black italic tracking-widest text-slate-300 drop-shadow sm:text-sm">
+                <span className="-mt-1 font-mono text-xs font-medium italic tracking-widest text-slate-300 drop-shadow sm:text-sm">
                   RACE
                 </span>
               </div>

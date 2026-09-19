@@ -44,7 +44,7 @@ function TopPerformanceBadge({ className = "h-8 w-8" }: { className?: string }) 
         textAnchor="middle"
         fill="#090810"
         fontSize="7"
-        fontWeight="800"
+        fontWeight="500"
       >
         TOP
       </text>
@@ -188,7 +188,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
         <TopPerformanceBadge className="hall-of-fame__title-icon h-7 w-7 sm:h-8 sm:w-8" />
         <h2
           id="top-performance-title"
-          className="text-[18px] font-bold tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
+          className="text-[18px] font-medium tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
         >
           Top Performance
         </h2>
@@ -231,7 +231,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
         <div className="hall-of-fame-table-wrap px-[var(--page-gutter)] lg:px-0">
           <table className="hall-of-fame-table w-full min-w-0 border-collapse text-left text-sm">
             <thead>
-              <tr className="hall-of-fame-table__head-row text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] sm:text-[11px]">
+              <tr className="hall-of-fame-table__head-row text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] sm:text-[11px]">
                 <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--game">
                   Game
                 </th>
@@ -265,7 +265,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--game">
                       <div className="flex min-w-0 items-center gap-2.5">
                         <HallOfFameGameThumb row={row} />
-                        <span className="line-clamp-2 text-xs font-semibold leading-snug text-[var(--text-primary)] sm:text-sm">
+                        <span className="line-clamp-2 text-xs font-medium leading-snug text-[var(--text-primary)] sm:text-sm">
                           {row.gameName}
                         </span>
                       </div>
@@ -290,12 +290,12 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                     </td>
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--value">
                       {isLatestWinner && row.payout != null ? (
-                        <span className="hall-of-fame-table__payout text-xs font-bold tabular-nums sm:text-sm">
+                        <span className="hall-of-fame-table__payout text-xs font-medium tabular-nums sm:text-sm">
                           {formatPayoutThb(row.payout)}
                         </span>
                       ) : null}
                       {!isLatestWinner && row.winMultiple != null ? (
-                        <span className="hall-of-fame-table__coef-pill text-xs font-extrabold tabular-nums sm:text-sm">
+                        <span className="hall-of-fame-table__coef-pill text-xs font-medium tabular-nums sm:text-sm">
                           x{row.winMultiple}
                         </span>
                       ) : null}

@@ -39,7 +39,7 @@ export function GemsStorePageContent({
         <header className="flex flex-col gap-3">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1 pr-1">
-              <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">
+              <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">
                 ร้านค้า <span className="text-[#c4b5fd]">Gems</span>
               </h1>
               <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
@@ -65,7 +65,7 @@ export function GemsStorePageContent({
               <p className="text-[10px] font-medium text-[var(--text-secondary)] sm:text-[11px]">
                 Gems ของคุณ
               </p>
-              <p className="text-lg font-extrabold tabular-nums leading-tight text-[var(--text-primary)] sm:text-xl">
+              <p className="text-lg font-medium tabular-nums leading-tight text-[var(--text-primary)] sm:text-xl">
                 {formatGemsBalance(gemsBalance)}
               </p>
               <p className="text-[9px] text-[var(--text-muted)] sm:text-[10px]">ยอดตัวอย่าง</p>
@@ -98,10 +98,10 @@ export function GemsStorePageContent({
           className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20"
           aria-expanded={termsOpen}
         >
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/70 text-[10px] font-bold text-[#c4b5fd]">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/70 text-[10px] font-medium text-[#c4b5fd]">
             i
           </span>
-          <span className="flex-1 text-sm font-bold text-[var(--text-primary)]">เงื่อนไขการแลกรางวัล</span>
+          <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการแลกรางวัล</span>
           <ChevronDownIcon
             className={`h-4 w-4 text-[var(--icon-default)] transition-transform ${
               termsOpen ? "rotate-180" : ""
@@ -150,10 +150,10 @@ function GemsRedeemCard({
             className="object-contain object-center"
           />
         </div>
-        <p className="text-sm font-extrabold text-[var(--text-primary)] sm:text-base">
+        <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
           {formatGemsCredits(pkg.credits)}
         </p>
-        <p className="mt-1 flex items-center justify-center gap-1.5 text-[10px] font-semibold text-[var(--text-secondary)] sm:text-xs">
+        <p className="mt-1 flex items-center justify-center gap-1.5 text-[10px] font-medium text-[var(--text-secondary)] sm:text-xs">
           <span className="relative h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4">
             <Image src={GEMS_STORE_GEM_ASSET} alt="" fill sizes="16px" className="object-contain" />
           </span>
@@ -164,7 +164,7 @@ function GemsRedeemCard({
         type="button"
         disabled={!affordable}
         onClick={onRedeem}
-        className={`mt-3 w-full py-2 text-[10px] font-bold disabled:cursor-not-allowed sm:text-xs ${
+        className={`mt-3 w-full py-2 text-[10px] font-medium disabled:cursor-not-allowed sm:text-xs ${
           affordable ? "cosmic-action-btn" : "rounded-[var(--radius-panel)] bg-[var(--surface-mid)] text-[var(--text-muted)]"
         }`}
       >

@@ -44,7 +44,7 @@ export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModal
                     boxShadow: "0 4px 20px rgba(124,58,237,0.35)",
                   }}
                 >
-                  <Dialog.Title className="text-sm font-extrabold tracking-wide text-white sm:text-base">
+                  <Dialog.Title className="text-sm font-medium tracking-wide text-white sm:text-base">
                     รายละเอียดโปรโมชั่น
                   </Dialog.Title>
                 </div>

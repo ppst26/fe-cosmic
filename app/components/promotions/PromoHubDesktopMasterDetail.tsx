@@ -120,7 +120,7 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
                       : "hover:bg-[var(--surface-hover)]/40"
                   }`}
                 >
-                  <span className="block text-sm font-extrabold leading-snug text-[var(--text-primary)]">
+                  <span className="block text-sm font-medium leading-snug text-[var(--text-primary)]">
                     {item.title}
                   </span>
                   <span className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">

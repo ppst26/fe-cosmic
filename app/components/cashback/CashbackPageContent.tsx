@@ -63,7 +63,7 @@ export function CashbackPageContent({
     <div className="flex flex-col gap-5 pb-6">
       {!embedded ? (
         <header>
-          <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">คืนยอด</h1>
+          <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">คืนยอด</h1>
           <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
             ตรวจสอบยอดคืนและกดรับเข้ากระเป๋า
           </p>
@@ -84,7 +84,7 @@ export function CashbackPageContent({
               role="tab"
               aria-selected={active}
               onClick={() => setTab(item.id)}
-              className={`rounded-[calc(var(--radius-panel)-6px)] py-2.5 text-sm font-bold transition-all ${
+              className={`rounded-[calc(var(--radius-panel)-6px)] py-2.5 text-sm font-medium transition-all ${
                 active
                   ? "bg-[#c4b5fd] text-[#121127] shadow-[0_2px_12px_rgba(196,181,253,0.35)]"
                   : "border border-transparent text-[#c4b5fd] hover:bg-[var(--surface-hover)]/40"
@@ -103,12 +103,12 @@ export function CashbackPageContent({
             aria-hidden="true"
           />
           <RefundIcon className="h-11 w-11 text-[#c4b5fd]" />
-          <span className="absolute text-xl font-extrabold text-[#c4b5fd]" aria-hidden="true">
+          <span className="absolute text-xl font-medium text-[#c4b5fd]" aria-hidden="true">
             ฿
           </span>
         </div>
-        <p className="mt-3 text-xs font-semibold text-[var(--text-secondary)]">ยอดคืนที่รับได้</p>
-        <p className="mt-1 text-3xl font-extrabold tabular-nums text-[#c4b5fd] sm:text-4xl">
+        <p className="mt-3 text-xs font-medium text-[var(--text-secondary)]">ยอดคืนที่รับได้</p>
+        <p className="mt-1 text-3xl font-medium tabular-nums text-[#c4b5fd] sm:text-4xl">
           {formatCashbackCurrency(panel.claimableThb)}
         </p>
         <p className="mt-1 text-xs text-[var(--text-muted)]">{panel.statusHint}</p>
@@ -118,7 +118,7 @@ export function CashbackPageContent({
         className="cosmic-inset-card border border-[var(--border-active)]/40 bg-[var(--surface-hover)]/20 px-4 py-4 sm:px-5"
         aria-labelledby="cashback-detail-heading"
       >
-        <h2 id="cashback-detail-heading" className="text-base font-extrabold text-[var(--text-primary)]">
+        <h2 id="cashback-detail-heading" className="text-base font-medium text-[var(--text-primary)]">
           {panel.title}
         </h2>
         <p className="mt-0.5 text-xs text-[var(--text-muted)]">{panel.subtitle}</p>
@@ -133,7 +133,7 @@ export function CashbackPageContent({
                 <DetailRowIcon kind={row.icon} />
                 <span className="text-sm text-[var(--text-secondary)]">{row.label}</span>
               </div>
-              <span className="shrink-0 text-sm font-bold tabular-nums text-[var(--text-primary)]">
+              <span className="shrink-0 text-sm font-medium tabular-nums text-[var(--text-primary)]">
                 {row.value}
               </span>
             </li>
@@ -148,7 +148,7 @@ export function CashbackPageContent({
         className={`flex h-12 w-full items-center justify-center text-sm sm:text-base ${
           panel.canClaim && panel.claimableThb > 0
             ? "cosmic-action-btn"
-            : "rounded-[var(--radius-panel)] bg-[color-mix(in_srgb,#c4b5fd_28%,var(--surface-mid))] font-extrabold text-[color-mix(in_srgb,#c4b5fd_75%,var(--text-muted))] disabled:cursor-not-allowed"
+            : "rounded-[var(--radius-panel)] bg-[color-mix(in_srgb,#c4b5fd_28%,var(--surface-mid))] font-medium text-[color-mix(in_srgb,#c4b5fd_75%,var(--text-muted))] disabled:cursor-not-allowed"
         } disabled:opacity-45`}
       >
         {panel.claimButtonLabel}

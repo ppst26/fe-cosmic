@@ -84,7 +84,7 @@ export function WelcomeBanner({
               />
 
               <div className="relative z-10 flex w-full max-w-sm flex-col items-center justify-center px-4 pb-10 text-center sm:pb-11">
-                <h2 className="mb-1.5 text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-3xl">
+                <h2 className="mb-1.5 text-2xl font-medium tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-3xl">
                   {slide.title}
                 </h2>
                 <p className="mb-4 text-sm font-medium text-[var(--text-secondary)] drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)] sm:mb-5 sm:text-base">

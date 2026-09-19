@@ -37,7 +37,7 @@ export function LotteryHubContent({
     <div className="lottery-hub flex min-w-0 flex-col gap-6 sm:gap-8">
       {showPageHeading ? (
         <header className="lottery-hub__head min-w-0">
-          <h2 className="text-lg font-extrabold tracking-tight text-[var(--text-primary)] sm:text-xl">
+          <h2 className="text-lg font-medium tracking-tight text-[var(--text-primary)] sm:text-xl">
             แทงหวย
           </h2>
           <p className="mt-1 text-sm text-[var(--text-secondary)]">

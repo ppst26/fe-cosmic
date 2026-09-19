@@ -91,7 +91,7 @@ export function SignUpPickerGridItem({
       }`}
     >
       <span
-        className={`flex h-10 w-10 items-center justify-center rounded-full text-[9px] font-extrabold uppercase text-[var(--text-primary)] ${signUpCoverToneClass(coverTone)}`}
+        className={`flex h-10 w-10 items-center justify-center rounded-full text-[9px] font-medium uppercase text-[var(--text-primary)] ${signUpCoverToneClass(coverTone)}`}
       >
         {shortLabel.slice(0, 3)}
       </span>

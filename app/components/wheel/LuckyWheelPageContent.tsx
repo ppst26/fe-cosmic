@@ -104,7 +104,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)] text-[var(--icon-default)]">
             <DocLinesIcon className="h-4 w-4" />
           </span>
-          <span className="flex-1 text-sm font-bold text-[var(--text-primary)]">กติกาและเงื่อนไข</span>
+          <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">กติกาและเงื่อนไข</span>
           <ChevronDownIcon
             className={`h-4 w-4 text-[var(--icon-default)] transition-transform ${termsOpen ? "rotate-180" : ""}`}
           />

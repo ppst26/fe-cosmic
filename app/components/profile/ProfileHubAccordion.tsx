@@ -27,7 +27,7 @@ export function ProfileHubRow({
       <span className="profile-hub-row__icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--icon-default)]">
         {icon}
       </span>
-      <span className="profile-hub-row__title min-w-0 flex-1 font-semibold text-[var(--text-secondary)]">
+      <span className="profile-hub-row__title min-w-0 flex-1 font-medium text-[var(--text-secondary)]">
         {title}
       </span>
       {trailing}
@@ -75,7 +75,7 @@ export function ProfileHubAccordion({
         <span className="profile-hub-accordion__icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--icon-default)]">
           {headerIcon}
         </span>
-        <span className="profile-hub-accordion__title flex-1 font-bold text-[var(--text-primary)]">
+        <span className="profile-hub-accordion__title flex-1 font-medium text-[var(--text-primary)]">
           {title}
         </span>
         <ChevronDownIcon

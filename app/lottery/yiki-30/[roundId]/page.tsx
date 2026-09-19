@@ -24,7 +24,7 @@ export default function Yiki30PlayPage() {
       activeCategoryId="lottery"
       subHeader={{ title: "หวยยี่กี 30 นาที", backHref: "/lottery/yiki-30" }}
       hideBottomNav
-      mainClassName="yiki-page-main mx-auto max-w-[var(--content-max)] pb-0 pt-4 lg:mx-0 lg:max-w-none lg:pb-4 lg:pt-0"
+      mainClassName="yiki-page-main mx-auto max-w-[var(--content-max)] pb-0 lg:mx-0 lg:max-w-none lg:pb-4 lg:pt-0"
     >
       {round ? (
         <YikiBetBoard

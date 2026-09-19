@@ -60,7 +60,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
           className="cosmic-modal-shell cosmic-modal-shell--hub vip-modal fixed left-1/2 top-1/2 z-[70] flex w-[min(calc(100vw-1.5rem),400px)] max-h-[min(90dvh,640px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-[var(--text-primary)] shadow-[0_22px_48px_rgba(0,0,0,0.55)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
         >
           <div className="relative shrink-0 px-4 pb-3 pt-4 lg:px-5 lg:pb-4">
-            <Dialog.Title className="text-center text-lg font-extrabold tracking-wide lg:text-xl">
+            <Dialog.Title className="text-center text-lg font-medium tracking-wide lg:text-xl">
               VIP
             </Dialog.Title>
             <Dialog.Close asChild>
@@ -113,7 +113,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
                 <p className="text-xs text-[var(--text-muted)]">ระดับปัจจุบัน</p>
                 <VipRankEmblem rankId={player.currentRankId} size="lg" />
                 <p
-                  className="text-2xl font-extrabold tracking-[0.2em]"
+                  className="text-2xl font-medium tracking-[0.2em]"
                   style={{ color: currentTier.accent }}
                 >
                   {currentTier.label}
@@ -121,7 +121,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
                 {nextTier && (
                   <p className="text-xs text-[var(--text-secondary)]">
                     ระดับถัดไป{" "}
-                    <span className="font-semibold text-[var(--text-primary)]">
+                    <span className="font-medium text-[var(--text-primary)]">
                       {nextTier.label}
                     </span>
                   </p>

@@ -33,11 +33,11 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
       <header className="lucky-wheel-history__head">
         <div className="flex items-center gap-2">
           <ClockIcon className="h-5 w-5 text-[var(--icon-active)]" />
-          <h2 id="wheel-history-title" className="text-sm font-bold text-[var(--text-primary)]">
+          <h2 id="wheel-history-title" className="text-sm font-medium text-[var(--text-primary)]">
             ประวัติรางวัลของคุณ
           </h2>
         </div>
-        <button type="button" className="lucky-wheel-wallet__link text-xs font-semibold">
+        <button type="button" className="lucky-wheel-wallet__link text-xs font-medium">
           ดูทั้งหมด ›
         </button>
       </header>

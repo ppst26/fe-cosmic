@@ -143,7 +143,7 @@ export function SignUpStepTwo({
           onSubmit();
         }}
       >
-        <Dialog.Title className="text-2xl font-extrabold text-[var(--text-primary)]">
+        <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">
           สมัครสมาชิก
         </Dialog.Title>
         <p className="text-sm text-[var(--text-secondary)]">
@@ -203,7 +203,7 @@ export function SignUpStepTwo({
           <button
             type="button"
             onClick={onBack}
-            className="glass-control glass-pill !min-h-12 w-full text-sm font-bold text-[var(--text-secondary)]"
+            className="glass-control glass-pill !min-h-12 w-full text-sm font-medium text-[var(--text-secondary)]"
           >
             ย้อนกลับ
           </button>

@@ -55,12 +55,12 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <path d="M22 65 L32 45 L26 45 L36 25" stroke="#38bdf8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             {/* ป้ายชื่อทอง */}
             <rect x="15" y="72" width="70" height="18" rx="3" fill="#1e1b4b" stroke="#ca8a04" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#fde047" fontSize="8" fontWeight="900" letterSpacing="0.5">
+            <text x="50" y="84" textAnchor="middle" fill="#fde047" fontSize="8" fontWeight="500" letterSpacing="0.5">
               GATES OF OLYMPUS
             </text>
           </svg>
           {game.badge && (
-            <div className="absolute bottom-1 right-1 rounded bg-gradient-to-r from-amber-500 to-yellow-400 px-1 py-0.5 text-[8px] font-black text-black shadow">
+            <div className="absolute bottom-1 right-1 rounded bg-gradient-to-r from-amber-500 to-yellow-400 px-1 py-0.5 text-[8px] font-medium text-black shadow">
               {game.badge}
             </div>
           )}
@@ -81,12 +81,12 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <circle cx="35" cy="22" r="6" fill="#f59e0b" />
             {/* ป้าย Sweet Bonanza */}
             <rect x="12" y="70" width="76" height="20" rx="4" fill="#831843" stroke="#f472b6" strokeWidth="1.5" />
-            <text x="50" y="83" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900" fontStyle="italic">
+            <text x="50" y="83" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="500" fontStyle="italic">
               SWEET BONANZA
             </text>
           </svg>
           {game.badge && (
-            <div className="absolute bottom-1 right-1 rounded bg-gradient-to-r from-pink-500 to-rose-400 px-1 py-0.5 text-[8px] font-black text-white shadow">
+            <div className="absolute bottom-1 right-1 rounded bg-gradient-to-r from-pink-500 to-rose-400 px-1 py-0.5 text-[8px] font-medium text-white shadow">
               {game.badge}
             </div>
           )}
@@ -111,12 +111,12 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <circle cx="68" cy="47" r="2" fill="#000" />
             {/* ป้ายชื่อกระดูก */}
             <rect x="14" y="72" width="72" height="18" rx="4" fill="#fef3c7" stroke="#92400e" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#78350f" fontSize="8" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#78350f" fontSize="8" fontWeight="500">
               THE DOG HOUSE
             </text>
           </svg>
           {game.badge && (
-            <div className="absolute top-1 left-1 rounded bg-gradient-to-r from-amber-600 to-orange-500 px-1 py-0.2 text-[7.5px] font-black text-white shadow">
+            <div className="absolute top-1 left-1 rounded bg-gradient-to-r from-amber-600 to-orange-500 px-1 py-0.2 text-[7.5px] font-medium text-white shadow">
               {game.badge}
             </div>
           )}
@@ -142,7 +142,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <path d="M25 65 Q50 60 75 68" stroke="#bae6fd" strokeWidth="2" fill="none" />
             {/* ป้าย Big Bass */}
             <rect x="12" y="72" width="76" height="18" rx="3" fill="#0369a1" stroke="#38bdf8" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="8" fontWeight="900" fontStyle="italic">
+            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="8" fontWeight="500" fontStyle="italic">
               BIG BASS BONANZA
             </text>
           </svg>
@@ -164,12 +164,12 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <rect x="35" y="58" width="30" height="14" rx="2" fill="#be185d" />
             {/* ป้าย Sugar Rush */}
             <rect x="12" y="72" width="76" height="18" rx="4" fill="#a21caf" stroke="#f472b6" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="500">
               SUGAR RUSH
             </text>
           </svg>
           {game.badge && (
-            <div className="absolute bottom-1 right-1 rounded bg-gradient-to-r from-fuchsia-500 to-pink-500 px-1 py-0.5 text-[8px] font-black text-white shadow">
+            <div className="absolute bottom-1 right-1 rounded bg-gradient-to-r from-fuchsia-500 to-pink-500 px-1 py-0.5 text-[8px] font-medium text-white shadow">
               {game.badge}
             </div>
           )}
@@ -190,7 +190,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <path d="M72 45 L78 30 L84 45 Z" fill="#38bdf8" />
             {/* ป้าย Starlight Princess */}
             <rect x="10" y="72" width="80" height="18" rx="3" fill="#1e3a8a" stroke="#60a5fa" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#e0f2fe" fontSize="7.5" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#e0f2fe" fontSize="7.5" fontWeight="500">
               STARLIGHT PRINCESS
             </text>
           </svg>
@@ -209,7 +209,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <polygon points="50,56 42,66 58,66" fill="#dc2626" />
             {/* ปืนลูกโม่คู่ */}
             <rect x="18" y="72" width="64" height="18" rx="3" fill="#713f12" stroke="#f59e0b" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="7.5" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="7.5" fontWeight="500">
               WILD WEST GOLD
             </text>
           </svg>
@@ -225,7 +225,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <circle cx="65" cy="38" r="12" fill="#7c3aed" stroke="#6d28d9" strokeWidth="1" />
             <circle cx="50" cy="52" r="15" fill="#ef4444" stroke="#dc2626" strokeWidth="1" />
             <rect x="12" y="72" width="76" height="18" rx="4" fill="#15803d" stroke="#4ade80" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="9" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="9" fontWeight="500">
               FRUIT PARTY
             </text>
           </svg>
@@ -243,7 +243,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <polygon points="50,32 60,24 55,36" fill="#ca8a04" />
             <path d="M20 65 Q50 55 80 65" stroke="#38bdf8" strokeWidth="2.5" fill="none" />
             <rect x="10" y="72" width="80" height="18" rx="3" fill="#0284c7" stroke="#38bdf8" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#ffffff" fontSize="8" fontWeight="900" fontStyle="italic">
+            <text x="50" y="84" textAnchor="middle" fill="#ffffff" fontSize="8" fontWeight="500" fontStyle="italic">
               BIG BASS SPLASH
             </text>
           </svg>
@@ -259,7 +259,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <path d="M48 14 C48 10 52 10 52 14 L54 28 L46 28 Z" fill="#dc2626" />
             <ellipse cx="50" cy="40" rx="8" ry="7" fill="#fed7aa" />
             <rect x="10" y="72" width="80" height="18" rx="3" fill="#9a3412" stroke="#fbbf24" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="7" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="7" fontWeight="500">
               WISDOM OF ATHENA
             </text>
           </svg>
@@ -275,12 +275,12 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <path d="M20 30 L42 36 M80 30 L58 36" stroke="#38bdf8" strokeWidth="2" />
             <polygon points="50,15 54,22 60,18" fill="#3b82f6" />
             <rect x="10" y="72" width="80" height="18" rx="3" fill="#1e293b" stroke="#38bdf8" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#67e8f9" fontSize="7" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#67e8f9" fontSize="7" fontWeight="500">
               POWER OF THOR
             </text>
           </svg>
           {game.badge && (
-            <div className="absolute top-1 left-1 rounded bg-gradient-to-r from-blue-600 to-cyan-500 px-1 py-0.2 text-[7px] font-black text-white shadow">
+            <div className="absolute top-1 left-1 rounded bg-gradient-to-r from-blue-600 to-cyan-500 px-1 py-0.2 text-[7px] font-medium text-white shadow">
               {game.badge}
             </div>
           )}
@@ -299,7 +299,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <polygon points="22,40 26,44 26,36" fill="#fde047" />
             <polygon points="78,40 74,44 74,36" fill="#fde047" />
             <rect x="12" y="72" width="76" height="18" rx="3" fill="#14532d" stroke="#facc15" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="8" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="8" fontWeight="500">
               AZTEC GEMS
             </text>
           </svg>
@@ -315,7 +315,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <path d="M38 60 L62 60 L56 68 L44 68 Z" fill="#d97706" />
             <circle cx="50" cy="42" r="30" fill="#c084fc" opacity="0.15" />
             <rect x="10" y="72" width="80" height="18" rx="3" fill="#581c87" stroke="#c084fc" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#f5d0fe" fontSize="7.5" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#f5d0fe" fontSize="7.5" fontWeight="500">
               MADAME DESTINY
             </text>
           </svg>
@@ -332,12 +332,12 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <ellipse cx="50" cy="46" rx="8" ry="5" fill="#92400e" />
             <path d="M28 40 Q24 25 36 26 Q42 16 50 20 Q58 16 64 26 Q76 25 72 40" stroke="#fde047" strokeWidth="2" fill="none" />
             <rect x="10" y="72" width="80" height="18" rx="3" fill="#78350f" stroke="#fde047" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="7" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="7" fontWeight="500">
               5 LIONS MEGAWAYS
             </text>
           </svg>
           {game.badge && (
-            <div className="absolute top-1 left-1 rounded bg-amber-500 px-1 py-0.2 text-[7px] font-black text-black shadow">
+            <div className="absolute top-1 left-1 rounded bg-amber-500 px-1 py-0.2 text-[7px] font-medium text-black shadow">
               {game.badge}
             </div>
           )}
@@ -353,7 +353,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <path d="M26 44 Q18 40 16 48" stroke="#fbbf24" strokeWidth="2" fill="none" />
             <circle cx="75" cy="38" r="6" fill="#f59e0b" />
             <rect x="10" y="72" width="80" height="18" rx="3" fill="#075985" stroke="#38bdf8" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#ffffff" fontSize="7.5" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#ffffff" fontSize="7.5" fontWeight="500">
               FLOATING DRAGON
             </text>
           </svg>
@@ -368,7 +368,7 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <circle cx="50" cy="46" r="14" fill="#fed7aa" />
             <path d="M38 48 C38 64 62 64 62 48 Z" fill="#eab308" />
             <rect x="10" y="72" width="80" height="18" rx="3" fill="#713f12" stroke="#fde047" strokeWidth="1.5" />
-            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="7" fontWeight="900">
+            <text x="50" y="84" textAnchor="middle" fill="#fef08a" fontSize="7" fontWeight="500">
               THE HAND OF MIDAS
             </text>
           </svg>
@@ -382,12 +382,12 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <span className="text-2xl drop-shadow" style={{ color: accentColor }}>
               🎰
             </span>
-            <span className="mt-1 line-clamp-2 text-[9px] font-bold text-white drop-shadow">
+            <span className="mt-1 line-clamp-2 text-[9px] font-medium text-white drop-shadow">
               {game.title}
             </span>
           </div>
           {game.badge && (
-            <div className="absolute top-1 left-1 rounded bg-amber-500 px-1 py-0.5 text-[7px] font-black text-black shadow">
+            <div className="absolute top-1 left-1 rounded bg-amber-500 px-1 py-0.5 text-[7px] font-medium text-black shadow">
               {game.badge}
             </div>
           )}
@@ -428,7 +428,7 @@ export function ProviderGameGrid({
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#121127] text-2xl text-[var(--text-muted)]">
           🔍
         </div>
-        <h3 className="mt-3 text-base font-bold text-white">ไม่พบเกมที่ค้นหา</h3>
+        <h3 className="mt-3 text-base font-medium text-white">ไม่พบเกมที่ค้นหา</h3>
         <p className="mt-1 text-xs text-[var(--text-muted)]">
           ลองค้นหาด้วยคำค้นอื่น หรือล้างช่องค้นหาเพื่อดูเกมทั้งหมด
         </p>
@@ -466,7 +466,7 @@ export function ProviderGameGrid({
               </div>
 
               {/* 2. ชื่อเกมด้านล่าง */}
-              <p className="mt-1.5 line-clamp-2 min-h-[28px] text-[10px] sm:text-[11.5px] font-semibold tracking-tight text-[var(--text-primary)] text-center leading-tight transition-colors group-hover:text-white">
+              <p className="mt-1.5 line-clamp-2 min-h-[28px] text-[10px] sm:text-[11.5px] font-medium tracking-tight text-[var(--text-primary)] text-center leading-tight transition-colors group-hover:text-white">
                 {game.title}
               </p>
             </div>

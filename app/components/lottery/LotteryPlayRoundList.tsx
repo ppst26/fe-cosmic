@@ -137,7 +137,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
 
       {otherRounds.length > 0 ? (
         <section aria-label="รอบถัดไป">
-          <h2 className="mb-3 text-sm font-bold text-[var(--text-secondary)]">รอบถัดไป</h2>
+          <h2 className="mb-3 text-sm font-medium text-[var(--text-secondary)]">รอบถัดไป</h2>
           <ul className="lottery-play-rounds__queue">
             {otherRounds.map((round) => (
               <li key={round.id}>

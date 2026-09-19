@@ -67,8 +67,8 @@ function PromotionDetailBanner({
           <h2
             className={
               isHub
-                ? "text-lg font-extrabold leading-snug text-[var(--text-primary)] sm:text-xl"
-                : "text-lg font-extrabold leading-snug sm:text-xl"
+                ? "text-lg font-medium leading-snug text-[var(--text-primary)] sm:text-xl"
+                : "text-lg font-medium leading-snug sm:text-xl"
             }
             style={
               isHub
@@ -101,7 +101,7 @@ function PromotionDetailAccordion({ body }: { body: PromotionDetailContent }) {
         className="flex w-full items-center justify-between gap-2 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/15"
         aria-expanded={expanded}
       >
-        <span className="text-sm font-extrabold text-[var(--text-primary)]">รายละเอียด</span>
+        <span className="text-sm font-medium text-[var(--text-primary)]">รายละเอียด</span>
         <ChevronDownIcon
           className={`h-4 w-4 shrink-0 text-[var(--icon-default)] transition-transform ${expanded ? "rotate-180" : ""}`}
         />
@@ -129,7 +129,7 @@ function PromotionDetailBodyExpanded({
       aria-label="รายละเอียดโปรโมชั่น"
     >
       {isHub ? (
-        <h3 className="text-sm font-extrabold text-[var(--text-primary)]">รายละเอียด</h3>
+        <h3 className="text-sm font-medium text-[var(--text-primary)]">รายละเอียด</h3>
       ) : null}
       <div className={isHub ? "space-y-4" : undefined}>
         {body.blocks.map((block, index) => (
@@ -148,7 +148,7 @@ function PromotionDetailBlockRow({ block }: { block: PromotionDetailBlock }) {
       <div className="flex gap-3">
         <PromotionDetailBlockIcon icon={block.icon} className="mt-0.5 h-9 w-9 shrink-0" />
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-extrabold text-[#c4b5fd]">{block.title}</h3>
+          <h3 className="text-sm font-medium text-[#c4b5fd]">{block.title}</h3>
           {block.description && (
             <p className="mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)]">{block.description}</p>
           )}

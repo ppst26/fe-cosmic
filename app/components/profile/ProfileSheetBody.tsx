@@ -65,8 +65,8 @@ export function ProfileSheetBody({ profile, onLogout, compact = false }: Profile
         onClick={onLogout}
         className={
           compact
-            ? "flex w-fit items-center gap-1.5 py-1 text-xs font-semibold text-[#e8c547] hover:opacity-85"
-            : "flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-control)] border border-[var(--destructive)]/70 bg-transparent text-sm font-bold text-[var(--destructive)] transition-colors hover:bg-[var(--destructive)]/10 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+            ? "flex w-fit items-center gap-1.5 py-1 text-xs font-medium text-[#e8c547] hover:opacity-85"
+            : "flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-control)] border border-[var(--destructive)]/70 bg-transparent text-sm font-medium text-[var(--destructive)] transition-colors hover:bg-[var(--destructive)]/10 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
         }
       >
         <LogOutIcon className={compact ? "h-3.5 w-3.5" : "h-5 w-5"} />

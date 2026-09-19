@@ -66,13 +66,13 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
             ) : (
               <PendingWithdrawGraphic className="mb-3 h-24 w-24" />
             )}
-            <Dialog.Title className="text-lg font-extrabold sm:text-xl">{payload.title}</Dialog.Title>
+            <Dialog.Title className="text-lg font-medium sm:text-xl">{payload.title}</Dialog.Title>
             <p id="pending-tx-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
               {payload.subtitle}
             </p>
           </div>
 
-          <p className="mt-6 text-center text-4xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-[2.75rem]">
+          <p className="mt-6 text-center text-4xl font-medium tracking-tight text-[var(--text-primary)] sm:text-[2.75rem]">
             <span className="text-[#c4b5fd]">฿</span> {payload.amountDisplay}
           </p>
 
@@ -110,7 +110,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
           <Dialog.Close asChild>
             <button
               type="button"
-              className="mt-6 flex h-12 w-full items-center justify-center rounded-full bg-[#ddd6fe] text-base font-extrabold text-[#1e1035] transition-colors hover:bg-[#c4b5fd]"
+              className="mt-6 flex h-12 w-full items-center justify-center rounded-full bg-[#ddd6fe] text-base font-medium text-[#1e1035] transition-colors hover:bg-[#c4b5fd]"
             >
               เรียบร้อย
             </button>
@@ -119,7 +119,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
           <Link
             href={payload.historyHref}
             onClick={onClose}
-            className="mt-4 block text-center text-sm font-semibold text-[var(--text-primary)] underline underline-offset-4"
+            className="mt-4 block text-center text-sm font-medium text-[var(--text-primary)] underline underline-offset-4"
           >
             ดูประวัติรายการ
           </Link>

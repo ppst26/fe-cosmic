@@ -5,7 +5,7 @@ import { ChevronRightIcon } from "../ui/Icons";
 
 export function PromoHubPillLabel({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center gap-0.5 rounded-full bg-[#1a1240]/80 px-3 py-1.5 text-[11px] font-bold text-[var(--text-primary)] sm:text-xs">
+    <span className="inline-flex items-center gap-0.5 rounded-full bg-[#1a1240]/80 px-3 py-1.5 text-[11px] font-medium text-[var(--text-primary)] sm:text-xs">
       {label}
       <ChevronRightIcon className="h-3.5 w-3.5" />
     </span>

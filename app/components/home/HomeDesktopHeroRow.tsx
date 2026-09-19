@@ -43,7 +43,7 @@ export function HomeDesktopHeroRow({ onCtaClick }: HomeDesktopHeroRowProps) {
           aria-hidden="true"
         />
         <div className="relative z-10 flex h-full min-h-[220px] flex-col justify-center px-6 py-8 xl:min-h-[260px] xl:px-8">
-          <h2 className="text-2xl font-extrabold tracking-tight text-white xl:text-3xl">
+          <h2 className="text-2xl font-medium tracking-tight text-white xl:text-3xl">
             {primary.title}
           </h2>
           <p className="mt-1 max-w-xs text-sm text-[var(--text-secondary)] xl:text-base">
@@ -88,7 +88,7 @@ export function HomeDesktopHeroRow({ onCtaClick }: HomeDesktopHeroRowProps) {
             aria-hidden="true"
           />
           <div className="relative z-10 flex h-full min-h-[220px] flex-col justify-center px-6 py-8 xl:min-h-[260px] xl:px-8">
-            <h2 className="text-xl font-extrabold tracking-tight text-white xl:text-2xl">
+            <h2 className="text-xl font-medium tracking-tight text-white xl:text-2xl">
               {secondary.title}
             </h2>
             {secondary.subtitle ? (

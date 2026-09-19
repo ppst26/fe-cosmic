@@ -30,7 +30,7 @@ export function ProviderCard({ provider }: ProviderCardProps) {
           className="object-contain p-4 sm:p-5"
         />
       ) : (
-        <span className="line-clamp-1 text-center text-[13px] font-bold uppercase tracking-[0.06em] text-[var(--text-secondary)] sm:text-sm">
+        <span className="line-clamp-1 text-center text-[13px] font-medium uppercase tracking-[0.06em] text-[var(--text-secondary)] sm:text-sm">
           {name}
         </span>
       )}

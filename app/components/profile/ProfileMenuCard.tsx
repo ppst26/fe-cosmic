@@ -26,7 +26,7 @@ export function ProfileMenuRow({
         {icon}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-sm font-semibold text-[var(--text-primary)]">{title}</span>
+        <span className="block text-sm font-medium text-[var(--text-primary)]">{title}</span>
         {description && (
           <span className="mt-0.5 block text-xs text-[var(--text-muted)]">{description}</span>
         )}
@@ -62,7 +62,7 @@ export function ProfileMenuCard({
 }) {
   return (
     <section className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-3">
-      <h2 className="mb-1 text-sm font-bold text-[var(--text-primary)]">{title}</h2>
+      <h2 className="mb-1 text-sm font-medium text-[var(--text-primary)]">{title}</h2>
       <div className="divide-y divide-[var(--border-subtle)]/60">{children}</div>
     </section>
   );

@@ -86,7 +86,7 @@ export function ProfileHubBody({
           showChevron
           onClick={onOpenVip}
           trailing={
-            <span className="text-xs font-extrabold text-[#ffe66d]">{vipRankLabel}</span>
+            <span className="text-xs font-medium text-[#ffe66d]">{vipRankLabel}</span>
           }
         />
       </ProfileHubAccordion>
@@ -107,7 +107,7 @@ export function ProfileHubBody({
           icon={<DiamondGemIcon className="h-4 w-4" />}
           title="เพชรของฉัน"
           trailing={
-            <span className="text-sm font-bold tabular-nums text-[var(--text-primary)]">
+            <span className="text-sm font-medium tabular-nums text-[var(--text-primary)]">
               {formatDiamonds(stats.diamonds)}
             </span>
           }
@@ -118,7 +118,7 @@ export function ProfileHubBody({
           showChevron
           onClick={onOpenLossRebate}
           trailing={
-            <span className="text-sm font-bold tabular-nums text-[var(--text-primary)]">
+            <span className="text-sm font-medium tabular-nums text-[var(--text-primary)]">
               {formatThb(stats.lossBonusThb)}
             </span>
           }
@@ -135,7 +135,7 @@ export function ProfileHubBody({
           icon={<UsersGroupIcon className="h-4 w-4" />}
           title="ยอด Affiliate"
           trailing={
-            <span className="text-sm font-bold tabular-nums text-[var(--text-primary)]">
+            <span className="text-sm font-medium tabular-nums text-[var(--text-primary)]">
               {formatThb(stats.affiliateBalanceThb)}
             </span>
           }
@@ -144,7 +144,7 @@ export function ProfileHubBody({
           icon={<PromoTagIcon className="h-4 w-4" />}
           title="โปรโมชั่นที่ใช้อยู่"
           trailing={
-            <span className="max-w-[42%] truncate rounded-full bg-[var(--surface-selected)] px-2.5 py-0.5 text-[10px] font-semibold text-[var(--border-active)]">
+            <span className="max-w-[42%] truncate rounded-full bg-[var(--surface-selected)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--border-active)]">
               {stats.activePromotionLabel}
             </span>
           }

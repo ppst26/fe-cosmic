@@ -12,7 +12,7 @@ export function ProfileInfoCard({
 }) {
   return (
     <section className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-3">
-      <h2 className="mb-3 text-sm font-bold text-[var(--text-primary)]">{title}</h2>
+      <h2 className="mb-3 text-sm font-medium text-[var(--text-primary)]">{title}</h2>
       <dl className="divide-y divide-[var(--border-subtle)]/60">
         {rows.map((row) => (
           <div

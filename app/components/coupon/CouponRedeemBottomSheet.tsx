@@ -77,7 +77,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
 
           <ResponsiveSheetHeader
             closeAriaLabel="ปิดหน้าแลกคูปอง"
-            title={<Dialog.Title className="text-xl font-extrabold sm:text-2xl">แลกคูปอง</Dialog.Title>}
+            title={<Dialog.Title className="text-xl font-medium sm:text-2xl">แลกคูปอง</Dialog.Title>}
             subtitle={
               <p id="coupon-redeem-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
                 โค้ดสำหรับแลกเครดิตฟรี

@@ -52,7 +52,7 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
       <div className={`flex flex-col gap-5 pb-4 ${showDesktopHub ? "lg:hidden" : ""}`}>
         <header className="flex flex-col gap-3">
           {!embedded ? (
-            <h1 className="text-xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-2xl">
+            <h1 className="text-xl font-medium tracking-tight text-[var(--text-primary)] sm:text-2xl">
               Promotions
             </h1>
           ) : null}
@@ -75,7 +75,7 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
 
         {featuredItems.length > 0 ? (
           <section aria-labelledby="promo-for-you-heading" className="flex flex-col gap-3">
-            <h2 id="promo-for-you-heading" className="text-base font-extrabold text-[var(--text-primary)] sm:text-lg">
+            <h2 id="promo-for-you-heading" className="text-base font-medium text-[var(--text-primary)] sm:text-lg">
               โปรโมชั่นสำหรับคุณ
             </h2>
             <ul className="flex flex-col gap-3">
@@ -118,7 +118,7 @@ function PromoHubHeroBanner({
       />
       <div className="relative z-[1] flex h-full min-h-[168px] items-stretch sm:min-h-[188px]">
         <div className="flex min-w-0 flex-1 flex-col justify-center px-4 py-4 sm:px-5 sm:py-5">
-          <h2 className="text-lg font-extrabold leading-snug text-[var(--text-primary)] drop-shadow-sm sm:text-xl">
+          <h2 className="text-lg font-medium leading-snug text-[var(--text-primary)] drop-shadow-sm sm:text-xl">
             {hero.title}
           </h2>
           <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">{hero.subtitle}</p>
@@ -157,7 +157,7 @@ function FeaturedPromoCard({
       />
       <div className="relative z-[1] flex items-center gap-2 px-3 py-3.5 sm:gap-3 sm:px-4 sm:py-4">
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-extrabold leading-snug text-[var(--text-primary)] sm:text-base">{item.title}</h3>
+          <h3 className="text-sm font-medium leading-snug text-[var(--text-primary)] sm:text-base">{item.title}</h3>
           <p className="mt-1 text-[11px] leading-relaxed text-[var(--text-secondary)] sm:text-xs">{item.subtitle}</p>
           <div className="mt-2.5">
             <PromoHubPillLabel label={item.ctaLabel} />

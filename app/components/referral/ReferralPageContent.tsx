@@ -123,7 +123,7 @@ function ReferralMobileTabs({
     <div className="flex flex-col gap-5 pb-4">
       {showPageTitle ? (
         <div>
-          <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">
+          <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">
             แนะนำเพื่อน
           </h1>
           <p className="mt-0.5 text-xs text-[var(--text-muted)]">Referral Program</p>
@@ -164,7 +164,7 @@ function ReferralMobileTabs({
           <ReferralStatsSection stats={stats} />
 
           <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-4 py-4">
-            <h2 className="text-sm font-extrabold text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
+            <h2 className="text-sm font-medium text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
             <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
               แชร์ลิงก์แล้วรับส่วนแบ่งจากยอดเทิร์นของเครือข่าย
             </p>
@@ -175,9 +175,9 @@ function ReferralMobileTabs({
                     <UsersGroupIcon className="h-5 w-5 text-[var(--icon-default)]" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-[var(--text-primary)]">{tier.title}</p>
+                    <p className="text-xs font-medium text-[var(--text-primary)]">{tier.title}</p>
                     <p className="text-[10px] text-[var(--text-muted)]">{tier.subtitle}</p>
-                    <p className="mt-1 text-2xl font-extrabold text-[#c4b5fd]">{tier.rateLabel}</p>
+                    <p className="mt-1 text-2xl font-medium text-[#c4b5fd]">{tier.rateLabel}</p>
                     <p className="text-[10px] text-[var(--text-muted)]">{tier.rateHint}</p>
                   </div>
                 </div>
@@ -197,16 +197,16 @@ function ReferralMobileTabs({
           </section>
 
           <section>
-            <h2 className="mb-3 text-sm font-extrabold text-[var(--text-primary)]">
+            <h2 className="mb-3 text-sm font-medium text-[var(--text-primary)]">
               เริ่มต้นง่าย ๆ ใน 3 ขั้นตอน
             </h2>
             <div className="grid grid-cols-3 gap-2">
               {REFERRAL_STEPS.map((step, index) => (
                 <div key={step.id} className="flex flex-col items-center text-center">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--surface-hover)]/50 text-xs font-extrabold text-[#c4b5fd]">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--surface-hover)]/50 text-xs font-medium text-[#c4b5fd]">
                     {String(index + 1).padStart(2, "0")}
                   </div>
-                  <p className="mt-2 text-[11px] font-semibold text-[var(--text-primary)]">{step.label}</p>
+                  <p className="mt-2 text-[11px] font-medium text-[var(--text-primary)]">{step.label}</p>
                 </div>
               ))}
             </div>

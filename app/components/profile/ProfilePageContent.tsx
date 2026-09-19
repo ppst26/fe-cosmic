@@ -116,7 +116,7 @@ export function ProfilePageContent() {
         <button
           type="button"
           onClick={() => void handleLogout()}
-          className="flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-control)] border border-[var(--destructive)]/70 bg-transparent text-sm font-bold text-[var(--destructive)] transition-colors hover:bg-[var(--destructive)]/10 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-control)] border border-[var(--destructive)]/70 bg-transparent text-sm font-medium text-[var(--destructive)] transition-colors hover:bg-[var(--destructive)]/10 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
         >
           <LogOutIcon className="h-5 w-5" />
           ออกจากระบบ

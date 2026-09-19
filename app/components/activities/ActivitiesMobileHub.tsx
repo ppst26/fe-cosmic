@@ -36,7 +36,7 @@ export function ActivitiesMobileHub() {
           >
             <ChevronLeftIcon className="h-5 w-5" />
           </button>
-          <h2 className="min-w-0 flex-1 text-base font-extrabold leading-snug text-[var(--text-primary)]">
+          <h2 className="min-w-0 flex-1 text-base font-medium leading-snug text-[var(--text-primary)]">
             {selected.title}
           </h2>
         </div>
@@ -62,13 +62,13 @@ export function ActivitiesMobileHub() {
               className="h-[72px] w-[72px]"
             />
             <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-              <span className="text-sm font-extrabold leading-snug text-[var(--text-primary)]">
+              <span className="text-sm font-medium leading-snug text-[var(--text-primary)]">
                 {item.title}
               </span>
               {item.listMeta ? (
                 <span className="text-xs text-[var(--text-muted)]">{item.listMeta}</span>
               ) : null}
-              <span className="mt-1 text-[11px] font-bold text-[#c4b5fd]">ดูรายละเอียด</span>
+              <span className="mt-1 text-[11px] font-medium text-[#c4b5fd]">ดูรายละเอียด</span>
             </div>
           </button>
         </li>

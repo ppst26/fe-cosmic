@@ -101,7 +101,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
 
           <ResponsiveSheetHeader
             closeAriaLabel="ปิดหน้าถอนเงิน"
-            title={<Dialog.Title className="text-xl font-extrabold sm:text-2xl">ถอนเงิน</Dialog.Title>}
+            title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ถอนเงิน</Dialog.Title>}
           />
 
           <div
@@ -116,10 +116,10 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               <KbankLogoGraphic className="h-11 w-11 shrink-0" />
               <span className="min-w-0 flex-1">
                 <span className="block text-[11px] text-[var(--text-muted)]">โอนเข้าบัญชีของคุณ</span>
-                <span className="mt-0.5 block text-sm font-extrabold text-[var(--text-primary)] sm:text-base">
+                <span className="mt-0.5 block text-sm font-medium text-[var(--text-primary)] sm:text-base">
                   {bank.bankShortName}
                 </span>
-                <span className="mt-0.5 block text-xs font-semibold tracking-wide text-[var(--text-secondary)]">
+                <span className="mt-0.5 block text-xs font-medium tracking-wide text-[var(--text-secondary)]">
                   {bank.accountNumberDisplay}
                 </span>
                 <span className="mt-0.5 block text-[11px] text-[var(--text-muted)]">{bank.holderLabel}</span>
@@ -134,7 +134,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               <div className="mt-4 pb-3">
                 <div className="flex items-baseline justify-center gap-0.5">
                   <span
-                    className="shrink-0 text-5xl font-extrabold leading-none text-[#a78bfa] sm:text-6xl"
+                    className="shrink-0 text-5xl font-medium leading-none text-[#a78bfa] sm:text-6xl"
                     aria-hidden="true"
                   >
                     ฿
@@ -144,7 +144,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                     inputMode="numeric"
                     value={amountInput}
                     onChange={(event) => handleAmountChange(event.target.value)}
-                    className="min-w-[2ch] max-w-[min(72vw,320px)] bg-transparent text-5xl font-extrabold leading-none tracking-tight text-[var(--text-primary)] outline-none sm:text-6xl"
+                    className="min-w-[2ch] max-w-[min(72vw,320px)] bg-transparent text-5xl font-medium leading-none tracking-tight text-[var(--text-primary)] outline-none sm:text-6xl"
                     style={{ width: `${Math.max(2, amountInput.length || 1)}.5ch` }}
                     aria-label="จำนวนเงินที่ต้องการถอน"
                   />
@@ -157,7 +157,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                 <button
                   type="button"
                   onClick={handleWithdrawAll}
-                  className="font-bold text-[#a78bfa] underline-offset-2 hover:underline"
+                  className="font-medium text-[#a78bfa] underline-offset-2 hover:underline"
                 >
                   ถอนทั้งหมด
                 </button>

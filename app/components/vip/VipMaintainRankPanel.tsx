@@ -21,8 +21,8 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
   return (
     <section className="w-full rounded-[10px] border border-[var(--border-active)]/45 bg-[var(--surface-hover)]/25 p-3">
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-sm font-extrabold text-[var(--text-primary)]">รักษาระดับ VIP</h3>
-        <span className="shrink-0 text-[11px] font-semibold tabular-nums text-[var(--text-primary)]">
+        <h3 className="text-sm font-medium text-[var(--text-primary)]">รักษาระดับ VIP</h3>
+        <span className="shrink-0 text-[11px] font-medium tabular-nums text-[var(--text-primary)]">
           {maintain.daysRemaining} วันคงเหลือ
         </span>
       </div>
@@ -73,9 +73,9 @@ function MaintainMetricCard({
         ) : (
           <TurnoverMiniIcon className="h-4 w-4 text-[var(--icon-default)]" />
         )}
-        <span className="text-[11px] font-bold text-[var(--text-secondary)]">{label}</span>
+        <span className="text-[11px] font-medium text-[var(--text-secondary)]">{label}</span>
       </div>
-      <p className="text-[11px] font-semibold tabular-nums text-[var(--text-primary)]">
+      <p className="text-[11px] font-medium tabular-nums text-[var(--text-primary)]">
         {formatVipAmount(progress)} / {formatVipAmount(target)}
       </p>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--surface-hover)]">

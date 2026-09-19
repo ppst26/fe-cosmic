@@ -39,14 +39,14 @@ export function LotteryLatestResultsTable({
           <MegaphoneMiniIcon />
           <h3
             id="lottery-results-title"
-            className="text-[18px] font-bold tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
+            className="text-[18px] font-medium tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
           >
             ผลหวยล่าสุด
           </h3>
         </div>
         <Link
           href={resultsPageHref}
-          className="lottery-results-board__more-link shrink-0 text-xs font-semibold text-[var(--text-secondary)] sm:text-sm"
+          className="lottery-results-board__more-link shrink-0 text-xs font-medium text-[var(--text-secondary)] sm:text-sm"
         >
           หน้าผลหวย &gt;&gt;
         </Link>

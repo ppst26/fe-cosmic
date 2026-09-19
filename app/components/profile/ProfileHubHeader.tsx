@@ -27,7 +27,7 @@ export function ProfileHubHeader({ profile }: { profile: ProfileUser }) {
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="profile-hub-header__name truncate text-sm font-extrabold text-[var(--text-primary)]">
+        <p className="profile-hub-header__name truncate text-sm font-medium text-[var(--text-primary)]">
           สวัสดี {profile.displayName}
         </p>
         <p className="profile-hub-header__meta mt-0.5 text-[11px] leading-snug text-[var(--text-secondary)]">

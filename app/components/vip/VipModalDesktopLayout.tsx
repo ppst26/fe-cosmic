@@ -63,12 +63,12 @@ export function VipModalDesktopLayout({
           className="vip-modal-desktop__panel vip-modal-desktop__level hub-desktop-card glass-card--soft flex flex-col items-center p-5 text-center"
           aria-label="ระดับ VIP ปัจจุบัน"
         >
-          <p className="text-xs font-semibold text-[var(--text-muted)]">ระดับ</p>
+          <p className="text-xs font-medium text-[var(--text-muted)]">ระดับ</p>
           <div className="my-2">
             <VipRankEmblem rankId={player.currentRankId} size="lg" />
           </div>
           <p
-            className="text-2xl font-extrabold tracking-[0.18em]"
+            className="text-2xl font-medium tracking-[0.18em]"
             style={{ color: currentTier.accent }}
           >
             {currentTier.label}
@@ -76,7 +76,7 @@ export function VipModalDesktopLayout({
           {nextTier ? (
             <p className="mt-1 text-xs text-[var(--text-secondary)]">
               ระดับถัดไป{" "}
-              <span className="font-bold text-[var(--text-primary)]">{nextTier.label}</span>
+              <span className="font-medium text-[var(--text-primary)]">{nextTier.label}</span>
             </p>
           ) : null}
 

@@ -35,7 +35,7 @@ export function CasinoFeaturedOverflow({ items }: CasinoFeaturedOverflowProps) {
                 className="object-cover"
               />
             ) : (
-              <span className="flex h-full items-center justify-center px-2 text-center text-[10px] font-bold text-white">
+              <span className="flex h-full items-center justify-center px-2 text-center text-[10px] font-medium text-white">
                 {item.title}
               </span>
             )}

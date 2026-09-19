@@ -21,7 +21,7 @@ export function ActivitiesHubPageContent({ embedded = false }: { embedded?: bool
       <div className={`pb-4 ${showDesktopHub ? "lg:hidden" : ""}`}>
         {!embedded ? (
           <header className="mb-4">
-            <h1 className="text-xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-2xl">
+            <h1 className="text-xl font-medium tracking-tight text-[var(--text-primary)] sm:text-2xl">
               กิจกรรม
             </h1>
             <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">

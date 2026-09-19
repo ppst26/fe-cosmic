@@ -80,7 +80,7 @@ export function LossRebatePageContent({
   return (
     <div className="flex flex-col gap-5 pb-4">
       <header>
-        <h1 className="text-xl font-extrabold text-[var(--text-primary)] sm:text-2xl">คืนยอดเสีย</h1>
+        <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">คืนยอดเสีย</h1>
         <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
           ตรวจสอบยอดคืนและรับโบนัสเข้ากระเป๋าของคุณ
         </p>
@@ -92,7 +92,7 @@ export function LossRebatePageContent({
 
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="text-sm font-extrabold text-[var(--text-primary)] sm:text-base">
+          <h2 className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
             ประวัติการรับคืนยอดเสีย
           </h2>
           <label className="flex items-center gap-2 text-[11px] text-[var(--text-muted)]">
@@ -100,7 +100,7 @@ export function LossRebatePageContent({
             <select
               value={monthId}
               onChange={(event) => handleMonthChange(event.target.value)}
-              className="rounded-[var(--radius-control)] border border-[var(--border-subtle)]/60 bg-[var(--surface-mid)] px-2.5 py-1.5 text-xs font-semibold text-[var(--text-primary)] outline-none"
+              className="rounded-[var(--radius-control)] border border-[var(--border-subtle)]/60 bg-[var(--surface-mid)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] outline-none"
             >
               {LOSS_REBATE_MONTH_OPTIONS.map((option) => (
                 <option key={option.id} value={option.id}>
@@ -115,16 +115,16 @@ export function LossRebatePageContent({
           <Table className="text-sm">
             <TableHeader>
               <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
-                <TableHead className="h-11 px-3 text-[11px] font-semibold text-[var(--border-active)] sm:px-4">
+                <TableHead className="h-11 px-3 text-[11px] font-medium text-[var(--border-active)] sm:px-4">
                   รอบคำนวณ
                 </TableHead>
-                <TableHead className="h-11 px-3 text-right text-[11px] font-semibold text-[var(--border-active)] sm:px-4">
+                <TableHead className="h-11 px-3 text-right text-[11px] font-medium text-[var(--border-active)] sm:px-4">
                   ยอดเสียสุทธิ
                 </TableHead>
-                <TableHead className="h-11 px-3 text-right text-[11px] font-semibold text-[var(--border-active)] sm:px-4">
+                <TableHead className="h-11 px-3 text-right text-[11px] font-medium text-[var(--border-active)] sm:px-4">
                   โบนัสที่ได้รับ
                 </TableHead>
-                <TableHead className="hidden h-11 px-3 text-right text-[11px] font-semibold text-[var(--border-active)] sm:table-cell sm:px-4">
+                <TableHead className="hidden h-11 px-3 text-right text-[11px] font-medium text-[var(--border-active)] sm:table-cell sm:px-4">
                   วันที่รับ
                 </TableHead>
               </TableRow>
@@ -153,7 +153,7 @@ export function LossRebatePageContent({
                     <TableCell className="px-3 py-3 text-right text-xs tabular-nums text-[var(--text-secondary)] sm:px-4">
                       {formatLossRebateCurrency(row.netLossThb)}
                     </TableCell>
-                    <TableCell className="px-3 py-3 text-right text-xs font-bold tabular-nums text-[#c4b5fd] sm:px-4">
+                    <TableCell className="px-3 py-3 text-right text-xs font-medium tabular-nums text-[#c4b5fd] sm:px-4">
                       {formatLossRebateCurrency(row.bonusThb)}
                     </TableCell>
                     <TableCell className="hidden px-3 py-3 text-right text-[11px] tabular-nums text-[var(--text-muted)] sm:table-cell sm:px-4">
@@ -208,10 +208,10 @@ export function LossRebatePageContent({
           className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20"
           aria-expanded={termsOpen}
         >
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/70 text-[10px] font-bold text-[var(--text-muted)]">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/70 text-[10px] font-medium text-[var(--text-muted)]">
             i
           </span>
-          <span className="flex-1 text-sm font-bold text-[var(--text-primary)]">เงื่อนไขการคืนยอดเสีย</span>
+          <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการคืนยอดเสีย</span>
           <ChevronDownIcon
             className={`h-4 w-4 text-[var(--icon-default)] transition-transform ${
               termsOpen ? "rotate-180" : ""
@@ -253,13 +253,13 @@ function LossRebateHeroCard({
       />
       <div className="relative z-[1] flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-semibold text-[var(--text-secondary)]">ยอดคืนที่ได้รับ</p>
+          <p className="text-xs font-medium text-[var(--text-secondary)]">ยอดคืนที่ได้รับ</p>
           <div className="mt-1 flex flex-wrap items-center gap-2">
-            <p className="text-2xl font-extrabold tabular-nums text-[var(--text-primary)] sm:text-3xl">
+            <p className="text-2xl font-medium tabular-nums text-[var(--text-primary)] sm:text-3xl">
               {formatLossRebateCurrency(summary.rebateReadyThb)}
             </p>
             {summary.isReadyToClaim && summary.rebateReadyThb > 0 && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#0f3d2e] px-2.5 py-0.5 text-[10px] font-bold text-[var(--success)]">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#0f3d2e] px-2.5 py-0.5 text-[10px] font-medium text-[var(--success)]">
                 <span aria-hidden="true">•</span> พร้อมรับ
               </span>
             )}
@@ -288,7 +288,7 @@ function LossRebateHeroCard({
           <ClockIcon className="h-5 w-5 shrink-0 text-[var(--border-active)]" />
           <div className="min-w-0">
             <p className="text-[10px] text-[var(--text-muted)]">รอบคำนวณ</p>
-            <p className="truncate text-xs font-bold text-[var(--text-primary)]">
+            <p className="truncate text-xs font-medium text-[var(--text-primary)]">
               {summary.calculationPeriodLabel}
             </p>
           </div>
@@ -297,7 +297,7 @@ function LossRebateHeroCard({
           <DocumentIcon className="h-5 w-5 shrink-0 text-[var(--border-active)]" />
           <div className="min-w-0">
             <p className="text-[10px] text-[var(--text-muted)]">สถานะ</p>
-            <p className="truncate text-xs font-bold text-[var(--text-primary)]">{summary.statusLabel}</p>
+            <p className="truncate text-xs font-medium text-[var(--text-primary)]">{summary.statusLabel}</p>
           </div>
         </div>
       </div>
@@ -308,7 +308,7 @@ function LossRebateHeroCard({
 function LossRebateFormulaSection({ summary }: { summary: LossRebateSummaryMock }) {
   return (
     <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-4 py-4 sm:px-5">
-      <h2 className="text-sm font-extrabold text-[var(--text-primary)]">รายละเอียดการคำนวณ</h2>
+      <h2 className="text-sm font-medium text-[var(--text-primary)]">รายละเอียดการคำนวณ</h2>
       <div className="mt-4 flex flex-row items-center gap-1.5 sm:gap-2">
         <FormulaBlock
           label="ยอดเสียสุทธิที่เข้าเงื่อนไข"
@@ -344,7 +344,7 @@ function FormulaBlock({
     <div className="min-w-0 flex-1 rounded-[var(--radius-control)] border border-[var(--border-subtle)]/40 bg-[var(--surface-mid)]/50 px-2 py-2 sm:px-3 sm:py-2.5">
       <p className="line-clamp-2 text-[9px] leading-tight text-[var(--text-muted)] sm:text-[10px]">{label}</p>
       <p
-        className={`mt-0.5 text-xs font-extrabold tabular-nums sm:text-base ${valueClassName}`}
+        className={`mt-0.5 text-xs font-medium tabular-nums sm:text-base ${valueClassName}`}
       >
         {value}
       </p>
@@ -355,7 +355,7 @@ function FormulaBlock({
 function FormulaOperator({ symbol }: { symbol: string }) {
   return (
     <span
-      className="flex h-7 w-7 shrink-0 items-center justify-center text-base font-extrabold text-[#c4b5fd] sm:h-8 sm:w-8 sm:text-lg"
+      className="flex h-7 w-7 shrink-0 items-center justify-center text-base font-medium text-[#c4b5fd] sm:h-8 sm:w-8 sm:text-lg"
       aria-hidden="true"
     >
       {symbol}

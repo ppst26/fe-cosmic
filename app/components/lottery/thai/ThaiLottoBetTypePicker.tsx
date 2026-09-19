@@ -41,7 +41,7 @@ export function ThaiLottoBetTypePicker({
               type="button"
               aria-pressed={isActive}
               onClick={() => onGroupChange(group.id)}
-              className={`cosmic-segment-btn min-h-11 text-sm ${
+              className={`cosmic-segment-btn text-sm ${
                 isActive ? "is-active" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >

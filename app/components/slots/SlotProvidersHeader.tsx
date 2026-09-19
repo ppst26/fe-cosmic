@@ -30,7 +30,7 @@ export function SlotProvidersHeader({
         </Link>
 
         {/* ชื่อหน้า */}
-        <h2 className="text-base font-bold tracking-wide text-white sm:text-lg">
+        <h2 className="text-base font-medium tracking-wide text-white sm:text-lg">
           {title}
         </h2>
       </div>

@@ -110,17 +110,21 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 
 ## 4. Typography
 
-**อิง Dexsport:** Adieu (display/heading), Object Sans (body) — ในโปรเจกต์ใช้ **Noto Sans Thai** (+ fallback geometric sans ที่มีอยู่) ให้รองรับไทยครบ ไม่เกินสองตระกูล
+**อิง Dexsport:** Adieu (display/heading), Object Sans (body) — ในโปรเจกต์ใช้ **Noto Sans Thai** (+ fallback system sans) ให้รองรับไทยครบ · ตัวเลข/โค้ด: **Geist Mono** (`--font-mono`)
+
+**โหลดฟอนต์ (implementation):** `app/layout.tsx` (`next/font/google`) → CSS variable `--font-noto-sans-thai` บน `<html>` · map ใน `app/globals.css` (`@theme` → `--font-sans`, `--font-heading`) · `body { font-family: … }`
+
+**กฎน้ำหนัก (บังคับ):** ใช้ได้แค่ **400 (normal)** และ **500 (medium)** — **ห้าม** `font-semibold` / `font-bold` / `font-extrabold` / `font-black` และ **ห้าม** `font-weight` ใน CSS เกิน 500 · เน้นหัวข้อด้วย **ขนาด** (`text-lg`, `text-xl`) และสี (`text-primary`) ไม่ใช่ bold
 
 | บทบาท | มือถือ | จอใหญ่ | Weight / line-height |
 | :--- | :--- | :--- | :--- |
-| **Hero / promo title** | 22–28px | 32–40px | 700–800 / 1.2 |
-| **Section heading** | 18–20px | 20–22px | 700 / 1.35 |
-| **Feature / hub title** | 17–18px | 18–20px | 700 / 1.35 |
-| **Body / game name** | 14px | 14–15px | 500–600 / 1.45 |
+| **Hero / promo title** | 22–28px | 32–40px | 500 / 1.2 |
+| **Section heading** | 18–20px | 20–22px | 500 / 1.35 |
+| **Feature / hub title** | 17–18px | 18–20px | 500 / 1.35 |
+| **Body / game name** | 14px | 14–15px | 400–500 / 1.45 |
 | **Secondary / time / odds** | 12px | 12–13px | 400–500 / 1.45 |
-| **Table header** | 10–11px | 11px | 700 / 1.3, uppercase อังกฤษเท่านั้น |
-| **Bottom nav label** | 10–11px | 11–12px | 600 / 1.25 |
+| **Table header** | 10–11px | 11px | 500 / 1.3, uppercase อังกฤษเท่านั้น |
+| **Bottom nav label** | 10–11px | 11–12px | 500 / 1.25 |
 
 - ยอดเงิน: `tabular-nums`; payout เน้นใช้ gold (`--gold-gradient` หรือ `#ffe66d`) แบบ Dexsport leaderboard
 - ไทย: ไม่ uppercase / letter-spacing กว้าง; ไม่ตัดสระด้วย line-height ต่ำ

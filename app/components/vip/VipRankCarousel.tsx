@@ -102,7 +102,7 @@ export function VipRankCarousel({
                   inactive={getVipRankViewStatus(prevTier.id, playerRankId) === "locked"}
                   playing={false}
                 />
-                <span className="text-[9px] font-bold tracking-wide text-[var(--text-muted)]">
+                <span className="text-[9px] font-medium tracking-wide text-[var(--text-muted)]">
                   {prevTier.label}
                 </span>
               </button>
@@ -121,7 +121,7 @@ export function VipRankCarousel({
               playing={!isLocked}
             />
             <p
-              className={`text-xl font-extrabold tracking-[0.15em] ${
+              className={`text-xl font-medium tracking-[0.15em] ${
                 isLocked ? "text-[var(--text-muted)]" : ""
               }`}
               style={isLocked ? undefined : { color: focused.accent }}
@@ -129,7 +129,7 @@ export function VipRankCarousel({
               {focused.label}
             </p>
             <p
-              className={`text-[11px] font-semibold ${
+              className={`text-[11px] font-medium ${
                 isActive
                   ? "text-[var(--text-secondary)]"
                   : isCleared
@@ -166,7 +166,7 @@ export function VipRankCarousel({
                   inactive={getVipRankViewStatus(nextTier.id, playerRankId) === "locked"}
                   playing={false}
                 />
-                <span className="text-[9px] font-bold tracking-wide text-[var(--text-muted)]">
+                <span className="text-[9px] font-medium tracking-wide text-[var(--text-muted)]">
                   {nextTier.label}
                 </span>
               </button>

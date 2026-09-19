@@ -127,14 +127,30 @@ export function YikiBetBoard({
   };
 
   const handleDigit = (digit: string) => {
-    if (isClosed || !activeType) return;
+    if (!activeType) return;
     const next = input + digit;
-    if (next.length >= digits) {
-      addToSlip(next);
+    if (next.length > digits) return;
+
+    setInput(next);
+    setFeedback("");
+
+    if (next.length < digits) return;
+
+    if (isClosed) {
+      setFeedback("ปิดรับแทงแล้ว");
+      return;
+    }
+
+    const number = next;
+    const pushSlip = () => {
+      addToSlip(number);
       setInput("");
+    };
+    // ให้ช่องแสดงเลขครบก่อนล้าง (โดยเฉพาะหลักสุดท้าย / วิ่ง 1 ตัว)
+    if (digits === 1) {
+      window.setTimeout(pushSlip, 150);
     } else {
-      setInput(next);
-      setFeedback("");
+      requestAnimationFrame(() => requestAnimationFrame(pushSlip));
     }
   };
 
@@ -301,7 +317,7 @@ export function YikiBetBoard({
                     type="button"
                     aria-pressed={isActive}
                     onClick={() => handleGroupChange(group.id)}
-                    className={`cosmic-segment-btn min-h-11 text-sm ${
+                    className={`cosmic-segment-btn text-sm ${
                       isActive ? "is-active" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                     }`}
                   >

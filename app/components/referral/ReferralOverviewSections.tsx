@@ -28,7 +28,7 @@ export function ReferralPromoBanner({ compact = false }: { compact?: boolean }) 
       <div className="relative z-[1] flex gap-3">
         <div className="min-w-0 flex-1">
           <h2
-            className={`font-extrabold leading-snug text-[var(--text-primary)] ${
+            className={`font-medium leading-snug text-[var(--text-primary)] ${
               compact ? "text-base sm:text-lg" : "text-lg sm:text-xl"
             }`}
           >
@@ -39,10 +39,10 @@ export function ReferralPromoBanner({ compact = false }: { compact?: boolean }) 
           </p>
           {!compact ? (
             <>
-              <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--border-active)]">
+              <p className="mt-3 text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--border-active)]">
                 Play together · Earn together
               </p>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[#ffe66d]">
+              <p className="text-[10px] font-medium uppercase tracking-wider text-[#ffe66d]">
                 More play · More rewards
               </p>
             </>
@@ -90,7 +90,7 @@ export function ReferralLinkSection({
 
   return (
     <section>
-      <p className="mb-2 text-sm font-bold text-[var(--text-primary)]">ลิงก์แนะนำของคุณ</p>
+      <p className="mb-2 text-sm font-medium text-[var(--text-primary)]">ลิงก์แนะนำของคุณ</p>
       <div className="flex gap-2">
         <div className="hub-desktop-field min-w-0 flex-1 truncate px-3 py-2.5 text-xs text-[var(--text-secondary)] sm:text-sm">
           {referralLink}
@@ -125,7 +125,7 @@ export function ReferralStatsSection({
 
   return (
     <section>
-      <h2 className="mb-3 text-sm font-extrabold text-[var(--text-primary)]">สถิติของคุณ</h2>
+      <h2 className="mb-3 text-sm font-medium text-[var(--text-primary)]">สถิติของคุณ</h2>
       <div className={gridClass}>
         <StatCard
           icon={<UsersGroupIcon className="h-5 w-5 text-[var(--border-active)]" />}
@@ -174,7 +174,7 @@ function StatCard({
       </div>
       <div className="min-w-0">
         <p className="text-[11px] text-[var(--text-muted)]">{label}</p>
-        <p className={`text-sm font-extrabold tabular-nums ${valueClassName}`}>{value}</p>
+        <p className={`text-sm font-medium tabular-nums ${valueClassName}`}>{value}</p>
       </div>
     </div>
   );

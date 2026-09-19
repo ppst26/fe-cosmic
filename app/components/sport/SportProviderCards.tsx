@@ -167,7 +167,7 @@ export function SportProviderCards({
     <div className="space-y-3.5">
       {!hideTitleRow ? (
       <div className="flex items-baseline gap-2 pt-1">
-        <h2 className="text-lg font-extrabold text-white sm:text-xl">
+        <h2 className="text-lg font-medium text-white sm:text-xl">
           {sectionTitle}
         </h2>
         <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
@@ -211,7 +211,7 @@ export function SportProviderCards({
                   return (
                     <span
                       key={idx}
-                      className="rounded bg-[#00f59b] px-1.5 py-0.5 text-[7.5px] font-black uppercase tracking-tight text-black shadow-sm sm:text-[8.5px]"
+                      className="rounded bg-[#00f59b] px-1.5 py-0.5 text-[7.5px] font-medium uppercase tracking-tight text-black shadow-sm sm:text-[8.5px]"
                     >
                       EXCLUSIVE
                     </span>
@@ -221,7 +221,7 @@ export function SportProviderCards({
                   return (
                     <span
                       key={idx}
-                      className="rounded bg-[#e91e3a] px-1.5 py-0.5 text-[7.5px] font-bold uppercase tracking-tight text-white shadow-sm sm:text-[8.5px]"
+                      className="rounded bg-[#e91e3a] px-1.5 py-0.5 text-[7.5px] font-medium uppercase tracking-tight text-white shadow-sm sm:text-[8.5px]"
                     >
                       LIVE
                     </span>
@@ -231,7 +231,7 @@ export function SportProviderCards({
                   return (
                     <span
                       key={idx}
-                      className="rounded bg-[#f59e0b] px-1.5 py-0.5 text-[7.5px] font-extrabold uppercase tracking-tight text-black shadow-sm sm:text-[8.5px]"
+                      className="rounded bg-[#f59e0b] px-1.5 py-0.5 text-[7.5px] font-medium uppercase tracking-tight text-black shadow-sm sm:text-[8.5px]"
                     >
                       HOT
                     </span>
@@ -251,10 +251,10 @@ export function SportProviderCards({
 
             {/* 4. ข้อความหัวข้อสีขาวตัวหนา และชื่อ Provider ด้านล่าง */}
             <div className="z-10 mt-auto flex flex-col items-center pb-2 px-1 text-center">
-              <h3 className="line-clamp-2 text-center text-[10px] sm:text-[11.5px] font-black uppercase leading-tight tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
+              <h3 className="line-clamp-2 text-center text-[10px] sm:text-[11.5px] font-medium uppercase leading-tight tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
                 {item.title}
               </h3>
-              <p className="mt-0.5 truncate text-center text-[8.5px] sm:text-[9.5px] font-semibold text-white/80 drop-shadow">
+              <p className="mt-0.5 truncate text-center text-[8.5px] sm:text-[9.5px] font-medium text-white/80 drop-shadow">
                 {item.provider}
               </p>
             </div>

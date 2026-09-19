@@ -64,7 +64,7 @@ function ActivityThumbArt({ tone }: { tone: ActivityThumbTone }) {
   if (tone === "turn") {
     return (
       <svg viewBox="0 0 80 80" className="absolute inset-0 h-full w-full p-2 opacity-90">
-        <text x="40" y="44" textAnchor="middle" fill="#fde047" fontSize="22" fontWeight="800">T</text>
+        <text x="40" y="44" textAnchor="middle" fill="#fde047" fontSize="22" fontWeight="500">T</text>
         <circle cx="40" cy="40" r="28" fill="none" stroke="#fca5a5" strokeWidth="2" opacity="0.6" />
       </svg>
     );
@@ -104,7 +104,7 @@ export function ActivityCategoryTabs({
             role="tab"
             aria-selected={selected}
             onClick={() => onSelect(tab.id)}
-            className={`activity-hub-cat-tab rounded-full px-4 py-1.5 text-xs font-bold sm:text-sm ${
+            className={`activity-hub-cat-tab rounded-full px-4 py-1.5 text-xs font-medium sm:text-sm ${
               selected ? "activity-hub-cat-tab--active" : ""
             }`}
           >
@@ -128,19 +128,19 @@ export function ActivityTurnProgressCard({
 
   return (
     <section className="activity-hub-progress hub-desktop-field px-4 py-3 sm:px-5 sm:py-4">
-      <h3 className="text-center text-sm font-extrabold text-[var(--text-primary)] sm:text-base">
+      <h3 className="text-center text-sm font-medium text-[var(--text-primary)] sm:text-base">
         ยอดเทิร์นของคุณ
       </h3>
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         <div className="text-center sm:text-left">
           <p className="text-[11px] text-[var(--text-secondary)] sm:text-xs">ยอดเทิร์นปัจจุบัน</p>
-          <p className="mt-0.5 text-sm font-extrabold tabular-nums text-[var(--text-primary)]">
+          <p className="mt-0.5 text-sm font-medium tabular-nums text-[var(--text-primary)]">
             {formatActivityCredits(progress.currentTurn)}
           </p>
         </div>
         <div className="text-center sm:text-right">
           <p className="text-[11px] text-[var(--text-secondary)] sm:text-xs">เป้าหมายลำดับที่ 1</p>
-          <p className="mt-0.5 text-sm font-extrabold tabular-nums text-[var(--text-primary)]">
+          <p className="mt-0.5 text-sm font-medium tabular-nums text-[var(--text-primary)]">
             {formatActivityCredits(progress.rank1Target)}
           </p>
         </div>
@@ -151,7 +151,7 @@ export function ActivityTurnProgressCard({
           <div className="activity-hub-progress__track h-2 overflow-hidden rounded-full">
             <div className="activity-hub-progress__fill h-full rounded-full" style={{ width: `${pct}%` }} />
           </div>
-          <p className="mt-1 text-center text-[11px] font-semibold tabular-nums text-[var(--text-secondary)]">
+          <p className="mt-1 text-center text-[11px] font-medium tabular-nums text-[var(--text-secondary)]">
             จำนวนรางวัล {formatActivityNumber(progress.bonusEarned)} / {formatActivityNumber(progress.bonusCap)}
           </p>
         </div>
@@ -165,7 +165,7 @@ export function ActivityTierTable({ rows }: { rows: ActivityTierRow[] }) {
     <div className="activity-hub-tier-table-wrap overflow-x-auto">
       <table className="activity-hub-tier-table w-full min-w-[520px] border-collapse text-left text-xs sm:text-sm">
         <thead>
-          <tr className="text-[10px] font-bold uppercase tracking-wide text-[var(--text-muted)] sm:text-[11px]">
+          <tr className="text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)] sm:text-[11px]">
             <th scope="col" className="px-2 py-2 sm:px-3">ลำดับ</th>
             <th scope="col" className="px-2 py-2 sm:px-3">เทิร์น</th>
             <th scope="col" className="px-2 py-2 text-center sm:px-3">โบนัส</th>
@@ -175,13 +175,13 @@ export function ActivityTierTable({ rows }: { rows: ActivityTierRow[] }) {
         <tbody>
           {rows.map((row) => (
             <tr key={row.rank} className="activity-hub-tier-table__row border-t border-[var(--border-subtle)]/25">
-              <td className="px-2 py-2.5 font-bold tabular-nums text-[var(--text-primary)] sm:px-3">
+              <td className="px-2 py-2.5 font-medium tabular-nums text-[var(--text-primary)] sm:px-3">
                 {row.rank}
               </td>
               <td className="px-2 py-2.5 tabular-nums text-[var(--text-secondary)] sm:px-3">
                 {formatActivityNumber(row.turnRequired)}
               </td>
-              <td className="px-2 py-2.5 text-center font-extrabold tabular-nums text-[#fde047] sm:px-3">
+              <td className="px-2 py-2.5 text-center font-medium tabular-nums text-[#fde047] sm:px-3">
                 {formatActivityNumber(row.bonus)}
               </td>
               <td className="px-2 py-2.5 text-right sm:px-3">
@@ -253,7 +253,7 @@ export function ActivityDetailBody({
     <div className="flex min-h-0 flex-col gap-4">
       <div className="flex flex-col gap-3">
         {showTitle ? (
-          <h2 className="text-base font-extrabold leading-snug text-[var(--text-primary)] sm:text-lg">
+          <h2 className="text-base font-medium leading-snug text-[var(--text-primary)] sm:text-lg">
             {item.title}
           </h2>
         ) : null}

@@ -43,7 +43,7 @@ export function VipBenefitsComparisonTable({
   return (
     <div className={`space-y-2 ${isDesktopFull ? "vip-benefits-table--desktop-full" : ""}`}>
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-sm font-extrabold text-[var(--text-primary)]">
+        <h3 className="text-sm font-medium text-[var(--text-primary)]">
           สิทธิประโยชน์แต่ละระดับ
         </h3>
         <p className="max-w-[9rem] text-right text-[10px] leading-snug text-[var(--text-muted)]">
@@ -71,7 +71,7 @@ export function VipBenefitsComparisonTable({
             <thead>
               <tr className="border-b border-[var(--border-subtle)]/50">
                 <th
-                  className={`sticky left-0 z-20 ${STICKY_BG} min-w-[7.5rem] px-3 py-2.5 text-left font-bold text-[var(--text-secondary)] shadow-[4px_0_12px_rgba(0,0,0,0.25)]`}
+                  className={`sticky left-0 z-20 ${STICKY_BG} min-w-[7.5rem] px-3 py-2.5 text-left font-medium text-[var(--text-secondary)] shadow-[4px_0_12px_rgba(0,0,0,0.25)]`}
                 >
                   สิทธิประโยชน์
                 </th>
@@ -90,13 +90,13 @@ export function VipBenefitsComparisonTable({
                       <div className="flex flex-col items-center gap-1 pb-0.5">
                         <VipRankEmblem rankId={tier.id} size="sm" playing={false} />
                         <span
-                          className="text-[10px] font-extrabold tracking-wide"
+                          className="text-[10px] font-medium tracking-wide"
                           style={{ color: tier.accent }}
                         >
                           {tier.label}
                         </span>
                         {isCurrent && (
-                          <span className="rounded-full bg-[#ddd6fe]/90 px-2 py-0.5 text-[9px] font-bold text-[#1e1035]">
+                          <span className="rounded-full bg-[#ddd6fe]/90 px-2 py-0.5 text-[9px] font-medium text-[#1e1035]">
                             ระดับของฉัน
                           </span>
                         )}
@@ -129,7 +129,7 @@ export function VipBenefitsComparisonTable({
                         key={tier.id}
                         className={`${COL_MIN} px-2 py-2.5 text-center tabular-nums ${
                           isCurrent
-                            ? "bg-[var(--surface-hover)]/50 font-semibold text-[var(--text-primary)]"
+                            ? "bg-[var(--surface-hover)]/50 font-medium text-[var(--text-primary)]"
                             : locked
                               ? "text-[var(--text-muted)]"
                               : "text-[var(--text-secondary)]"

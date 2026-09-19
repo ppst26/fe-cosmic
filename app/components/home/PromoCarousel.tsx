@@ -97,7 +97,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
 
             <div className="relative z-10 flex h-full min-h-[100px] items-center p-4 sm:p-5">
               <div className="max-w-[58%] min-w-0 sm:max-w-[55%]">
-                <h3 className="mb-1 text-lg font-extrabold tracking-tight text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)] transition-colors group-hover:text-blue-100 sm:text-xl">
+                <h3 className="mb-1 text-lg font-medium tracking-tight text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)] transition-colors group-hover:text-blue-100 sm:text-xl">
                   {item.title}
                 </h3>
                 <p className="text-xs font-medium leading-relaxed text-[var(--text-secondary)] drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] sm:text-sm">
@@ -106,7 +106,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
               </div>
 
               {!item.bannerSrc && (
-                <div className="ml-auto flex h-14 w-20 shrink-0 rotate-6 items-center justify-center rounded-[var(--radius-control)] bg-gradient-to-tr from-purple-700 to-indigo-500 text-xs font-bold text-white shadow-lg">
+                <div className="ml-auto flex h-14 w-20 shrink-0 rotate-6 items-center justify-center rounded-[var(--radius-control)] bg-gradient-to-tr from-purple-700 to-indigo-500 text-xs font-medium text-white shadow-lg">
                   PROMO
                 </div>
               )}

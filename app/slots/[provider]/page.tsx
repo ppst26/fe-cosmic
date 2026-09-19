@@ -84,7 +84,7 @@ export default function ProviderGamesPage() {
 
         {/* 4. หัวข้อค่ายเกม (Provider Heading) ตามภาพตัวอย่าง */}
         <div className="mt-3 mb-1 flex items-center gap-2">
-          <h1 className="text-xl font-black uppercase tracking-tight text-white drop-shadow sm:text-2xl">
+          <h1 className="text-xl font-medium uppercase tracking-tight text-white drop-shadow sm:text-2xl">
             {providerInfo.name}
           </h1>
 
@@ -92,7 +92,7 @@ export default function ProviderGamesPage() {
           {providerId === "pragmatic" && (
             <div className="flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-500 px-2 py-0.5 text-black shadow-md select-none">
               <span className="text-xs">👑</span>
-              <span className="text-[10px] font-black tracking-tight">PLAY™</span>
+              <span className="text-[10px] font-medium tracking-tight">PLAY™</span>
             </div>
           )}
         </div>

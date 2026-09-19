@@ -37,7 +37,7 @@ export function VipProgressAndMissions({
           <span className="text-[var(--text-secondary)]">
             เทิร์น {formatVipAmount(player.turnoverProgress)} / {formatVipAmount(turnoverTarget)}
           </span>
-          <span className="font-bold text-[#f5c542]">{Math.round(turnoverPct)}%</span>
+          <span className="font-medium text-[#f5c542]">{Math.round(turnoverPct)}%</span>
         </div>
         <div className="h-2.5 overflow-hidden rounded-full bg-[var(--surface-hover)]">
           <div
@@ -54,7 +54,7 @@ export function VipProgressAndMissions({
       </div>
 
       <div className="w-full pt-4">
-        <h3 className="text-sm font-extrabold">{missionsTitle}</h3>
+        <h3 className="text-sm font-medium">{missionsTitle}</h3>
         <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">{missionsSubtitle}</p>
         <div className="mt-3 flex gap-2">
           {player.missions.map((mission) => (

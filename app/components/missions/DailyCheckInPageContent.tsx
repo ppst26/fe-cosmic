@@ -65,7 +65,7 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
       <header className="relative">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <h1 className="text-xl font-extrabold text-[var(--text-primary)] drop-shadow-[0_0_20px_rgba(167,139,250,0.25)] sm:text-2xl">
+            <h1 className="text-xl font-medium text-[var(--text-primary)] drop-shadow-[0_0_20px_rgba(167,139,250,0.25)] sm:text-2xl">
               เช็คอินรายวัน
             </h1>
             <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
@@ -78,7 +78,7 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
 
       <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-3 py-3.5 sm:px-4">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-xs">
-          <p className="font-bold text-[var(--text-primary)]">
+          <p className="font-medium text-[var(--text-primary)]">
             เช็คอินแล้ว {checkedInCount} / 7 วัน
           </p>
           <p className="text-[var(--border-active)]">สะสมทุกวัน รับรางวัลพิเศษ</p>
@@ -125,7 +125,7 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/70 text-[var(--icon-default)]">
             <ListIcon className="h-4 w-4" />
           </span>
-          <span className="flex-1 text-sm font-bold text-[var(--text-primary)]">เงื่อนไขการเช็คอิน</span>
+          <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการเช็คอิน</span>
           <ChevronDownIcon
             className={`h-4 w-4 text-[var(--icon-default)] transition-transform ${
               termsOpen ? "rotate-180" : ""
@@ -158,7 +158,7 @@ function DailyCheckInProgressTrack({ days }: { days: DailyCheckInDayReward[] }) 
         return (
           <li key={day.day} className="flex flex-col items-center gap-1.5">
             <div
-              className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-extrabold sm:h-9 sm:w-9 ${
+              className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium sm:h-9 sm:w-9 ${
                 isClaimed
                   ? "bg-[#facc15] text-[#422006]"
                   : isToday
@@ -190,18 +190,18 @@ function DailyRewardCard({ day }: { day: DailyCheckInDayReward }) {
       } ${isLocked ? "opacity-80" : ""}`}
     >
       {isToday && (
-        <span className="absolute right-1.5 top-1.5 rounded-full bg-[#7c3aed] px-1.5 py-0.5 text-[8px] font-bold text-white sm:text-[9px]">
+        <span className="absolute right-1.5 top-1.5 rounded-full bg-[#7c3aed] px-1.5 py-0.5 text-[8px] font-medium text-white sm:text-[9px]">
           วันนี้
         </span>
       )}
-      <p className="text-[10px] font-bold text-[var(--text-secondary)] sm:text-xs">วันที่ {day.day}</p>
+      <p className="text-[10px] font-medium text-[var(--text-secondary)] sm:text-xs">วันที่ {day.day}</p>
       <CheckInCoinGraphic className="mx-auto my-1.5 h-10 w-10 sm:h-11 sm:w-11" />
-      <p className="text-center text-[11px] font-extrabold text-[var(--text-primary)] sm:text-xs">
+      <p className="text-center text-[11px] font-medium text-[var(--text-primary)] sm:text-xs">
         {formatCheckInCredits(day.credits)}
       </p>
       <div className="mt-2">
         {isClaimed && (
-          <span className="flex w-full items-center justify-center gap-1 rounded-full bg-[#0f3d2e] py-1 text-[9px] font-bold text-[var(--success)] sm:text-[10px]">
+          <span className="flex w-full items-center justify-center gap-1 rounded-full bg-[#0f3d2e] py-1 text-[9px] font-medium text-[var(--success)] sm:text-[10px]">
             ✓ รับแล้ว
           </span>
         )}
@@ -211,7 +211,7 @@ function DailyRewardCard({ day }: { day: DailyCheckInDayReward }) {
           </span>
         )}
         {isLocked && (
-          <span className="flex w-full items-center justify-center gap-1 rounded-[var(--radius-control)] bg-[var(--surface-hover)]/80 py-1 text-[9px] font-bold text-[var(--text-muted)] sm:text-[10px]">
+          <span className="flex w-full items-center justify-center gap-1 rounded-[var(--radius-control)] bg-[var(--surface-hover)]/80 py-1 text-[9px] font-medium text-[var(--text-muted)] sm:text-[10px]">
             <LockMiniIcon className="h-3 w-3" /> ล็อค
           </span>
         )}
@@ -225,11 +225,11 @@ function DailyDaySevenCard({ day }: { day: DailyCheckInDayReward }) {
     <article className="cosmic-inset-card relative flex items-center gap-3 overflow-hidden bg-[var(--surface-mid)]/60 px-3 py-3 sm:gap-4 sm:px-4">
       <TreasureChestGraphic className="h-16 w-16 shrink-0 sm:h-20 sm:w-20" />
       <div className="min-w-0 flex-1">
-        <p className="text-xs font-bold text-[var(--text-secondary)]">วันที่ 7</p>
-        <p className="text-lg font-extrabold text-[var(--text-primary)] sm:text-xl">
+        <p className="text-xs font-medium text-[var(--text-secondary)]">วันที่ 7</p>
+        <p className="text-lg font-medium text-[var(--text-primary)] sm:text-xl">
           {formatCheckInCredits(day.credits)}
         </p>
-        <span className="mt-2 inline-flex items-center gap-1 rounded-[var(--radius-control)] bg-[var(--surface-hover)]/80 px-2.5 py-1 text-[10px] font-bold text-[var(--text-muted)]">
+        <span className="mt-2 inline-flex items-center gap-1 rounded-[var(--radius-control)] bg-[var(--surface-hover)]/80 px-2.5 py-1 text-[10px] font-medium text-[var(--text-muted)]">
           <LockMiniIcon className="h-3 w-3" /> ล็อค
         </span>
       </div>

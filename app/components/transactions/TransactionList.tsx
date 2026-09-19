@@ -69,7 +69,7 @@ export function TransactionList({ items }: { items: TransactionItem[] }) {
             )}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-[var(--text-primary)]">{item.title}</p>
+            <p className="truncate text-sm font-medium text-[var(--text-primary)]">{item.title}</p>
             <p className="mt-0.5 text-xs text-[var(--text-muted)]">
               {formatTransactionDate(item.createdAt)} · {item.reference}
             </p>
@@ -79,7 +79,7 @@ export function TransactionList({ items }: { items: TransactionItem[] }) {
           </div>
           <div className="shrink-0 text-right">
             <p
-              className={`text-sm font-extrabold tabular-nums ${
+              className={`text-sm font-medium tabular-nums ${
                 item.kind === "deposit" ? "text-[var(--success)]" : "text-[var(--text-primary)]"
               }`}
             >

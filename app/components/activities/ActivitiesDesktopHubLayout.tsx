@@ -29,7 +29,7 @@ function ActivityMasterRow({
           className="h-[72px] w-[72px] sm:h-20 sm:w-20"
         />
         <div className="flex min-w-0 flex-1 flex-col justify-center gap-1 py-0.5">
-          <span className="text-sm font-extrabold leading-snug text-[var(--text-primary)]">
+          <span className="text-sm font-medium leading-snug text-[var(--text-primary)]">
             {item.title}
           </span>
           {item.listMeta ? (

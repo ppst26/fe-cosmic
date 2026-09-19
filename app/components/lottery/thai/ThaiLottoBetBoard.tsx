@@ -113,14 +113,29 @@ export function ThaiLottoBetBoard({
   };
 
   const handleDigit = (digit: string) => {
-    if (isClosed || selectedTypeIds.length === 0) return;
+    if (selectedTypeIds.length === 0) return;
     const next = input + digit;
-    if (next.length >= digits) {
-      addToSlip(next);
+    if (next.length > digits) return;
+
+    setInput(next);
+    setFeedback("");
+
+    if (next.length < digits) return;
+
+    if (isClosed) {
+      setFeedback("ปิดรับแทงแล้ว");
+      return;
+    }
+
+    const number = next;
+    const pushSlip = () => {
+      addToSlip(number);
       setInput("");
+    };
+    if (digits === 1) {
+      window.setTimeout(pushSlip, 150);
     } else {
-      setInput(next);
-      setFeedback("");
+      requestAnimationFrame(() => requestAnimationFrame(pushSlip));
     }
   };
 

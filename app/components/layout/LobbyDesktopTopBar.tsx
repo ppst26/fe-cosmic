@@ -55,14 +55,14 @@ export function LobbyDesktopTopBar({
         ) : isAuthenticated ? (
           <div className="lobby-desktop-topbar__wallet">
             <HeaderWalletIcon className="h-[18px] w-[18px] text-[var(--icon-default)]" />
-            <span className="tabular-nums font-extrabold">{balanceLabel}</span>
+            <span className="tabular-nums font-medium">{balanceLabel}</span>
           </div>
         ) : (
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={onLoginClick}
-              className="px-2 py-1 text-xs font-bold uppercase text-[var(--text-secondary)] hover:text-white"
+              className="px-2 py-1 text-xs font-medium uppercase text-[var(--text-secondary)] hover:text-white"
             >
               Log in
             </button>

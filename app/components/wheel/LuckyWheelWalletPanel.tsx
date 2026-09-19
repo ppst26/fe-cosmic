@@ -57,9 +57,9 @@ export function LuckyWheelWalletPanel({
       <div className="lucky-wheel-wallet__head">
         <div className="flex items-center gap-2">
           <WalletIcon className="h-5 w-5 text-[var(--icon-active)]" />
-          <h2 className="text-sm font-bold text-[var(--text-primary)]">กระเป๋าของคุณ</h2>
+          <h2 className="text-sm font-medium text-[var(--text-primary)]">กระเป๋าของคุณ</h2>
         </div>
-        <Link href="/transactions" className="lucky-wheel-wallet__link text-xs font-semibold">
+        <Link href="/transactions" className="lucky-wheel-wallet__link text-xs font-medium">
           ประวัติ
         </Link>
       </div>
@@ -75,7 +75,7 @@ export function LuckyWheelWalletPanel({
         <div className="lucky-wheel-wallet__balance-tile">
           <p className="lucky-wheel-wallet__balance-label">ตั๋วหมุน</p>
           <p className="lucky-wheel-wallet__balance-value tabular-nums">
-            {ticketCount} <span className="text-sm font-semibold text-[var(--text-secondary)]">ใบ</span>
+            {ticketCount} <span className="text-sm font-medium text-[var(--text-secondary)]">ใบ</span>
           </p>
           <button type="button" className="lucky-wheel-wallet__mini-cta lucky-wheel-wallet__mini-cta--muted">
             รับเพิ่ม
@@ -183,7 +183,7 @@ function MethodOption({
         {selected ? "✓" : ""}
       </span>
       <span className="lucky-wheel-wallet__method-body">
-        <span className="block text-xs font-bold leading-tight text-[var(--text-primary)] sm:text-sm">{title}</span>
+        <span className="block text-xs font-medium leading-tight text-[var(--text-primary)] sm:text-sm">{title}</span>
         <span className="block text-[10px] leading-snug text-[var(--text-muted)]">{detail}</span>
       </span>
     </button>

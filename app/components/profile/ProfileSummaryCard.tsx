@@ -31,7 +31,7 @@ export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
       </div>
 
       <div className="min-w-0 flex-1 space-y-1.5">
-        <p className="truncate text-lg font-extrabold text-[var(--text-primary)]">
+        <p className="truncate text-lg font-medium text-[var(--text-primary)]">
           {profile.phoneMasked}
         </p>
         <div className="flex flex-wrap items-center gap-2">
@@ -52,7 +52,7 @@ export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
             </span>
           )}
         </div>
-        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success)]/15 px-2.5 py-0.5 text-xs font-semibold text-[var(--success)]">
+        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success)]/15 px-2.5 py-0.5 text-xs font-medium text-[var(--success)]">
           <VerifiedCheckIcon className="h-3 w-3" />
           ยืนยันเบอร์แล้ว
         </span>

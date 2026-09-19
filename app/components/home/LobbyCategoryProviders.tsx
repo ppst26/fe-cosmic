@@ -308,12 +308,12 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
       >
         <CategorySectionHead
           start={
-            <h2 className="text-lg font-extrabold text-[var(--text-primary)] sm:text-xl">
+            <h2 className="text-lg font-medium text-[var(--text-primary)] sm:text-xl">
               {sectionTitle}
             </h2>
           }
           meta={
-            <span className="text-xs font-semibold text-[var(--text-muted)] sm:text-sm">
+            <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
               ({providerTotal} ค่ายเกม)
             </span>
           }

@@ -200,7 +200,7 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
     <>
       <ResponsiveSheetHeader
         closeAriaLabel="ปิดหน้าฝากเงิน"
-        title={<Dialog.Title className="text-xl font-extrabold sm:text-2xl">ฝากเงิน</Dialog.Title>}
+        title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ฝากเงิน</Dialog.Title>}
         subtitle={
           <p id="deposit-sheet-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
             เลือกช่องทางการฝากเงิน
@@ -218,7 +218,7 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
             >
               <DepositMethodIcon methodId={method.id} className="h-12 w-12 shrink-0 sm:h-[52px] sm:w-[52px]" />
               <span className="min-w-0 flex-1">
-                <span className="block text-sm font-extrabold text-[var(--text-primary)] sm:text-base">
+                <span className="block text-sm font-medium text-[var(--text-primary)] sm:text-base">
                   {method.title}
                 </span>
                 <span className="mt-0.5 block text-xs text-[var(--text-secondary)]">{method.subtitle}</span>
@@ -263,7 +263,7 @@ function DepositBankStep({
         onBack={onBack}
         backAriaLabel="กลับเลือกช่องทางฝาก"
         title={
-          <Dialog.Title className="text-base font-extrabold sm:text-lg">ฝากผ่านบัญชีธนาคาร</Dialog.Title>
+          <Dialog.Title className="text-base font-medium sm:text-lg">ฝากผ่านบัญชีธนาคาร</Dialog.Title>
         }
       />
 
@@ -275,8 +275,8 @@ function DepositBankStep({
           <div className="flex items-start gap-3">
             <KbankLogoGraphic className="h-11 w-11 shrink-0 sm:h-12 sm:w-12" />
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-extrabold text-[var(--text-primary)] sm:text-base">{bank.bankName}</p>
-              <span className="mt-1 inline-flex rounded-full bg-[#5b21b6]/80 px-2 py-0.5 text-[10px] font-bold text-[#e9d5ff]">
+              <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">{bank.bankName}</p>
+              <span className="mt-1 inline-flex rounded-full bg-[#5b21b6]/80 px-2 py-0.5 text-[10px] font-medium text-[#e9d5ff]">
                 {bank.sampleBadgeLabel}
               </span>
             </div>
@@ -286,7 +286,7 @@ function DepositBankStep({
             <div>
               <p className="text-xs text-[var(--text-muted)]">เลขบัญชี</p>
               <div className="mt-1 flex items-center gap-2">
-                <p className="min-w-0 flex-1 text-lg font-extrabold tracking-wide text-[var(--text-primary)] sm:text-xl">
+                <p className="min-w-0 flex-1 text-lg font-medium tracking-wide text-[var(--text-primary)] sm:text-xl">
                   {bank.accountNumberDisplay}
                 </p>
                 <button
@@ -306,7 +306,7 @@ function DepositBankStep({
             </div>
             <div>
               <p className="text-xs text-[var(--text-muted)]">ชื่อบัญชี</p>
-              <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{bank.accountName}</p>
+              <p className="mt-1 text-sm font-medium text-[var(--text-primary)]">{bank.accountName}</p>
             </div>
           </div>
         </section>
@@ -316,7 +316,7 @@ function DepositBankStep({
             จำนวนเงินที่ต้องการฝาก
           </label>
           <div className={`${COSMIC_SHEET_FIELD_AMOUNT} mt-2`}>
-            <span className="cosmic-sheet-field__addon px-3 text-lg font-bold text-[var(--text-secondary)]">
+            <span className="cosmic-sheet-field__addon px-3 text-lg font-medium text-[var(--text-secondary)]">
               ฿
             </span>
             <input
@@ -325,7 +325,7 @@ function DepositBankStep({
               inputMode="numeric"
               value={amountInput}
               onChange={(event) => onAmountChange(event.target.value)}
-              className="min-w-0 flex-1 bg-transparent px-3 text-2xl font-extrabold text-[var(--text-primary)] outline-none"
+              className="min-w-0 flex-1 bg-transparent px-3 text-2xl font-medium text-[var(--text-primary)] outline-none"
               aria-label="จำนวนเงินที่ต้องการฝาก"
             />
             <span className="shrink-0 px-3 text-sm text-[var(--text-muted)]">บาท</span>
@@ -360,7 +360,7 @@ function DepositBankStep({
           <button
             type="button"
             onClick={onEdit}
-            className="shrink-0 px-1 py-2.5 text-sm font-bold text-[var(--text-primary)] underline-offset-2 hover:underline"
+            className="shrink-0 px-1 py-2.5 text-sm font-medium text-[var(--text-primary)] underline-offset-2 hover:underline"
           >
             แก้ไข
           </button>
@@ -412,7 +412,7 @@ function DepositConfirmStep({
         closeAriaLabel="ปิดหน้าฝากเงิน"
         onBack={onBack}
         backAriaLabel="กลับแก้ไขยอดฝาก"
-        title={<Dialog.Title className="text-base font-extrabold sm:text-lg">ยืนยันการฝากเงิน</Dialog.Title>}
+        title={<Dialog.Title className="text-base font-medium sm:text-lg">ยืนยันการฝากเงิน</Dialog.Title>}
         subtitle={<p className="mt-0.5 text-xs text-[var(--text-muted)]">ขั้นตอน 3 จาก 3</p>}
       />
 
@@ -422,7 +422,7 @@ function DepositConfirmStep({
       >
         <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 text-center sm:px-4`}>
           <p className="text-xs text-[var(--text-secondary)]">ยอดเงินที่ต้องโอน</p>
-          <p className="mt-1 text-3xl font-extrabold text-[#a78bfa] sm:text-4xl">
+          <p className="mt-1 text-3xl font-medium text-[#a78bfa] sm:text-4xl">
             ฿ {formatDepositTransferAmount(amount)}
           </p>
         </section>
@@ -431,7 +431,7 @@ function DepositConfirmStep({
           <div className="flex items-start gap-3">
             <KbankLogoGraphic className="h-10 w-10 shrink-0" />
             <div className="min-w-0 flex-1 space-y-1.5 text-sm">
-              <p className="font-extrabold text-[var(--text-primary)]">{bank.bankName}</p>
+              <p className="font-medium text-[var(--text-primary)]">{bank.bankName}</p>
               <p className="text-[var(--text-secondary)]">
                 <span className="text-[var(--text-muted)]">ชื่อบัญชี: </span>
                 {bank.accountName}
@@ -439,7 +439,7 @@ function DepositConfirmStep({
               <div className="flex flex-wrap items-center gap-2">
                 <p className="text-[var(--text-secondary)]">
                   <span className="text-[var(--text-muted)]">เลขบัญชี: </span>
-                  <span className="font-bold text-[var(--text-primary)]">{bank.accountNumberDisplay}</span>
+                  <span className="font-medium text-[var(--text-primary)]">{bank.accountNumberDisplay}</span>
                 </p>
                 <button
                   type="button"
@@ -461,7 +461,7 @@ function DepositConfirmStep({
         </section>
 
         <section className="mt-4">
-          <p className="text-sm font-extrabold text-[var(--text-primary)]">แนบสลิปการโอน</p>
+          <p className="text-sm font-medium text-[var(--text-primary)]">แนบสลิปการโอน</p>
           <input
             ref={slipInputRef}
             type="file"
@@ -476,14 +476,14 @@ function DepositConfirmStep({
           >
             <SlipPlaceholderIcon className="h-10 w-10 shrink-0 text-[var(--icon-default)]" />
             <span className="min-w-0 flex-1">
-              <span className="block text-sm font-bold text-[var(--text-primary)]">
+              <span className="block text-sm font-medium text-[var(--text-primary)]">
                 {slipFileName ?? "แตะเพื่อแนบสลิป"}
               </span>
               <span className="mt-0.5 block text-xs text-[var(--text-muted)]">
                 {slipFileName ? "เปลี่ยนรูปได้โดยแตะอีกครั้ง" : "เลือกรูปภาพจากอุปกรณ์"}
               </span>
             </span>
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]/60 text-lg font-bold text-[var(--text-primary)]">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]/60 text-lg font-medium text-[var(--text-primary)]">
               +
             </span>
           </button>

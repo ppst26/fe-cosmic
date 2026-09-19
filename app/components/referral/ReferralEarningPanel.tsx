@@ -111,7 +111,7 @@ export function ReferralEarningPanel({
       </div>
       ) : (
         <div className="flex items-center justify-between gap-2">
-          <h2 className="text-sm font-extrabold text-[var(--text-primary)]">{sectionTitle}</h2>
+          <h2 className="text-sm font-medium text-[var(--text-primary)]">{sectionTitle}</h2>
           <p className="text-[11px] text-[var(--text-muted)]">
             รับสะสม {formatReferralCurrency(received)}
           </p>
@@ -122,10 +122,10 @@ export function ReferralEarningPanel({
         <Table className="text-sm">
           <TableHeader>
             <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
-              <TableHead className="h-11 px-4 text-xs font-semibold text-[var(--text-muted)] sm:px-5">
+              <TableHead className="h-11 px-4 text-xs font-medium text-[var(--text-muted)] sm:px-5">
                 จำนวนโบนัส
               </TableHead>
-              <TableHead className="h-11 px-4 text-right text-xs font-semibold text-[var(--text-muted)] sm:px-5">
+              <TableHead className="h-11 px-4 text-right text-xs font-medium text-[var(--text-muted)] sm:px-5">
                 วันที่
               </TableHead>
             </TableRow>
@@ -148,7 +148,7 @@ export function ReferralEarningPanel({
                     index % 2 === 1 ? "bg-[var(--surface-mid)]/45" : "bg-transparent"
                   }`}
                 >
-                  <TableCell className="px-4 py-3.5 text-sm font-bold tabular-nums text-[var(--text-primary)] sm:px-5">
+                  <TableCell className="px-4 py-3.5 text-sm font-medium tabular-nums text-[var(--text-primary)] sm:px-5">
                     {formatReferralCurrency(row.amountThb)}
                   </TableCell>
                   <TableCell className="px-4 py-3.5 text-right text-xs tabular-nums text-[var(--text-secondary)] sm:px-5">
@@ -220,10 +220,10 @@ function EarningSummaryCard({
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
-          <p className="text-xs font-semibold text-[var(--text-secondary)] sm:text-sm">{label}</p>
+          <p className="text-xs font-medium text-[var(--text-secondary)] sm:text-sm">{label}</p>
           <InfoHintButton label={hint} />
         </div>
-        <p className={`mt-0.5 text-lg font-extrabold tabular-nums sm:text-xl ${valueClassName}`}>
+        <p className={`mt-0.5 text-lg font-medium tabular-nums sm:text-xl ${valueClassName}`}>
           {value}
         </p>
       </div>
@@ -237,7 +237,7 @@ function InfoHintButton({ label }: { label: string }) {
     <button
       type="button"
       aria-label={label}
-      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/80 text-[9px] font-bold text-[var(--text-muted)] transition-colors hover:border-[var(--border-active)] hover:text-[var(--text-secondary)]"
+      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/80 text-[9px] font-medium text-[var(--text-muted)] transition-colors hover:border-[var(--border-active)] hover:text-[var(--text-secondary)]"
     >
       i
     </button>
