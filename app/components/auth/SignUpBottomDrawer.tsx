@@ -18,6 +18,7 @@ import {
   SignUpPickerSheet,
 } from "./SignUpPickerSheet";
 import { SIGNUP_BANKS, SIGNUP_CHANNELS } from "../../data/signupMockData";
+import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import {
   responsiveAuthSheetContentClass,
   responsiveSheetCloseButtonClass,
@@ -106,7 +107,7 @@ function SignUpField({
       <label htmlFor={id} className="text-sm font-medium text-[var(--text-secondary)]">
         {label}
       </label>
-      <div className="flex h-12 items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3">
+      <div className={COSMIC_SHEET_FIELD_ROW}>
         <span className="shrink-0 text-[var(--icon-default)]">{leadingIcon}</span>
         <input
           id={id}
@@ -213,7 +214,7 @@ function SignUpStepOne({
 
       <button
         type="submit"
-        className="cosmic-action-btn mt-1 flex h-12 w-full items-center justify-center gap-2 text-base"
+        className="cosmic-sheet-submit mt-1"
       >
         ถัดไป
         <ChevronRightIcon className="h-5 w-5" />

@@ -218,6 +218,30 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
   | Welcome hero | เส้นแนวนอน (ตาม Dexsport) |
   | **กิจกรรมทัวร์นาเมนต์** | **จุดกลมกลางแถว** — active `--text-primary`, inactive `--surface-hover` |
 
+### ปุ่มหลัก (3 ชั้น)
+
+ใช้ **ชั้นเดียวต่อปุ่ม** — ห้ามผสม gradient CTA กับ glass ในปุ่มเดียวกัน  
+ค่าคงที่ class: `app/components/ui/cosmicButtonClasses.ts` · shadcn `Button` variant ตามตาราง
+
+| ชั้น | ชื่อ | Class / variant | ใช้เมื่อ |
+| :--- | :--- | :--- | :--- |
+| **1 — Outline glass** | Glass control | `glass-control` + `glass-pill` หรือ `glass-icon-btn` · `Button` (เพิ่มภายหลัง: `glassPill` / `glassIcon`) | แท็บรอง, View All, ปุ่มเลื่อน carousel, ตัวกรองเล็ก ๆ |
+| | Log in (header) | `glass-card--soft` บน `.cosmic-nav__auth-login` | เข้าสู่ระบบ — โทน glass ไม่ใช่ CTA |
+| **2 — White solid** | Nav / link | **`cosmic-btn-nav`** (+ `--sm` / `--lg`) · `Button variant="navSolid"` | ไปหน้าอื่นในแอป (`Link` / `router.push`) · **external** (`<a target="_blank" rel="noopener noreferrer">`) |
+| **3 — Primary CTA** | Action | `cosmic-cta-primary` (+ `--sm` / `--lg`) · `Button variant="ctaPrimary"` | สมัคร, ส่งฟอร์ม, รับโบนัส, ฝาก — action สำคัญที่ไม่ใช่แค่เปลี่ยนหน้า |
+
+**ไม่ใช้ชั้น 2 สำหรับ:** submit ฟอร์ม, สมัคร, รับรางวัล → ชั้น 3  
+**ไม่ใช้ชั้น 3 สำหรับ:** View All / ลูกศร carousel / เปิดแท็บ → ชั้น 1  
+
+**อื่น ๆ (ไม่ใช่ปุ่มหลัก 3 ชั้น):**
+
+- `cosmic-cta-white` + `--sm` — ปุ่มขาวมุมโค้งใน **การ์ด feature** (คู่ `cosmic-cta-muted`)
+- `cosmic-cta-muted` — ปุ่มรองโปร่งบน glass card (outline อ่อน) **ไม่**แทน `cosmic-btn-nav`
+
+**Accessibility:** hit area ≥ 44px บนมือถือ (ใช้ `min-height` / padding ของแต่ละ class); `focus-visible` ตาม globals.css
+
+**Mobile bottom sheet** (ฝาก / ถอน / คูปอง / login / signup): ปุ่มยืนยัน **`cosmic-sheet-submit`** — **ห้าม** `cosmic-action-btn` ม่วงทึบ · ข้อมูล / input / quick select ใช้ **soft glass** (`cosmic-sheet-soft-glass`, `cosmic-sheet-field`, `cosmic-choice-btn` ใน `.cosmic-mobile-sheet`) · ปิด/คัดลอก `glass-control` + `glass-icon-btn` · พื้น `.cosmic-mobile-sheet` · หัว `ResponsiveSheetHeader` — กลับซ้าย · ปิดขวา · constants ใน `cosmicButtonClasses.ts`
+
 ### Searchbar
 - สูง **44–48px**; radius `--radius-pill`; พื้น `--surface-elevated`
 - **ไม่ใช้ ring/outline ตอน focus/hover** (เรียบแบบ Dexsport)

@@ -12,6 +12,9 @@
   --surface-end: #090810;
   --surface-hover: #232145;
   --surface-selected: #29264f;
+  /** พื้นทึบสองชั้น — กลุ่มข้อมูล / อัตราต่อรอง / ช่องข้อความ (.surface-solid-*) */
+  --surface-solid-outer: #131216;
+  --surface-solid-inner: #1d1a22; 
   --surface-gradient: linear-gradient(
     110deg,
     var(--surface-start) 0%,
@@ -201,6 +204,8 @@
   --color-surface-end: var(--surface-end);
   --color-surface-hover: var(--surface-hover);
   --color-surface-selected: var(--surface-selected);
+  --color-surface-solid-outer: var(--surface-solid-outer);
+  --color-surface-solid-inner: var(--surface-solid-inner);
 
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
@@ -374,6 +379,14 @@ html {
   border-radius: 14px;
 }
 
+/*
+ * ระบบปุ่มหลัก Cosmicbet (3 ชั้น) — รายละเอียด design.md § ปุ่มหลัก
+ * 1) Outline glass: .glass-control + .glass-pill | .glass-icon-btn (View All, carousel, tab รอง)
+ *    Log in header: .glass-card--soft (โทนเดียวกัน ไม่ใช่ CTA)
+ * 2) White solid nav: .cosmic-btn-nav — ลิงก์หน้าอื่น / external
+ * 3) Primary CTA: .cosmic-cta-primary — สมัคร, ส่งข้อมูล, รับโบนัส
+ */
+
 /**
  * ปุ่มเล็กแบบ glass — ไม่ backdrop-blur (View All, carousel arrows) · CategoryNav ใช้ soft glass ใน .category-nav__chip
  */
@@ -462,8 +475,69 @@ html {
 }
 
 /**
- * CTA ปุ่มขาว — ใช้คู่กับ .glass-card หรือพื้นเข้ม (คล้ายปุ่ม Buy ใน mock)
- * ใช้เป็น <button> / <a> หรือ Button variant="ctaWhite"
+ * ชั้น 2 — ปุ่มขาวทึบ (นำทาง) pill · หน้าอื่น / external link
+ * ใช้ <Link> / <a> หรือ Button variant="navSolid"
+ */
+.cosmic-btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.55rem 1.25rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--cta-white-fg);
+  background: var(--cta-white-bg);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-btn-nav:hover {
+  background: var(--cta-white-hover);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.16);
+}
+
+.cosmic-btn-nav:active {
+  transform: scale(0.98);
+}
+
+.cosmic-btn-nav:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cosmic-btn-nav:disabled,
+.cosmic-btn-nav[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cosmic-btn-nav--sm {
+  min-height: 2.125rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.8125rem;
+}
+
+.cosmic-btn-nav--lg {
+  min-height: 2.75rem;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.9375rem;
+}
+
+/**
+ * CTA ปุ่มขาวมุมโค้ง — คู่กับ glass card (ปุ่มหลักในการ์ด feature)
+ * นำทางทั่วไปให้ใช้ .cosmic-btn-nav แทน
  */
 .cosmic-cta-white {
   display: inline-flex;
@@ -521,8 +595,16 @@ html {
   border-radius: 16px;
 }
 
+/** alias ชั้น 2 — pill เหมือน cosmic-btn-nav */
+.cosmic-cta-white--pill {
+  border-radius: var(--radius-pill);
+  min-height: 2.5rem;
+  padding: 0.55rem 1.25rem;
+  font-weight: 600;
+}
+
 /**
- * CTA รองบน glass card — โปร่งแสง (คู่กับ cosmic-cta-white)
+ * CTA รองบน glass card — โปร่งแสง outline (ไม่ใช่ชั้น 2 — อยู่ใกล้ glass มากกว่า)
  */
 .cosmic-cta-muted {
   display: inline-flex;
@@ -1775,6 +1857,41 @@ body {
     );
   }
 
+  /**
+   * Bottom sheet ฝาก/ถอน/คูปอง — พื้นเทาเข้ม ลดโทนม่วงจาก glass-fill
+   * responsiveSheetDialog.ts · ResponsiveSheetHeader.tsx
+   */
+  .cosmic-mobile-sheet.cosmic-modal-shell {
+    border-color: rgb(255 255 255 / 0.11);
+    background: linear-gradient(
+      180deg,
+      rgb(52 54 62 / 0.82) 0%,
+      rgb(38 40 48 / 0.78) 100%
+    );
+    -webkit-backdrop-filter: blur(22px) saturate(1.12);
+    backdrop-filter: blur(22px) saturate(1.12);
+    box-shadow:
+      0 -20px 48px rgb(0 0 0 / 0.42),
+      inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  .cosmic-mobile-sheet .glass-control {
+    border-color: rgb(255 255 255 / 0.1);
+    background: linear-gradient(
+      145deg,
+      rgb(255 255 255 / 0.08),
+      rgb(255 255 255 / 0.04)
+    );
+  }
+
+  .cosmic-mobile-sheet .glass-control:hover:not(:disabled):not(.is-active) {
+    background: linear-gradient(
+      145deg,
+      rgb(255 255 255 / 0.11),
+      rgb(255 255 255 / 0.06)
+    );
+  }
+
   .cosmic-modal-shell--hub {
     background: linear-gradient(155deg, rgb(28 26 36 / 0.98), rgb(14 13 20 / 0.99));
   }
@@ -1784,6 +1901,78 @@ body {
   border: 0;
   border-top-left-radius: var(--radius-panel);
   border-top-right-radius: var(--radius-panel);
+}
+
+/**
+ * Bottom sheet — panel / input / quick select (soft glass)
+ * cosmicButtonClasses.ts · Deposit / Withdraw / Coupon / Login / SignUp
+ */
+:is(.cosmic-mobile-sheet, .sign-up-picker-sheet) {
+  --sheet-soft-fill: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.11),
+    rgb(255 255 255 / 0.045)
+  );
+  --sheet-soft-fill-hover: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.14),
+    rgb(255 255 255 / 0.075)
+  );
+  --sheet-soft-border: rgb(255 255 255 / 0.1);
+  --sheet-soft-blur: 14px;
+}
+
+.cosmic-sheet-soft-glass {
+  border: 1px solid var(--sheet-soft-border, rgb(255 255 255 / 0.1));
+  border-radius: var(--radius-panel);
+  background: var(
+    --sheet-soft-fill,
+    linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.05))
+  );
+  -webkit-backdrop-filter: blur(var(--sheet-soft-blur, 14px)) saturate(1.1);
+  backdrop-filter: blur(var(--sheet-soft-blur, 14px)) saturate(1.1);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.09),
+    0 8px 22px rgb(0 0 0 / 0.14);
+}
+
+button.cosmic-sheet-soft-glass--interactive:hover,
+a.cosmic-sheet-soft-glass--interactive:hover {
+  background: var(
+    --sheet-soft-fill-hover,
+    linear-gradient(145deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.07))
+  );
+}
+
+button.cosmic-sheet-soft-glass--interactive:active {
+  transform: scale(0.995);
+}
+
+/** แถว input ใน sheet — โทนเดียวกับ panel ข้อมูล */
+.cosmic-sheet-field {
+  border: 1px solid var(--sheet-soft-border, rgb(255 255 255 / 0.1));
+  border-radius: var(--radius-panel);
+  background: var(
+    --sheet-soft-fill,
+    linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.05))
+  );
+  -webkit-backdrop-filter: blur(var(--sheet-soft-blur, 14px)) saturate(1.1);
+  backdrop-filter: blur(var(--sheet-soft-blur, 14px)) saturate(1.1);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 6px 18px rgb(0 0 0 / 0.12);
+}
+
+.cosmic-sheet-field--amount {
+  min-height: 3.5rem;
+}
+
+.cosmic-sheet-field__addon {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  border-right: 1px solid rgb(255 255 255 / 0.08);
+  background: rgb(255 255 255 / 0.05);
 }
 
 /**
@@ -1799,6 +1988,31 @@ body {
   :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(input, textarea, select):is(:focus, :focus-visible) {
     font-size: inherit;
   }
+}
+
+/**
+ * Surface solid สองชั้น — ชั้นนอก #18141f · ชั้นใน #272132
+ * ใช้จัดกลุ่มข้อมูลให้อ่านง่าย (ตลาดกีฬา, ตารางอัตราจ่าย, ช่องตัวเลือก)
+ */
+.surface-solid-outer {
+  background-color: var(--surface-solid-outer);
+  color: var(--text-primary);
+}
+
+.surface-solid-inner {
+  background-color: var(--surface-solid-inner);
+  color: var(--text-primary);
+}
+
+/** กลุ่มชั้นนอก — ใส่ .surface-solid-inner เป็นลูกหรือช่องย่อย */
+.surface-solid-stack {
+  background-color: var(--surface-solid-outer);
+  border-radius: var(--radius-panel);
+  color: var(--text-primary);
+}
+
+.surface-solid-stack .surface-solid-inner {
+  border-radius: var(--radius-card);
 }
 
 /** การ์ดย่อยใน modal / sheet / drawer */
@@ -2676,26 +2890,93 @@ body {
   box-shadow: 0 2px 12px rgb(73 48 223 / 35%);
 }
 
+/** chip เลือกยอด / ตัวเลือกด่วน — มุม panel (คู่ cosmic-inset-card ใน sheet) */
 .cosmic-choice-btn {
+  border: 0;
   border-radius: var(--radius-panel);
-  font-weight: 800;
-  background: color-mix(in srgb, var(--surface-hover) 45%, transparent);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--surface-hover) 38%, transparent);
   color: var(--text-secondary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 4px 14px rgb(0 0 0 / 0.16);
   transition:
     background var(--motion-fast) ease,
     color var(--motion-fast) ease,
-    box-shadow var(--motion-fast) ease;
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
 }
 
-.cosmic-choice-btn:hover {
-  background: color-mix(in srgb, var(--surface-selected) 28%, transparent);
+.cosmic-choice-btn:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--surface-hover) 52%, transparent);
   color: var(--text-primary);
 }
 
 .cosmic-choice-btn.is-active {
-  background: var(--action-solid);
-  color: var(--text-primary);
-  box-shadow: 0 4px 16px rgb(73 48 223 / 35%);
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow:
+    0 4px 16px rgb(0 0 0 / 0.2),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.cosmic-mobile-sheet .cosmic-choice-btn:not(.is-active) {
+  border: 1px solid var(--sheet-soft-border);
+  background: var(--sheet-soft-fill);
+  -webkit-backdrop-filter: blur(var(--sheet-soft-blur)) saturate(1.1);
+  backdrop-filter: blur(var(--sheet-soft-blur)) saturate(1.1);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 4px 14px rgb(0 0 0 / 0.1);
+}
+
+.cosmic-mobile-sheet .cosmic-choice-btn:hover:not(.is-active) {
+  background: var(--sheet-soft-fill-hover);
+}
+
+/** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient) แทน .cosmic-action-btn ม่วงทึบ */
+.cosmic-sheet-submit {
+  display: flex;
+  width: 100%;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: var(--radius-panel);
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--cta-primary-fg);
+  background: var(--cta-primary-gradient);
+  box-shadow:
+    0 6px 22px rgb(99 102 241 / 0.38),
+    inset 0 1px 0 rgb(255 255 255 / 0.38);
+  cursor: pointer;
+  transition:
+    filter var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-sheet-submit:hover:not(:disabled) {
+  filter: brightness(1.07);
+}
+
+.cosmic-sheet-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.cosmic-sheet-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  filter: none;
+}
+
+.cosmic-sheet-submit:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.45);
+  outline-offset: 2px;
 }
 
 .page-subnav__icon {
@@ -6728,6 +7009,459 @@ body {
 }
 
 /*
+ * Lottery UI — surface solid ชั้นนอก/ใน (step 2 รอบ + step 3 แทง)
+ */
+:is(.lottery-market-shell, .thai-lotto-layout, .yiki-layout, .yiki-page-main) {
+  --lottery-glass-fill: var(--surface-solid-inner);
+  --lottery-glass-fill-hover: color-mix(in srgb, var(--surface-solid-inner) 88%, rgb(255 255 255 / 0.07));
+  /* borderless — แยกชั้นด้วยสีพื้น + gap (shell/การ์ดรอบ) */
+  --lottery-glass-border: transparent;
+  /* ขอบปุ่มแป้นกด + ชุดประเภท/แผงเลข */
+  --lottery-control-border: color-mix(in srgb, var(--border-subtle) 62%, rgb(255 255 255 / 0.05));
+  /* แผงเลข 00–99 / แถวร้อย — มุมน้อย ให้ดูเป็นสี่เหลี่ยม */
+  --lottery-grid-cell-radius: var(--radius-card);
+}
+
+.thai-lotto-layout,
+.yiki-layout {
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-outer);
+}
+
+@media (min-width: 640px) {
+  .thai-lotto-layout,
+  .yiki-layout {
+    padding: var(--space-4);
+  }
+}
+
+/*
+ * Lottery step 2 — sidebar + banner + รายการรอบ (LotteryMarketShell)
+ */
+.lottery-market-shell {
+  --lottery-shell-max-h: min(calc(100dvh - 10.5rem), 46rem);
+  display: grid;
+  gap: var(--space-4);
+  align-items: stretch;
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-outer);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .lottery-market-shell {
+    grid-template-columns: minmax(0, 248px) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: var(--space-4);
+    height: var(--lottery-shell-max-h);
+    max-height: var(--lottery-shell-max-h);
+    padding: var(--space-4);
+    --lottery-shell-max-h: min(calc(100dvh - 7.5rem), 50rem);
+  }
+
+  .lottery-market-shell > * {
+    min-height: 0;
+  }
+}
+
+/** พื้นที่ scroll แยก — เมาส์อยู่บนโซนนี้จะ scroll เฉพาะโซน (overscroll-behavior: contain) */
+.lottery-market-scroll {
+  min-height: 0;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--border-subtle) 70%, transparent) transparent;
+}
+
+.lottery-market-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.lottery-market-scroll::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--border-subtle) 75%, transparent);
+}
+
+.lottery-market-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.lottery-market-sidebar__panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius-panel) - 2px);
+  background: transparent;
+}
+
+@media (min-width: 1024px) {
+  .lottery-market-sidebar {
+    height: 100%;
+  }
+
+  .lottery-market-sidebar__panel.lottery-market-scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: var(--space-1);
+  }
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-sidebar__panel.lottery-market-scroll {
+    margin-inline: calc(-1 * var(--space-3));
+    padding-inline: var(--space-3);
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    flex-shrink: 0;
+    border-inline: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .lottery-market-sidebar__panel.lottery-market-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.lottery-market-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  padding: var(--space-2) var(--space-1);
+  border: 0;
+  border-radius: calc(var(--radius-panel) - 2px);
+  background: transparent;
+}
+
+@media (min-width: 1024px) {
+  .lottery-market-main {
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-main {
+    padding: var(--space-2);
+  }
+}
+
+.lottery-market-rounds-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 2px;
+  padding-bottom: var(--space-1);
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-rounds-scroll {
+    max-height: min(56dvh, 34rem);
+  }
+}
+
+.lottery-market-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-sidebar__list {
+    flex-direction: row;
+    width: max-content;
+    min-width: 100%;
+    padding-bottom: var(--space-1);
+  }
+}
+
+.lottery-market-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 3.25rem;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: transparent;
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--motion-fast) ease;
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-sidebar__item {
+    width: 11.5rem;
+    flex-shrink: 0;
+  }
+}
+
+.lottery-market-sidebar__item:hover {
+  background: color-mix(in srgb, var(--surface-solid-inner) 55%, transparent);
+}
+
+.lottery-market-sidebar__item.is-active {
+  background: var(--surface-solid-inner);
+}
+
+.lottery-market-sidebar__item.is-closed .lottery-market-sidebar__meta {
+  color: var(--text-muted);
+}
+
+.lottery-market-sidebar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.lottery-market-sidebar__title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.lottery-market-sidebar__meta {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.lottery-market-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+}
+
+.lottery-market-banner__body {
+  flex: 1 1 auto;
+}
+
+.lottery-market-banner__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.lottery-market-banner__rules {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.lottery-market-banner__rules:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.lottery-market-round-count {
+  margin: 0 0 var(--space-3);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.lottery-market-round-count__n {
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.lottery-play-round-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+}
+
+@media (min-width: 640px) {
+  .lottery-play-round-card--open {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.lottery-play-round-card--open {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.lottery-play-round-card--upcoming {
+  opacity: 0.88;
+}
+
+.lottery-play-round-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.lottery-play-round-card__schedule {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.lottery-play-round-card__countdown {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--success);
+}
+
+.lottery-play-round-card__opens {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.lottery-play-round-card__cta {
+  width: 100%;
+  max-width: 12rem;
+}
+
+.lottery-play-rounds__queue {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* รอบเยอะ (ยี่กี) — กริด 4 คอลัมน์ */
+.lottery-play-round-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 480px) {
+  .lottery-play-round-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .lottery-play-round-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+.lottery-play-round-grid__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 5.5rem;
+  padding: var(--space-2) var(--space-1);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--surface-solid-inner);
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    background var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.lottery-play-round-grid__cell.is-playable {
+  cursor: pointer;
+}
+
+.lottery-play-round-grid__cell.is-playable:hover {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.lottery-play-round-grid__cell.is-open {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.lottery-play-round-grid__cell:not(.is-playable) {
+  opacity: 0.72;
+}
+
+.lottery-play-round-grid__round {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.lottery-play-round-grid__time {
+  font-size: 1.125rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.lottery-play-round-grid__countdown {
+  display: inline-flex;
+  min-width: 4.5rem;
+  justify-content: center;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.lottery-play-rounds__expand {
+  display: flex;
+  width: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: var(--space-3);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.lottery-play-rounds__expand-chevron {
+  font-size: 0.65rem;
+  opacity: 0.85;
+}
+
+/*
  * --- Thai government lottery (/lottery/thai-government) — mobile-first ---
  * มือถือ/แท็บเล็ต: โพยคอลัมน์ซ้าย (แคบ, sticky) + เลือกเลขคอลัมน์ขวา วางคู่กันตลอด ไม่ซ้อนแนวตั้ง
  * จอใหญ่ (≥1024px): โพยย้ายเป็นคอลัมน์ขวาเต็มความสูง กว้างขึ้น
@@ -6783,8 +7517,9 @@ body {
   flex-direction: column;
   gap: var(--space-3);
   padding: var(--space-3);
+  border: 0;
   border-radius: var(--radius-panel);
-  background: var(--surface-mid);
+  background: var(--surface-solid-inner);
 }
 
 @media (min-width: 640px) {
@@ -6831,8 +7566,9 @@ body {
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-4);
+  border: 0;
   border-radius: var(--radius-panel);
-  background: var(--surface-gradient);
+  background: var(--surface-solid-inner);
 }
 
 .thai-lotto-draw__title {
@@ -6864,6 +7600,17 @@ body {
   font-size: 0.875rem;
 }
 
+:is(.thai-lotto-layout, .yiki-layout) .cosmic-segment-track {
+  border: 0;
+  background: color-mix(in srgb, var(--surface-solid-outer) 88%, #000);
+}
+
+:is(.thai-lotto-layout, .yiki-layout) .cosmic-segment-btn.is-active {
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
+}
+
 /* ประเภทการแทง */
 .thai-lotto-type-grid {
   display: grid;
@@ -6880,24 +7627,29 @@ body {
   align-items: center;
   min-height: 3.5rem;
   padding: var(--space-2) var(--space-3);
-  border-radius: calc(var(--radius-panel) - 8px);
-  background: color-mix(in srgb, var(--surface-hover) 60%, var(--surface-mid));
+  border: 1px solid var(--lottery-control-border);
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
   color: var(--text-secondary);
   text-align: left;
   transition:
     background var(--motion-fast) ease,
-    color var(--motion-fast) ease;
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
 }
 
 .thai-lotto-type-chip:hover {
-  background: var(--surface-hover);
+  background: var(--lottery-glass-fill-hover);
   color: var(--text-primary);
 }
 
 .thai-lotto-type-chip.is-active {
-  background: var(--surface-selected);
-  color: var(--text-primary);
-  box-shadow: inset 0 0 0 1.5px var(--border-active);
+  border-color: color-mix(in srgb, var(--cta-white-bg) 88%, var(--lottery-control-border));
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow:
+    0 4px 16px rgb(0 0 0 / 0.18),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
 }
 
 .thai-lotto-type-chip__check {
@@ -6907,12 +7659,13 @@ body {
   width: 1.125rem;
   height: 1.125rem;
   border-radius: 6px;
-  background: color-mix(in srgb, var(--surface-end) 70%, transparent);
+  background: color-mix(in srgb, var(--surface-solid-outer) 78%, var(--surface-solid-inner));
   color: var(--text-primary);
 }
 
 .thai-lotto-type-chip.is-active .thai-lotto-type-chip__check {
-  background: var(--action-solid);
+  background: color-mix(in srgb, var(--cta-white-fg) 88%, transparent);
+  color: var(--cta-white-bg);
 }
 
 .thai-lotto-type-chip__label {
@@ -6929,7 +7682,7 @@ body {
 }
 
 .thai-lotto-type-chip.is-active .thai-lotto-type-chip__rate {
-  color: #ffe66d;
+  color: color-mix(in srgb, var(--cta-white-fg) 72%, #b45309);
 }
 
 /* toggle กลับเลข */
@@ -6958,7 +7711,7 @@ body {
 }
 
 .thai-lotto-toggle.is-active .thai-lotto-toggle__track {
-  background: var(--action-solid);
+  background: var(--cta-primary-gradient);
 }
 
 .thai-lotto-toggle__thumb {
@@ -6988,17 +7741,29 @@ body {
   place-items: center;
   width: 3.25rem;
   height: 3.75rem;
-  border-radius: calc(var(--radius-panel) - 10px);
-  background: var(--surface-end);
+  border: 1px solid var(--lottery-control-border);
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--surface-solid-outer) 78%, var(--surface-solid-inner));
   font-size: 1.75rem;
   font-weight: 800;
-  color: #ffe66d;
+  color: transparent;
   font-variant-numeric: tabular-nums;
-  transition: box-shadow var(--motion-fast) ease;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+/* ตัวเลขที่กรอกแล้ว — สีขาวชัด ต่างจากช่องว่าง */
+.thai-lotto-slot.is-filled {
+  background: var(--surface-solid-inner);
+  color: var(--text-primary);
 }
 
 .thai-lotto-slot.is-next {
-  box-shadow: inset 0 0 0 1.5px var(--border-active);
+  border-color: color-mix(in srgb, var(--border-active) 55%, var(--lottery-control-border));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border-active) 35%, transparent);
 }
 
 .thai-lotto-pad {
@@ -7019,29 +7784,32 @@ body {
   display: grid;
   place-items: center;
   min-height: 3.25rem;
-  border-radius: calc(var(--radius-panel) - 10px);
-  background: var(--surface-hover);
+  border: 1px solid var(--lottery-control-border);
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
   font-size: 1.375rem;
   font-weight: 700;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
   transition:
     background var(--motion-fast) ease,
-    opacity var(--motion-fast) ease;
+    opacity var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
 }
 
 .thai-lotto-pad__key:hover:not(:disabled) {
-  background: var(--surface-selected);
+  background: var(--lottery-glass-fill-hover);
 }
 
 .thai-lotto-pad__key:active:not(:disabled) {
-  background: color-mix(in srgb, var(--action-solid) 45%, var(--surface-selected));
+  transform: scale(0.98);
 }
 
 .thai-lotto-pad__key--muted {
-  background: color-mix(in srgb, var(--surface-hover) 50%, var(--surface-mid));
   font-size: 0.9375rem;
   color: var(--text-secondary);
+  border: 1px solid var(--lottery-control-border);
+  background: color-mix(in srgb, var(--surface-solid-outer) 55%, var(--surface-solid-inner));
 }
 
 .thai-lotto-pad__key:disabled {
@@ -7081,7 +7849,7 @@ body {
   left: 20%;
   height: 2px;
   border-radius: var(--radius-pill);
-  background: var(--action-solid);
+  background: rgb(255 255 255 / 0.88);
 }
 
 .thai-lotto-mode-tabs__tab:focus-visible {
@@ -7112,8 +7880,12 @@ body {
 .thai-lotto-hundreds__btn {
   position: relative;
   min-height: 2.75rem;
-  border-radius: calc(var(--radius-panel) - 12px);
-  background: color-mix(in srgb, var(--surface-hover) 50%, var(--surface-mid));
+  border: 1px solid var(--lottery-control-border);
+  border-radius: var(--lottery-grid-cell-radius, var(--radius-card));
+  background: var(
+    --lottery-glass-fill,
+    linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.045))
+  );
   font-size: 0.9375rem;
   font-weight: 700;
   color: var(--text-secondary);
@@ -7125,11 +7897,16 @@ body {
 
 .thai-lotto-hundreds__btn:hover {
   color: var(--text-primary);
+  background: var(
+    --lottery-glass-fill-hover,
+    linear-gradient(145deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.07))
+  );
 }
 
 .thai-lotto-hundreds__btn.is-active {
-  background: var(--action-solid);
-  color: var(--text-primary);
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  border-color: transparent;
 }
 
 .thai-lotto-hundreds__dot {
@@ -7157,15 +7934,20 @@ body {
 
 .thai-lotto-grid__btn {
   min-height: 2.75rem;
-  border-radius: calc(var(--radius-panel) - 12px);
-  background: var(--surface-hover);
+  border: 1px solid var(--lottery-control-border);
+  border-radius: var(--lottery-grid-cell-radius, var(--radius-card));
+  background: var(
+    --lottery-glass-fill,
+    linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.045))
+  );
   font-size: 0.9375rem;
   font-weight: 700;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
   transition:
     background var(--motion-fast) ease,
-    color var(--motion-fast) ease;
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
 }
 
 .thai-lotto-grid--run .thai-lotto-grid__btn {
@@ -7174,7 +7956,10 @@ body {
 }
 
 .thai-lotto-grid__btn:hover:not(:disabled) {
-  background: var(--surface-selected);
+  background: var(
+    --lottery-glass-fill-hover,
+    linear-gradient(145deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.07))
+  );
 }
 
 .thai-lotto-grid__btn.is-active {
@@ -7243,8 +8028,9 @@ body {
   gap: var(--space-1);
   min-height: 2.5rem;
   padding: 0 var(--space-3);
-  border-radius: calc(var(--radius-panel) - 12px);
-  background: var(--surface-end);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
 }
 
 .thai-lotto-amount:focus-within {
@@ -7325,8 +8111,9 @@ body {
   align-items: center;
   gap: var(--space-1) var(--space-2);
   padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
-  border-radius: calc(var(--radius-panel) - 10px);
-  background: color-mix(in srgb, var(--surface-hover) 55%, var(--surface-mid));
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--lottery-glass-fill);
 }
 
 @media (min-width: 1024px) {
@@ -7391,7 +8178,7 @@ body {
 }
 
 .thai-lotto-slip__remove:hover {
-  background: var(--surface-hover);
+  background: color-mix(in srgb, var(--surface-solid-outer) 70%, var(--surface-solid-inner));
   color: var(--text-primary);
 }
 
@@ -7425,7 +8212,7 @@ body {
   gap: var(--space-1);
   padding: var(--space-3);
   border-radius: calc(var(--radius-panel) - 10px);
-  background: var(--surface-end);
+  background: color-mix(in srgb, var(--surface-solid-outer) 90%, #000);
 }
 
 .thai-lotto-result__label {
@@ -7457,7 +8244,7 @@ body {
   gap: var(--space-1);
   padding: var(--space-3) var(--space-1);
   border-radius: calc(var(--radius-panel) - 10px);
-  background: color-mix(in srgb, var(--surface-hover) 55%, var(--surface-mid));
+  background: var(--surface-solid-inner);
 }
 
 .thai-lotto-result__values {
@@ -7501,8 +8288,9 @@ body {
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
+  border: 0;
   border-radius: var(--radius-panel);
-  background: var(--surface-gradient);
+  background: var(--surface-solid-inner);
 }
 
 .yiki-round-strip__label {
@@ -7631,23 +8419,26 @@ body {
   min-width: 0;
   min-height: 3.5rem;
   padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--lottery-control-border);
   border-radius: calc(var(--radius-panel) - 8px);
-  background: color-mix(in srgb, var(--surface-hover) 60%, var(--surface-mid));
+  background: var(--lottery-glass-fill, var(--surface-solid-inner));
   color: var(--text-secondary);
   text-align: left;
   transition:
     background var(--motion-fast) ease,
-    color var(--motion-fast) ease;
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
 }
 
 .yiki-type-chip:hover {
-  background: var(--surface-hover);
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
   color: var(--text-primary);
 }
 
 .yiki-type-chip.is-active {
-  background: var(--gold-gradient);
-  color: #3a2400;
+  border-color: color-mix(in srgb, var(--cta-white-bg) 88%, var(--lottery-control-border));
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
 }
 
 .yiki-type-chip__label {
@@ -7666,7 +8457,7 @@ body {
 }
 
 .yiki-type-chip.is-active .yiki-type-chip__rate {
-  color: #5b3d00;
+  color: color-mix(in srgb, var(--cta-white-fg) 72%, #b45309);
 }
 
 /* โพย/ใส่ราคา — หัวเป็นจำนวนรายการ (ไม่มีคำว่า "โพยของฉัน" ตามดีไซน์อ้างอิง) */
@@ -7675,8 +8466,9 @@ body {
   flex-direction: column;
   gap: var(--space-3);
   padding: var(--space-3);
+  border: 0;
   border-radius: var(--radius-panel);
-  background: var(--surface-mid);
+  background: var(--surface-solid-inner);
 }
 
 @media (min-width: 640px) {
@@ -7730,7 +8522,7 @@ body {
     gap: var(--space-2);
     padding: var(--space-2);
     border-radius: calc(var(--radius-panel) - 6px);
-    background: color-mix(in srgb, var(--surface-hover) 28%, var(--surface-mid));
+    background: color-mix(in srgb, var(--surface-solid-outer) 55%, var(--surface-solid-inner));
   }
 }
 
@@ -7740,10 +8532,10 @@ body {
   justify-content: space-between;
   padding: 0.35rem var(--space-2);
   border-radius: calc(var(--radius-panel) - 14px);
-  background: color-mix(in srgb, var(--gold-gradient) 22%, var(--surface-end));
+  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
   font-size: 0.75rem;
   font-weight: 700;
-  color: #ffe66d;
+  color: var(--text-secondary);
 }
 
 .yiki-slip__row {
@@ -7752,7 +8544,7 @@ body {
   gap: var(--space-2);
   padding: 0.4rem var(--space-2) 0.4rem var(--space-3);
   border-radius: calc(var(--radius-panel) - 14px);
-  background: color-mix(in srgb, var(--surface-hover) 45%, var(--surface-mid));
+  background: color-mix(in srgb, var(--surface-solid-outer) 68%, var(--surface-solid-inner));
 }
 
 .yiki-slip__number {
@@ -7785,7 +8577,7 @@ body {
 }
 
 .yiki-slip__remove:hover {
-  background: var(--surface-hover);
+  background: color-mix(in srgb, var(--surface-solid-outer) 75%, var(--surface-solid-inner));
   color: var(--text-primary);
 }
 
@@ -7794,7 +8586,7 @@ body {
   justify-content: flex-end;
   gap: var(--space-2);
   padding-top: var(--space-2);
-  border-top: 1px solid var(--border-subtle);
+  border-top: 0;
 }
 
 .yiki-slip__tool-btn {
@@ -7803,7 +8595,7 @@ body {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 9999px;
-  background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
+  background: color-mix(in srgb, var(--surface-solid-outer) 70%, var(--surface-solid-inner));
   color: var(--text-secondary);
   transition:
     background var(--motion-fast) ease,
@@ -7812,7 +8604,7 @@ body {
 }
 
 .yiki-slip__tool-btn:hover:not(:disabled) {
-  background: var(--surface-hover);
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
   color: var(--text-primary);
 }
 
@@ -7831,14 +8623,14 @@ body {
   gap: var(--space-2);
   padding: 0.4rem var(--space-2) 0.4rem var(--space-3);
   border-radius: calc(var(--radius-panel) - 14px);
-  background: color-mix(in srgb, var(--surface-hover) 45%, var(--surface-mid));
-  box-shadow: inset 0 0 0 1.5px transparent;
+  background: color-mix(in srgb, var(--surface-solid-outer) 68%, var(--surface-solid-inner));
+  box-shadow: none;
   cursor: pointer;
-  transition: box-shadow var(--motion-fast) ease;
+  transition: background var(--motion-fast) ease;
 }
 
 .yiki-price-row.is-selected {
-  box-shadow: inset 0 0 0 1.5px var(--focus-ring);
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
 }
 
 .yiki-price-row__index {
@@ -7900,8 +8692,8 @@ body {
   display: flex;
   gap: var(--space-3);
   padding: var(--space-3) var(--page-gutter) calc(var(--space-3) + var(--nav-safe));
-  background: var(--surface-end);
-  border-top: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--surface-solid-outer) 94%, #000);
+  border-top: 0;
 }
 
 @media (min-width: 1024px) {
@@ -7934,8 +8726,9 @@ body {
   flex: 1 1 0;
   place-items: center;
   min-height: 3rem;
+  border: 0;
   border-radius: var(--radius-panel);
-  background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
+  background: var(--lottery-glass-fill);
   font-size: 0.9375rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -7944,7 +8737,7 @@ body {
 }
 
 .yiki-action-bar__secondary:hover {
-  background: var(--surface-hover);
+  background: var(--lottery-glass-fill-hover);
 }
 
 .yiki-action-bar__primary {
@@ -7962,18 +8755,18 @@ body {
   gap: var(--space-3);
   padding: var(--space-4);
   border-radius: var(--radius-panel);
-  background: var(--surface-mid);
+  background: var(--surface-solid-inner);
   text-decoration: none;
   color: inherit;
   transition: background var(--motion-fast) ease;
 }
 
 .yiki-round-card:hover {
-  background: var(--surface-hover);
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
 }
 
 .yiki-round-card--next {
-  background: var(--surface-gradient);
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
 }
 
 .yiki-round-card__body {
@@ -8014,8 +8807,9 @@ body {
 /* "วิธีการแทงหวย" — จอใหญ่เท่านั้น สีตามธีมเดิมทั้งหมด (ไม่ใช้โทนทอง/ดำจากภาพอ้างอิง) */
 .yiki-howto {
   padding: var(--space-5);
+  border: 0;
   border-radius: var(--radius-panel);
-  background: var(--surface-mid);
+  background: var(--surface-solid-inner);
   text-align: center;
 }
 
@@ -8060,7 +8854,7 @@ body {
   width: 2.75rem;
   height: 2.75rem;
   border-radius: var(--radius-panel);
-  background: color-mix(in srgb, var(--surface-hover) 60%, transparent);
+  background: color-mix(in srgb, var(--surface-solid-outer) 88%, #000);
   color: var(--icon-default);
 }
 
@@ -8106,7 +8900,7 @@ body {
   gap: 0.35rem;
   padding: var(--space-4);
   border-radius: calc(var(--radius-panel) - 8px);
-  background: var(--surface-end);
+  background: color-mix(in srgb, var(--surface-solid-outer) 80%, #000);
 }
 
 .yiki-price-controls__preview-label {
@@ -8141,7 +8935,7 @@ body {
 .yiki-price-controls__checkbox input[type="checkbox"] {
   width: 1.125rem;
   height: 1.125rem;
-  accent-color: var(--action-solid);
+  accent-color: var(--chart-2);
 }
 
 .yiki-price-controls__chips {
@@ -8152,23 +8946,43 @@ body {
 
 .yiki-price-chip {
   min-height: 2.75rem;
-  border-radius: calc(var(--radius-panel) - 10px);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
   font-size: 0.875rem;
   font-weight: 800;
   color: var(--text-primary);
-  box-shadow: inset 0 0 0 1.5px transparent;
-  transition: box-shadow var(--motion-fast) ease;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
 }
 
 .yiki-price-chip.is-active {
-  box-shadow: inset 0 0 0 2px var(--focus-ring);
+  border-color: transparent;
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
 }
 
-.yiki-price-chip--5 { background: color-mix(in srgb, #38bdf8 55%, var(--surface-hover)); }
-.yiki-price-chip--10 { background: color-mix(in srgb, var(--success) 55%, var(--surface-hover)); }
-.yiki-price-chip--20 { background: color-mix(in srgb, #d99a08 65%, var(--surface-hover)); }
-.yiki-price-chip--50 { background: color-mix(in srgb, #f97316 55%, var(--surface-hover)); }
-.yiki-price-chip--100 { background: color-mix(in srgb, #f43f5e 55%, var(--surface-hover)); }
+.yiki-price-chip--5:not(.is-active) {
+  background: color-mix(in srgb, #38bdf8 14%, var(--surface-solid-inner));
+}
+
+.yiki-price-chip--10:not(.is-active) {
+  background: color-mix(in srgb, #22c55e 12%, var(--surface-solid-inner));
+}
+
+.yiki-price-chip--20:not(.is-active) {
+  background: color-mix(in srgb, #d99a08 14%, var(--surface-solid-inner));
+}
+
+.yiki-price-chip--50:not(.is-active) {
+  background: color-mix(in srgb, #f97316 12%, var(--surface-solid-inner));
+}
+
+.yiki-price-chip--100:not(.is-active) {
+  background: color-mix(in srgb, #f43f5e 12%, var(--surface-solid-inner));
+}
 
 .yiki-price-controls__total {
   display: flex;
@@ -8197,8 +9011,9 @@ body {
 
 .yiki-price-controls__back {
   min-height: 2.75rem;
+  border: 0;
   border-radius: var(--radius-panel);
-  background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
+  background: var(--lottery-glass-fill);
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -8206,7 +9021,7 @@ body {
 }
 
 .yiki-price-controls__back:hover {
-  background: var(--surface-hover);
+  background: var(--lottery-glass-fill-hover);
 }
 
 .yiki-price-controls__submit {
@@ -8244,8 +9059,9 @@ body {
     display: grid;
     place-items: center;
     min-height: 2.75rem;
+    border: 0;
     border-radius: var(--radius-panel);
-    background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
+    background: var(--lottery-glass-fill);
     font-size: 0.875rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -8254,7 +9070,7 @@ body {
   }
 
   .yiki-pick-actions__back:hover {
-    background: var(--surface-hover);
+    background: var(--lottery-glass-fill-hover);
   }
 
   .yiki-pick-actions__primary {
@@ -8713,6 +9529,13 @@ body {
  */
 .cosmic-footer {
   --cosmic-footer-muted: var(--text-secondary);
+  --sheet-soft-fill: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.11),
+    rgb(255 255 255 / 0.045)
+  );
+  --sheet-soft-border: rgb(255 255 255 / 0.1);
+  --sheet-soft-blur: 14px;
   position: relative;
   flex-shrink: 0;
   margin-top: var(--space-8);
@@ -8906,28 +9729,30 @@ body {
   justify-content: center;
   gap: 0.5rem;
   flex: 1;
+  min-width: 0;
   min-height: 2.75rem;
   padding: 0.625rem 0.75rem;
-  border: 0;
   border-radius: var(--radius-panel);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--primary-foreground) !important;
-  background: var(--action-solid);
+  text-decoration: none;
 }
 
-.cosmic-footer__social-btn:hover {
-  background: var(--action-solid-hover);
-  color: var(--primary-foreground) !important;
+.cosmic-footer__social-btn--nav {
+  border-radius: var(--radius-panel);
+  color: var(--cta-white-fg) !important;
 }
 
-.cosmic-footer__social-btn--alt {
+.cosmic-footer__social-btn--nav:hover {
+  color: var(--cta-white-fg) !important;
+}
+
+.cosmic-footer__social-btn--glass {
   color: var(--text-primary) !important;
-  background: var(--surface-selected);
+  border-radius: var(--radius-panel);
 }
 
-.cosmic-footer__social-btn--alt:hover {
-  background: var(--surface-hover);
+.cosmic-footer__social-btn--glass:hover {
   color: var(--text-primary) !important;
 }
 
@@ -8952,26 +9777,10 @@ body {
 }
 
 .cosmic-footer__payment-chip {
-  padding: 0.5rem 0.625rem;
-  border-radius: var(--radius-panel);
-  border: 0;
+  padding: 0.5rem 0.75rem;
   font-size: 0.75rem;
   font-weight: 600;
-}
-
-.cosmic-footer__payment-chip--primary {
-  color: var(--primary-foreground);
-  background: var(--action-solid);
-}
-
-.cosmic-footer__payment-chip--muted {
   color: var(--text-secondary);
-  background: var(--surface-hover);
-}
-
-.cosmic-footer__payment-chip--soft {
-  color: var(--text-primary);
-  background: var(--surface-selected);
 }
 
 .cosmic-footer__bottom {

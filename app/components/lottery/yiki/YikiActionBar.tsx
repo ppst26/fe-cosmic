@@ -34,7 +34,7 @@ export function YikiActionBar({ className = "", secondary, primary }: YikiAction
       ) : null}
       <button
         type="button"
-        className="cosmic-action-btn yiki-action-bar__primary"
+        className="cosmic-cta-primary cosmic-cta-primary--lg yiki-action-bar__primary"
         disabled={primary.disabled}
         onClick={primary.onClick}
       >

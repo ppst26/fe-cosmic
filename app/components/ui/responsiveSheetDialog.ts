@@ -32,8 +32,8 @@ export function responsiveSheetContentClass(
           : "lg:w-[min(92vw,440px)]";
 
   return cn(
-    "cosmic-mobile-sheet cosmic-modal-shell fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
-    "rounded-t-[20px] border-t border-[var(--border-subtle)]/50 bg-[var(--cosmic-dialog-shell-bg)]",
+    "cosmic-mobile-sheet cosmic-modal-shell relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
+    "rounded-t-[20px] border-t border-[var(--border-subtle)]/50 max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)]",
     "px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)]",
     "shadow-[0_-16px_48px_rgba(0,0,0,0.55)] sm:px-5",
     "data-[state=closed]:animate-out data-[state=open]:animate-in duration-300",
@@ -57,10 +57,25 @@ export const RESPONSIVE_SHEET_HANDLE_CLASS =
  */
 export function responsiveSheetCloseButtonClass(extra?: string) {
   return cn(
-    "flex h-9 w-9 items-center justify-center rounded-full",
-    "bg-[var(--surface-hover)]/90 text-[var(--text-primary)]",
-    "transition-colors hover:bg-[var(--surface-selected)]",
+    "glass-control glass-icon-btn !h-9 !w-9 shrink-0 text-[var(--icon-default)]",
     "outline-none focus-visible:outline-none",
+    extra,
+  );
+}
+
+/** ปุ่มกลับสเต็ป — คู่กับ ResponsiveSheetHeader */
+export function responsiveSheetBackButtonClass(extra?: string) {
+  return cn(
+    "glass-control glass-icon-btn !h-9 !w-9 shrink-0 text-[var(--icon-default)]",
+    "outline-none focus-visible:outline-none",
+    extra,
+  );
+}
+
+/** แถวหัว sheet — 3 คอลัมน์: กลับ | หัวข้อ | ปิด */
+export function RESPONSIVE_SHEET_HEADER_ROW_CLASS(extra?: string) {
+  return cn(
+    "grid shrink-0 grid-cols-[2.25rem_minmax(0,1fr)_2.25rem] items-start gap-x-1 pb-2 pt-0.5 sm:grid-cols-[2.5rem_minmax(0,1fr)_2.5rem]",
     extra,
   );
 }
@@ -69,7 +84,7 @@ export function responsiveSheetCloseButtonClass(extra?: string) {
 export function responsiveAuthSheetContentClass(extra?: string) {
   return cn(
     responsiveSheetContentClass(undefined, { variant: "signup" }),
-    "cosmic-sheet-shell bg-[var(--cosmic-dialog-shell-bg)] shadow-[0_-12px_40px_rgba(0,0,0,0.45)]",
+    "cosmic-sheet-shell max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)] shadow-[0_-12px_40px_rgba(0,0,0,0.45)]",
     "lg:shadow-[0_0_32px_rgba(119,112,183,0.2),0_24px_48px_rgba(0,0,0,0.55)]",
     extra,
   );

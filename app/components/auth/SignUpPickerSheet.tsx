@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { signUpCoverToneClass, SignUpCoverTone } from "../../data/signupMockData";
+import { COSMIC_SHEET_SOFT_GLASS_INTERACTIVE } from "../ui/cosmicButtonClasses";
 
 interface SignUpPickerSheetProps {
   isOpen: boolean;
@@ -85,8 +86,8 @@ export function SignUpPickerGridItem({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex aspect-square flex-col items-center justify-center gap-2 rounded-[var(--radius-panel)] bg-[var(--surface-hover)] p-2 transition-colors outline-none hover:bg-[var(--surface-selected)] focus-visible:outline-none ${
-        selected ? "bg-[var(--surface-selected)] shadow-[inset_0_0_0_1px_var(--border-active)]" : ""
+      className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex aspect-square flex-col items-center justify-center gap-2 p-2 outline-none focus-visible:outline-none ${
+        selected ? "shadow-[inset_0_0_0_2px_var(--border-active)]" : ""
       }`}
     >
       <span

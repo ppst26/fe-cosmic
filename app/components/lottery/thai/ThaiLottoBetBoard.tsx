@@ -187,7 +187,7 @@ export function ThaiLottoBetBoard({
   };
 
   return (
-    <div className="thai-lotto-layout">
+    <div className="thai-lotto-layout surface-solid-outer">
       <div className="thai-lotto-layout__draw">
         <ThaiLottoDrawCard draw={draw} remainingMs={remainingMs} />
       </div>

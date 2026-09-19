@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import { Dialog } from "radix-ui";
-import { CloseIcon, PromoTicketIcon } from "../ui/Icons";
+import { PromoTicketIcon } from "../ui/Icons";
+import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
+import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
-  responsiveSheetCloseButtonClass,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
@@ -74,22 +75,18 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
         >
           <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
-          <Dialog.Close asChild>
-            <button
-              type="button"
-              className={responsiveSheetCloseButtonClass("absolute right-3 top-4")}
-              aria-label="ปิดหน้าแลกคูปอง"
-            >
-              <CloseIcon className="h-4 w-4" />
-            </button>
-          </Dialog.Close>
+          <ResponsiveSheetHeader
+            closeAriaLabel="ปิดหน้าแลกคูปอง"
+            title={<Dialog.Title className="text-xl font-extrabold sm:text-2xl">แลกคูปอง</Dialog.Title>}
+            subtitle={
+              <p id="coupon-redeem-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
+                โค้ดสำหรับแลกเครดิตฟรี
+              </p>
+            }
+          />
 
-          <div className="flex flex-col items-center pt-2 text-center">
+          <div className="flex flex-col items-center pt-1 text-center">
             <CouponTicketsGraphic className="mb-3 h-24 w-40 sm:h-28 sm:w-44" />
-            <Dialog.Title className="text-xl font-extrabold sm:text-2xl">แลกคูปอง</Dialog.Title>
-            <p id="coupon-redeem-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
-              โค้ดสำหรับแลกเครดิตฟรี
-            </p>
           </div>
 
           <form className="mt-6 flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -114,7 +111,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
               <label htmlFor="coupon-code" className="text-sm font-medium text-[var(--text-secondary)]">
                 รหัสคูปอง
               </label>
-              <div className="cosmic-inset-card flex h-12 items-center gap-2.5 bg-[var(--surface-hover)]/80 px-3">
+              <div className={COSMIC_SHEET_FIELD_ROW}>
                 <PromoTicketIcon className="h-5 w-5 shrink-0 text-[var(--border-active)]" />
                 <input
                   id="coupon-code"
@@ -131,7 +128,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
             <button
               type="submit"
               disabled={submitting}
-              className="cosmic-action-btn flex h-12 w-full items-center justify-center text-base disabled:opacity-60"
+              className="cosmic-sheet-submit"
             >
               {submitting ? "กำลังตรวจสอบ..." : "แลกเครดิตฟรี"}
             </button>

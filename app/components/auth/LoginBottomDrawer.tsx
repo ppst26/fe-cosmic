@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { CloseIcon, LockIcon, PhoneIcon } from "../ui/Icons";
+import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import {
   responsiveAuthSheetContentClass,
   responsiveSheetCloseButtonClass,
@@ -96,8 +97,8 @@ export function LoginBottomDrawer({
               <label htmlFor="login-phone" className="text-sm font-medium text-[var(--text-secondary)]">
                 เบอร์โทรศัพท์
               </label>
-              <div className="flex h-12 items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3">
-                <PhoneIcon className="h-5 w-5 text-[var(--icon-default)]" />
+              <div className={COSMIC_SHEET_FIELD_ROW}>
+                <PhoneIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
                 <input
                   id="login-phone"
                   type="tel"
@@ -115,8 +116,8 @@ export function LoginBottomDrawer({
               <label htmlFor="login-password" className="text-sm font-medium text-[var(--text-secondary)]">
                 รหัสผ่าน
               </label>
-              <div className="flex h-12 items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3">
-                <LockIcon className="h-5 w-5 text-[var(--icon-default)]" />
+              <div className={COSMIC_SHEET_FIELD_ROW}>
+                <LockIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
                 <input
                   id="login-password"
                   type="password"
@@ -132,7 +133,7 @@ export function LoginBottomDrawer({
             <button
               type="submit"
               disabled={submitting}
-              className="cosmic-action-btn mt-1 flex h-12 w-full items-center justify-center text-base disabled:opacity-60"
+              className="cosmic-sheet-submit mt-1"
             >
               {submitting ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
             </button>

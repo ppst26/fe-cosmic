@@ -10,13 +10,18 @@ import {
   formatWithdrawAmount,
   formatWithdrawMoney,
 } from "@/app/data/withdrawMockData";
-import { ChevronRightIcon, CloseIcon } from "../ui/Icons";
+import { ChevronRightIcon } from "../ui/Icons";
+import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
-  responsiveSheetCloseButtonClass,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
+import {
+  COSMIC_CHOICE_BTN,
+  COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
+  COSMIC_SHEET_SUBMIT,
+} from "../ui/cosmicButtonClasses";
 
 interface WithdrawBottomSheetProps {
   isOpen: boolean;
@@ -94,18 +99,10 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
         >
           <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
-          <div className="relative flex shrink-0 items-center justify-center px-12 pt-1 pb-2">
-            <Dialog.Title className="text-xl font-extrabold sm:text-2xl">ถอนเงิน</Dialog.Title>
-            <Dialog.Close asChild>
-              <button
-                type="button"
-                className={responsiveSheetCloseButtonClass("absolute right-0 top-0")}
-                aria-label="ปิดหน้าถอนเงิน"
-              >
-                <CloseIcon className="h-4 w-4" />
-              </button>
-            </Dialog.Close>
-          </div>
+          <ResponsiveSheetHeader
+            closeAriaLabel="ปิดหน้าถอนเงิน"
+            title={<Dialog.Title className="text-xl font-extrabold sm:text-2xl">ถอนเงิน</Dialog.Title>}
+          />
 
           <div
             id="withdraw-sheet-desc"
@@ -113,7 +110,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
           >
             <button
               type="button"
-              className="cosmic-inset-card flex w-full items-center gap-3 bg-[var(--surface-hover)]/35 px-3 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20 sm:px-4 sm:py-4"
+              className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex w-full items-center gap-3 px-3 py-3.5 sm:px-4 sm:py-4`}
               aria-label="เปลี่ยนบัญชีรับเงิน"
             >
               <KbankLogoGraphic className="h-11 w-11 shrink-0" />
@@ -127,7 +124,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                 </span>
                 <span className="mt-0.5 block text-[11px] text-[var(--text-muted)]">{bank.holderLabel}</span>
               </span>
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]/50 text-[var(--icon-default)]">
+              <span className="glass-control glass-icon-btn !h-9 !w-9 shrink-0 text-[var(--icon-default)]">
                 <ChevronRightIcon className="h-4 w-4" />
               </span>
             </button>
@@ -176,11 +173,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                       key={value}
                       type="button"
                       onClick={() => applyAmount(value)}
-                      className={`shrink-0 rounded-[var(--radius-control)] px-4 py-2 text-sm font-extrabold transition-colors ${
-                        active
-                          ? "bg-[#ddd6fe] text-[#1e1035]"
-                          : "bg-[var(--surface-hover)]/35 text-[var(--text-secondary)] hover:bg-[var(--surface-selected)]/25"
-                      }`}
+                      className={`${COSMIC_CHOICE_BTN} shrink-0 px-4 py-2 text-sm ${active ? "is-active" : ""}`}
                     >
                       {formatWithdrawAmount(value)}
                     </button>
@@ -205,7 +198,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               type="button"
               disabled={!canConfirm || submitting}
               onClick={handleConfirm}
-              className="cosmic-action-btn flex h-12 w-full items-center justify-center gap-2 text-base disabled:opacity-45"
+              className={COSMIC_SHEET_SUBMIT}
             >
               <WithdrawConfirmIcon className="h-5 w-5" />
               {submitting ? "กำลังส่ง..." : "ยืนยันถอนเงิน"}

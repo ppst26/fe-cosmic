@@ -11,6 +11,7 @@ alwaysApply: false
 
 - พื้นหลัง graphite `#0C0713`; การ์ด/ชั้นยก `--surface-elevated`; ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex ซ้ำ
 - Primary action / tab active: `#7747E5` (gradient ม่วง→ฟ้าได้เฉพาะ CTA/badge โปรโมชัน)
+- **ปุ่ม 3 ชั้น:** (1) `glass-control`+pill/icon — View All, carousel, tab (2) **`cosmic-btn-nav`** — ลิงก์หน้าอื่น/external (3) `cosmic-cta-primary` — สมัคร/ส่ง/รับโบนัส — ดู `design.md` § ปุ่มหลัก
 - **Component หลัก lobby:** borderless หรือ border จางมาก — แยกชั้นด้วย radius + elevation; หลีกเลี่ยง nebula/cosmic หนา
 - **Modal / sheet / grid cards:** มุม `var(--radius-panel)`; class ใน `globals.css` (`cosmic-modal-shell`, `cosmic-sheet-shell`, …)
 - **Search bar:** pill พื้น elevated; ห้าม ring/outline ตอน focus/hover — มือถือ guest ไม่มี search ใน header

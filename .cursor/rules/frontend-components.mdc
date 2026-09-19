@@ -9,6 +9,7 @@ alwaysApply: false
 แยก reusable components อย่างน้อยตามนี้เมื่อสร้างหน้าเต็มหรือส่วนที่เกี่ยวข้อง:
 
 - SectionHeader, CarouselControls (`showViewAll` สำหรับ carousel กิจกรรม)
+- ปุ่มหลัก: `cosmicButtonClasses.ts` — glass / `cosmic-btn-nav` / `cosmic-cta-primary`
 - GameCard, ProviderLogoMarquee / ProvidersSection, FeatureActionCard
 - JackpotSection (กิจกรรมทัวร์นาเมนต์ lobby), HallOfFame, FloatingBottomNav
 - หน้า lobby รวม: `HomeLobbyPage` + mock `HOME_LOBBY_TOURNAMENT_ITEMS`

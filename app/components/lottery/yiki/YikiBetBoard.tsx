@@ -236,7 +236,9 @@ export function YikiBetBoard({
 
   return (
     <>
-      <div className={`yiki-layout${step === "price" ? " yiki-layout--price" : ""}`}>
+      <div
+        className={`yiki-layout surface-solid-outer${step === "price" ? " yiki-layout--price" : ""}`}
+      >
         <div className="yiki-layout__round">
           <YikiRoundStrip round={round} remainingMs={remainingMs} flagLabel={flagLabel} flagTone={flagTone} />
         </div>
@@ -345,7 +347,7 @@ export function YikiBetBoard({
               </Link>
               <button
                 type="button"
-                className="cosmic-action-btn yiki-pick-actions__primary"
+                className="cosmic-cta-primary cosmic-cta-primary--lg yiki-pick-actions__primary"
                 disabled={entries.length === 0 || isClosed}
                 onClick={handleGoToPrice}
               >

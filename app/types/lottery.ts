@@ -13,7 +13,7 @@ export interface LotteryFeaturedItem {
   countdownLabel: string;
   href: string;
   visual: "thai-gov" | "yiki";
-  yikiMinutes?: 15 | 30;
+  yikiMinutes?: 5 | 15 | 30;
 }
 
 /** รายการหวยในกริด */
@@ -88,4 +88,35 @@ export interface ThaiLottoBetEntry {
   typeId: ThaiLottoBetTypeId;
   number: string;
   amount: number;
+}
+
+/* ---------- เลือกรอบเล่น (step 2) ---------- */
+
+/** รายการใน sidebar เลือกประเภทหวย */
+export interface LotteryCatalogEntry {
+  slug: string;
+  title: string;
+  flagLabel: string;
+  flagTone: LotteryFlagTone;
+  /** path หน้ารายการรอบ เช่น /lottery/thai-government */
+  roundsHref: string;
+  status: LotteryMarketStatus;
+  /** ข้อความใต้ชื่อใน sidebar — countdown หรือสถานะ */
+  statusLabel: string;
+}
+
+/** รอบการเล่น — mock จากตารางจริง (หวยไทย 1/16 · ยี่กี · หวยรายวัน) */
+export type LotteryPlayRoundStatus = "open" | "upcoming" | "closed";
+
+export interface LotteryPlayRound {
+  id: string;
+  drawLabel: string;
+  /** ข้อความยาวบนการ์ดรอบ */
+  scheduleLabel: string;
+  drawAt: string;
+  closeAt: string;
+  openAt: string;
+  status: LotteryPlayRoundStatus;
+  minBet: number;
+  maxBet: number;
 }

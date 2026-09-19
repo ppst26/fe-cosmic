@@ -10,6 +10,11 @@ import {
   FOOTER_SOCIAL_LINKS,
   FOOTER_TAGLINE,
 } from "@/app/data/footerMockData";
+import {
+  COSMIC_BTN_GLASS_PILL,
+  COSMIC_BTN_NAV,
+  COSMIC_SHEET_SOFT_GLASS,
+} from "@/app/components/ui/cosmicButtonClasses";
 
 interface CosmicFooterProps {
   className?: string;
@@ -55,11 +60,11 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className={
+                    className={`cosmic-footer__social-btn ${
                       index === 0
-                        ? "cosmic-footer__social-btn"
-                        : "cosmic-footer__social-btn cosmic-footer__social-btn--alt"
-                    }
+                        ? `${COSMIC_BTN_NAV} cosmic-btn-nav--lg cosmic-footer__social-btn--nav`
+                        : `${COSMIC_BTN_GLASS_PILL} cosmic-footer__social-btn--glass`
+                    }`}
                   >
                     {item.label === "LINE" ? <LineIcon /> : <TelegramIcon />}
                     {item.label}
@@ -70,11 +75,8 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
             <div className="cosmic-footer__contact-group">
               <h3 className="cosmic-footer__heading-sm">ช่องทางชำระเงิน</h3>
               <ul className="cosmic-footer__payments">
-                {FOOTER_PAYMENT_LABELS.map((label, index) => (
-                  <li
-                    key={label}
-                    className={`cosmic-footer__payment-chip ${paymentChipClass(index)}`}
-                  >
+                {FOOTER_PAYMENT_LABELS.map((label) => (
+                  <li key={label} className={`cosmic-footer__payment-chip ${COSMIC_SHEET_SOFT_GLASS}`}>
                     {label}
                   </li>
                 ))}
@@ -96,13 +98,6 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
       </div>
     </footer>
   );
-}
-
-/** โทนชิปชำระเงิน — สี solid จากธีม (ไม่ผูกแพลตฟอร์ม) */
-function paymentChipClass(index: number): string {
-  if (index === 0) return "cosmic-footer__payment-chip--primary";
-  if (index === 1) return "cosmic-footer__payment-chip--soft";
-  return "cosmic-footer__payment-chip--muted";
 }
 
 function LineIcon() {

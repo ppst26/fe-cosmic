@@ -14,6 +14,14 @@ export const LOTTERY_FEATURED_ITEMS: LotteryFeaturedItem[] = [
     visual: "thai-gov",
   },
   {
+    id: "lottery-feature-yiki-5",
+    title: "หวยยี่กี 5 นาที",
+    countdownLabel: "00:03:24",
+    href: "/lottery/yiki-5",
+    visual: "yiki",
+    yikiMinutes: 5,
+  },
+  {
     id: "lottery-feature-yiki-15",
     title: "หวยยี่กี 15 นาที",
     countdownLabel: "03:29:01",

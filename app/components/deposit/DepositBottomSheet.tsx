@@ -11,13 +11,21 @@ import {
   formatDepositTransferAmount,
   type DepositMethodId,
 } from "@/app/data/depositMockData";
-import { ChevronLeftIcon, ChevronRightIcon, CloseIcon, CopyIcon } from "../ui/Icons";
+import { ChevronRightIcon, CopyIcon } from "../ui/Icons";
+import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
-  responsiveSheetCloseButtonClass,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
+import {
+  COSMIC_CHOICE_BTN,
+  COSMIC_SHEET_FIELD_AMOUNT,
+  COSMIC_SHEET_FIELD_ROW,
+  COSMIC_SHEET_SOFT_GLASS,
+  COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
+  COSMIC_SHEET_SUBMIT,
+} from "../ui/cosmicButtonClasses";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 
@@ -181,15 +189,6 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
             />
           )}
 
-          <Dialog.Close asChild>
-            <button
-              type="button"
-              className={responsiveSheetCloseButtonClass("absolute right-3 top-4")}
-              aria-label="ปิดหน้าฝากเงิน"
-            >
-              <CloseIcon className="h-4 w-4" />
-            </button>
-          </Dialog.Close>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -199,19 +198,22 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMethodId) => void }) {
   return (
     <>
-      <div className="flex flex-col items-center pt-2 text-center">
-        <Dialog.Title className="text-xl font-extrabold sm:text-2xl">ฝากเงิน</Dialog.Title>
-        <p id="deposit-sheet-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
-          เลือกช่องทางการฝากเงิน
-        </p>
-      </div>
+      <ResponsiveSheetHeader
+        closeAriaLabel="ปิดหน้าฝากเงิน"
+        title={<Dialog.Title className="text-xl font-extrabold sm:text-2xl">ฝากเงิน</Dialog.Title>}
+        subtitle={
+          <p id="deposit-sheet-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
+            เลือกช่องทางการฝากเงิน
+          </p>
+        }
+      />
 
       <ul className="mt-6 flex flex-col gap-3 overflow-y-auto pb-2" aria-label="ช่องทางฝากเงิน">
         {DEPOSIT_METHOD_OPTIONS.map((method) => (
           <li key={method.id}>
             <button
               type="button"
-              className="cosmic-inset-card flex w-full items-center gap-3 bg-[var(--surface-hover)]/35 px-3 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/25 active:scale-[0.995] sm:px-4 sm:py-4"
+              className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex w-full items-center gap-3 px-3 py-3.5 sm:px-4 sm:py-4`}
               onClick={() => onSelectMethod(method.id)}
             >
               <DepositMethodIcon methodId={method.id} className="h-12 w-12 shrink-0 sm:h-[52px] sm:w-[52px]" />
@@ -256,25 +258,20 @@ function DepositBankStep({
 
   return (
     <>
-      <div className="relative flex shrink-0 items-center justify-center px-10 pt-1 pb-2">
-        <button
-          type="button"
-          onClick={onBack}
-          className="absolute left-0 top-1 flex h-9 w-9 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--icon-active)]"
-          aria-label="กลับเลือกช่องทางฝาก"
-        >
-          <ChevronLeftIcon className="h-5 w-5" />
-        </button>
-        <Dialog.Title className="text-center text-base font-extrabold sm:text-lg">
-          ฝากผ่านบัญชีธนาคาร
-        </Dialog.Title>
-      </div>
+      <ResponsiveSheetHeader
+        closeAriaLabel="ปิดหน้าฝากเงิน"
+        onBack={onBack}
+        backAriaLabel="กลับเลือกช่องทางฝาก"
+        title={
+          <Dialog.Title className="text-base font-extrabold sm:text-lg">ฝากผ่านบัญชีธนาคาร</Dialog.Title>
+        }
+      />
 
       <div
         id="deposit-bank-desc"
         className="min-h-0 flex-1 overflow-y-auto pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(124,58,237,0.35)_transparent]"
       >
-        <section className="cosmic-inset-card bg-[var(--surface-hover)]/30 px-3 py-3.5 sm:px-4 sm:py-4">
+        <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 sm:px-4 sm:py-4`}>
           <div className="flex items-start gap-3">
             <KbankLogoGraphic className="h-11 w-11 shrink-0 sm:h-12 sm:w-12" />
             <div className="min-w-0 flex-1">
@@ -295,7 +292,7 @@ function DepositBankStep({
                 <button
                   type="button"
                   onClick={onCopyAccount}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--surface-mid)]/60 text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-selected)]/40 hover:text-[var(--icon-active)]"
+                  className="glass-control glass-icon-btn !h-9 !w-9 shrink-0 text-[var(--icon-default)]"
                   aria-label="คัดลอกเลขบัญชี"
                 >
                   <CopyIcon className="h-4 w-4" />
@@ -318,8 +315,8 @@ function DepositBankStep({
           <label htmlFor="deposit-amount" className="text-xs font-medium text-[var(--text-secondary)]">
             จำนวนเงินที่ต้องการฝาก
           </label>
-          <div className="cosmic-inset-card mt-2 flex h-14 items-center gap-0 overflow-hidden bg-[var(--surface-hover)]/40">
-            <span className="flex h-full items-center bg-[var(--surface-hover)]/50 px-3 text-lg font-bold text-[var(--text-secondary)]">
+          <div className={`${COSMIC_SHEET_FIELD_AMOUNT} mt-2`}>
+            <span className="cosmic-sheet-field__addon px-3 text-lg font-bold text-[var(--text-secondary)]">
               ฿
             </span>
             <input
@@ -345,7 +342,7 @@ function DepositBankStep({
                   key={value}
                   type="button"
                   onClick={() => onQuickAmount(value)}
-                  className={`cosmic-choice-btn py-2.5 text-sm ${active ? "is-active" : ""}`}
+                  className={`${COSMIC_CHOICE_BTN} py-2.5 text-sm ${active ? "is-active" : ""}`}
                 >
                   {formatDepositAmount(value)}
                 </button>
@@ -371,7 +368,7 @@ function DepositBankStep({
             type="button"
             disabled={!canProceed}
             onClick={onNext}
-            className="cosmic-action-btn flex h-12 min-w-0 flex-1 items-center justify-center gap-1 text-base"
+            className={`${COSMIC_SHEET_SUBMIT} min-w-0 flex-1 !w-auto`}
           >
             ถัดไป
             <ChevronRightIcon className="h-4 w-4" />
@@ -411,31 +408,26 @@ function DepositConfirmStep({
 
   return (
     <>
-      <div className="relative flex shrink-0 flex-col items-center px-10 pt-1 pb-2">
-        <button
-          type="button"
-          onClick={onBack}
-          className="absolute left-0 top-1 flex h-9 w-9 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--icon-active)]"
-          aria-label="กลับแก้ไขยอดฝาก"
-        >
-          <ChevronLeftIcon className="h-5 w-5" />
-        </button>
-        <Dialog.Title className="text-center text-base font-extrabold sm:text-lg">ยืนยันการฝากเงิน</Dialog.Title>
-        <p className="mt-0.5 text-xs text-[var(--text-muted)]">ขั้นตอน 3 จาก 3</p>
-      </div>
+      <ResponsiveSheetHeader
+        closeAriaLabel="ปิดหน้าฝากเงิน"
+        onBack={onBack}
+        backAriaLabel="กลับแก้ไขยอดฝาก"
+        title={<Dialog.Title className="text-base font-extrabold sm:text-lg">ยืนยันการฝากเงิน</Dialog.Title>}
+        subtitle={<p className="mt-0.5 text-xs text-[var(--text-muted)]">ขั้นตอน 3 จาก 3</p>}
+      />
 
       <div
         id="deposit-confirm-desc"
         className="min-h-0 flex-1 overflow-y-auto pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(124,58,237,0.35)_transparent]"
       >
-        <section className="cosmic-inset-card bg-[var(--surface-hover)]/25 px-3 py-3.5 text-center sm:px-4">
+        <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 text-center sm:px-4`}>
           <p className="text-xs text-[var(--text-secondary)]">ยอดเงินที่ต้องโอน</p>
           <p className="mt-1 text-3xl font-extrabold text-[#a78bfa] sm:text-4xl">
             ฿ {formatDepositTransferAmount(amount)}
           </p>
         </section>
 
-        <section className="cosmic-inset-card mt-3 bg-[var(--surface-hover)]/30 px-3 py-3 sm:px-4 sm:py-3.5">
+        <section className={`${COSMIC_SHEET_SOFT_GLASS} mt-3 px-3 py-3 sm:px-4 sm:py-3.5`}>
           <div className="flex items-start gap-3">
             <KbankLogoGraphic className="h-10 w-10 shrink-0" />
             <div className="min-w-0 flex-1 space-y-1.5 text-sm">
@@ -452,7 +444,7 @@ function DepositConfirmStep({
                 <button
                   type="button"
                   onClick={onCopyAccount}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5b21b6]/70 text-[var(--text-primary)] transition-colors hover:bg-[#6d28d9]"
+                  className="glass-control glass-icon-btn !h-8 !w-8 text-[var(--icon-default)]"
                   aria-label="คัดลอกเลขบัญชี"
                 >
                   <CopyIcon className="h-3.5 w-3.5" />
@@ -480,7 +472,7 @@ function DepositConfirmStep({
           <button
             type="button"
             onClick={onPickSlip}
-            className="cosmic-inset-card mt-2 flex w-full items-center gap-3 bg-[var(--surface-hover)]/20 px-3 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20 sm:px-4"
+            className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} mt-2 flex w-full items-center gap-3 px-3 py-3.5 sm:px-4`}
           >
             <SlipPlaceholderIcon className="h-10 w-10 shrink-0 text-[var(--icon-default)]" />
             <span className="min-w-0 flex-1">
@@ -513,7 +505,7 @@ function DepositConfirmStep({
           type="button"
           disabled={submitting}
           onClick={onConfirm}
-          className="cosmic-action-btn flex h-12 w-full items-center justify-center text-base disabled:opacity-60"
+          className={COSMIC_SHEET_SUBMIT}
         >
           {submitting ? "กำลังส่ง..." : "ยืนยันการฝากเงิน"}
         </button>

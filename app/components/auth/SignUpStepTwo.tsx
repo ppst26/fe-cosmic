@@ -12,6 +12,10 @@ import {
   getSignUpBankById,
   getSignUpChannelById,
 } from "../../data/signupMockData";
+import {
+  COSMIC_SHEET_FIELD_ROW,
+  COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
+} from "../ui/cosmicButtonClasses";
 
 /**
  * ช่องกรอกแบบไม่มีไอคอน — ชื่อ / เลขบัญชี
@@ -38,16 +42,18 @@ function SignUpPlainInput({
       <label htmlFor={id} className="text-sm font-medium text-[var(--text-secondary)]">
         {label}
       </label>
-      <input
-        id={id}
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        inputMode={inputMode}
-        autoComplete={autoComplete}
-        className="h-12 w-full rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none"
-      />
+      <div className={COSMIC_SHEET_FIELD_ROW}>
+        <input
+          id={id}
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          inputMode={inputMode}
+          autoComplete={autoComplete}
+          className="min-w-0 flex-1 bg-transparent text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none"
+        />
+      </div>
     </div>
   );
 }
@@ -82,7 +88,7 @@ function SignUpPickerTrigger({
         id={id}
         aria-labelledby={`${id}-label`}
         onClick={onClick}
-        className="flex h-12 w-full items-center gap-2.5 rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3 text-left outline-none focus-visible:outline-none"
+        className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex h-12 w-full items-center gap-2.5 px-3 text-left outline-none focus-visible:outline-none`}
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)] text-[var(--icon-default)]">
           {icon}
@@ -197,14 +203,14 @@ export function SignUpStepTwo({
           <button
             type="button"
             onClick={onBack}
-            className="flex h-12 items-center justify-center rounded-[var(--radius-control)] bg-[var(--surface-hover)] text-sm font-bold text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-selected)] active:scale-[0.99]"
+            className="glass-control glass-pill !min-h-12 w-full text-sm font-bold text-[var(--text-secondary)]"
           >
             ย้อนกลับ
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="cosmic-action-btn flex h-12 items-center justify-center text-sm disabled:opacity-60"
+            className="cosmic-sheet-submit !w-auto text-sm"
           >
             {isSubmitting ? "กำลังสมัคร..." : "สมัครสมาชิก"}
           </button>

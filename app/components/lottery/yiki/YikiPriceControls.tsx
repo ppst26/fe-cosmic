@@ -89,7 +89,7 @@ export function YikiPriceControls({
         </button>
         <button
           type="button"
-          className="cosmic-action-btn yiki-price-controls__submit"
+          className="cosmic-cta-primary cosmic-cta-primary--lg yiki-price-controls__submit"
           onClick={onSubmit}
           disabled={submitDisabled}
         >

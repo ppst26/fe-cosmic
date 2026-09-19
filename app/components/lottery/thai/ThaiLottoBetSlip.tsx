@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { ThaiLottoBetEntry, ThaiLottoBetType, ThaiLottoBetTypeId } from "@/app/types/lottery";
+import { COSMIC_BTN_PRIMARY } from "@/app/components/ui/cosmicButtonClasses";
 import { formatBaht } from "../lotteryUtils";
 
 interface ThaiLottoBetSlipProps {
@@ -146,7 +147,7 @@ export function ThaiLottoBetSlip({
 
       <button
         type="button"
-        className="cosmic-action-btn min-h-12 w-full text-base"
+        className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--lg min-h-12 w-full text-base`}
         disabled={!canSubmit}
         onClick={() => onSubmit?.(entries)}
       >
