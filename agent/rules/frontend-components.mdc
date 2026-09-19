@@ -8,9 +8,10 @@ alwaysApply: false
 
 แยก reusable components อย่างน้อยตามนี้เมื่อสร้างหน้าเต็มหรือส่วนที่เกี่ยวข้อง:
 
-- SectionHeader, CarouselControls
-- GameCard, ProviderCard, FeatureActionCard
-- JackpotWinnerCard, HallOfFame, FloatingBottomNav
+- SectionHeader, CarouselControls (`showViewAll` สำหรับ carousel กิจกรรม)
+- GameCard, ProviderLogoMarquee / ProvidersSection, FeatureActionCard
+- JackpotSection (กิจกรรมทัวร์นาเมนต์ lobby), HallOfFame, FloatingBottomNav
+- หน้า lobby รวม: `HomeLobbyPage` + mock `HOME_LOBBY_TOURNAMENT_ITEMS`
 
 กฎ:
 

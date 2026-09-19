@@ -29,7 +29,7 @@ interface HeaderProps {
 }
 
 /**
- * Header — มือถือ: โลโก้ · (ค้นหา+โปรไฟล์เมื่อล็อกอิน) · กระเป๋าหรือ Log in/Sign up
+ * Header — มือถือ: โลโก้ · ยอดเครดิต+ไอคอนกระเป๋า (ล็อกอิน) · โปรไฟล์ · ไม่มีการ์ด/ค้นหา/ปุ่ม +
  * Desktop lg+: ค้นหากลางแสดงเมื่อล็อกอิน · แขกเห็นแค่ Log in / Sign up
  */
 export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
@@ -64,38 +64,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
           </Link>
 
           <div className="cosmic-actions">
-            {showWallet ? (
-              <button
-                type="button"
-                className="cosmic-nav__chip glass-card--soft glass-icon-btn"
-                aria-label="ค้นหาเกม"
-              >
-                <SearchIcon className="h-5 w-5" aria-hidden />
-              </button>
-            ) : null}
-
-            {isLoading ? (
-              <div
-                className="cosmic-nav__wallet-cluster glass-card--soft wallet-button--skeleton"
-                aria-hidden="true"
-              />
-            ) : showWallet ? (
-              <div className="cosmic-nav__wallet-cluster glass-card--soft">
-                <div className="wallet-button wallet-button--cluster" aria-live="polite">
-                  <HeaderWalletIcon aria-hidden="true" />
-                  <span>{balanceLabel}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={openDeposit}
-                  className="cosmic-nav__deposit-cta cosmic-cta-primary"
-                  aria-label="ฝากเงิน"
-                  aria-haspopup="dialog"
-                >
-                  +
-                </button>
-              </div>
-            ) : (
+            {isLoading ? null : !showWallet ? (
               <div className="cosmic-nav__auth">
                 <button
                   type="button"
@@ -112,19 +81,28 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   Sign up
                 </button>
               </div>
-            )}
+            ) : null}
 
             {showWallet ? (
-              <button
-                type="button"
-                onClick={handleProfileClick}
-                className={`profile-button cosmic-nav__chip glass-card--soft glass-icon-btn${isProfileOpen ? " is-active" : ""}`}
-                aria-label="โปรไฟล์"
-                aria-expanded={isProfileOpen}
-                aria-haspopup="dialog"
-              >
-                <ProfileNavIcon aria-hidden="true" />
-              </button>
+              <div className="cosmic-nav__user-cluster glass-card--soft">
+                <div className="cosmic-nav__wallet-inline" aria-live="polite">
+                  <HeaderWalletIcon
+                    className="h-5 w-5 shrink-0 text-[var(--icon-active)]"
+                    aria-hidden="true"
+                  />
+                  <span className="cosmic-nav__wallet-balance">{balanceLabel}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleProfileClick}
+                  className={`cosmic-nav__profile-in-cluster profile-button${isProfileOpen ? " is-active" : ""}`}
+                  aria-label="โปรไฟล์"
+                  aria-expanded={isProfileOpen}
+                  aria-haspopup="dialog"
+                >
+                  <ProfileNavIcon className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
             ) : null}
           </div>
         </div>

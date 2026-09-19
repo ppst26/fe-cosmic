@@ -69,7 +69,7 @@ export function ProfileHubAccordion({
       <button
         type="button"
         onClick={onToggle}
-        className="profile-hub-accordion__trigger flex w-full items-center gap-2 px-2.5 py-2.5 text-left transition-colors"
+        className="profile-hub-accordion__trigger profile-hub-menu-main flex w-full items-center gap-2 px-2.5 py-2.5 text-left transition-colors"
         aria-expanded={expanded}
       >
         <span className="profile-hub-accordion__icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--icon-default)]">

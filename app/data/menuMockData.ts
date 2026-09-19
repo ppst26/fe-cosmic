@@ -19,7 +19,7 @@ export interface MenuDialogSection {
 }
 
 /**
- * กลุ่มเมนู dialog — เลเบลด้านบนแต่ละกลุ่ม · grid 3 / 3 / 4
+ * กลุ่มเมนู dialog — เลเบลด้านบนแต่ละกลุ่ม · grid 3 / 4 / 4
  * ใช้โดย app/components/layout/RightMenuDrawer.tsx
  */
 export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
@@ -36,7 +36,7 @@ export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
   {
     id: "privileges",
     sectionLabel: "สิทธิพิเศษ",
-    columns: 3,
+    columns: 4,
     items: [
       { id: "promotions", label: "โปรโมชั่น", href: "/promotions", iconId: "promotions" },
       { id: "activities", label: "กิจกรรม", href: "/activities", iconId: "activities" },

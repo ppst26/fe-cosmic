@@ -133,15 +133,23 @@ export function LobbyDesktopSidebar({
 }: LobbyDesktopSidebarProps) {
   const router = useRouter();
 
+  const pushCategoryRoute = (href: string) => {
+    const scrollY = window.scrollY;
+    router.push(href, { scroll: false });
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY);
+    });
+  };
+
   const handleCategoryClick = (category: CategoryItem) => {
     onSelectCategory?.(category.id);
     if (navigationMode !== "route") return;
     if (category.href.startsWith("#")) {
-      router.push(`/${category.href}`);
+      pushCategoryRoute(`/${category.href}`);
       return;
     }
     if (category.href.startsWith("/")) {
-      router.push(category.href);
+      pushCategoryRoute(category.href);
     }
   };
 

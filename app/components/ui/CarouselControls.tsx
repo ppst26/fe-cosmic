@@ -3,8 +3,10 @@ import Link from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 
 interface CarouselControlsProps {
-  viewAllHref: string;
+  viewAllHref?: string;
   viewAllLabel?: string;
+  /** false = แสดงเฉพาะปุ่มเลื่อน (เช่น carousel กิจกรรม) */
+  showViewAll?: boolean;
   /** ชื่อ section ใช้ประกอบ accessible name ของปุ่มลูกศร */
   sectionTitle: string;
   canPrev: boolean;
@@ -19,8 +21,9 @@ interface CarouselControlsProps {
  * ถูกเรียกใช้โดย Carousel.tsx เท่านั้น — state ของปุ่มมาจาก hook ใน Carousel
  */
 export function CarouselControls({
-  viewAllHref,
+  viewAllHref = "#",
   viewAllLabel = "View All",
+  showViewAll = true,
   sectionTitle,
   canPrev,
   canNext,
@@ -31,9 +34,11 @@ export function CarouselControls({
 
   return (
     <div className="flex items-center gap-2">
-      <Link href={viewAllHref} className="glass-control glass-pill">
-        {viewAllLabel}
-      </Link>
+      {showViewAll ? (
+        <Link href={viewAllHref} className="glass-control glass-pill">
+          {viewAllLabel}
+        </Link>
+      ) : null}
 
       {/* Previous */}
       <button

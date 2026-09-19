@@ -150,6 +150,14 @@ export interface JackpotWinner {
   category: JackpotCategory;
 }
 
+/** การ์ดกิจกรรม/ทัวร์นาเมนต์บน lobby มือถือ — รูปจาก public/tournament */
+export interface HomeLobbyTournamentItem {
+  id: string;
+  title: string;
+  imageSrc: string;
+  href?: string;
+}
+
 export type HallOfFameTabId = "latest-winner" | "top-win-multiple";
 
 /** แถว Hall of Fame — แท็บ Latest Winner (payout) / Top Win Multiple (winMultiple) */

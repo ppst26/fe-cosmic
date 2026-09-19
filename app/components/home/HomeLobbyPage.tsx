@@ -21,7 +21,6 @@ import { CategoryNav } from "./CategoryNav";
 import { LobbyCategoryProviders } from "./LobbyCategoryProviders";
 import { GameSection } from "./GameSection";
 import { ProvidersSection } from "./ProvidersSection";
-import { FeatureActionCards } from "./FeatureActionCards";
 import { JackpotSection } from "./JackpotSection";
 import { HallOfFame } from "./HallOfFame";
 import { FloatingBottomNav } from "../layout/FloatingBottomNav";
@@ -34,8 +33,7 @@ import {
   INTRO_STATS_DATA,
   POPULAR_HIGHLIGHTS_DATA,
   GAME_SECTIONS_DATA,
-  FEATURE_ACTIONS_DATA,
-  JACKPOT_WINNERS_DATA,
+  HOME_LOBBY_TOURNAMENT_ITEMS,
   HALL_OF_FAME_DATA,
   BOTTOM_NAV_DATA,
 } from "@/app/data/lobbyMockData";
@@ -157,12 +155,12 @@ export function HomeLobbyPage() {
                         fallback={
                           <section className="mt-8 w-full px-[var(--page-gutter)] sm:mt-10">
                             <p className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-6 text-center text-sm text-[var(--text-secondary)]">
-                              เข้าสู่ระบบหรือสมัครสมาชิกเพื่อดูรายชื่อผู้ชนะ Jackpot
+                              เข้าสู่ระบบหรือสมัครสมาชิกเพื่อดูกิจกรรม
                             </p>
                           </section>
                         }
                       >
-                        <JackpotSection winners={JACKPOT_WINNERS_DATA} />
+                        <JackpotSection items={HOME_LOBBY_TOURNAMENT_ITEMS} />
                       </AuthGate>
 
                       <FloatingBottomNav
@@ -175,8 +173,6 @@ export function HomeLobbyPage() {
                     <div className={isHomeLobby ? undefined : "lg:hidden"}>
                       <HallOfFame datasets={HALL_OF_FAME_DATA} />
                     </div>
-
-                    {isHomeLobby ? <FeatureActionCards items={FEATURE_ACTIONS_DATA} /> : null}
                   </main>
                 </div>
 

@@ -196,8 +196,10 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
 
   if (categoryId === "lottery") {
     return (
-      <section className="lobby-category-providers mt-1 min-w-0">
-        <LotteryHubContent />
+      <section className="lobby-category-providers mt-1 min-w-0" aria-label="หวย">
+        <div key={categoryId} className="lobby-category-providers__swap min-w-0">
+          <LotteryHubContent />
+        </div>
       </section>
     );
   }

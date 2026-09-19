@@ -27,5 +27,5 @@ description: >-
 - การกำหนด style และการออกแบบเริ่มต้นต้องเริ่มที่การออกแบบหน้าจอมือถือก่อนเป็นหลักเสมอ (Mobile-first)
 - ไม่เพิ่ม section, เมนู, กราฟิก, สถิติ หรือ copy ที่ผู้ใช้ไม่ได้ให้
 - ไม่ยึดความสูงภาพ mockup เป็นความสูงหน้าเว็บ
-- Feature / Jackpot / Bottom Nav = ไอคอนเรียบ ไม่ใช่ 3D/neon
+- Feature / กิจกรรม lobby (carousel รูปทัวร์นาเมนต์) / Bottom Nav = ไอคอนเรียบ ไม่ใช่ 3D/neon — ดู `design.md` § LobbyActivitiesSection
 - ไม่สร้าง Header หรือ Navigation ซ้ำเมื่อประกอบจากภาพแยกส่วน

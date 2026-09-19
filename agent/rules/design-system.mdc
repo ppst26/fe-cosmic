@@ -13,9 +13,11 @@ alwaysApply: false
 - Primary action / tab active: `#7747E5` (gradient ม่วง→ฟ้าได้เฉพาะ CTA/badge โปรโมชัน)
 - **Component หลัก lobby:** borderless หรือ border จางมาก — แยกชั้นด้วย radius + elevation; หลีกเลี่ยง nebula/cosmic หนา
 - **Modal / sheet / grid cards:** มุม `var(--radius-panel)`; class ใน `globals.css` (`cosmic-modal-shell`, `cosmic-sheet-shell`, …)
-- **Search bar:** pill พื้น elevated; ห้าม ring/outline ตอน focus/hover
-- **Category row:** การ์ดมุมโค้งแบบ Dexsport (ภาพหมวดได้); nav/HoF/Jackpot ยังใช้ icon เรียบ
-- **Hall of Fame:** แถวแยกการ์ด + gap แนวตั้งชัด
+- **Search bar:** pill พื้น elevated; ห้าม ring/outline ตอน focus/hover — มือถือ guest ไม่มี search ใน header
+- **Category row:** การ์ดมุมโค้งแบบ Dexsport + chip soft glass; nav/HoF/กิจกรรม ใช้ icon เรียบ
+- **กิจกรรม lobby (มือถือ):** carousel รูป `public/tournament/` — dots กลาง + prev/next ไม่มี View All (`JackpotSection.tsx`)
+- **Providers:** marquee โลโก้ ไม่ glass card; ช่องว่างบน ~48px
+- **Hall of Fame:** แถวแยกการ์ด + gap แนวตั้งชัด; แท็บ soft glass
 - Mobile-first; `max-width` 1200px; gutter จาก `design.md`
-- ลำดับ section หมวด 6 ใน `design.md`
+- ลำดับ section หมวด 6 + แผนไฟล์หมวด 10 ใน `design.md`
 - เกณฑ์ตรวจ: หมวด 11 ใน `design.md` หรือ skill `ui-qa-checklist`

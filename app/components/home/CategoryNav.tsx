@@ -85,19 +85,27 @@ export function CategoryNav({
       ? (activeIdProp ?? pickedId)
       : (routeActiveId ?? activeIdProp ?? pickedId);
 
+  const pushCategoryRoute = (href: string) => {
+    const scrollY = window.scrollY;
+    router.push(href, { scroll: false });
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY);
+    });
+  };
+
   const handleCategoryClick = (category: CategoryItem) => {
     setPickedId(category.id);
     onSelectCategory?.(category.id);
     if (navigationMode !== "route") return;
 
     if (category.href.startsWith("#")) {
-      router.push(`/${category.href}`);
+      pushCategoryRoute(`/${category.href}`);
       return;
     }
 
     if (category.href.startsWith("/")) {
       if (category.href === "/" && pathname === "/") return;
-      router.push(category.href);
+      pushCategoryRoute(category.href);
     }
   };
 

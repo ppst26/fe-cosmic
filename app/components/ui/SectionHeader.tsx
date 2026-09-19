@@ -3,6 +3,7 @@ import React from "react";
 interface SectionHeaderProps {
   icon?: React.ReactNode;
   title: string;
+  titleId?: string;
   className?: string;
   actionContent?: React.ReactNode;
 }
@@ -14,6 +15,7 @@ interface SectionHeaderProps {
 export function SectionHeader({
   icon,
   title,
+  titleId,
   className = "",
   actionContent,
 }: SectionHeaderProps) {
@@ -21,7 +23,10 @@ export function SectionHeader({
     <div className={`flex items-center justify-between gap-3 mb-3 ${className}`}>
       <div className="flex items-center gap-2">
         {icon && <span className="inline-flex items-center shrink-0">{icon}</span>}
-        <h2 className="text-[18px] sm:text-[20px] font-bold tracking-tight text-[var(--text-primary)] leading-[1.4]">
+        <h2
+          id={titleId}
+          className="text-[18px] sm:text-[20px] font-bold tracking-tight text-[var(--text-primary)] leading-[1.4]"
+        >
           {title}
         </h2>
       </div>

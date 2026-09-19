@@ -25,7 +25,7 @@ interface RightMenuDrawerProps {
   onClose: () => void;
 }
 
-const ICON_CLASS = "h-[29px] w-[29px] shrink-0 text-current";
+const ICON_CLASS = "h-6 w-6 shrink-0 text-current";
 
 /**
  * Menu dialog — mock ติ่ง「เมนู」· panel สูงพอดีเนื้อหา · ชิดเหนือ bottom nav
@@ -77,7 +77,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         <button
           key={tile.id}
           type="button"
-          className="menu-item glass-menu-tile"
+          className="menu-item menu-item--solid"
           onClick={() => runAction(tile.action!)}
         >
           {body}
@@ -90,7 +90,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       <Link
         key={tile.id}
         href={href}
-        className="menu-item glass-menu-tile"
+        className="menu-item menu-item--solid"
         onClick={(event) => {
           if (href.startsWith("/")) {
             event.preventDefault();
@@ -139,7 +139,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
                   >
                     <h3 id={`menu-section-${section.id}`}>{section.sectionLabel}</h3>
                     <div
-                      className={`menu-grid ${section.columns === 4 ? "menu-grid--four" : ""}`}
+                      className={`menu-grid ${section.columns === 4 ? "menu-grid--four" : "menu-grid--three"}`}
                     >
                       {section.items.map((tile) => renderItem(tile))}
                     </div>

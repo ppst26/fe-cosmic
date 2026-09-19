@@ -8,7 +8,7 @@ import {
   GameItem,
   ProviderItem,
   FeatureActionItem,
-  JackpotWinner,
+  HomeLobbyTournamentItem,
   BottomNavItem,
 } from "../types/lobby";
 import { CASINO_FEATURED_ITEMS } from "./casinoFeaturedData";
@@ -291,39 +291,33 @@ export const FEATURE_ACTIONS_DATA: FeatureActionItem[] = [
 ];
 
 /**
- * ผู้ชนะ Jackpot — mock ตามตัวอย่าง design.md (ไม่มีเครื่องหมาย +)
+ * กิจกรรมทัวร์นาเมนต์บน lobby — รูปจาก public/tournament
  * ถูกเรียกใช้โดย JackpotSection.tsx
  */
-export const JACKPOT_WINNERS_DATA: JackpotWinner[] = [
+export const HOME_LOBBY_TOURNAMENT_ITEMS: HomeLobbyTournamentItem[] = [
   {
-    id: "jackpot-casino-1",
-    maskedUsername: "Bll****ia",
-    amount: 600_000,
-    currency: "SGD",
-    categoryLabel: "คาสิโน",
-    gameName: "Cash or Clash",
-    providerName: "Pragmatic Play",
-    category: "casino",
+    id: "tournament-esport",
+    title: "ทัวร์นาเมนต์อีสปอร์ต",
+    imageSrc: "/tournament/esport.webp",
+    href: "/activities",
   },
   {
-    id: "jackpot-sports-1",
-    maskedUsername: "Bll****ia",
-    amount: 59_704.9,
-    currency: "SGD",
-    categoryLabel: "กีฬา",
-    gameName: "Football",
-    providerName: "FB Sports",
-    category: "sports",
+    id: "tournament-sport",
+    title: "ทัวร์นาเมนต์กีฬา",
+    imageSrc: "/tournament/sport win.avif",
+    href: "/activities",
   },
   {
-    id: "jackpot-slots-1",
-    maskedUsername: "Bll****ia",
-    amount: 450_000,
-    currency: "SGD",
-    categoryLabel: "สล็อต",
-    gameName: "Sweet Bonanza",
-    providerName: "Pragmatic Play",
-    category: "slots",
+    id: "tournament-slot",
+    title: "ทัวร์นาเมนต์สล็อต",
+    imageSrc: "/tournament/slot win.avif",
+    href: "/activities",
+  },
+  {
+    id: "tournament-esport-2",
+    title: "ทัวร์นาเมนต์อีสปอร์ต",
+    imageSrc: "/tournament/esport2.webp",
+    href: "/activities",
   },
 ];
 

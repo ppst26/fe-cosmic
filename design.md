@@ -134,6 +134,13 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 - ระหว่าง heading กับรายการ: **12–16px**; ระหว่างการ์ดใน carousel: **8–12px** มือถือ / **12–16px** desktop
 - **Category row (Dexsport-style):** การ์ดมุมโค้ง ~12–16px สูงประมาณ 72–88px มือถือ; gap แนวนอน 8–12px; เลื่อนแนวนอนเมื่อเกินจอ
 - Game grid/carousel: ~550px แสดง 3 ใบ; แคบกว่า 480px min-width การ์ด ~140px เห็นใบถัดไปบางส่วน
+- **Carousel presets** (`app/globals.css` + `Carousel.tsx`): กำหนดด้วย class บน `.carousel-track`
+  | Class | ใช้กับ | มือถือ (โดยประมาณ) |
+  | :--- | :--- | :--- |
+  | `.carousel-games` | แถวเกม (GameSection) | 3 คอลัมน์ + peek |
+  | `.carousel-popular` | ยอดนิยม | 2 คอลัมน์ |
+  | `.carousel-providers` | (สำรอง — lobby ใช้ marquee แทน) | 3 คอลัมน์ |
+  | `.carousel-tournaments` | **กิจกรรม / ทัวร์นาเมนต์** (`JackpotSection.tsx`) | ~2.2 คอลัมน์ การ์ดแนวตั้ง 3:4 + peek |
 - ตั้งแต่ 1024px: sidebar lobby (ถ้ามี) ~240–280px; เนื้อหาหลักไม่เกิน `--content-max`
 - Hall of Fame / ตารางแถวแยก: **gap แนวตั้ง 8–10px** มือถือ, **10–12px** sm+ ระหว่างแถว glass/elevated
 - ห้าม horizontal overflow นอก carousel ที่ตั้งใจ
@@ -150,12 +157,17 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 4. **ยอดนิยม** — Swipe Bet / DEXY RACE
 5. **หมวดเกม** — Lobby, Originals, Slots, Live Casino, … (สไตล์การ์ดหมวด Dexsport)
 6. **Searchbar** — pill กว้าง
-7. **เกมยอดฮิต → Slots → คาสิโน → ยิงปลา → กีฬา**
-8. **Providers**
-9. **Feature cards** — ร้านค้าเพชร / ภารกิจ / วงล้อ (การ์ดยกชั้น + CTA ขาว/ muted)
-10. **Jackpot**
-11. **Hall of Fame (Top Performance)**
-12. **Floating Bottom Nav** — fixed; Cosmicbet: โปรไฟล์ / ฝาก / ถอน / โบนัส / ติดต่อ (โทน Dexsport: พื้นเข้ม, icon เรียบ, active ม่วง)
+7. **เกมยอดฮิต → Slots → คาสิโน → ยิงปลา → กีฬา** (บนมือถือแสดงเมื่ออยู่หมวด home / เส้นทางที่ `HomeLobbyPage` เปิดชุดนี้ — ดู `showMobileLobbySections`)
+8. **Providers** — marquee โลโก้ (ไม่ใช่การ์ด glass รายค่าย); View All ไป `/providers`
+9. **กิจกรรม (ทัวร์นาเมนต์ carousel)** — **มือถือเท่านั้น** (`lg:hidden`); อยู่เหนือ HoF; ต้องล็อกอิน (`AuthGate`) หรือแสดงข้อความชวนเข้าสู่ระบบ
+10. **Hall of Fame (Top Performance)** — แท็บ soft glass; ไม่ glow ม่วงหนักบน active
+11. **Floating Bottom Nav** — fixed มือถือ; Cosmicbet: ถอน / ฝาก / เมนู / คืนยอด / ติดต่อ
+
+**ไม่แสดงบน lobby:** การ์ด Feature สามใบ (ร้านค้าเพชร / ภารกิจ / วงล้อ) — เข้าผ่านเมนู / hub (`/activities`, `/wheel` ฯลฯ) แทน; component `FeatureActionCards` เก็บไว้ reuse ได้แต่ไม่ mount ใน `HomeLobbyPage`
+
+หมายเหตุ: ข้อ 6 Searchbar เป็นแนวทาง desktop / hub — **ไม่**อยู่แถบ header มือถือ guest
+
+**เส้นทาง lobby (implementation):** `/`, `/slots`, `/casino`, `/fishing`, `/sport`, `/lottery`, `/cards` ใช้ `HomeLobbyPage` ร่วมกัน — หมวดจาก URL (`CategoryNav` + sidebar `navigationMode="route"`, `scroll: false` + คงตำแหน่ง scroll เมื่อเปลี่ยนหมวด)
 
 ---
 
@@ -164,7 +176,7 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 | โซน | แนวทาง |
 | :--- | :--- |
 | **Nav, header, bottom bar** | SVG เรียว น้ำหนักเดียว `currentColor` |
-| **แถวหมวดเกม (CategoryNav)** | อนุญาตภาพประกอบ/3D ค่ายหรือ asset หมวด (เหมือน Dexsport) — ไม่ยัด 3D ลง Jackpot/HoF |
+| **แถวหมวดเกม (CategoryNav)** | อนุญาตภาพประกอบ/3D ค่ายหรือ asset หมวด (เหมือน Dexsport); chip **soft glass** (`glass-card--soft`) — ไม่ยัด 3D ลงกิจกรรม/HoF |
 | **ปกเกม / โปรโมชัน / provider** | สีจริงได้ |
 | **Hall of Fame** | ดาวทองเล็ก ๆ ที่หัวข้อ; payout สีทอง |
 
@@ -178,7 +190,9 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - สูงประมาณ **56–64px**; พื้น `--bg-page` หรือโปร่งใสบนพื้นเดียวกัน
 - **Sign up:** พื้น `--action-solid` หรือ `--action-gradient`; มุม `--radius-pill` หรือ `--radius-control`
 - **Log in:** ghost / พื้น `--surface-elevated`
-- ค้นหา: ปุ่มหรือช่องมุม `--radius-control` พื้น `--surface-elevated`
+- **Desktop:** ค้นหา + wallet card ตาม layout เดิม
+- **Mobile ไม่ล็อกอิน:** แสดงเฉพาะโลโก้ + Log in / Sign up — **ซ่อน** search และโปรไฟล์
+- **Mobile ล็อกอิน:** ไอคอนกระเป๋า + ยอดเครดิต + ปุ่มโปรไฟล์ใน **กลุ่ม `glass-card--soft` เดียว** (ไม่ซ้อน glass หลายชั้น); **ไม่**แสดง search / wallet card แบบ desktop
 - โลโก้: `CosmicbetLogo` / `public/cm-logo.png`
 
 ### Promotional carousel
@@ -192,27 +206,39 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - Active: border หรือพื้น `--category-active-gradient`
 
 ### SectionHeader + carousel
-- ซ้าย: icon + heading; ขวา: See all / View All + prev/next
-- View All: pill พื้น `--surface-elevated`
-- ปุ่มเลื่อน: วงกลมหรือสี่เหลี่ยมมุมโค้ง พื้นเข้ม hit area ≥ 44px
+- ซ้าย: icon + heading (`SectionHeader`, optional `titleId` สำหรับ `aria-labelledby`)
+- ขวา — **แบบมาตรฐาน (เกม / ยอดนิยม):** View All (pill `glass-control glass-pill`) + prev/next (`CarouselControls`, `showViewAll` default `true`)
+- ขวา — **กิจกรรมทัวร์นาเมนต์:** prev/next **เท่านั้น** (`showViewAll={false}`) — อ้างอิง carousel แนว Dexsport/Tournaments
+- Track: native scroll + `scroll-snap`; ซ่อน scrollbar (`.carousel-track`)
+- ปุ่มเลื่อน: `glass-control glass-icon-btn`; hit area ≥ 44px (`::after` ใน CSS)
+- **Pagination แยกตาม section:**
+  | Section | รูปแบบ |
+  | :--- | :--- |
+  | Promo (`PromoCarousel`) | จุด/แถบด้านล่าง (active เน้นสี product) |
+  | Welcome hero | เส้นแนวนอน (ตาม Dexsport) |
+  | **กิจกรรมทัวร์นาเมนต์** | **จุดกลมกลางแถว** — active `--text-primary`, inactive `--surface-hover` |
 
 ### Searchbar
 - สูง **44–48px**; radius `--radius-pill`; พื้น `--surface-elevated`
 - **ไม่ใช้ ring/outline ตอน focus/hover** (เรียบแบบ Dexsport)
 - Placeholder: “Game \| Provider” หรือ “Search”
 
-### GameCard / ProviderCard
+### GameCard / Providers (lobby)
 - GameCard: มุม `--radius-card`, ไม่ซ้อนกรอบ; `aspect-ratio: 3/4`
-- ProviderCard: แถบแนวนอนเตี้ย, `object-fit: contain`, padding 16–20px
+- **ProvidersSection:** `ProviderLogoMarquee` — โลโก้จาก `public/provider logo/` (หรือ data ใน `homeProviderLogosData.ts`); **ไม่**ห่อแต่ละโลโก้ด้วย glass card; default grayscale, hover สว่างขึ้น; ช่องว่างด้านบน section **48–56px** (`mt-12` / `sm:mt-14`)
 
-### FeatureActionCard
-- การ์ดยกชั้น (glass หรือ `--surface-elevated` แบบ Dexsport — โปร่งใสน้อยลงกว่า glass ม่วงเก่า)
-- ชื่อ + คำอธิบายสั้น + CTA ขาว / muted ตาม implementation ปัจจุบัน
-- Desktop: 3 คอลัมน์ใต้ HoF ได้ตาม layout โปรเจกต์
+### FeatureActionCard (ไม่ใช้บนหน้า lobby หลัก)
+- การ์ดยกชั้น glass + CTA ขาว/รอง — ร้านค้าเพชร / ภารกิจ / วงล้อ
+- **ห้าม**ใส่กลับใต้ Hall of Fame บน `HomeLobbyPage` เว้นแต่ผู้ใช้สั่งชัด
 
-### JackpotSection
-- หัวข้อ + trophy; การ์ดผู้ชนะบนพื้น `--surface-elevated`
-- ยอดเงินเด่นที่สุด; ไม่ใช้กราฟิกเหรียญ/ribbon ใหญ่
+### LobbyActivitiesSection (ชื่อในโค้ด: `JackpotSection`)
+- **หัวข้อ:** 「กิจกรรม」 + ไอคอนเมนูกิจกรรม (`MenuItemIcon` / `activities`) — **ไม่**ใช้ trophy / ไม่แสดงยอดผู้ชนะ mock
+- **เนื้อหา:** carousel แนวนอน การ์ด **รูปเต็ม** จาก `public/tournament/` (`esport.webp`, `esport2.webp`, `sport win.avif`, `slot win.avif` — ชื่อไฟล์มีช่องว่างได้ ใช้ path `/tournament/...` ใน mock)
+- การ์ด: `.carousel-tournament-card`, `aspect-ratio: 3/4`, `object-fit: cover`, มุม `--radius-panel`; แตะไป `/activities` (หรือ href ต่อ API ภายหลัง)
+- Data: `HOME_LOBBY_TOURNAMENT_ITEMS` ใน `lobbyMockData.ts` · type `HomeLobbyTournamentItem`
+- เลื่อน: ลากนิ้ว + ปุ่ม prev/next; dots ผูก index สไลด์ (หนึ่งจุดต่อการ์ด)
+- **ห้าม**กลับไป layout การ์ด 3 คอลัมน์พร้อมชื่อผู้ใช้/ยอดเงิน — หน้า `/activities` เป็นที่รายละเอียดกิจกรรมแบบ hub
+- Component เก่า `JackpotWinnerCard` ไม่ใช้บน lobby แล้ว (เก็บไว้ได้จนกว่าจะลบหรือ reuse)
 
 ### HallOfFame (Top Performance)
 - หัวข้อแยกจากตาราง; แท็บ pill: **Latest Winner** / **Top Win Multiple** (หรือชุด tab ตาม product)
@@ -339,14 +365,34 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - แยก mock data จาก API; ห้ามแสดงยอด/ผู้ชนะ mock เป็นข้อมูล live
 - เมื่ออ้างอิง Dexsport ให้เปิด [dexsport.io/casino](https://dexsport.io/casino/) สำหรับ lobby และ [dexsport.io](https://dexsport.io/) สำหรับ sportsbook
 
+### แผนไฟล์ lobby (อัปเดตล่าสุด — อ้างอิงก่อนแก้ UI)
+
+| หน้าที่ | ไฟล์หลัก |
+| :--- | :--- |
+| หน้า + ลำดับ section | `app/components/home/HomeLobbyPage.tsx` |
+| หมวด URL | `app/lib/lobbyCategoryFromPath.ts`, `app/{slots,casino,...}/page.tsx` |
+| กิจกรรม carousel | `app/components/home/JackpotSection.tsx`, `HOME_LOBBY_TOURNAMENT_ITEMS` |
+| Carousel ร่วม | `app/components/ui/Carousel.tsx`, `CarouselControls.tsx`, presets ใน `globals.css` |
+| Providers marquee | `ProvidersSection.tsx`, `ProviderLogoMarquee.tsx` |
+| HoF | `HallOfFame.tsx`, `hallOfFameMockData.ts` |
+| Header มือถือ | `app/components/layout/Header.tsx` |
+| เมนูขวา | `RightMenuDrawer.tsx` — ไทล์ `menu-item--solid` (ไม่ glass), grid 3/4/4 |
+| Sidebar desktop พับ | `LobbyDesktopSidebar.tsx` — พับแล้ว icon อย่างเดียว |
+| กิจกรรมเต็มหน้า | `/activities` → `ActivitiesHubPageContent` (แยกจากโปร `/promotions`) |
+| วงล้อ | `app/components/wheel/*` — hero `wheel-bg.avif`, glass ชั้นนอก / soft glass แถวใน |
+
+ก่อนเพิ่ม section ใหม่บน lobby — เทียบลำดับหมวด 6 และตารางด้านบน; ถ้าผู้ใช้ขอเฉพาะส่วนใดส่วนหนึ่ง ห้ามรื้อ section อื่นโดยไม่จำเป็น
+
 ---
 
 ## 11. เกณฑ์ตรวจงานก่อนส่ง
 
 - [ ] พื้นหลัก `--bg-page` / `#0C0713`; action หลัก `#7747E5` — ไม่มีม่วงสด/neon นอก palette
 - [ ] Hero carousel + pagination แบบเส้น; หมวดเกมเป็นการ์ดมุมโค้งแบบ Dexsport
-- [ ] Search pill พื้น elevated; ไม่มี focus ring รบกวน
-- [ ] Hall of Fame แถวแยกการ์ด มี gap แนวตั้งชัด
+- [ ] Search pill พื้น elevated (desktop); มือถือ guest ไม่มี search
+- [ ] Hall of Fame แถวแยกการ์ด มี gap แนวตั้งชัด; แท็บ soft glass
+- [ ] **กิจกรรม:** carousel รูปทัวร์นาเมนต์ + dots + prev/next (ไม่มี View All); ไม่ใช่การ์ด jackpot ยอดเงิน
+- [ ] Providers: marquee โลโก้ ไม่ glass card; ช่องว่างบน ~48px
 - [ ] ลำดับ section ตามหมวด 6; ไม่ซ้ำ header/nav
 - [ ] ไทยอ่านครบ; ยอดเงินไม่ถูกตัด; โลโก้ไม่เพี้ยน
 - [ ] Bottom nav ไม่บังเนื้อหา; safe area + focus
