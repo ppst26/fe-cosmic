@@ -65,7 +65,7 @@ export function LotteryHubContent({
             <Link
               key={item.id}
               href={item.href}
-              className={`lottery-feature-card lottery-feature-card--${item.visual}`}
+              className={`lottery-feature-card glass-card--soft lottery-feature-card--${item.visual}`}
             >
               {item.visual === "thai-gov" ? (
                 <LotteryFlagOrb label="TH" tone="th" size="lg" />
@@ -87,7 +87,7 @@ export function LotteryHubContent({
       <section className="lottery-hub__markets min-w-0" aria-label="ประเภทหวยทั้งหมด">
         <div className="lottery-type-grid">
           {gridItems.map((item) => (
-            <Link key={item.id} href={item.href} className="lottery-type-card">
+            <Link key={item.id} href={item.href} className="lottery-type-card glass-card--soft">
               <LotteryFlagOrb label={item.flagLabel} tone={item.flagTone} size="sm" />
               <span className="lottery-type-card__body min-w-0">
                 <span className="lottery-type-card__title">{item.title}</span>
@@ -102,41 +102,89 @@ export function LotteryHubContent({
         </div>
       </section>
 
-      <section className="lottery-results" aria-labelledby="lottery-results-title">
-        <div className="lottery-results__banner">
-          <h3 id="lottery-results-title" className="lottery-results__banner-title">
+      <section className="lottery-results w-full min-w-0" aria-labelledby="lottery-results-title">
+        <div className="lottery-results__head mb-3 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <MegaphoneMiniIcon />
-            <span>ผลหวยล่าสุด</span>
-          </h3>
-          <Link href="/lottery/results" className="lottery-results__banner-link">
+            <h3
+              id="lottery-results-title"
+              className="text-[18px] font-bold tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
+            >
+              ผลหวยล่าสุด
+            </h3>
+          </div>
+          <Link
+            href="/lottery/results"
+            className="lottery-results__more-link shrink-0 text-xs font-semibold text-[var(--text-secondary)] sm:text-sm"
+          >
             หน้าผลหวย &gt;&gt;
           </Link>
         </div>
 
-        <ul className="lottery-results__list">
-          {results.map((row, index) => (
-            <li
-              key={row.id}
-              className={`lottery-results__row${index % 2 === 0 ? " lottery-results__row--framed" : ""}`}
-            >
-              <div className="lottery-results__market min-w-0">
-                <LotteryFlagOrb label={row.flagLabel} tone={row.flagTone} size="sm" />
-                <span className="lottery-results__market-name">{row.title}</span>
-              </div>
-              <div className="lottery-results__nums">
-                <div className="lottery-results__num-block">
-                  <span className="lottery-results__num-label">3 ตัวบน</span>
-                  <span className="lottery-results__num-value">{row.top3}</span>
-                </div>
-                <div className="lottery-results__num-block">
-                  <span className="lottery-results__num-label">2 ตัวล่าง</span>
-                  <span className="lottery-results__num-value">{row.bottom2}</span>
-                </div>
-              </div>
-              <span className="lottery-results__date">{row.dateLabel}</span>
-            </li>
-          ))}
-        </ul>
+        <div
+          className="hall-of-fame__table-band hall-of-fame__table-band--borderless lottery-results__table-band relative -mx-[var(--page-gutter)] w-[calc(100%+2*var(--page-gutter))] max-w-none lg:mx-0 lg:w-full"
+        >
+          <div className="hall-of-fame-table-wrap px-[var(--page-gutter)] lg:px-0">
+            <table className="hall-of-fame-table lottery-results-table w-full min-w-0 border-collapse text-left text-sm">
+              <thead>
+                <tr className="hall-of-fame-table__head-row lottery-results-table__head-row">
+                  <th scope="col" className="hall-of-fame-table__th">ประเภทหวย</th>
+                  <th
+                    scope="col"
+                    className="hall-of-fame-table__th lottery-results-table__th lottery-results-table__th--date"
+                  >
+                    งวด / วันที่
+                  </th>
+                  <th scope="col" className="hall-of-fame-table__th lottery-results-table__th--num">
+                    3 ตัวบน
+                  </th>
+                  <th scope="col" className="hall-of-fame-table__th lottery-results-table__th--num">
+                    2 ตัวล่าง
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="hall-of-fame-table__body">
+                {results.length === 0 ? (
+                  <tr className="hall-of-fame-table__row hall-of-fame-table__row--empty">
+                    <td
+                      className="hall-of-fame-table__empty py-8 text-center text-sm text-[var(--text-muted)]"
+                      style={{ gridColumn: "1 / -1" }}
+                    >
+                      ยังไม่มีผลหวย
+                    </td>
+                  </tr>
+                ) : (
+                  results.map((row) => (
+                    <tr
+                      key={row.id}
+                      className="hall-of-fame-table__row glass-card glass-card--hof-row lottery-results-table__row"
+                    >
+                      <td className="hall-of-fame-table__td lottery-results-table__td">
+                        <div className="flex min-w-0 items-center gap-2.5">
+                          <LotteryFlagOrb label={row.flagLabel} tone={row.flagTone} size="sm" />
+                          <span className="truncate text-xs font-semibold leading-none text-[var(--text-primary)] sm:text-sm">
+                            {row.title}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="hall-of-fame-table__td lottery-results-table__td lottery-results-table__td--date">
+                        <span className="lottery-results-table__date tabular-nums">
+                          {row.dateLabel}
+                        </span>
+                      </td>
+                      <td className="hall-of-fame-table__td lottery-results-table__td lottery-results-table__td--num">
+                        <span className="lottery-results-table__num tabular-nums">{row.top3}</span>
+                      </td>
+                      <td className="hall-of-fame-table__td lottery-results-table__td lottery-results-table__td--num">
+                        <span className="lottery-results-table__num tabular-nums">{row.bottom2}</span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
     </div>
   );

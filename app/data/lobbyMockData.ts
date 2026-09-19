@@ -38,8 +38,6 @@ export const HOME_SLOTS_PROVIDER_ITEMS: GameItem[] = GRID_SLOT_PROVIDERS.slice(0
  */
 /** แถบนำทาง header desktop (Dexsport-style pills) — Header.tsx */
 export const HEADER_DESKTOP_NAV = [
-  { id: "sports", label: "กีฬา", href: "/sport" },
-  { id: "casino", label: "คาสิโน", href: "/casino" },
   { id: "promotions", label: "โปรโมชัน", href: "/promotions", showBadge: true },
 ] as const;
 

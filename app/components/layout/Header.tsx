@@ -30,7 +30,7 @@ interface HeaderProps {
 
 /**
  * Header — มือถือ: .glass-mobile-nav (โลโก้ · ค้นหา · กระเป๋า+ฝาก · โปรไฟล์)
- * Desktop lg+: โลโก้ · nav glass · ค้นหา glass · กระเป๋า · CTA ฝาก · ไอคอน · โปรไฟล์
+ * Desktop lg+: โลโก้ · โปรโมชัน · ค้นหา · กระเป๋า · CTA ฝาก · ไอคอน · โปรไฟล์ (glass-card--soft)
  */
 export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
   const pathname = usePathname();
@@ -66,7 +66,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
           <div className="cosmic-actions">
             <button
               type="button"
-              className="cosmic-nav__chip glass-control glass-icon-btn"
+              className="cosmic-nav__chip glass-card--soft glass-icon-btn"
               aria-label="ค้นหาเกม"
             >
               <SearchIcon className="h-5 w-5" aria-hidden />
@@ -74,11 +74,11 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
 
             {isLoading ? (
               <div
-                className="cosmic-nav__wallet-cluster glass-control wallet-button--skeleton"
+                className="cosmic-nav__wallet-cluster glass-card--soft wallet-button--skeleton"
                 aria-hidden="true"
               />
             ) : showWallet ? (
-              <div className="cosmic-nav__wallet-cluster glass-control">
+              <div className="cosmic-nav__wallet-cluster glass-card--soft">
                 <div className="wallet-button wallet-button--cluster" aria-live="polite">
                   <HeaderWalletIcon aria-hidden="true" />
                   <span>{balanceLabel}</span>
@@ -98,7 +98,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={onLoginClick}
-                  className="cosmic-nav__auth-login glass-control"
+                  className="cosmic-nav__auth-login glass-card--soft"
                 >
                   Log in
                 </button>
@@ -115,7 +115,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
             <button
               type="button"
               onClick={handleProfileClick}
-              className={`profile-button cosmic-nav__chip glass-control glass-icon-btn${isProfileOpen ? " is-active" : ""}`}
+              className={`profile-button cosmic-nav__chip glass-card--soft glass-icon-btn${isProfileOpen ? " is-active" : ""}`}
               aria-label="โปรไฟล์"
               aria-expanded={isProfileOpen}
               aria-haspopup="dialog"
@@ -146,7 +146,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   <Link
                     key={item.id}
                     href={item.href}
-                    className={`header-desktop-bar__nav-link glass-control glass-pill${isActive ? " is-active" : ""}`}
+                    className={`header-desktop-bar__nav-link glass-card--soft${isActive ? " is-active" : ""}`}
                   >
                     {item.label}
                     {showBadge ? (
@@ -159,7 +159,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
           </div>
 
           <div className="header-desktop-bar__center">
-            <label className="header-desktop-bar__search glass-control">
+            <label className="header-desktop-bar__search glass-card--soft">
               <span className="sr-only">ค้นหาเกมหรือค่าย</span>
               <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
               <input
@@ -179,7 +179,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
               />
             ) : showWallet ? (
               <div className="header-desktop-bar__actions">
-                <div className="header-desktop-bar__wallet glass-control" aria-live="polite">
+                <div className="header-desktop-bar__wallet glass-card--soft" aria-live="polite">
                   <HeaderWalletIcon className="h-[18px] w-[18px] shrink-0 text-[var(--icon-active)]" />
                   <span className="header-desktop-bar__wallet-balance">{balanceLabel}</span>
                 </div>
@@ -197,7 +197,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={openWithdraw}
-                  className="header-desktop-bar__icon-btn glass-control glass-icon-btn"
+                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn"
                   aria-label="ถอนเงิน"
                   aria-haspopup="dialog"
                 >
@@ -206,7 +206,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
 
                 <button
                   type="button"
-                  className="header-desktop-bar__icon-btn glass-control glass-icon-btn"
+                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn"
                   aria-label="การแจ้งเตือน"
                 >
                   <HeaderBellIcon />
@@ -216,7 +216,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={handleProfileClick}
-                  className={`header-desktop-bar__profile-pill glass-control${isProfileOpen ? " is-active" : ""}`}
+                  className={`header-desktop-bar__profile-pill glass-card--soft${isProfileOpen ? " is-active" : ""}`}
                   aria-label="โปรไฟล์"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
@@ -230,7 +230,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={onLoginClick}
-                  className="header-desktop-bar__auth-login glass-control glass-pill"
+                  className="header-desktop-bar__auth-login glass-card--soft"
                 >
                   Log in
                 </button>
@@ -244,7 +244,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={handleProfileClick}
-                  className="header-desktop-bar__icon-btn glass-control glass-icon-btn"
+                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn"
                   aria-label="บัญชี"
                 >
                   <ProfileNavIcon className="h-5 w-5" />

@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { HubNavLink } from "@/app/components/hub/HubNavLink";
 import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
-import { MenuItemIcon } from "@/app/components/layout/MenuItemIcon";
 import type { MenuDialogAction } from "@/app/data/menuMockData";
 import { DESKTOP_RIGHT_MENU_TILES } from "@/app/data/desktopLobbyMockData";
 
@@ -12,66 +11,57 @@ interface LobbyDesktopRightMenuGridProps {
   onMenuAction?: (action: MenuDialogAction) => void;
 }
 
-/** แบนเนอร์เมนูแนวนอน — ไอคอนซ้าย · ข้อความขวา */
-function RightMenuBannerContent({
-  iconId,
+/**
+ * การ์ดเมนูขวา desktop — glass · ข้อความซ้าย · asset 3D ขวา
+ * ถูกเรียกจาก LobbyDesktopRightRail.tsx
+ */
+function RightMenuGlassCardContent({
   title,
   subtitle,
+  visualSrc,
   emphasis,
 }: {
-  iconId: string;
   title: string;
   subtitle: string;
+  visualSrc: string;
   emphasis?: boolean;
 }) {
   return (
-    <>
-      <span className="lobby-right-menu-card__pattern" aria-hidden="true" />
-      <span
-        className={`lobby-right-menu-card__icon ${emphasis ? "lobby-right-menu-card__icon--emphasis" : ""}`}
-      >
-        <MenuItemIcon iconId={iconId} className="h-7 w-7 shrink-0 text-white drop-shadow-sm" />
-      </span>
-      <span className="lobby-right-menu-card__text min-w-0">
+    <div className="lobby-right-menu-card__body">
+      <div className="lobby-right-menu-card__text min-w-0">
         <span
           className={`lobby-right-menu-card__title ${emphasis ? "lobby-right-menu-card__title--emphasis" : ""}`}
         >
           {title}
         </span>
-        <span
-          className={
-            emphasis
-              ? "lobby-right-menu-card__subtitle"
-              : "lobby-right-menu-card__subtitle-en"
-          }
-        >
-          {subtitle}
-        </span>
-      </span>
-    </>
+        <span className="lobby-right-menu-card__subtitle">{subtitle}</span>
+      </div>
+      <div className="lobby-right-menu-card__visual" aria-hidden="true">
+        <img src={visualSrc} alt="" className="lobby-right-menu-card__visual-img" loading="lazy" decoding="async" />
+      </div>
+    </div>
   );
 }
 
-/**
- * แถบเมนูขวา desktop — แบนเนอร์เรียงลง 1 คอลัมน์ (LobbyDesktopRightRail.tsx)
- */
 export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMenuGridProps) {
   return (
     <div className="lobby-right-menu-stack w-full min-w-0" aria-label="เมนูด่วน">
       {DESKTOP_RIGHT_MENU_TILES.map((tile) => {
         const className = [
           "lobby-right-menu-card",
-          `lobby-right-menu-card--${tile.tone}`,
+          "glass-card",
+          "glass-card--soft",
+          "lobby-right-menu-card--glass",
           tile.variant === "hero" ? "lobby-right-menu-card--emphasis" : "",
         ]
           .filter(Boolean)
           .join(" ");
 
         const body = (
-          <RightMenuBannerContent
-            iconId={tile.iconId}
+          <RightMenuGlassCardContent
             title={tile.title}
             subtitle={tile.subtitle}
+            visualSrc={tile.visualSrc}
             emphasis={tile.variant === "hero"}
           />
         );
