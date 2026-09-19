@@ -51,7 +51,7 @@ export function LuckyWheelWalletPanel({
 
   return (
     <aside
-      className="lucky-wheel-wallet cosmic-inset-card lg:self-center"
+      className="lucky-wheel-wallet lucky-wheel-surface-glass cosmic-inset-card lg:self-center"
       aria-label="กระเป๋าและการหมุน"
     >
       <div className="lucky-wheel-wallet__head">

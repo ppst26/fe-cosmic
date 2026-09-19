@@ -26,7 +26,10 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
   const pageRows = allRows.slice(sliceStart, sliceStart + LUCKY_WHEEL_HISTORY_PAGE_SIZE);
 
   return (
-    <section className="lucky-wheel-history cosmic-inset-card flex h-full min-h-0 flex-col" aria-labelledby="wheel-history-title">
+    <section
+      className="lucky-wheel-history lucky-wheel-surface-glass cosmic-inset-card flex h-full min-h-0 flex-col"
+      aria-labelledby="wheel-history-title"
+    >
       <header className="lucky-wheel-history__head">
         <div className="flex items-center gap-2">
           <ClockIcon className="h-5 w-5 text-[var(--icon-active)]" />

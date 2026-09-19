@@ -10,9 +10,15 @@ import {
   type DailyCheckInDayReward,
 } from "@/app/data/dailyCheckInMockData";
 import { ChevronDownIcon, ChevronRightIcon } from "../ui/Icons";
+import { DailyCheckInDesktopLayout } from "./DailyCheckInDesktopLayout";
+import {
+  CheckInCoinGraphic,
+  DailyCheckInCalendarGraphic,
+  TreasureChestGraphic,
+} from "./DailyCheckInGraphics";
 
 /**
- * เนื้อหาเช็คอินรายวัน — ใช้ใน /missions/check-in
+ * เนื้อหาเช็คอินรายวัน — ใช้ใน /missions/check-in และ DesktopHubModal
  */
 export function DailyCheckInPageContent({ embedded = false }: { embedded?: boolean }) {
   const [days, setDays] = useState<DailyCheckInDayReward[]>(DAILY_CHECKIN_INITIAL);
@@ -24,38 +30,47 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
   const regularDays = useMemo(() => days.filter((d) => d.day <= 6), [days]);
   const daySeven = days.find((d) => d.day === 7);
 
-  const handleClaimToday = () => {
-    if (!todayReward) return;
-    setDays((prev) => {
-      const nextDay = todayReward.day + 1;
-      return prev.map((item) => {
-        if (item.status === "today") {
+  const handleClaimDay = (dayNum: number) => {
+    const reward = days.find((d) => d.day === dayNum);
+    if (!reward || reward.status !== "today") return;
+
+    const nextDay = reward.day + 1;
+    setDays((prev) =>
+      prev.map((item) => {
+        if (item.status === "today" && item.day === dayNum) {
           return { ...item, status: "claimed" };
         }
         if (item.day === nextDay && item.status === "locked") {
           return { ...item, status: "today" };
         }
         return item;
-      });
-    });
-    setClaimMessage(`รับ ${formatCheckInCredits(todayReward.credits)} แล้ว (mock)`);
+      }),
+    );
+    setClaimMessage(`รับ ${formatCheckInCredits(reward.credits)} แล้ว (mock)`);
   };
+
+  if (embedded) {
+    return (
+      <DailyCheckInDesktopLayout
+        days={days}
+        checkedInCount={checkedInCount}
+        claimMessage={claimMessage}
+        onClaimDay={handleClaimDay}
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-5 pb-4">
       <header className="relative">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            {!embedded ? (
-              <>
-                <h1 className="text-xl font-extrabold text-[var(--text-primary)] drop-shadow-[0_0_20px_rgba(167,139,250,0.25)] sm:text-2xl">
-                  เช็คอินรายวัน
-                </h1>
-                <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
-                  เข้าเช็คอิน รับรางวัลเครดิตฟรี
-                </p>
-              </>
-            ) : null}
+            <h1 className="text-xl font-extrabold text-[var(--text-primary)] drop-shadow-[0_0_20px_rgba(167,139,250,0.25)] sm:text-2xl">
+              เช็คอินรายวัน
+            </h1>
+            <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
+              เข้าเช็คอิน รับรางวัลเครดิตฟรี
+            </p>
           </div>
           <DailyCheckInCalendarGraphic className="h-20 w-24 shrink-0 sm:h-24 sm:w-28" />
         </div>
@@ -88,7 +103,7 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
       <button
         type="button"
         disabled={!todayReward}
-        onClick={handleClaimToday}
+        onClick={() => todayReward && handleClaimDay(todayReward.day)}
         className="cosmic-action-btn flex h-12 w-full items-center justify-center gap-2 text-sm disabled:opacity-45 sm:text-base"
       >
         <GiftMiniIcon className="h-5 w-5" />
@@ -218,58 +233,7 @@ function DailyDaySevenCard({ day }: { day: DailyCheckInDayReward }) {
           <LockMiniIcon className="h-3 w-3" /> ล็อค
         </span>
       </div>
-      <p
-        className="hidden shrink-0 text-[9px] font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)] sm:block"
-        aria-hidden="true"
-      >
-        Bigger
-        <br />
-        Rewards
-      </p>
     </article>
-  );
-}
-
-function CheckInCoinGraphic({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
-      <ellipse cx="24" cy="40" rx="14" ry="4" fill="#000" opacity="0.35" />
-      <circle cx="24" cy="22" r="14" fill="url(#checkInCoin)" stroke="#fde047" strokeWidth="1.5" />
-      <path d="M24 14v16M18 22h12" stroke="#92400e" strokeWidth="2" strokeLinecap="round" />
-      <defs>
-        <linearGradient id="checkInCoin" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#fde047" />
-          <stop offset="100%" stopColor="#ca8a04" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-function DailyCheckInCalendarGraphic({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 112 96" className={className} aria-hidden="true">
-      <circle cx="92" cy="18" r="6" fill="#6366f1" opacity="0.6" />
-      <circle cx="8" cy="28" r="2" fill="#fff" opacity="0.5" />
-      <rect x="28" y="20" width="56" height="52" rx="8" fill="#1e1b4b" stroke="#a78bfa" strokeWidth="1.5" />
-      <rect x="28" y="20" width="56" height="14" rx="8" fill="#4c1d95" />
-      <path d="M40 14v8M72 14v8" stroke="#c4b5fd" strokeWidth="2" strokeLinecap="round" />
-      <circle cx="56" cy="48" r="10" fill="#facc15" />
-      <path d="M52 48 55 51 61 44" stroke="#422006" strokeWidth="2" fill="none" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function TreasureChestGraphic({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 80 80" className={className} aria-hidden="true">
-      <rect x="12" y="36" width="56" height="32" rx="4" fill="#78350f" stroke="#facc15" strokeWidth="1.5" />
-      <path d="M12 44h56" stroke="#facc15" strokeWidth="1" opacity="0.6" />
-      <path d="M28 36V28a12 12 0 0 1 24 0v8" fill="#92400e" stroke="#fde047" strokeWidth="1.5" />
-      <circle cx="28" cy="24" r="5" fill="#fde047" />
-      <circle cx="52" cy="22" r="4" fill="#facc15" />
-      <circle cx="40" cy="18" r="3" fill="#fde047" opacity="0.8" />
-    </svg>
   );
 }
 

@@ -21,6 +21,8 @@ interface VipRankRequirementsPanelProps {
   focusRankId: VipRankId;
   sectionTitle?: string;
   sectionSubtitle?: string;
+  /** desktop VIP modal — แยกคอลัมน์เทิร์น / ภารกิจ */
+  sections?: "all" | "turnover" | "missions";
 }
 
 /**
@@ -31,7 +33,10 @@ export function VipRankRequirementsPanel({
   focusRankId,
   sectionTitle = "เงื่อนไขการเลื่อนระดับ",
   sectionSubtitle = "ทำครบทุกข้อเพื่อเลื่อนแรงค์",
+  sections = "all",
 }: VipRankRequirementsPanelProps) {
+  const showTurnover = sections === "all" || sections === "turnover";
+  const showMissions = sections === "all" || sections === "missions";
   const status = getVipRankViewStatus(focusRankId, player.currentRankId);
   const isLocked = status === "locked";
   const isCleared = status === "cleared";
@@ -73,6 +78,7 @@ export function VipRankRequirementsPanel({
         </p>
       )}
 
+      {showTurnover ? (
       <div className="w-full space-y-2">
         <div className="flex items-center justify-between text-[11px] tabular-nums">
           <span
@@ -123,8 +129,10 @@ export function VipRankRequirementsPanel({
               : `อีก ${formatVipAmount(turnoverRemaining)} เทิร์นเพื่อเลื่อนระดับ`}
         </p>
       </div>
+      ) : null}
 
-      <div className="w-full pt-4">
+      {showMissions ? (
+      <div className={`w-full ${showTurnover ? "pt-4" : ""}`}>
         <h3
           className={`text-sm font-extrabold ${isLocked ? "text-[var(--text-muted)]" : ""}`}
         >
@@ -133,7 +141,7 @@ export function VipRankRequirementsPanel({
         <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">{sectionSubtitle}</p>
 
         {isActive ? (
-          <div className="mt-3 flex gap-2">
+          <div className="mt-3 flex flex-wrap justify-center gap-2 sm:justify-start">
             {missions.map((mission) => (
               <VipCircularProgress
                 key={mission.id}
@@ -178,6 +186,7 @@ export function VipRankRequirementsPanel({
           </p>
         )}
       </div>
+      ) : null}
     </div>
   );
 }

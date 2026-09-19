@@ -13,6 +13,8 @@ import { VipRankEmblem } from "./VipRankEmblem";
 
 interface VipBenefitsComparisonTableProps {
   currentRankId: VipRankId;
+  /** desktop VIP modal — ตารางเต็มความกว้างในการ์ด */
+  variant?: "default" | "desktop-full";
 }
 
 const STICKY_BG = "bg-[var(--surface-mid)]";
@@ -23,7 +25,9 @@ const COL_MIN = "min-w-[5.75rem] w-[5.75rem]";
  */
 export function VipBenefitsComparisonTable({
   currentRankId,
+  variant = "default",
 }: VipBenefitsComparisonTableProps) {
+  const isDesktopFull = variant === "desktop-full";
   const scrollRef = useRef<HTMLDivElement>(null);
   const currentColRef = useRef<HTMLTableCellElement>(null);
 
@@ -37,7 +41,7 @@ export function VipBenefitsComparisonTable({
   }, [currentRankId]);
 
   return (
-    <div className="space-y-2">
+    <div className={`space-y-2 ${isDesktopFull ? "vip-benefits-table--desktop-full" : ""}`}>
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-sm font-extrabold text-[var(--text-primary)]">
           สิทธิประโยชน์แต่ละระดับ
@@ -47,7 +51,13 @@ export function VipBenefitsComparisonTable({
         </p>
       </div>
 
-      <div className="cosmic-inset-card relative overflow-hidden bg-[var(--surface-hover)]/30">
+      <div
+        className={`relative overflow-hidden ${
+          isDesktopFull
+            ? "vip-benefits-table__scroll-wrap rounded-[var(--radius-control)] bg-[rgb(0_0_0/0.22)]"
+            : "cosmic-inset-card bg-[var(--surface-hover)]/30"
+        }`}
+      >
         <div
           className="pointer-events-none absolute inset-y-0 right-0 z-30 w-8 rounded-r-[10px] bg-gradient-to-l from-[var(--surface-mid)] to-transparent"
           aria-hidden="true"

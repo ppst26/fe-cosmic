@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CategoryItem, CategoryId } from "../../types/lobby";
+import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
 import {
   CardsIcon,
   FishIcon,
@@ -52,23 +53,6 @@ function getCategoryIcon(id: CategoryId, className = "w-6 h-6") {
   }
 }
 
-/** หา id ที่ตรง route ปัจจุบัน — path ยาวก่อน เพื่อไม่ให้ "/" match ทุกหน้า */
-function resolveActiveFromPath(pathname: string, categories: CategoryItem[]): CategoryId | null {
-  const sorted = [...categories].sort((a, b) => b.href.length - a.href.length);
-
-  for (const category of sorted) {
-    if (!category.href.startsWith("/")) continue;
-    if (category.href === "/") {
-      if (pathname === "/") return category.id;
-      continue;
-    }
-    if (pathname === category.href || pathname.startsWith(`${category.href}/`)) {
-      return category.id;
-    }
-  }
-  return null;
-}
-
 /**
  * CategoryNav — แถบหมวดหมู่เกม ไอคอนบน + ข้อความไทยล่าง
  * ถูกเรียกใช้ใน app/page.tsx
@@ -84,7 +68,7 @@ export function CategoryNav({
   const router = useRouter();
   const pathname = usePathname();
   const routeActiveId = useMemo(
-    () => resolveActiveFromPath(pathname, categories),
+    () => resolveLobbyCategoryFromPath(pathname, categories),
     [pathname, categories],
   );
   const [pickedId, setPickedId] = useState<CategoryId>(defaultActiveId);
@@ -104,7 +88,14 @@ export function CategoryNav({
   const handleCategoryClick = (category: CategoryItem) => {
     setPickedId(category.id);
     onSelectCategory?.(category.id);
-    if (navigationMode === "route" && category.href.startsWith("/")) {
+    if (navigationMode !== "route") return;
+
+    if (category.href.startsWith("#")) {
+      router.push(`/${category.href}`);
+      return;
+    }
+
+    if (category.href.startsWith("/")) {
       if (category.href === "/" && pathname === "/") return;
       router.push(category.href);
     }

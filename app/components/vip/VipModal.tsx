@@ -11,6 +11,7 @@ import {
 import { CloseIcon } from "../ui/Icons";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
 import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
+import { VipModalDesktopLayout } from "./VipModalDesktopLayout";
 import { VipRankRequirementsPanel } from "./VipRankRequirementsPanel";
 import { VipRankCarousel } from "./VipRankCarousel";
 import { VipRankEmblem } from "./VipRankEmblem";
@@ -27,7 +28,7 @@ interface VipModalProps {
 }
 
 /**
- * Modal ข้อมูล VIP — เปิดจาก popover โปรไฟล์ / เมนู slide-over
+ * Modal ข้อมูล VIP — mobile แนวตั้ง · desktop แบ่งคอลัมน์ + ตารางสิทธิประโยชน์
  */
 export function VipModal({ isOpen, onClose }: VipModalProps) {
   const [tab, setTab] = useState<VipModalTabId>("my-level");
@@ -56,16 +57,16 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
 
         <Dialog.Content
           aria-describedby={undefined}
-          className="cosmic-modal-shell fixed left-1/2 top-1/2 z-[70] flex max-h-[min(90dvh,640px)] w-[min(calc(100vw-1.5rem),400px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-[var(--text-primary)] shadow-[0_22px_48px_rgba(0,0,0,0.55)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
+          className="cosmic-modal-shell cosmic-modal-shell--hub vip-modal fixed left-1/2 top-1/2 z-[70] flex w-[min(calc(100vw-1.5rem),400px)] max-h-[min(90dvh,640px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-[var(--text-primary)] shadow-[0_22px_48px_rgba(0,0,0,0.55)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
         >
-          <div className="relative shrink-0 px-4 pb-3 pt-4">
-            <Dialog.Title className="text-center text-lg font-extrabold tracking-wide">
+          <div className="relative shrink-0 px-4 pb-3 pt-4 lg:px-5 lg:pb-4">
+            <Dialog.Title className="text-center text-lg font-extrabold tracking-wide lg:text-xl">
               VIP
             </Dialog.Title>
             <Dialog.Close asChild>
               <button
                 type="button"
-                className="absolute right-3 top-3.5 flex h-8 w-8 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--icon-active)]"
+                className="absolute right-3 top-3.5 flex h-8 w-8 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--icon-active)] lg:right-4 lg:top-4"
                 aria-label="ปิด VIP"
               >
                 <CloseIcon className="h-4 w-4" />
@@ -75,7 +76,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
             <div
               role="tablist"
               aria-label="เมนู VIP"
-              className="mt-3 grid grid-cols-3 gap-1 rounded-[var(--radius-panel)] bg-[var(--surface-hover)]/40 p-1"
+              className="hub-modal-segment-track mt-3 grid grid-cols-3 lg:mt-4 lg:mx-auto lg:max-w-xl"
             >
               {VIP_TABS.map((item) => {
                 const active = tab === item.id;
@@ -86,10 +87,8 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setTab(item.id)}
-                    className={`rounded-[var(--radius-control)] px-1 py-2 text-[11px] font-bold leading-tight transition-colors sm:text-xs ${
-                      active
-                        ? "bg-[#ddd6fe] text-[#1e1035]"
-                        : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                    className={`hub-modal-segment-btn px-1 py-2 text-[11px] leading-tight sm:text-xs lg:py-2.5 ${
+                      active ? "is-active" : ""
                     }`}
                   >
                     {item.label}
@@ -99,7 +98,16 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
             </div>
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="vip-modal__body hidden min-h-0 flex-1 overflow-hidden px-4 pb-5 lg:flex lg:flex-col">
+            <VipModalDesktopLayout
+              tab={tab}
+              player={player}
+              rankFocusIndex={rankFocusIndex}
+              onRankFocusChange={setRankFocusIndex}
+            />
+          </div>
+
+          <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 lg:hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             {tab === "my-level" && (
               <div className="flex flex-col items-center gap-4">
                 <p className="text-xs text-[var(--text-muted)]">ระดับปัจจุบัน</p>

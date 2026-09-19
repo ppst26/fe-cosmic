@@ -29,8 +29,8 @@ interface HeaderProps {
 }
 
 /**
- * Header — มือถือ: .glass-mobile-nav (โลโก้ · ค้นหา · กระเป๋า+ฝาก · โปรไฟล์)
- * Desktop lg+: โลโก้ · โปรโมชัน · ค้นหา · กระเป๋า · CTA ฝาก · ไอคอน · โปรไฟล์ (glass-card--soft)
+ * Header — มือถือ: โลโก้ · (ค้นหา+โปรไฟล์เมื่อล็อกอิน) · กระเป๋าหรือ Log in/Sign up
+ * Desktop lg+: ค้นหากลางแสดงเมื่อล็อกอิน · แขกเห็นแค่ Log in / Sign up
  */
 export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
   const pathname = usePathname();
@@ -64,13 +64,15 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
           </Link>
 
           <div className="cosmic-actions">
-            <button
-              type="button"
-              className="cosmic-nav__chip glass-card--soft glass-icon-btn"
-              aria-label="ค้นหาเกม"
-            >
-              <SearchIcon className="h-5 w-5" aria-hidden />
-            </button>
+            {showWallet ? (
+              <button
+                type="button"
+                className="cosmic-nav__chip glass-card--soft glass-icon-btn"
+                aria-label="ค้นหาเกม"
+              >
+                <SearchIcon className="h-5 w-5" aria-hidden />
+              </button>
+            ) : null}
 
             {isLoading ? (
               <div
@@ -112,16 +114,18 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
               </div>
             )}
 
-            <button
-              type="button"
-              onClick={handleProfileClick}
-              className={`profile-button cosmic-nav__chip glass-card--soft glass-icon-btn${isProfileOpen ? " is-active" : ""}`}
-              aria-label="โปรไฟล์"
-              aria-expanded={isProfileOpen}
-              aria-haspopup="dialog"
-            >
-              <ProfileNavIcon aria-hidden="true" />
-            </button>
+            {showWallet ? (
+              <button
+                type="button"
+                onClick={handleProfileClick}
+                className={`profile-button cosmic-nav__chip glass-card--soft glass-icon-btn${isProfileOpen ? " is-active" : ""}`}
+                aria-label="โปรไฟล์"
+                aria-expanded={isProfileOpen}
+                aria-haspopup="dialog"
+              >
+                <ProfileNavIcon aria-hidden="true" />
+              </button>
+            ) : null}
           </div>
         </div>
       </header>
@@ -158,18 +162,22 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
             </nav>
           </div>
 
-          <div className="header-desktop-bar__center">
-            <label className="header-desktop-bar__search glass-card--soft">
-              <span className="sr-only">ค้นหาเกมหรือค่าย</span>
-              <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
-              <input
-                type="search"
-                className="header-desktop-bar__search-input"
-                placeholder="ค้นหาเกม / ค่าย"
-                autoComplete="off"
-              />
-            </label>
-          </div>
+          {showWallet ? (
+            <div className="header-desktop-bar__center">
+              <label className="header-desktop-bar__search glass-card--soft">
+                <span className="sr-only">ค้นหาเกมหรือค่าย</span>
+                <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
+                <input
+                  type="search"
+                  className="header-desktop-bar__search-input"
+                  placeholder="ค้นหาเกม / ค่าย"
+                  autoComplete="off"
+                />
+              </label>
+            </div>
+          ) : (
+            <div className="header-desktop-bar__center" aria-hidden="true" />
+          )}
 
           <div className="header-desktop-bar__end">
             {isLoading ? (
@@ -240,14 +248,6 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   className="cosmic-cta-primary cosmic-cta-primary--sm uppercase tracking-wide"
                 >
                   Sign up
-                </button>
-                <button
-                  type="button"
-                  onClick={handleProfileClick}
-                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn"
-                  aria-label="บัญชี"
-                >
-                  <ProfileNavIcon className="h-5 w-5" />
                 </button>
               </div>
             )}

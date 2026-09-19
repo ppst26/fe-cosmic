@@ -94,7 +94,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
 
   const termsSection = useMemo(
     () => (
-      <section className="lucky-wheel-terms cosmic-inset-card overflow-hidden">
+      <section className="lucky-wheel-terms lucky-wheel-surface-glass cosmic-inset-card overflow-hidden">
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}
@@ -128,7 +128,11 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
 
   return (
     <div className={`lucky-wheel-page ${embedded ? "lucky-wheel-page--embedded" : ""}`}>
-      <div className="lucky-wheel-page__top">
+      <div className="lucky-wheel-page__hero">
+        <div className="lucky-wheel-page__hero-bg" aria-hidden="true" />
+        <div className="lucky-wheel-page__hero-overlay" aria-hidden="true" />
+        <div className="lucky-wheel-page__hero-scrim" aria-hidden="true" />
+        <div className="lucky-wheel-page__top">
         <LuckyWheelIntroColumn embedded={embedded} />
 
         <div className="lucky-wheel-page__wheel-col">
@@ -158,11 +162,12 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
           canSpin={canAfford}
           totalCostLabel={totalCostLabel}
         />
-      </div>
+        </div>
 
-      <div className="lucky-wheel-page__bottom">
-        <LuckyWheelLiveWinners />
-        <LuckyWheelPrizeHistory extraRows={recentHistoryRows} />
+        <div className="lucky-wheel-page__bottom">
+          <LuckyWheelLiveWinners />
+          <LuckyWheelPrizeHistory extraRows={recentHistoryRows} />
+        </div>
       </div>
 
       {termsSection}

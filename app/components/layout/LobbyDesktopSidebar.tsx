@@ -32,7 +32,7 @@ const SIDEBAR_STORAGE_KEY = "cosmicbet-lobby-sidebar-collapsed";
 interface LobbyDesktopSidebarProps {
   categories: CategoryItem[];
   activeCategoryId: CategoryId;
-  onSelectCategory: (id: CategoryId) => void;
+  onSelectCategory?: (id: CategoryId) => void;
   collapsed: boolean;
   onCollapsedChange: (collapsed: boolean) => void;
   onMenuAction?: (action: MenuDialogAction) => void;
@@ -134,8 +134,13 @@ export function LobbyDesktopSidebar({
   const router = useRouter();
 
   const handleCategoryClick = (category: CategoryItem) => {
-    onSelectCategory(category.id);
-    if (navigationMode === "route" && category.href.startsWith("/")) {
+    onSelectCategory?.(category.id);
+    if (navigationMode !== "route") return;
+    if (category.href.startsWith("#")) {
+      router.push(`/${category.href}`);
+      return;
+    }
+    if (category.href.startsWith("/")) {
       router.push(category.href);
     }
   };

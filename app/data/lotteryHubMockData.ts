@@ -53,12 +53,12 @@ export const LOTTERY_GRID_ITEMS: LotteryGridItem[] = [
 
 /** ผลหวยล่าสุด — mock */
 export const LOTTERY_LATEST_RESULTS: LotteryResultRow[] = [
-  { id: "res-my", title: "หวยมาเลย์", top3: "842", bottom2: "56", dateLabel: "วันนี้", flagLabel: "MY", flagTone: "my" },
-  { id: "res-cn", title: "หวยจีน", top3: "842", bottom2: "56", dateLabel: "วันนี้", flagLabel: "CN", flagTone: "cn" },
-  { id: "res-hn", title: "หวยฮานอย", top3: "842", bottom2: "56", dateLabel: "วันนี้", flagLabel: "VN", flagTone: "vn" },
+  { id: "res-my", title: "หวยมาเลย์", top3: "584", bottom2: "27", dateLabel: "วันนี้", flagLabel: "MY", flagTone: "my" },
+  { id: "res-cn", title: "หวยจีน", top3: "672", bottom2: "08", dateLabel: "วันนี้", flagLabel: "CN", flagTone: "cn" },
+  { id: "res-hn", title: "หวยฮานอย", top3: "903", bottom2: "62", dateLabel: "วันนี้", flagLabel: "VN", flagTone: "vn" },
   { id: "res-th", title: "หวยรัฐบาลไทย", top3: "842", bottom2: "56", dateLabel: "1 ส.ค. 2026", flagLabel: "TH", flagTone: "th" },
-  { id: "res-la", title: "หวยลาว", top3: "842", bottom2: "56", dateLabel: "วันนี้", flagLabel: "LA", flagTone: "la" },
-  { id: "res-yk15", title: "หวยยี่กี 15 นาที", top3: "842", bottom2: "56", dateLabel: "วันนี้", flagLabel: "YK", flagTone: "gold" },
-  { id: "res-yk30", title: "หวยยี่กี 30 นาที", top3: "842", bottom2: "56", dateLabel: "วันนี้", flagLabel: "YK", flagTone: "gold" },
-  { id: "res-stock", title: "หวยหุ้นไทย", top3: "842", bottom2: "56", dateLabel: "วันนี้", flagLabel: "TH", flagTone: "th" },
+  { id: "res-jp", title: "หวยนิเคอิ", top3: "514", bottom2: "72", dateLabel: "1 ส.ค. 2026", flagLabel: "JP", flagTone: "jp" },
+  { id: "res-kr", title: "หวยเกาหลี", top3: "829", bottom2: "04", dateLabel: "1 ส.ค. 2026", flagLabel: "KR", flagTone: "kr" },
+  { id: "res-us", title: "หวยดาวโจนส์", top3: "319", bottom2: "41", dateLabel: "31 ก.ค. 2026", flagLabel: "US", flagTone: "us" },
+  { id: "res-la", title: "หวยลาว", top3: "428", bottom2: "15", dateLabel: "31 ก.ค. 2026", flagLabel: "LA", flagTone: "la" },
 ];

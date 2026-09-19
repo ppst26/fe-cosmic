@@ -8,7 +8,10 @@ import { LUCKY_WHEEL_LIVE_WINNERS } from "@/app/data/luckyWheelMockData";
  */
 export function LuckyWheelLiveWinners() {
   return (
-    <section className="lucky-wheel-feed cosmic-inset-card flex h-full min-h-0 flex-col" aria-labelledby="wheel-live-title">
+    <section
+      className="lucky-wheel-feed lucky-wheel-surface-glass cosmic-inset-card flex h-full min-h-0 flex-col"
+      aria-labelledby="wheel-live-title"
+    >
       <header className="lucky-wheel-feed__head">
         <div className="flex min-w-0 items-center gap-2">
           <UsersIcon className="h-5 w-5 shrink-0 text-[var(--icon-active)]" />

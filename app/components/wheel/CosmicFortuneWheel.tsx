@@ -134,8 +134,6 @@ export function CosmicFortuneWheel({
       >
         SPIN
       </button>
-
-      <p className="lucky-wheel__caption">หมุนวงล้อเพื่อรับรางวัลสุดพิเศษ</p>
     </div>
   );
 }

@@ -41,31 +41,55 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
         <Dialog.Content
           aria-describedby={undefined}
           className={`cosmic-modal-shell cosmic-modal-shell--hub fixed left-1/2 top-1/2 z-[70] flex -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-[var(--text-primary)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200 ${
-            hubId === "referral" || hubId === "promotions" || hubId === "activities"
+            hubId === "referral" ||
+            hubId === "promotions" ||
+            hubId === "activities" ||
+            hubId === "check-in"
               ? "w-[min(94vw,1040px)]"
               : "w-[min(92vw,720px)]"
           } ${
-            hubId === "promotions" || hubId === "activities"
+            hubId === "promotions" || hubId === "activities" || hubId === "check-in"
               ? "max-h-[min(92dvh,880px)]"
               : "max-h-[min(90dvh,800px)]"
-          }`}
+          } ${hubId === "check-in" ? "cosmic-modal-shell--check-in" : ""}`}
         >
-          <div className="cosmic-modal-shell--hub__header flex shrink-0 items-center justify-between gap-3 px-4 py-3">
-            <Dialog.Title className="text-lg font-extrabold tracking-tight text-[var(--text-primary)]">
-              {title}
-            </Dialog.Title>
-            <Dialog.Close asChild>
-              <button
-                type="button"
-                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-control)] text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
-                aria-label="ปิด"
-              >
-                <CloseIcon className="h-5 w-5" />
-              </button>
-            </Dialog.Close>
-          </div>
+          {hubId === "check-in" ? (
+            <Dialog.Title className="sr-only">{title}</Dialog.Title>
+          ) : (
+            <div className="cosmic-modal-shell--hub__header flex shrink-0 items-center justify-between gap-3 px-4 py-3">
+              <Dialog.Title className="text-lg font-extrabold tracking-tight text-[var(--text-primary)]">
+                {title}
+              </Dialog.Title>
+              <Dialog.Close asChild>
+                <button
+                  type="button"
+                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-control)] text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
+                  aria-label="ปิด"
+                >
+                  <CloseIcon className="h-5 w-5" />
+                </button>
+              </Dialog.Close>
+            </div>
+          )}
 
-          <div className="min-h-0 flex-1 overflow-y-auto px-[var(--page-gutter)] pb-4 pt-3">
+          <div
+            className={`min-h-0 flex-1 overflow-y-auto ${
+              hubId === "check-in"
+                ? "daily-check-in-desktop-modal-body relative p-0"
+                : "px-[var(--page-gutter)] pb-4 pt-3"
+            }`}
+          >
+            {hubId === "check-in" ? (
+              <Dialog.Close asChild>
+                <button
+                  type="button"
+                  className="daily-check-in-desktop__close absolute right-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-control)] text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
+                  aria-label="ปิด"
+                >
+                  <CloseIcon className="h-5 w-5" />
+                </button>
+              </Dialog.Close>
+            ) : null}
             {hubId === "promotions" ? <PromotionsHubPageContent embedded /> : null}
             {hubId === "activities" ? <ActivitiesHubPageContent embedded /> : null}
             {hubId === "cashback" ? (
