@@ -35,8 +35,8 @@
     border-color: rgb(255 255 255 / 0.11);
     background: linear-gradient(
       180deg,
-      rgb(52 54 62 / 0.82) 0%,
-      rgb(38 40 48 / 0.78) 100%
+      rgb(44 46 54 / 0.94) 0%,
+      rgb(32 34 42 / 0.96) 100%
     );
     -webkit-backdrop-filter: blur(22px) saturate(1.12);
     backdrop-filter: blur(22px) saturate(1.12);
@@ -92,8 +92,8 @@
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) {
   --sheet-soft-fill: linear-gradient(
     145deg,
-    rgb(255 255 255 / 0.11),
-    rgb(255 255 255 / 0.045)
+    rgb(48 47 56 / 0.72),
+    rgb(32 31 38 / 0.78)
   );
   --sheet-soft-fill-hover: linear-gradient(
     145deg,

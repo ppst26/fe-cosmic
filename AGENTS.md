@@ -11,7 +11,7 @@ Stack: Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · shadcn/ui (Radix
 | ดีไซน์เต็ม (tokens, sections, QA) | `design.md` |
 | บุคลิกการตอบ | `agent/rules/personality.mdc` หรือ `.cursor/rules/personality.mdc` |
 | ภาษา / คอมเมนต์ / commit | `*/rules/communication.mdc` |
-| Stack & Next docs | `*/rules/tech-stack.mdc` + `node_modules/next/dist/docs/` |
+| Stack, Tailwind vs CSS, Next | `*/rules/tech-stack.mdc` (§ Styling) + `node_modules/next/dist/docs/` |
 | shadcn / UI primitives | `*/rules/shadcn-ui.mdc` + `components.json` |
 | สรุป visual rules | `*/rules/design-system.mdc` |
 | โครงสร้าง component | `*/rules/frontend-components.mdc` |

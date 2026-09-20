@@ -108,6 +108,8 @@ export interface GameSectionData {
   icon: SectionIconId;
   viewAllHref: string;
   games: GameItem[];
+  /** จำกัดการ์ดใน carousel — default จาก HOME_LOBBY_GAME_CAROUSEL_MAX */
+  carouselMax?: number;
 }
 
 export interface ProviderItem {

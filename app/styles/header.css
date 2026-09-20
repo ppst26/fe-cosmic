@@ -287,11 +287,16 @@
   padding: 0 10px;
   border: 0;
   color: var(--text-secondary);
-  font: inherit;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+
+.cosmic-nav__auth .cosmic-cta-primary--sm {
+  min-height: 36px;
+  padding-inline: 0.65rem;
+  letter-spacing: 0.04em;
 }
 
 .cosmic-nav__auth-login:hover {
@@ -622,8 +627,10 @@
 .header-desktop-bar .cosmic-cta-primary--sm {
   min-height: var(--header-control-height);
   padding-block: 0;
+  padding-inline: 0.75rem;
   display: inline-flex;
   align-items: center;
+  letter-spacing: 0.04em;
 }
 
 .header-desktop-bar__nav-link.glass-card--soft.is-active {

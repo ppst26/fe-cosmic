@@ -16,6 +16,7 @@ alwaysApply: false
 
 กฎ:
 
+- **Layout ใน component:** Tailwind ใน TSX เป็นหลัก (ดู `tech-stack` § Styling); แยก layout shell เป็นชิ้นเล็ก ๆ ที่ compose ด้วย `className` + `cn()` — อย่าเพิ่มกฎ flex/grid/spacing ใหม่ใน `app/styles/` ถ้า utility ทำได้
 - Render รายการจาก data arrays ที่มี stable IDs — ห้ามคัดลอก markup ทีละหมวดโดยไม่จำเป็น
 - แยก mock data ออกจาก service/API; ห้ามนำยอดเงิน/ผู้ชนะตัวอย่างขึ้นเป็นข้อมูล live
 - ลิงก์ (`<a>` / Next `Link`) สำหรับ navigation; `button` สำหรับ action; ห้าม nested interactive

@@ -15,6 +15,7 @@ import {
 import { CASINO_FEATURED_ITEMS } from "./casinoFeaturedData";
 import { SPORT_FEATURED_ITEMS } from "./sportFeaturedData";
 import { FISHING_FEATURED_ITEMS } from "./fishingFeaturedData";
+import { HOT_GAMES_FEATURED_ITEMS } from "./hotGamesFeaturedData";
 import { GRID_SLOT_PROVIDERS } from "./slotProvidersData";
 
 /** รูปทัวร์นาเมนต์ใน public/tournament */
@@ -199,30 +200,8 @@ export const GAME_SECTIONS_DATA: GameSectionData[] = [
     title: "เกมยอดฮิต",
     icon: "flame",
     viewAllHref: "/games?filter=hot",
-    games: [
-      {
-        id: "game-tres-pinatas",
-        title: "Tres Pinatas Hold & Win",
-        provider: "Hacksaw Gaming",
-        href: "/games/tres-pinatas",
-        coverTone: "rose",
-      },
-      {
-        id: "game-hamster-dam",
-        title: "Hamster-Dam",
-        provider: "Wicked Games",
-        href: "/games/hamster-dam",
-        coverTone: "emerald",
-        badge: "EXCLUSIVE",
-      },
-      {
-        id: "game-moon-rush",
-        title: "Moon Rush",
-        provider: "Pragmatic Play",
-        href: "/games/moon-rush",
-        coverTone: "sky",
-      },
-    ],
+    games: HOT_GAMES_FEATURED_ITEMS,
+    carouselMax: HOT_GAMES_FEATURED_ITEMS.length,
   },
   {
     id: "section-slots",

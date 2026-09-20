@@ -16,8 +16,9 @@ interface GameSectionProps {
  * Render จาก GAME_SECTIONS_DATA ใน app/page.tsx — ไม่คัดลอก markup ทีละหมวด
  */
 export function GameSection({ section, className = "mt-6 sm:mt-8" }: GameSectionProps) {
-  const { id, title, icon, viewAllHref, games } = section;
-  const carouselGames = games.slice(0, HOME_LOBBY_GAME_CAROUSEL_MAX);
+  const { id, title, icon, viewAllHref, games, carouselMax } = section;
+  const limit = carouselMax ?? HOME_LOBBY_GAME_CAROUSEL_MAX;
+  const carouselGames = games.slice(0, limit);
 
   return (
     <Carousel

@@ -28,8 +28,12 @@
     rgb(30 29 38 / 0.8),
     rgb(14 13 20 / 0.86)
   );
-  /* Shell dialog — โปร่งแบบ glass-card (ไม่ใช่ม่วงทึบ) */
-  --cosmic-dialog-shell-bg: rgb(18 12 26 / 0.42);
+  /* Shell hub/sheet (desktop) — เทาเข้มทึบพอ อ่านข้อความชัด ยังมี depth เล็กน้อย */
+  --cosmic-dialog-shell-bg: linear-gradient(
+    165deg,
+    rgb(40 39 48 / 0.94),
+    rgb(26 25 32 / 0.97)
+  );
   --glass-blur: 32px;
   --glass-blur-overlay: 28px;
   /* Scrim dialog — ไม่ blur (ประหยัด GPU มือถือ) */

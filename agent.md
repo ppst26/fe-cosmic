@@ -11,7 +11,7 @@ Stack: Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · shadcn/ui (Radix
 | ดีไซน์เต็ม (tokens, sections, QA) | `design.md` |
 | บุคลิกการตอบ | `agent/rules/personality.mdc` หรือ `.cursor/rules/personality.mdc` |
 | ภาษา / คอมเมนต์ / commit | `*/rules/communication.mdc` |
-| Stack & Next docs | `*/rules/tech-stack.mdc` + `node_modules/next/dist/docs/` |
+| Stack, Tailwind vs CSS, Next | `*/rules/tech-stack.mdc` (§ Styling) + `node_modules/next/dist/docs/` |
 | shadcn / UI primitives | `*/rules/shadcn-ui.mdc` + `components.json` |
 | สรุป visual rules | `*/rules/design-system.mdc` |
 | โครงสร้าง component | `*/rules/frontend-components.mdc` |
@@ -70,5 +70,7 @@ diff -q .cursor/skills/ui-qa-checklist/SKILL.md agent/skills/ui-qa-checklist/SKI
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->

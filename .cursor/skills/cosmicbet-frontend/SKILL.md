@@ -14,13 +14,24 @@ description: >-
 
 ## Workflow
 
-1. อ่าน `design.md` (ต้นฉบับ) และ rules `design-system` + `frontend-components` + `tech-stack` + `shadcn-ui`
+1. อ่าน `design.md` (ต้นฉบับ) และ rules `design-system` + `frontend-components` + `tech-stack` + `shadcn-ui` + `typography`
 2. อ่าน `components.json` ก่อนเพิ่ม primitive shadcn
 3. อ่าน Next docs ใน `node_modules/next/dist/docs/` ถ้าแตะ App Router / routing / image
 4. ทำเฉพาะส่วนที่ผู้ใช้ร้องขอ — คงตำแหน่งสัมพัทธ์ตามลำดับหน้าใน `design.md` หมวด 5
-5. ใช้ CSS variables / tokens; แยก reusable components ตามรายชื่อใน rule
-6. Mock แยกจาก API; link vs button ให้ถูกความหมาย
-7. ก่อนบอกว่าเสร็จ — ใช้ skill `ui-qa-checklist`
+5. Mock แยกจาก API; link vs button ให้ถูกความหมาย
+6. ก่อนบอกว่าเสร็จ — ใช้ skill `ui-qa-checklist`
+
+## Styling (Tailwind เป็นหลัก)
+
+| ทำใน TSX (Tailwind) | ทำใน `app/styles/*.css` |
+| --- | --- |
+| Layout shells, flex/grid, gap, spacing, size, position, overflow, responsive | Tokens (`tokens.css`), สี, gradient |
+| Layout components compose ด้วย `cn()` | Glass / blur / shadow / glow / แสง |
+| Typography ตาม `typography.mdc` | Keyframes, scrollbar theme, pseudo ซับซ้อน |
+| shadcn + semantic utilities | Class โทน visual (`glass-card`, modal shell) |
+
+- งานใหม่: **ไม่** เพิ่มกฎ margin/padding/flex/grid ใน feature CSS ถ้า Tailwind ทำได้
+- CSS เก่า: ไม่ย้ายทั้งไฟล์เว้นผู้ใช้สั่ง — แตะแล้วค่อยดึง layout ไป Tailwind
 
 ## Hard rules
 

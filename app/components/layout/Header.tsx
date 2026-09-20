@@ -102,14 +102,14 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={onLoginClick}
-                  className="cosmic-nav__auth-login glass-card--soft"
+                  className="cosmic-nav__auth-login glass-card--soft text-xs font-medium uppercase tracking-wide"
                 >
                   Log in
                 </button>
                 <button
                   type="button"
                   onClick={onSignUpClick}
-                  className="cosmic-cta-primary cosmic-cta-primary--sm uppercase tracking-wide"
+                  className="cosmic-cta-primary cosmic-cta-primary--sm text-xs font-medium uppercase tracking-wide"
                 >
                   Sign up
                 </button>
@@ -234,7 +234,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={onSignUpClick}
-                  className="cosmic-cta-primary cosmic-cta-primary--sm uppercase tracking-wide"
+                  className="cosmic-cta-primary cosmic-cta-primary--sm text-xs font-medium uppercase tracking-wide"
                 >
                   Sign up
                 </button>

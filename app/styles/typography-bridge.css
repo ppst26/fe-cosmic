@@ -16,7 +16,7 @@
   }
 
   .cosmic-nav__auth-login {
-    @apply text-[10px] font-medium;
+    @apply text-xs font-medium;
   }
 
   .wallet-button span {
@@ -27,8 +27,9 @@
     @apply text-lg;
   }
 
-  .cosmic-nav__auth-login {
-    @apply text-[9px];
+  .cosmic-nav__auth .cosmic-cta-primary--sm,
+  .header-desktop-bar__actions .cosmic-cta-primary--sm {
+    @apply text-xs font-medium;
   }
 
   .header-desktop-bar__search--compact .header-desktop-bar__search-input {
