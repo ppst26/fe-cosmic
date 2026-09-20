@@ -8,6 +8,12 @@ import {
   type ReferralStatsMock,
 } from "@/app/data/referralMockData";
 import { CopyIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
+import {
+  COSMIC_BTN_NAV,
+  COSMIC_PANEL_GLASS,
+  COSMIC_PANEL_GLASS_ICON,
+  COSMIC_SHEET_FIELD_ROW,
+} from "../ui/cosmicButtonClasses";
 
 /**
  * แบนเนอร์โปรโมชันแนะนำเพื่อน — ใช้ใน overview / desktop hub
@@ -15,7 +21,7 @@ import { CopyIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 export function ReferralPromoBanner({ compact = false }: { compact?: boolean }) {
   return (
     <section
-      className="referral-promo-banner hub-desktop-card relative overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 px-4 py-5 sm:px-5 sm:py-6"
+      className="referral-promo-banner glass-card--soft relative overflow-hidden rounded-[var(--radius-panel)] px-4 py-5 sm:px-5 sm:py-6"
       aria-label="โปรโมชันแนะนำเพื่อน"
     >
       <div
@@ -52,19 +58,22 @@ export function ReferralPromoBanner({ compact = false }: { compact?: boolean }) 
           className={`referral-promo-banner__art relative shrink-0 ${compact ? "w-16 sm:w-20" : "hidden w-24 sm:block sm:w-28"}`}
           aria-hidden="true"
         >
-          <svg viewBox="0 0 120 120" className="relative h-full w-full">
+          <svg
+            viewBox="0 0 120 120"
+            className="relative h-full w-full text-[var(--accent-highlight)]"
+          >
             <path
               d="M35 85 45 35h30l10 50H35Z"
               fill="url(#refMegaphone)"
-              stroke="#c4b5fd"
+              stroke="currentColor"
               strokeWidth="2"
             />
             <path d="M75 45 95 35v50L75 75Z" fill="#7c6cff" opacity="0.9" />
             <circle cx="92" cy="28" r="8" fill="#4ade80" opacity="0.9" />
             <defs>
               <linearGradient id="refMegaphone" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#a78bfa" />
-                <stop offset="100%" stopColor="#5b21b6" />
+                <stop offset="0%" stopColor="var(--accent-muted)" />
+                <stop offset="100%" stopColor="var(--accent-primary)" />
               </linearGradient>
             </defs>
           </svg>
@@ -92,13 +101,15 @@ export function ReferralLinkSection({
     <section>
       <p className="mb-2 text-sm font-medium text-[var(--text-primary)]">ลิงก์แนะนำของคุณ</p>
       <div className="flex gap-2">
-        <div className="hub-desktop-field min-w-0 flex-1 truncate px-3 py-2.5 text-xs text-[var(--text-secondary)] sm:text-sm">
+        <div
+          className={`${COSMIC_SHEET_FIELD_ROW} min-w-0 flex-1 truncate text-xs text-[var(--text-secondary)] sm:text-sm`}
+        >
           {referralLink}
         </div>
         <button
           type="button"
           onClick={() => onCopy(referralLink)}
-          className="cosmic-action-btn flex shrink-0 items-center gap-1.5 px-3.5 py-2.5 text-xs sm:text-sm"
+          className={`${COSMIC_BTN_NAV} cosmic-btn-nav--sm flex shrink-0 items-center gap-1.5 px-3.5 py-2.5 text-xs sm:text-sm`}
         >
           <CopyIcon className="h-4 w-4" />
           {copied ? "คัดลอกแล้ว" : "Copy"}
@@ -149,7 +160,7 @@ export function ReferralStatsSection({
           }
           label="รายได้สะสม"
           value={formatReferralCurrency(stats.totalEarningsThb)}
-          valueClassName="text-[#c4b5fd]"
+          valueClassName="text-[var(--text-primary)]"
         />
       </div>
     </section>
@@ -168,10 +179,8 @@ function StatCard({
   valueClassName?: string;
 }) {
   return (
-    <div className="hub-desktop-card flex items-center gap-3 rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/35 px-3 py-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]">
-        {icon}
-      </div>
+    <div className={`${COSMIC_PANEL_GLASS} flex items-center gap-3 px-3 py-3`}>
+      <div className={COSMIC_PANEL_GLASS_ICON}>{icon}</div>
       <div className="min-w-0">
         <p className="text-[11px] text-[var(--text-muted)]">{label}</p>
         <p className={`text-sm font-medium tabular-nums ${valueClassName}`}>{value}</p>

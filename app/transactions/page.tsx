@@ -47,14 +47,14 @@ function TransactionsPageInner() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)]">
+    <div className="mobile-standalone-page">
       <Header />
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       <SlotProvidersHeader title="รายการธุรกรรม" backHref="/" />
 
-      <main className="mx-auto max-w-[var(--content-max)] px-[var(--page-gutter)] pb-28 pt-4">
+      <main className="mobile-standalone-main pb-28 pt-4">
         <TransactionsPageContent
           activeKind={activeKind}
           onSelectKind={handleSelectKind}
@@ -75,7 +75,7 @@ export default function TransactionsPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[var(--bg-page)] px-[var(--page-gutter)] py-16 text-center text-sm text-[var(--text-muted)]">
+        <div className="mobile-standalone-page mobile-standalone-main py-16 text-center text-sm text-[var(--text-muted)]">
           กำลังโหลด...
         </div>
       }

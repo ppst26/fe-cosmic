@@ -10,6 +10,13 @@ import {
   type DailyCheckInDayReward,
 } from "@/app/data/dailyCheckInMockData";
 import { ChevronDownIcon, ChevronRightIcon } from "../ui/Icons";
+import {
+  COSMIC_BTN_PRIMARY,
+  COSMIC_BTN_NAV,
+  COSMIC_BTN_GLASS_PILL_SM,
+  COSMIC_PANEL_GLASS,
+  COSMIC_PANEL_GLASS_ICON,
+} from "../ui/cosmicButtonClasses";
 import { DailyCheckInDesktopLayout } from "./DailyCheckInDesktopLayout";
 import {
   CheckInCoinGraphic,
@@ -61,7 +68,7 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
   }
 
   return (
-    <div className="flex flex-col gap-5 pb-4">
+    <div className="daily-check-in-mobile flex flex-col gap-5 pb-4">
       <header className="relative">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
@@ -76,12 +83,12 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
         </div>
       </header>
 
-      <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-3 py-3.5 sm:px-4">
+      <section className={`${COSMIC_PANEL_GLASS} px-3 py-3.5 sm:px-4`}>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-xs">
           <p className="font-medium text-[var(--text-primary)]">
             เช็คอินแล้ว {checkedInCount} / 7 วัน
           </p>
-          <p className="text-[var(--border-active)]">สะสมทุกวัน รับรางวัลพิเศษ</p>
+          <p className="text-[var(--text-secondary)]">สะสมทุกวัน รับรางวัลพิเศษ</p>
         </div>
         <DailyCheckInProgressTrack days={days} />
       </section>
@@ -104,7 +111,7 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
         type="button"
         disabled={!todayReward}
         onClick={() => todayReward && handleClaimDay(todayReward.day)}
-        className="cosmic-action-btn flex h-12 w-full items-center justify-center gap-2 text-sm disabled:opacity-45 sm:text-base"
+        className={`${COSMIC_BTN_PRIMARY} flex h-12 w-full items-center justify-center gap-2 text-sm disabled:opacity-45 sm:text-base`}
       >
         <GiftMiniIcon className="h-5 w-5" />
         {todayReward
@@ -115,14 +122,14 @@ export function DailyCheckInPageContent({ embedded = false }: { embedded?: boole
 
       <p className="text-center text-[10px] text-[var(--text-muted)]">ตัวอย่างรางวัลสำหรับการออกแบบ</p>
 
-      <section className="overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/35">
+      <section className={`${COSMIC_PANEL_GLASS} overflow-hidden`}>
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}
-          className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20"
+          className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)]"
           aria-expanded={termsOpen}
         >
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/70 text-[var(--icon-default)]">
+          <span className={`${COSMIC_PANEL_GLASS_ICON} !h-9 !w-9`}>
             <ListIcon className="h-4 w-4" />
           </span>
           <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการเช็คอิน</span>
@@ -158,12 +165,12 @@ function DailyCheckInProgressTrack({ days }: { days: DailyCheckInDayReward[] }) 
         return (
           <li key={day.day} className="flex flex-col items-center gap-1.5">
             <div
-              className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium sm:h-9 sm:w-9 ${
+              className={`daily-check-in-mobile__streak-dot flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium sm:h-9 sm:w-9 ${
                 isClaimed
-                  ? "bg-[#facc15] text-[#422006]"
+                  ? "is-claimed"
                   : isToday
-                    ? "bg-[var(--surface-mid)] text-[var(--text-primary)] ring-2 ring-[#a78bfa] ring-offset-2 ring-offset-[#121127]"
-                    : "bg-[var(--surface-mid)] text-[var(--text-muted)]"
+                    ? "is-today glass-control"
+                    : "glass-control text-[var(--text-muted)]"
               }`}
             >
               {isClaimed ? "✓" : day.day}
@@ -183,14 +190,12 @@ function DailyRewardCard({ day }: { day: DailyCheckInDayReward }) {
 
   return (
     <article
-      className={`cosmic-inset-card relative flex flex-col px-2 pb-2 pt-2.5 sm:px-2.5 ${
-        isToday
-          ? "bg-[var(--surface-hover)]/50 shadow-[0_0_20px_rgba(124,58,237,0.25)]"
-          : "bg-[var(--surface-mid)]/55"
-      } ${isLocked ? "opacity-80" : ""}`}
+      className={`glass-card--soft relative flex flex-col rounded-[var(--radius-panel)] px-2 pb-2 pt-2.5 sm:px-2.5 ${
+        isToday ? "daily-check-in-mobile__day-card is-today" : ""
+      } ${isLocked ? "opacity-85" : ""}`}
     >
       {isToday && (
-        <span className="absolute right-1.5 top-1.5 rounded-full bg-[#7c3aed] px-1.5 py-0.5 text-[8px] font-medium text-white sm:text-[9px]">
+        <span className="daily-check-in-mobile__today-badge absolute right-1.5 top-1.5 rounded-[var(--radius-pill)] px-1.5 py-0.5 text-[8px] font-medium sm:text-[9px]">
           วันนี้
         </span>
       )}
@@ -201,17 +206,23 @@ function DailyRewardCard({ day }: { day: DailyCheckInDayReward }) {
       </p>
       <div className="mt-2">
         {isClaimed && (
-          <span className="flex w-full items-center justify-center gap-1 rounded-full bg-[#0f3d2e] py-1 text-[9px] font-medium text-[var(--success)] sm:text-[10px]">
+          <span
+            className={`${COSMIC_BTN_GLASS_PILL_SM} flex w-full items-center justify-center gap-1 !text-[9px] sm:!text-[10px] text-[var(--success)]`}
+          >
             ✓ รับแล้ว
           </span>
         )}
         {isToday && (
-          <span className="cosmic-action-btn flex w-full items-center justify-center gap-1 py-1 text-[9px] sm:text-[10px]">
+          <span
+            className={`${COSMIC_BTN_NAV} cosmic-btn-nav--sm flex w-full items-center justify-center gap-1 py-1 text-[9px] sm:text-[10px]`}
+          >
             🎁 พร้อมรับ
           </span>
         )}
         {isLocked && (
-          <span className="flex w-full items-center justify-center gap-1 rounded-[var(--radius-control)] bg-[var(--surface-hover)]/80 py-1 text-[9px] font-medium text-[var(--text-muted)] sm:text-[10px]">
+          <span
+            className={`${COSMIC_BTN_GLASS_PILL_SM} flex w-full items-center justify-center gap-1 !text-[9px] sm:!text-[10px] text-[var(--text-muted)]`}
+          >
             <LockMiniIcon className="h-3 w-3" /> ล็อค
           </span>
         )}
@@ -222,14 +233,18 @@ function DailyRewardCard({ day }: { day: DailyCheckInDayReward }) {
 
 function DailyDaySevenCard({ day }: { day: DailyCheckInDayReward }) {
   return (
-    <article className="cosmic-inset-card relative flex items-center gap-3 overflow-hidden bg-[var(--surface-mid)]/60 px-3 py-3 sm:gap-4 sm:px-4">
+    <article
+      className={`${COSMIC_PANEL_GLASS} relative flex items-center gap-3 overflow-hidden px-3 py-3 sm:gap-4 sm:px-4`}
+    >
       <TreasureChestGraphic className="h-16 w-16 shrink-0 sm:h-20 sm:w-20" />
       <div className="min-w-0 flex-1">
         <p className="text-xs font-medium text-[var(--text-secondary)]">วันที่ 7</p>
         <p className="text-lg font-medium text-[var(--text-primary)] sm:text-xl">
           {formatCheckInCredits(day.credits)}
         </p>
-        <span className="mt-2 inline-flex items-center gap-1 rounded-[var(--radius-control)] bg-[var(--surface-hover)]/80 px-2.5 py-1 text-[10px] font-medium text-[var(--text-muted)]">
+        <span
+          className={`${COSMIC_BTN_GLASS_PILL_SM} mt-2 inline-flex items-center gap-1 !text-[10px] text-[var(--text-muted)]`}
+        >
           <LockMiniIcon className="h-3 w-3" /> ล็อค
         </span>
       </div>

@@ -96,7 +96,7 @@ export function VipBenefitsComparisonTable({
                           {tier.label}
                         </span>
                         {isCurrent && (
-                          <span className="rounded-full bg-[#ddd6fe]/90 px-2 py-0.5 text-[9px] font-medium text-[#1e1035]">
+                          <span className="rounded-full bg-[var(--cta-white-bg)] px-2 py-0.5 text-[9px] font-medium text-[var(--cta-white-fg)]">
                             ระดับของฉัน
                           </span>
                         )}

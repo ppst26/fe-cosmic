@@ -9,7 +9,7 @@ import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitive
 type ActivityItem = (typeof PROMOTIONS_HUB_ACTIVITIES)[number];
 
 /**
- * ส่วนกิจกรรมแนวนอน — ใช้ในหน้า /activities (มือถือ)
+ * ส่วนกิจกรรมแนวนอน — ใช้ในหน้า /event (มือถือ)
  */
 export function PromoHubActivitiesSection({
   activityItems,
@@ -36,7 +36,7 @@ export function PromoHubActivitiesSection({
       </div>
 
       <div
-        className="-mx-[var(--page-gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--page-gutter)] pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="-mx-[var(--layout-inline-gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--layout-inline-gutter)] pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         role="list"
         aria-label="กิจกรรมรายวัน"
       >
@@ -67,7 +67,7 @@ export function ActivityPromoCard({
       type="button"
       role="listitem"
       className={promoCardButtonClass(
-        "flex w-[min(78vw,280px)] shrink-0 snap-start flex-col bg-[var(--surface-mid)]/55",
+        "flex w-[min(78vw,280px)] shrink-0 snap-start flex-col",
       )}
       aria-label={`${activity.title} — ${activity.ctaLabel}`}
       onClick={() => onOpenDetail(activity.detailId)}

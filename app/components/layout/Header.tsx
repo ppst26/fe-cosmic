@@ -207,7 +207,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
                 >
-                  <VipRankEmblem rankId={rankId} size="sm" playing={false} />
+                  <VipRankEmblem rankId={rankId} size="xs" playing={false} />
                   <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 text-[var(--icon-default)]" aria-hidden />
                 </button>
               </div>

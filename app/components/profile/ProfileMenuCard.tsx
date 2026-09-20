@@ -1,5 +1,9 @@
 import React from "react";
 import { ChevronRightIcon } from "../ui/Icons";
+import {
+  COSMIC_PANEL_GLASS,
+  COSMIC_PANEL_GLASS_ICON,
+} from "../ui/cosmicButtonClasses";
 
 /**
  * แถวเมนูโปรไฟล์ — ไอคอน + หัวข้อ + คำอธิบาย + chevron
@@ -18,11 +22,11 @@ export function ProfileMenuRow({
   href?: string;
 }) {
   const className =
-    "flex w-full items-center gap-3 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/40 first:pt-0 last:pb-0";
+    "flex w-full items-center gap-3 rounded-[var(--radius-control)] py-3.5 text-left transition-colors hover:bg-[color-mix(in_srgb,var(--text-primary)_6%,transparent)] first:pt-0 last:pb-0";
 
   const content = (
     <>
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)] text-[var(--icon-default)]">
+      <span className={COSMIC_PANEL_GLASS_ICON}>
         {icon}
       </span>
       <span className="min-w-0 flex-1">
@@ -61,7 +65,7 @@ export function ProfileMenuCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-3">
+    <section className={`${COSMIC_PANEL_GLASS} px-4 py-3`}>
       <h2 className="mb-1 text-sm font-medium text-[var(--text-primary)]">{title}</h2>
       <div className="divide-y divide-[var(--border-subtle)]/60">{children}</div>
     </section>

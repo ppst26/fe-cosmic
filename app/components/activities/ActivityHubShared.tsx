@@ -12,6 +12,7 @@ import {
   formatActivityCredits,
   formatActivityNumber,
 } from "@/app/data/activitiesHubMockData";
+import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 
 /**
  * รูปย่อกิจกรรม — gradient mock ตามประเภท (ใช้ใน list ซ้าย / การ์ดมือถือ)
@@ -94,7 +95,11 @@ export function ActivityCategoryTabs({
   tabs?: { id: ActivityHubCategoryTab; label: string }[];
 }) {
   return (
-    <div className="flex flex-wrap gap-2" role="tablist" aria-label="หมวดกิจกรรม">
+    <div
+      className="promo-hub-category-tabs activities-hub-cat-tabs flex flex-wrap gap-2"
+      role="tablist"
+      aria-label="หมวดกิจกรรม"
+    >
       {tabs.map((tab) => {
         const selected = tab.id === activeId;
         return (
@@ -104,9 +109,12 @@ export function ActivityCategoryTabs({
             role="tab"
             aria-selected={selected}
             onClick={() => onSelect(tab.id)}
-            className={`activity-hub-cat-tab rounded-full px-4 py-1.5 text-xs font-medium sm:text-sm ${
-              selected ? "activity-hub-cat-tab--active" : ""
-            }`}
+            className={[
+              "glass-card--soft rounded-[var(--radius-pill)] px-4 py-1.5 text-xs font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:text-sm",
+              selected
+                ? "is-active text-[var(--text-primary)]"
+                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
+            ].join(" ")}
           >
             {tab.label}
           </button>
@@ -127,7 +135,7 @@ export function ActivityTurnProgressCard({
       : 0;
 
   return (
-    <section className="activity-hub-progress hub-desktop-field px-4 py-3 sm:px-5 sm:py-4">
+    <section className="activity-hub-progress glass-card--soft rounded-[var(--radius-panel)] px-4 py-3 sm:px-5 sm:py-4">
       <h3 className="text-center text-sm font-medium text-[var(--text-primary)] sm:text-base">
         ยอดเทิร์นของคุณ
       </h3>
@@ -162,7 +170,7 @@ export function ActivityTurnProgressCard({
 
 export function ActivityTierTable({ rows }: { rows: ActivityTierRow[] }) {
   return (
-    <div className="activity-hub-tier-table-wrap overflow-x-auto">
+    <div className="activity-hub-tier-table-wrap glass-card--soft overflow-x-auto rounded-[var(--radius-panel)] p-1 sm:p-2">
       <table className="activity-hub-tier-table w-full min-w-[520px] border-collapse text-left text-xs sm:text-sm">
         <thead>
           <tr className="text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)] sm:text-[11px]">
@@ -196,20 +204,23 @@ export function ActivityTierTable({ rows }: { rows: ActivityTierRow[] }) {
 }
 
 function ActivityClaimButton({ state }: { state: ActivityTierRow["claimState"] }) {
+  const base =
+    "activity-hub-claim-btn inline-flex min-w-[5.5rem] justify-center rounded-[var(--radius-control)] px-2 py-1.5 text-[10px] font-medium leading-tight sm:text-[11px]";
+
   if (state === "claimable") {
     return (
-      <button type="button" className="activity-hub-claim-btn activity-hub-claim-btn--ready">
+      <button type="button" className={`${base} ${COSMIC_BTN_PRIMARY}`}>
         รับรางวัล
       </button>
     );
   }
   if (state === "claimed") {
     return (
-      <span className="activity-hub-claim-btn activity-hub-claim-btn--done">รับแล้ว</span>
+      <span className={`${base} glass-card--soft text-[var(--success)]`}>รับแล้ว</span>
     );
   }
   return (
-    <span className="activity-hub-claim-btn activity-hub-claim-btn--locked">ไม่ผ่านเงื่อนไข</span>
+    <span className={`${base} text-[var(--text-muted)] opacity-90`}>ไม่ผ่านเงื่อนไข</span>
   );
 }
 
@@ -223,7 +234,7 @@ export function ActivityInfoDetail({ item }: { item: ActivityHubItem }) {
         <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
           {item.infoBullets.map((line) => (
             <li key={line} className="flex gap-2">
-              <span className="text-[#a78bfa]" aria-hidden="true">•</span>
+              <span className="text-[var(--accent-primary)]" aria-hidden="true">•</span>
               <span>{line}</span>
             </li>
           ))}

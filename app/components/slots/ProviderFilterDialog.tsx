@@ -9,6 +9,7 @@ import {
   FilterProvidersGridIcon,
   GamepadIcon,
 } from "../ui/Icons";
+import { COSMIC_BTN_GLASS_ICON } from "../ui/cosmicButtonClasses";
 import { getTabIcon, type GenericFilterTabItem } from "./SlotFilterTabs";
 
 const PROVIDER_TAB_IDS = new Set(["all-in-one", "all-providers"]);
@@ -84,10 +85,12 @@ export function ProviderFilterDialog({
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="provider-filter-dialog__overlay" />
+        <Dialog.Overlay
+          className="cosmic-dialog-overlay fixed inset-0 z-[68] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0"
+        />
         <Dialog.Content
           aria-describedby={undefined}
-          className="provider-filter-dialog__content"
+          className="provider-filter-dialog cosmic-modal-shell fixed left-1/2 top-1/2 z-[72] flex max-h-[min(85dvh,520px)] w-[min(calc(100vw-2rem),360px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-[var(--text-primary)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
         >
           <header className="provider-filter-dialog__header">
             {view === "root" ? (
@@ -95,7 +98,7 @@ export function ProviderFilterDialog({
             ) : (
               <button
                 type="button"
-                className="provider-filter-dialog__back"
+                className={`${COSMIC_BTN_GLASS_ICON} provider-filter-dialog__header-btn text-[var(--icon-default)]`}
                 aria-label="กลับ"
                 onClick={() => setView("root")}
               >
@@ -109,7 +112,7 @@ export function ProviderFilterDialog({
 
             <button
               type="button"
-              className="provider-filter-dialog__done"
+              className={`${COSMIC_BTN_GLASS_ICON} provider-filter-dialog__header-btn text-[var(--icon-active)]`}
               aria-label="ใช้ตัวกรอง"
               onClick={applyAndClose}
             >
@@ -148,7 +151,9 @@ export function ProviderFilterDialog({
                       </span>
                       <span className="provider-filter-dialog__row-body">
                         <span className="provider-filter-dialog__row-label">{categoryGroupLabel}</span>
-                        <span className="provider-filter-dialog__row-value">{categorySummary}</span>
+                        {categorySummary !== "—" ? (
+                          <span className="provider-filter-dialog__row-value">{categorySummary}</span>
+                        ) : null}
                       </span>
                       <ChevronRightIcon className="provider-filter-dialog__row-chevron" />
                     </button>

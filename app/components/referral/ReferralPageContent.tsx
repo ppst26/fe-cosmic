@@ -17,6 +17,11 @@ import {
   ReferralPromoBanner,
   ReferralStatsSection,
 } from "./ReferralOverviewSections";
+import {
+  COSMIC_PANEL_GLASS,
+  COSMIC_PANEL_GLASS_ICON,
+  COSMIC_SEGMENT_GLASS_WHITE,
+} from "../ui/cosmicButtonClasses";
 type ReferralTabId = "overview" | "users" | "earning";
 
 const TABS: { id: ReferralTabId; label: string }[] = [
@@ -120,7 +125,7 @@ function ReferralMobileTabs({
   showPageTitle?: boolean;
 }) {
   return (
-    <div className="flex flex-col gap-5 pb-4">
+    <div className="referral-mobile flex flex-col gap-5 pb-4">
       {showPageTitle ? (
         <div>
           <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">
@@ -133,7 +138,7 @@ function ReferralMobileTabs({
       <div
         role="tablist"
         aria-label="เมนูแนะนำเพื่อน"
-        className="flex gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className={`${COSMIC_SEGMENT_GLASS_WHITE} flex gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`}
       >
         {TABS.map((item) => {
           const active = tab === item.id;
@@ -145,9 +150,7 @@ function ReferralMobileTabs({
               aria-selected={active}
               onClick={() => setTab(item.id)}
               className={`cosmic-segment-btn flex shrink-0 items-center gap-2 px-3.5 py-2 text-xs sm:px-4 sm:text-sm ${
-                active
-                  ? "is-active"
-                  : "bg-[var(--surface-hover)]/40 text-[var(--text-secondary)] hover:bg-[var(--surface-selected)]/25 hover:text-[var(--text-primary)]"
+                active ? "is-active" : ""
               }`}
             >
               <TabIcon tab={item.id} />
@@ -163,21 +166,24 @@ function ReferralMobileTabs({
           <ReferralLinkSection refCode={refCode} copied={copied} onCopy={onCopy} />
           <ReferralStatsSection stats={stats} />
 
-          <section className="rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-hover)]/30 px-4 py-4">
+          <section className={`${COSMIC_PANEL_GLASS} px-4 py-4`}>
             <h2 className="text-sm font-medium text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
             <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
               แชร์ลิงก์แล้วรับส่วนแบ่งจากยอดเทิร์นของเครือข่าย
             </p>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {REFERRAL_COMMISSION_TIERS.map((tier) => (
-                <div key={tier.id} className="cosmic-inset-card flex gap-3 bg-[var(--surface-hover)]/20 p-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]">
+                <div
+                  key={tier.id}
+                  className="glass-card--soft flex gap-3 rounded-[var(--radius-panel)] p-3"
+                >
+                  <div className={COSMIC_PANEL_GLASS_ICON}>
                     <UsersGroupIcon className="h-5 w-5 text-[var(--icon-default)]" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-xs font-medium text-[var(--text-primary)]">{tier.title}</p>
                     <p className="text-[10px] text-[var(--text-muted)]">{tier.subtitle}</p>
-                    <p className="mt-1 text-2xl font-medium text-[#c4b5fd]">{tier.rateLabel}</p>
+                    <p className="mt-1 text-2xl font-medium text-[var(--text-primary)]">{tier.rateLabel}</p>
                     <p className="text-[10px] text-[var(--text-muted)]">{tier.rateHint}</p>
                   </div>
                 </div>
@@ -203,7 +209,7 @@ function ReferralMobileTabs({
             <div className="grid grid-cols-3 gap-2">
               {REFERRAL_STEPS.map((step, index) => (
                 <div key={step.id} className="flex flex-col items-center text-center">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--surface-hover)]/50 text-xs font-medium text-[#c4b5fd]">
+                  <div className="glass-control flex h-12 w-12 items-center justify-center rounded-full text-xs font-medium text-[var(--text-primary)]">
                     {String(index + 1).padStart(2, "0")}
                   </div>
                   <p className="mt-2 text-[11px] font-medium text-[var(--text-primary)]">{step.label}</p>

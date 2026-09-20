@@ -1,14 +1,9 @@
 "use client";
 
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import { DepositBottomSheet } from "./DepositBottomSheet";
 import { usePendingTransaction } from "@/app/components/transactions/PendingTransactionProvider";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 
 interface DepositContextValue {
   openDeposit: () => void;
@@ -18,18 +13,15 @@ interface DepositContextValue {
 const DepositContext = createContext<DepositContextValue | null>(null);
 
 /**
- * เปิด/ปิด bottom sheet ฝากเงิน — mount ใน AppProviders
+ * เปิด/ปิด bottom sheet ฝากเงิน — mount ใน AppProviders · sync ?layer=deposit
  */
 export function DepositProvider({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useOverlayLayer("deposit");
   const { showPendingDeposit } = usePendingTransaction();
 
-  const openDeposit = useCallback(() => setIsOpen(true), []);
-  const closeDeposit = useCallback(() => setIsOpen(false), []);
-
   const value = useMemo(
-    () => ({ openDeposit, closeDeposit }),
-    [openDeposit, closeDeposit],
+    () => ({ openDeposit: open, closeDeposit: close }),
+    [open, close],
   );
 
   return (
@@ -37,7 +29,7 @@ export function DepositProvider({ children }: { children: React.ReactNode }) {
       {children}
       <DepositBottomSheet
         isOpen={isOpen}
-        onClose={closeDeposit}
+        onClose={close}
         onCompleted={(amount) => showPendingDeposit(amount)}
       />
     </DepositContext.Provider>

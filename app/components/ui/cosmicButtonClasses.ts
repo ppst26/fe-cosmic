@@ -10,6 +10,10 @@
 
 export const COSMIC_BTN_GLASS_PILL = "glass-control glass-pill";
 
+/** outline glass ขนาดเล็ก — สถานะรอง / inactive (เช็คอิน รับแล้ว·ล็อค) */
+export const COSMIC_BTN_GLASS_PILL_SM =
+  "glass-control glass-pill !min-h-0 !py-1.5 !px-2.5 !text-[0.6875rem] sm:!text-xs";
+
 
 
 /** ชั้น 1 — outline glass: ปุ่มวงกลมเลื่อน carousel */
@@ -39,6 +43,33 @@ export const COSMIC_SHEET_SUBMIT = "cosmic-sheet-submit";
 /** panel ข้อมูลใน bottom sheet — soft glass */
 
 export const COSMIC_SHEET_SOFT_GLASS = "cosmic-sheet-soft-glass";
+
+
+
+/** การ์ด glass หน้าโปรไฟล์ / standalone mobile */
+
+export const COSMIC_PANEL_GLASS = "glass-card--soft rounded-[var(--radius-panel)]";
+
+
+
+/** แท็บ 2 ช่อง — track glass · active white solid */
+
+export const COSMIC_SEGMENT_GLASS_WHITE =
+  "cosmic-segment-track cosmic-segment-track--glass-white";
+
+
+
+/** วงไอคอนในแถวเมนู / รายการ — ขนาด 40px */
+
+export const COSMIC_PANEL_GLASS_ICON =
+  "glass-control glass-icon-btn !h-10 !w-10 shrink-0 text-[var(--icon-default)]";
+
+
+
+/** ปุ่มออกจากระบบ — glass outline โทน destructive */
+
+export const COSMIC_BTN_LOGOUT =
+  "glass-control flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-panel)] border border-[color-mix(in_srgb,var(--destructive)_55%,transparent)] text-sm font-medium text-[var(--destructive)] transition-[background,color,box-shadow] duration-[var(--motion-fast)] hover:bg-[color-mix(in_srgb,var(--destructive)_14%,transparent)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]";
 
 
 

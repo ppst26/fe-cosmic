@@ -422,7 +422,7 @@ function DepositConfirmStep({
       >
         <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 text-center sm:px-4`}>
           <p className="text-xs text-[var(--text-secondary)]">ยอดเงินที่ต้องโอน</p>
-          <p className="mt-1 text-3xl font-medium text-[#a78bfa] sm:text-4xl">
+          <p className="mt-1 text-3xl font-medium text-[var(--accent-muted)] sm:text-4xl">
             ฿ {formatDepositTransferAmount(amount)}
           </p>
         </section>

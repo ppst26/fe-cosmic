@@ -7,6 +7,10 @@ import {
   ProfileAvatarIcon,
   VerifiedCheckIcon,
 } from "../ui/Icons";
+import {
+  COSMIC_BTN_GLASS_ICON,
+  COSMIC_PANEL_GLASS,
+} from "../ui/cosmicButtonClasses";
 
 /**
  * สรุปโปรไฟล์ — avatar, เบอร์, ID, badge ยืนยัน
@@ -25,8 +29,10 @@ export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
   };
 
   return (
-    <section className="flex gap-4 py-2">
-      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[var(--surface-hover)] text-[var(--icon-default)]">
+    <section className={`${COSMIC_PANEL_GLASS} flex gap-4 px-4 py-4`}>
+      <div
+        className={`${COSMIC_BTN_GLASS_ICON} !h-16 !w-16 shrink-0 text-[var(--icon-default)]`}
+      >
         <ProfileAvatarIcon className="h-9 w-9" />
       </div>
 
@@ -41,7 +47,7 @@ export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
           <button
             type="button"
             onClick={() => void handleCopyId()}
-            className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-control)] text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--icon-active)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+            className={`${COSMIC_BTN_GLASS_ICON} !h-7 !w-7 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]`}
             aria-label={copied ? "คัดลอกแล้ว" : "คัดลอก ID"}
           >
             <CopyIcon className="h-4 w-4" />

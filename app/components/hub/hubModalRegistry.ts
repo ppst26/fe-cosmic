@@ -30,7 +30,7 @@ export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
 
 const PATH_TO_HUB: Record<string, DesktopHubId> = {
   "/promotions": "promotions",
-  "/activities": "activities",
+  "/event": "activities",
   "/cashback": "cashback",
   "/gems-store": "gems-store",
   "/profile/account": "account",
@@ -83,6 +83,10 @@ export function parseHubFromHref(href: string): {
 
 export function hrefToHubId(href: string): DesktopHubId | null {
   return parseHubFromHref(href).id;
+}
+
+export function isDesktopHubId(value: string | null): value is DesktopHubId {
+  return value !== null && value in HUB_MODAL_TITLES;
 }
 
 /** hub ที่ต้องล็อกอินก่อนเปิด modal */

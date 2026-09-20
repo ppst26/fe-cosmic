@@ -19,7 +19,7 @@ import { YikiTypeChips } from "./YikiTypeChips";
 import { YikiSlip } from "./YikiSlip";
 import { YikiPricePanel } from "./YikiPricePanel";
 import { YikiPriceControls } from "./YikiPriceControls";
-import { YikiActionBar } from "./YikiActionBar";
+import { LotteryPriceStepCard } from "../LotteryPriceStepCard";
 import { YikiHowToBet } from "./YikiHowToBet";
 import { uniquePermutations } from "../lotteryUtils";
 
@@ -35,6 +35,8 @@ interface YikiBetBoardProps {
   flagTone?: LotteryFlagTone;
   /** ส่งโพย+ราคาไป API — ยังไม่เชื่อม ถ้าไม่ส่งมาปุ่ม "ยืนยันการแทง" จะถูกปิด */
   onSubmit?: (entries: YikiBetEntry[]) => void;
+  /** แจ้ง shell ซ่อน bottom nav ตอนขั้นใส่ราคา (มือถือ) */
+  onStepChange?: (step: "pick" | "price") => void;
 }
 
 const YIKI_INPUT_MODES: { id: LotteryInputMode; label: string }[] = [
@@ -54,7 +56,7 @@ function isTypingTarget(target: EventTarget | null): boolean {
  * กระดานแทงหวยแบบ "โพยซ้าย/ใส่เลขขวา" — ถือ state ทั้งหมด (ประเภท · เลขที่กด · โพย · ขั้นใส่ราคา)
  * ใช้ร่วมกันทั้งยี่กี (15/30 นาที ผ่าน app/lottery/yiki-15|yiki-30/[roundId]/page.tsx)
  * และตลาดหวยหุ้นอื่น (ผ่าน app/lottery/[marketId]/page.tsx) — ต่างกันแค่ round/flag ที่ส่งเข้ามา
- * ทุกขนาดจอ: โพย/ใส่ราคาคอลัมน์ซ้าย (sticky) + เลือกเลขคอลัมน์ขวา อยู่คู่กันตลอด ไม่ซ้อนแนวตั้ง
+ * ทุกขนาดจอ: โพย/ใส่ราคาคอลัมน์ซ้าย + เลือกเลขคอลัมน์ขวา อยู่คู่กันตลอด ไม่ซ้อนแนวตั้ง
  */
 export function YikiBetBoard({
   round,
@@ -65,6 +67,7 @@ export function YikiBetBoard({
   flagLabel,
   flagTone,
   onSubmit,
+  onStepChange,
 }: YikiBetBoardProps) {
   const firstTypeOf = useCallback(
     (group: YikiDigitGroup) => betTypes.find((type) => type.group === group)?.id,
@@ -84,6 +87,10 @@ export function YikiBetBoard({
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [sameForAll, setSameForAll] = useState(false);
   const entryCounter = useRef(0);
+
+  useEffect(() => {
+    onStepChange?.(step);
+  }, [step, onStepChange]);
 
   // นับถอยหลังหลัง mount เท่านั้น เพื่อให้ markup จาก server ตรงกับ client
   useEffect(() => {
@@ -255,9 +262,11 @@ export function YikiBetBoard({
       <div
         className={`yiki-layout surface-solid-outer${step === "price" ? " yiki-layout--price" : ""}`}
       >
-        <div className="yiki-layout__round">
-          <YikiRoundStrip round={round} remainingMs={remainingMs} flagLabel={flagLabel} flagTone={flagTone} />
-        </div>
+        {step === "pick" ? (
+          <div className="yiki-layout__round">
+            <YikiRoundStrip round={round} remainingMs={remainingMs} flagLabel={flagLabel} flagTone={flagTone} />
+          </div>
+        ) : null}
 
         <div className="yiki-layout__slip">
           {step === "pick" ? (
@@ -270,34 +279,33 @@ export function YikiBetBoard({
               onClearAll={handleClearAll}
             />
           ) : (
-            <YikiPricePanel
-              entries={entries}
-              settlementTypes={settlementTypes}
-              selectedEntryId={selectedEntryId}
-              onSelectEntry={setSelectedEntryId}
-              onAmountChange={(entryId, amount) =>
-                setEntries((prev) => prev.map((entry) => (entry.id === entryId ? { ...entry, amount } : entry)))
+            <LotteryPriceStepCard
+              controls={
+                <YikiPriceControls
+                  selectedEntry={selectedEntry}
+                  sameForAll={sameForAll}
+                  onToggleSameForAll={setSameForAll}
+                  onQuickAmount={handleQuickAmount}
+                  onBack={() => setStep("pick")}
+                  onSubmit={() => onSubmit?.(entries)}
+                  submitDisabled={!canConfirm}
+                  total={priceTotal}
+                />
               }
-              onRemove={(entryId) => setEntries((prev) => prev.filter((entry) => entry.id !== entryId))}
-            />
+            >
+              <YikiPricePanel
+                entries={entries}
+                settlementTypes={settlementTypes}
+                selectedEntryId={selectedEntryId}
+                onSelectEntry={setSelectedEntryId}
+                onAmountChange={(entryId, amount) =>
+                  setEntries((prev) => prev.map((entry) => (entry.id === entryId ? { ...entry, amount } : entry)))
+                }
+                onRemove={(entryId) => setEntries((prev) => prev.filter((entry) => entry.id !== entryId))}
+              />
+            </LotteryPriceStepCard>
           )}
         </div>
-
-        {step === "price" ? (
-          <div className="yiki-layout__input">
-            <YikiPriceControls
-              selectedEntry={selectedEntry}
-              settlementTypes={settlementTypes}
-              sameForAll={sameForAll}
-              onToggleSameForAll={setSameForAll}
-              onQuickAmount={handleQuickAmount}
-              onBack={() => setStep("pick")}
-              onSubmit={() => onSubmit?.(entries)}
-              submitDisabled={!canConfirm}
-              total={priceTotal}
-            />
-          </div>
-        ) : null}
 
         {step === "pick" ? (
           <section className="thai-lotto-panel yiki-layout__input" aria-label="เลือกเลข">
@@ -380,13 +388,6 @@ export function YikiBetBoard({
         ) : null}
       </div>
 
-      {step === "pick" ? (
-        <YikiActionBar
-          className="yiki-action-bar--mobile-only"
-          secondary={{ label: "กลับหน้าก่อนหน้า", href: backHref }}
-          primary={{ label: "ใส่ราคา", onClick: handleGoToPrice, disabled: entries.length === 0 || isClosed }}
-        />
-      ) : null}
     </>
   );
 }

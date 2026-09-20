@@ -26,6 +26,8 @@ interface ProfileHubBodyProps {
   onOpenLossRebate: () => void;
   onOpenVip: () => void;
   onLogout: () => void;
+  /** false เมื่อหัวอยู่ในแถบม่วงของ bottom sheet */
+  showHeader?: boolean;
 }
 
 const stats = PROFILE_HUB_STATS_MOCK;
@@ -53,6 +55,7 @@ export function ProfileHubBody({
   onOpenLossRebate,
   onOpenVip,
   onLogout,
+  showHeader = true,
 }: ProfileHubBodyProps) {
   const [expanded, setExpanded] = useState({
     account: true,
@@ -66,7 +69,7 @@ export function ProfileHubBody({
 
   return (
     <div className="profile-hub-body flex flex-col gap-2 pb-1">
-      <ProfileHubHeader profile={profile} />
+      {showHeader ? <ProfileHubHeader profile={profile} /> : null}
 
       <ProfileHubAccordion
         title="บัญชีของฉัน"

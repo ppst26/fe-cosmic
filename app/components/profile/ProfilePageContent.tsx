@@ -15,6 +15,7 @@ import {
   LogOutIcon,
   SupportHeadsetIcon,
 } from "../ui/Icons";
+import { COSMIC_BTN_LOGOUT, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 
 /**
  * เนื้อหาหน้าโปรไฟล์ — โหลดจาก /api/auth/profile
@@ -105,7 +106,7 @@ export function ProfilePageContent() {
           />
         </ProfileMenuCard>
 
-        <section className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-1">
+        <section className={`${COSMIC_PANEL_GLASS} px-4 py-1`}>
           <ProfileMenuRow
             icon={<SupportHeadsetIcon className="h-5 w-5" />}
             title="ติดต่อฝ่ายบริการ"
@@ -116,7 +117,7 @@ export function ProfilePageContent() {
         <button
           type="button"
           onClick={() => void handleLogout()}
-          className="flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-control)] border border-[var(--destructive)]/70 bg-transparent text-sm font-medium text-[var(--destructive)] transition-colors hover:bg-[var(--destructive)]/10 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+          className={COSMIC_BTN_LOGOUT}
         >
           <LogOutIcon className="h-5 w-5" />
           ออกจากระบบ

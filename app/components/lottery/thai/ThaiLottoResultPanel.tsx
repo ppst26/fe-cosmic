@@ -3,6 +3,7 @@ import type { ThaiLottoResult } from "@/app/types/lottery";
 
 /**
  * ผลรางวัลงวดก่อน — รางวัลที่ 1 · 3 ตัวหน้า · 3 ตัวท้าย · 2 ตัวล่าง
+ * ใช้ใน LotteryMarketRoundsView (หน้ารายการรอบ) ไม่แสดงในหน้าแทง/ใส่ราคา
  * ใช้ใน app/lottery/thai-government/page.tsx
  */
 export function ThaiLottoResultPanel({ result }: { result: ThaiLottoResult }) {

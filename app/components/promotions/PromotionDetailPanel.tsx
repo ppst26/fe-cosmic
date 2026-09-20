@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import type {
   PromotionDetailBlock,
   PromotionDetailBlockIcon,
   PromotionDetailContent,
 } from "@/app/data/promotionDetailMockData";
-import { ChevronDownIcon } from "../ui/Icons";
 
 export type PromotionDetailPanelVariant = "modal" | "hub";
 
@@ -22,12 +21,18 @@ export function PromotionDetailPanel({ content, variant = "modal" }: PromotionDe
   const isHub = variant === "hub";
 
   return (
-    <div className={isHub ? "promotion-detail-panel promotion-detail-panel--hub" : "promotion-detail-panel"}>
+    <div
+      className={
+        isHub
+          ? "promotion-detail-panel promotion-detail-panel--hub"
+          : "promotion-detail-panel promotion-detail-panel--modal"
+      }
+    >
       <PromotionDetailBanner content={content} isHub={isHub} />
       {isHub ? (
         <PromotionDetailBodyExpanded body={content} isHub={isHub} />
       ) : (
-        <PromotionDetailAccordion body={content} />
+        <PromotionDetailDetailsSection body={content} />
       )}
     </div>
   );
@@ -45,40 +50,23 @@ function PromotionDetailBanner({
       className={
         isHub
           ? "promotion-detail-panel__banner relative overflow-hidden px-4 py-4"
-          : "cosmic-inset-card relative overflow-hidden px-4 py-5"
+          : "promotion-detail-panel__banner glass-card--soft relative overflow-hidden px-4 py-5"
       }
       aria-label={content.bannerTitle}
     >
-      {!isHub ? (
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 85% 75% at 70% 35%, rgba(124,58,237,0.4) 0%, rgba(13,11,26,0.95) 55%, rgba(9,11,24,1) 100%)",
-          }}
-        />
-      ) : null}
+      {!isHub ? <div className="promotion-detail-panel__banner-glow" aria-hidden="true" /> : null}
       <div className="relative z-[1] flex items-center gap-3">
         <PromotionDetailBannerArt
           art={content.bannerArt}
           className="h-16 w-16 shrink-0 sm:h-[4.5rem] sm:w-[4.5rem]"
+          isHub={isHub}
         />
         <div className="min-w-0 flex-1">
           <h2
             className={
               isHub
                 ? "text-lg font-medium leading-snug text-[var(--text-primary)] sm:text-xl"
-                : "text-lg font-medium leading-snug sm:text-xl"
-            }
-            style={
-              isHub
-                ? undefined
-                : {
-                    background: "linear-gradient(180deg, #ffffff 0%, #fde047 85%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }
+                : "promotion-detail-panel__banner-title text-lg sm:text-xl"
             }
           >
             {content.bannerTitle}
@@ -90,24 +78,13 @@ function PromotionDetailBanner({
   );
 }
 
-function PromotionDetailAccordion({ body }: { body: PromotionDetailContent }) {
-  const [expanded, setExpanded] = useState(true);
-
+/** บล็อกรายละเอียดใน modal — แสดงเต็ม ไม่มี accordion */
+function PromotionDetailDetailsSection({ body }: { body: PromotionDetailContent }) {
   return (
-    <section className="cosmic-inset-card mt-3 overflow-hidden bg-[#121027]/90">
-      <button
-        type="button"
-        onClick={() => setExpanded((open) => !open)}
-        className="flex w-full items-center justify-between gap-2 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/15"
-        aria-expanded={expanded}
-      >
-        <span className="text-sm font-medium text-[var(--text-primary)]">รายละเอียด</span>
-        <ChevronDownIcon
-          className={`h-4 w-4 shrink-0 text-[var(--icon-default)] transition-transform ${expanded ? "rotate-180" : ""}`}
-        />
-      </button>
-
-      {expanded && <PromotionDetailBodyExpanded body={body} isHub={false} />}
+    <section className="promotion-detail-panel__details glass-card--soft" aria-label="รายละเอียดโปรโมชั่น">
+      <h3 className="promotion-detail-panel__details-heading">รายละเอียด</h3>
+      <hr className="promotion-detail-panel__divider" />
+      <PromotionDetailBodyExpanded body={body} isHub={false} />
     </section>
   );
 }
@@ -124,31 +101,45 @@ function PromotionDetailBodyExpanded({
       className={
         isHub
           ? "promotion-detail-panel__body mt-4 space-y-4"
-          : "space-y-4 px-4 py-4"
+          : "promotion-detail-panel__accordion-body"
       }
       aria-label="รายละเอียดโปรโมชั่น"
     >
       {isHub ? (
         <h3 className="text-sm font-medium text-[var(--text-primary)]">รายละเอียด</h3>
       ) : null}
-      <div className={isHub ? "space-y-4" : undefined}>
+      <div className={isHub ? "space-y-4" : "promotion-detail-panel__blocks"}>
         {body.blocks.map((block, index) => (
-          <PromotionDetailBlockRow key={`${block.title}-${index}`} block={block} />
+          <PromotionDetailBlockRow key={`${block.title}-${index}`} block={block} isHub={isHub} />
         ))}
       </div>
-      <p className="pt-1 text-center text-[10px] text-[var(--text-muted)]">{body.footerNote}</p>
+      <p className="promotion-detail-panel__footer">{body.footerNote}</p>
     </section>
   );
 }
 
-function PromotionDetailBlockRow({ block }: { block: PromotionDetailBlock }) {
+function PromotionDetailBlockRow({
+  block,
+  isHub,
+}: {
+  block: PromotionDetailBlock;
+  isHub: boolean;
+}) {
   return (
     <>
-      {block.showDividerBefore && <hr className="border-[var(--border-subtle)]/35" />}
+      {block.showDividerBefore && <hr className="promotion-detail-panel__divider" />}
       <div className="flex gap-3">
-        <PromotionDetailBlockIcon icon={block.icon} className="mt-0.5 h-9 w-9 shrink-0" />
+        <PromotionDetailBlockIcon icon={block.icon} className="mt-0.5 h-9 w-9 shrink-0" isHub={isHub} />
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-medium text-[#c4b5fd]">{block.title}</h3>
+          <h3
+            className={
+              isHub
+                ? "text-sm font-medium text-[var(--accent-muted)]"
+                : "promotion-detail-panel__block-title text-sm font-medium"
+            }
+          >
+            {block.title}
+          </h3>
           {block.description && (
             <p className="mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)]">{block.description}</p>
           )}
@@ -156,7 +147,7 @@ function PromotionDetailBlockRow({ block }: { block: PromotionDetailBlock }) {
             <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-[var(--text-secondary)]">
               {block.bullets.map((line) => (
                 <li key={line} className="flex gap-2">
-                  <span className="text-[#a78bfa]" aria-hidden="true">•</span>
+                  <span className="text-[var(--accent-primary)]" aria-hidden="true">•</span>
                   <span>{line}</span>
                 </li>
               ))}
@@ -168,8 +159,20 @@ function PromotionDetailBlockRow({ block }: { block: PromotionDetailBlock }) {
   );
 }
 
-function PromotionDetailBlockIcon({ icon, className }: { icon: PromotionDetailBlockIcon; className?: string }) {
-  const base = `${className} flex items-center justify-center rounded-full border border-[#7c3aed]/40 bg-[#1e1b4b]/80`;
+function PromotionDetailBlockIcon({
+  icon,
+  className,
+  isHub,
+}: {
+  icon: PromotionDetailBlockIcon;
+  className?: string;
+  isHub?: boolean;
+}) {
+  const base = `${className} promo-detail-block-icon flex items-center justify-center ${
+    isHub
+      ? "rounded-full border border-[color-mix(in_srgb,var(--accent-primary)_40%,transparent)] bg-[color-mix(in_srgb,var(--surface-mid)_88%,black)]"
+      : ""
+  }`;
   if (icon === "shield") {
     return (
       <span className={base} aria-hidden="true">
@@ -242,7 +245,15 @@ function PromotionDetailBlockIcon({ icon, className }: { icon: PromotionDetailBl
   );
 }
 
-function PromotionDetailBannerArt({ art, className }: { art: PromotionDetailBlockIcon; className?: string }) {
+function PromotionDetailBannerArt({
+  art,
+  className,
+  isHub,
+}: {
+  art: PromotionDetailBlockIcon;
+  className?: string;
+  isHub?: boolean;
+}) {
   if (art === "shield") {
     return (
       <svg viewBox="0 0 80 80" className={className} aria-hidden="true">
@@ -265,5 +276,5 @@ function PromotionDetailBannerArt({ art, className }: { art: PromotionDetailBloc
       </svg>
     );
   }
-  return <PromotionDetailBlockIcon icon={art} className={className} />;
+  return <PromotionDetailBlockIcon icon={art} className={className} isHub={isHub} />;
 }

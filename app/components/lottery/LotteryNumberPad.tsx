@@ -24,7 +24,7 @@ export function LotteryNumberPad({
   onClear,
 }: LotteryNumberPadProps) {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="lottery-number-pad flex flex-col gap-2">
       <div className="thai-lotto-slots" aria-live="polite" aria-label={`เลขที่กรอก ${value || "ว่าง"}`}>
         {Array.from({ length: digits }, (_, index) => {
           const char = value[index];

@@ -14,6 +14,11 @@ export function uniquePermutations(value: string): string[] {
   return [...result];
 }
 
+/** แสดงเลขโพยแบบมีช่องว่างระหว่างหลัก — อ่านง่ายในแถบสรุป (เช่น 655 → 6 5 5) */
+export function formatLotteryDigitsDisplay(value: string): string {
+  return value.replace(/\s/g, "").split("").join(" ");
+}
+
 /** แปลงยอดเงินเป็นรูปแบบ 1,234.50 — ใช้ในโพยและสรุปยอด */
 export function formatBaht(value: number): string {
   return value.toLocaleString("th-TH", {

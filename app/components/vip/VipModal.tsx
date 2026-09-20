@@ -1,14 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog } from "radix-ui";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { VipModalTabId } from "@/app/types/vip";
+import {
+  OVERLAY_LAYER_KEY,
+  OVERLAY_VIP_TAB_KEY,
+  parseVipModalTab,
+} from "@/lib/overlayUrl";
 import {
   getVipRankTier,
   VIP_PLAYER_MOCK,
   VIP_RANK_TIERS,
 } from "@/app/data/vipMockData";
 import { CloseIcon } from "../ui/Icons";
+import { COSMIC_BTN_GLASS_ICON, COSMIC_SEGMENT_GLASS_WHITE } from "../ui/cosmicButtonClasses";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
 import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
 import { VipModalDesktopLayout } from "./VipModalDesktopLayout";
@@ -31,6 +38,9 @@ interface VipModalProps {
  * Modal ข้อมูล VIP — mobile แนวตั้ง · desktop แบ่งคอลัมน์ + ตารางสิทธิประโยชน์
  */
 export function VipModal({ isOpen, onClose }: VipModalProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [tab, setTab] = useState<VipModalTabId>("my-level");
   const player = VIP_PLAYER_MOCK;
   const currentTier = getVipRankTier(player.currentRankId);
@@ -39,6 +49,20 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
   const [rankFocusIndex, setRankFocusIndex] = useState(
     currentRankIndex >= 0 ? currentRankIndex : 0,
   );
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const fromUrl = parseVipModalTab(searchParams.get(OVERLAY_VIP_TAB_KEY));
+    if (fromUrl) setTab(fromUrl);
+  }, [isOpen, searchParams]);
+
+  const selectTab = (id: VipModalTabId) => {
+    setTab(id);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(OVERLAY_LAYER_KEY, "vip");
+    params.set(OVERLAY_VIP_TAB_KEY, id);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
@@ -66,7 +90,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
             <Dialog.Close asChild>
               <button
                 type="button"
-                className="absolute right-3 top-3.5 flex h-8 w-8 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--icon-active)] lg:right-4 lg:top-4"
+                className={`absolute right-3 top-3.5 lg:right-4 lg:top-4 ${COSMIC_BTN_GLASS_ICON} text-[var(--icon-active)]`}
                 aria-label="ปิด VIP"
               >
                 <CloseIcon className="h-4 w-4" />
@@ -76,7 +100,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
             <div
               role="tablist"
               aria-label="เมนู VIP"
-              className="hub-modal-segment-track mt-3 grid grid-cols-3 lg:mt-4 lg:mx-auto lg:max-w-xl"
+              className={`${COSMIC_SEGMENT_GLASS_WHITE} vip-modal__segment-track mt-3 grid grid-cols-3 gap-1.5 lg:mt-4 lg:mx-auto lg:max-w-xl`}
             >
               {VIP_TABS.map((item) => {
                 const active = tab === item.id;
@@ -86,8 +110,8 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
                     type="button"
                     role="tab"
                     aria-selected={active}
-                    onClick={() => setTab(item.id)}
-                    className={`hub-modal-segment-btn px-1 py-2 text-[11px] leading-tight sm:text-xs lg:py-2.5 ${
+                    onClick={() => selectTab(item.id)}
+                    className={`cosmic-segment-btn px-1 py-2 text-[11px] leading-tight sm:text-xs lg:py-2.5 ${
                       active ? "is-active" : ""
                     }`}
                   >

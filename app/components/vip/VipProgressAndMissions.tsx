@@ -44,7 +44,7 @@ export function VipProgressAndMissions({
             className="h-full rounded-full transition-[width] duration-500"
             style={{
               width: `${turnoverPct}%`,
-              background: "linear-gradient(90deg, #9b87ff 0%, #c4b5fd 45%, #f5c542 100%)",
+              background: "var(--vip-progress-gradient)",
             }}
           />
         </div>

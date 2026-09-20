@@ -1,4 +1,4 @@
-/** ข้อมูล mock หน้ากิจกรรม (/activities) — รายการซ้าย + รายละเอียดขวา (desktop) */
+/** ข้อมูล mock หน้ากิจกรรม (/event) — รายการซ้าย + รายละเอียดขวา (desktop) */
 
 export type ActivityHubCategoryTab = "slots" | "casino";
 

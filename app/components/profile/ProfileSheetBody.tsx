@@ -10,6 +10,7 @@ import {
   LogOutIcon,
   SupportHeadsetIcon,
 } from "../ui/Icons";
+import { COSMIC_BTN_LOGOUT, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 
 interface ProfileSheetBodyProps {
   profile: ProfileUser;
@@ -52,7 +53,7 @@ export function ProfileSheetBody({ profile, onLogout, compact = false }: Profile
         />
       </ProfileMenuCard>
 
-      <section className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-1">
+      <section className={`${COSMIC_PANEL_GLASS} px-4 py-1`}>
         <ProfileMenuRow
           icon={<SupportHeadsetIcon className="h-5 w-5" />}
           title="ติดต่อฝ่ายบริการ"
@@ -65,8 +66,8 @@ export function ProfileSheetBody({ profile, onLogout, compact = false }: Profile
         onClick={onLogout}
         className={
           compact
-            ? "flex w-fit items-center gap-1.5 py-1 text-xs font-medium text-[#e8c547] hover:opacity-85"
-            : "flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-control)] border border-[var(--destructive)]/70 bg-transparent text-sm font-medium text-[var(--destructive)] transition-colors hover:bg-[var(--destructive)]/10 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+            ? "flex w-fit items-center gap-1.5 py-1 text-xs font-medium text-[var(--destructive)] hover:opacity-85"
+            : COSMIC_BTN_LOGOUT
         }
       >
         <LogOutIcon className={compact ? "h-3.5 w-3.5" : "h-5 w-5"} />

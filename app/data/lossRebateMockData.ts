@@ -1,4 +1,4 @@
-/** ข้อมูล mock หน้าคืนยอดเสีย */
+/** ข้อมูล mock ส่วนคืนยอดเสียใน /cashback (ตาราง + สูตร + เงื่อนไข) */
 
 export interface LossRebateSummaryMock {
   rebateReadyThb: number;

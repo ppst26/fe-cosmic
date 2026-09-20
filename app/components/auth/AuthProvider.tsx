@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import type { LoginRequestBody, RegisterRequestBody, SessionUser } from "@/app/types/auth";
 import { fetchSession, loginUser, logoutUser, registerUser } from "@/lib/auth/client";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 
 interface AuthContextValue {
   user: SessionUser | null;
@@ -32,15 +33,11 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  const openProfile = useCallback(() => {
-    setIsProfileOpen(true);
-  }, []);
-
-  const closeProfile = useCallback(() => {
-    setIsProfileOpen(false);
-  }, []);
+  const {
+    isOpen: isProfileOpen,
+    open: openProfile,
+    close: closeProfile,
+  } = useOverlayLayer("profile");
 
   const refreshSession = useCallback(async () => {
     const sessionUser = await fetchSession();
@@ -83,8 +80,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(async () => {
     await logoutUser();
     setUser(null);
-    setIsProfileOpen(false);
-  }, []);
+    closeProfile();
+  }, [closeProfile]);
 
   const value = useMemo<AuthContextValue>(
     () => ({

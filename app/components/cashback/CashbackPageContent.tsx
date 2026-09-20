@@ -11,6 +11,8 @@ import {
   type CashbackTabId,
 } from "@/app/data/cashbackMockData";
 import { RefundIcon } from "../ui/Icons";
+import { COSMIC_SEGMENT_GLASS_WHITE } from "../ui/cosmicButtonClasses";
+import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
 
 interface CashbackPageContentProps {
   initialTab?: CashbackTabId;
@@ -73,7 +75,7 @@ export function CashbackPageContent({
       <div
         role="tablist"
         aria-label="ประเภทคืนยอด"
-        className="grid grid-cols-2 gap-2 rounded-[var(--radius-panel)] border border-[var(--border-active)]/35 bg-[var(--surface-mid)]/60 p-1.5"
+        className={`${COSMIC_SEGMENT_GLASS_WHITE} grid grid-cols-2 gap-2`}
       >
         {CASHBACK_TABS.map((item) => {
           const active = tab === item.id;
@@ -84,11 +86,7 @@ export function CashbackPageContent({
               role="tab"
               aria-selected={active}
               onClick={() => setTab(item.id)}
-              className={`rounded-[calc(var(--radius-panel)-6px)] py-2.5 text-sm font-medium transition-all ${
-                active
-                  ? "bg-[#c4b5fd] text-[#121127] shadow-[0_2px_12px_rgba(196,181,253,0.35)]"
-                  : "border border-transparent text-[#c4b5fd] hover:bg-[var(--surface-hover)]/40"
-              }`}
+              className={`cosmic-segment-btn py-2.5 text-sm ${active ? "is-active" : ""}`}
             >
               {item.label}
             </button>
@@ -99,23 +97,27 @@ export function CashbackPageContent({
       <section className="flex flex-col items-center px-2 pt-2 text-center" aria-live="polite">
         <div className="relative flex h-[88px] w-[88px] items-center justify-center">
           <span
-            className="pointer-events-none absolute inset-0 rounded-full border-2 border-[#c4b5fd]/45"
+            className="pointer-events-none absolute inset-0 rounded-full border-2 border-[var(--icon-active)]/45"
             aria-hidden="true"
           />
-          <RefundIcon className="h-11 w-11 text-[#c4b5fd]" />
-          <span className="absolute text-xl font-medium text-[#c4b5fd]" aria-hidden="true">
+          <RefundIcon className="h-11 w-11 text-[var(--icon-active)]" />
+          <span className="absolute text-xl font-medium text-[var(--icon-active)]" aria-hidden="true">
             ฿
           </span>
         </div>
         <p className="mt-3 text-xs font-medium text-[var(--text-secondary)]">ยอดคืนที่รับได้</p>
-        <p className="mt-1 text-3xl font-medium tabular-nums text-[#c4b5fd] sm:text-4xl">
+        <p className="mt-1 text-3xl font-medium tabular-nums text-[var(--icon-active)] sm:text-4xl">
           {formatCashbackCurrency(panel.claimableThb)}
         </p>
         <p className="mt-1 text-xs text-[var(--text-muted)]">{panel.statusHint}</p>
       </section>
 
       <section
-        className="cosmic-inset-card border border-[var(--border-active)]/40 bg-[var(--surface-hover)]/20 px-4 py-4 sm:px-5"
+        className={
+          embedded
+            ? "hub-desktop-card px-4 py-4 sm:px-5"
+            : "cosmic-inset-card border border-[var(--border-active)]/40 bg-[var(--surface-hover)]/20 px-4 py-4 sm:px-5"
+        }
         aria-labelledby="cashback-detail-heading"
       >
         <h2 id="cashback-detail-heading" className="text-base font-medium text-[var(--text-primary)]">
@@ -148,17 +150,19 @@ export function CashbackPageContent({
         className={`flex h-12 w-full items-center justify-center text-sm sm:text-base ${
           panel.canClaim && panel.claimableThb > 0
             ? "cosmic-action-btn"
-            : "rounded-[var(--radius-panel)] bg-[color-mix(in_srgb,#c4b5fd_28%,var(--surface-mid))] font-medium text-[color-mix(in_srgb,#c4b5fd_75%,var(--text-muted))] disabled:cursor-not-allowed"
+            : "rounded-[var(--radius-panel)] bg-[color-mix(in_srgb,var(--icon-active)_28%,var(--surface-mid))] font-medium text-[color-mix(in_srgb,var(--icon-active)_75%,var(--text-muted))] disabled:cursor-not-allowed"
         } disabled:opacity-45`}
       >
         {panel.claimButtonLabel}
       </button>
+
+      {tab === "loss" ? <CashbackLossRebateExtraSections /> : null}
     </div>
   );
 }
 
 function DetailRowIcon({ kind }: { kind: "percent" | "wallet" | "cycle" }) {
-  const className = "h-5 w-5 shrink-0 text-[#c4b5fd]";
+  const className = "h-5 w-5 shrink-0 text-[var(--icon-active)]";
   if (kind === "percent") {
     return (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">

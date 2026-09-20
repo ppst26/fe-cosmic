@@ -17,7 +17,7 @@ export function VipRankEmblem({
   playing = true,
 }: {
   rankId: VipRankId;
-  size?: "sm" | "lg";
+  size?: "xs" | "sm" | "lg";
   inactive?: boolean;
   playing?: boolean;
 }) {
@@ -26,8 +26,10 @@ export function VipRankEmblem({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [preferStatic, setPreferStatic] = useState(false);
 
-  const dim = size === "lg" ? "h-[88px] w-[88px]" : "h-12 w-12";
-  const gem = size === "lg" ? "h-7 w-7" : "h-4 w-4";
+  const dim =
+    size === "lg" ? "h-[88px] w-[88px]" : size === "sm" ? "h-12 w-12" : "h-8 w-8";
+  const gem =
+    size === "lg" ? "h-7 w-7" : size === "sm" ? "h-4 w-4" : "h-3 w-3";
   const gradId = React.useId().replace(/:/g, "");
 
   useEffect(() => {

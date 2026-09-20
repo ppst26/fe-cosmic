@@ -20,6 +20,11 @@ import {
   type ReferralEarningSummaryMock,
 } from "@/app/data/referralMockData";
 import { BonusNavIcon } from "../ui/Icons";
+import {
+  COSMIC_BTN_PRIMARY,
+  COSMIC_PANEL_GLASS,
+  COSMIC_PANEL_GLASS_ICON,
+} from "../ui/cosmicButtonClasses";
 
 /**
  * แท็บ Earning — สรุปโบนัส + ประวัติรับโบนัส (10 แถว/หน้า)
@@ -85,24 +90,24 @@ export function ReferralEarningPanel({
       {showSummary ? (
       <div className="flex flex-col gap-2.5">
         <EarningSummaryCard
-          icon={<WalletCheckIcon className="h-7 w-7 text-[#c4b5fd]" />}
+          icon={<WalletCheckIcon className="h-7 w-7 text-[var(--icon-active)]" />}
           label="โบนัสที่รับแล้ว"
           hint="ยอดโบนัสที่คุณกดรับเข้ากระเป๋าแล้ว"
           value={formatReferralCurrency(received)}
           valueClassName="text-[var(--text-primary)]"
         />
         <EarningSummaryCard
-          icon={<BonusNavIcon className="h-7 w-7 text-[#c4b5fd]" />}
+          icon={<BonusNavIcon className="h-7 w-7 text-[var(--icon-active)]" />}
           label="โบนัสที่รับได้"
           hint="ยอดที่พร้อมกดรับเข้ากระเป๋า"
           value={formatReferralCurrency(claimable)}
-          valueClassName="text-[#c4b5fd]"
+          valueClassName="text-[var(--text-primary)]"
           trailing={
             <button
               type="button"
               disabled={claimable <= 0}
               onClick={handleClaimBonus}
-              className="cosmic-action-btn shrink-0 px-4 py-2.5 text-xs disabled:opacity-45 sm:text-sm"
+              className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm shrink-0 px-4 py-2.5 text-xs disabled:opacity-45 sm:text-sm`}
             >
               รับโบนัส
             </button>
@@ -118,7 +123,7 @@ export function ReferralEarningPanel({
         </div>
       )}
 
-      <section className="hub-desktop-card cosmic-inset-card min-h-0">
+      <section className={`${COSMIC_PANEL_GLASS} min-h-0 overflow-hidden`}>
         <Table className="text-sm">
           <TableHeader>
             <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
@@ -214,10 +219,8 @@ function EarningSummaryCard({
   trailing?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-3 cosmic-inset-card bg-[var(--surface-hover)]/35 px-4 py-3.5 sm:gap-4">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]/90">
-        {icon}
-      </div>
+    <div className={`${COSMIC_PANEL_GLASS} flex items-center gap-3 px-4 py-3.5 sm:gap-4`}>
+      <div className={`${COSMIC_PANEL_GLASS_ICON} !h-12 !w-12`}>{icon}</div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
           <p className="text-xs font-medium text-[var(--text-secondary)] sm:text-sm">{label}</p>
@@ -292,10 +295,8 @@ function PaginationButton({
       aria-current={active ? "page" : undefined}
       disabled={disabled}
       onClick={onClick}
-      className={`cosmic-choice-btn flex h-9 min-w-9 items-center justify-center border px-2 text-xs disabled:cursor-not-allowed disabled:opacity-40 ${
-        active
-          ? "is-active border-transparent"
-          : "border-[var(--border-subtle)]/60 bg-[var(--surface-mid)]/80 text-[var(--text-secondary)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
+      className={`cosmic-choice-btn flex h-9 min-w-9 items-center justify-center px-2 text-xs disabled:cursor-not-allowed disabled:opacity-40 ${
+        active ? "is-active" : ""
       }`}
     >
       {children}

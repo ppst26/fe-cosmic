@@ -134,7 +134,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               <div className="mt-4 pb-3">
                 <div className="flex items-baseline justify-center gap-0.5">
                   <span
-                    className="shrink-0 text-5xl font-medium leading-none text-[#a78bfa] sm:text-6xl"
+                    className="shrink-0 text-5xl font-medium leading-none text-[var(--accent-muted)] sm:text-6xl"
                     aria-hidden="true"
                   >
                     ฿
@@ -157,7 +157,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                 <button
                   type="button"
                   onClick={handleWithdrawAll}
-                  className="font-medium text-[#a78bfa] underline-offset-2 hover:underline"
+                  className="font-medium text-[var(--accent-muted)] underline-offset-2 hover:underline"
                 >
                   ถอนทั้งหมด
                 </button>

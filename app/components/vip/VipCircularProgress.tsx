@@ -74,8 +74,8 @@ export function VipCircularProgress({
           />
           <defs>
             <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#7c6cff" />
-              <stop offset="100%" stopColor="#c4b5fd" />
+              <stop offset="0%" stopColor="var(--accent-primary)" />
+              <stop offset="100%" stopColor="var(--accent-highlight)" />
             </linearGradient>
           </defs>
         </svg>

@@ -18,8 +18,10 @@ function ActivityMasterRow({
       type="button"
       onClick={onSelect}
       aria-current={selected ? "true" : undefined}
-      className={`activity-hub-master-row w-full rounded-[var(--radius-panel)] p-2 text-left transition-colors ${
-        selected ? "activity-hub-master-row--selected" : "hover:bg-[var(--surface-hover)]/35"
+      className={`activity-hub-master-row w-full rounded-[var(--radius-control)] p-2 text-left transition-colors ${
+        selected
+          ? "activity-hub-master-row--selected bg-[var(--surface-selected)]/25"
+          : "hover:bg-[var(--surface-hover)]/35"
       }`}
     >
       <div className="flex gap-3">
@@ -59,7 +61,7 @@ export function ActivitiesDesktopHubLayout() {
   return (
     <div className="activities-desktop-hub grid min-h-[min(58dvh,540px)] gap-4 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)] lg:items-stretch">
       <nav
-        className="hub-desktop-card flex min-h-0 flex-col gap-2 overflow-y-auto p-2 [scrollbar-width:thin]"
+        className="hub-desktop-card glass-card--soft flex min-h-0 flex-col gap-2 overflow-y-auto rounded-[var(--radius-panel)] p-2 [scrollbar-width:thin]"
         aria-label="รายการกิจกรรม"
       >
         {ACTIVITIES_HUB_ITEMS.map((item) => (
@@ -73,7 +75,7 @@ export function ActivitiesDesktopHubLayout() {
       </nav>
 
       <div
-        className="hub-desktop-card min-h-0 overflow-y-auto px-3 py-4 sm:px-5 [scrollbar-width:thin]"
+        className="hub-desktop-card glass-card--soft min-h-0 overflow-y-auto rounded-[var(--radius-panel)] px-3 py-4 sm:px-5 [scrollbar-width:thin]"
         aria-live="polite"
       >
         {selected ? <ActivityDetailBody key={selected.id} item={selected} /> : null}

@@ -58,7 +58,7 @@ export default function ProviderGamesPage() {
   }, [allGames, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#090b18] text-[var(--text-primary)]">
+    <div className="mobile-standalone-page">
       {/* 1. Global Header ด้านบนสุด */}
       <Header />
 
@@ -75,7 +75,7 @@ export default function ProviderGamesPage() {
       />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-[var(--content-max)] px-[var(--page-gutter)] pb-28 pt-2">
+      <main className="mobile-standalone-main pb-28 pt-2">
         {/* 3. Search Bar สไตล์มาตรฐาน ไร้ ring/outline */}
         <GameSearchBar
           placeholder="ค้นหาเกมในค่ายนี้"

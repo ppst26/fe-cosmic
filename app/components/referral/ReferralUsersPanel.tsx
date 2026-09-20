@@ -16,6 +16,7 @@ import {
   formatReferralRegisteredAt,
   type ReferralUserRow,
 } from "@/app/data/referralMockData";
+import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 
 /**
  * แท็บ Referral users — ตารางเพื่อนที่แนะนำ + pagination (10 แถว/หน้า)
@@ -50,15 +51,12 @@ export function ReferralUsersPanel({ users = REFERRAL_USERS_MOCK }: { users?: Re
         >
           เพื่อนที่แนะนำ
         </h2>
-        <span className="rounded-full bg-[var(--surface-selected)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--border-active)]">
+        <span className="glass-card--soft rounded-[var(--radius-pill)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--text-secondary)]">
           {formatReferralCount(total)}
         </span>
       </div>
 
-      <section
-        className="cosmic-inset-card bg-[var(--surface-hover)]/25"
-        aria-labelledby="referral-users-title"
-      >
+      <section className={`${COSMIC_PANEL_GLASS} overflow-hidden`} aria-labelledby="referral-users-title">
         <Table className="text-sm">
         <TableHeader>
           <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
@@ -158,10 +156,8 @@ function PaginationButton({
       aria-current={active ? "page" : undefined}
       disabled={disabled}
       onClick={onClick}
-      className={`cosmic-choice-btn flex h-9 min-w-9 items-center justify-center border px-2 text-xs disabled:cursor-not-allowed disabled:opacity-40 ${
-        active
-          ? "is-active border-transparent"
-          : "border-[var(--border-subtle)]/60 bg-[var(--surface-mid)]/80 text-[var(--text-secondary)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
+      className={`cosmic-choice-btn flex h-9 min-w-9 items-center justify-center px-2 text-xs disabled:cursor-not-allowed disabled:opacity-40 ${
+        active ? "is-active" : ""
       }`}
     >
       {children}

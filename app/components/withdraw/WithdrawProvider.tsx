@@ -1,14 +1,9 @@
 "use client";
 
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import { WithdrawBottomSheet } from "./WithdrawBottomSheet";
 import { usePendingTransaction } from "@/app/components/transactions/PendingTransactionProvider";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 
 interface WithdrawContextValue {
   openWithdraw: () => void;
@@ -18,18 +13,15 @@ interface WithdrawContextValue {
 const WithdrawContext = createContext<WithdrawContextValue | null>(null);
 
 /**
- * เปิด/ปิด bottom sheet ถอนเงิน — mount ใน AppProviders
+ * เปิด/ปิด bottom sheet ถอนเงิน — mount ใน AppProviders · sync ?layer=withdraw
  */
 export function WithdrawProvider({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useOverlayLayer("withdraw");
   const { showPendingWithdraw } = usePendingTransaction();
 
-  const openWithdraw = useCallback(() => setIsOpen(true), []);
-  const closeWithdraw = useCallback(() => setIsOpen(false), []);
-
   const value = useMemo(
-    () => ({ openWithdraw, closeWithdraw }),
-    [openWithdraw, closeWithdraw],
+    () => ({ openWithdraw: open, closeWithdraw: close }),
+    [open, close],
   );
 
   return (
@@ -37,7 +29,7 @@ export function WithdrawProvider({ children }: { children: React.ReactNode }) {
       {children}
       <WithdrawBottomSheet
         isOpen={isOpen}
-        onClose={closeWithdraw}
+        onClose={close}
         onCompleted={(amount) => showPendingWithdraw(amount)}
       />
     </WithdrawContext.Provider>

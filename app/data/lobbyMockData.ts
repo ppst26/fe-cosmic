@@ -277,7 +277,7 @@ export const FEATURE_ACTIONS_DATA: FeatureActionItem[] = [
     icon: "missions",
     ctaPrimaryLabel: "เช็คอินเลย",
     ctaSecondaryLabel: "กติกากิจกรรม",
-    secondaryHref: "/activities",
+    secondaryHref: "/event",
   },
   {
     id: "feature-prize-wheel",
@@ -299,25 +299,25 @@ export const HOME_LOBBY_TOURNAMENT_ITEMS: HomeLobbyTournamentItem[] = [
     id: "tournament-esport",
     title: "ทัวร์นาเมนต์อีสปอร์ต",
     imageSrc: "/tournament/esport.webp",
-    href: "/activities",
+    href: "/event",
   },
   {
     id: "tournament-sport",
     title: "ทัวร์นาเมนต์กีฬา",
     imageSrc: "/tournament/sport win.avif",
-    href: "/activities",
+    href: "/event",
   },
   {
     id: "tournament-slot",
     title: "ทัวร์นาเมนต์สล็อต",
     imageSrc: "/tournament/slot win.avif",
-    href: "/activities",
+    href: "/event",
   },
   {
     id: "tournament-esport-2",
     title: "ทัวร์นาเมนต์อีสปอร์ต",
     imageSrc: "/tournament/esport2.webp",
-    href: "/activities",
+    href: "/event",
   },
 ];
 

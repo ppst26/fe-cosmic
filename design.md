@@ -167,7 +167,7 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 10. **Hall of Fame (Top Performance)** — แท็บ soft glass; ไม่ glow ม่วงหนักบน active
 11. **Floating Bottom Nav** — fixed มือถือ; Cosmicbet: ถอน / ฝาก / เมนู / คืนยอด / ติดต่อ
 
-**ไม่แสดงบน lobby:** การ์ด Feature สามใบ (ร้านค้าเพชร / ภารกิจ / วงล้อ) — เข้าผ่านเมนู / hub (`/activities`, `/wheel` ฯลฯ) แทน; component `FeatureActionCards` เก็บไว้ reuse ได้แต่ไม่ mount ใน `HomeLobbyPage`
+**ไม่แสดงบน lobby:** การ์ด Feature สามใบ (ร้านค้าเพชร / ภารกิจ / วงล้อ) — เข้าผ่านเมนู / hub (`/event`, `/wheel` ฯลฯ) แทน; component `FeatureActionCards` เก็บไว้ reuse ได้แต่ไม่ mount ใน `HomeLobbyPage`
 
 หมายเหตุ: ข้อ 6 Searchbar เป็นแนวทาง desktop / hub — **ไม่**อยู่แถบ header มือถือ guest
 
@@ -262,10 +262,10 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 ### LobbyActivitiesSection (ชื่อในโค้ด: `JackpotSection`)
 - **หัวข้อ:** 「กิจกรรม」 + ไอคอนเมนูกิจกรรม (`MenuItemIcon` / `activities`) — **ไม่**ใช้ trophy / ไม่แสดงยอดผู้ชนะ mock
 - **เนื้อหา:** carousel แนวนอน การ์ด **รูปเต็ม** จาก `public/tournament/` (`esport.webp`, `esport2.webp`, `sport win.avif`, `slot win.avif` — ชื่อไฟล์มีช่องว่างได้ ใช้ path `/tournament/...` ใน mock)
-- การ์ด: `.carousel-tournament-card`, `aspect-ratio: 3/4`, `object-fit: cover`, มุม `--radius-panel`; แตะไป `/activities` (หรือ href ต่อ API ภายหลัง)
+- การ์ด: `.carousel-tournament-card`, `aspect-ratio: 3/4`, `object-fit: cover`, มุม `--radius-panel`; แตะไป `/event` (หรือ href ต่อ API ภายหลัง)
 - Data: `HOME_LOBBY_TOURNAMENT_ITEMS` ใน `lobbyMockData.ts` · type `HomeLobbyTournamentItem`
 - เลื่อน: ลากนิ้ว + ปุ่ม prev/next; dots ผูก index สไลด์ (หนึ่งจุดต่อการ์ด)
-- **ห้าม**กลับไป layout การ์ด 3 คอลัมน์พร้อมชื่อผู้ใช้/ยอดเงิน — หน้า `/activities` เป็นที่รายละเอียดกิจกรรมแบบ hub
+- **ห้าม**กลับไป layout การ์ด 3 คอลัมน์พร้อมชื่อผู้ใช้/ยอดเงิน — หน้า `/event` เป็นที่รายละเอียดกิจกรรมแบบ hub
 - Component เก่า `JackpotWinnerCard` ไม่ใช้บน lobby แล้ว (เก็บไว้ได้จนกว่าจะลบหรือ reuse)
 
 ### HallOfFame (Top Performance)
@@ -406,7 +406,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 | Header มือถือ | `app/components/layout/Header.tsx` |
 | เมนูขวา | `RightMenuDrawer.tsx` — ไทล์ `menu-item--solid` (ไม่ glass), grid 3/4/4 |
 | Sidebar desktop พับ | `LobbyDesktopSidebar.tsx` — พับแล้ว icon อย่างเดียว |
-| กิจกรรมเต็มหน้า | `/activities` → `ActivitiesHubPageContent` (แยกจากโปร `/promotions`) |
+| กิจกรรมเต็มหน้า | `/event` → `ActivitiesHubPageContent` (แยกจากโปร `/promotions`) |
 | วงล้อ | `app/components/wheel/*` — hero `wheel-bg.avif`, glass ชั้นนอก / soft glass แถวใน |
 
 ก่อนเพิ่ม section ใหม่บน lobby — เทียบลำดับหมวด 6 และตารางด้านบน; ถ้าผู้ใช้ขอเฉพาะส่วนใดส่วนหนึ่ง ห้ามรื้อ section อื่นโดยไม่จำเป็น

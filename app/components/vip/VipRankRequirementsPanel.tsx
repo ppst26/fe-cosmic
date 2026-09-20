@@ -116,7 +116,7 @@ export function VipRankRequirementsPanel({
                   : {
                       width: `${turnoverPct}%`,
                       background:
-                        "linear-gradient(90deg, #9b87ff 0%, #c4b5fd 45%, #f5c542 100%)",
+                        "var(--vip-progress-gradient)",
                     }
             }
           />

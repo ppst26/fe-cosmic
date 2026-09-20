@@ -23,9 +23,9 @@ export function DailyCheckInCalendarGraphic({ className }: { className?: string 
     <svg viewBox="0 0 112 96" className={className} aria-hidden="true">
       <circle cx="92" cy="18" r="6" fill="#6366f1" opacity="0.6" />
       <circle cx="8" cy="28" r="2" fill="#fff" opacity="0.5" />
-      <rect x="28" y="20" width="56" height="52" rx="8" fill="#1e1b4b" stroke="#a78bfa" strokeWidth="1.5" />
+      <rect x="28" y="20" width="56" height="52" rx="8" fill="#1e1b4b" stroke="var(--accent-muted)" strokeWidth="1.5" />
       <rect x="28" y="20" width="56" height="14" rx="8" fill="#4c1d95" />
-      <path d="M40 14v8M72 14v8" stroke="#c4b5fd" strokeWidth="2" strokeLinecap="round" />
+      <path d="M40 14v8M72 14v8" stroke="var(--accent-highlight)" strokeWidth="2" strokeLinecap="round" />
       <circle cx="56" cy="48" r="10" fill="#facc15" />
       <path d="M52 48 55 51 61 44" stroke="#422006" strokeWidth="2" fill="none" strokeLinecap="round" />
     </svg>

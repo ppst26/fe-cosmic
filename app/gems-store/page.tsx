@@ -14,12 +14,12 @@ export default function GemsStorePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)]">
+    <div className="mobile-standalone-page">
       <Header />
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <main className="mx-auto max-w-[var(--content-max)] px-[var(--page-gutter)] pb-28 pt-4">
+      <main className="mobile-standalone-main pb-28 pt-4">
         <GemsStorePageContent />
       </main>
 

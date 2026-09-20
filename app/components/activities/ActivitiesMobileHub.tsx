@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { ACTIVITIES_HUB_ITEMS, type ActivityHubItem } from "@/app/data/activitiesHubMockData";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
+import { PromoHubPillLabel, promoCardButtonClass } from "../promotions/promoHubCardPrimitives";
+import { COSMIC_BTN_GLASS_ICON, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { ChevronLeftIcon } from "../ui/Icons";
 
 type MobileView = "list" | "detail";
@@ -31,7 +33,7 @@ export function ActivitiesMobileHub() {
           <button
             type="button"
             onClick={backToList}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-control)] text-[var(--icon-default)] hover:bg-[var(--surface-hover)]"
+            className={`${COSMIC_BTN_GLASS_ICON} shrink-0 text-[var(--icon-default)]`}
             aria-label="กลับรายการกิจกรรม"
           >
             <ChevronLeftIcon className="h-5 w-5" />
@@ -40,7 +42,7 @@ export function ActivitiesMobileHub() {
             {selected.title}
           </h2>
         </div>
-        <div className="cosmic-inset-card px-3 py-4 sm:px-4">
+        <div className={`${COSMIC_PANEL_GLASS} px-3 py-4 sm:px-4`}>
           <ActivityDetailBody item={selected} showTitle={false} />
         </div>
       </div>
@@ -54,7 +56,7 @@ export function ActivitiesMobileHub() {
           <button
             type="button"
             onClick={() => openDetail(item)}
-            className="activity-hub-mobile-card cosmic-inset-card flex w-full gap-3 p-3 text-left transition-colors hover:bg-[var(--surface-selected)]/10 active:scale-[0.995]"
+            className={promoCardButtonClass("activity-hub-mobile-card flex gap-3 p-3")}
           >
             <ActivityHubThumb
               tone={item.thumbTone}
@@ -68,7 +70,9 @@ export function ActivitiesMobileHub() {
               {item.listMeta ? (
                 <span className="text-xs text-[var(--text-muted)]">{item.listMeta}</span>
               ) : null}
-              <span className="mt-1 text-[11px] font-medium text-[#c4b5fd]">ดูรายละเอียด</span>
+              <span className="mt-1 inline-flex">
+                <PromoHubPillLabel label="ดูรายละเอียด" />
+              </span>
             </div>
           </button>
         </li>

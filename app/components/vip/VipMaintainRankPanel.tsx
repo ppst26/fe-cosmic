@@ -81,7 +81,7 @@ function MaintainMetricCard({
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--surface-hover)]">
         <div
           className={`h-full rounded-full transition-[width] duration-500 ${
-            complete ? "bg-[var(--success)]" : "bg-[#c4b5fd]"
+            complete ? "bg-[var(--success)]" : "bg-[var(--accent-highlight)]"
           }`}
           style={{ width: `${pct}%` }}
         />

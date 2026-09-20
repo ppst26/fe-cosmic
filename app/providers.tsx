@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { AuthProvider } from "@/app/components/auth/AuthProvider";
 import { TransactionsProvider } from "@/app/components/transactions/TransactionsProvider";
 import { VipModalProvider } from "@/app/components/vip/VipModalProvider";
@@ -15,20 +15,22 @@ import { PendingTransactionProvider } from "@/app/components/transactions/Pendin
  */
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
-      <CouponRedeemProvider>
-        <PendingTransactionProvider>
-          <DepositProvider>
-            <WithdrawProvider>
-              <VipModalProvider>
-                <DesktopHubModalProvider>
-                  <TransactionsProvider>{children}</TransactionsProvider>
-                </DesktopHubModalProvider>
-              </VipModalProvider>
-            </WithdrawProvider>
-          </DepositProvider>
-        </PendingTransactionProvider>
-      </CouponRedeemProvider>
-    </AuthProvider>
+    <Suspense fallback={null}>
+      <AuthProvider>
+        <CouponRedeemProvider>
+          <PendingTransactionProvider>
+            <DepositProvider>
+              <WithdrawProvider>
+                <VipModalProvider>
+                  <DesktopHubModalProvider>
+                    <TransactionsProvider>{children}</TransactionsProvider>
+                  </DesktopHubModalProvider>
+                </VipModalProvider>
+              </WithdrawProvider>
+            </DepositProvider>
+          </PendingTransactionProvider>
+        </CouponRedeemProvider>
+      </AuthProvider>
+    </Suspense>
   );
 }

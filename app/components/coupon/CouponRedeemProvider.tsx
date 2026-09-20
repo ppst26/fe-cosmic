@@ -1,13 +1,8 @@
 "use client";
 
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import { CouponRedeemBottomSheet } from "./CouponRedeemBottomSheet";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 
 interface CouponRedeemContextValue {
   openCouponRedeem: () => void;
@@ -17,23 +12,20 @@ interface CouponRedeemContextValue {
 const CouponRedeemContext = createContext<CouponRedeemContextValue | null>(null);
 
 /**
- * เปิด/ปิด bottom sheet แลกคูปอง — mount ใน AppProviders
+ * เปิด/ปิด bottom sheet แลกคูปอง — sync ?layer=coupon
  */
 export function CouponRedeemProvider({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openCouponRedeem = useCallback(() => setIsOpen(true), []);
-  const closeCouponRedeem = useCallback(() => setIsOpen(false), []);
+  const { isOpen, open, close } = useOverlayLayer("coupon");
 
   const value = useMemo(
-    () => ({ openCouponRedeem, closeCouponRedeem }),
-    [openCouponRedeem, closeCouponRedeem],
+    () => ({ openCouponRedeem: open, closeCouponRedeem: close }),
+    [open, close],
   );
 
   return (
     <CouponRedeemContext.Provider value={value}>
       {children}
-      <CouponRedeemBottomSheet isOpen={isOpen} onClose={closeCouponRedeem} />
+      <CouponRedeemBottomSheet isOpen={isOpen} onClose={close} />
     </CouponRedeemContext.Provider>
   );
 }

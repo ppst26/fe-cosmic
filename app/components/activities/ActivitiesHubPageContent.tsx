@@ -5,7 +5,7 @@ import { ActivitiesDesktopHubLayout } from "./ActivitiesDesktopHubLayout";
 import { ActivitiesMobileHub } from "./ActivitiesMobileHub";
 
 /**
- * เนื้อหาหน้ากิจกรรม (/activities) และ desktop hub กิจกรรม
+ * เนื้อหาหน้ากิจกรรม (/event) และ desktop hub กิจกรรม
  */
 export function ActivitiesHubPageContent({ embedded = false }: { embedded?: boolean }) {
   const showDesktopHub = embedded;

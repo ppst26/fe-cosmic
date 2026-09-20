@@ -76,7 +76,7 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
         >
           <div>
             <p className="text-xs font-medium text-[var(--text-secondary)]">รายได้ที่รับได้</p>
-            <p className="mt-1 text-2xl font-medium tabular-nums text-[#c4b5fd]">
+            <p className="mt-1 text-2xl font-medium tabular-nums text-[var(--icon-active)]">
               {formatReferralCurrency(claimable)}
             </p>
           </div>
@@ -98,7 +98,7 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
         <div
           role="tablist"
           aria-label="ช่วงเวลารายได้"
-          className="flex flex-wrap gap-2"
+          className="cosmic-segment-track flex flex-wrap gap-1.5"
         >
           {REFERRAL_EARNING_PERIOD_OPTIONS.map((option) => {
             const active = period === option.id;
@@ -109,11 +109,7 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
                 role="tab"
                 aria-selected={active}
                 onClick={() => setPeriod(option.id)}
-                className={`cosmic-segment-btn px-3 py-1.5 text-xs ${
-                  active
-                    ? "is-active"
-                    : "bg-[var(--surface-hover)]/40 text-[var(--text-secondary)] hover:bg-[var(--surface-selected)]/25 hover:text-[var(--text-primary)]"
-                }`}
+                className={`cosmic-segment-btn px-3 py-1.5 text-xs ${active ? "is-active" : ""}`}
               >
                 {option.label}
               </button>

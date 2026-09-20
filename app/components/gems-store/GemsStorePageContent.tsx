@@ -14,6 +14,7 @@ import {
   type GemsStorePackage,
 } from "@/app/data/gemsStoreMockData";
 import { ChevronDownIcon } from "../ui/Icons";
+import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 
 /**
  * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal
@@ -33,6 +34,8 @@ export function GemsStorePageContent({
     setGemsBalance((prev) => prev - pkg.gemsCost);
   };
 
+  const panelShell = embedded ? "hub-desktop-card" : "cosmic-inset-card bg-[var(--surface-hover)]/35";
+
   return (
     <div className="flex flex-col gap-5 pb-4">
       {!embedded ? (
@@ -40,7 +43,7 @@ export function GemsStorePageContent({
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1 pr-1">
               <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">
-                ร้านค้า <span className="text-[#c4b5fd]">Gems</span>
+                ร้านค้า <span className="text-[var(--accent-highlight)]">Gems</span>
               </h1>
               <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
                 ใช้ Gems แลกรับเครดิตเข้ากระเป๋าของคุณ
@@ -85,20 +88,21 @@ export function GemsStorePageContent({
               key={pkg.id}
               pkg={pkg}
               affordable={affordable}
+              panelShell={panelShell}
               onRedeem={() => handleRedeem(pkg)}
             />
           );
         })}
       </div>
 
-      <section className="overflow-hidden cosmic-inset-card bg-[var(--surface-hover)]/35">
+      <section className={`overflow-hidden ${embedded ? COSMIC_PANEL_GLASS : panelShell}`}>
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}
           className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20"
           aria-expanded={termsOpen}
         >
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/70 text-[10px] font-medium text-[#c4b5fd]">
+          <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-medium text-[var(--text-muted)]">
             i
           </span>
           <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการแลกรางวัล</span>
@@ -128,17 +132,17 @@ export function GemsStorePageContent({
 function GemsRedeemCard({
   pkg,
   affordable,
+  panelShell,
   onRedeem,
 }: {
   pkg: GemsStorePackage;
   affordable: boolean;
+  panelShell: string;
   onRedeem: () => void;
 }) {
   return (
     <article
-      className={`flex flex-col cosmic-inset-card bg-[var(--surface-hover)]/35 p-2.5 sm:p-3 ${
-        affordable ? "" : "opacity-75"
-      }`}
+      className={`flex flex-col ${panelShell} p-2.5 sm:p-3 ${affordable ? "" : "opacity-75"}`}
     >
       <div className="flex flex-1 flex-col items-center text-center">
         <div className="relative mb-2 h-14 w-full max-w-[100px] sm:h-16 sm:max-w-[112px]">

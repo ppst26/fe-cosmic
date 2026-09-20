@@ -1,5 +1,9 @@
 import type { TransactionItem, TransactionStatus } from "@/app/types/transaction";
 import { DepositNavIcon, WithdrawNavIcon } from "../ui/Icons";
+import {
+  COSMIC_PANEL_GLASS,
+  COSMIC_PANEL_GLASS_ICON,
+} from "../ui/cosmicButtonClasses";
 
 /**
  * จัดรูปแบบวันที่รายการ
@@ -58,10 +62,12 @@ export function TransactionList({ items }: { items: TransactionItem[] }) {
   }
 
   return (
-    <ul className="flex flex-col divide-y divide-[var(--border-subtle)]/50">
+    <ul
+      className={`${COSMIC_PANEL_GLASS} flex flex-col divide-y divide-[var(--border-subtle)]/40 px-4 py-1`}
+    >
       {items.map((item) => (
         <li key={item.id} className="flex gap-3 py-3.5 first:pt-0 last:pb-0">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--surface-hover)] text-[var(--icon-default)]">
+          <span className={`${COSMIC_PANEL_GLASS_ICON} !h-11 !w-11`}>
             {item.kind === "deposit" ? (
               <DepositNavIcon className="h-5 w-5" />
             ) : (

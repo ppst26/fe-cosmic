@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Dialog } from "radix-ui";
 import type { PendingTransactionPayload } from "@/app/data/pendingTransactionMockData";
 import { CloseIcon, CopyIcon } from "../ui/Icons";
+import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 
 interface PendingTransactionDialogProps {
   payload: PendingTransactionPayload | null;
@@ -73,7 +74,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
           </div>
 
           <p className="mt-6 text-center text-4xl font-medium tracking-tight text-[var(--text-primary)] sm:text-[2.75rem]">
-            <span className="text-[#c4b5fd]">฿</span> {payload.amountDisplay}
+            <span className="text-[var(--icon-active)]">฿</span> {payload.amountDisplay}
           </p>
 
           <hr className="my-5 border-[var(--border-subtle)]/45" />
@@ -110,7 +111,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
           <Dialog.Close asChild>
             <button
               type="button"
-              className="mt-6 flex h-12 w-full items-center justify-center rounded-full bg-[#ddd6fe] text-base font-medium text-[#1e1035] transition-colors hover:bg-[#c4b5fd]"
+              className={`${COSMIC_BTN_PRIMARY} mt-6 flex h-12 w-full items-center justify-center text-base`}
             >
               เรียบร้อย
             </button>

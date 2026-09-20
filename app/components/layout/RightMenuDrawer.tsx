@@ -25,7 +25,6 @@ interface RightMenuDrawerProps {
   onClose: () => void;
 }
 
-const ICON_CLASS = "h-6 w-6 shrink-0 text-current";
 
 /**
  * Menu dialog — mock ติ่ง「เมนู」· panel สูงพอดีเนื้อหา · ชิดเหนือ bottom nav
@@ -67,7 +66,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const renderItem = (tile: MenuDialogTile) => {
     const body = (
       <>
-        <MenuItemIcon iconId={tile.iconId} className={ICON_CLASS} />
+        <MenuItemIcon iconId={tile.iconId} variant="asset" />
         <span>{tile.label}</span>
       </>
     );

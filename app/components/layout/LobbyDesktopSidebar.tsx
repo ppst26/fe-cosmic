@@ -118,7 +118,7 @@ const SIDEBAR_MENU_SECTIONS = MENU_DIALOG_SECTIONS.filter(
 );
 
 /**
- * แถบนำทางซ้าย desktop — sticky · glass-sidebar (Dexsport)
+ * แถบนำทางซ้าย desktop — sticky · glass พื้นหลัง ไม่มีกรอบชัด
  * ถูกเรียกใช้ใน app/page.tsx ภายใน lobby-desktop-shell
  */
 export function LobbyDesktopSidebar({
@@ -163,7 +163,10 @@ export function LobbyDesktopSidebar({
       aria-label="เมนูหลักเดสก์ท็อป"
     >
       <div
-        className={cn("lobby-desktop-sidebar glass-sidebar", collapsed && "is-collapsed")}
+        className={cn(
+          "lobby-desktop-sidebar glass-sidebar lobby-desktop-sidebar--borderless",
+          collapsed && "is-collapsed",
+        )}
         data-collapsed={collapsed ? "true" : "false"}
       >
       <div className="lobby-desktop-sidebar__body">

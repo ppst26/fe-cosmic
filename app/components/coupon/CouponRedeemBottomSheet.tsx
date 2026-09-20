@@ -144,21 +144,21 @@ function CouponTicketsGraphic({ className }: { className?: string }) {
     <svg viewBox="0 0 160 96" className={className} aria-hidden="true">
       <defs>
         <linearGradient id="couponTicketGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#c4b5fd" />
-          <stop offset="100%" stopColor="#6d28d9" />
+          <stop offset="0%" stopColor="var(--accent-highlight)" />
+          <stop offset="100%" stopColor="var(--accent-primary)" />
         </linearGradient>
       </defs>
       <ellipse cx="118" cy="72" rx="10" ry="6" fill="#facc15" opacity="0.9" />
       <ellipse cx="134" cy="64" rx="7" ry="4" fill="#fde047" opacity="0.85" />
       <g transform="rotate(-12 52 48)">
-        <rect x="18" y="28" width="72" height="40" rx="6" fill="url(#couponTicketGrad)" stroke="#ddd6fe" strokeWidth="1.5" />
+        <rect x="18" y="28" width="72" height="40" rx="6" fill="url(#couponTicketGrad)" stroke="var(--accent-highlight)" strokeWidth="1.5" />
         <circle cx="18" cy="48" r="6" fill="#121127" />
         <circle cx="90" cy="48" r="6" fill="#121127" />
         <path d="M36 40h12v16H36zM54 40h12v16H54z" fill="#ede9fe" opacity="0.5" />
         <path d="M42 44 48 52 42 60" stroke="#fde047" strokeWidth="2" fill="none" />
       </g>
       <g transform="rotate(10 88 40)">
-        <rect x="72" y="22" width="68" height="38" rx="6" fill="url(#couponTicketGrad)" stroke="#a78bfa" strokeWidth="1.5" opacity="0.95" />
+        <rect x="72" y="22" width="68" height="38" rx="6" fill="url(#couponTicketGrad)" stroke="var(--accent-muted)" strokeWidth="1.5" opacity="0.95" />
         <circle cx="72" cy="41" r="5.5" fill="#121127" />
         <circle cx="140" cy="41" r="5.5" fill="#121127" />
         <path

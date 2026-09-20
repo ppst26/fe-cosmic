@@ -52,17 +52,14 @@ export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMen
           "glass-card",
           "glass-card--soft",
           "lobby-right-menu-card--glass",
-          tile.variant === "hero" ? "lobby-right-menu-card--emphasis" : "",
-        ]
-          .filter(Boolean)
-          .join(" ");
+        ].join(" ");
 
         const body = (
           <RightMenuGlassCardContent
             title={tile.title}
             subtitle={tile.subtitle}
             visualSrc={tile.visualSrc}
-            emphasis={tile.variant === "hero"}
+            emphasis={false}
           />
         );
 

@@ -12,10 +12,11 @@ import type { PromotionDetailId } from "@/app/data/promotionDetailMockData";
 import { PromotionDetailModal } from "./PromotionDetailModal";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
 import { PromoHubDesktopMasterDetail } from "./PromoHubDesktopMasterDetail";
+import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
 
 /**
- * เนื้อหาหน้าโปรโมชั่น — ใช้ใน /promotions (กิจกรรมอยู่ที่ /activities)
+ * เนื้อหาหน้าโปรโมชั่น — ใช้ใน /promotions (กิจกรรมอยู่ที่ /event)
  */
 export function PromotionsHubPageContent({ embedded = false }: { embedded?: boolean }) {
   const [detailId, setDetailId] = useState<PromotionDetailId | null>(null);
@@ -59,12 +60,12 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
           <PromotionsCategoryTabs
             activeId={categoryFilter}
             onSelect={setCategoryFilter}
-            className="-mx-[var(--page-gutter)] px-[var(--page-gutter)]"
+            className="-mx-[var(--layout-inline-gutter)] px-[var(--layout-inline-gutter)]"
           />
         </header>
 
         {!hasAnyPromo ? (
-          <p className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-8 text-center text-sm text-[var(--text-secondary)]">
+          <p className={`${COSMIC_PANEL_GLASS} px-4 py-8 text-center text-sm text-[var(--text-secondary)]`}>
             ยังไม่มีโปรโมชั่นในหมวดนี้ — ลองเลือก All Promotions
           </p>
         ) : null}
@@ -105,7 +106,7 @@ function PromoHubHeroBanner({
   return (
     <button
       type="button"
-      className={promoCardButtonClass("min-h-[168px] sm:min-h-[188px] bg-[var(--surface-mid)]/40")}
+      className={promoCardButtonClass("min-h-[168px] sm:min-h-[188px]")}
       aria-label={`${hero.title} — ${hero.ctaLabel}`}
       onClick={() => onOpenDetail(hero.detailId)}
     >
@@ -144,7 +145,7 @@ function FeaturedPromoCard({
   return (
     <button
       type="button"
-      className={promoCardButtonClass("bg-[var(--surface-mid)]/50")}
+      className={promoCardButtonClass()}
       aria-label={`${item.title} — ${item.ctaLabel}`}
       onClick={() => onOpenDetail(item.detailId)}
     >

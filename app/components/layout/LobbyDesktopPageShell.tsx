@@ -10,6 +10,7 @@ import { useCouponRedeem } from "@/app/components/coupon/CouponRedeemProvider";
 import { useVipModal } from "@/app/components/vip/VipModalProvider";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { cn } from "@/lib/utils";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { FloatingBottomNav } from "./FloatingBottomNav";
 import { Header } from "./Header";
 import {
@@ -43,16 +44,13 @@ export function LobbyDesktopPageShell({
   hideBottomNav = false,
 }: LobbyDesktopPageShellProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const { isOpen: isSignUpOpen, open: openSignUp, close: closeSignUp } = useOverlayLayer("signup");
+  const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useOverlayLayer("login");
   const { collapsed: isSidebarCollapsed, setCollapsed: setSidebarCollapsed } =
     useLobbySidebarCollapsed(false);
   const { logout } = useAuth();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
-
-  const openSignUp = () => setIsSignUpOpen(true);
-  const openLogin = () => setIsLoginOpen(true);
 
   const handleSidebarMenuAction = (action: "vip-rank" | "coupon") => {
     if (action === "vip-rank") openVipModal();
@@ -88,13 +86,13 @@ export function LobbyDesktopPageShell({
 
                   <SignUpBottomDrawer
                     isOpen={isSignUpOpen}
-                    onClose={() => setIsSignUpOpen(false)}
+                    onClose={closeSignUp}
                     onLoginClick={openLogin}
                   />
 
                   <LoginBottomDrawer
                     isOpen={isLoginOpen}
-                    onClose={() => setIsLoginOpen(false)}
+                    onClose={closeLogin}
                     onSignUpClick={openSignUp}
                   />
 

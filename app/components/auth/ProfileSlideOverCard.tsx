@@ -10,6 +10,15 @@ import { useVipModal } from "../vip/VipModalProvider";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { getIsDesktopViewport } from "../hub/useIsDesktop";
 import { ProfileHubBody } from "../profile/ProfileHubBody";
+import { ProfileHubHeader } from "../profile/ProfileHubHeader";
+import { CloseIcon } from "../ui/Icons";
+import { COSMIC_BTN_NAV } from "../ui/cosmicButtonClasses";
+import {
+  RESPONSIVE_SHEET_HANDLE_CLASS,
+  responsiveSheetCloseButtonClass,
+  responsiveSheetContentClass,
+  responsiveSheetOverlayClass,
+} from "../ui/responsiveSheetDialog";
 
 interface ProfileSlideOverCardProps {
   isOpen: boolean;
@@ -17,8 +26,8 @@ interface ProfileSlideOverCardProps {
 }
 
 /**
- * การ์ดโปรไฟล์ยึดมุมขวาบน (ใต้ปุ่มโปรไฟล์ใน Header) — ทุก breakpoint
- * ไม่ใช้ overlay/backdrop · รายละเอียดบัญชีเต็ม → hub modal บน desktop
+ * โปรไฟล์ย่อ — bottom sheet glass + หัวม่วง (ทุก breakpoint)
+ * ถูก mount ใน TransactionsProvider · เปิดจาก Header / ?layer=profile
  */
 export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardProps) {
   const router = useRouter();
@@ -68,7 +77,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
       openHub("cashback", { cashbackTab: "loss" });
       return;
     }
-    router.push("/loss-rebate");
+    router.push("/cashback?tab=loss");
   };
 
   const handleOpenVip = () => {
@@ -86,42 +95,75 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
   };
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={handleOpenChange} modal={false}>
+    <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        <div className="fixed inset-x-0 z-[60] pointer-events-none px-[var(--page-gutter)] top-[calc(env(safe-area-inset-top,0px)+var(--header-mobile-bar-height))] lg:top-[calc(env(safe-area-inset-top,0px)+var(--header-desktop-bar-height))]">
-          <div className="mx-auto flex w-full max-w-[var(--content-max)] justify-end lg:max-w-[min(1680px,calc(100%-2*var(--page-gutter)))]">
-            <Dialog.Content
-              aria-describedby={undefined}
-              onOpenAutoFocus={(event) => event.preventDefault()}
-              className="profile-slideover-card pointer-events-auto flex flex-col outline-none"
-            >
-              <Dialog.Title className="sr-only">โปรไฟล์</Dialog.Title>
+        <Dialog.Overlay className={responsiveSheetOverlayClass("z-[65]")} />
 
-              <div className="min-h-0 flex-1 overflow-y-auto px-0 pb-0 pt-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                {loading && (
-                  <p className="py-6 text-center text-xs text-[var(--text-muted)]">กำลังโหลด...</p>
-                )}
+        <Dialog.Content
+          aria-describedby={undefined}
+          onOpenAutoFocus={(event) => event.preventDefault()}
+          className={responsiveSheetContentClass(
+            "profile-hub-sheet z-[65] max-h-[min(92dvh,720px)] overflow-hidden !px-0 !pb-0 !pt-0",
+            { variant: "profile" },
+          )}
+        >
+          <header className="profile-hub-sheet__hero shrink-0">
+            <div className={`${RESPONSIVE_SHEET_HANDLE_CLASS} profile-hub-sheet__handle`} aria-hidden="true" />
 
-                {!loading && profile === null && (
-                  <p className="py-6 text-center text-xs text-[var(--text-muted)]">
-                    ไม่พบข้อมูลโปรไฟล์
-                  </p>
-                )}
+            <div className="profile-hub-sheet__hero-bar flex items-center justify-between gap-2 px-4 pb-1 pt-0.5">
+              <Dialog.Title className="text-base font-medium text-white">โปรไฟล์</Dialog.Title>
+              <Dialog.Close asChild>
+                <button
+                  type="button"
+                  className={responsiveSheetCloseButtonClass(
+                    "profile-hub-sheet__close !border-white/20 !text-white/90 hover:!text-white",
+                  )}
+                  aria-label="ปิดโปรไฟล์"
+                >
+                  <CloseIcon className="h-4 w-4" />
+                </button>
+              </Dialog.Close>
+            </div>
 
-                {!loading && profile && (
-                  <ProfileHubBody
-                    profile={profile}
-                    onOpenAccountDetail={handleOpenAccountPage}
-                    onOpenTransactions={handleOpenTransactions}
-                    onOpenLossRebate={handleOpenLossRebate}
-                    onOpenVip={handleOpenVip}
-                    onLogout={() => void handleLogout()}
-                  />
-                )}
-              </div>
-            </Dialog.Content>
+            <div className="profile-hub-sheet__hero-body px-4 pb-4 pt-1">
+              {loading ? (
+                <p className="py-4 text-center text-xs text-white/70">กำลังโหลด...</p>
+              ) : null}
+
+              {!loading && profile === null ? (
+                <p className="py-4 text-center text-xs text-white/70">ไม่พบข้อมูลโปรไฟล์</p>
+              ) : null}
+
+              {!loading && profile ? (
+                <ProfileHubHeader profile={profile} variant="sheet" />
+              ) : null}
+            </div>
+          </header>
+
+          <div
+            className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4 [scrollbar-width:thin]"
+          >
+            {!loading && profile ? (
+              <ProfileHubBody
+                profile={profile}
+                showHeader={false}
+                onOpenAccountDetail={handleOpenAccountPage}
+                onOpenTransactions={handleOpenTransactions}
+                onOpenLossRebate={handleOpenLossRebate}
+                onOpenVip={handleOpenVip}
+                onLogout={() => void handleLogout()}
+              />
+            ) : null}
           </div>
-        </div>
+
+          <footer className="profile-hub-sheet__footer shrink-0 border-t border-[var(--border-subtle)]/40 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+            <Dialog.Close asChild>
+              <button type="button" className={`${COSMIC_BTN_NAV} w-full justify-center py-3`}>
+                ปิด
+              </button>
+            </Dialog.Close>
+          </footer>
+        </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );

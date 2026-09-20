@@ -27,6 +27,7 @@ import { FloatingBottomNav } from "../layout/FloatingBottomNav";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
 import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import {
   CATEGORIES_DATA,
   PROMO_CAROUSEL_DATA,
@@ -50,16 +51,13 @@ export function HomeLobbyPage() {
   );
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const { isOpen: isSignUpOpen, open: openSignUp, close: closeSignUp } = useOverlayLayer("signup");
+  const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useOverlayLayer("login");
   const { collapsed: isSidebarCollapsed, setCollapsed: setSidebarCollapsed } =
     useLobbySidebarCollapsed(false);
   const { logout } = useAuth();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
-
-  const openSignUp = () => setIsSignUpOpen(true);
-  const openLogin = () => setIsLoginOpen(true);
 
   const handleSidebarMenuAction = (action: "vip-rank" | "coupon") => {
     if (action === "vip-rank") openVipModal();
@@ -100,13 +98,13 @@ export function HomeLobbyPage() {
 
                   <SignUpBottomDrawer
                     isOpen={isSignUpOpen}
-                    onClose={() => setIsSignUpOpen(false)}
+                    onClose={closeSignUp}
                     onLoginClick={openLogin}
                   />
 
                   <LoginBottomDrawer
                     isOpen={isLoginOpen}
-                    onClose={() => setIsLoginOpen(false)}
+                    onClose={closeLogin}
                     onSignUpClick={openSignUp}
                   />
 
@@ -119,10 +117,6 @@ export function HomeLobbyPage() {
                     <HomeDesktopHeroRow onCtaClick={openSignUp} />
 
                     <div className="relative -mx-[var(--page-gutter)] flex flex-col gap-4 overflow-hidden rounded-none px-[var(--page-gutter)] pb-6 pt-1 lg:mx-0 lg:gap-3 lg:px-0 lg:pb-0 lg:pt-0">
-                      <div
-                        className="lobby-zone-bg pointer-events-none absolute inset-0 lg:hidden"
-                        aria-hidden="true"
-                      />
                       <div className="relative flex min-w-0 flex-col gap-4 lg:gap-3">
                         <div className={showMobileLobbySections}>
                           <div className="lg:hidden">

@@ -7,7 +7,7 @@ interface CosmicIntroProps {
 }
 
 /**
- * CosmicIntro — ข้อความ "อาณาจักรแห่งความมันส์" (พื้นหลัง nebula อยู่ที่ shell ใน app/page.tsx)
+ * CosmicIntro — ข้อความ "อาณาจักรแห่งความมันส์" (พื้นหลังตาม .cosmic-bg บน <html>)
  * ตัวเลขใน stats ต้องมาจากข้อมูลจริง — ค่า mock เป็นตัวอย่างจัดวาง
  * ถูกเรียกใช้ใน app/page.tsx
  */

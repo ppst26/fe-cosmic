@@ -2,6 +2,8 @@
 
 import React from "react";
 import type { YikiBetEntry, YikiSettlementTypeId, YikiSettlementType } from "@/app/types/yiki";
+import { LotterySlipToolbar } from "../LotterySlipToolbar";
+import { formatLotteryDigitsDisplay } from "../lotteryUtils";
 
 interface YikiSlipProps {
   entries: YikiBetEntry[];
@@ -43,12 +45,12 @@ export function YikiSlip({ entries, settlementTypes, canUndo, onRemove, onUndo, 
               <div key={settlementTypeId} className="yiki-slip__group">
                 <div className="yiki-slip__group-head">
                   <span>{settlementType.label}</span>
-                  <span>{groupEntries.length}</span>
+                  <span>{groupEntries.length} รายการ</span>
                 </div>
                 <div className="yiki-slip-rows">
                   {groupEntries.map((entry) => (
                     <div key={entry.id} className="yiki-slip__row">
-                      <span className="yiki-slip__number">{entry.number}</span>
+                      <span className="yiki-slip__number">{formatLotteryDigitsDisplay(entry.number)}</span>
                       <span className="yiki-slip__rate">x{settlementType.payoutRate}</span>
                       <button
                         type="button"
@@ -67,27 +69,12 @@ export function YikiSlip({ entries, settlementTypes, canUndo, onRemove, onUndo, 
         </div>
       )}
 
-      {entries.length > 0 ? (
-        <div className="yiki-slip__toolbar">
-          <button
-            type="button"
-            className="yiki-slip__tool-btn"
-            onClick={onUndo}
-            disabled={!canUndo}
-            aria-label="เอารายการล่าสุดออก"
-          >
-            <UndoIcon />
-          </button>
-          <button
-            type="button"
-            className="yiki-slip__tool-btn"
-            onClick={onClearAll}
-            aria-label="ล้างโพยทั้งหมด"
-          >
-            <TrashIcon />
-          </button>
-        </div>
-      ) : null}
+      <LotterySlipToolbar
+        visible={entries.length > 0}
+        canUndo={canUndo}
+        onUndo={onUndo}
+        onClearAll={onClearAll}
+      />
     </div>
   );
 }
@@ -97,27 +84,6 @@ function TrashIcon() {
     <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" aria-hidden>
       <path
         d="M4 6h12M8 6V4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V6m-7 0 .6 9.4a1 1 0 0 0 1 .9h5.8a1 1 0 0 0 1-.9L15 6"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function UndoIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" aria-hidden>
-      <path
-        d="M6.5 5 3 8.5 6.5 12"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M3 8.5h8.5a4 4 0 1 1 0 8H8"
         stroke="currentColor"
         strokeWidth="1.4"
         strokeLinecap="round"
