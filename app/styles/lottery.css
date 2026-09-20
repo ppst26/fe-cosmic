@@ -76,12 +76,13 @@
 
 @media (max-width: 1023px) {
   /**
-   * มือถือ — ประเภทหวยเป็นแถบเลื่อนแนวนอนด้านบน · รายการรอบเต็มความกว้าง (ไม่ใช้ rail แคบแบบ desktop)
+   * มือถือ — ซ้ายประเภทหวย · ขวารอบ/แทง (scroll แยกใน .lottery-market-scroll + wheel handler)
    */
   .lottery-market-shell {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: var(--space-3);
+    --lottery-mobile-rail: clamp(6.75rem, 31vw, 8.25rem);
+    grid-template-columns: minmax(0, var(--lottery-mobile-rail)) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: var(--space-2);
     height: 100%;
     max-height: 100%;
     padding: var(--space-2);
@@ -157,22 +158,18 @@
 
 @media (max-width: 1023px) {
   .lottery-market-sidebar {
-    height: auto;
-    max-height: none;
+    height: 100%;
+    min-height: 0;
   }
 
   .lottery-market-sidebar__panel.lottery-market-scroll {
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding: 0;
-    flex: 0 0 auto;
-    scrollbar-width: none;
-  }
-
-  .lottery-market-sidebar__panel.lottery-market-scroll::-webkit-scrollbar {
-    display: none;
+    flex: 1 1 auto;
+    scrollbar-width: thin;
   }
 }
 
@@ -229,12 +226,7 @@
 
 @media (max-width: 1023px) {
   .lottery-market-sidebar__list {
-    flex-direction: row;
-    align-items: stretch;
-    gap: var(--space-2);
-    width: max-content;
-    min-width: 100%;
-    padding-inline: 1px;
+    gap: var(--space-1);
   }
 }
 
@@ -264,15 +256,16 @@
 
 @media (max-width: 1023px) {
   .lottery-market-sidebar__item {
-    flex: 0 0 auto;
     flex-direction: column;
     align-items: center;
     gap: var(--space-1);
-    width: 5.75rem;
-    max-width: 5.75rem;
-    min-height: 4.25rem;
+    min-height: 0;
     padding: var(--space-2) var(--space-1);
     text-align: center;
+  }
+
+  .lottery-market-sidebar__item .lottery-flag {
+    flex-shrink: 0;
   }
 
   .lottery-market-sidebar__text {
@@ -281,10 +274,10 @@
   }
 
   .lottery-market-sidebar__title {
-    line-height: 1.25;
+    line-height: 1.2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     overflow: hidden;
   }
 
@@ -296,6 +289,11 @@
   .lottery-market-sidebar__item .lottery-countdown svg {
     width: 0.75rem;
     height: 0.75rem;
+  }
+
+  .lottery-market-sidebar__item.glass-card--soft.is-active {
+    background: color-mix(in srgb, var(--action-solid) 22%, var(--glass-fill));
+    box-shadow: var(--glass-shadow);
   }
 }
 
@@ -341,14 +339,25 @@
 
 @media (max-width: 1023px) {
   .lottery-market-banner {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: var(--space-2) var(--space-3);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: var(--space-1);
+    padding: var(--space-2);
     border-radius: calc(var(--radius-panel) - 4px);
+    background: var(--surface-solid-inner);
   }
 
   .lottery-market-banner > .lottery-flag {
     display: none;
+  }
+
+  .lottery-market-banner__body {
+    text-align: left;
+  }
+
+  .lottery-market-banner__rules {
+    display: block;
+    margin-top: 0.1rem;
   }
 }
 
@@ -476,6 +485,24 @@
 @media (max-width: 1023px) {
   .lottery-play-rounds {
     gap: var(--space-2);
+  }
+
+  /* โซนขวาแคบ — กริดรอบยี่กี 2 คอลัมน์ (ไม่ขยาย 3–4 ตามความกว้างจอเต็ม) */
+  .lottery-market-rounds-scroll .lottery-play-round-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-1);
+  }
+
+  .lottery-market-rounds-scroll .lottery-play-round-grid__cell {
+    min-height: 4.75rem;
+    padding: var(--space-1) var(--space-1);
+  }
+
+  .lottery-market-rounds-scroll .lottery-play-round-grid__countdown {
+    min-width: 0;
+    width: 100%;
+    max-width: 5.5rem;
+    padding-inline: 0.35rem;
   }
 }
 
