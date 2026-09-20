@@ -4,7 +4,7 @@ import React from "react";
 
 /**
  * แถบล่างโพย — ย้อนรายการล่าสุด · ล้างทั้งหมด (โทนเดียวกับตัวอย่างยี่กี)
- * ใช้ใน ThaiLottoBetSlip · YikiSlip
+ * ใช้ใน LotteryBetSlip
  */
 export function LotterySlipToolbar({
   visible,

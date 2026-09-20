@@ -21,6 +21,53 @@
 }
 
 @media (max-width: 1023px) {
+  .mobile-standalone-main {
+    padding-bottom: var(--menu-nav-clearance);
+  }
+
+  .lobby-desktop-center--over-rail > main.page-shell--feature {
+    padding-bottom: var(--menu-nav-clearance);
+    box-sizing: border-box;
+  }
+
+  /**
+   * หวย step 2/3 — ย่อ shell ให้อยู่เหนือ bottom nav (scroll ในโซนรอบ/แทง)
+   */
+  .lobby-desktop-shell:has(main.lottery-page-main) {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-shell__frame,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-shell__row,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-main,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-workspace--over-right-rail,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-center--over-rail {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-shell__header-band,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-center--over-rail > .lg\:hidden {
+    flex-shrink: 0;
+  }
+
+  .lobby-desktop-center--over-rail > main.page-shell--feature.lottery-page-main {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1023px) {
   /**
    * Segment ฝาก/ถอน ฯลฯ — glass track · active ไม่ใช้ --action-solid
    */

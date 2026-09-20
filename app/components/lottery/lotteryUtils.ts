@@ -27,6 +27,21 @@ export function formatBaht(value: number): string {
   });
 }
 
+/** วันเวลาแบบสรุปโพย — เช่น 20 ก.ย. 2569 08:52 */
+export function formatLotterySlipDateTime(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "—";
+  return date.toLocaleString("th-TH", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Bangkok",
+  });
+}
+
 /** แปลงมิลลิวินาทีคงเหลือเป็น "3 วัน 04:12:09" — ใช้ใน ThaiLottoDrawCard / YikiRoundCard */
 export function formatCountdown(ms: number): string {
   if (ms <= 0) return "ปิดรับแทงแล้ว";

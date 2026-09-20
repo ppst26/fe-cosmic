@@ -75,7 +75,7 @@ export default function ProviderGamesPage() {
       />
 
       {/* Main Content */}
-      <main className="mobile-standalone-main pb-28 pt-2">
+      <main className="mobile-standalone-main pt-2">
         {/* 3. Search Bar สไตล์มาตรฐาน ไร้ ring/outline */}
         <GameSearchBar
           placeholder="ค้นหาเกมในค่ายนี้"

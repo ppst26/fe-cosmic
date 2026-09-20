@@ -3,28 +3,15 @@
 import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { LotteryPlayPageShell } from "@/app/components/lottery/LotteryPlayPageShell";
-import { YikiBetBoard } from "@/app/components/lottery/yiki/YikiBetBoard";
-import { YIKI_BET_TYPES, YIKI_GROUPS, YIKI_SETTLEMENT_TYPES } from "@/app/data/yikiMockData";
+import { LotteryYikiPlayBoard } from "@/app/components/lottery/LotteryYikiPlayBoard";
 import { getLotteryMarketBySlug } from "@/app/data/lotteryMarketsMockData";
-import { getLotteryPlayRoundById } from "@/app/data/lotteryRoundsMockData";
 
-/**
- * Step 3 — แทงหวยตลาดรายวัน (/lottery/[marketId]/[roundId])
- */
+/** Step 3 — แทงหวยตลาดรายวัน (/lottery/[marketId]/[roundId]) */
 export default function LotteryMarketPlayPage() {
   const urlParams = useParams();
   const marketId = (urlParams?.marketId as string) || "";
   const roundId = (urlParams?.roundId as string) || "";
   const market = useMemo(() => getLotteryMarketBySlug(marketId), [marketId]);
-  const playRound = useMemo(() => getLotteryPlayRoundById(marketId, roundId), [marketId, roundId]);
-
-  const round = playRound
-    ? {
-        id: playRound.id,
-        label: playRound.drawLabel,
-        closeAt: playRound.closeAt,
-      }
-    : null;
 
   return (
     <LotteryPlayPageShell
@@ -32,20 +19,14 @@ export default function LotteryMarketPlayPage() {
       backHref={`/lottery/${marketId}`}
       mainClassName="yiki-page-main mx-auto max-w-[var(--content-max)] pb-0 lg:mx-0 lg:max-w-none lg:pb-4 lg:pt-0"
     >
-      {({ onStepChange }) =>
-        market && round ? (
-          <YikiBetBoard
-            round={round}
-            groups={YIKI_GROUPS}
-            betTypes={YIKI_BET_TYPES}
-            settlementTypes={YIKI_SETTLEMENT_TYPES}
-            backHref={`/lottery/${marketId}`}
-            onStepChange={onStepChange}
-          />
-        ) : (
-          <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ไม่พบรอบที่เลือก</p>
-        )
-      }
+      {({ onStepChange }) => (
+        <LotteryYikiPlayBoard
+          marketSlug={marketId}
+          roundId={roundId}
+          backHref={`/lottery/${marketId}`}
+          onStepChange={onStepChange}
+        />
+      )}
     </LotteryPlayPageShell>
   );
 }

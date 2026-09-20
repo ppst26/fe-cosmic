@@ -14,6 +14,8 @@ interface ThaiLottoBetTypePickerProps {
   selectedTypeIds: ThaiLottoBetTypeId[];
   onGroupChange: (group: ThaiLottoDigitGroup) => void;
   onToggleType: (typeId: ThaiLottoBetTypeId) => void;
+  /** single = ยี่กี/บางตลาด · multi = หวยรัฐบาล (ค่าเริ่มต้น) */
+  selectionMode?: "multi" | "single";
 }
 
 /**
@@ -27,6 +29,7 @@ export function ThaiLottoBetTypePicker({
   selectedTypeIds,
   onGroupChange,
   onToggleType,
+  selectionMode = "multi",
 }: ThaiLottoBetTypePickerProps) {
   const groupTypes = betTypes.filter((type) => type.group === activeGroup);
 

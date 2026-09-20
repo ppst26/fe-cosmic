@@ -3,11 +3,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { LotteryPlayRound } from "@/app/types/lottery";
-import { lotteryMarketUsesRoundGrid } from "@/app/data/lotteryRoundsMockData";
+import {
+  LOTTERY_LOW_FREQ_MAX_ROUNDS,
+  lotteryMarketUsesRoundGrid,
+} from "@/app/data/lotteryRoundsMockData";
 import { formatCountdown } from "./lotteryUtils";
 
 const GRID_INITIAL_VISIBLE = 24;
-const GRID_LAYOUT_MIN_ROUNDS = 8;
 
 interface LotteryPlayRoundListProps {
   rounds: LotteryPlayRound[];
@@ -32,8 +34,12 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
   const [nowMs, setNowMs] = useState<number | null>(null);
   const [showAllGrid, setShowAllGrid] = useState(false);
 
-  const useGridLayout =
-    lotteryMarketUsesRoundGrid(marketSlug) || rounds.length >= GRID_LAYOUT_MIN_ROUNDS;
+  const useGridLayout = lotteryMarketUsesRoundGrid(marketSlug);
+
+  const cardRounds = useMemo(() => {
+    if (useGridLayout) return rounds;
+    return rounds.slice(0, LOTTERY_LOW_FREQ_MAX_ROUNDS);
+  }, [rounds, useGridLayout]);
 
   useEffect(() => {
     const tick = () => setNowMs(Date.now());
@@ -50,7 +56,13 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
 
   const hiddenGridCount = useGridLayout ? Math.max(0, rounds.length - GRID_INITIAL_VISIBLE) : 0;
 
-  if (rounds.length === 0) {
+  if (cardRounds.length === 0 && !useGridLayout) {
+    return (
+      <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ยังไม่มีรอบที่เปิดรับแทง</p>
+    );
+  }
+
+  if (rounds.length === 0 && useGridLayout) {
     return (
       <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ยังไม่มีรอบที่เปิดรับแทง</p>
     );
@@ -110,8 +122,8 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
     );
   }
 
-  const openRounds = rounds.filter((round) => round.status === "open");
-  const otherRounds = rounds.filter((round) => round.status !== "open");
+  const openRounds = cardRounds.filter((round) => round.status === "open");
+  const otherRounds = cardRounds.filter((round) => round.status !== "open");
 
   return (
     <div className="lottery-play-rounds flex flex-col gap-4">
@@ -136,8 +148,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
       ))}
 
       {otherRounds.length > 0 ? (
-        <section aria-label="รอบถัดไป">
-          <h2 className="mb-3 text-sm font-medium text-[var(--text-secondary)]">รอบถัดไป</h2>
+        <section className="lottery-play-rounds__upcoming" aria-label="รอบถัดไป">
           <ul className="lottery-play-rounds__queue">
             {otherRounds.map((round) => (
               <li key={round.id}>

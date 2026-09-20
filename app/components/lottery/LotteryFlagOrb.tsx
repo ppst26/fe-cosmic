@@ -9,14 +9,16 @@ export function LotteryFlagOrb({
   label,
   tone,
   size = "md",
+  className,
 }: {
   label: string;
   tone: LotteryFlagTone;
   size?: "sm" | "md" | "lg";
+  className?: string;
 }) {
   return (
     <span
-      className={`lottery-flag lottery-flag--${size} lottery-flag--${tone}`}
+      className={`lottery-flag lottery-flag--${size} lottery-flag--${tone}${className ? ` ${className}` : ""}`}
       aria-hidden="true"
     >
       <span className="lottery-flag__sphere">{label.slice(0, 2)}</span>

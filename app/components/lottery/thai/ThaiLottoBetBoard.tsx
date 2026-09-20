@@ -31,8 +31,9 @@ interface ThaiLottoBetBoardProps {
   groups: { id: ThaiLottoDigitGroup; label: string }[];
   betTypes: ThaiLottoBetType[];
   backHref: string;
-  /** ส่งโพยไป API — ยังไม่เชื่อม ถ้าไม่ส่งมาปุ่มยืนยันจะถูกปิด */
-  onSubmit?: (entries: ThaiLottoBetEntry[]) => void;
+  /** ส่งโพยไป API — คืน true เมื่อสำเร็จเพื่อล้างโพย */
+  onSubmit?: (entries: ThaiLottoBetEntry[]) => void | Promise<boolean>;
+  isSubmitting?: boolean;
   /** แจ้ง shell ซ่อน bottom nav ตอนขั้นใส่ราคา (มือถือ) */
   onStepChange?: (step: "pick" | "price") => void;
 }
@@ -57,6 +58,7 @@ export function ThaiLottoBetBoard({
   backHref,
   onSubmit,
   onStepChange,
+  isSubmitting = false,
 }: ThaiLottoBetBoardProps) {
   const firstTypeOf = useCallback(
     (group: ThaiLottoDigitGroup) => betTypes.find((type) => type.group === group)?.id,
@@ -240,9 +242,26 @@ export function ThaiLottoBetBoard({
   const selectedEntry = entries.find((entry) => entry.id === selectedEntryId) ?? null;
   const canConfirm =
     Boolean(onSubmit) &&
+    !isSubmitting &&
     !isClosed &&
     entries.length > 0 &&
     entries.every((entry) => isAmountValid(entry.amount));
+
+  const resetSlipAfterSuccess = () => {
+    setEntries([]);
+    setLastAddedIds([]);
+    setSelectedEntryId(null);
+    setSameForAll(false);
+    setInput("");
+    setFeedback("");
+    setStep("pick");
+  };
+
+  const handleSubmitSlip = async () => {
+    if (!onSubmit || !canConfirm) return;
+    const ok = await onSubmit(entries);
+    if (ok) resetSlipAfterSuccess();
+  };
 
   return (
     <>
@@ -350,8 +369,9 @@ export function ThaiLottoBetBoard({
                   onToggleSameForAll={setSameForAll}
                   onBack={() => setStep("pick")}
                   onQuickAmount={handleQuickAmount}
-                  onSubmit={() => onSubmit?.(entries)}
+                  onSubmit={() => void handleSubmitSlip()}
                   submitDisabled={!canConfirm}
+                  isSubmitting={isSubmitting}
                   total={priceTotal}
                   selectedAmount={selectedEntry?.amount ?? null}
                 />

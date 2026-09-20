@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useContainedVerticalScroll } from "./useContainedVerticalScroll";
 import type { LotteryCatalogEntry } from "@/app/types/lottery";
 import { LOTTERY_CATALOG_ENTRIES } from "@/app/data/lotteryCatalogMockData";
-import { LotteryFlagOrb } from "./LotteryFlagOrb";
+import { LotteryCountdown, LotteryFlagOrb } from "./LotteryFlagOrb";
 
 interface LotteryMarketShellProps {
   activeEntry: LotteryCatalogEntry;
@@ -36,15 +36,19 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               <li key={entry.slug}>
                 <Link
                   href={entry.roundsHref}
-                  className={`lottery-market-sidebar__item${isActive ? " is-active" : ""}${
-                    entry.status === "closed" ? " is-closed" : ""
-                  }`}
+                  className={`lottery-market-sidebar__item glass-card--soft${
+                    isActive ? " is-active" : ""
+                  }${entry.status === "closed" ? " is-closed" : ""}`}
                   aria-current={isActive ? "page" : undefined}
                 >
                   <LotteryFlagOrb label={entry.flagLabel} tone={entry.flagTone} size="sm" />
                   <span className="lottery-market-sidebar__text min-w-0">
                     <span className="lottery-market-sidebar__title">{entry.title}</span>
-                    <span className="lottery-market-sidebar__meta">{entry.statusLabel}</span>
+                    {entry.status === "closed" ? (
+                      <span className="lottery-market-sidebar__meta">ปิดรับแทง</span>
+                    ) : (
+                      <LotteryCountdown label={entry.statusLabel} />
+                    )}
                   </span>
                 </Link>
               </li>
@@ -63,12 +67,9 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               กติกา / อัตราการจ่าย
             </Link>
           </div>
-          <span className="lottery-market-banner__orb-end max-lg:hidden" aria-hidden="true">
-            <LotteryFlagOrb label={activeEntry.flagLabel} tone={activeEntry.flagTone} size="lg" />
-          </span>
         </header>
 
-        <p className="lottery-market-round-count">
+        <p className="lottery-market-round-count max-lg:hidden">
           รอบที่เปิดให้เล่น <span className="lottery-market-round-count__n">{roundCount}</span> รอบ
         </p>
 

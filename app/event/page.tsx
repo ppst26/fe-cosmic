@@ -19,7 +19,7 @@ export default function EventPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <main className="mobile-standalone-main pb-28 pt-4">
+      <main className="mobile-standalone-main pt-4">
         <ActivitiesHubPageContent />
       </main>
 

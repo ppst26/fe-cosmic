@@ -107,7 +107,7 @@ export function LobbyDesktopPageShell({
 
                   <main
                     className={cn(
-                      "page-shell page-shell--feature min-h-0 min-w-0 flex-col overflow-x-clip pb-28 lg:pb-4 lg:pt-0",
+                      "page-shell page-shell--feature min-h-0 min-w-0 flex-col overflow-x-clip lg:pb-4 lg:pt-0",
                       activeCategoryId === "lottery" ? "lottery-page-main pt-0" : "pt-4",
                       mainClassName,
                     )}

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
+import React, { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import type { LotteryFlagTone } from "@/app/types/lottery";
+import type { LotteryFlagTone, ThaiLottoBetTypeId } from "@/app/types/lottery";
 import type {
   YikiBetEntry,
   YikiBetType,
@@ -11,16 +11,16 @@ import type {
   YikiSettlementTypeId,
   YikiSettlementType,
 } from "@/app/types/yiki";
+import { mapYikiBetTypesForPicker } from "@/lib/lottery/yikiToThaiBetTypes";
+import { LotteryDrawCard } from "../LotteryDrawCard";
+import { ThaiLottoBetTypePicker } from "../thai/ThaiLottoBetTypePicker";
 import { LotteryNumberPad } from "../LotteryNumberPad";
 import { LotteryNumberGrid } from "../LotteryNumberGrid";
 import { LotteryInputModeTabs, type LotteryInputMode } from "../LotteryInputModeTabs";
-import { YikiRoundStrip } from "./YikiRoundStrip";
-import { YikiTypeChips } from "./YikiTypeChips";
 import { YikiSlip } from "./YikiSlip";
 import { YikiPricePanel } from "./YikiPricePanel";
 import { YikiPriceControls } from "./YikiPriceControls";
 import { LotteryPriceStepCard } from "../LotteryPriceStepCard";
-import { YikiHowToBet } from "./YikiHowToBet";
 import { uniquePermutations } from "../lotteryUtils";
 
 interface YikiBetBoardProps {
@@ -30,18 +30,21 @@ interface YikiBetBoardProps {
   settlementTypes: Record<YikiSettlementTypeId, YikiSettlementType>;
   /** กลับหน้าก่อนหน้า — รายการรอบของยี่กี หรือหน้าเลือกหวยของตลาดที่ไม่มีรายการรอบ */
   backHref: string;
+  /** ชื่อตลาดบนการ์ดหัวงวด */
+  marketTitle: string;
   /** ตราตลาด — ค่าเริ่มต้นเป็นยี่กี (YK/gold) ตลาดหวยหุ้นอื่นส่งธงของตัวเองมาแทน */
   flagLabel?: string;
   flagTone?: LotteryFlagTone;
-  /** ส่งโพย+ราคาไป API — ยังไม่เชื่อม ถ้าไม่ส่งมาปุ่ม "ยืนยันการแทง" จะถูกปิด */
-  onSubmit?: (entries: YikiBetEntry[]) => void;
+  /** ส่งโพย+ราคาไป API — คืน true เมื่อสำเร็จเพื่อล้างโพย */
+  onSubmit?: (entries: YikiBetEntry[]) => void | Promise<boolean>;
+  isSubmitting?: boolean;
   /** แจ้ง shell ซ่อน bottom nav ตอนขั้นใส่ราคา (มือถือ) */
   onStepChange?: (step: "pick" | "price") => void;
 }
 
-const YIKI_INPUT_MODES: { id: LotteryInputMode; label: string }[] = [
-  { id: "manual", label: "กดเลือกเอง" },
-  { id: "grid", label: "ชุดตัวเลข" },
+const LOTTERY_INPUT_MODES: { id: LotteryInputMode; label: string }[] = [
+  { id: "manual", label: "กรอกเลขเอง" },
+  { id: "grid", label: "เลือกจากแผงเลข" },
 ];
 
 /** เป้าหมายของ keydown เป็นช่องพิมพ์หรือไม่ — กันไม่ให้แป้นพิมพ์ไปแย่งช่องราคา */
@@ -64,10 +67,12 @@ export function YikiBetBoard({
   betTypes,
   settlementTypes,
   backHref,
-  flagLabel,
-  flagTone,
+  marketTitle,
+  flagLabel = "YK",
+  flagTone = "gold",
   onSubmit,
   onStepChange,
+  isSubmitting = false,
 }: YikiBetBoardProps) {
   const firstTypeOf = useCallback(
     (group: YikiDigitGroup) => betTypes.find((type) => type.group === group)?.id,
@@ -252,94 +257,73 @@ export function YikiBetBoard({
     );
   };
 
-  const activeGroupTypes = betTypes.filter((type) => type.group === activeGroup);
-  const canConfirm = Boolean(onSubmit) && !isClosed && entries.length > 0 && entries.every((entry) => (entry.amount ?? 0) > 0);
+  const pickerBetTypes = useMemo(
+    () => mapYikiBetTypesForPicker(betTypes, settlementTypes),
+    [betTypes, settlementTypes],
+  );
+  const selectedTypeIdsForPicker = selectedTypeId
+    ? [selectedTypeId as ThaiLottoBetTypeId]
+    : [];
+
+  const canConfirm =
+    Boolean(onSubmit) &&
+    !isSubmitting &&
+    !isClosed &&
+    entries.length > 0 &&
+    entries.every((entry) => (entry.amount ?? 0) > 0);
   const priceTotal = entries.reduce((sum, entry) => sum + (entry.amount ?? 0), 0);
   const selectedEntry = entries.find((entry) => entry.id === selectedEntryId) ?? null;
+
+  const resetSlipAfterSuccess = () => {
+    setEntries([]);
+    setLastAddedIds([]);
+    setSelectedEntryId(null);
+    setSameForAll(false);
+    setInput("");
+    setFeedback("");
+    setStep("pick");
+  };
+
+  const handleSubmitSlip = async () => {
+    if (!onSubmit || !canConfirm) return;
+    const ok = await onSubmit(entries);
+    if (ok) resetSlipAfterSuccess();
+  };
 
   return (
     <>
       <div
-        className={`yiki-layout surface-solid-outer${step === "price" ? " yiki-layout--price" : ""}`}
+        className={`thai-lotto-layout surface-solid-outer${step === "price" ? " thai-lotto-layout--price" : ""}`}
       >
         {step === "pick" ? (
-          <div className="yiki-layout__round">
-            <YikiRoundStrip round={round} remainingMs={remainingMs} flagLabel={flagLabel} flagTone={flagTone} />
+          <div className="thai-lotto-layout__draw">
+            <LotteryDrawCard
+              title={marketTitle}
+              drawLabel={round.label}
+              remainingMs={remainingMs}
+              flagLabel={flagLabel}
+              flagTone={flagTone}
+            />
           </div>
         ) : null}
 
-        <div className="yiki-layout__slip">
-          {step === "pick" ? (
-            <YikiSlip
-              entries={entries}
-              settlementTypes={settlementTypes}
-              canUndo={lastAddedIds.length > 0}
-              onRemove={(entryId) => setEntries((prev) => prev.filter((entry) => entry.id !== entryId))}
-              onUndo={handleUndo}
-              onClearAll={handleClearAll}
-            />
-          ) : (
-            <LotteryPriceStepCard
-              controls={
-                <YikiPriceControls
-                  selectedEntry={selectedEntry}
-                  sameForAll={sameForAll}
-                  onToggleSameForAll={setSameForAll}
-                  onQuickAmount={handleQuickAmount}
-                  onBack={() => setStep("pick")}
-                  onSubmit={() => onSubmit?.(entries)}
-                  submitDisabled={!canConfirm}
-                  total={priceTotal}
-                />
-              }
-            >
-              <YikiPricePanel
-                entries={entries}
-                settlementTypes={settlementTypes}
-                selectedEntryId={selectedEntryId}
-                onSelectEntry={setSelectedEntryId}
-                onAmountChange={(entryId, amount) =>
-                  setEntries((prev) => prev.map((entry) => (entry.id === entryId ? { ...entry, amount } : entry)))
-                }
-                onRemove={(entryId) => setEntries((prev) => prev.filter((entry) => entry.id !== entryId))}
-              />
-            </LotteryPriceStepCard>
-          )}
-        </div>
-
         {step === "pick" ? (
-          <section className="thai-lotto-panel yiki-layout__input" aria-label="เลือกเลข">
+          <section className="thai-lotto-panel thai-lotto-layout__input" aria-label="เลือกเลข">
+            <ThaiLottoBetTypePicker
+              groups={groups}
+              betTypes={pickerBetTypes}
+              activeGroup={activeGroup}
+              selectedTypeIds={selectedTypeIdsForPicker}
+              onGroupChange={handleGroupChange}
+              onToggleType={(typeId) => handleTypeSelect(typeId)}
+              selectionMode="single"
+            />
+
             <LotteryInputModeTabs
-              modes={YIKI_INPUT_MODES}
+              modes={LOTTERY_INPUT_MODES}
               activeMode={inputMode}
               onChange={handleInputModeChange}
               panelId="yiki-input-panel"
-            />
-
-            <div className="cosmic-segment-track grid grid-cols-3 gap-1" role="group" aria-label="จำนวนหลัก">
-              {groups.map((group) => {
-                const isActive = group.id === activeGroup;
-                return (
-                  <button
-                    key={group.id}
-                    type="button"
-                    aria-pressed={isActive}
-                    onClick={() => handleGroupChange(group.id)}
-                    className={`cosmic-segment-btn text-sm ${
-                      isActive ? "is-active" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                    }`}
-                  >
-                    {group.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            <YikiTypeChips
-              betTypes={activeGroupTypes}
-              settlementTypes={settlementTypes}
-              activeTypeId={selectedTypeId}
-              onSelect={handleTypeSelect}
             />
 
             <div id="yiki-input-panel" role="tabpanel" aria-labelledby={`thai-lotto-mode-${inputMode}`}>
@@ -383,11 +367,45 @@ export function YikiBetBoard({
           </section>
         ) : null}
 
-        {step === "pick" ? (
-          <div className="yiki-layout__howto">
-            <YikiHowToBet />
-          </div>
-        ) : null}
+        <div className="thai-lotto-layout__slip">
+          {step === "pick" ? (
+            <YikiSlip
+              entries={entries}
+              settlementTypes={settlementTypes}
+              canUndo={lastAddedIds.length > 0}
+              onRemove={(entryId) => setEntries((prev) => prev.filter((entry) => entry.id !== entryId))}
+              onUndo={handleUndo}
+              onClearAll={handleClearAll}
+            />
+          ) : (
+            <LotteryPriceStepCard
+              controls={
+                <YikiPriceControls
+                  selectedEntry={selectedEntry}
+                  sameForAll={sameForAll}
+                  onToggleSameForAll={setSameForAll}
+                  onQuickAmount={handleQuickAmount}
+                  onBack={() => setStep("pick")}
+                  onSubmit={() => void handleSubmitSlip()}
+                  submitDisabled={!canConfirm}
+                  isSubmitting={isSubmitting}
+                  total={priceTotal}
+                />
+              }
+            >
+              <YikiPricePanel
+                entries={entries}
+                settlementTypes={settlementTypes}
+                selectedEntryId={selectedEntryId}
+                onSelectEntry={setSelectedEntryId}
+                onAmountChange={(entryId, amount) =>
+                  setEntries((prev) => prev.map((entry) => (entry.id === entryId ? { ...entry, amount } : entry)))
+                }
+                onRemove={(entryId) => setEntries((prev) => prev.filter((entry) => entry.id !== entryId))}
+              />
+            </LotteryPriceStepCard>
+          )}
+        </div>
       </div>
 
     </>

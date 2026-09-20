@@ -60,7 +60,7 @@ export default function ProfileAccountPage() {
 
       <SlotProvidersHeader title="ข้อมูลบัญชี" backHref="/" />
 
-      <main className="mobile-standalone-main pb-28 pt-4">
+      <main className="mobile-standalone-main pt-4">
         {loadingProfile && (
           <p className="py-12 text-center text-sm text-[var(--text-muted)]">กำลังโหลด...</p>
         )}

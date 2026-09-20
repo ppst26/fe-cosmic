@@ -12,6 +12,7 @@ interface YikiPriceControlsProps {
   onBack: () => void;
   onSubmit: () => void;
   submitDisabled: boolean;
+  isSubmitting?: boolean;
   total: number;
 }
 
@@ -24,6 +25,7 @@ export function YikiPriceControls({
   onBack,
   onSubmit,
   submitDisabled,
+  isSubmitting,
   total,
 }: YikiPriceControlsProps) {
   return (
@@ -34,6 +36,7 @@ export function YikiPriceControls({
       onQuickAmount={onQuickAmount}
       onSubmit={onSubmit}
       submitDisabled={submitDisabled}
+      isSubmitting={isSubmitting}
       total={total}
       selectedAmount={selectedEntry?.amount ?? null}
     />

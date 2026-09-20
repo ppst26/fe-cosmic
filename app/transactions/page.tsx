@@ -54,7 +54,7 @@ function TransactionsPageInner() {
 
       <SlotProvidersHeader title="รายการธุรกรรม" backHref="/" />
 
-      <main className="mobile-standalone-main pb-28 pt-4">
+      <main className="mobile-standalone-main pt-4">
         <TransactionsPageContent
           activeKind={activeKind}
           onSelectKind={handleSelectKind}

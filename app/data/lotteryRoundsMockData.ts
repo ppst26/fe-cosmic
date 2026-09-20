@@ -171,8 +171,11 @@ function yikiPlayRounds(intervalMin: number, count: number, from = new Date()): 
 /**
  * รายการรอบตาม slug ตลาด — เรียกฝั่ง client (ใช้ Date.now)
  */
+/** รอบสูงสุดที่แสดงในหน้าเลือกรอบ — ยกเว้นยี่กี (กริด) */
+export const LOTTERY_LOW_FREQ_MAX_ROUNDS = 4;
+
 export function getLotteryPlayRounds(slug: string, from = new Date()): LotteryPlayRound[] {
-  if (slug === "thai-government") return generateThaiGovernmentPlayRounds(6, from);
+  if (slug === "thai-government") return generateThaiGovernmentPlayRounds(LOTTERY_LOW_FREQ_MAX_ROUNDS, from);
   const yiki = YIKI_ROUND_COUNTS[slug];
   if (yiki) return yikiPlayRounds(yiki.interval, yiki.count, from);
   return generateDailyMarketPlayRounds(slug, from);
@@ -228,6 +231,22 @@ export function getLotteryPlayRoundById(slug: string, roundId: string): LotteryP
       status: "open",
       minBet: 1,
       maxBet: 2000,
+    };
+  }
+
+  if (slug === "thai-government") {
+    const draw = getThaiLottoDrawByRoundId(roundId);
+    if (!draw) return undefined;
+    return {
+      id: draw.id,
+      drawLabel: draw.drawLabel,
+      scheduleLabel: draw.drawLabel,
+      drawAt: draw.closeAt,
+      closeAt: draw.closeAt,
+      openAt: draw.closeAt,
+      status: "open",
+      minBet: draw.minBet,
+      maxBet: draw.maxBet,
     };
   }
 

@@ -13,6 +13,8 @@ interface LotteryPriceControlsProps {
   onQuickAmount: (amount: number) => void;
   onSubmit: () => void;
   submitDisabled: boolean;
+  /** กำลังเรียก API ส่งโพย */
+  isSubmitting?: boolean;
   total: number;
   /** ราคาที่เลือกอยู่ — ไฮไลต์ชิปเมื่อตรง */
   selectedAmount?: number | null;
@@ -29,6 +31,7 @@ export function LotteryPriceControls({
   onQuickAmount,
   onSubmit,
   submitDisabled,
+  isSubmitting = false,
   total,
   selectedAmount = null,
 }: LotteryPriceControlsProps) {
@@ -77,9 +80,10 @@ export function LotteryPriceControls({
           type="button"
           className="cosmic-cta-primary cosmic-cta-primary--lg lottery-price-controls__submit"
           onClick={onSubmit}
-          disabled={submitDisabled}
+          disabled={submitDisabled || isSubmitting}
+          aria-busy={isSubmitting}
         >
-          ส่งโพย
+          {isSubmitting ? "กำลังส่ง…" : "ส่งโพย"}
         </button>
       </div>
     </div>

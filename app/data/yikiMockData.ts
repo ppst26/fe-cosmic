@@ -10,7 +10,7 @@ import type {
 export const YIKI_GROUPS: { id: YikiDigitGroup; label: string }[] = [
   { id: "three", label: "3 ตัว" },
   { id: "two", label: "2 ตัว" },
-  { id: "run", label: "วิ่ง" },
+  { id: "run", label: "เลขวิ่ง" },
 ];
 
 /** ผลการจ่ายจริง — ใช้จัดกลุ่มหัวข้อในโพยและคำนวณเงินรางวัล (mock — รอค่าจริงจาก API) */
