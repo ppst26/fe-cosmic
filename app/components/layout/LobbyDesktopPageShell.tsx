@@ -5,7 +5,6 @@ import type { CategoryId } from "@/app/types/lobby";
 import { BOTTOM_NAV_DATA, CATEGORIES_DATA } from "@/app/data/lobbyMockData";
 import { SignUpBottomDrawer } from "@/app/components/auth/SignUpBottomDrawer";
 import { LoginBottomDrawer } from "@/app/components/auth/LoginBottomDrawer";
-import { useAuth } from "@/app/components/auth/AuthProvider";
 import { useCouponRedeem } from "@/app/components/coupon/CouponRedeemProvider";
 import { useVipModal } from "@/app/components/vip/VipModalProvider";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
@@ -13,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { FloatingBottomNav } from "./FloatingBottomNav";
 import { Header } from "./Header";
-import { useLobbySidebarCollapsed } from "./LobbyDesktopSidebar";
+import { useLobbyShellSidebar } from "./LobbyShellSidebarContext";
 import { LobbyDesktopSidebarColumn } from "./LobbyDesktopSidebarColumn";
 import { RightMenuDrawer } from "./RightMenuDrawer";
 
@@ -43,9 +42,7 @@ export function LobbyDesktopPageShell({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isOpen: isSignUpOpen, open: openSignUp, close: closeSignUp } = useOverlayLayer("signup");
   const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useOverlayLayer("login");
-  const { collapsed: isSidebarCollapsed, setCollapsed: setSidebarCollapsed } =
-    useLobbySidebarCollapsed(false);
-  const { logout } = useAuth();
+  const { sidebarHidden: isSidebarCollapsed } = useLobbyShellSidebar();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
 
@@ -70,10 +67,7 @@ export function LobbyDesktopPageShell({
               activeCategoryId={activeCategoryId}
               onSelectCategory={() => {}}
               navigationMode="route"
-              collapsed={isSidebarCollapsed}
-              onCollapsedChange={setSidebarCollapsed}
               onMenuAction={handleSidebarMenuAction}
-              onLogout={() => void logout()}
             />
           </div>
 

@@ -10,7 +10,7 @@ export default function Yiki5RoundListPage() {
     <LobbyDesktopPageShell
       activeCategoryId="lottery"
       subHeader={{ title: "แทงหวย", backHref: "/lottery" }}
-      mainClassName="mx-auto max-w-[var(--content-max)] lg:mx-0 lg:max-w-none"
+      mainClassName="w-full max-w-none mx-0 lg:max-w-none"
     >
       <LotteryMarketRoundsView marketSlug="yiki-5" />
     </LobbyDesktopPageShell>

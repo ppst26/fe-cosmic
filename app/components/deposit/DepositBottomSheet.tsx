@@ -269,7 +269,7 @@ function DepositBankStep({
 
       <div
         id="deposit-bank-desc"
-        className="min-h-0 flex-1 overflow-y-auto pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(124,58,237,0.35)_transparent]"
+        className="min-h-0 flex-1 overflow-y-auto pb-3"
       >
         <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 sm:px-4 sm:py-4`}>
           <div className="flex items-start gap-3">
@@ -418,7 +418,7 @@ function DepositConfirmStep({
 
       <div
         id="deposit-confirm-desc"
-        className="min-h-0 flex-1 overflow-y-auto pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(124,58,237,0.35)_transparent]"
+        className="min-h-0 flex-1 overflow-y-auto pb-3"
       >
         <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 text-center sm:px-4`}>
           <p className="text-xs text-[var(--text-secondary)]">ยอดเงินที่ต้องโอน</p>

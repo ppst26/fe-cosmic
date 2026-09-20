@@ -38,9 +38,9 @@ function ClockMiniIcon() {
 }
 
 /** ป้าย countdown สีเขียว — ใช้ใน LotteryHubContent และ ThaiLottoDrawCard */
-export function LotteryCountdown({ label }: { label: string }) {
+export function LotteryCountdown({ label, className }: { label: string; className?: string }) {
   return (
-    <span className="lottery-countdown">
+    <span className={`lottery-countdown${className ? ` ${className}` : ""}`}>
       <ClockMiniIcon />
       <span className="tabular-nums">{label}</span>
     </span>

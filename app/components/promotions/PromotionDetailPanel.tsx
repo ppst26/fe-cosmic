@@ -65,13 +65,21 @@ function PromotionDetailBanner({
           <h2
             className={
               isHub
-                ? "text-lg font-medium leading-snug text-[var(--text-primary)] sm:text-xl"
+                ? "text-xl font-semibold leading-snug text-[var(--text-primary)] sm:text-2xl"
                 : "promotion-detail-panel__banner-title text-lg sm:text-xl"
             }
           >
             {content.bannerTitle}
           </h2>
-          <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">{content.bannerSubtitle}</p>
+          <p
+            className={
+              isHub
+                ? "mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base"
+                : "mt-1 text-xs text-[var(--text-secondary)] sm:text-sm"
+            }
+          >
+            {content.bannerSubtitle}
+          </p>
         </div>
       </div>
     </section>
@@ -106,7 +114,7 @@ function PromotionDetailBodyExpanded({
       aria-label="รายละเอียดโปรโมชั่น"
     >
       {isHub ? (
-        <h3 className="text-sm font-medium text-[var(--text-primary)]">รายละเอียด</h3>
+        <h3 className="text-base font-semibold text-[var(--text-primary)] sm:text-lg">รายละเอียด</h3>
       ) : null}
       <div className={isHub ? "space-y-4" : "promotion-detail-panel__blocks"}>
         {body.blocks.map((block, index) => (
@@ -134,17 +142,31 @@ function PromotionDetailBlockRow({
           <h3
             className={
               isHub
-                ? "text-sm font-medium text-[var(--accent-muted)]"
+                ? "text-base font-semibold text-[var(--text-primary)]"
                 : "promotion-detail-panel__block-title text-sm font-medium"
             }
           >
             {block.title}
           </h3>
           {block.description && (
-            <p className="mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)]">{block.description}</p>
+            <p
+              className={
+                isHub
+                  ? "mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.9375rem]"
+                  : "mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)]"
+              }
+            >
+              {block.description}
+            </p>
           )}
           {block.bullets && block.bullets.length > 0 && (
-            <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-[var(--text-secondary)]">
+            <ul
+              className={
+                isHub
+                  ? "mt-2 space-y-2 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.9375rem]"
+                  : "mt-2 space-y-1.5 text-xs leading-relaxed text-[var(--text-secondary)]"
+              }
+            >
               {block.bullets.map((line) => (
                 <li key={line} className="flex gap-2">
                   <span className="text-[var(--accent-primary)]" aria-hidden="true">•</span>

@@ -10,10 +10,7 @@ interface LobbyDesktopSidebarColumnProps {
   categories: CategoryItem[];
   activeCategoryId: CategoryId;
   onSelectCategory?: (id: CategoryId) => void;
-  collapsed: boolean;
-  onCollapsedChange: (collapsed: boolean) => void;
   onMenuAction?: (action: MenuDialogAction) => void;
-  onLogout?: () => void;
   navigationMode?: "route" | "none";
 }
 
@@ -25,10 +22,7 @@ export function LobbyDesktopSidebarColumn({
   categories,
   activeCategoryId,
   onSelectCategory,
-  collapsed,
-  onCollapsedChange,
   onMenuAction,
-  onLogout,
   navigationMode = "route",
 }: LobbyDesktopSidebarColumnProps) {
   return (
@@ -37,17 +31,12 @@ export function LobbyDesktopSidebarColumn({
         categories={categories}
         activeCategoryId={activeCategoryId}
         onSelectCategory={onSelectCategory}
-        collapsed={collapsed}
-        onCollapsedChange={onCollapsedChange}
         onMenuAction={onMenuAction}
-        onLogout={onLogout}
         navigationMode={navigationMode}
       />
-      {!collapsed ? (
-        <div className="lobby-desktop-shell__sidebar-hub">
-          <LobbyDesktopHubMenuStack onMenuAction={onMenuAction} />
-        </div>
-      ) : null}
+      <div className="lobby-desktop-shell__sidebar-hub">
+        <LobbyDesktopHubMenuStack onMenuAction={onMenuAction} />
+      </div>
     </>
   );
 }

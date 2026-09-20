@@ -89,12 +89,12 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
 
   return (
     <div className="promotions-desktop-hub promotions-desktop-hub--flat flex min-h-0 flex-col gap-3">
-      <div className="promotions-desktop-hub__tabs sticky top-0 z-10 -mx-[var(--page-gutter)] px-[var(--page-gutter)] pb-2 pt-0">
+      <div className="promotions-desktop-hub__tabs sticky top-0 z-10 pb-2 pt-0">
         <PromotionsCategoryTabs activeId={categoryFilter} onSelect={setCategoryFilter} variant="flat" />
       </div>
 
       {listItems.length === 0 ? (
-        <p className="promotions-desktop-hub__empty py-10 text-center text-sm text-[var(--text-secondary)]">
+        <p className="promotions-desktop-hub__empty py-10 text-center text-base text-[var(--text-secondary)]">
           {emptyMessage}
         </p>
       ) : (
@@ -114,14 +114,14 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
                   type="button"
                   onClick={() => setSelectedItemId(item.id)}
                   aria-current={selected ? "true" : undefined}
-                  className={`promotions-desktop-hub__row w-full px-2 py-2.5 text-left transition-colors ${
+                  className={`promotions-desktop-hub__row w-full px-2.5 py-3 text-left transition-colors ${
                     selected ? "promotions-desktop-hub__row--selected" : "hover:bg-[var(--surface-hover)]/25"
                   }`}
                 >
-                  <span className="block text-sm font-medium leading-snug text-[var(--text-primary)]">
+                  <span className="block text-base font-semibold leading-snug text-[var(--text-primary)]">
                     {item.title}
                   </span>
-                  <span className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">
+                  <span className="mt-1 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">
                     {item.subtitle}
                   </span>
                 </button>

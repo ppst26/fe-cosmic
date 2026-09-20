@@ -11,7 +11,6 @@ import {
 } from "../ui/Icons";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
-import { useWithdraw } from "../withdraw/WithdrawProvider";
 import { VipRankEmblem } from "../vip/VipRankEmblem";
 import type { VipRankId } from "@/app/types/vip";
 import { DESKTOP_PLAYER_PANEL_MOCK } from "@/app/data/desktopLobbyMockData";
@@ -20,6 +19,8 @@ import {
   formatHeaderWalletBalance,
   MOCK_MAIN_WALLET_BALANCE,
 } from "@/app/data/walletMockData";
+import { useLobbyShellSidebarOptional } from "./LobbyShellSidebarContext";
+import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   onLoginClick?: () => void;
@@ -28,14 +29,13 @@ interface HeaderProps {
 
 /**
  * Header — มือถือ: โลโก้ · ยอดเครดิต+ไอคอนกระเป๋า (ล็อกอิน) · โปรไฟล์ · ไม่มีการ์ด/ค้นหา/ปุ่ม +
- * Desktop lg+: full-width — ซ้าย logo · โปรโมชัน · ค้นหาแบบกะทัดรัด · ขวายอด · ฝาก-ถอน · แจ้งเตือน · ยศ
+ * Desktop lg+: full-width — ซ้าย logo · โปรโมชัน · ค้นหาแบบกะทัดรัด · ขวายอด · ฝาก · แจ้งเตือน · ยศ
  */
 export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
   const pathname = usePathname();
   const { isAuthenticated, isLoading, openProfile, closeProfile, isProfileOpen } =
     useAuth();
   const { openDeposit } = useDeposit();
-  const { openWithdraw } = useWithdraw();
   const [isClientReady, setIsClientReady] = useState(false);
 
   useEffect(() => {
@@ -58,6 +58,8 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
   const showWallet = isClientReady && !isLoading && isAuthenticated;
   const balanceLabel = formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE);
   const rankId = DESKTOP_PLAYER_PANEL_MOCK.rankId as VipRankId;
+  const lobbySidebar = useLobbyShellSidebarOptional();
+  const sidebarHidden = lobbySidebar?.sidebarHidden ?? false;
 
   return (
     <>
@@ -128,6 +130,21 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
               <CosmicbetLogo className="h-7 w-auto max-w-[min(100%,200px)]" />
             </Link>
 
+            {lobbySidebar ? (
+              <button
+                type="button"
+                className={cn(
+                  "header-desktop-bar__menu-btn glass-card--soft",
+                  sidebarHidden && "is-active",
+                )}
+                aria-expanded={!sidebarHidden}
+                aria-label={sidebarHidden ? "แสดงเมนูด้านซ้าย" : "ซ่อนเมนูด้านซ้าย"}
+                onClick={lobbySidebar.toggleSidebarHidden}
+              >
+                <HeaderSidebarToggleIcon hidden={sidebarHidden} />
+              </button>
+            ) : null}
+
             <nav className="header-desktop-bar__nav" aria-label="หมวดหลัก">
               {HEADER_DESKTOP_NAV.map((item) => {
                 const isActive =
@@ -175,27 +192,15 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   </span>
                 </div>
 
-                <div className="header-desktop-bar__cashier glass-card--soft">
-                  <button
-                    type="button"
-                    onClick={openDeposit}
-                    className="header-desktop-bar__cashier-btn header-desktop-bar__cashier-btn--deposit text-sm font-medium"
-                    aria-label="ฝากเงิน"
-                    aria-haspopup="dialog"
-                  >
-                    ฝาก
-                  </button>
-                  <span className="header-desktop-bar__cashier-divider" aria-hidden="true" />
-                  <button
-                    type="button"
-                    onClick={openWithdraw}
-                    className="header-desktop-bar__cashier-btn text-sm font-medium"
-                    aria-label="ถอนเงิน"
-                    aria-haspopup="dialog"
-                  >
-                    ถอน
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={openDeposit}
+                  className="cosmic-cta-primary cosmic-cta-primary--sm text-sm font-medium"
+                  aria-label="ฝากเงิน"
+                  aria-haspopup="dialog"
+                >
+                  ฝาก
+                </button>
 
                 <button
                   type="button"
@@ -239,6 +244,30 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
         </div>
       </header>
     </>
+  );
+}
+
+/** ไอคอนย่อ/ขยายคอลัมน์ซ้าย — อิง Dexsport panel toggle */
+function HeaderSidebarToggleIcon({ hidden }: { hidden: boolean }) {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className="h-[18px] w-[18px]" aria-hidden>
+      <rect
+        x="2.5"
+        y="3.5"
+        width="15"
+        height="13"
+        rx="2.5"
+        stroke="currentColor"
+        strokeWidth="1.35"
+      />
+      <path
+        d={hidden ? "M7.5 8.5 5 10.5 7.5 12.5" : "M7.5 3.5v13"}
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 

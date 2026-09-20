@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { CategoryId, CategoryItem } from "@/app/types/lobby";
 import {
   CardsIcon,
-  ChevronRightIcon,
   ContactNavIcon,
   FishIcon,
   FootballIcon,
   GameShowsIcon,
   HomeNavIcon,
   LiveCasinoIcon,
-  LogOutIcon,
   PromoTicketIcon,
   SlotsIcon,
 } from "../ui/Icons";
@@ -27,16 +25,11 @@ import { HubNavLink } from "@/app/components/hub/HubNavLink";
 import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
 import { cn } from "@/lib/utils";
 
-const SIDEBAR_STORAGE_KEY = "cosmicbet-lobby-sidebar-collapsed";
-
 interface LobbyDesktopSidebarProps {
   categories: CategoryItem[];
   activeCategoryId: CategoryId;
   onSelectCategory?: (id: CategoryId) => void;
-  collapsed: boolean;
-  onCollapsedChange: (collapsed: boolean) => void;
   onMenuAction?: (action: MenuDialogAction) => void;
-  onLogout?: () => void;
   /** route = ไปหน้า /casino ฯลฯ · none = สลับ state บนหน้าเดียว (หน้าแรก) */
   navigationMode?: "route" | "none";
 }
@@ -125,10 +118,7 @@ export function LobbyDesktopSidebar({
   categories,
   activeCategoryId,
   onSelectCategory,
-  collapsed,
-  onCollapsedChange,
   onMenuAction,
-  onLogout,
   navigationMode = "route",
 }: LobbyDesktopSidebarProps) {
   const router = useRouter();
@@ -153,22 +143,12 @@ export function LobbyDesktopSidebar({
     }
   };
 
-  const toggleCollapsed = () => {
-    onCollapsedChange(!collapsed);
-  };
-
   return (
     <aside
       className="lobby-desktop-sidebar-rail hidden shrink-0 lg:flex"
       aria-label="เมนูหลักเดสก์ท็อป"
     >
-      <div
-        className={cn(
-          "lobby-desktop-sidebar glass-sidebar lobby-desktop-sidebar--borderless",
-          collapsed && "is-collapsed",
-        )}
-        data-collapsed={collapsed ? "true" : "false"}
-      >
+      <div className="lobby-desktop-sidebar glass-sidebar lobby-desktop-sidebar--borderless">
       <div className="lobby-desktop-sidebar__body">
       <nav
         className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--primary"
@@ -233,106 +213,11 @@ export function LobbyDesktopSidebar({
               <span className="lobby-desktop-sidebar__link-label">ติดต่อเรา</span>
             </Link>
           </li>
-          {onLogout ? (
-            <li>
-              <button
-                type="button"
-                className="lobby-desktop-sidebar__link cosmic-type-sidebar-link lobby-desktop-sidebar__link--danger"
-                title="ออกจากระบบ"
-                onClick={onLogout}
-              >
-                <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
-                  <LogOutIcon className="h-5 w-5 shrink-0" />
-                </span>
-                <span className="lobby-desktop-sidebar__link-label">ออกจากระบบ</span>
-              </button>
-            </li>
-          ) : null}
         </ul>
       </nav>
 
       </div>
-
-      <div className="lobby-desktop-sidebar__foot">
-        <button
-          type="button"
-          onClick={toggleCollapsed}
-          className="lobby-desktop-sidebar__toggle"
-          aria-expanded={!collapsed}
-          aria-label={collapsed ? "ขยายเมนูด้านซ้าย" : "ย่อเมนูด้านซ้าย"}
-        >
-          <span className="lobby-desktop-sidebar__toggle-icon" aria-hidden="true">
-            {collapsed ? (
-              <ChevronRightIcon className="h-4 w-4" />
-            ) : (
-              <SidebarDockIcon className="h-[18px] w-[18px]" />
-            )}
-          </span>
-          <span className="lobby-desktop-sidebar__toggle-label cosmic-type-nav-label">
-            {collapsed ? "ขยาย" : "ย่อเมนู"}
-          </span>
-        </button>
-      </div>
       </div>
     </aside>
   );
-}
-
-/** ไอคอนย่อ/ขยาย panel — มุมล่างแผงเมนู */
-function SidebarDockIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      <rect
-        x="2.5"
-        y="3.5"
-        width="15"
-        height="13"
-        rx="2.5"
-        stroke="currentColor"
-        strokeWidth="1.35"
-      />
-      <path d="M7.5 3.5v13" stroke="currentColor" strokeWidth="1.35" />
-    </svg>
-  );
-}
-
-/**
- * โหลด/บันทึกสถานะย่อ sidebar — ใช้ใน app/page.tsx
- * ค่าเริ่มต้นต้องตรง SSR; อ่าน localStorage หลัง hydrate เท่านั้น
- */
-function readSidebarCollapsedFromStorage(fallback: boolean): boolean {
-  if (typeof window === "undefined") return fallback;
-  try {
-    const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
-    if (stored === "1") return true;
-    if (stored === "0") return false;
-  } catch {
-    /* ignore */
-  }
-  return fallback;
-}
-
-export function useLobbySidebarCollapsed(defaultCollapsed = false) {
-  const [collapsed, setCollapsedState] = useState(defaultCollapsed);
-
-  React.useEffect(() => {
-    setCollapsedState(readSidebarCollapsedFromStorage(defaultCollapsed));
-  }, [defaultCollapsed]);
-
-  const setCollapsed = (next: boolean) => {
-    setCollapsedState(next);
-    try {
-      window.localStorage.setItem(SIDEBAR_STORAGE_KEY, next ? "1" : "0");
-    } catch {
-      /* ignore */
-    }
-  };
-
-  return { collapsed, setCollapsed };
 }

@@ -106,7 +106,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
 
           <div
             id="withdraw-sheet-desc"
-            className="min-h-0 flex-1 overflow-y-auto pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(124,58,237,0.35)_transparent]"
+            className="min-h-0 flex-1 overflow-y-auto pb-3"
           >
             <button
               type="button"

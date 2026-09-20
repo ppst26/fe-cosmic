@@ -65,7 +65,7 @@ export function VipBenefitsComparisonTable({
 
         <div
           ref={scrollRef}
-          className="overflow-x-auto overscroll-x-contain [scrollbar-width:thin] [scrollbar-color:var(--border-active)_transparent]"
+          className="overflow-x-auto overscroll-x-contain"
         >
           <table className="w-max min-w-full border-collapse text-[11px]">
             <thead>

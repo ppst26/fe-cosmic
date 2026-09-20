@@ -47,7 +47,7 @@ export function PromotionsCategoryTabs({
             onClick={() => onSelect(tab.id)}
             className={
               isFlat
-                ? `${COSMIC_BTN_GLASS_PILL} shrink-0 whitespace-nowrap !px-3 !py-2 !text-xs sm:!px-4 sm:!text-sm ${
+                ? `${COSMIC_BTN_GLASS_PILL} shrink-0 whitespace-nowrap !px-4 !py-2.5 !text-sm font-medium sm:!px-5 sm:!text-base ${
                     selected ? "is-active" : ""
                   }`
                 : [

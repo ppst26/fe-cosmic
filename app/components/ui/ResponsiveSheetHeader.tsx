@@ -3,6 +3,7 @@
 import React from "react";
 import { Dialog } from "radix-ui";
 import { ChevronLeftIcon, CloseIcon } from "./Icons";
+import { cn } from "@/lib/utils";
 import {
   RESPONSIVE_SHEET_HEADER_ROW_CLASS,
   responsiveSheetBackButtonClass,
@@ -18,6 +19,8 @@ type ResponsiveSheetHeaderProps = {
   /** กลับสเต็ปก่อนหน้า — ไม่ส่ง = ช่องซ้ายว่าง */
   onBack?: () => void;
   backAriaLabel?: string;
+  /** center = กลาง (ฝาก/ถอน) · start = ชิดซ้ายสุด (hub modal) */
+  titleAlign?: "center" | "start";
   className?: string;
 };
 
@@ -31,8 +34,46 @@ export function ResponsiveSheetHeader({
   closeAriaLabel,
   onBack,
   backAriaLabel = "กลับขั้นตอนก่อนหน้า",
+  titleAlign = "center",
   className,
 }: ResponsiveSheetHeaderProps) {
+  const closeButton = (
+    <Dialog.Close asChild>
+      <button type="button" className={responsiveSheetCloseButtonClass()} aria-label={closeAriaLabel}>
+        <CloseIcon className="h-4 w-4" />
+      </button>
+    </Dialog.Close>
+  );
+
+  if (titleAlign === "start") {
+    return (
+      <header
+        className={cn(
+          "responsive-sheet-header--start grid w-full shrink-0 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-3 pb-2 pt-0.5",
+          className,
+        )}
+      >
+        <div className="col-start-1 flex min-w-0 items-start gap-2 self-center">
+          {onBack ? (
+            <button
+              type="button"
+              onClick={onBack}
+              className={responsiveSheetBackButtonClass()}
+              aria-label={backAriaLabel}
+            >
+              <ChevronLeftIcon className="h-5 w-5" />
+            </button>
+          ) : null}
+          <div className="min-w-0 text-left [&_h2]:text-left">
+            {title}
+            {subtitle}
+          </div>
+        </div>
+        <div className="col-start-2 flex min-h-9 items-center justify-end self-start">{closeButton}</div>
+      </header>
+    );
+  }
+
   return (
     <header className={RESPONSIVE_SHEET_HEADER_ROW_CLASS(className)}>
       <div className="flex min-h-9 items-center justify-start">
@@ -55,13 +96,7 @@ export function ResponsiveSheetHeader({
         {subtitle}
       </div>
 
-      <div className="flex min-h-9 items-center justify-end">
-        <Dialog.Close asChild>
-          <button type="button" className={responsiveSheetCloseButtonClass()} aria-label={closeAriaLabel}>
-            <CloseIcon className="h-4 w-4" />
-          </button>
-        </Dialog.Close>
-      </div>
+      <div className="flex min-h-9 items-center justify-end">{closeButton}</div>
     </header>
   );
 }

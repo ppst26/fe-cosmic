@@ -9,6 +9,7 @@ import { CouponRedeemProvider } from "@/app/components/coupon/CouponRedeemProvid
 import { DepositProvider } from "@/app/components/deposit/DepositProvider";
 import { WithdrawProvider } from "@/app/components/withdraw/WithdrawProvider";
 import { PendingTransactionProvider } from "@/app/components/transactions/PendingTransactionProvider";
+import { LobbyShellSidebarProvider } from "@/app/components/layout/LobbyShellSidebarContext";
 
 /**
  * ครอบ client providers — Auth + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
@@ -23,7 +24,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
               <WithdrawProvider>
                 <VipModalProvider>
                   <DesktopHubModalProvider>
-                    <TransactionsProvider>{children}</TransactionsProvider>
+                    <TransactionsProvider>
+                      <LobbyShellSidebarProvider>{children}</LobbyShellSidebarProvider>
+                    </TransactionsProvider>
                   </DesktopHubModalProvider>
                 </VipModalProvider>
               </WithdrawProvider>

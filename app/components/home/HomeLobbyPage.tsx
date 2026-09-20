@@ -6,8 +6,8 @@ import { Header } from "../layout/Header";
 import { RightMenuDrawer } from "../layout/RightMenuDrawer";
 import { SignUpBottomDrawer } from "../auth/SignUpBottomDrawer";
 import { LoginBottomDrawer } from "../auth/LoginBottomDrawer";
-import { AuthGate, useAuth } from "../auth/AuthProvider";
-import { useLobbySidebarCollapsed } from "../layout/LobbyDesktopSidebar";
+import { AuthGate } from "../auth/AuthProvider";
+import { useLobbyShellSidebar } from "../layout/LobbyShellSidebarContext";
 import { LobbyDesktopSidebarColumn } from "../layout/LobbyDesktopSidebarColumn";
 import { HomeDesktopHeroRow } from "./HomeDesktopHeroRow";
 import { HomeDesktopPeekCarousel } from "./HomeDesktopPeekCarousel";
@@ -53,9 +53,7 @@ export function HomeLobbyPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isOpen: isSignUpOpen, open: openSignUp, close: closeSignUp } = useOverlayLayer("signup");
   const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useOverlayLayer("login");
-  const { collapsed: isSidebarCollapsed, setCollapsed: setSidebarCollapsed } =
-    useLobbySidebarCollapsed(false);
-  const { logout } = useAuth();
+  const { sidebarHidden: isSidebarCollapsed } = useLobbyShellSidebar();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
 
@@ -83,10 +81,7 @@ export function HomeLobbyPage() {
               categories={CATEGORIES_DATA}
               activeCategoryId={activeCategoryId}
               navigationMode="route"
-              collapsed={isSidebarCollapsed}
-              onCollapsedChange={setSidebarCollapsed}
               onMenuAction={handleSidebarMenuAction}
-              onLogout={() => void logout()}
             />
           </div>
 

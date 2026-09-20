@@ -100,8 +100,12 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
 
               <ResponsiveSheetHeader
                 closeAriaLabel="ปิด"
+                titleAlign="start"
+                className="responsive-sheet-header--hub"
                 title={
-                  <Dialog.Title className="text-xl font-medium sm:text-2xl">{title}</Dialog.Title>
+                  <Dialog.Title className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">
+                    {title}
+                  </Dialog.Title>
                 }
                 subtitle={
                   hubId === "check-in" ? (
@@ -119,7 +123,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                 className={`cosmic-modal-shell--hub min-h-0 flex-1 overflow-y-auto ${
                   hubId === "check-in"
                     ? "daily-check-in-desktop-modal-body relative p-0"
-                    : "px-[var(--page-gutter)] pb-4 pt-1"
+                    : "pb-4 pt-1"
                 }`}
               >
                 <HubModalBody hubId={hubId} options={options} />
@@ -136,7 +140,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
               aria-describedby={undefined}
               className="cosmic-modal-shell cosmic-modal-shell--hub fixed left-1/2 top-1/2 z-[70] flex w-[min(92vw,720px)] max-h-[min(90dvh,800px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-[var(--text-primary)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
             >
-              <div className="cosmic-modal-shell--hub__header flex shrink-0 items-center justify-between gap-3 px-4 py-3">
+              <div className="cosmic-modal-shell--hub__header flex shrink-0 items-center justify-between gap-3 px-[var(--page-gutter)] py-3">
                 <Dialog.Title className="text-lg font-medium tracking-tight text-[var(--text-primary)]">
                   {title}
                 </Dialog.Title>
@@ -151,7 +155,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                 </Dialog.Close>
               </div>
 
-              <div className="min-h-0 flex-1 overflow-y-auto px-[var(--page-gutter)] pb-4 pt-3">
+              <div className="min-h-0 flex-1 overflow-y-auto pb-4 pt-3 px-[var(--page-gutter)]">
                 {hubId ? <HubModalBody hubId={hubId} options={options} /> : null}
               </div>
             </Dialog.Content>

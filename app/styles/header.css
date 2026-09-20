@@ -562,6 +562,8 @@
  */
 .header-desktop-bar {
   --header-control-height: 2.75rem;
+  /* มุมโค้งที่ปุ่ม/ช่องค้นหา — ไม่ทาที่แถบ outer */
+  --header-chip-radius: var(--radius-pill);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -705,7 +707,7 @@
 .header-desktop-bar__nav-link {
   position: relative;
   display: inline-flex;
-  min-height: 2.25rem;
+  min-height: var(--header-control-height);
   align-items: center;
   justify-content: center;
   padding-inline: 0.95rem;
@@ -737,7 +739,7 @@
 }
 
 .header-desktop-bar__auth-login {
-  min-height: 2.25rem;
+  min-height: var(--header-control-height);
   padding-inline: 0.75rem;
   border: 0;
   border-radius: var(--header-chip-radius);
@@ -755,21 +757,32 @@
   display: grid;
   flex-shrink: 0;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border: 1px solid color-mix(in srgb, var(--border-active) 28%, var(--border-subtle));
-  border-radius: var(--radius-panel);
-  background: color-mix(in srgb, var(--surface-hover) 65%, var(--surface-mid));
+  width: var(--header-control-height);
+  height: var(--header-control-height);
+  min-width: var(--header-control-height);
+  min-height: var(--header-control-height);
+  padding: 0;
+  border: 0;
+  border-radius: var(--header-chip-radius);
   color: var(--icon-active);
   cursor: pointer;
   transition:
     background var(--motion-fast) ease,
-    border-color var(--motion-fast) ease;
+    border-color var(--motion-fast) ease,
+    color var(--motion-fast) ease;
 }
 
 .header-desktop-bar__menu-btn:hover {
-  background: var(--surface-hover);
-  border-color: color-mix(in srgb, var(--border-active) 45%, var(--border-subtle));
+  filter: brightness(1.05);
+}
+
+.header-desktop-bar__menu-btn.is-active {
+  color: var(--text-primary);
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.28),
+    rgb(90 70 130 / 0.18)
+  );
 }
 
 .header-desktop-bar__logo {
@@ -809,6 +822,7 @@
 .header-desktop-bar__cashier-btn {
   display: inline-flex;
   min-width: 0;
+  min-height: var(--header-control-height);
   align-items: center;
   justify-content: center;
   border: 0;
@@ -823,6 +837,7 @@
 .header-desktop-bar__cashier-btn--deposit {
   color: #fff;
   background: var(--action-solid);
+  border-radius: var(--header-chip-radius);
 }
 
 .header-desktop-bar__cashier-btn--deposit:hover {

@@ -49,11 +49,15 @@ export function responsiveSheetContentClass(
         ? "lg:max-h-[min(90dvh,800px)]"
         : "lg:max-h-[min(90dvh,680px)]";
 
+  const isHubSheet = variant === "hub" || variant === "hubWide";
+
   return cn(
     "cosmic-mobile-sheet cosmic-modal-shell relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
     "rounded-t-[20px] border-t border-[var(--border-subtle)]/50 max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)]",
-    "px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 text-[var(--text-primary)]",
-    "shadow-[0_-16px_48px_rgba(0,0,0,0.55)] sm:px-5",
+    isHubSheet
+      ? "cosmic-mobile-sheet--hub px-[var(--page-gutter)] pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3"
+      : "px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 sm:px-5",
+    "text-[var(--text-primary)] shadow-[0_-16px_48px_rgba(0,0,0,0.55)]",
     "data-[state=closed]:animate-out data-[state=open]:animate-in duration-300",
     "max-lg:data-[state=closed]:slide-out-to-bottom max-lg:data-[state=open]:slide-in-from-bottom",
     "lg:inset-auto lg:left-1/2 lg:top-1/2 lg:bottom-auto lg:-translate-x-1/2 lg:-translate-y-1/2",

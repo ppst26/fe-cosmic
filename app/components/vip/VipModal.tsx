@@ -93,6 +93,8 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
 
           <ResponsiveSheetHeader
             closeAriaLabel="ปิด VIP"
+            titleAlign="start"
+            className="responsive-sheet-header--hub"
             title={
               <Dialog.Title className="text-xl font-medium tracking-wide sm:text-2xl">
                 VIP

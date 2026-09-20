@@ -141,7 +141,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
           </header>
 
           <div
-            className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4 [scrollbar-width:thin]"
+            className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4"
           >
             {!loading && profile ? (
               <ProfileHubBody

@@ -278,6 +278,15 @@
   .cosmic-footer {
     margin-inline: max(var(--page-gutter), calc((100% - min(100%, 1680px)) / 2 + var(--page-gutter)));
   }
+
+  .cosmic-footer__container {
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .cosmic-footer__dex .cosmic-footer__bottom {
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 1023px) {

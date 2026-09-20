@@ -51,6 +51,19 @@
 }
 
 /**
+ * Hub sheet — gutter จาก shell (--page-gutter) · หัวข้อชิดซ้ายตรงเนื้อหา
+ * responsiveSheetDialog (hub/hubWide) · ResponsiveSheetHeader titleAlign=start
+ */
+.cosmic-mobile-sheet--hub .responsive-sheet-header--hub.responsive-sheet-header--start [data-radix-dialog-title],
+.cosmic-mobile-sheet--hub .responsive-sheet-header--hub.responsive-sheet-header--start h2 {
+  text-align: left;
+}
+
+.cosmic-mobile-sheet--hub .cosmic-modal-shell--hub:not(.daily-check-in-desktop-modal-body) {
+  padding-inline: 0;
+}
+
+/**
  * Lobby catalog modal — toolbar + sidebar + game grid (HubLobbyModalLayout)
  * อ้าง design.md § Dialog & Modal — Lobby catalog (XL)
  */
@@ -382,7 +395,7 @@
   }
 
 .cosmic-modal-shell--hub .promotions-desktop-hub__row--selected {
-    box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
+    background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
   }
 }
 
@@ -489,8 +502,7 @@
 }
 
 .cosmic-mobile-sheet .promotions-desktop-hub--flat .promotions-desktop-hub__row--selected {
-  background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
-  box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
 }
 
 .cosmic-mobile-sheet .promotions-desktop-hub--flat .promotion-detail-panel--hub .promotion-detail-panel__banner {
@@ -519,18 +531,13 @@
 }
 
 @media (min-width: 1024px) {
-  .cosmic-modal-shell--hub .promotions-desktop-hub__row--selected {
-    box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
-  }
-
-.cosmic-modal-shell--hub .promotion-detail-panel--hub .promotion-detail-panel__banner {
+  .cosmic-modal-shell--hub .promotion-detail-panel--hub .promotion-detail-panel__banner {
     border-radius: var(--radius-control);
     background: color-mix(in srgb, var(--surface-hover) 40%, var(--hub-dialog-card-bg));
   }
 
 .cosmic-modal-shell--hub .activity-hub-master-row--selected {
-    background: color-mix(in srgb, var(--accent-primary) 14%, var(--hub-dialog-card-bg));
-    box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
+    background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
   }}
 
 .activity-hub-thumb__overlay {
@@ -1534,6 +1541,13 @@
   background: transparent;
 }
 
+.cosmic-modal-shell--hub .promotion-detail-panel--hub .promotion-detail-panel__footer {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
 /*
  * กิจกรรม desktop hub (sheet) — ไม่มีการ์ดซ้อน
  */
@@ -1563,8 +1577,7 @@
 }
 
 .cosmic-mobile-sheet .cosmic-modal-shell--hub .activities-desktop-hub--flat .activity-hub-master-row--selected {
-  background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
-  box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
 }
 
 .cosmic-mobile-sheet .activities-desktop-hub--flat .activity-hub-tier-table__row:nth-child(even) {

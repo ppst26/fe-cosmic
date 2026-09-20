@@ -122,6 +122,11 @@
   --nav-top-line: color-mix(in srgb, var(--border-active) 32%, var(--border-subtle));
   --motion-fast: 160ms;
 
+  /** Scrollbar มินิมอล — scrollbars.css */
+  --scrollbar-size: 3px;
+  --scrollbar-thumb: color-mix(in srgb, var(--text-muted) 50%, transparent);
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--text-secondary) 65%, transparent);
+
   /* Header notch — ปีก vs แท็บกลาง */
   --header-wing: var(--surface-mid);
   --header-notch: var(--surface-start);
