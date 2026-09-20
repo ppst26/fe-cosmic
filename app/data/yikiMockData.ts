@@ -5,6 +5,11 @@ import type {
   YikiSettlementType,
   YikiSettlementTypeId,
 } from "@/app/types/yiki";
+import {
+  BANGKOK_OFFSET_MS,
+  dateFromBangkokWall,
+  getBangkokWallParts,
+} from "@/app/lib/bangkokTime";
 
 /** แท็บกลุ่มจำนวนหลัก — ตามที่ผู้ใช้ระบุ ไม่มี "อื่นๆ" */
 export const YIKI_GROUPS: { id: YikiDigitGroup; label: string }[] = [
@@ -86,23 +91,23 @@ export const YIKI_BET_TYPES: YikiBetType[] = [
 const CLOSE_BEFORE_DRAW_MS = 2 * 60 * 1000;
 
 /**
- * สร้างรายการงวดถัดไปจากเวลาปัจจุบัน — ใช้ในหน้ารายการรอบ /lottery/yiki-15 และ /lottery/yiki-30 (ส่ง intervalMin ต่างกัน)
- * เรียกฝั่ง client เท่านั้น (ใช้ Date.now()) เพื่อไม่ให้ markup server/client ไม่ตรงกัน
+ * สร้างรายการงวดถัดไปจากเวลาปัจจุบัน — จัดรอบตามนาฬิกา Bangkok (ไม่ใช้ timezone ของเครื่อง)
  */
 export function generateYikiRounds(count = 8, intervalMin = 15, from = new Date()): YikiRound[] {
   const intervalMs = intervalMin * 60 * 1000;
-  const base = new Date(from);
-  base.setSeconds(0, 0);
-  const remainder = base.getMinutes() % intervalMin;
-  base.setMinutes(base.getMinutes() - remainder + intervalMin);
+  const bkkMinute = Math.floor((from.getTime() + BANGKOK_OFFSET_MS) / 60_000);
+  const remainder = bkkMinute % intervalMin;
+  const nextBkkMinute = bkkMinute - remainder + intervalMin;
+  const baseMs = nextBkkMinute * 60_000 - BANGKOK_OFFSET_MS;
 
   return Array.from({ length: count }, (_, index) => {
-    const drawAt = new Date(base.getTime() + index * intervalMs);
+    const drawAt = new Date(baseMs + index * intervalMs);
     const closeAt = new Date(drawAt.getTime() - CLOSE_BEFORE_DRAW_MS);
-    const hh = String(drawAt.getHours()).padStart(2, "0");
-    const mm = String(drawAt.getMinutes()).padStart(2, "0");
+    const { year, month, day, hour, minute } = getBangkokWallParts(drawAt);
+    const hh = String(hour).padStart(2, "0");
+    const mm = String(minute).padStart(2, "0");
     return {
-      id: `${drawAt.getFullYear()}${String(drawAt.getMonth() + 1).padStart(2, "0")}${String(drawAt.getDate()).padStart(2, "0")}${hh}${mm}`,
+      id: `${year}${String(month).padStart(2, "0")}${String(day).padStart(2, "0")}${hh}${mm}`,
       label: `รอบ ${hh}:${mm} น.`,
       closeAt: closeAt.toISOString(),
     };
@@ -119,7 +124,13 @@ export function getYikiRoundById(roundId: string): YikiRound | null {
   const match = ROUND_ID_PATTERN.exec(roundId);
   if (!match) return null;
   const [, year, month, day, hour, minute] = match;
-  const drawAt = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
+  const drawAt = dateFromBangkokWall(
+    Number(year),
+    Number(month),
+    Number(day),
+    Number(hour),
+    Number(minute),
+  );
   if (Number.isNaN(drawAt.getTime())) return null;
   const closeAt = new Date(drawAt.getTime() - CLOSE_BEFORE_DRAW_MS);
   return {

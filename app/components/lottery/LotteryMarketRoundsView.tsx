@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { getLotteryCatalogEntry } from "@/app/data/lotteryCatalogMockData";
 import { getLotteryPlayRounds } from "@/app/data/lotteryRoundsMockData";
 import { THAI_LOTTO_LAST_RESULT } from "@/app/data/thaiLottoMockData";
@@ -17,7 +17,15 @@ interface LotteryMarketRoundsViewProps {
  */
 export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewProps) {
   const entry = getLotteryCatalogEntry(marketSlug);
-  const rounds = useMemo(() => getLotteryPlayRounds(marketSlug), [marketSlug]);
+  /** รอบ mock อิงเวลาจริง — สร้างหลัง mount เพื่อไม่ให้ SSR/client คนละ snapshot */
+  const [roundsReady, setRoundsReady] = useState(false);
+  useEffect(() => {
+    setRoundsReady(true);
+  }, []);
+  const rounds = useMemo(
+    () => (roundsReady ? getLotteryPlayRounds(marketSlug) : []),
+    [marketSlug, roundsReady],
+  );
 
   if (!entry) {
     return (
@@ -31,7 +39,17 @@ export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewP
 
   return (
     <LotteryMarketShell activeEntry={entry} roundCount={openCount}>
-      <LotteryPlayRoundList rounds={rounds} marketSlug={marketSlug} basePath={entry.roundsHref} />
+      {!roundsReady ? (
+        <p
+          className="py-10 text-center text-sm text-[var(--text-muted)]"
+          aria-busy="true"
+          aria-live="polite"
+        >
+          กำลังโหลดรอบ…
+        </p>
+      ) : (
+        <LotteryPlayRoundList rounds={rounds} marketSlug={marketSlug} basePath={entry.roundsHref} />
+      )}
       {showThaiLastResult ? (
         <div className="lottery-market-rounds__result">
           <ThaiLottoResultPanel result={THAI_LOTTO_LAST_RESULT} />

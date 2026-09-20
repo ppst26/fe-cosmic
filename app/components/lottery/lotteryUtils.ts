@@ -42,6 +42,13 @@ export function formatLotterySlipDateTime(iso: string): string {
   });
 }
 
+export {
+  BANGKOK_OFFSET_MS,
+  dateFromBangkokWall,
+  formatBangkokTimeHHmm,
+  getBangkokWallParts,
+} from "@/app/lib/bangkokTime";
+
 /** แปลงมิลลิวินาทีคงเหลือเป็น "3 วัน 04:12:09" — ใช้ใน ThaiLottoDrawCard / YikiRoundCard */
 export function formatCountdown(ms: number): string {
   if (ms <= 0) return "ปิดรับแทงแล้ว";

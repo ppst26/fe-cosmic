@@ -7,7 +7,7 @@ import {
   LOTTERY_LOW_FREQ_MAX_ROUNDS,
   lotteryMarketUsesRoundGrid,
 } from "@/app/data/lotteryRoundsMockData";
-import { formatCountdown } from "./lotteryUtils";
+import { formatBangkokTimeHHmm, formatCountdown } from "./lotteryUtils";
 
 const GRID_INITIAL_VISIBLE = 24;
 
@@ -19,12 +19,7 @@ interface LotteryPlayRoundListProps {
 }
 
 function formatRoundClock(iso: string): string {
-  return new Intl.DateTimeFormat("th-TH", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Asia/Bangkok",
-  }).format(new Date(iso));
+  return formatBangkokTimeHHmm(iso);
 }
 
 /**
