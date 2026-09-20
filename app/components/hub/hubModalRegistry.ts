@@ -95,3 +95,30 @@ export const HUB_REQUIRES_AUTH: ReadonlySet<DesktopHubId> = new Set([
   "account",
   "transactions",
 ]);
+
+/** Hub ที่ใช้ responsive sheet แบบคูปอง/ฝาก-ถอน (ไม่ใช่ modal hub กลางจอแบบเดิม) */
+export const RESPONSIVE_SHEET_HUB_IDS: ReadonlySet<DesktopHubId> = new Set([
+  "promotions",
+  "activities",
+  "cashback",
+  "gems-store",
+  "referral",
+  "check-in",
+]);
+
+export function isResponsiveSheetHub(id: DesktopHubId): boolean {
+  return RESPONSIVE_SHEET_HUB_IDS.has(id);
+}
+
+/** ความกว้าง sheet บน desktop — wide สำหรับ master–detail */
+export function getHubSheetSize(id: DesktopHubId): "compact" | "wide" {
+  if (
+    id === "referral" ||
+    id === "promotions" ||
+    id === "activities" ||
+    id === "check-in"
+  ) {
+    return "wide";
+  }
+  return "compact";
+}

@@ -1,6 +1,13 @@
 import { cn } from "@/lib/utils";
 
-type ResponsiveSheetVariant = "default" | "auth" | "signup" | "wide" | "profile";
+type ResponsiveSheetVariant =
+  | "default"
+  | "auth"
+  | "signup"
+  | "wide"
+  | "profile"
+  | "hub"
+  | "hubWide";
 
 /**
  * Overlay — มือถือ sheet · desktop modal (lg+)
@@ -23,13 +30,24 @@ export function responsiveSheetContentClass(
 ) {
   const variant = options?.variant ?? "default";
   const lgWidth =
-    variant === "wide"
-      ? "lg:w-[min(92vw,520px)]"
-      : variant === "signup"
-        ? "lg:w-[min(92vw,480px)]"
-        : variant === "profile"
-          ? "lg:w-[min(92vw,360px)]"
-          : "lg:w-[min(92vw,440px)]";
+    variant === "hubWide"
+      ? "lg:w-[min(94vw,1040px)]"
+      : variant === "hub"
+        ? "lg:w-[min(92vw,720px)]"
+        : variant === "wide"
+          ? "lg:w-[min(92vw,520px)]"
+          : variant === "signup"
+            ? "lg:w-[min(92vw,480px)]"
+            : variant === "profile"
+              ? "lg:w-[min(92vw,360px)]"
+              : "lg:w-[min(92vw,440px)]";
+
+  const lgMaxHeight =
+    variant === "hubWide"
+      ? "lg:max-h-[min(92dvh,880px)]"
+      : variant === "hub"
+        ? "lg:max-h-[min(90dvh,800px)]"
+        : "lg:max-h-[min(90dvh,680px)]";
 
   return cn(
     "cosmic-mobile-sheet cosmic-modal-shell relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
@@ -40,7 +58,8 @@ export function responsiveSheetContentClass(
     "max-lg:data-[state=closed]:slide-out-to-bottom max-lg:data-[state=open]:slide-in-from-bottom",
     "lg:inset-auto lg:left-1/2 lg:top-1/2 lg:bottom-auto lg:-translate-x-1/2 lg:-translate-y-1/2",
     lgWidth,
-    "lg:max-h-[min(90dvh,680px)] lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
+    lgMaxHeight,
+    "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
     "lg:bg-[var(--cosmic-dialog-shell-bg)] lg:backdrop-blur-none",
     "lg:shadow-[0_0_32px_rgba(119,112,183,0.2),0_24px_48px_rgba(0,0,0,0.55)]",
     "lg:data-[state=closed]:zoom-out-95 lg:data-[state=open]:zoom-in-95 lg:duration-200",

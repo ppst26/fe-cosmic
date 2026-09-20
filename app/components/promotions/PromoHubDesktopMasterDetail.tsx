@@ -88,21 +88,21 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
   const listAriaLabel = kind === "promotions" ? "รายการโปรโมชั่น" : "รายการกิจกรรม";
 
   return (
-    <div className="promotions-desktop-hub flex min-h-0 flex-col gap-3">
+    <div className="promotions-desktop-hub promotions-desktop-hub--flat flex min-h-0 flex-col gap-3">
       <div className="promotions-desktop-hub__tabs sticky top-0 z-10 -mx-[var(--page-gutter)] px-[var(--page-gutter)] pb-2 pt-0">
-        <PromotionsCategoryTabs activeId={categoryFilter} onSelect={setCategoryFilter} />
+        <PromotionsCategoryTabs activeId={categoryFilter} onSelect={setCategoryFilter} variant="flat" />
       </div>
 
       {listItems.length === 0 ? (
-        <p className="hub-desktop-card px-4 py-10 text-center text-sm text-[var(--text-secondary)]">
+        <p className="promotions-desktop-hub__empty py-10 text-center text-sm text-[var(--text-secondary)]">
           {emptyMessage}
         </p>
       ) : (
         <div
-          className="promotions-desktop-hub__split grid min-h-[min(58dvh,520px)] gap-4 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:items-stretch"
+          className="promotions-desktop-hub__split grid min-h-[min(58dvh,520px)] lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:items-stretch"
         >
           <nav
-            className="hub-desktop-card flex min-h-0 flex-col gap-0.5 overflow-y-auto p-2 [scrollbar-width:thin]"
+            className="promotions-desktop-hub__list flex min-h-0 flex-col overflow-y-auto [scrollbar-width:thin]"
             aria-label={listAriaLabel}
           >
             {listItems.map((item) => {
@@ -114,10 +114,8 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
                   type="button"
                   onClick={() => setSelectedItemId(item.id)}
                   aria-current={selected ? "true" : undefined}
-                  className={`promotions-desktop-hub__row w-full rounded-[var(--radius-control)] px-3 py-2.5 text-left transition-colors ${
-                    selected
-                      ? "promotions-desktop-hub__row--selected bg-[var(--surface-selected)]/25"
-                      : "hover:bg-[var(--surface-hover)]/40"
+                  className={`promotions-desktop-hub__row w-full px-2 py-2.5 text-left transition-colors ${
+                    selected ? "promotions-desktop-hub__row--selected" : "hover:bg-[var(--surface-hover)]/25"
                   }`}
                 >
                   <span className="block text-sm font-medium leading-snug text-[var(--text-primary)]">
@@ -132,7 +130,7 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
           </nav>
 
           <div
-            className="hub-desktop-card min-h-0 overflow-y-auto px-3 py-3 sm:px-4 sm:py-4 [scrollbar-width:thin]"
+            className="promotions-desktop-hub__detail min-h-0 overflow-y-auto [scrollbar-width:thin]"
             aria-live="polite"
             aria-label="รายละเอียดที่เลือก"
           >

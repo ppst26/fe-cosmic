@@ -14,7 +14,12 @@ import {
   type GemsStorePackage,
 } from "@/app/data/gemsStoreMockData";
 import { ChevronDownIcon } from "../ui/Icons";
-import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
+import {
+  COSMIC_BTN_GLASS_PILL,
+  COSMIC_BTN_GLASS_PILL_SM,
+  COSMIC_BTN_NAV,
+  COSMIC_PANEL_GLASS,
+} from "../ui/cosmicButtonClasses";
 
 /**
  * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal
@@ -34,10 +39,12 @@ export function GemsStorePageContent({
     setGemsBalance((prev) => prev - pkg.gemsCost);
   };
 
-  const panelShell = embedded ? "hub-desktop-card" : "cosmic-inset-card bg-[var(--surface-hover)]/35";
+  const flatHub = embedded;
 
   return (
-    <div className="flex flex-col gap-5 pb-4">
+    <div
+      className={`flex flex-col gap-5 pb-4 ${flatHub ? "gems-store-hub gems-store-hub--flat" : ""}`}
+    >
       {!embedded ? (
         <header className="flex flex-col gap-3">
           <div className="flex items-start justify-between gap-3">
@@ -51,7 +58,7 @@ export function GemsStorePageContent({
             </div>
 
           <aside
-            className="flex shrink-0 items-center gap-2.5 cosmic-inset-card bg-[var(--surface-mid)]/75 px-2.5 py-2 sm:gap-3 sm:px-3 sm:py-2.5"
+            className={`flex shrink-0 items-center gap-2.5 px-2.5 py-2 sm:gap-3 sm:px-3 sm:py-2.5 ${COSMIC_PANEL_GLASS}`}
             aria-label="ยอด Gems ของคุณ"
           >
             <div className="relative h-16 w-16 shrink-0 sm:h-28 sm:w-28">
@@ -88,14 +95,20 @@ export function GemsStorePageContent({
               key={pkg.id}
               pkg={pkg}
               affordable={affordable}
-              panelShell={panelShell}
+              flat={flatHub}
               onRedeem={() => handleRedeem(pkg)}
             />
           );
         })}
       </div>
 
-      <section className={`overflow-hidden ${embedded ? COSMIC_PANEL_GLASS : panelShell}`}>
+      <section
+        className={
+          flatHub
+            ? "gems-store-terms overflow-hidden border-t border-[var(--border-subtle)]/45 pt-1"
+            : `overflow-hidden ${COSMIC_PANEL_GLASS}`
+        }
+      >
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}
@@ -132,17 +145,19 @@ export function GemsStorePageContent({
 function GemsRedeemCard({
   pkg,
   affordable,
-  panelShell,
+  flat = false,
   onRedeem,
 }: {
   pkg: GemsStorePackage;
   affordable: boolean;
-  panelShell: string;
+  flat?: boolean;
   onRedeem: () => void;
 }) {
   return (
     <article
-      className={`flex flex-col ${panelShell} p-2.5 sm:p-3 ${affordable ? "" : "opacity-75"}`}
+      className={`gems-store-redeem-card flex flex-col p-2.5 sm:p-3 ${
+        flat ? "gems-store-redeem-card--flat" : COSMIC_PANEL_GLASS
+      } ${affordable ? "" : "opacity-85"}`}
     >
       <div className="flex flex-1 flex-col items-center text-center">
         <div className="relative mb-2 h-14 w-full max-w-[100px] sm:h-16 sm:max-w-[112px]">
@@ -168,9 +183,11 @@ function GemsRedeemCard({
         type="button"
         disabled={!affordable}
         onClick={onRedeem}
-        className={`mt-3 w-full py-2 text-[10px] font-medium disabled:cursor-not-allowed sm:text-xs ${
-          affordable ? "cosmic-action-btn" : "rounded-[var(--radius-panel)] bg-[var(--surface-mid)] text-[var(--text-muted)]"
-        }`}
+        className={
+          affordable
+            ? `${COSMIC_BTN_NAV} cosmic-btn-nav--sm mt-3 flex w-full items-center justify-center !py-2 !text-[10px] sm:!text-xs`
+            : `${COSMIC_BTN_GLASS_PILL_SM} mt-3 flex w-full items-center justify-center !py-2 !text-[10px] text-[var(--text-muted)] sm:!text-xs`
+        }
       >
         {affordable ? "แลกรางวัล" : "Gems ไม่เพียงพอ"}
       </button>

@@ -18,10 +18,21 @@ import {
 /**
  * แบนเนอร์โปรโมชันแนะนำเพื่อน — ใช้ใน overview / desktop hub
  */
-export function ReferralPromoBanner({ compact = false }: { compact?: boolean }) {
+export function ReferralPromoBanner({
+  compact = false,
+  flat = false,
+}: {
+  compact?: boolean;
+  /** desktop hub sheet — ไม่ใช้การ์ดทึบ */
+  flat?: boolean;
+}) {
   return (
     <section
-      className="referral-promo-banner glass-card--soft relative overflow-hidden rounded-[var(--radius-panel)] px-4 py-5 sm:px-5 sm:py-6"
+      className={`referral-promo-banner relative overflow-hidden py-5 sm:py-6 ${
+        flat
+          ? "referral-promo-banner--flat px-0"
+          : "glass-card--soft rounded-[var(--radius-panel)] px-4 sm:px-5"
+      }`}
       aria-label="โปรโมชันแนะนำเพื่อน"
     >
       <div
@@ -125,9 +136,11 @@ export function ReferralLinkSection({
 export function ReferralStatsSection({
   stats,
   layout = "grid",
+  flat = false,
 }: {
   stats: ReferralStatsMock;
   layout?: "grid" | "stack";
+  flat?: boolean;
 }) {
   const gridClass =
     layout === "stack"
@@ -139,17 +152,20 @@ export function ReferralStatsSection({
       <h2 className="mb-3 text-sm font-medium text-[var(--text-primary)]">สถิติของคุณ</h2>
       <div className={gridClass}>
         <StatCard
+          flat={flat}
           icon={<UsersGroupIcon className="h-5 w-5 text-[var(--border-active)]" />}
           label="เพื่อนที่สมัคร"
           value={formatReferralCount(stats.friendsCount)}
         />
         <StatCard
+          flat={flat}
           icon={<WalletCryptoIcon className="h-5 w-5 text-[var(--border-active)]" />}
           label="ยอดเล่นรวม"
           value={formatReferralCurrency(stats.totalTurnoverThb)}
           valueClassName="text-[var(--success)]"
         />
         <StatCard
+          flat={flat}
           icon={
             <svg viewBox="0 0 24 24" className="h-5 w-5 text-[var(--border-active)]" aria-hidden="true">
               <path
@@ -172,14 +188,20 @@ function StatCard({
   label,
   value,
   valueClassName = "text-[var(--text-primary)]",
+  flat = false,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
   valueClassName?: string;
+  flat?: boolean;
 }) {
   return (
-    <div className={`${COSMIC_PANEL_GLASS} flex items-center gap-3 px-3 py-3`}>
+    <div
+      className={`flex items-center gap-3 py-3 ${
+        flat ? "referral-stat-row border-b border-[var(--border-subtle)]/45 px-0 last:border-b-0" : `${COSMIC_PANEL_GLASS} px-3`
+      }`}
+    >
       <div className={COSMIC_PANEL_GLASS_ICON}>{icon}</div>
       <div className="min-w-0">
         <p className="text-[11px] text-[var(--text-muted)]">{label}</p>

@@ -13,11 +13,8 @@ import { cn } from "@/lib/utils";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { FloatingBottomNav } from "./FloatingBottomNav";
 import { Header } from "./Header";
-import {
-  LobbyDesktopSidebar,
-  useLobbySidebarCollapsed,
-} from "./LobbyDesktopSidebar";
-import { LobbyDesktopRightRail } from "./LobbyDesktopRightRail";
+import { useLobbySidebarCollapsed } from "./LobbyDesktopSidebar";
+import { LobbyDesktopSidebarColumn } from "./LobbyDesktopSidebarColumn";
 import { RightMenuDrawer } from "./RightMenuDrawer";
 
 interface LobbyDesktopPageShellProps {
@@ -66,9 +63,9 @@ export function LobbyDesktopPageShell({
           <Header onSignUpClick={openSignUp} onLoginClick={openLogin} />
         </div>
 
-        <div className="lobby-desktop-shell__frame">
-          <div className="lobby-desktop-shell__row">
-            <LobbyDesktopSidebar
+        <div className="lobby-desktop-shell__desk-body">
+          <div className="lobby-desktop-shell__sidebar-outside hidden shrink-0 lg:flex">
+            <LobbyDesktopSidebarColumn
               categories={CATEGORIES_DATA}
               activeCategoryId={activeCategoryId}
               onSelectCategory={() => {}}
@@ -78,10 +75,13 @@ export function LobbyDesktopPageShell({
               onMenuAction={handleSidebarMenuAction}
               onLogout={() => void logout()}
             />
+          </div>
 
-            <div className="lobby-desktop-main min-w-0 flex-1">
-              <div className="lobby-desktop-workspace lobby-desktop-workspace--over-right-rail">
-                <div className="lobby-desktop-center lobby-desktop-center--over-rail min-w-0 flex-1">
+          <div className="lobby-desktop-shell__center-container min-w-0 flex-1">
+            <div className="lobby-desktop-shell__frame lobby-desktop-shell__frame--dex">
+            <div className="lobby-desktop-main min-w-0 w-full">
+              <div className="lobby-desktop-workspace">
+                <div className="lobby-desktop-center min-w-0 flex-1">
                   <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
                   <SignUpBottomDrawer
@@ -115,9 +115,8 @@ export function LobbyDesktopPageShell({
                     {children}
                   </main>
                 </div>
-
-                <LobbyDesktopRightRail onMenuAction={handleSidebarMenuAction} />
               </div>
+            </div>
             </div>
           </div>
         </div>

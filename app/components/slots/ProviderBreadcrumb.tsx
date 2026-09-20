@@ -19,7 +19,7 @@ export function ProviderBreadcrumb({
 }: ProviderBreadcrumbProps) {
   return (
     <nav
-      className="w-full min-w-0 border-b border-[#232145]/60 bg-[#121127]/80 backdrop-blur-md"
+      className="provider-breadcrumb-nav w-full min-w-0"
       aria-label="การนำทางตามลำดับขั้น"
     >
       <div className="mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center gap-2 px-[var(--page-gutter)] text-sm sm:text-base">

@@ -3,16 +3,14 @@
 import React, { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Header } from "../layout/Header";
-import { LobbyDesktopRightRail } from "../layout/LobbyDesktopRightRail";
 import { RightMenuDrawer } from "../layout/RightMenuDrawer";
 import { SignUpBottomDrawer } from "../auth/SignUpBottomDrawer";
 import { LoginBottomDrawer } from "../auth/LoginBottomDrawer";
 import { AuthGate, useAuth } from "../auth/AuthProvider";
-import {
-  LobbyDesktopSidebar,
-  useLobbySidebarCollapsed,
-} from "../layout/LobbyDesktopSidebar";
+import { useLobbySidebarCollapsed } from "../layout/LobbyDesktopSidebar";
+import { LobbyDesktopSidebarColumn } from "../layout/LobbyDesktopSidebarColumn";
 import { HomeDesktopHeroRow } from "./HomeDesktopHeroRow";
+import { HomeDesktopPeekCarousel } from "./HomeDesktopPeekCarousel";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { PromoCarousel } from "./PromoCarousel";
 import { CosmicIntro } from "./CosmicIntro";
@@ -23,6 +21,7 @@ import { GameSection } from "./GameSection";
 import { ProvidersSection } from "./ProvidersSection";
 import { JackpotSection } from "./JackpotSection";
 import { HallOfFame } from "./HallOfFame";
+import { TournamentsSection } from "./TournamentsSection";
 import { FloatingBottomNav } from "../layout/FloatingBottomNav";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
@@ -35,6 +34,7 @@ import {
   POPULAR_HIGHLIGHTS_DATA,
   GAME_SECTIONS_DATA,
   HOME_LOBBY_TOURNAMENT_ITEMS,
+  LOBBY_TOURNAMENTS_SECTION_ITEMS,
   HALL_OF_FAME_DATA,
   BOTTOM_NAV_DATA,
 } from "@/app/data/lobbyMockData";
@@ -77,9 +77,9 @@ export function HomeLobbyPage() {
           <Header onSignUpClick={openSignUp} onLoginClick={openLogin} />
         </div>
 
-        <div className="lobby-desktop-shell__frame">
-          <div className="lobby-desktop-shell__row">
-            <LobbyDesktopSidebar
+        <div className="lobby-desktop-shell__desk-body">
+          <div className="lobby-desktop-shell__sidebar-outside hidden shrink-0 lg:flex">
+            <LobbyDesktopSidebarColumn
               categories={CATEGORIES_DATA}
               activeCategoryId={activeCategoryId}
               navigationMode="route"
@@ -88,8 +88,20 @@ export function HomeLobbyPage() {
               onMenuAction={handleSidebarMenuAction}
               onLogout={() => void logout()}
             />
+          </div>
 
-            <div className="lobby-desktop-main min-w-0 flex-1">
+          <div className="lobby-desktop-shell__center-container min-w-0 flex-1">
+            <div className="lobby-desktop-shell__frame lobby-desktop-shell__frame--dex">
+            <div className="lobby-desktop-main min-w-0 w-full">
+              {isHomeLobby ? (
+                <div className="lobby-desktop-main__peek hidden lg:block">
+                  <HomeDesktopPeekCarousel
+                    items={PROMO_CAROUSEL_DATA}
+                    placement="shellBand"
+                    usePlaceholderSlides
+                  />
+                </div>
+              ) : null}
               <div className="lobby-desktop-workspace">
                 <div className="lobby-desktop-center min-w-0 flex-1">
                   <RightMenuDrawer
@@ -168,13 +180,15 @@ export function HomeLobbyPage() {
                     </div>
 
                     {isHomeLobby ? (
-                      <HallOfFame datasets={HALL_OF_FAME_DATA} />
+                      <>
+                        <HallOfFame datasets={HALL_OF_FAME_DATA} />
+                        <TournamentsSection items={LOBBY_TOURNAMENTS_SECTION_ITEMS} />
+                      </>
                     ) : null}
                   </main>
                 </div>
-
-                <LobbyDesktopRightRail onMenuAction={handleSidebarMenuAction} />
               </div>
+            </div>
             </div>
           </div>
         </div>

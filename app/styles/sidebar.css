@@ -691,3 +691,114 @@
     filter: drop-shadow(0 6px 14px rgb(0 0 0 / 0.35));
   }
 
+  /** Hub การ์ดใต้แผง sidebar (นอก glass) — LobbyDesktopSidebarColumn */
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-stack {
+    gap: 0.55rem;
+    --lobby-hub-card-height: 5.75rem;
+  }
+
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card {
+    align-items: center;
+    padding: 0.5rem 0.4rem 0.5rem 0.5rem;
+  }
+
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card.glass-card--soft {
+    padding: 0.5rem 0.4rem 0.5rem 0.5rem;
+    border-radius: 14px;
+  }
+
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card__visual {
+    flex: 0 0 44%;
+    width: 44%;
+    max-width: 44%;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card__visual-img {
+    max-height: 3.35rem;
+    transform: scale(1.15);
+    object-position: center right;
+  }
+
+  .lobby-hub-menu-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    width: 100%;
+    min-width: 0;
+    --lobby-hub-card-height: 3.75rem;
+  }
+
+  .lobby-hub-menu-card {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: var(--lobby-hub-card-height);
+    min-height: var(--lobby-hub-card-height);
+    max-height: var(--lobby-hub-card-height);
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.35rem 0.3rem 0.35rem 0.45rem;
+    border: 0;
+    font: inherit;
+    color: var(--text-primary);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      border-color var(--motion-fast) ease,
+      filter var(--motion-fast) ease,
+      transform var(--motion-fast) ease;
+  }
+
+  .lobby-hub-menu-card.glass-card--soft {
+    border-radius: 12px;
+    padding: 0.35rem 0.25rem 0.3rem 0.4rem;
+  }
+
+  .lobby-hub-menu-card.glass-card--soft:hover {
+    filter: brightness(1.05);
+  }
+
+  .lobby-hub-menu-card:active {
+    transform: scale(0.98);
+  }
+
+  .lobby-hub-menu-card__title {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-top: 0.1rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  .lobby-hub-menu-card__visual {
+    display: flex;
+    flex: 0 0 42%;
+    width: 42%;
+    max-width: 42%;
+    align-items: flex-end;
+    justify-content: flex-end;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .lobby-hub-menu-card__visual-img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 2.15rem;
+    object-fit: contain;
+    object-position: bottom right;
+    transform: scale(1.05);
+    transform-origin: 100% 100%;
+    filter: drop-shadow(0 4px 10px rgb(0 0 0 / 0.32));
+  }
+

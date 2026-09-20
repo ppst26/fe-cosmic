@@ -20,6 +20,19 @@
   box-sizing: border-box;
 }
 
+/** แถบหัวย่อย (ย้อนกลับ + ชื่อหน้า) — ไม่ทาพื้น ให้ละกับพื้น cosmic */
+@media (max-width: 1023px) {
+  .mobile-standalone-page .slot-providers-header,
+  .mobile-standalone-page .provider-breadcrumb-nav,
+  .mobile-standalone-page .profile-page-header {
+    background: transparent;
+    border-bottom: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
 @media (max-width: 1023px) {
   .mobile-standalone-main {
     padding-bottom: var(--menu-nav-clearance);
@@ -274,20 +287,26 @@
 
   /** Desktop lobby — กรอบกลาง max 1680 · 3 คอลัมน์ flex (sidebar หด/ขยาย → main ปรับตาม) */
   .lobby-desktop-shell {
+    --lobby-desktop-main-max: 76rem;
+    --lobby-desktop-cluster-gutter: var(--page-gutter);
     --lobby-sidebar-card-width: 220px;
     --lobby-sidebar-card-width-collapsed: 84px;
     --lobby-desktop-frame-max: 1680px;
-    --lobby-bottom-nav-inset-left: var(--lobby-sidebar-card-width);
+    --lobby-desktop-center-width: min(
+      var(--lobby-desktop-main-max),
+      calc(100% - 2 * var(--lobby-desktop-cluster-gutter))
+    );
+    --lobby-bottom-nav-inset-left: calc(var(--lobby-sidebar-card-width) + 1rem);
     --lobby-desktop-side-rail-offset: 0px;
     --lobby-sidebar-sticky-top: calc(
-      var(--header-desktop-bar-height) + env(safe-area-inset-top, 0px) + var(--space-4)
+      var(--header-desktop-bar-height) + env(safe-area-inset-top, 0px) + var(--space-2)
     );
     /* สูงสูงสุดของแผง sidebar — ไม่เกิน viewport ใต้ header (ไม่ยืดตามความยาวหน้า) */
     --lobby-sidebar-panel-height: min(
       calc(100dvh - 80px),
       calc(100dvh - var(--lobby-sidebar-sticky-top) - 1rem - var(--space-6))
     );
-    --lobby-workspace-pad-top: var(--space-4);
+    --lobby-workspace-pad-top: var(--space-2);
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -314,7 +333,7 @@
     }
   }
 
-  /** แถบ header เต็ม viewport — เนื้อหาใน .header-desktop-bar__inner กว้างเท่า frame */
+  /** แถบ header เต็ม viewport — inner กว้างเต็มจอ (main ยังอยู่กรอบกลาง) */
   @media (min-width: 1024px) {
     .lobby-desktop-shell__header-band {
       position: sticky;
@@ -344,10 +363,10 @@
     }
 
     .lobby-desktop-shell__header-band .header-desktop-bar__inner {
-      width: min(var(--lobby-desktop-frame-max), calc(100% - 2 * var(--page-gutter)));
+      width: 100%;
       max-width: none;
-      margin-inline: auto;
-      padding-inline: 0;
+      margin-inline: 0;
+      padding-inline: clamp(12px, 2vw, 28px);
       background: transparent;
       box-shadow: none;
       border-radius: 0;
@@ -355,6 +374,99 @@
 
     .lobby-desktop-shell__header-band .header-desktop-bar__inner::before {
       display: none;
+    }
+
+    .lobby-desktop-shell__desk-body {
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      flex: 1;
+    }
+
+    /** Sidebar นอก container กลาง — ชิดซ้าย viewport */
+    .lobby-desktop-shell__sidebar-outside {
+      position: fixed;
+      left: var(--lobby-desktop-cluster-gutter);
+      top: var(--lobby-sidebar-sticky-top);
+      z-index: 6;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+      width: var(--lobby-sidebar-card-width);
+      max-height: calc(100dvh - var(--lobby-sidebar-sticky-top) - var(--space-6));
+      overflow: visible;
+    }
+
+    .lobby-desktop-shell__sidebar-hub {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .lobby-desktop-shell__sidebar-hub::-webkit-scrollbar {
+      display: none;
+    }
+
+    .lobby-desktop-shell.is-sidebar-collapsed .lobby-desktop-shell__sidebar-hub {
+      display: none;
+    }
+
+    .lobby-desktop-shell__sidebar-outside .lobby-desktop-sidebar-rail {
+      width: 100%;
+      flex: 0 1 auto;
+      min-height: 0;
+      max-height: min(var(--lobby-sidebar-panel-height), 52dvh);
+    }
+
+    .lobby-desktop-shell__sidebar-outside .lobby-desktop-sidebar.glass-sidebar {
+      height: 100%;
+      max-height: 100%;
+    }
+
+    .lobby-desktop-shell__center-container {
+      display: flex;
+      width: 100%;
+      min-width: 0;
+      justify-content: center;
+    }
+
+    .lobby-desktop-shell__frame--dex {
+      width: var(--lobby-desktop-center-width);
+      max-width: none;
+      margin-inline: auto;
+      padding-inline: 0;
+      flex: 0 1 var(--lobby-desktop-center-width);
+    }
+
+    .lobby-desktop-shell__frame--dex .lobby-desktop-main {
+      display: flex;
+      width: 100%;
+      min-width: 0;
+      flex-direction: column;
+      align-items: stretch;
+      background: transparent;
+    }
+
+    .lobby-desktop-main__peek {
+      width: 100%;
+      flex-shrink: 0;
+      margin-bottom: var(--space-2);
+      box-sizing: border-box;
+    }
+
+    .lobby-desktop-shell__frame--dex .lobby-desktop-main:has(.lobby-desktop-main__peek) .lobby-desktop-workspace {
+      padding-top: 0;
+    }
+
+    .lobby-desktop-shell__frame--dex .lobby-desktop-workspace {
+      width: 100%;
+      max-width: none;
     }
   }
 
@@ -365,7 +477,7 @@
     width: 100%;
     align-items: flex-start;
     gap: 1rem;
-    padding-top: var(--space-4);
+    padding-top: 0;
   }
 
   .lobby-desktop-main {
@@ -668,7 +780,11 @@
   }
 
   .lobby-desktop-shell.is-sidebar-collapsed {
-    --lobby-bottom-nav-inset-left: var(--lobby-sidebar-card-width-collapsed);
+    --lobby-bottom-nav-inset-left: calc(var(--lobby-sidebar-card-width-collapsed) + 1rem);
+  }
+
+  .lobby-desktop-shell.is-sidebar-collapsed .lobby-desktop-shell__sidebar-outside {
+    width: var(--lobby-sidebar-card-width-collapsed);
   }
 
 

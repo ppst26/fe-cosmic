@@ -54,8 +54,8 @@ export function VipBenefitsComparisonTable({
       <div
         className={`relative overflow-hidden ${
           isDesktopFull
-            ? "vip-benefits-table__scroll-wrap rounded-[var(--radius-control)] bg-[rgb(0_0_0/0.22)]"
-            : "cosmic-inset-card bg-[var(--surface-hover)]/30"
+            ? "vip-benefits-table__scroll-wrap rounded-[var(--radius-control)]"
+            : "cosmic-inset-card"
         }`}
       >
         <div

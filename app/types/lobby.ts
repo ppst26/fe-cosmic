@@ -158,6 +158,16 @@ export interface HomeLobbyTournamentItem {
   href?: string;
 }
 
+/** การ์ดกิจกรรมรูปเต็ม — ข้อความอยู่ในไฟล์ภาพ; brand/badge/description ใช้กับ aria-label */
+export interface LobbyTournamentSectionItem {
+  id: string;
+  brandLabel: string;
+  badge: string;
+  description: string;
+  imageSrc: string;
+  href?: string;
+}
+
 export type HallOfFameTabId = "latest-winner" | "top-win-multiple";
 
 /** แถว Hall of Fame — แท็บ Latest Winner (payout) / Top Win Multiple (winMultiple) */

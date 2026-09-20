@@ -8,7 +8,7 @@ import { COSMIC_BTN_GLASS_ICON } from "../ui/cosmicButtonClasses";
  */
 export function ProfilePageHeader({ title }: { title: string }) {
   return (
-    <header className="sticky top-0 z-20 -mx-[var(--page-gutter)] bg-[color-mix(in_srgb,var(--cosmic-page-base)_88%,transparent)] px-[var(--page-gutter)] pb-3 pt-2 backdrop-blur-md">
+    <header className="profile-page-header sticky top-0 z-20 -mx-[var(--page-gutter)] px-[var(--page-gutter)] pb-3 pt-2">
       <div className="mx-auto flex max-w-[var(--content-max)] items-center gap-3">
         <Link
           href="/"

@@ -77,6 +77,18 @@
  * Bottom sheet — panel / input / quick select (soft glass)
  * cosmicButtonClasses.ts · Deposit / Withdraw / Coupon / Login / SignUp
  */
+/**
+ * ชั้นเนื้อหา hub ใน sheet — ไม่ทาพื้น hub modal ทับ shell คูปอง/ฝาก-ถอน
+ * DesktopHubModal · VipModal
+ */
+.cosmic-mobile-sheet .cosmic-modal-shell--hub {
+  border: 0;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) {
   --sheet-soft-fill: linear-gradient(
     145deg,

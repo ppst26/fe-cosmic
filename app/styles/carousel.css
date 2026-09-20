@@ -54,6 +54,8 @@
 }
 .carousel-tournament-card {
   position: relative;
+  display: block;
+  width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: var(--radius-panel);

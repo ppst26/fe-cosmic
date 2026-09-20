@@ -26,7 +26,7 @@ export function HomeDesktopHeroRow({ onCtaClick }: HomeDesktopHeroRowProps) {
 
   return (
     <section
-      className="home-desktop-hero mb-4 hidden w-full min-w-0 lg:grid lg:grid-cols-2 lg:gap-3"
+      className="home-desktop-hero mb-3 hidden w-full min-w-0 lg:grid lg:grid-cols-2 lg:gap-3"
       aria-label="แบนเนอร์โปรโมชันหลัก"
     >
       <article className="home-desktop-hero__card relative min-h-[220px] overflow-hidden rounded-[var(--radius-panel)] xl:min-h-[260px]">

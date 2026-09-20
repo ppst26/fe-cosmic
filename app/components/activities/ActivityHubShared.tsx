@@ -12,7 +12,7 @@ import {
   formatActivityCredits,
   formatActivityNumber,
 } from "@/app/data/activitiesHubMockData";
-import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM, COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 
 /**
  * รูปย่อกิจกรรม — gradient mock ตามประเภท (ใช้ใน list ซ้าย / การ์ดมือถือ)
@@ -89,10 +89,12 @@ export function ActivityCategoryTabs({
   activeId,
   onSelect,
   tabs = ACTIVITY_HUB_CATEGORY_TABS,
+  flat = false,
 }: {
   activeId: ActivityHubCategoryTab;
   onSelect: (id: ActivityHubCategoryTab) => void;
   tabs?: { id: ActivityHubCategoryTab; label: string }[];
+  flat?: boolean;
 }) {
   return (
     <div
@@ -109,12 +111,16 @@ export function ActivityCategoryTabs({
             role="tab"
             aria-selected={selected}
             onClick={() => onSelect(tab.id)}
-            className={[
-              "glass-card--soft rounded-[var(--radius-pill)] px-4 py-1.5 text-xs font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:text-sm",
-              selected
-                ? "is-active text-[var(--text-primary)]"
-                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
-            ].join(" ")}
+            className={
+              flat
+                ? `${COSMIC_BTN_GLASS_PILL} !px-3 !py-1.5 !text-xs sm:!text-sm ${selected ? "is-active" : ""}`
+                : [
+                    "glass-card--soft rounded-[var(--radius-pill)] px-4 py-1.5 text-xs font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:text-sm",
+                    selected
+                      ? "is-active text-[var(--text-primary)]"
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
+                  ].join(" ")
+            }
           >
             {tab.label}
           </button>
@@ -126,8 +132,10 @@ export function ActivityCategoryTabs({
 
 export function ActivityTurnProgressCard({
   progress,
+  flat = false,
 }: {
   progress: NonNullable<ActivityHubItem["progress"]>;
+  flat?: boolean;
 }) {
   const pct =
     progress.bonusCap > 0
@@ -135,7 +143,11 @@ export function ActivityTurnProgressCard({
       : 0;
 
   return (
-    <section className="activity-hub-progress glass-card--soft rounded-[var(--radius-panel)] px-4 py-3 sm:px-5 sm:py-4">
+    <section
+      className={`activity-hub-progress px-0 py-3 sm:py-4 ${
+        flat ? "activity-hub-progress--flat border-b border-[var(--border-subtle)]/45" : "glass-card--soft rounded-[var(--radius-panel)] px-4 sm:px-5"
+      }`}
+    >
       <h3 className="text-center text-sm font-medium text-[var(--text-primary)] sm:text-base">
         ยอดเทิร์นของคุณ
       </h3>
@@ -168,9 +180,13 @@ export function ActivityTurnProgressCard({
   );
 }
 
-export function ActivityTierTable({ rows }: { rows: ActivityTierRow[] }) {
+export function ActivityTierTable({ rows, flat = false }: { rows: ActivityTierRow[]; flat?: boolean }) {
   return (
-    <div className="activity-hub-tier-table-wrap glass-card--soft overflow-x-auto rounded-[var(--radius-panel)] p-1 sm:p-2">
+    <div
+      className={`activity-hub-tier-table-wrap overflow-x-auto ${
+        flat ? "activity-hub-tier-table-wrap--flat pt-2" : "glass-card--soft rounded-[var(--radius-panel)] p-1 sm:p-2"
+      }`}
+    >
       <table className="activity-hub-tier-table w-full min-w-[520px] border-collapse text-left text-xs sm:text-sm">
         <thead>
           <tr className="text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)] sm:text-[11px]">
@@ -193,7 +209,7 @@ export function ActivityTierTable({ rows }: { rows: ActivityTierRow[] }) {
                 {formatActivityNumber(row.bonus)}
               </td>
               <td className="px-2 py-2.5 text-right sm:px-3">
-                <ActivityClaimButton state={row.claimState} />
+                <ActivityClaimButton state={row.claimState} flat={flat} />
               </td>
             </tr>
           ))}
@@ -203,20 +219,41 @@ export function ActivityTierTable({ rows }: { rows: ActivityTierRow[] }) {
   );
 }
 
-function ActivityClaimButton({ state }: { state: ActivityTierRow["claimState"] }) {
+function ActivityClaimButton({
+  state,
+  flat = false,
+}: {
+  state: ActivityTierRow["claimState"];
+  flat?: boolean;
+}) {
   const base =
-    "activity-hub-claim-btn inline-flex min-w-[5.5rem] justify-center rounded-[var(--radius-control)] px-2 py-1.5 text-[10px] font-medium leading-tight sm:text-[11px]";
+    "activity-hub-claim-btn inline-flex min-w-[5.5rem] justify-center px-2 py-1.5 text-[10px] font-medium leading-tight sm:text-[11px]";
 
   if (state === "claimable") {
     return (
-      <button type="button" className={`${base} ${COSMIC_BTN_PRIMARY}`}>
+      <button
+        type="button"
+        className={
+          flat
+            ? `${COSMIC_BTN_GLASS_PILL_SM} ${base} !w-full is-active`
+            : `${base} rounded-[var(--radius-control)] ${COSMIC_BTN_PRIMARY}`
+        }
+      >
         รับรางวัล
       </button>
     );
   }
   if (state === "claimed") {
     return (
-      <span className={`${base} glass-card--soft text-[var(--success)]`}>รับแล้ว</span>
+      <span
+        className={
+          flat
+            ? `${COSMIC_BTN_GLASS_PILL_SM} ${base} !w-full text-[var(--success)]`
+            : `${base} glass-card--soft rounded-[var(--radius-control)] text-[var(--success)]`
+        }
+      >
+        รับแล้ว
+      </span>
     );
   }
   return (
@@ -247,9 +284,12 @@ export function ActivityInfoDetail({ item }: { item: ActivityHubItem }) {
 export function ActivityDetailBody({
   item,
   showTitle = true,
+  flat = false,
 }: {
   item: ActivityHubItem;
   showTitle?: boolean;
+  /** desktop hub sheet — ไม่ห่อการ์ดซ้อน */
+  flat?: boolean;
 }) {
   const [category, setCategory] = React.useState<ActivityHubCategoryTab>(
     item.categoryTabs?.[0] ?? "slots",
@@ -269,14 +309,19 @@ export function ActivityDetailBody({
           </h2>
         ) : null}
         {item.detailKind === "turn-tier" && item.categoryTabs ? (
-          <ActivityCategoryTabs activeId={category} onSelect={setCategory} tabs={ACTIVITY_HUB_CATEGORY_TABS.filter((t) => item.categoryTabs?.includes(t.id))} />
+          <ActivityCategoryTabs
+            activeId={category}
+            onSelect={setCategory}
+            flat={flat}
+            tabs={ACTIVITY_HUB_CATEGORY_TABS.filter((t) => item.categoryTabs?.includes(t.id))}
+          />
         ) : null}
       </div>
 
       {item.detailKind === "turn-tier" && item.progress ? (
         <>
-          <ActivityTurnProgressCard progress={item.progress} />
-          <ActivityTierTable rows={tiers} />
+          <ActivityTurnProgressCard progress={item.progress} flat={flat} />
+          <ActivityTierTable rows={tiers} flat={flat} />
         </>
       ) : (
         <ActivityInfoDetail item={item} />

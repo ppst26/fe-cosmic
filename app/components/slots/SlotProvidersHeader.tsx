@@ -19,9 +19,7 @@ export function SlotProvidersHeader({
   backHref = "/",
 }: SlotProvidersHeaderProps) {
   return (
-    <div
-      className="slot-providers-header w-full min-w-0 border-b border-[var(--border-subtle)]/60 bg-[color-mix(in_srgb,var(--cosmic-page-base)_82%,transparent)] backdrop-blur-md"
-    >
+    <div className="slot-providers-header w-full min-w-0">
       <div className="slot-providers-header__inner mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center gap-3 px-[var(--layout-inline-gutter)]">
         {/* ปุ่มย้อนกลับ < */}
         <Link

@@ -59,7 +59,7 @@ export function VipRankRequirementsPanel({
   return (
     <div className={isLocked ? "opacity-85" : undefined}>
       {isLocked && (
-        <div className="cosmic-inset-card mb-3 flex items-center gap-2 bg-[var(--surface-hover)]/60 px-3 py-2">
+        <div className="cosmic-inset-card mb-3 flex items-center gap-2 px-3 py-2">
           <LockIcon className="h-4 w-4 shrink-0 text-[var(--text-muted)]" />
           <p className="text-[11px] leading-snug text-[var(--text-muted)]">
             แรงค์ {getVipRankTier(focusRankId).label} — เป้าสะสมทวีคูณ ×
@@ -162,10 +162,10 @@ export function VipRankRequirementsPanel({
                   key={mission.id}
                   className={`cosmic-inset-card flex items-center justify-between gap-2 px-2.5 py-2 ${
                     isLocked
-                      ? "bg-[var(--surface-hover)]/25 text-[var(--text-muted)]"
+                      ? "text-[var(--text-muted)]"
                       : done
-                        ? "bg-[var(--success)]/10 text-[var(--text-primary)]"
-                        : "bg-[var(--surface-hover)]/45 text-[var(--text-primary)]"
+                        ? "vip-mission-row--done text-[var(--text-primary)]"
+                        : "text-[var(--text-primary)]"
                   }`}
                 >
                   <span className="text-xs font-medium">{mission.label}</span>

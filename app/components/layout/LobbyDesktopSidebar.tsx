@@ -246,6 +246,7 @@ export function LobbyDesktopSidebar({
           ) : null}
         </ul>
       </nav>
+
       </div>
 
       <div className="lobby-desktop-sidebar__foot">

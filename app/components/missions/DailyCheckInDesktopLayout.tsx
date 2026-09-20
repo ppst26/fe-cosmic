@@ -7,7 +7,7 @@ import {
   type DailyCheckInDayReward,
 } from "@/app/data/dailyCheckInMockData";
 import { CheckInCoinGraphic, DailyCheckInCalendarGraphic } from "./DailyCheckInGraphics";
-import { COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
 
 interface DailyCheckInDesktopLayoutProps {
   days: DailyCheckInDayReward[];
@@ -28,8 +28,8 @@ export function DailyCheckInDesktopLayout({
   const todayReward = days.find((d) => d.status === "today");
 
   return (
-    <div className="daily-check-in-desktop">
-      <aside className="daily-check-in-desktop__banner hub-desktop-card" aria-label="สรุปเช็คอิน">
+    <div className="daily-check-in-desktop daily-check-in-desktop--flat">
+      <aside className="daily-check-in-desktop__banner" aria-label="สรุปเช็คอิน">
         <div className="daily-check-in-desktop__banner-head">
           <h2 className="daily-check-in-desktop__banner-title">เช็คอินรายวัน</h2>
           <p className="daily-check-in-desktop__banner-sub">
@@ -51,7 +51,9 @@ export function DailyCheckInDesktopLayout({
           type="button"
           disabled={!todayReward}
           onClick={() => todayReward && onClaimDay(todayReward.day)}
-          className="daily-check-in-desktop__banner-cta cosmic-cta-primary cosmic-cta-primary--sm w-full"
+          className={`${COSMIC_BTN_GLASS_PILL} daily-check-in-desktop__banner-cta !min-h-11 w-full !text-sm font-medium ${
+            todayReward ? "is-active" : ""
+          }`}
         >
           {todayReward ? "รับรางวัลวันนี้" : "รับรางวัลแล้ว"}
         </button>
@@ -109,9 +111,9 @@ function DailyCheckInDayRow({
 
   return (
     <li
-      className={`daily-check-in-desktop__day-row hub-desktop-card glass-card--soft${
-        isToday ? " is-today" : ""
-      }${isClaimed ? " is-claimed" : ""}`}
+      className={`daily-check-in-desktop__day-row${isToday ? " is-today" : ""}${
+        isClaimed ? " is-claimed" : ""
+      }`}
     >
       <div
         className={`daily-check-in-desktop__day-badge${isToday ? " is-today" : ""}${
@@ -145,7 +147,11 @@ function DailyCheckInDayRow({
             รับแล้ว
           </span>
         ) : isToday ? (
-          <button type="button" className="daily-check-in-desktop__claim-btn cosmic-cta-primary cosmic-cta-primary--sm" onClick={onClaim}>
+          <button
+            type="button"
+            className={`${COSMIC_BTN_GLASS_PILL} daily-check-in-desktop__claim-btn !min-h-9 !px-3 !text-xs is-active`}
+            onClick={onClaim}
+          >
             รับรางวัล
           </button>
         ) : (

@@ -39,16 +39,16 @@ export function VipModalDesktopLayout({
 
   if (tab === "rank") {
     return (
-      <div className="vip-modal-desktop">
+      <div className="vip-modal-desktop vip-modal-desktop--flat">
         <div className="vip-modal-desktop__split">
-          <section className="vip-modal-desktop__panel hub-desktop-card glass-card--soft flex flex-col items-center justify-center gap-3 p-5">
+          <section className="vip-modal-desktop__panel flex flex-col items-center justify-center gap-3 py-4 lg:pr-4">
             <VipRankCarousel
               focusIndex={rankFocusIndex}
               onFocusChange={onRankFocusChange}
               playerRankId={player.currentRankId}
             />
           </section>
-          <section className="vip-modal-desktop__panel hub-desktop-card glass-card--soft p-5">
+          <section className="vip-modal-desktop__panel py-4 lg:pl-4">
             <VipRankRequirementsPanel player={player} focusRankId={focusRankId} />
           </section>
         </div>
@@ -57,10 +57,10 @@ export function VipModalDesktopLayout({
   }
 
   return (
-    <div className="vip-modal-desktop">
+    <div className="vip-modal-desktop vip-modal-desktop--flat">
       <div className="vip-modal-desktop__split">
         <section
-          className="vip-modal-desktop__panel vip-modal-desktop__level hub-desktop-card glass-card--soft flex flex-col items-center p-5 text-center"
+          className="vip-modal-desktop__panel vip-modal-desktop__level flex flex-col items-center py-4 text-center lg:pr-4"
           aria-label="ระดับ VIP ปัจจุบัน"
         >
           <p className="text-xs font-medium text-[var(--text-muted)]">ระดับ</p>
@@ -90,7 +90,7 @@ export function VipModalDesktopLayout({
         </section>
 
         <section
-          className="vip-modal-desktop__panel vip-modal-desktop__missions hub-desktop-card glass-card--soft flex flex-col gap-4 p-5"
+          className="vip-modal-desktop__panel vip-modal-desktop__missions flex flex-col gap-4 py-4 lg:pl-4"
           aria-label="ความคืบหน้าภารกิจ"
         >
           <VipRankRequirementsPanel

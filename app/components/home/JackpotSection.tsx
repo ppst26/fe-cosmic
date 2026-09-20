@@ -106,30 +106,37 @@ export function JackpotSection({
 
       <div ref={trackRef} className="carousel-track carousel-tournaments">
         {items.map((item) => {
-          const card = (
-            <article className="carousel-tournament-card transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.99]">
-              <Image
-                src={item.imageSrc}
-                alt=""
-                fill
-                sizes="(min-width: 768px) 220px, 42vw"
-                className="object-cover object-center"
-              />
-            </article>
+          const image = (
+            <Image
+              src={item.imageSrc}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 220px, 42vw"
+              className="object-cover object-center"
+            />
           );
 
           if (item.href) {
             return (
-              <Link key={item.id} href={item.href} aria-label={item.title} className="block min-w-0">
-                {card}
+              <Link
+                key={item.id}
+                href={item.href}
+                aria-label={item.title}
+                className="carousel-tournament-card transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.99]"
+              >
+                {image}
               </Link>
             );
           }
 
           return (
-            <div key={item.id} className="min-w-0" aria-label={item.title}>
-              {card}
-            </div>
+            <article
+              key={item.id}
+              className="carousel-tournament-card"
+              aria-label={item.title}
+            >
+              {image}
+            </article>
           );
         })}
       </div>

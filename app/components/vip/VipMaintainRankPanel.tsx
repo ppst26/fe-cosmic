@@ -19,7 +19,7 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
   const tier = getVipRankTier(activeRankId);
 
   return (
-    <section className="w-full rounded-[10px] border border-[var(--border-active)]/45 bg-[var(--surface-hover)]/25 p-3">
+    <section className="vip-maintain-rank-panel vip-maintain-rank-panel--flat w-full border-t border-[var(--border-subtle)]/45 pt-4">
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-[var(--text-primary)]">รักษาระดับ VIP</h3>
         <span className="shrink-0 text-[11px] font-medium tabular-nums text-[var(--text-primary)]">
@@ -66,7 +66,7 @@ function MaintainMetricCard({
   const remaining = Math.max(0, target - progress);
 
   return (
-    <div className="cosmic-inset-card bg-[var(--surface-mid)]/80 p-2.5">
+    <div className="vip-maintain-metric cosmic-inset-card p-2.5">
       <div className="mb-1.5 flex items-center gap-1.5">
         {iconKind === "deposit" ? (
           <WalletMiniIcon className="h-4 w-4 text-[var(--icon-default)]" />

@@ -23,7 +23,7 @@ type ResponsiveSheetHeaderProps = {
 
 /**
  * แถบหัว bottom sheet มือถือ — กลับซ้าย · หัวข้อกลาง · ปิดขวา
- * ใช้ใน Deposit / Withdraw / Coupon และสเต็ปย่อยของฝาก-ถอน
+ * ใช้ใน Deposit / Withdraw / Coupon / hub สิทธิพิเศษ และสเต็ปย่อยของฝาก-ถอน
  */
 export function ResponsiveSheetHeader({
   title,

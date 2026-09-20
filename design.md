@@ -261,7 +261,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 
 ### LobbyActivitiesSection (ชื่อในโค้ด: `JackpotSection`)
 - **หัวข้อ:** 「กิจกรรม」 + ไอคอนเมนูกิจกรรม (`MenuItemIcon` / `activities`) — **ไม่**ใช้ trophy / ไม่แสดงยอดผู้ชนะ mock
-- **เนื้อหา:** carousel แนวนอน การ์ด **รูปเต็ม** จาก `public/tournament/` (`esport.webp`, `esport2.webp`, `sport win.avif`, `slot win.avif` — ชื่อไฟล์มีช่องว่างได้ ใช้ path `/tournament/...` ใน mock)
+- **เนื้อหา:** carousel แนวนอน การ์ด **รูปเต็ม** จาก `public/tournament/` (`esport.webp`, `esport2.webp`, `sport-win.avif`, `slot-win.avif` — `TOURNAMENT_IMAGE_PATHS` ใน `lobbyMockData.ts`)
 - การ์ด: `.carousel-tournament-card`, `aspect-ratio: 3/4`, `object-fit: cover`, มุม `--radius-panel`; แตะไป `/event` (หรือ href ต่อ API ภายหลัง)
 - Data: `HOME_LOBBY_TOURNAMENT_ITEMS` ใน `lobbyMockData.ts` · type `HomeLobbyTournamentItem`
 - เลื่อน: ลากนิ้ว + ปุ่ม prev/next; dots ผูก index สไลด์ (หนึ่งจุดต่อการ์ด)

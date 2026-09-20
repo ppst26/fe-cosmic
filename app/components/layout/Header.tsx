@@ -5,11 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   CosmicbetLogo,
-  ChevronDownIcon,
   HeaderWalletIcon,
   ProfileNavIcon,
   SearchIcon,
-  WithdrawNavIcon,
 } from "../ui/Icons";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
@@ -30,7 +28,7 @@ interface HeaderProps {
 
 /**
  * Header — มือถือ: โลโก้ · ยอดเครดิต+ไอคอนกระเป๋า (ล็อกอิน) · โปรไฟล์ · ไม่มีการ์ด/ค้นหา/ปุ่ม +
- * Desktop lg+: ค้นหากลางแสดงเมื่อล็อกอิน · แขกเห็นแค่ Log in / Sign up
+ * Desktop lg+: full-width — ซ้าย logo · โปรโมชัน · ค้นหาแบบกะทัดรัด · ขวายอด · ฝาก-ถอน · แจ้งเตือน · ยศ
  */
 export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
   const pathname = usePathname();
@@ -109,7 +107,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
       </header>
 
       <header className="header-desktop-bar hidden lg:block">
-        <div className="header-desktop-bar__inner">
+        <div className="header-desktop-bar__inner header-desktop-bar__inner--split">
           <div className="header-desktop-bar__start">
             <Link
               href="/"
@@ -138,24 +136,18 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 );
               })}
             </nav>
-          </div>
 
-          {showWallet ? (
-            <div className="header-desktop-bar__center">
-              <label className="header-desktop-bar__search glass-card--soft">
-                <span className="sr-only">ค้นหาเกมหรือค่าย</span>
-                <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
-                <input
-                  type="search"
-                  className="header-desktop-bar__search-input"
-                  placeholder="ค้นหาเกม / ค่าย"
-                  autoComplete="off"
-                />
-              </label>
-            </div>
-          ) : (
-            <div className="header-desktop-bar__center" aria-hidden="true" />
-          )}
+            <label className="header-desktop-bar__search header-desktop-bar__search--compact glass-card--soft">
+              <span className="sr-only">ค้นหาเกมหรือค่าย</span>
+              <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
+              <input
+                type="search"
+                className="header-desktop-bar__search-input"
+                placeholder="ค้นหา"
+                autoComplete="off"
+              />
+            </label>
+          </div>
 
           <div className="header-desktop-bar__end">
             {isLoading ? (
@@ -170,25 +162,27 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   <span className="header-desktop-bar__wallet-balance">{balanceLabel}</span>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={openDeposit}
-                  className="cosmic-cta-primary cosmic-cta-primary--sm"
-                  aria-label="ฝากเงิน"
-                  aria-haspopup="dialog"
-                >
-                  ฝาก
-                </button>
-
-                <button
-                  type="button"
-                  onClick={openWithdraw}
-                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn"
-                  aria-label="ถอนเงิน"
-                  aria-haspopup="dialog"
-                >
-                  <WithdrawNavIcon className="h-[18px] w-[18px]" />
-                </button>
+                <div className="header-desktop-bar__cashier glass-card--soft">
+                  <button
+                    type="button"
+                    onClick={openDeposit}
+                    className="header-desktop-bar__cashier-btn header-desktop-bar__cashier-btn--deposit"
+                    aria-label="ฝากเงิน"
+                    aria-haspopup="dialog"
+                  >
+                    ฝาก
+                  </button>
+                  <span className="header-desktop-bar__cashier-divider" aria-hidden="true" />
+                  <button
+                    type="button"
+                    onClick={openWithdraw}
+                    className="header-desktop-bar__cashier-btn"
+                    aria-label="ถอนเงิน"
+                    aria-haspopup="dialog"
+                  >
+                    ถอน
+                  </button>
+                </div>
 
                 <button
                   type="button"
@@ -202,13 +196,12 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={handleProfileClick}
-                  className={`header-desktop-bar__profile-pill glass-card--soft${isProfileOpen ? " is-active" : ""}`}
-                  aria-label="โปรไฟล์"
+                  className={`header-desktop-bar__rank-btn glass-card--soft${isProfileOpen ? " is-active" : ""}`}
+                  aria-label="ยศ VIP และโปรไฟล์"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
                 >
                   <VipRankEmblem rankId={rankId} size="xs" playing={false} />
-                  <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 text-[var(--icon-default)]" aria-hidden />
                 </button>
               </div>
             ) : (

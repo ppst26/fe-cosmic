@@ -7,6 +7,7 @@
 /* ── Cosmic Design System ── */
 @import "./styles/tokens.css";
 @import "./styles/base.css";
+@import "./styles/typography.css";
 
 /* ── Shared primitives ── */
 @import "./styles/glass-cards.css";
@@ -29,6 +30,8 @@
 
 /* ── Feature sections ── */
 @import "./styles/hall-of-fame.css";
+@import "./styles/tournaments-section.css";
+@import "./styles/home-desktop-peek-carousel.css";
 @import "./styles/lucky-wheel.css";
 @import "./styles/lottery.css";
 @import "./styles/carousel.css";

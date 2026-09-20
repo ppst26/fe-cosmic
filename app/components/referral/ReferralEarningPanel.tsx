@@ -38,6 +38,7 @@ export function ReferralEarningPanel({
   received: receivedProp,
   claimable: claimableProp,
   onClaim,
+  flat = false,
 }: {
   summary?: ReferralEarningSummaryMock;
   history?: ReferralEarningHistoryRow[];
@@ -46,6 +47,8 @@ export function ReferralEarningPanel({
   received?: number;
   claimable?: number;
   onClaim?: () => void;
+  /** desktop hub — ตารางไม่ห่อการ์ดทึบ */
+  flat?: boolean;
 }) {
   const [page, setPage] = useState(1);
   const [claimableInternal, setClaimableInternal] = useState(summary.bonusClaimableThb);
@@ -86,7 +89,7 @@ export function ReferralEarningPanel({
   };
 
   return (
-    <div className="flex min-h-0 flex-col gap-3">
+    <div className="referral-earning-panel flex min-h-0 flex-col gap-3">
       {showSummary ? (
       <div className="flex flex-col gap-2.5">
         <EarningSummaryCard
@@ -123,7 +126,13 @@ export function ReferralEarningPanel({
         </div>
       )}
 
-      <section className={`${COSMIC_PANEL_GLASS} min-h-0 overflow-hidden`}>
+      <section
+        className={
+          flat
+            ? "referral-earning-table min-h-0 overflow-hidden border-t border-[var(--border-subtle)]/50 pt-1"
+            : `${COSMIC_PANEL_GLASS} min-h-0 overflow-hidden`
+        }
+      >
         <Table className="text-sm">
           <TableHeader>
             <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">

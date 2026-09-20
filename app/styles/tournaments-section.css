@@ -1,0 +1,72 @@
+/* กิจกรรม — section หลัง Hall of Fame (TournamentsSection.tsx) */
+
+.tournaments-section__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.tournaments-section__view-all-chevron {
+  font-size: 1.125rem;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.carousel-tournaments-feature {
+  --carousel-cols: 1.12;
+  --carousel-gap: var(--space-2);
+  --carousel-min: 17.5rem;
+}
+
+@media (min-width: 640px) {
+  .carousel-tournaments-feature {
+    --carousel-cols: 2.05;
+    --carousel-min: 15rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-tournaments-feature {
+    --carousel-cols: 4;
+    --carousel-gap: var(--space-3);
+    --carousel-min: 0px;
+  }
+}
+
+.tournament-feature-card__link {
+  text-decoration: none;
+  color: inherit;
+  transition: filter var(--motion-fast) ease;
+}
+
+.tournament-feature-card__link:hover {
+  filter: brightness(1.06);
+}
+
+.tournament-feature-card__link:active {
+  filter: brightness(0.98);
+}
+
+.tournament-feature-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  background: var(--surface-mid);
+}
+
+@media (min-width: 1024px) {
+  .tournament-feature-card {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+.tournament-feature-card__image {
+  pointer-events: none;
+}
