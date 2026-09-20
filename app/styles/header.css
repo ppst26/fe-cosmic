@@ -177,7 +177,9 @@
   height: 1.25rem;
   max-width: min(42vw, 9.25rem);
   border-radius: 6px;
-}.cosmic-nav__wallet-balance {
+}
+
+.cosmic-nav__wallet-balance {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -201,7 +203,9 @@
 .cosmic-nav__wallet-cluster.wallet-button--skeleton {
   width: 7.5rem;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}.cosmic-nav__deposit-cta {
+}
+
+.cosmic-nav__deposit-cta {
   display: grid;
   flex-shrink: 0;
   place-items: center;
@@ -251,7 +255,9 @@
   max-width: min(42vw, 9.25rem);
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   background: rgb(255 255 255 / 0.06);
-}.wallet-button span {
+}
+
+.wallet-button span {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -274,7 +280,9 @@
   align-items: center;
   gap: 8px;
   min-width: 0;
-}.cosmic-nav__auth-login {
+}
+
+.cosmic-nav__auth-login {
   min-height: 36px;
   padding: 0 10px;
   border: 0;
@@ -325,44 +333,50 @@
     --header-mobile-bar-height: 64px;
   }
 
-  .cosmic-nav-shell {
+.cosmic-nav-shell {
     padding-inline: 10px;
   }
 
-  .cosmic-nav {
+.cosmic-nav {
     min-height: 48px;
     padding: 6px 8px 6px 10px;
     gap: 8px;
   }
 
-  .cosmic-actions {
+.cosmic-actions {
     gap: 4px;
   }
 
-  .cosmic-nav__chip,
+.cosmic-nav__chip,
   .profile-button {
     width: 36px;
     height: 36px;
   }
 
-  .cosmic-nav__wallet-cluster {
+.cosmic-nav__wallet-cluster {
     max-width: min(48vw, 10.5rem);
     min-height: 36px;
     padding: 3px 3px 3px 6px;
-  }.wallet-button span {
   }
 
-  .wallet-button svg {
+.wallet-button span {
+  }
+
+.wallet-button svg {
     width: 18px;
     height: 18px;
-  }.cosmic-nav__deposit-cta {
+  }
+
+.cosmic-nav__deposit-cta {
     min-width: 30px;
     min-height: 28px;
   }
 
-  .cosmic-nav__auth {
+.cosmic-nav__auth {
     gap: 4px;
-  }.cosmic-nav__auth-login {
+  }
+
+.cosmic-nav__auth-login {
     min-height: 32px;
     padding-inline: 8px;
   }
@@ -652,8 +666,12 @@
 .header-desktop-bar__search--compact:focus-within {
   width: min(14rem, 36vw);
   max-width: 14rem;
-}.header-desktop-bar__search--compact .header-desktop-bar__search-input {
-}.header-desktop-bar__search-input {
+}
+
+.header-desktop-bar__search--compact .header-desktop-bar__search-input {
+}
+
+.header-desktop-bar__search-input {
   width: 100%;
   min-width: 0;
   border: 0;
@@ -682,7 +700,9 @@
 @media (min-width: 1280px) {
   .header-desktop-bar__nav {
     display: flex;
-  }} .header-desktop-bar__nav-link {
+  }}
+
+.header-desktop-bar__nav-link {
   position: relative;
   display: inline-flex;
   min-height: 2.25rem;
@@ -714,7 +734,9 @@
   gap: 0.45rem;
   border-radius: var(--header-chip-radius);
   padding: 0 0.9rem;
-}.header-desktop-bar__auth-login {
+}
+
+.header-desktop-bar__auth-login {
   min-height: 2.25rem;
   padding-inline: 0.75rem;
   border: 0;
@@ -782,7 +804,9 @@
   align-items: stretch;
   overflow: hidden;
   padding: 0;
-}.header-desktop-bar__cashier-btn {
+}
+
+.header-desktop-bar__cashier-btn {
   display: inline-flex;
   min-width: 0;
   align-items: center;
@@ -854,7 +878,9 @@
   padding: 0.45rem 0.85rem;
   color: var(--text-primary);
   white-space: nowrap;
-}.header-desktop-bar__wallet-segment--action {
+}
+
+.header-desktop-bar__wallet-segment--action {
   cursor: pointer;
   transition: background var(--motion-fast) ease, color var(--motion-fast) ease;
 }
@@ -877,7 +903,9 @@
 
 .header-desktop-bar__wallet-segment--action:hover .header-desktop-bar__action-icon {
   color: var(--icon-active);
-}.header-desktop-bar__wallet-balance {
+}
+
+.header-desktop-bar__wallet-balance {
   max-width: min(100%, 7.5rem);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -949,18 +977,24 @@
   flex-direction: column;
   align-items: flex-start;
   line-height: 1.15;
-}.header-desktop-bar__stat-label {
+}
+
+.header-desktop-bar__stat-label {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-}.header-desktop-bar__stat-value {
+}
+
+.header-desktop-bar__stat-value {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--text-primary);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-}.header-desktop-bar__deposit {
+}
+
+.header-desktop-bar__deposit {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -1021,13 +1055,17 @@
   flex-direction: column;
   align-items: flex-start;
   line-height: 1.15;
-}.header-desktop-bar__user-name {
+}
+
+.header-desktop-bar__user-name {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--text-primary);
   white-space: nowrap;
-}.header-desktop-bar__user-rank {
+}
+
+.header-desktop-bar__user-rank {
   color: #d99a08;
   letter-spacing: 0.06em;
 }
