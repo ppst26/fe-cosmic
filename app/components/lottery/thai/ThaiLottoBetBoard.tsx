@@ -306,9 +306,11 @@ export function ThaiLottoBetBoard({
           )}
         </div>
 
-            <p className="thai-lotto-feedback" aria-live="polite">
-              {feedback}
-            </p>
+            {feedback ? (
+              <p className="thai-lotto-feedback" aria-live="polite">
+                {feedback}
+              </p>
+            ) : null}
 
             <div className="yiki-pick-actions" aria-label="ดำเนินการต่อ">
               <Link href={backHref} className="yiki-pick-actions__back">
