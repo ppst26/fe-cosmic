@@ -1,0 +1,96 @@
+html {
+  min-height: 100%;
+  overflow-x: clip;
+  background-color: var(--cosmic-page-base);
+}
+
+/** โทนข้อความเมื่อใช้ร่วมกับ .cosmic-bg บน <html> (app/layout.tsx) */
+.cosmic-page {
+  color: var(--text-primary);
+}
+
+
+/**
+ * พื้นหลัง cosmic ทั้งหน้า — แทน gradient ::before เก่า / fe-cosmic-bg.webp
+ */
+.cosmic-bg {
+  min-height: 100dvh;
+  background-color: var(--cosmic-page-base);
+  background-image:
+    radial-gradient(
+      ellipse 55% 38% at 42% 0%,
+      rgba(65, 19, 100, 0.28),
+      transparent 75%
+    ),
+    radial-gradient(
+      ellipse 42% 32% at 75% 0%,
+      rgba(83, 14, 53, 0.22),
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 30% 32% at 29% 55%,
+      rgba(26, 49, 80, 0.38),
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 32% 34% at 65% 54%,
+      rgba(48, 22, 79, 0.32),
+      transparent 80%
+    );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body {
+  color: var(--text-primary);
+  font-family: var(--font-noto-sans-thai), ui-sans-serif, system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(
+    var(--nav-height) + var(--nav-float-offset) + var(--nav-safe) + var(--nav-scroll-gap)
+  );
+  background-color: transparent;
+}
+
+
+/* พื้นหลัง Cosmic Intro / โซน lobby — nebula + ไล่ม่วงเข้ม→ดำ (บน→ล่าง) + ดาวเล็ก */
+.cosmic-intro-bg {
+  background:
+    radial-gradient(60% 80% at 12% 45%, var(--nebula-violet), transparent 70%),
+    radial-gradient(50% 70% at 88% 55%, var(--nebula-blue), transparent 70%),
+    var(--surface-gradient);
+}
+
+/** บรรทัดสถิติใต้หัว CosmicIntro — อ่านง่ายบนมือถือ (ไม่ใช้ 11px inline) */
+.cosmic-intro__stats {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.cosmic-intro__stats strong {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 640px) {
+  .cosmic-intro__stats {
+    font-size: 1rem;
+  }
+}
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply text-foreground;
+    background-color: transparent;
+  }
+  html {
+    @apply font-sans;
+  }
+}

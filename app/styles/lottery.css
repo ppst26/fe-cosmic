@@ -1,0 +1,2559 @@
+/*
+ * Lottery UI — surface solid ชั้นนอก/ใน (step 2 รอบ + step 3 แทง)
+ */
+:is(.lottery-market-shell, .thai-lotto-layout, .yiki-layout, .yiki-page-main) {
+  --lottery-glass-fill: var(--surface-solid-inner);
+  --lottery-glass-fill-hover: color-mix(in srgb, var(--surface-solid-inner) 88%, rgb(255 255 255 / 0.07));
+  /* borderless — แยกชั้นด้วยสีพื้น + gap (shell/การ์ดรอบ) */
+  --lottery-glass-border: transparent;
+  /* ขอบปุ่มแป้นกด + ชุดประเภท/แผงเลข */
+  --lottery-control-border: color-mix(in srgb, var(--border-subtle) 62%, rgb(255 255 255 / 0.05));
+  /* แผงเลข 00–99 / แถวร้อย — มุมน้อย ให้ดูเป็นสี่เหลี่ยม */
+  --lottery-grid-cell-radius: var(--radius-card);
+}
+
+.thai-lotto-layout,
+.yiki-layout {
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-outer);
+}
+
+@media (min-width: 640px) {
+  .thai-lotto-layout,
+  .yiki-layout {
+    padding: var(--space-4);
+  }
+}
+
+/*
+ * มือถือ — พื้นหลังหวยเต็มความกว้างจอ · เนื้อหา inset เล็กน้อย (--lottery-mobile-inset)
+ * ใช้คลาส lottery-page-main จาก LobbyDesktopPageShell เมื่อ activeCategoryId="lottery"
+ */
+@media (max-width: 1023px) {
+  main.page-shell.lottery-page-main {
+    --lottery-mobile-inset: var(--space-2);
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
+    padding-top: 0;
+  }
+
+  .lottery-page-main .lottery-market-shell,
+  .lottery-page-main .thai-lotto-layout,
+  .lottery-page-main .yiki-layout {
+    padding: var(--lottery-mobile-inset);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* แถบเลือกตลาดเลื่อนแนวนอน — ดึงชิดขอบจอ แต่ยังอยู่ใน shell ที่มีพื้นเต็มกว้าง */
+  .lottery-page-main .lottery-market-sidebar__panel.lottery-market-scroll {
+    margin-inline: calc(-1 * var(--lottery-mobile-inset));
+    padding-inline: var(--lottery-mobile-inset);
+  }
+
+  .lottery-page-main .lottery-market-main {
+    padding-inline: 0;
+    padding-block: var(--space-2) 0;
+  }
+}
+
+/*
+ * Lottery step 2 — sidebar + banner + รายการรอบ (LotteryMarketShell)
+ */
+.lottery-market-shell {
+  --lottery-shell-max-h: min(calc(100dvh - 10.5rem), 46rem);
+  display: grid;
+  gap: var(--space-4);
+  align-items: stretch;
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-outer);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .lottery-market-shell {
+    grid-template-columns: minmax(0, 248px) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: var(--space-4);
+    height: var(--lottery-shell-max-h);
+    max-height: var(--lottery-shell-max-h);
+    padding: var(--space-4);
+    --lottery-shell-max-h: min(calc(100dvh - 7.5rem), 50rem);
+  }
+
+  .lottery-market-shell > * {
+    min-height: 0;
+  }
+}
+
+/** พื้นที่ scroll แยก — เมาส์อยู่บนโซนนี้จะ scroll เฉพาะโซน (overscroll-behavior: contain) */
+.lottery-market-scroll {
+  min-height: 0;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--border-subtle) 70%, transparent) transparent;
+}
+
+.lottery-market-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.lottery-market-scroll::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--border-subtle) 75%, transparent);
+}
+
+.lottery-market-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.lottery-market-sidebar__panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius-panel) - 2px);
+  background: transparent;
+}
+
+@media (min-width: 1024px) {
+  .lottery-market-sidebar {
+    height: 100%;
+  }
+
+  .lottery-market-sidebar__panel.lottery-market-scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: var(--space-1);
+  }
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-sidebar__panel.lottery-market-scroll {
+    margin-inline: calc(-1 * var(--space-3));
+    padding-inline: var(--space-3);
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    flex-shrink: 0;
+    border-inline: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .lottery-market-sidebar__panel.lottery-market-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.lottery-market-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  padding: var(--space-2) var(--space-1);
+  border: 0;
+  border-radius: calc(var(--radius-panel) - 2px);
+  background: transparent;
+}
+
+@media (min-width: 1024px) {
+  .lottery-market-main {
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-main {
+    padding: var(--space-2);
+  }
+}
+
+.lottery-market-rounds-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 2px;
+  padding-bottom: var(--space-1);
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-rounds-scroll {
+    max-height: min(56dvh, 34rem);
+  }
+}
+
+.lottery-market-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-sidebar__list {
+    flex-direction: row;
+    width: max-content;
+    min-width: 100%;
+    padding-bottom: var(--space-1);
+  }
+}
+
+.lottery-market-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 3.25rem;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: transparent;
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--motion-fast) ease;
+}
+
+@media (max-width: 1023px) {
+  .lottery-market-sidebar__item {
+    width: 11.5rem;
+    flex-shrink: 0;
+  }
+}
+
+.lottery-market-sidebar__item:hover {
+  background: color-mix(in srgb, var(--surface-solid-inner) 55%, transparent);
+}
+
+.lottery-market-sidebar__item.is-active {
+  background: var(--surface-solid-inner);
+}
+
+.lottery-market-sidebar__item.is-closed .lottery-market-sidebar__meta {
+  color: var(--text-muted);
+}
+
+.lottery-market-sidebar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.lottery-market-sidebar__title {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.lottery-market-sidebar__meta {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.lottery-market-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+}
+
+.lottery-market-banner__body {
+  flex: 1 1 auto;
+}
+
+.lottery-market-banner__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.lottery-market-banner__rules {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.lottery-market-banner__rules:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.lottery-market-round-count {
+  margin: 0 0 var(--space-3);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.lottery-market-round-count__n {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.lottery-play-round-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+}
+
+@media (min-width: 640px) {
+  .lottery-play-round-card--open {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.lottery-play-round-card--open {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.lottery-play-round-card--upcoming {
+  opacity: 0.88;
+}
+
+.lottery-play-round-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.lottery-play-round-card__schedule {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.lottery-play-round-card__countdown {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--success);
+}
+
+.lottery-play-round-card__opens {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.lottery-play-round-card__cta {
+  width: 100%;
+  max-width: 12rem;
+}
+
+.lottery-play-rounds__queue {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* รอบเยอะ (ยี่กี) — กริด 4 คอลัมน์ */
+.lottery-play-round-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 480px) {
+  .lottery-play-round-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .lottery-play-round-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+.lottery-play-round-grid__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 5.5rem;
+  padding: var(--space-2) var(--space-1);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--surface-solid-inner);
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    background var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.lottery-play-round-grid__cell.is-playable {
+  cursor: pointer;
+}
+
+.lottery-play-round-grid__cell.is-playable:hover {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.lottery-play-round-grid__cell.is-open {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.lottery-play-round-grid__cell:not(.is-playable) {
+  opacity: 0.72;
+}
+
+.lottery-play-round-grid__round {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.lottery-play-round-grid__time {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.lottery-play-round-grid__countdown {
+  display: inline-flex;
+  min-width: 4.5rem;
+  justify-content: center;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--success);
+}
+
+.lottery-play-rounds__expand {
+  display: flex;
+  width: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: var(--space-3);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.lottery-play-rounds__expand-chevron {
+  font-size: 0.65rem;
+  opacity: 0.85;
+}
+
+/*
+ * --- Thai government lottery (/lottery/thai-government) — mobile-first ---
+ * มือถือ/แท็บเล็ต: โพยคอลัมน์ซ้าย (แคบ) + เลือกเลขคอลัมน์ขวา วางคู่กันตลอด ไม่ซ้อนแนวตั้ง
+ * จอใหญ่ (≥1024px): โพยย้ายเป็นคอลัมน์ขวา กว้างขึ้น · ผลหวยอยู่หน้ารายการรอบเท่านั้น
+ */
+.thai-lotto-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 168px) minmax(0, 1fr);
+  grid-template-areas:
+    "draw draw"
+    "slip input";
+  gap: var(--space-3) var(--space-2);
+  align-items: stretch;
+}
+
+@media (min-width: 640px) {
+  .thai-lotto-layout {
+    grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+.thai-lotto-layout__draw { grid-area: draw; min-width: 0; }
+.thai-lotto-layout__input {
+  grid-area: input;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.thai-lotto-layout__slip {
+  grid-area: slip;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .thai-lotto-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+    grid-template-areas:
+      "draw slip"
+      "input slip";
+    grid-template-rows: auto 1fr;
+    gap: var(--space-4) var(--space-6);
+  }
+}
+
+/* ผลรางวัลงวดก่อน — แสดงใต้รายการรอบ (step 2) ไม่ใช่หน้าแทง/ใส่ราคา */
+.lottery-market-rounds__result {
+  margin-top: var(--space-4);
+  min-width: 0;
+}
+
+/* ขั้นใส่ราคา — การ์ดโพย+ใส่ราคาชิ้นเดียว (ตาราง scroll · แถบราคา sticky ในการ์ด) */
+:is(.thai-lotto-layout.thai-lotto-layout--price, .yiki-layout.yiki-layout--price) {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "slip";
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+:is(.thai-lotto-layout--price, .yiki-layout--price) .thai-lotto-layout__slip,
+:is(.thai-lotto-layout--price, .yiki-layout--price) .yiki-layout__slip {
+  min-width: 0;
+  align-self: stretch;
+}
+
+.lottery-price-step-card.thai-lotto-panel {
+  gap: 0;
+  padding: var(--space-2);
+  min-height: 0;
+  max-height: min(40rem, calc(100dvh - 7.5rem));
+  overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  .lottery-price-step-card.thai-lotto-panel {
+    max-height: calc(100dvh - 6.5rem - var(--nav-safe));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lottery-price-step-card.thai-lotto-panel {
+    max-height: min(44rem, calc(100dvh - var(--header-desktop-bar-height) - 5rem));
+  }
+}
+
+.lottery-price-step-card__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--space-1);
+}
+
+.lottery-price-step-card__dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  flex-shrink: 0;
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-solid-inner);
+  box-shadow: 0 -10px 28px rgb(0 0 0 / 0.28);
+}
+
+.lottery-price-step-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* โพยขั้นใส่ราคา — ใช้ร่วมทุกประเภทหวย */
+.lottery-price-slip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.lottery-price-slip__head {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.lottery-price-slip__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+:is(.lottery-price-slip__group-head, .thai-lotto-slip__group-head, .yiki-slip__group-head) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem var(--space-2);
+  border-radius: calc(var(--radius-panel) - 14px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+:is(.lottery-price-slip__group-head, .thai-lotto-slip__group-head, .yiki-slip__group-head) span:last-child {
+  color: #ffe66d;
+  font-variant-numeric: tabular-nums;
+}
+
+.lottery-price-slip__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lottery-price-row {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.35rem 0.3rem 0.5rem;
+  border-radius: calc(var(--radius-panel) - 14px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 68%, var(--surface-solid-inner));
+  cursor: pointer;
+}
+
+.lottery-price-row.is-selected {
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
+}
+
+.lottery-price-row__number {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lottery-price-row__tag {
+  flex-shrink: 0;
+  min-height: 1.65rem;
+  padding: 0 0.45rem;
+  border: 0;
+  border-radius: calc(var(--radius-panel) - 16px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 88%, #000);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.lottery-price-row__rate {
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.lottery-price-row__amount {
+  flex: 0 0 2.75rem;
+  min-width: 0;
+  min-height: 1.75rem;
+  padding-inline: 0.35rem;
+}
+
+.lottery-price-row__amount .thai-lotto-amount__input {
+  width: 100%;
+  text-align: center;
+  font-size: 0.8125rem;
+}
+
+.lottery-price-row__remove {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0;
+  border-radius: calc(var(--radius-panel) - 16px);
+  background: transparent;
+  color: var(--icon-default);
+}
+
+.lottery-price-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lottery-price-controls__toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.lottery-price-controls__checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 0;
+}
+
+.lottery-price-controls__checkbox input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--chart-2);
+}
+
+.lottery-price-controls__edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 2rem;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: calc(var(--radius-panel) - 14px);
+  background: var(--lottery-glass-fill);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.lottery-price-controls__total-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem 0.2rem 0.45rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, #d99a08 22%, var(--surface-solid-inner));
+}
+
+.lottery-price-controls__total-label {
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+}
+
+.lottery-price-controls__total-value {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #ffe66d;
+  font-variant-numeric: tabular-nums;
+}
+
+.lottery-price-controls__chips {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.lottery-price-chip {
+  min-height: 2.5rem;
+  border: 1px dashed color-mix(in srgb, var(--text-primary) 28%, transparent);
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.lottery-price-chip.is-active {
+  border-style: solid;
+  border-color: transparent;
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+}
+
+.lottery-price-chip--5:not(.is-active) {
+  background: color-mix(in srgb, #38bdf8 14%, var(--surface-solid-inner));
+}
+
+.lottery-price-chip--10:not(.is-active) {
+  background: color-mix(in srgb, #22c55e 12%, var(--surface-solid-inner));
+}
+
+.lottery-price-chip--20:not(.is-active) {
+  background: color-mix(in srgb, #d99a08 14%, var(--surface-solid-inner));
+}
+
+.lottery-price-chip--50:not(.is-active) {
+  background: color-mix(in srgb, #f97316 12%, var(--surface-solid-inner));
+}
+
+.lottery-price-chip--100:not(.is-active) {
+  background: color-mix(in srgb, #f43f5e 12%, var(--surface-solid-inner));
+}
+
+.lottery-price-controls__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.lottery-price-controls__back {
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.lottery-price-controls__submit {
+  min-height: 2.75rem;
+  font-size: 0.8125rem;
+}
+
+@media (min-width: 1024px) {
+  :is(.thai-lotto-layout--price, .yiki-layout--price) .lottery-price-controls__actions {
+    padding-top: var(--space-1);
+  }
+}
+
+.thai-lotto-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+}
+
+@media (min-width: 640px) {
+  .thai-lotto-panel {
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+}
+
+@media (min-width: 768px) {
+  .thai-lotto-panel {
+    padding: var(--space-5);
+  }
+}
+
+.thai-lotto-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+}
+
+.thai-lotto-panel__title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.thai-lotto-panel__meta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* หัวงวด */
+.thai-lotto-draw {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+}
+
+.thai-lotto-draw__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.thai-lotto-draw__meta {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.thai-lotto-draw__close {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.thai-lotto-draw__close-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.thai-lotto-draw__close .lottery-countdown {
+  font-size: 0.875rem;
+}
+
+:is(.thai-lotto-layout, .yiki-layout) .cosmic-segment-track {
+  border: 0;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: color-mix(in srgb, var(--surface-solid-outer) 88%, #000);
+}
+
+:is(.thai-lotto-layout, .yiki-layout) .cosmic-segment-btn {
+  min-height: 2rem;
+  padding: 0.2rem 0.35rem;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+}
+
+:is(.thai-lotto-layout, .yiki-layout) .cosmic-segment-btn.is-active {
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
+}
+
+/* ประเภทการแทง */
+.thai-lotto-type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-1-5, 0.375rem);
+}
+
+.thai-lotto-type-chip {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 0.375rem;
+  align-items: center;
+  min-height: 2.625rem;
+  padding: 0.375rem 0.5rem;
+  border: 1px solid var(--lottery-control-border);
+  border-radius: calc(var(--radius-panel) - 4px);
+  background: var(--lottery-glass-fill);
+  color: var(--text-secondary);
+  text-align: left;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.thai-lotto-type-chip:hover {
+  background: var(--lottery-glass-fill-hover);
+  color: var(--text-primary);
+}
+
+.thai-lotto-type-chip.is-active {
+  border-color: color-mix(in srgb, var(--cta-white-bg) 88%, var(--lottery-control-border));
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow:
+    0 4px 16px rgb(0 0 0 / 0.18),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.thai-lotto-type-chip__check {
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--surface-solid-outer) 78%, var(--surface-solid-inner));
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.thai-lotto-type-chip.is-active .thai-lotto-type-chip__check {
+  background: color-mix(in srgb, var(--cta-white-fg) 88%, transparent);
+  color: var(--cta-white-bg);
+}
+
+.thai-lotto-type-chip__label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.thai-lotto-type-chip__rate {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.thai-lotto-type-chip.is-active .thai-lotto-type-chip__rate {
+  color: color-mix(in srgb, var(--cta-white-fg) 72%, #b45309);
+}
+
+/* toggle กลับเลข */
+.thai-lotto-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  align-self: flex-start;
+  min-height: 2rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.thai-lotto-toggle.is-active {
+  color: var(--text-primary);
+}
+
+.thai-lotto-toggle__track {
+  position: relative;
+  width: 2.25rem;
+  height: 1.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-hover);
+  transition: background var(--motion-fast) ease;
+}
+
+.thai-lotto-toggle.is-active .thai-lotto-toggle__track {
+  background: var(--cta-primary-gradient);
+}
+
+.thai-lotto-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  background: var(--text-primary);
+  transition: transform var(--motion-fast) ease;
+}
+
+.thai-lotto-toggle.is-active .thai-lotto-toggle__thumb {
+  transform: translateX(1rem);
+}
+
+/* ช่องเลข + แป้น */
+.thai-lotto-slots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-1-5, 0.375rem);
+}
+
+.thai-lotto-slot {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2.25rem;
+  border: 1px solid var(--lottery-control-border);
+  border-radius: calc(var(--radius-panel) - 6px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 78%, var(--surface-solid-inner));
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+/* ตัวเลขที่กรอกแล้ว — สีขาวชัด ต่างจากช่องว่าง */
+.thai-lotto-slot.is-filled {
+  background: var(--surface-solid-inner);
+  color: var(--text-primary);
+}
+
+.thai-lotto-slot.is-next {
+  border-color: color-mix(in srgb, var(--border-active) 55%, var(--lottery-control-border));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border-active) 35%, transparent);
+}
+
+.thai-lotto-pad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.25rem;
+}
+
+@media (min-width: 1024px) {
+  .thai-lotto-pad {
+    width: 100%;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+}
+
+.thai-lotto-pad__key {
+  display: grid;
+  place-items: center;
+  min-height: 1.875rem;
+  border: 1px solid var(--lottery-control-border);
+  border-radius: calc(var(--radius-panel) - 8px);
+  background: var(--lottery-glass-fill);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background var(--motion-fast) ease,
+    opacity var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.thai-lotto-pad__key:hover:not(:disabled) {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.thai-lotto-pad__key:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.thai-lotto-pad__key--muted {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--lottery-control-border);
+  background: color-mix(in srgb, var(--surface-solid-outer) 55%, var(--surface-solid-inner));
+}
+
+.thai-lotto-pad__key:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* แท็บวิธีใส่เลข — ขีดเส้นใต้ แยกจาก segment จำนวนหลักด้านบน */
+.thai-lotto-mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.thai-lotto-mode-tabs__tab {
+  position: relative;
+  min-height: 2.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color var(--motion-fast) ease;
+}
+
+.thai-lotto-mode-tabs__tab:hover {
+  color: var(--text-primary);
+}
+
+.thai-lotto-mode-tabs__tab.is-active {
+  color: var(--text-primary);
+}
+
+.thai-lotto-mode-tabs__tab.is-active::after {
+  content: "";
+  position: absolute;
+  right: 20%;
+  bottom: -1px;
+  left: 20%;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 0.88);
+}
+
+.thai-lotto-mode-tabs__tab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+  border-radius: calc(var(--radius-panel) - 12px);
+}
+
+/* แผงเลข */
+.thai-lotto-grid__caption {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.thai-lotto-hundreds {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .thai-lotto-hundreds {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+}
+
+.thai-lotto-hundreds__btn {
+  position: relative;
+  min-height: 1.875rem;
+  padding: 0.15rem 0.25rem;
+  border: 1px solid var(--lottery-control-border);
+  border-radius: calc(var(--lottery-grid-cell-radius, var(--radius-card)) - 2px);
+  background: var(--lottery-glass-fill);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.thai-lotto-hundreds__btn:hover {
+  color: var(--text-primary);
+  background: var(--lottery-glass-fill-hover);
+}
+
+.thai-lotto-hundreds__btn.is-active {
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  border-color: transparent;
+}
+
+.thai-lotto-hundreds__dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #ffe66d;
+}
+
+.thai-lotto-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .thai-lotto-grid:not(.thai-lotto-grid--run) {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+}
+
+.thai-lotto-grid__btn {
+  min-height: 1.875rem;
+  padding: 0.15rem 0.25rem;
+  border: 1px solid var(--lottery-control-border);
+  border-radius: calc(var(--lottery-grid-cell-radius, var(--radius-card)) - 2px);
+  background: var(--lottery-glass-fill);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.thai-lotto-grid--run .thai-lotto-grid__btn {
+  min-height: 2.25rem;
+  padding: 0.25rem;
+  font-size: 1rem;
+}
+
+.thai-lotto-grid__btn:hover:not(:disabled) {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.thai-lotto-grid__btn.is-active {
+  background: #ffcc00;
+  color: #0a0a0a;
+}
+
+.thai-lotto-grid__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.thai-lotto-feedback {
+  margin: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--success);
+}
+
+.thai-lotto-feedback:empty {
+  display: none;
+}
+
+/* โพย — แถบเครื่องมือล่าง (ย้อนกลับ / ล้าง) */
+.lottery-slip-toolbar {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: stretch;
+  margin-top: auto;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--surface-solid-outer) 78%, var(--surface-solid-inner));
+}
+
+.lottery-slip-toolbar__divider {
+  background: rgb(255 255 255 / 0.1);
+}
+
+.lottery-slip-toolbar__btn {
+  display: grid;
+  place-items: center;
+  min-height: 2.5rem;
+  color: var(--text-secondary);
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    opacity var(--motion-fast) ease;
+}
+
+.lottery-slip-toolbar__btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--surface-hover) 45%, transparent);
+  color: var(--text-primary);
+}
+
+.lottery-slip-toolbar__btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.thai-lotto-layout__slip .thai-lotto-slip,
+.yiki-layout__slip .yiki-slip {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--space-2);
+  padding: var(--space-2);
+}
+
+.thai-lotto-layout__slip .thai-lotto-slip__head-count,
+.yiki-layout__slip .yiki-slip__head {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.thai-lotto-layout__slip .thai-lotto-slip__default {
+  gap: var(--space-1) var(--space-2);
+}
+
+.thai-lotto-layout__slip .thai-lotto-slip__default-label,
+.thai-lotto-layout__slip .thai-lotto-slip__text-btn {
+  font-size: 0.6875rem;
+}
+
+.thai-lotto-layout__slip .thai-lotto-amount {
+  min-height: 2rem;
+  padding-inline: var(--space-2);
+}
+
+.thai-lotto-layout__slip .thai-lotto-slip__summary {
+  padding-block: 0.15rem;
+}
+
+.thai-lotto-layout__slip .thai-lotto-slip__total {
+  font-size: 0.9375rem;
+}
+
+.thai-lotto-slip__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-selected);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.thai-lotto-slip__text-btn {
+  min-height: 2.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--focus-ring);
+  white-space: nowrap;
+}
+
+.thai-lotto-slip__text-btn:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.thai-lotto-slip__text-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.thai-lotto-slip__default {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.thai-lotto-slip__default-label {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.thai-lotto-amount {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 2.5rem;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
+}
+
+.thai-lotto-amount:focus-within {
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.thai-lotto-amount.is-invalid {
+  box-shadow: inset 0 0 0 1.5px #f87171;
+}
+
+.thai-lotto-amount__input {
+  width: 4.5rem;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.thai-lotto-amount--sm {
+  min-height: 2.25rem;
+  padding: 0 var(--space-2);
+}
+
+.thai-lotto-amount--sm .thai-lotto-amount__input {
+  width: 3.75rem;
+}
+
+.thai-lotto-amount__unit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.thai-lotto-slip__empty {
+  display: grid;
+  place-items: center;
+  flex: 1 1 auto;
+  margin: 0;
+  padding: var(--space-6) var(--space-2);
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.thai-lotto-slip__list {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  gap: var(--space-2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (min-width: 1024px) {
+  .thai-lotto-slip__list {
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: none;
+  }
+}
+
+.thai-lotto-slip__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.thai-lotto-slip__group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem var(--space-2);
+  border-radius: calc(var(--radius-panel) - 14px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.thai-lotto-slip__group-head span:last-child {
+  color: #ffe66d;
+  font-variant-numeric: tabular-nums;
+}
+
+.thai-lotto-slip__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/** แถวโพย — เลข · อัตราจ่าย · ราคา · ลบ ในบรรทัดเดียว (โทนเดียวกับ yiki-slip) */
+.thai-lotto-slip__row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.35rem 0.3rem 0.5rem;
+  border: 0;
+  border-radius: calc(var(--radius-panel) - 14px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 68%, var(--surface-solid-inner));
+}
+
+.thai-lotto-slip__number {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.thai-lotto-slip__rate {
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #ffe66d;
+  font-variant-numeric: tabular-nums;
+}
+
+.thai-lotto-amount--slip-row {
+  flex-shrink: 0;
+  min-height: 1.75rem;
+  padding: 0 0.35rem;
+}
+
+.thai-lotto-amount--slip-row .thai-lotto-amount__input {
+  width: 2.75rem;
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.thai-lotto-slip__remove {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  color: var(--text-muted);
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.thai-lotto-slip__remove:hover {
+  background: color-mix(in srgb, var(--surface-solid-outer) 70%, var(--surface-solid-inner));
+  color: var(--text-primary);
+}
+
+.thai-lotto-slip__error {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #fca5a5;
+}
+
+.thai-lotto-slip__summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.thai-lotto-slip__total {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ผลงวดก่อน */
+.thai-lotto-result__first {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: calc(var(--radius-panel) - 10px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 90%, #000);
+}
+
+.thai-lotto-result__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.thai-lotto-result__first-value {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #ffe66d;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.thai-lotto-result__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.thai-lotto-result__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-1);
+  border-radius: calc(var(--radius-panel) - 10px);
+  background: var(--surface-solid-inner);
+}
+
+.thai-lotto-result__values {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.15rem var(--space-2);
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thai-lotto-type-chip,
+  .thai-lotto-toggle__track,
+  .thai-lotto-toggle__thumb,
+  .thai-lotto-slot,
+  .thai-lotto-pad__key,
+  .thai-lotto-mode-tabs__tab,
+  .thai-lotto-hundreds__btn,
+  .thai-lotto-grid__btn,
+  .thai-lotto-slip__remove {
+    transition: none;
+  }
+}
+
+/*
+ * --- Yiki 15-minute lottery (/lottery/yiki-15) — mobile-first ---
+ * เลย์เอาต์เดียวกับหวยรัฐบาลไทย (โพย/ใส่ราคาซ้าย + เลือกเลขขวา) แต่ไม่มีแถวผลรางวัลในหน้าแทง
+ * และมี action bar คงที่ล่างสุดแทน FloatingBottomNav
+ */
+.yiki-page-main {
+  padding-bottom: calc(var(--yiki-action-bar-height, 76px) + var(--nav-safe) + var(--space-4));
+}
+
+.yiki-round-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+}
+
+.yiki-round-strip__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.yiki-round-strip__close {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.yiki-round-strip__close-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+.yiki-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 168px) minmax(0, 1fr);
+  grid-template-areas:
+    "round round"
+    "slip input";
+  gap: var(--space-3) var(--space-2);
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .yiki-layout {
+    grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+@media (min-width: 1024px) {
+  /*
+   * จอใหญ่: โพยคอลัมน์ซ้ายแคบ · เลือกเลขคอลัมน์ขวากว้าง
+   */
+  .yiki-layout {
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    grid-template-areas:
+      "round round"
+      "slip input"
+      "howto howto";
+    grid-template-rows: auto 1fr auto;
+    gap: var(--space-4) var(--space-6);
+  }
+}
+
+/*
+ * ขั้นใส่ราคา — มือถือ/แท็บเล็ต: คอลัมน์เดียวเต็มความกว้าง (โพยแล้วตามด้วยแผงใส่ราคาซึ่ง auto-place ต่อท้าย
+ * เพราะ template นี้ไม่มี area "input" ให้) จอใหญ่ (≥1024px): กำหนดค่าเดียวกับ template ปกติของ .yiki-layout
+ * ซ้ำไว้ตรงๆ (โพยกว้างซ้าย + แผงใส่ราคาแคบขวา) กัน source order ชนะทับกันเอง
+ */
+/*
+ * ใช้ selector คู่ .yiki-layout.yiki-layout--price (specificity สูงกว่า .yiki-layout เฉยๆ) เพื่อไม่ให้
+ * ผลลัพธ์ขึ้นกับลำดับไฟล์ที่ CSS minifier อาจจัดเรียงต่างจากที่เขียนไว้
+ * ระบุ area "input" ไว้ตรงๆ เป็นแถวที่ 3 (ไม่พึ่ง auto-placement) กัน browser วาง input เป็นคอลัมน์แยกแทนที่จะซ้อนลงมา
+ */
+/* โครงขั้น price ของยี่กี — ดู :is(.yiki-layout.yiki-layout--price) ด้านบน (การ์ดเดียว) */
+
+.yiki-layout__round { grid-area: round; min-width: 0; }
+.yiki-layout__input {
+  grid-area: input;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* แถบ "วิธีการแทงหวย" — เฉพาะจอใหญ่ตามที่ระบุ ไม่แสดงบนมือถือ */
+.yiki-layout__howto {
+  display: none;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .yiki-layout__howto {
+    display: block;
+    grid-area: howto;
+  }
+}
+
+.yiki-layout__slip {
+  grid-area: slip;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ปุ่มเลือกประเภทการแทง — เลือกได้ทีละปุ่ม ไม่มีช่อง checkbox เหมือนหวยรัฐบาลไทย */
+.yiki-type-grid {
+  display: grid;
+  /* บังคับ 2 คอลัมน์เสมอ จับคู่ปุ่มตามลำดับ (เช่น "3 ตัวบน" กับ "3 ตัวบนกลับ" อยู่แถวเดียวกัน) ตามดีไซน์อ้างอิง */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.yiki-type-chip {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  min-height: 2rem;
+  padding: 0.25rem var(--space-2);
+  border: 1px solid var(--lottery-control-border);
+  border-radius: calc(var(--radius-panel) - 8px);
+  background: var(--lottery-glass-fill, var(--surface-solid-inner));
+  color: var(--text-secondary);
+  text-align: left;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.yiki-type-chip:hover {
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
+  color: var(--text-primary);
+}
+
+.yiki-type-chip.is-active {
+  border-color: color-mix(in srgb, var(--cta-white-bg) 88%, var(--lottery-control-border));
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+}
+
+.yiki-type-chip__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.yiki-type-chip__rate {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-type-chip.is-active .yiki-type-chip__rate {
+  color: color-mix(in srgb, var(--cta-white-fg) 72%, #b45309);
+}
+
+/* โพย/ใส่ราคา — หัวเป็นจำนวนรายการ (ไม่มีคำว่า "โพยของฉัน" ตามดีไซน์อ้างอิง) */
+.yiki-slip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+}
+
+@media (min-width: 640px) {
+  .yiki-slip {
+    padding: var(--space-4);
+  }
+}
+
+.yiki-slip__head {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.yiki-slip__empty {
+  display: grid;
+  place-items: center;
+  flex: 1 1 auto;
+  margin: 0;
+  padding: var(--space-6) var(--space-2);
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.yiki-slip__list {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  gap: var(--space-2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (min-width: 1024px) {
+  .yiki-layout__slip .yiki-slip__list {
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: none;
+  }
+}
+
+.yiki-slip__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .yiki-slip__group {
+    gap: var(--space-2);
+    padding: var(--space-2);
+    border-radius: calc(var(--radius-panel) - 6px);
+    background: color-mix(in srgb, var(--surface-solid-outer) 55%, var(--surface-solid-inner));
+  }
+}
+
+.yiki-slip__group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem var(--space-2);
+  border-radius: calc(var(--radius-panel) - 14px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.yiki-slip__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem var(--space-2) 0.4rem var(--space-3);
+  border-radius: calc(var(--radius-panel) - 14px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 68%, var(--surface-solid-inner));
+}
+
+.yiki-slip__number {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-slip__rate {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-slip__remove {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  color: var(--text-muted);
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.yiki-slip__remove:hover {
+  background: color-mix(in srgb, var(--surface-solid-outer) 75%, var(--surface-solid-inner));
+  color: var(--text-primary);
+}
+
+.yiki-slip__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 0;
+}
+
+.yiki-slip__tool-btn {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--surface-solid-outer) 70%, var(--surface-solid-inner));
+  color: var(--text-secondary);
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    opacity var(--motion-fast) ease;
+}
+
+.yiki-slip__tool-btn:hover:not(:disabled) {
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
+  color: var(--text-primary);
+}
+
+.yiki-slip__tool-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/*
+ * แถวใส่ราคาต่อรายการ — ลำดับ · เลข · ช่องราคา · อัตราจ่าย · ยอดชนะที่คำนวณได้ (—/ตัวเลข) · ลบ
+ * คลิกทั้งแถวเพื่อเลือกเป็นเป้าหมายของชิปราคาด่วนใน YikiPriceControls (ไฮไลต์กรอบทองเมื่อเลือกอยู่)
+ */
+.yiki-price-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem var(--space-2) 0.4rem var(--space-3);
+  border-radius: calc(var(--radius-panel) - 14px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 68%, var(--surface-solid-inner));
+  box-shadow: none;
+  cursor: pointer;
+  transition: background var(--motion-fast) ease;
+}
+
+.yiki-price-row.is-selected {
+  background: var(--lottery-glass-fill-hover, var(--surface-solid-inner));
+}
+
+.yiki-price-row__index {
+  flex-shrink: 0;
+  width: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-price-row__number {
+  flex-shrink: 0;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-price-row__input {
+  flex: 1 1 5.5rem;
+  min-width: 0;
+}
+
+.yiki-price-row__input .thai-lotto-amount__input {
+  width: 100%;
+  text-align: left;
+}
+
+.yiki-price-row__input .thai-lotto-amount__input::placeholder {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.yiki-price-row__rate {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-price-row__payout {
+  flex-shrink: 0;
+  min-width: 3.25rem;
+  text-align: right;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #ffe66d;
+  font-variant-numeric: tabular-nums;
+}
+
+/* action bar คงที่ล่างสุด — แทน FloatingBottomNav บนหน้าแทงยี่กี */
+.yiki-action-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--page-gutter) calc(var(--space-3) + var(--nav-safe));
+  background: color-mix(in srgb, var(--surface-solid-outer) 94%, #000);
+  border-top: 0;
+}
+
+@media (min-width: 1024px) {
+  /*
+   * จัดปุ่มให้กว้างตรงกับคอลัมน์โพย/เลือกเลขด้านบน แทนแบ่งครึ่งเท่ากัน
+   * เว้นซ้ายตาม sidebar ของ LobbyDesktopPageShell (--lobby-bottom-nav-inset-left จาก .lobby-desktop-shell
+   * ที่ครอบอยู่ — ไม่งั้นพื้นแถบจะพาดใต้ sidebar) fallback 0px กันหน้าที่ไม่มี shell ครอบ
+   */
+  .yiki-action-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+    gap: var(--space-6);
+    max-width: var(--content-max);
+    margin-inline: auto;
+    left: var(--lobby-bottom-nav-inset-left, 0px);
+  }
+}
+
+/* ไม่มีปุ่มรอง (เช่นขั้นใส่ราคาที่ย้าย "กลับแก้ไขเลข" ไปการ์ดขวาแล้ว) — ปุ่มหลักขยายเต็มความกว้าง */
+.yiki-action-bar--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.yiki-action-bar--single .yiki-action-bar__primary {
+  grid-column: 1 / -1;
+}
+
+.yiki-action-bar__secondary {
+  display: grid;
+  flex: 1 1 0;
+  place-items: center;
+  min-height: 3rem;
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  text-align: center;
+}
+
+.yiki-action-bar__secondary:hover {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.yiki-action-bar__primary {
+  flex: 1 1 0;
+  min-height: 3rem;
+  font-size: 0.9375rem;
+}
+
+/* "วิธีการแทงหวย" — จอใหญ่เท่านั้น สีตามธีมเดิมทั้งหมด (ไม่ใช้โทนทอง/ดำจากภาพอ้างอิง) */
+.yiki-howto {
+  padding: var(--space-5);
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+  text-align: center;
+}
+
+.yiki-howto__title {
+  margin: 0 0 var(--space-4);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.yiki-howto__list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.yiki-howto__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.yiki-howto__badge {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  background: var(--action-solid);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.yiki-howto__icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--surface-solid-outer) 88%, #000);
+  color: var(--icon-default);
+}
+
+.yiki-howto__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/*
+ * แผงใส่ราคา (YikiPriceControls) — พรีวิวเลขที่เลือก + ติ๊กราคาเท่ากัน + ชิปราคาด่วน + ปุ่มแก้ไข + ยอดรวม
+ * สีชิปราคาแต่ละใบต่างกันเพื่อแยกมูลค่าด้วยตา (ธรรมเนียมชิปคาสิโน) แต่คุมโทนให้เข้ากับพื้นเข้มของธีม ไม่ใช้สีจากภาพอ้างอิง
+ */
+.yiki-price-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .yiki-layout--price .yiki-price-controls {
+    min-height: min(36rem, 70dvh);
+  }
+
+  .yiki-price-controls__actions {
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+}
+
+.yiki-price-controls__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.yiki-price-controls__preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: var(--space-4);
+  border-radius: calc(var(--radius-panel) - 8px);
+  background: color-mix(in srgb, var(--surface-solid-outer) 80%, #000);
+}
+
+.yiki-price-controls__preview-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.yiki-price-controls__preview-number {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #ffe66d;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+}
+
+.yiki-price-controls__preview-rate {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.yiki-price-controls__checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.yiki-price-controls__checkbox input[type="checkbox"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--chart-2);
+}
+
+.yiki-price-controls__chips {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.yiki-price-chip {
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.yiki-price-chip.is-active {
+  border-color: transparent;
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
+}
+
+.yiki-price-chip--5:not(.is-active) {
+  background: color-mix(in srgb, #38bdf8 14%, var(--surface-solid-inner));
+}
+
+.yiki-price-chip--10:not(.is-active) {
+  background: color-mix(in srgb, #22c55e 12%, var(--surface-solid-inner));
+}
+
+.yiki-price-chip--20:not(.is-active) {
+  background: color-mix(in srgb, #d99a08 14%, var(--surface-solid-inner));
+}
+
+.yiki-price-chip--50:not(.is-active) {
+  background: color-mix(in srgb, #f97316 12%, var(--surface-solid-inner));
+}
+
+.yiki-price-chip--100:not(.is-active) {
+  background: color-mix(in srgb, #f43f5e 12%, var(--surface-solid-inner));
+}
+
+.yiki-price-controls__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.yiki-price-controls__total span:last-child {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ปุ่ม "กลับแก้ไขเลข" + "ส่งโพย" — ย้ายมาไว้ในการ์ดใส่ราคาแทนแถบปุ่มล่างสุด (ซึ่งไม่แสดงแล้วในขั้นนี้) */
+.yiki-price-controls__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.yiki-price-controls__back {
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--lottery-glass-fill);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: background var(--motion-fast) ease;
+}
+
+.yiki-price-controls__back:hover {
+  background: var(--lottery-glass-fill-hover);
+}
+
+.yiki-price-controls__submit {
+  min-height: 2.75rem;
+  font-size: 0.875rem;
+}
+
+/* แถวโพย/ใส่ราคา — 2 คอลัมน์ต่อการ์ดประเภท (จอใหญ่) */
+.yiki-slip-rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+@media (min-width: 1024px) {
+  .yiki-slip-rows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ปุ่มใส่ราคา — ในการ์ดเลือกเลข (มือถือ: ปุ่มเดียวเหนือ bottom nav · จอใหญ่: คู่กับกลับรายการรอบ) */
+.yiki-pick-actions {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: 0.25rem;
+}
+
+:is(.thai-lotto-panel.thai-lotto-layout__input, .thai-lotto-panel.yiki-layout__input) {
+  height: 100%;
+  gap: 0.5rem;
+}
+
+.yiki-pick-actions__back {
+  display: none;
+}
+
+.yiki-pick-actions__primary {
+  min-height: 2.75rem;
+  width: 100%;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1024px) {
+  .yiki-pick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: var(--space-3);
+  }
+
+  .yiki-pick-actions__back {
+    display: grid;
+    place-items: center;
+    min-height: 2.75rem;
+    border: 0;
+    border-radius: var(--radius-panel);
+    background: var(--lottery-glass-fill);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: background var(--motion-fast) ease;
+  }
+
+  .yiki-pick-actions__back:hover {
+    background: var(--lottery-glass-fill-hover);
+  }
+
+  .yiki-page-main {
+    padding-bottom: var(--space-6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yiki-type-chip,
+  .yiki-slip__remove,
+  .yiki-slip__tool-btn,
+  .yiki-price-row,
+  .yiki-price-chip,
+  .yiki-price-controls__back {
+    transition: none;
+  }
+}
+
+/*
+ * Providers marquee — หน้าแรก (ProviderLogoMarquee.tsx)
+ * โลโก้ grayscale · hover ขาว · ไม่มี glass card
+ */
+.provider-logo-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-block: var(--space-2);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.provider-logo-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: provider-logo-marquee-scroll 52s linear infinite;
+  will-change: transform;
+}
+
+.provider-logo-marquee__track:hover {
+  animation-play-state: paused;
+}
+
+.provider-logo-marquee__group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  padding-inline: clamp(0.375rem, 1vw, 0.75rem);
+}
+
+.provider-logo-marquee__link {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: clamp(6.25rem, 13vw, 9.5rem);
+  border-radius: var(--radius-control);
+  transition: transform var(--motion-fast) ease;
+}
+
+.provider-logo-marquee__link:hover,
+.provider-logo-marquee__link:focus-visible {
+  transform: translateY(-1px);
+}
+
+.provider-logo-marquee__img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0.58;
+  filter: grayscale(1);
+  transition:
+    filter var(--motion-fast) ease,
+    opacity var(--motion-fast) ease;
+}
+
+.provider-logo-marquee__link:hover .provider-logo-marquee__img,
+.provider-logo-marquee__link:focus-visible .provider-logo-marquee__img {
+  opacity: 1;
+  filter: grayscale(1) brightness(0) invert(1);
+}
+
+@keyframes provider-logo-marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .provider-logo-marquee__track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  .provider-logo-marquee__group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .provider-logo-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

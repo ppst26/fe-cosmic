@@ -1,0 +1,403 @@
+/* แถบค้นหา + ตัวกรองหมวดย่อย (ค่ายเกม) — แถบเดียว · glass-card--soft */
+.provider-category-toolbar {
+  margin-block: 0 0.625rem;
+}
+
+.provider-category-toolbar__row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.provider-category-toolbar .glass-card--soft {
+  border-radius: var(--radius-card);
+  box-shadow: none;
+}
+
+.provider-category-toolbar .glass-card--soft.is-filter-active {
+  color: var(--icon-active);
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.28),
+    rgb(90 70 130 / 0.18)
+  );
+}
+
+.provider-category-toolbar__filter-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    filter 160ms ease;
+}
+
+.provider-category-toolbar__filter-label,
+.provider-category-toolbar__filter-chevron {
+  display: none;
+}
+
+.provider-category-toolbar__search-field {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding-inline: 14px;
+}
+
+.provider-category-toolbar__search-input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  box-shadow: none;
+}
+
+.provider-category-toolbar__search-input::placeholder {
+  color: var(--text-muted);
+}
+
+@media (min-width: 1024px) {
+  .provider-category-toolbar__search-field {
+    height: 46px;
+    padding-inline: 16px;
+  }
+
+  .provider-category-toolbar__filter-btn {
+    width: auto;
+    height: 46px;
+    padding-inline: 16px;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .provider-category-toolbar__filter-label,
+  .provider-category-toolbar__filter-chevron {
+    display: inline;
+  }
+
+  .provider-category-toolbar__filter-btn:hover {
+    color: var(--text-primary);
+    filter: brightness(1.04);
+  }
+}
+
+.provider-category-toolbar__filter-panel {
+  margin-top: 10px;
+  animation: provider-toolbar-filter-in 240ms ease-out both;
+}
+
+@keyframes provider-toolbar-search-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes provider-toolbar-filter-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .provider-category-toolbar__search-row,
+  .provider-category-toolbar__filter-panel {
+    animation: none;
+  }
+}
+
+/* WelcomeBanner carousel — dots ด้านใน (โทนเดียวกับ promo carousel) */
+.welcome-banner__track {
+  scroll-padding-inline: 0;
+}
+
+.welcome-banner__dots-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: rgb(12 10 24 / 72%);
+}
+
+.welcome-banner__dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: rgb(120 115 150 / 85%);
+  cursor: pointer;
+  transition:
+    width 200ms ease,
+    background 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.welcome-banner__dot:hover {
+  background: rgb(160 155 185 / 95%);
+}
+
+.welcome-banner__dot.is-active {
+  width: 22px;
+  background: var(--chart-2);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--chart-2) 55%, transparent);
+}
+
+/** หน้าคืนยอดเสีย (/loss-rebate) — LossRebatePageContent.tsx */
+.loss-rebate-page__month-select {
+  cursor: pointer;
+}
+
+/** Select แบบ Radix — CosmicSelectField.tsx · แทน native <select> */
+.cosmic-select__content {
+  -webkit-backdrop-filter: blur(16px) saturate(1.12);
+  backdrop-filter: blur(16px) saturate(1.12);
+}
+
+.cosmic-select__item[data-highlighted] {
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.28),
+    rgb(90 70 130 / 0.18)
+  );
+  color: var(--text-primary);
+}
+
+.cosmic-select__item svg {
+  color: var(--icon-active);
+}
+
+.mobile-standalone-page .loss-rebate-page .cosmic-choice-btn.is-active {
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+}
+
+/* Dialog ตัวกรองค่ายเกม (FILTER) — ProviderFilterDialog.tsx */
+.provider-filter-dialog.cosmic-modal-shell {
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: var(--glass-fill-modal);
+}
+
+@media (max-width: 1023px) {
+  .provider-filter-dialog.cosmic-modal-shell {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--surface-start) 96%, var(--bg-page)) 0%,
+      color-mix(in srgb, var(--surface-end) 92%, var(--bg-page)) 100%
+    );
+  }
+}
+
+.provider-filter-dialog__header {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr 2.25rem;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.85rem 0.75rem 0.65rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+}
+
+.provider-filter-dialog__header-spacer {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.provider-filter-dialog__header-btn {
+  justify-self: center;
+}
+
+.provider-filter-dialog__title {
+  margin: 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.provider-filter-dialog__list {
+  margin: 0;
+  padding: 4px 0 8px;
+  list-style: none;
+}
+
+.provider-filter-dialog__list--sub {
+  padding-block: 0 12px;
+  overflow-y: auto;
+}
+
+.provider-filter-dialog__row,
+.provider-filter-dialog__option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.55rem 1rem;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.provider-filter-dialog__row:hover,
+.provider-filter-dialog__option:hover {
+  background: color-mix(in srgb, var(--surface-hover) 45%, transparent);
+  color: var(--text-primary);
+}
+
+.provider-filter-dialog__row-icon,
+.provider-filter-dialog__option-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--icon-default);
+}
+
+.provider-filter-dialog__row-body {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.provider-filter-dialog__row-label,
+.provider-filter-dialog__option-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.provider-filter-dialog__row-value {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.provider-filter-dialog__row-value:empty {
+  display: none;
+}
+
+.provider-filter-dialog__row-chevron {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: var(--icon-default);
+  opacity: 0.75;
+}
+
+.provider-filter-dialog__option.is-selected {
+  background: color-mix(in srgb, var(--accent-primary) 14%, transparent);
+}
+
+.provider-filter-dialog__option.is-selected .provider-filter-dialog__option-label {
+  color: var(--text-primary);
+}
+
+.provider-filter-dialog__option-check {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--accent-primary);
+}
+
+.provider-filter-dialog__option-check-placeholder {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.provider-filter-dialog__footer {
+  margin-top: auto;
+  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+  padding: 0.15rem 0 0.5rem;
+}
+
+.provider-filter-dialog__toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 10px 18px;
+}
+
+.provider-filter-dialog__toggle-label {
+  flex: 1;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.provider-filter-dialog__switch {
+  position: relative;
+  width: 2.875rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 70%, transparent);
+  border-radius: var(--radius-pill);
+  background: var(--glass-fill-subtle);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.provider-filter-dialog__switch.is-on {
+  border-color: transparent;
+  background: var(--cta-white-bg);
+}
+
+.provider-filter-dialog__switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: var(--radius-pill);
+  background: var(--text-primary);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.28);
+  transition: transform var(--motion-fast) ease;
+}
+
+.provider-filter-dialog__switch.is-on .provider-filter-dialog__switch-knob {
+  transform: translateX(1.125rem);
+  background: var(--cta-white-fg);
+}
+

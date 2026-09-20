@@ -1,0 +1,594 @@
+/** Overlay มืดเท่านั้น — ไม่ backdrop-blur (DesktopHubModal, sheet ฯลฯ) */
+.cosmic-dialog-overlay {
+  background: var(--dialog-overlay-bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/** โครง modal / bottom sheet — glass shell มุมจาก --radius-panel */
+.cosmic-modal-shell {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-panel);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
+}
+
+/** มือถือ — shell ไม่ blur พื้นหลัง (โทน glass จาก gradient ทึบขึ้น) */
+@media (max-width: 1023px) {
+  :is(.cosmic-modal-shell, .cosmic-modal-shell--hub, .cosmic-modal-shell--lobby) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: linear-gradient(
+      145deg,
+      rgb(36 32 48 / 0.96),
+      rgb(22 18 32 / 0.98)
+    );
+  }
+
+  /**
+   * Bottom sheet ฝาก/ถอน/คูปอง — พื้นเทาเข้ม ลดโทนม่วงจาก glass-fill
+   * responsiveSheetDialog.ts · ResponsiveSheetHeader.tsx
+   */
+  .cosmic-mobile-sheet.cosmic-modal-shell {
+    border-color: rgb(255 255 255 / 0.11);
+    background: linear-gradient(
+      180deg,
+      rgb(52 54 62 / 0.82) 0%,
+      rgb(38 40 48 / 0.78) 100%
+    );
+    -webkit-backdrop-filter: blur(22px) saturate(1.12);
+    backdrop-filter: blur(22px) saturate(1.12);
+    box-shadow:
+      0 -20px 48px rgb(0 0 0 / 0.42),
+      inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  .cosmic-mobile-sheet .glass-control {
+    border-color: rgb(255 255 255 / 0.1);
+    background: linear-gradient(
+      145deg,
+      rgb(255 255 255 / 0.08),
+      rgb(255 255 255 / 0.04)
+    );
+  }
+
+  .cosmic-mobile-sheet .glass-control:hover:not(:disabled):not(.is-active) {
+    background: linear-gradient(
+      145deg,
+      rgb(255 255 255 / 0.11),
+      rgb(255 255 255 / 0.06)
+    );
+  }
+
+  .cosmic-modal-shell--hub {
+    background: linear-gradient(155deg, rgb(28 26 36 / 0.98), rgb(14 13 20 / 0.99));
+  }
+}
+
+.cosmic-sheet-shell {
+  border: 0;
+  border-top-left-radius: var(--radius-panel);
+  border-top-right-radius: var(--radius-panel);
+}
+
+/**
+ * Bottom sheet — panel / input / quick select (soft glass)
+ * cosmicButtonClasses.ts · Deposit / Withdraw / Coupon / Login / SignUp
+ */
+:is(.cosmic-mobile-sheet, .sign-up-picker-sheet) {
+  --sheet-soft-fill: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.11),
+    rgb(255 255 255 / 0.045)
+  );
+  --sheet-soft-fill-hover: linear-gradient(
+    145deg,
+    rgb(255 255 255 / 0.14),
+    rgb(255 255 255 / 0.075)
+  );
+  --sheet-soft-border: rgb(255 255 255 / 0.1);
+  --sheet-soft-blur: 14px;
+}
+
+.cosmic-sheet-soft-glass {
+  border: 1px solid var(--sheet-soft-border, rgb(255 255 255 / 0.1));
+  border-radius: var(--radius-panel);
+  background: var(
+    --sheet-soft-fill,
+    linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.05))
+  );
+  -webkit-backdrop-filter: blur(var(--sheet-soft-blur, 14px)) saturate(1.1);
+  backdrop-filter: blur(var(--sheet-soft-blur, 14px)) saturate(1.1);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.09),
+    0 8px 22px rgb(0 0 0 / 0.14);
+}
+
+button.cosmic-sheet-soft-glass--interactive:hover,
+a.cosmic-sheet-soft-glass--interactive:hover {
+  background: var(
+    --sheet-soft-fill-hover,
+    linear-gradient(145deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.07))
+  );
+}
+
+button.cosmic-sheet-soft-glass--interactive:active {
+  transform: scale(0.995);
+}
+
+/** แถว input ใน sheet — โทนเดียวกับ panel ข้อมูล */
+.cosmic-sheet-field {
+  border: 1px solid var(--sheet-soft-border, rgb(255 255 255 / 0.1));
+  border-radius: var(--radius-panel);
+  background: var(
+    --sheet-soft-fill,
+    linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.05))
+  );
+  -webkit-backdrop-filter: blur(var(--sheet-soft-blur, 14px)) saturate(1.1);
+  backdrop-filter: blur(var(--sheet-soft-blur, 14px)) saturate(1.1);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 6px 18px rgb(0 0 0 / 0.12);
+}
+
+.cosmic-sheet-field--amount {
+  min-height: 3.5rem;
+}
+
+.cosmic-sheet-field__addon {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  border-right: 1px solid rgb(255 255 255 / 0.08);
+  background: rgb(255 255 255 / 0.05);
+}
+
+/**
+ * Bottom sheet มือถือ — ไม่ใช้ focus ring/outline (responsiveSheetDialog + SignUpPickerSheet)
+ */
+@media (max-width: 1023px) {
+  :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(a, button, [tabindex]):focus-visible {
+    outline: none;
+    outline-offset: 0;
+    box-shadow: none;
+  }
+
+  :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(input, textarea, select):is(:focus, :focus-visible) {
+    font-size: inherit;
+  }
+}
+
+/**
+ * Surface solid สองชั้น — ชั้นนอก #18141f · ชั้นใน #272132
+ * ใช้จัดกลุ่มข้อมูลให้อ่านง่าย (ตลาดกีฬา, ตารางอัตราจ่าย, ช่องตัวเลือก)
+ */
+.surface-solid-outer {
+  background-color: var(--surface-solid-outer);
+  color: var(--text-primary);
+}
+
+.surface-solid-inner {
+  background-color: var(--surface-solid-inner);
+  color: var(--text-primary);
+}
+
+/** กลุ่มชั้นนอก — ใส่ .surface-solid-inner เป็นลูกหรือช่องย่อย */
+.surface-solid-stack {
+  background-color: var(--surface-solid-outer);
+  border-radius: var(--radius-panel);
+  color: var(--text-primary);
+}
+
+.surface-solid-stack .surface-solid-inner {
+  border-radius: var(--radius-card);
+}
+
+/** การ์ดย่อยใน modal / sheet / drawer */
+.cosmic-inset-card {
+  border: 0;
+  border-radius: var(--radius-panel);
+}
+
+/** โปรไฟล์ย่อ — bottom sheet glass (ProfileSlideOverCard.tsx) */
+.profile-hub-sheet.cosmic-mobile-sheet.cosmic-modal-shell {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-hub-sheet__hero {
+  background: linear-gradient(
+    165deg,
+    #6d28d9 0%,
+    #5b21b6 22%,
+    #4338ca 52%,
+    #312e81 78%,
+    #1e1b4b 100%
+  );
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.14);
+}
+
+.profile-hub-sheet__hero .profile-hub-sheet__handle {
+  background: rgb(255 255 255 / 0.32);
+}
+
+.profile-hub-sheet__body {
+  background: var(--glass-fill-subtle);
+  -webkit-backdrop-filter: blur(14px) saturate(1.12);
+  backdrop-filter: blur(14px) saturate(1.12);
+}
+
+.profile-hub-sheet__footer {
+  background: color-mix(in srgb, var(--glass-fill-subtle) 92%, var(--bg-page));
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  backdrop-filter: blur(12px) saturate(1.1);
+}
+
+@media (min-width: 1024px) {
+  .profile-hub-sheet__hero {
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+  }
+}
+
+/** @deprecated popover มุมขวาบน — เก็บชื่อ class ถ้ามี reference เก่า */
+.profile-slideover-card {
+  position: relative;
+  overflow: hidden;
+  width: min(100%, var(--profile-popover-width));
+  max-height: min(calc(100dvh - var(--header-mobile-bar-height) - env(safe-area-inset-top, 0px) - 1rem), 520px);
+  padding: 10px 10px 12px;
+  border-radius: var(--radius-panel);
+  border: 1px solid var(--profile-menu-outline);
+  background: var(--profile-popover-bg);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.42);
+  color: var(--text-primary);
+  transform-origin: top right;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.profile-slideover-card[data-state="open"] {
+  animation: profile-slideover-in 360ms cubic-bezier(0.22, 1.08, 0.36, 1) both;
+}
+
+.profile-slideover-card[data-state="closed"] {
+  animation: profile-slideover-out 220ms cubic-bezier(0.45, 0, 0.75, 0.35) both;
+}
+
+@keyframes profile-slideover-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0) scale(0.94);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translate3d(0, 3px, 0) scale(1.02);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes profile-slideover-out {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0) scale(0.96);
+  }
+}
+
+@keyframes profile-hub-panel-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -4px, 0);
+  }
+
+  62% {
+    opacity: 1;
+    transform: translate3d(0, 2px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-slideover-card[data-state="open"],
+  .profile-slideover-card[data-state="closed"],
+  .profile-slideover-card .profile-hub-accordion__panel {
+    animation: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .profile-slideover-card {
+    width: min(100%, 320px);
+    max-height: min(calc(100dvh - var(--header-desktop-bar-height) - env(safe-area-inset-top, 0px) - 1.5rem), 640px);
+    padding: 14px 14px 16px;
+  }
+}
+
+.profile-hub-accordion {
+  background: transparent;
+}
+
+.profile-hub-accordion__trigger {
+  background: var(--profile-menu-main-bg);
+}
+
+.profile-hub-accordion__trigger:hover {
+  background: var(--profile-menu-main-bg-hover);
+}
+
+.profile-hub-accordion__icon {
+  background: color-mix(in srgb, var(--surface-mid) 88%, transparent);
+}
+
+.profile-hub-accordion__title {
+  font-size: 0.875rem;
+}
+
+.profile-hub-accordion__panel {
+  padding: 0.35rem 0.5rem 0.5rem;
+  background: transparent;
+  border-top: 0;
+}
+
+.profile-hub-row__icon {
+  background: color-mix(in srgb, var(--surface-hover) 70%, var(--surface-mid));
+}
+
+.profile-hub-row__title {
+  font-size: 0.75rem;
+}
+
+.profile-slideover-card .profile-hub-body {
+  gap: 0.5rem;
+}
+
+.profile-slideover-card .profile-hub-header {
+  gap: 0.75rem;
+  padding-bottom: 0.65rem;
+  margin-bottom: 0.1rem;
+  border-bottom: 1px solid var(--profile-menu-outline);
+}
+
+.profile-slideover-card .profile-hub-accordion {
+  overflow: visible;
+  border-radius: 12px;
+  background: transparent;
+}
+
+.profile-slideover-card .profile-hub-accordion__trigger.profile-hub-menu-main {
+  border: 1px solid var(--profile-menu-outline);
+  border-radius: var(--radius-card);
+  background: var(--profile-menu-main-bg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+.profile-slideover-card .profile-hub-accordion__trigger.profile-hub-menu-main:hover {
+  background: var(--profile-menu-main-bg-hover);
+  border-color: color-mix(in srgb, var(--border-subtle) 72%, rgb(255 255 255 / 0.06));
+}
+
+.profile-slideover-card .profile-hub-accordion__icon {
+  background: transparent;
+  color: var(--icon-default);
+}
+
+.profile-slideover-card .profile-hub-accordion__title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.profile-slideover-card .profile-hub-accordion__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.35rem 0 0.15rem;
+  padding-left: 0.65rem;
+  background: transparent;
+  border-top: 0;
+  animation: profile-hub-panel-in 280ms cubic-bezier(0.22, 1.08, 0.36, 1) both;
+}
+
+.profile-slideover-card .profile-hub-row {
+  gap: 0.45rem;
+  padding: 0.38rem 0.45rem 0.38rem 0.75rem;
+  border-radius: var(--radius-card);
+  border: 1px solid color-mix(in srgb, var(--profile-menu-outline) 65%, transparent);
+  background: var(--profile-menu-row-bg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.03);
+}
+
+.profile-slideover-card .profile-hub-row:hover,
+.profile-slideover-card .profile-hub-row:focus-visible {
+  background: var(--profile-menu-row-bg-hover);
+  border-color: color-mix(in srgb, var(--profile-menu-outline) 90%, transparent);
+}
+
+.profile-slideover-card .profile-hub-row__icon {
+  height: 1.35rem;
+  width: 1.35rem;
+  border-radius: 0;
+  background: transparent;
+  color: var(--icon-default);
+}
+
+.profile-slideover-card .profile-hub-row__title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.profile-slideover-card .profile-hub-header__avatar {
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--profile-menu-outline);
+  background: var(--surface-solid-inner);
+}
+
+.profile-slideover-card .profile-hub-header__avatar svg {
+  height: 1.35rem;
+  width: 1.35rem;
+}
+
+.profile-slideover-card .profile-hub-header__name {
+  font-size: 0.9375rem;
+}
+
+.profile-slideover-card .profile-hub-header__meta,
+.profile-slideover-card .profile-hub-header__id span {
+  font-size: 0.6875rem;
+}
+
+.profile-slideover-card .profile-hub-accordion__trigger {
+  padding: 0.6rem 0.7rem;
+}
+
+.profile-slideover-card .profile-hub-accordion__icon {
+  height: 1.75rem;
+  width: 1.75rem;
+}
+
+.profile-slideover-card .profile-hub-logout {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #f87171;
+}
+
+.profile-slideover-card .profile-hub-logout:hover {
+  color: #fca5a5;
+  opacity: 1;
+}
+
+.profile-slideover-card .profile-hub-logout svg {
+  height: 1.05rem;
+  width: 1.05rem;
+  color: inherit;
+}
+
+
+/** VIP modal — segment glass+white ชนะโทน hub-modal-segment */
+.vip-modal .vip-modal__segment-track.cosmic-segment-track--glass-white {
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: var(--glass-fill-subtle);
+  -webkit-backdrop-filter: blur(12px) saturate(1.12);
+  backdrop-filter: blur(12px) saturate(1.12);
+}
+
+.vip-modal .vip-modal__segment-track .cosmic-segment-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.vip-modal .vip-modal__segment-track .cosmic-segment-btn.is-active {
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
+}
+
+/** chip เลือกยอด / ตัวเลือกด่วน — มุม panel (คู่ cosmic-inset-card ใน sheet) */
+.cosmic-choice-btn {
+  border: 0;
+  border-radius: var(--radius-panel);
+  font-weight: 500;
+  background: color-mix(in srgb, var(--surface-hover) 38%, transparent);
+  color: var(--text-secondary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 4px 14px rgb(0 0 0 / 0.16);
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-choice-btn:hover:not(.is-active) {
+  background: color-mix(in srgb, var(--surface-hover) 52%, transparent);
+  color: var(--text-primary);
+}
+
+.cosmic-choice-btn.is-active {
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow:
+    0 4px 16px rgb(0 0 0 / 0.2),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.cosmic-mobile-sheet .cosmic-choice-btn:not(.is-active) {
+  border: 1px solid var(--sheet-soft-border);
+  background: var(--sheet-soft-fill);
+  -webkit-backdrop-filter: blur(var(--sheet-soft-blur)) saturate(1.1);
+  backdrop-filter: blur(var(--sheet-soft-blur)) saturate(1.1);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 4px 14px rgb(0 0 0 / 0.1);
+}
+
+.cosmic-mobile-sheet .cosmic-choice-btn:hover:not(.is-active) {
+  background: var(--sheet-soft-fill-hover);
+}
+
+/** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient) แทน .cosmic-action-btn ม่วงทึบ */
+.cosmic-sheet-submit {
+  display: flex;
+  width: 100%;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: var(--radius-panel);
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--cta-primary-fg);
+  background: var(--cta-primary-gradient);
+  box-shadow:
+    0 6px 22px rgb(99 102 241 / 0.38),
+    inset 0 1px 0 rgb(255 255 255 / 0.38);
+  cursor: pointer;
+  transition:
+    filter var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-sheet-submit:hover:not(:disabled) {
+  filter: brightness(1.07);
+}
+
+.cosmic-sheet-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.cosmic-sheet-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  filter: none;
+}
+
+.cosmic-sheet-submit:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.45);
+  outline-offset: 2px;
+}
+

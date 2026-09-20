@@ -1,0 +1,164 @@
+.page-subnav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.page-subnav__icon.is-active {
+  color: #efedff;
+  transform: scale(1.05);
+}
+
+.page-subnav__label {
+  max-width: 100%;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.category-nav__track {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-block: 4px;
+  padding-inline: 2px 0.35rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.category-nav__track::-webkit-scrollbar {
+  display: none;
+}
+
+.category-nav {
+  position: relative;
+  margin-block: 0.875rem;
+  overflow: visible;
+}
+
+/* หน้าแรก — แถบค้นหา/ตัวกรองใต้ CategoryNav */
+.lobby-category-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lobby-category-stack .category-nav {
+  margin-block: 0;
+}
+
+.lobby-category-stack .provider-category-toolbar {
+  margin-top: 0;
+  margin-bottom: 0.375rem;
+}
+
+.lobby-category-stack .lobby-category-providers {
+  gap: 0.625rem;
+}
+
+@media (min-width: 1024px) {
+  .lobby-category-stack {
+    gap: var(--space-4);
+  }
+
+  /* ปุ่มหมวดเท่ากันเต็มความกว้างคอลัมนกลาง desktop */
+  .lobby-category-stack .category-nav .category-nav__track {
+    justify-content: stretch;
+    gap: var(--space-2);
+    overflow-x: visible;
+    padding-inline: 0;
+  }
+
+  .lobby-category-stack .category-nav .category-nav__chip {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+  }
+}
+
+/* CategoryNav มือถือ — soft glass เบาลงเล็กน้อย (ประหยัด GPU) */
+@media (max-width: 1023px) {
+  .category-nav__chip:not(.is-active) {
+    color: var(--text-secondary);
+  }
+
+  .category-nav__chip {
+    -webkit-backdrop-filter: blur(8px) saturate(1.08);
+    backdrop-filter: blur(8px) saturate(1.08);
+    box-shadow: 0 8px 22px rgb(0 0 0 / 0.2);
+  }
+}
+
+.category-nav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.category-nav__label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .page-subnav__chip--filter {
+    width: 94px;
+    min-width: 94px;
+    min-height: 70px;
+    font-size: 0.75rem;
+  }
+
+  .category-nav__chip {
+    min-height: 70px;
+    min-width: 88px;
+    font-size: 0.8125rem;
+  }
+}
+
+/* กริดค่ายใต้ CategoryNav — animate เฉพาะส่วนใต้ toolbar */
+.lobby-category-providers {
+  transform-origin: top center;
+}
+
+.lobby-category-providers__swap {
+  transform-origin: top center;
+  animation: lobby-category-providers-in 280ms ease-out both;
+}
+
+@keyframes lobby-category-providers-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lobby-category-providers__swap {
+    animation: lobby-category-providers-in-reduced 180ms ease-out both;
+  }
+
+  @keyframes lobby-category-providers-in-reduced {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+

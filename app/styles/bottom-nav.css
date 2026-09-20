@@ -1,0 +1,148 @@
+/* Bottom nav — แคปซูลลอยมือถือ (FloatingBottomNav.tsx) */
+.bottom-nav-shell {
+  position: fixed;
+  z-index: 50;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  padding: 0 var(--layout-inline-gutter) calc(var(--nav-float-offset) + var(--nav-safe));
+  pointer-events: none;
+}
+
+.bottom-nav {
+  pointer-events: auto;
+
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+
+  width: 100%;
+  max-width: 28rem;
+  height: var(--nav-height);
+  margin-inline: auto;
+  padding: 6px 4px;
+  box-sizing: border-box;
+
+  border-radius: var(--radius-pill);
+  background: var(--nav-capsule-bg);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 7%),
+    0 10px 28px rgb(0 0 0 / 48%),
+    0 2px 8px rgb(0 0 0 / 32%);
+}
+
+.bottom-nav__item {
+  appearance: none;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 4px 2px;
+
+  border: 0;
+  border-radius: calc(var(--radius-pill) - 6px);
+  background: transparent;
+  color: var(--nav-text);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+
+  transition:
+    color 180ms ease,
+    transform 120ms ease;
+}
+
+.bottom-nav__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.bottom-nav__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.bottom-nav__label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+@media (hover: hover) {
+  .bottom-nav__item:hover {
+    color: var(--nav-hover);
+  }
+}
+
+.bottom-nav__item.is-active {
+  color: var(--nav-active);
+}
+
+.bottom-nav__item:active {
+  transform: scale(0.96);
+  color: var(--nav-hover);
+}
+
+.bottom-nav__item.is-active:active {
+  color: var(--nav-active);
+}
+
+.bottom-nav__item:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1024px) {
+  body:has(.lobby-desktop-shell) {
+    padding-bottom: var(--space-6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav__item {
+    transition: none;
+  }
+}
+
+/* Cosmicbet ใช้ธีมมืดตลอด — ค่าเดียวกับ :root */
+.dark {
+  --background: var(--bg-page);
+  --foreground: var(--text-primary);
+  --card: var(--surface-mid);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-mid);
+  --popover-foreground: var(--text-primary);
+  --primary: #4930df;
+  --primary-foreground: #f5f4fc;
+  --secondary: var(--surface-hover);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--surface-hover);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--surface-selected);
+  --accent-foreground: var(--text-primary);
+  --destructive: #ef4444;
+  --border: var(--border-subtle);
+  --input: var(--border-subtle);
+  --ring: var(--focus-ring);
+}
+
+/*
+ * CosmicFooter — ส่วนท้ายเว็บ (CosmicFooter.tsx)
+ */

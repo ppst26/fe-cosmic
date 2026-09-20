@@ -1,0 +1,31 @@
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* Input / textarea / select — ไม่ใช้ outline หรือ ring ตอน focus / hover */
+:where(input, textarea, select):is(:focus, :focus-visible, :hover) {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Wrapper ที่ห่อ input — ปิด focus-within ring (เช่น ฝากเงิน, login) */
+*:focus-within:has(:is(input, textarea, select):focus),
+*:focus-within:has(:is(input, textarea, select):focus-visible) {
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Search bar — ไม่ใช้ ring หรือ outline ทั้งตอนคลิก (focus) และ hover เพื่อความเรียบเนียนกลมกลืน */
+:where([role="search"], [role="search"] *, #game-search-input, .no-focus-ring):focus,
+:where([role="search"], [role="search"] *, #game-search-input, .no-focus-ring):focus-visible,
+:where([role="search"], [role="search"] *, #game-search-input, .no-focus-ring):hover,
+:where([role="search"], [role="search"] *, #game-search-input, .no-focus-ring):active {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+

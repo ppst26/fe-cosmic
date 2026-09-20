@@ -1,0 +1,128 @@
+
+/*
+ * Carousel track — native horizontal scroll + scroll-snap
+ * จำนวนคอลัมน์และช่องว่างกำหนดผ่าน --carousel-cols / --carousel-gap แบบ mobile-first
+ * ใช้โดย app/components/ui/Carousel.tsx; แต่ละ section เลือก preset .carousel-games / -popular / -providers
+ */
+.carousel-track {
+  display: flex;
+  gap: var(--carousel-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  padding-block: var(--space-1);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+.carousel-track > * {
+  --carousel-slide-size: calc(
+    (100% - calc((var(--carousel-cols) - 1) * var(--carousel-gap))) / var(--carousel-cols)
+  );
+  flex: 0 0 max(var(--carousel-min), var(--carousel-slide-size));
+  width: max(var(--carousel-min), var(--carousel-slide-size));
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+/* การ์ดเกม: 3 ใบต่อแถวที่ ~550px; ต่ำกว่านั้นกว้างอย่างน้อย 140px เห็นใบถัดไปบางส่วน */
+.carousel-games {
+  --carousel-cols: 3;
+  --carousel-gap: var(--space-2);
+  --carousel-min: 140px;
+}
+/* ยอดนิยม: Swipe Bet + DEXY RACE คู่กัน */
+.carousel-popular {
+  --carousel-cols: 2;
+  --carousel-gap: var(--space-2);
+  --carousel-min: 160px;
+}
+/* Providers: ช่องโลโก้เตี้ย */
+.carousel-providers {
+  --carousel-cols: 3;
+  --carousel-gap: var(--space-2);
+  --carousel-min: 128px;
+}
+/* กิจกรรม/ทัวร์นาเมนต์ — การ์ดแนวตั้ง ~2 ใบ + peek ใบถัดไป */
+.carousel-tournaments {
+  --carousel-cols: 2.2;
+  --carousel-gap: var(--space-2);
+  --carousel-min: 132px;
+}
+.carousel-tournament-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  background: var(--surface-mid);
+}
+@media (min-width: 768px) {
+  .carousel-games,
+  .carousel-popular,
+  .carousel-providers,
+  .carousel-tournaments {
+    --carousel-gap: var(--space-4);
+  }
+  .carousel-games {
+    --carousel-cols: 4;
+  }
+  .carousel-popular {
+    --carousel-cols: 3;
+  }
+  .carousel-providers {
+    --carousel-cols: 4;
+  }
+  .carousel-tournaments {
+    --carousel-cols: 3.2;
+    --carousel-min: 140px;
+  }
+}
+@media (min-width: 1024px) {
+  .carousel-games {
+    --carousel-cols: 8;
+    --carousel-min: 100px;
+  }
+  .carousel-popular {
+    --carousel-cols: 4;
+  }
+  .carousel-providers {
+    --carousel-cols: 6;
+    --carousel-min: 100px;
+  }
+
+  /* หน้า lobby desktop — แถวเกม (GameSection) 8 ใบเต็มแถว */
+  .lobby-desktop-center .carousel-games {
+    --carousel-cols: 8;
+    --carousel-min: 88px;
+    --carousel-gap: var(--space-3);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    scroll-behavior: auto;
+  }
+}
+
+/* Placeholder ปกเกม — ใช้โดย GameCard.tsx เมื่อ coverSrc ว่าง */
+.cover-tone-indigo {
+  background: var(--cover-indigo);
+}
+.cover-tone-rose {
+  background: var(--cover-rose);
+}
+.cover-tone-emerald {
+  background: var(--cover-emerald);
+}
+.cover-tone-amber {
+  background: var(--cover-amber);
+}
+.cover-tone-sky {
+  background: var(--cover-sky);
+}
+.cover-tone-violet {
+  background: var(--cover-violet);
+}
+

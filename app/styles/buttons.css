@@ -1,0 +1,330 @@
+/*
+ * ระบบปุ่มหลัก Cosmicbet (3 ชั้น) — รายละเอียด design.md § ปุ่มหลัก
+ * 1) Outline glass: .glass-control + .glass-pill | .glass-icon-btn (View All, carousel, tab รอง)
+ *    Log in header: .glass-card--soft (โทนเดียวกัน ไม่ใช่ CTA)
+ * 2) White solid nav: .cosmic-btn-nav — ลิงก์หน้าอื่น / external
+ * 3) Primary CTA: .cosmic-cta-primary — สมัคร, ส่งข้อมูล, รับโบนัส
+ */
+
+/**
+ * ปุ่มเล็กแบบ glass — ไม่ backdrop-blur (View All, carousel arrows) · CategoryNav ใช้ soft glass ใน .category-nav__chip
+ */
+.glass-control {
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill-subtle);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 4px 14px rgb(0 0 0 / 0.14);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition:
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.glass-control:hover:not(:disabled):not(.is-active) {
+  border-color: rgb(255 255 255 / 0.14);
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.09),
+    rgb(151 112 213 / 0.13)
+  );
+  color: var(--text-primary);
+}
+
+.glass-control.is-active,
+.glass-control--active {
+  border-color: rgb(155 124 240 / 0.42);
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.34),
+    rgb(90 70 130 / 0.22)
+  );
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 6px 18px rgb(73 48 223 / 0.22);
+}
+
+.glass-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding-inline: 0.875rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.glass-pill:hover {
+  color: var(--text-primary);
+}
+
+.glass-icon-btn {
+  position: relative;
+  display: inline-flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--icon-default);
+}
+
+/* ปุ่มปิด sheet มุม — class absolute ชนะ position:relative ของ .glass-icon-btn */
+button.glass-icon-btn:is(.absolute, .\!absolute),
+a.glass-icon-btn:is(.absolute, .\!absolute) {
+  position: absolute;
+}
+
+.glass-icon-btn::after {
+  position: absolute;
+  inset: -4px;
+  content: "";
+}
+
+.glass-icon-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.glass-icon-btn:not(:disabled):hover {
+  color: var(--icon-active);
+}
+
+/**
+ * ชั้น 2 — ปุ่มขาวทึบ (นำทาง) pill · หน้าอื่น / external link
+ * ใช้ <Link> / <a> หรือ Button variant="navSolid"
+ */
+.cosmic-btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.55rem 1.25rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--cta-white-fg);
+  background: var(--cta-white-bg);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-btn-nav:hover {
+  background: var(--cta-white-hover);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.16);
+}
+
+.cosmic-btn-nav:active {
+  transform: scale(0.98);
+}
+
+.cosmic-btn-nav:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cosmic-btn-nav:disabled,
+.cosmic-btn-nav[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cosmic-btn-nav--sm {
+  min-height: 2.125rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.8125rem;
+}
+
+.cosmic-btn-nav--lg {
+  min-height: 2.75rem;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.9375rem;
+}
+
+/**
+ * CTA ปุ่มขาวมุมโค้ง — คู่กับ glass card (ปุ่มหลักในการ์ด feature)
+ * นำทางทั่วไปให้ใช้ .cosmic-btn-nav แทน
+ */
+.cosmic-cta-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: 14px;
+  padding: 0.65rem 1.35rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--cta-white-fg);
+  background: var(--cta-white-bg);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 12%);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-cta-white:hover {
+  background: var(--cta-white-hover);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 16%);
+}
+
+.cosmic-cta-white:active {
+  transform: scale(0.98);
+}
+
+.cosmic-cta-white:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cosmic-cta-white:disabled,
+.cosmic-cta-white[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cosmic-cta-white--sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  border-radius: 12px;
+}
+
+.cosmic-cta-white--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  border-radius: 16px;
+}
+
+/** alias ชั้น 2 — pill เหมือน cosmic-btn-nav */
+.cosmic-cta-white--pill {
+  border-radius: var(--radius-pill);
+  min-height: 2.5rem;
+  padding: 0.55rem 1.25rem;
+  font-weight: 500;
+}
+
+/**
+ * CTA รองบน glass card — โปร่งแสง outline (ไม่ใช่ชั้น 2 — อยู่ใกล้ glass มากกว่า)
+ */
+.cosmic-cta-muted {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.65rem 1.35rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.cosmic-cta-muted:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.cosmic-cta-muted:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/**
+ * CTA หลัก gradient — ปุ่ม Deposit / Sign up (pill, ขาว, เงา + highlight บน)
+ * ใช้เป็น <button> / <a> หรือ Button variant="ctaPrimary"
+ */
+.cosmic-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 0.55rem 1.35rem;
+  min-height: 2.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--cta-primary-fg);
+  background: var(--cta-primary-gradient);
+  box-shadow:
+    0 6px 22px rgb(99 102 241 / 0.38),
+    inset 0 1px 0 rgb(255 255 255 / 0.38);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    filter var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-cta-primary:hover {
+  filter: brightness(1.07);
+  box-shadow:
+    0 8px 26px rgb(124 58 237 / 0.42),
+    inset 0 1px 0 rgb(255 255 255 / 0.45);
+}
+
+.cosmic-cta-primary:active {
+  transform: scale(0.98);
+  filter: brightness(1.02);
+}
+
+.cosmic-cta-primary:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.45);
+  outline-offset: 2px;
+}
+
+.cosmic-cta-primary:disabled,
+.cosmic-cta-primary[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: none;
+}
+
+.cosmic-cta-primary--sm {
+  min-height: 2rem;
+  padding: 0.45rem 1.05rem;
+  font-size: 0.8125rem;
+}
+
+.cosmic-cta-primary--lg {
+  min-height: 2.625rem;
+  padding: 0.65rem 1.65rem;
+  font-size: 0.9375rem;
+}
+

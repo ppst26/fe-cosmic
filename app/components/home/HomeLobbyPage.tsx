@@ -116,7 +116,7 @@ export function HomeLobbyPage() {
 
                     <HomeDesktopHeroRow onCtaClick={openSignUp} />
 
-                    <div className="relative -mx-[var(--page-gutter)] flex flex-col gap-4 overflow-hidden rounded-none px-[var(--page-gutter)] pb-6 pt-1 lg:mx-0 lg:gap-3 lg:px-0 lg:pb-0 lg:pt-0">
+                    <div className="relative flex min-w-0 flex-col gap-4 overflow-hidden rounded-none pb-6 pt-1 lg:gap-3 lg:pb-0 lg:pt-0">
                       <div className="relative flex min-w-0 flex-col gap-4 lg:gap-3">
                         <div className={showMobileLobbySections}>
                           <div className="lg:hidden">
@@ -147,7 +147,7 @@ export function HomeLobbyPage() {
                     <div className="lg:hidden">
                       <AuthGate
                         fallback={
-                          <section className="mt-8 w-full px-[var(--page-gutter)] sm:mt-10">
+                          <section className="mt-8 w-full sm:mt-10">
                             <p className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-6 text-center text-sm text-[var(--text-secondary)]">
                               เข้าสู่ระบบหรือสมัครสมาชิกเพื่อดูกิจกรรม
                             </p>

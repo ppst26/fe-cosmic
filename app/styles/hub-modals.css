@@ -1,0 +1,1292 @@
+
+/* การ์ด glass ใน hub modal — เทาดำทึบกว่า lobby ทั่วไป */
+.cosmic-modal-shell--hub .hub-desktop-card,
+.cosmic-modal-shell--hub .glass-card--soft,
+.cosmic-modal-shell--hub .glass-card:not(.glass-card--hof-row) {
+  background: var(--glass-fill-modal-subtle);
+  border: 1px solid rgb(255 255 255 / 0.07);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 10px 28px rgb(0 0 0 / 0.28);
+}
+
+.cosmic-modal-shell--hub .glass-card--soft:hover {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 12px 32px rgb(0 0 0 / 0.32);
+}
+
+/** แท็บ/segment ใน hub modal — track เข้ม · active สว่างกว่า (แบบ Deposit/Withdraw) */
+.cosmic-modal-shell--hub .hub-modal-segment-track,
+.cosmic-modal-shell--hub .cosmic-segment-track {
+  padding: 4px;
+  border: 1px solid rgb(255 255 255 / 0.06);
+  border-radius: 12px;
+  background: rgb(0 0 0 / 0.38);
+}
+
+.cosmic-modal-shell--hub .hub-modal-segment-btn,
+.cosmic-modal-shell--hub .cosmic-segment-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.cosmic-modal-shell--hub .hub-modal-segment-btn.is-active,
+.cosmic-modal-shell--hub .cosmic-segment-btn.is-active {
+  background: rgb(58 56 70 / 0.96);
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 2px 10px rgb(0 0 0 / 0.32);
+}
+
+.cosmic-modal-shell--hub .hub-modal-segment-btn:hover:not(.is-active),
+.cosmic-modal-shell--hub .cosmic-segment-btn:hover:not(.is-active) {
+  color: var(--text-secondary);
+}
+
+.cosmic-modal-shell--hub__header {
+  border-bottom: 0;
+}
+
+/**
+ * Lobby catalog modal — toolbar + sidebar + game grid (HubLobbyModalLayout)
+ * อ้าง design.md § Dialog & Modal — Lobby catalog (XL)
+ */
+.cosmic-modal-shell--lobby {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lobby-modal);
+  background: linear-gradient(
+    145deg,
+    rgb(30 28 38 / 0.55),
+    rgb(14 12 20 / 0.62)
+  );
+  -webkit-backdrop-filter: blur(40px) saturate(var(--glass-saturate));
+  backdrop-filter: blur(40px) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
+}
+
+.hub-lobby-modal {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.hub-lobby-modal__toolbar {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.75rem;
+  padding: 0.75rem 1rem 0.65rem;
+}
+
+.hub-lobby-modal__toolbar-close {
+  margin-left: auto;
+}
+
+.hub-lobby-modal__segment {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--hub-lobby-chrome);
+}
+
+.hub-lobby-modal__segment-btn {
+  min-height: 36px;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.hub-lobby-modal__segment-btn.is-active {
+  background: var(--surface-elevated, #2a2834);
+  color: var(--text-primary);
+}
+
+.hub-lobby-modal__search-wrap {
+  display: flex;
+  min-width: min(100%, 12rem);
+  flex: 1 1 12rem;
+  align-items: center;
+  gap: 0.5rem;
+  height: 42px;
+  padding-inline: 0.85rem;
+  border-radius: 10px;
+  background: var(--hub-lobby-chrome);
+  color: var(--text-muted);
+}
+
+.hub-lobby-modal__search-wrap input {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.hub-lobby-modal__search-wrap input::placeholder {
+  color: var(--text-muted);
+}
+
+.hub-lobby-modal__chrome-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 42px;
+  padding-inline: 0.85rem;
+  border: 0;
+  border-radius: 10px;
+  background: var(--hub-lobby-chrome);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: background var(--motion-fast) ease;
+}
+
+.hub-lobby-modal__chrome-btn:hover {
+  background: color-mix(in srgb, var(--hub-lobby-chrome) 70%, var(--text-primary) 8%);
+}
+
+.hub-lobby-modal__body {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.hub-lobby-modal__sidebar {
+  display: none;
+  width: var(--hub-lobby-sidebar-width);
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 0.65rem 0.5rem 1rem 0.75rem;
+  border-right: 1px solid var(--border-subtle);
+}
+
+@media (min-width: 1024px) {
+  .hub-lobby-modal__sidebar {
+    display: block;
+  }
+}
+
+.hub-lobby-modal__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hub-lobby-modal__nav-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 40px;
+  padding: 0.35rem 0.65rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.hub-lobby-modal__nav-btn:hover {
+  background: color-mix(in srgb, var(--hub-lobby-chrome) 80%, var(--text-primary) 6%);
+  color: var(--text-primary);
+}
+
+.hub-lobby-modal__nav-btn.is-active {
+  background: var(--surface-selected, #2e2840);
+  color: var(--text-primary);
+}
+
+.hub-lobby-modal__main {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.hub-lobby-modal__categories-mobile {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  scrollbar-width: none;
+}
+
+.hub-lobby-modal__categories-mobile::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hub-lobby-modal__categories-mobile {
+    display: none;
+  }
+}
+
+.hub-lobby-modal__grid-scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0.75rem 1rem 1.25rem;
+}
+
+.hub-lobby-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--hub-lobby-grid-gap);
+}
+
+@media (min-width: 480px) {
+  .hub-lobby-modal__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .hub-lobby-modal__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .hub-lobby-modal__grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .hub-lobby-modal__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.hub-lobby-game-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hub-lobby-game-tile__cover {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--hub-lobby-chrome);
+}
+
+.hub-lobby-game-tile__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hub-lobby-game-tile__badge {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  background: rgb(0 0 0 / 72%);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.hub-lobby-game-tile__title {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.hub-lobby-game-tile__provider {
+  font-size: 0.625rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/** ฟิลด์/การ์ดย่อยใน hub dialog */
+.hub-desktop-field {
+  border: 0;
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .cosmic-modal-shell--hub .hub-desktop-card,
+  .cosmic-modal-shell--hub .cosmic-inset-card {
+    border: 1px solid rgb(255 255 255 / 0.07);
+    border-radius: var(--radius-panel);
+    background: var(--glass-fill-modal-subtle);
+    -webkit-backdrop-filter: blur(20px) saturate(1.12);
+    backdrop-filter: blur(20px) saturate(1.12);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 10px 28px rgb(0 0 0 / 0.26);
+  }
+
+  .cosmic-modal-shell--hub .promotions-desktop-hub__tabs {
+    background: rgb(14 10 22 / 0.55);
+    -webkit-backdrop-filter: blur(20px) saturate(1.15);
+    backdrop-filter: blur(20px) saturate(1.15);
+  }
+
+  .cosmic-modal-shell--hub .hub-desktop-field {
+    background: var(--hub-dialog-card-bg);
+  }
+
+  .cosmic-modal-shell--hub .referral-desktop-hub .cosmic-segment-track {
+    width: 100%;
+  }
+
+  .cosmic-modal-shell--hub .referral-mobile .cosmic-segment-track {
+    width: 100%;
+  }
+
+  .cosmic-modal-shell--hub .referral-promo-banner__glow {
+    display: none;
+  }
+
+  .cosmic-modal-shell--hub .referral-promo-banner__art {
+    opacity: 0.35;
+    filter: none;
+  }
+
+  .cosmic-modal-shell--hub .referral-promo-banner__art svg {
+    filter: none;
+  }
+
+  .cosmic-modal-shell--hub .promotions-desktop-hub__row--selected {
+    box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
+  }
+
+  .cosmic-modal-shell--hub .promotion-detail-panel--hub .promotion-detail-panel__banner {
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--surface-hover) 40%, var(--hub-dialog-card-bg));
+  }
+
+  .cosmic-modal-shell--hub .activity-hub-master-row--selected {
+    background: color-mix(in srgb, var(--accent-primary) 14%, var(--hub-dialog-card-bg));
+    box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
+  }
+}
+
+.activity-hub-thumb__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  background: rgb(0 0 0 / 55%);
+  text-align: center;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #fecaca;
+}
+
+.activity-hub-progress__track {
+  background: color-mix(in srgb, var(--surface-hover) 70%, #000);
+}
+
+.activity-hub-progress__fill {
+  background: linear-gradient(90deg, #facc15 0%, #fde047 100%);
+}
+
+.activity-hub-tier-table__row:nth-child(even) {
+  background: color-mix(in srgb, var(--surface-hover) 35%, transparent);
+}
+
+/* --- Lottery hub (/lottery + หมวดหวยโฮม) --- */
+.lottery-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--success, #41d995);
+}
+
+.lottery-feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .lottery-feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.lottery-feature-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 5.5rem;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-panel);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    filter var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.lottery-feature-card.glass-card--soft {
+  box-shadow: none;
+}
+
+.lottery-feature-card.glass-card--soft:hover {
+  filter: brightness(1.05);
+  box-shadow: none;
+}
+
+.lottery-feature-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: flex-start;
+}
+
+.lottery-feature-card__title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.lottery-feature-card__yiki {
+  position: relative;
+  flex-shrink: 0;
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+.lottery-feature-card__yiki-ball {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #b91c1c;
+  background: radial-gradient(circle at 30% 25%, #fde68a, #f59e0b 55%, #b45309);
+  box-shadow: inset 0 -4px 8px rgb(0 0 0 / 25%);
+}
+
+.lottery-feature-card__yiki-coin {
+  position: absolute;
+  right: -0.15rem;
+  bottom: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  background: var(--gold-gradient);
+  border: 2px solid rgb(0 0 0 / 35%);
+}
+
+.lottery-flag {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.lottery-flag--sm {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.lottery-flag--md {
+  width: 3rem;
+  height: 3rem;
+}
+
+.lottery-flag--lg {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.lottery-flag__sphere {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: rgb(255 255 255 / 92%);
+  text-shadow: 0 1px 2px rgb(0 0 0 / 45%);
+  box-shadow: inset 0 -3px 6px rgb(0 0 0 / 28%);
+}
+
+.lottery-flag--sm .lottery-flag__sphere {
+  font-size: 0.5rem;
+}
+
+.lottery-flag--lg .lottery-flag__sphere {
+  font-size: 0.7rem;
+}
+
+.lottery-flag__coin {
+  position: absolute;
+  right: -0.1rem;
+  bottom: 0.05rem;
+  width: 38%;
+  height: 38%;
+  border-radius: 9999px;
+  background: var(--gold-gradient);
+  border: 1.5px solid rgb(0 0 0 / 35%);
+}
+
+.lottery-flag--th .lottery-flag__sphere {
+  background: radial-gradient(circle at 35% 30%, #3b82f6, #1d4ed8 48%, #dc2626 49%);
+}
+
+.lottery-flag--la .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 35%, #dc2626, #1e3a8a);
+}
+
+.lottery-flag--vn .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 40%, #dc2626, #b91c1c);
+}
+
+.lottery-flag--my .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 35%, #1d4ed8, #dc2626);
+}
+
+.lottery-flag--us .lottery-flag__sphere {
+  background: radial-gradient(circle at 35% 30%, #3b82f6, #1e3a8a);
+}
+
+.lottery-flag--cn .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 40%, #dc2626, #991b1b);
+}
+
+.lottery-flag--de .lottery-flag__sphere {
+  background: linear-gradient(180deg, #1f2937 33%, #dc2626 33% 66%, #fbbf24 66%);
+}
+
+.lottery-flag--ru .lottery-flag__sphere {
+  background: linear-gradient(180deg, #fff 33%, #3b82f6 33% 66%, #dc2626 66%);
+}
+
+.lottery-flag--kr .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 40%, #fff, #dc2626);
+  color: #1e3a8a;
+}
+
+.lottery-flag--jp .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 45%, #fff, #dc2626);
+  color: #dc2626;
+}
+
+.lottery-flag--gb .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 40%, #1e3a8a, #312e81);
+}
+
+.lottery-flag--hk .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 40%, #dc2626, #991b1b);
+}
+
+.lottery-flag--tw .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 40%, #1d4ed8, #dc2626);
+}
+
+.lottery-flag--sg .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 40%, #dc2626, #fff);
+  color: #dc2626;
+}
+
+.lottery-flag--in .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 35%, #f97316, #059669);
+}
+
+.lottery-flag--eg .lottery-flag__sphere {
+  background: radial-gradient(circle at 50% 40%, #dc2626, #1f2937);
+}
+
+.lottery-flag--gold .lottery-flag__sphere {
+  background: radial-gradient(circle at 30% 25%, #fde68a, #f59e0b 55%, #b45309);
+  color: #b91c1c;
+}
+
+.lottery-type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .lottery-type-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lottery-type-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.lottery-type-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 4.25rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: calc(var(--radius-panel) - 4px);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    filter var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.lottery-type-card.glass-card--soft {
+  box-shadow: none;
+}
+
+.lottery-type-card.glass-card--soft:hover {
+  filter: brightness(1.05);
+  box-shadow: none;
+}
+
+.lottery-type-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.lottery-type-card__title {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lottery-type-card__closed {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/*
+ * LotteryLatestResultsTable — ผลหวยล่าสุด (LotteryLatestResultsTable.tsx)
+ * ลำดับ: ประเภทหวย · 3 ตัวบน · 2 ตัวล่าง · งวด/วันที่
+ */
+.lottery-results-board {
+  --lottery-results-board-cols: minmax(0, 1fr) 3.75rem 3.75rem minmax(4.25rem, 5rem);
+}
+
+.lottery-results-board__more-link {
+  text-decoration: none;
+  transition: color var(--motion-fast) ease;
+}
+
+.lottery-results-board__more-link:hover {
+  color: var(--text-primary);
+}
+
+.lottery-results-board__header,
+.lottery-results-board__row {
+  display: grid;
+  grid-template-columns: var(--lottery-results-board-cols);
+  column-gap: 0.5rem;
+  align-items: center;
+}
+
+.lottery-results-board__header {
+  padding: 0 0.15rem 0.4rem;
+}
+
+.lottery-results-board__header-cell {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--text-secondary);
+}
+
+.lottery-results-board__header-cell--prize {
+  text-align: center;
+}
+
+.lottery-results-board__header-cell--date {
+  text-align: right;
+}
+
+.lottery-results-board__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lottery-results-board__row {
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--radius-panel);
+  transition: filter var(--motion-fast) ease;
+}
+
+.lottery-results-board__row.glass-card--soft {
+  box-shadow: none;
+}
+
+.lottery-results-board__row.glass-card--soft:hover {
+  filter: brightness(1.05);
+  box-shadow: none;
+}
+
+.lottery-results-board__market {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lottery-results-board__market-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.lottery-results-board__prize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.lottery-results-board__prize-label {
+  font-size: 0.625rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.lottery-results-board__prize-value {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: #ffe66d;
+}
+
+.lottery-results-board__date {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.lottery-results-board__date-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.lottery-results-board__empty {
+  padding: 2rem 1rem;
+  border-radius: var(--radius-panel);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  background: var(--glass-fill-subtle);
+}
+
+@media (min-width: 640px) {
+  .lottery-results-board {
+    --lottery-results-board-cols: minmax(0, 1fr) 4.25rem 4.25rem minmax(5rem, 6.25rem);
+  }
+
+  .lottery-results-board__header-cell {
+    font-size: 0.9375rem;
+  }
+
+  .lottery-results-board__body {
+    gap: 0.4rem;
+  }
+
+  .lottery-results-board__row {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .lottery-results-board__market-name {
+    font-size: 0.875rem;
+  }
+
+  .lottery-results-board__prize-label {
+    font-size: 0.6875rem;
+  }
+
+  .lottery-results-board__prize-value {
+    font-size: 1.25rem;
+  }
+
+  .lottery-results-board__date-text {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .lottery-results-board__prize-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .lottery-results-board__prize {
+    position: relative;
+    gap: 0;
+  }
+}
+
+/*
+ * DailyCheckInPageContent — เช็คอินมือถือ (/missions/check-in)
+ */
+.daily-check-in-mobile__streak-dot.is-claimed {
+  color: #422006;
+  background: #facc15;
+}
+
+.daily-check-in-mobile__streak-dot.is-today {
+  color: var(--text-primary);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--accent-primary, #7c3aed) 65%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--cosmic-page-base) 88%, transparent);
+}
+
+.daily-check-in-mobile__day-card.is-today {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 0 0 1px color-mix(in srgb, var(--accent-primary, #7c3aed) 35%, transparent),
+    0 12px 28px rgb(124 58 237 / 0.2);
+}
+
+.daily-check-in-mobile__today-badge {
+  color: var(--text-primary);
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.45),
+    rgb(90 70 130 / 0.35)
+  );
+  border: 1px solid rgb(255 255 255 / 0.12);
+}
+
+/*
+ * DailyCheckInDesktopLayout — modal desktop เช็คอิน (DesktopHubModal check-in)
+ */
+.daily-check-in-desktop-modal-body {
+  overflow: hidden;
+}
+
+.daily-check-in-desktop {
+  display: grid;
+  min-height: min(72dvh, 620px);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 720px) {
+  .daily-check-in-desktop {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.daily-check-in-desktop__banner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 1rem;
+  border-radius: 0;
+  border-right: 1px solid rgb(255 255 255 / 0.06);
+}
+
+.daily-check-in-desktop__banner-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.daily-check-in-desktop__banner-sub {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.daily-check-in-desktop__banner-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0 0.25rem;
+}
+
+.daily-check-in-desktop__banner-art {
+  width: 7.5rem;
+  height: auto;
+}
+
+.daily-check-in-desktop__banner-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.daily-check-in-desktop__banner-stat-value {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #ffe66d;
+}
+
+.daily-check-in-desktop__banner-stat-label {
+  margin-left: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.daily-check-in-desktop__banner-cta {
+  margin-top: 0.25rem;
+}
+
+.daily-check-in-desktop__streak {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.daily-check-in-desktop__streak-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.daily-check-in-desktop__streak-dot {
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 9999px;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: rgb(0 0 0 / 0.28);
+}
+
+.daily-check-in-desktop__streak-dot.is-claimed {
+  color: #422006;
+  background: #facc15;
+}
+
+.daily-check-in-desktop__streak-dot.is-today {
+  color: var(--text-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--action-solid) 70%, transparent);
+}
+
+.daily-check-in-desktop__streak-label {
+  font-size: 0.5625rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.daily-check-in-desktop__terms-hint {
+  margin: auto 0 0;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.daily-check-in-desktop__main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 1rem 1rem 1.25rem;
+  padding-top: 2.75rem;
+}
+
+.daily-check-in-desktop__main-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.daily-check-in-desktop__main-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.daily-check-in-desktop__claim-msg {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--success, #41d995);
+}
+
+.daily-check-in-desktop__day-list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.daily-check-in-desktop__day-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.65rem 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-panel);
+}
+
+.daily-check-in-desktop__day-row.glass-card--soft {
+  box-shadow: none;
+}
+
+.daily-check-in-desktop__day-row.is-today {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--action-solid) 45%, transparent);
+}
+
+.daily-check-in-desktop__day-row.is-claimed:not(.is-today) {
+  opacity: 0.94;
+}
+
+.daily-check-in-desktop__day-badge {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: rgb(0 0 0 / 0.32);
+  color: var(--text-primary);
+}
+
+.daily-check-in-desktop__day-badge.is-claimed {
+  color: #422006;
+  background: linear-gradient(180deg, #fde047, #ca8a04);
+}
+
+.daily-check-in-desktop__day-badge.is-today {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--action-solid) 55%, transparent);
+}
+
+.daily-check-in-desktop__day-badge-num {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.daily-check-in-desktop__day-title {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: color-mix(in srgb, #f472b6 55%, var(--text-primary));
+}
+
+.daily-check-in-desktop__day-reward {
+  margin: 0.15rem 0 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #ffe66d;
+}
+
+.daily-check-in-desktop__day-desc {
+  margin: 0.2rem 0 0;
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+.daily-check-in-desktop__day-visual {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .daily-check-in-desktop__day-visual {
+    display: block;
+  }
+}
+
+.daily-check-in-desktop__day-action {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 5.5rem;
+}
+
+.daily-check-in-desktop__claim-btn {
+  min-width: 5.25rem;
+  white-space: nowrap;
+}
+
+.daily-check-in-desktop__claim-pill {
+  min-width: 5.25rem;
+  white-space: nowrap;
+}
+
+.cosmic-modal-shell--check-in {
+  padding: 0;
+}
+
+/*
+ * VipModal — ขนาดคงที่ desktop · ซ้ายระดับ/เทิร์น · ขวาภารกิจ
+ */
+@media (min-width: 1024px) {
+  .vip-modal.cosmic-modal-shell--hub {
+    width: min(94vw, 1040px);
+    height: 560px;
+    min-height: 560px;
+    max-height: min(92dvh, 560px);
+  }
+
+  .vip-modal__body {
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}
+
+.vip-modal-desktop {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+@media (min-width: 1024px) {
+  .vip-modal-desktop {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+}
+
+.vip-modal-desktop__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .vip-modal-desktop__split {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+}
+
+.vip-modal-desktop__panel {
+  min-width: 0;
+  min-height: 0;
+}
+
+@media (min-width: 1024px) {
+  .vip-modal-desktop__panel {
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}
+
+.vip-modal-desktop__level {
+  justify-content: flex-start;
+}
+
+.vip-modal-desktop__benefits {
+  min-width: 0;
+}
+
+.vip-benefits-table--desktop-full .vip-benefits-table__scroll-wrap {
+  border: 1px solid rgb(255 255 255 / 0.06);
+}
+
+.vip-modal.cosmic-modal-shell--hub .hub-desktop-card {
+  border-radius: var(--radius-panel);
+}
+

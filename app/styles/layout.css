@@ -1,0 +1,827 @@
+/**
+ * หน้า standalone มือถือ (โปรไฟล์, ธุรกรรม, โปรโมชัน ฯลฯ) — ไม่ทาพื้น --bg-page / ไม่บังคับ min-h-screen
+ * พื้นหลังเดียวกับ .cosmic-bg บน <html> · ต่อกับ CosmicFooter ไม่เหลือแถบสีต่างกลางจอ
+ */
+.mobile-standalone-page {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+/** เนื้อหาหน้า standalone — gutter แนวนอนเท่า .page-shell / หน้าแรก */
+.mobile-standalone-main {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--layout-inline-gutter);
+  box-sizing: border-box;
+}
+
+@media (max-width: 1023px) {
+  /**
+   * Segment ฝาก/ถอน ฯลฯ — glass track · active ไม่ใช้ --action-solid
+   */
+  .mobile-standalone-page .cosmic-segment-track {
+    border: 1px solid rgb(255 255 255 / 0.08);
+    background: var(--glass-fill-subtle);
+    -webkit-backdrop-filter: blur(12px) saturate(1.12);
+    backdrop-filter: blur(12px) saturate(1.12);
+    box-shadow: 0 8px 22px rgb(0 0 0 / 0.18);
+  }
+
+  .mobile-standalone-page .cosmic-segment-btn {
+    border: 0;
+    background: transparent;
+  }
+
+  .mobile-standalone-page .cosmic-segment-btn.is-active {
+    background: color-mix(in srgb, var(--glass-fill) 70%, rgb(255 255 255 / 0.1));
+    color: var(--text-primary);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.12),
+      0 2px 10px rgb(0 0 0 / 0.28);
+  }
+
+  .mobile-standalone-page .cosmic-segment-btn:hover:not(.is-active) {
+    color: var(--text-secondary);
+  }
+}
+
+/** แถบหมวดโปรโมชัน — glass chip (PromotionsCategoryTabs) */
+.promo-hub-category-tabs .glass-card--soft {
+  border-radius: var(--radius-pill);
+  box-shadow: none;
+}
+
+.promo-hub-category-tabs .glass-card--soft.is-active {
+  background: linear-gradient(
+    135deg,
+    rgb(119 71 229 / 0.28),
+    rgb(90 70 130 / 0.18)
+  );
+  color: var(--text-primary);
+}
+
+/** หน้ากิจกรรม (/event) — การ์ดรายการ + ชิปหมวด (ActivityHubShared · ActivitiesMobileHub) */
+.activities-mobile-hub .activity-hub-mobile-card.glass-card--soft {
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.22);
+}
+
+.activities-hub-cat-tabs .glass-card--soft {
+  border-radius: var(--radius-pill);
+  box-shadow: none;
+}
+
+.mobile-standalone-page .activities-hub-cat-tabs .glass-card--soft.is-active {
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
+}
+
+/**
+ * Modal รายละเอียดโปรโมชั่น — PromotionDetailModal.tsx · PromotionDetailPanel.tsx
+ */
+.promo-detail-modal {
+  --promo-detail-title-gold: linear-gradient(180deg, #fff8e7 0%, #fde047 72%, #f59e0b 100%);
+  box-shadow:
+    0 22px 48px rgb(0 0 0 / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.promo-detail-modal__header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.875rem 0.75rem 0.625rem;
+}
+
+.promo-detail-modal__title {
+  min-width: 0;
+  flex: 1;
+  text-align: right;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+@media (min-width: 640px) {
+  .promo-detail-modal__title {
+    font-size: 1rem;
+  }
+}
+
+.promo-detail-modal__scroll {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.375rem 0.75rem 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(124 58 237 / 0.45) transparent;
+}
+
+.promotion-detail-panel--modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-1);
+}
+
+.promotion-detail-panel__banner.glass-card--soft {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 10px 28px rgb(0 0 0 / 0.22);
+}
+
+.promotion-detail-panel__banner-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 90% 80% at 72% 38%,
+    rgb(124 58 237 / 0.42) 0%,
+    rgb(13 11 26 / 0.92) 52%,
+    rgb(9 11 24 / 1) 100%
+  );
+  opacity: 0.95;
+}
+
+.promotion-detail-panel__banner-title {
+  font-weight: 500;
+  line-height: 1.35;
+  background: var(--promo-detail-title-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.promotion-detail-panel__details.glass-card--soft {
+  box-shadow: none;
+}
+
+.promotion-detail-panel__details-heading {
+  padding: 1rem 1rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.promotion-detail-panel__details .promotion-detail-panel__divider {
+  margin-inline: 1rem;
+}
+
+.promotion-detail-panel__accordion-body {
+  padding: 0.75rem 1rem 1rem;
+}
+
+.promotion-detail-panel__blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.promotion-detail-panel__divider {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.promotion-detail-panel__block-title {
+  color: var(--text-primary);
+}
+
+.promo-detail-block-icon {
+  border-radius: var(--radius-pill);
+  border: 1px solid rgb(124 58 237 / 0.45);
+  background: color-mix(in srgb, var(--surface-mid) 70%, rgb(124 58 237 / 0.18));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.promotion-detail-panel__footer {
+  margin-top: 0.75rem;
+  padding-top: 0.25rem;
+  text-align: center;
+  font-size: 0.625rem;
+  color: var(--text-muted);
+}
+
+
+/* Base shell layout */
+.page-shell {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--layout-inline-gutter);
+  padding-bottom: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding-bottom: var(--space-6);
+  }
+
+  /** Desktop lobby — กรอบกลาง max 1680 · 3 คอลัมน์ flex (sidebar หด/ขยาย → main ปรับตาม) */
+  .lobby-desktop-shell {
+    --lobby-sidebar-card-width: 220px;
+    --lobby-sidebar-card-width-collapsed: 84px;
+    --lobby-desktop-frame-max: 1680px;
+    --lobby-bottom-nav-inset-left: var(--lobby-sidebar-card-width);
+    --lobby-desktop-side-rail-offset: 0px;
+    --lobby-sidebar-sticky-top: calc(
+      var(--header-desktop-bar-height) + env(safe-area-inset-top, 0px) + var(--space-4)
+    );
+    /* สูงสูงสุดของแผง sidebar — ไม่เกิน viewport ใต้ header (ไม่ยืดตามความยาวหน้า) */
+    --lobby-sidebar-panel-height: min(
+      calc(100dvh - 80px),
+      calc(100dvh - var(--lobby-sidebar-sticky-top) - 1rem - var(--space-6))
+    );
+    --lobby-workspace-pad-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    align-items: center;
+    background: transparent;
+  }
+
+  .lobby-desktop-shell__frame {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  @media (min-width: 1024px) {
+    .lobby-desktop-shell__frame {
+      width: min(var(--lobby-desktop-frame-max), calc(100% - 2 * var(--page-gutter)));
+      max-width: none;
+      margin-inline: auto;
+      padding-inline: 0;
+    }
+  }
+
+  /** แถบ header เต็ม viewport — เนื้อหาใน .header-desktop-bar__inner กว้างเท่า frame */
+  @media (min-width: 1024px) {
+    .lobby-desktop-shell__header-band {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      isolation: isolate;
+      width: 100%;
+      flex-shrink: 0;
+      padding-top: env(safe-area-inset-top, 0px);
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .lobby-desktop-shell__header-band::before {
+      display: none;
+    }
+
+    .lobby-desktop-shell__header-band .header-desktop-bar {
+      position: static;
+      background: transparent;
+      box-shadow: none;
+      padding-top: 0;
+    }
+
+    .lobby-desktop-shell__header-band .header-desktop-bar::before {
+      display: none;
+    }
+
+    .lobby-desktop-shell__header-band .header-desktop-bar__inner {
+      width: min(var(--lobby-desktop-frame-max), calc(100% - 2 * var(--page-gutter)));
+      max-width: none;
+      margin-inline: auto;
+      padding-inline: 0;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    .lobby-desktop-shell__header-band .header-desktop-bar__inner::before {
+      display: none;
+    }
+  }
+
+  .lobby-desktop-shell__row {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    width: 100%;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-top: var(--space-4);
+  }
+
+  .lobby-desktop-main {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    background: transparent;
+  }
+
+  .lobby-desktop-header-dock {
+    justify-content: flex-end;
+    padding: 0.5rem 0 0.35rem;
+  }
+
+  .header-notch-desktop-tools {
+    max-width: min(100%, 420px);
+  }
+
+  .page-shell--lobby .header-notch-inner {
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  .header-notch-tab-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-notch-wing--end {
+    height: auto;
+    min-height: var(--header-wing-bar);
+    max-height: none;
+    align-items: center;
+  }
+
+  .lobby-desktop-header-dock__cluster {
+    display: inline-flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    border-radius: var(--radius-panel);
+    border: 1px solid color-mix(in srgb, var(--border-subtle) 88%, transparent);
+    background: color-mix(in srgb, var(--surface-mid) 82%, var(--bg-page));
+    padding: 0.35rem 0.45rem;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 4%);
+  }
+
+  .lobby-desktop-header-dock__balance {
+    display: inline-flex;
+    max-width: min(100%, 11rem);
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid color-mix(in srgb, var(--border-active) 32%, var(--border-subtle));
+    background: color-mix(in srgb, var(--surface-hover) 72%, transparent);
+    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+  }
+
+  .lobby-desktop-header-dock__icon-btn {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--surface-hover) 75%, transparent);
+    color: var(--icon-default);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--motion-fast) ease;
+  }
+
+  .lobby-desktop-header-dock__icon-btn:hover {
+    background: var(--surface-hover);
+    color: var(--icon-active);
+  }
+
+  .lobby-desktop-header-dock__badge {
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ef4444;
+  }
+
+  .lobby-desktop-header-dock__avatar {
+    display: grid;
+    place-items: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    border: 1px solid color-mix(in srgb, var(--border-active) 40%, transparent);
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--surface-start), var(--surface-end));
+    color: var(--icon-active);
+    cursor: pointer;
+  }
+
+  .lobby-desktop-workspace {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin-inline: 0;
+    padding: var(--lobby-workspace-pad-top) 0 1.25rem;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  /**
+   * หวย / วงล้อ — content กินความกว้างเต็ม main ทับโซนแบนเนอร์ขวา (LobbyDesktopPageShell)
+   */
+  .lobby-desktop-workspace--over-right-rail {
+    display: block;
+    position: relative;
+  }
+
+  .lobby-desktop-workspace--over-right-rail .lobby-desktop-center--over-rail {
+    position: relative;
+    z-index: 6;
+    width: 100%;
+    max-width: none;
+  }
+
+  .lobby-desktop-workspace--over-right-rail .lobby-desktop-center--over-rail > main {
+    background: transparent;
+  }
+
+  .lobby-desktop-workspace--over-right-rail .lobby-desktop-right-rail {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .lobby-desktop-center {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .lobby-desktop-panel {
+    border-radius: var(--radius-panel);
+    border: 0;
+    background: linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--surface-start) 94%, var(--bg-page)) 0%,
+      color-mix(in srgb, var(--surface-end) 88%, var(--bg-page)) 100%
+    );
+    box-shadow:
+      0 16px 48px rgb(0 0 0 / 28%),
+      inset 0 1px 0 rgb(255 255 255 / 5%);
+    padding: 0.85rem 1rem;
+  }
+
+  .lobby-desktop-rail-btn {
+    border: 0;
+    border-radius: var(--radius-panel);
+    padding: 0.5rem 0.65rem;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25;
+    cursor: pointer;
+    transition:
+      filter var(--motion-fast) ease,
+      background var(--motion-fast) ease,
+      transform var(--motion-fast) ease;
+  }
+
+  .lobby-desktop-rail-btn--primary {
+    background: var(--action-solid);
+    color: var(--primary-foreground);
+  }
+
+  .lobby-desktop-rail-btn--primary:hover {
+    filter: brightness(1.08);
+  }
+
+  .lobby-desktop-rail-btn--secondary {
+    background: color-mix(in srgb, var(--surface-hover) 82%, var(--surface-mid));
+    color: var(--text-primary);
+  }
+
+  .lobby-desktop-rail-btn--secondary:hover {
+    background: var(--surface-hover);
+  }
+
+  .lobby-desktop-rail-btn:active {
+    transform: scale(0.99);
+  }
+
+  .lobby-desktop-panel--row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .lobby-desktop-panel__label {
+    margin-bottom: 0.15rem;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+  }
+
+  .lobby-desktop-panel__progress {
+    height: 6px;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--surface-hover) 90%, transparent);
+  }
+
+  .lobby-desktop-panel__progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--action-solid), var(--chart-2));
+  }
+
+  .lobby-desktop-panel__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border-radius: var(--radius-card);
+    padding: 0.45rem 0.35rem;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: background var(--motion-fast) ease;
+  }
+
+  .lobby-desktop-panel__link:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+  }
+
+  .home-desktop-feature-promos__card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 88px;
+    border-radius: var(--radius-panel);
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+    transition: filter 160ms ease;
+  }
+
+  .home-desktop-feature-promos__card:hover {
+    filter: brightness(1.06);
+  }
+
+  .home-desktop-feature-promos__card--violet {
+    background: linear-gradient(135deg, #4c1d95, #312e81);
+  }
+
+  .home-desktop-feature-promos__card--indigo {
+    background: linear-gradient(135deg, #3730a3, #1e1b4b);
+  }
+
+  .home-desktop-feature-promos__card--rose {
+    background: linear-gradient(135deg, #9d174d, #4c0519);
+  }
+
+  .lobby-desktop-sidebar-rail {
+    position: sticky;
+    top: var(--lobby-sidebar-sticky-top);
+    z-index: 5;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    width: var(--lobby-sidebar-card-width);
+    min-width: 0;
+    align-self: flex-start;
+    height: var(--lobby-sidebar-panel-height);
+    max-height: var(--lobby-sidebar-panel-height);
+    padding: var(--lobby-workspace-pad-top) 0 1rem;
+    overflow: visible;
+    transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .lobby-desktop-shell.is-sidebar-collapsed .lobby-desktop-sidebar-rail {
+    width: var(--lobby-sidebar-card-width-collapsed);
+  }
+
+  .lobby-desktop-shell.is-sidebar-collapsed {
+    --lobby-bottom-nav-inset-left: var(--lobby-sidebar-card-width-collapsed);
+  }
+
+
+  .lobby-category-stack .category-nav {
+    margin-top: 0.25rem;
+  }
+
+  /* โฮม desktop — ไม่มี intro / โซนพื้นหลัง */
+  .lobby-desktop-shell .lobby-category-stack .category-nav {
+    margin-block: 0;
+  }
+
+  .lobby-desktop-shell .page-shell--lobby section[aria-label="เกมยอดฮิต"] {
+    margin-top: 0.75rem;
+  }
+}
+
+.surface {
+  background: var(--surface-gradient);
+}
+
+
+
+/*
+ * แถบเมนูย่อยแนวนอน — มุมโค้ง --radius-panel เดียวกันทุกหน้า
+ * CategoryNav (หน้าแรก), SlotFilterTabs (/slots, /casino, /sport)
+ */
+.page-subnav__track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-block: 4px;
+}
+
+.category-nav__chip,
+.page-subnav__chip {
+  display: flex;
+  min-height: 64px;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  scroll-snap-align: start;
+
+  padding: 8px 4px;
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--surface-mid);
+  color: var(--nav-text);
+
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.page-subnav__chip--filter {
+  flex-shrink: 0;
+  width: 84px;
+  min-width: 84px;
+  padding-inline: 6px;
+  font-size: 0.6875rem;
+  letter-spacing: -0.01em;
+}
+
+.category-nav__chip {
+  flex: 0 0 auto;
+  min-width: 76px;
+  max-width: none;
+  border: 0;
+  background: var(--glass-fill-subtle);
+  -webkit-backdrop-filter: blur(12px) saturate(1.12);
+  backdrop-filter: blur(12px) saturate(1.12);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.22);
+  color: var(--text-secondary);
+}
+
+.category-nav__chip:hover:not(.is-active) {
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.1),
+    rgb(151 112 213 / 0.14)
+  );
+  color: var(--text-primary);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.26);
+}
+
+.category-nav__chip.is-active {
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.12),
+    rgb(151 112 213 / 0.18)
+  );
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 10px 28px rgb(0 0 0 / 0.22);
+  transform: none;
+}
+
+.page-subnav__chip:hover:not(.is-active) {
+  color: var(--nav-active);
+  background: var(--surface-hover);
+}
+
+.page-subnav__chip.is-active {
+  color: var(--text-primary);
+  background: var(--action-solid);
+  box-shadow: 0 4px 16px rgb(73 48 223 / 35%);
+  transform: scale(1.02);
+}
+
+/*
+ * ปุ่ม CTA / quick amount / segment — สีทึบ + มุม --radius-panel เดียวกัน
+ */
+.cosmic-action-btn {
+  border-radius: var(--radius-panel);
+  background: var(--action-solid);
+  color: var(--primary-foreground);
+  font-weight: 500;
+  transition:
+    filter var(--motion-fast) ease,
+    opacity var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.cosmic-action-btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.cosmic-action-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.cosmic-action-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.cosmic-segment-track {
+  border-radius: var(--radius-panel);
+  background: color-mix(in srgb, var(--surface-hover) 88%, transparent);
+  padding: 4px;
+}
+
+.cosmic-segment-btn {
+  border-radius: calc(var(--radius-panel) - 4px);
+  font-weight: 500;
+  transition:
+    color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.cosmic-segment-btn.is-active {
+  background: var(--action-solid);
+  color: var(--text-primary);
+  box-shadow: 0 2px 12px rgb(73 48 223 / 35%);
+}
+
+/** segment — glass track · แท็บ active white solid (คืนยอด ฯลฯ) */
+.cosmic-segment-track--glass-white {
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: var(--glass-fill-subtle);
+  -webkit-backdrop-filter: blur(12px) saturate(1.12);
+  backdrop-filter: blur(12px) saturate(1.12);
+  box-shadow: 0 8px 22px rgb(0 0 0 / 0.18);
+}
+
+.cosmic-segment-track--glass-white .cosmic-segment-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.cosmic-segment-track--glass-white .cosmic-segment-btn:hover:not(.is-active) {
+  color: var(--text-secondary);
+}
+
+.cosmic-segment-track--glass-white .cosmic-segment-btn.is-active {
+  background: var(--cta-white-bg);
+  color: var(--cta-white-fg);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
+}
+
+
+/*
+ * cosmic-bg-shell — wrapper หน้ากิจกรรม (พื้นหลังใช้ global ที่ html)
+ */
+.cosmic-bg-shell {
+  position: relative;
+  min-height: 100vh;
+}
