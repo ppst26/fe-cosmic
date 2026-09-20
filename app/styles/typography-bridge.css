@@ -1,0 +1,900 @@
+/**
+ * Typography bridge — สร้างโดย scripts/strip-feature-font-css.mjs
+ * ห้ามแก้ font-size ใน hub-modals / lottery โดยตรง
+ */
+
+.cosmic-nav__wallet-balance {
+    @apply text-sm font-medium;
+  }
+
+  .cosmic-nav__deposit-cta {
+    @apply text-xl font-medium;
+  }
+
+  .wallet-button span {
+    @apply text-sm font-medium;
+  }
+
+  .cosmic-nav__auth-login {
+    @apply text-[10px] font-medium;
+  }
+
+  .wallet-button span {
+    @apply text-xs;
+  }
+
+  .cosmic-nav__deposit-cta {
+    @apply text-lg;
+  }
+
+  .cosmic-nav__auth-login {
+    @apply text-[9px];
+  }
+
+  .header-desktop-bar__search--compact .header-desktop-bar__search-input {
+    @apply text-sm;
+  }
+
+  .header-desktop-bar__search-input {
+    @apply text-sm font-medium;
+  }
+
+  .header-desktop-bar__nav-link {
+    @apply text-xs font-medium;
+  }
+
+  .header-desktop-bar__auth-login {
+    @apply text-xs font-medium;
+  }
+
+  .header-desktop-bar__cashier-btn {
+    @apply text-sm font-medium;
+  }
+
+  .header-desktop-bar__wallet-segment--action {
+    @apply text-sm font-medium;
+  }
+
+  .header-desktop-bar__wallet-balance {
+    @apply text-sm font-medium;
+  }
+
+  .header-desktop-bar__stat-label {
+    @apply text-xs font-medium;
+  }
+
+  .header-desktop-bar__stat-value {
+    @apply text-base font-medium;
+  }
+
+  .header-desktop-bar__deposit {
+    @apply text-sm font-medium;
+  }
+
+  .header-desktop-bar__user-name {
+    @apply text-sm font-medium;
+  }
+
+  .header-desktop-bar__user-rank {
+    @apply text-xs font-medium;
+  }
+
+  .menu-tab {
+    @apply text-2xl font-medium;
+  }
+
+  .menu-section h3 {
+    @apply text-xs font-medium;
+  }
+
+  .menu-item span {
+    @apply text-[10.5px] font-medium;
+  }
+
+  .menu-grid--four .menu-item span {
+    @apply text-[9.5px];
+  }
+
+  .menu-section h3 {
+    @apply text-[11px];
+  }
+
+  .cosmic-footer__heading-lg {
+    @apply text-xl font-medium;
+  }
+
+  .cosmic-footer__heading-sm {
+    @apply text-base font-medium;
+  }
+
+  .cosmic-footer__provider-list li {
+    @apply text-sm font-medium;
+  }
+
+  .cosmic-footer__brandmark {
+    @apply text-[2.125rem] font-medium;
+  }
+
+  .cosmic-footer__brandmark span {
+    @apply font-medium;
+  }
+
+  .cosmic-footer__brand-text {
+    @apply text-sm;
+  }
+
+  .cosmic-footer__links a {
+    @apply text-sm;
+  }
+
+  .cosmic-footer__social-btn {
+    @apply text-sm font-medium;
+  }
+
+  .cosmic-footer__payment-chip {
+    @apply text-xs font-medium;
+  }
+
+  .cosmic-footer__bottom {
+    @apply text-xs;
+  }
+
+  .cosmic-footer__heading-lg {
+    @apply text-lg;
+  }
+
+  .cosmic-footer__provider-list li {
+    @apply text-[0.625rem];
+  }
+
+  .cosmic-footer__brandmark {
+    @apply text-[2.125rem];
+  }
+
+  .promo-detail-modal__title {
+    @apply text-sm font-medium;
+  }
+
+  .promotion-detail-panel__banner-title {
+    @apply font-medium;
+  }
+
+  .promotion-detail-panel__details-heading {
+    @apply text-sm font-medium;
+  }
+
+  .promotion-detail-panel__footer {
+    @apply text-[0.625rem];
+  }
+
+  .lobby-desktop-header-dock__balance {
+    @apply text-sm;
+  }
+
+  .lobby-desktop-rail-btn {
+    @apply text-sm font-medium;
+  }
+
+  .lobby-desktop-panel__label {
+    @apply text-[11px] font-medium;
+  }
+
+  .lobby-desktop-panel__link {
+    @apply text-sm font-medium;
+  }
+
+  .category-nav__chip {
+    @apply text-xs font-medium;
+  }
+
+  .page-subnav__chip {
+    @apply text-xs font-medium;
+  }
+
+  .page-subnav__chip--filter {
+    @apply text-xs;
+  }
+
+  /* * ปุ่ม CTA / quick amount / segment — สีทึบ + มุม --radius-panel เดียวกัน */
+
+  .cosmic-action-btn {
+    @apply font-medium;
+  }
+
+  .cosmic-segment-btn {
+    @apply font-medium;
+  }
+
+  .hub-lobby-modal__segment-btn {
+    @apply text-sm font-medium;
+  }
+
+  .hub-lobby-modal__search-wrap input {
+    @apply text-sm font-medium;
+  }
+
+  .hub-lobby-modal__chrome-btn {
+    @apply text-sm font-medium;
+  }
+
+  .hub-lobby-modal__nav-btn {
+    @apply text-sm font-medium;
+  }
+
+  .hub-lobby-game-tile__badge {
+    @apply text-[0.5625rem] font-medium;
+  }
+
+  .hub-lobby-game-tile__title {
+    @apply text-xs font-medium;
+  }
+
+  .hub-lobby-game-tile__provider {
+    @apply text-[0.625rem] font-medium;
+  }
+
+  .activity-hub-thumb__overlay {
+    @apply text-[10px] font-medium;
+  }
+
+  /* --- Lottery hub (/lottery + หมวดหวยโฮม) --- */
+
+  .lottery-countdown {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-feature-card__title {
+    @apply text-base font-medium;
+  }
+
+  .lottery-feature-card__yiki-ball {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-flag__sphere {
+    @apply text-[0.625rem] font-medium;
+  }
+
+  .lottery-flag--sm .lottery-flag__sphere {
+    @apply text-[0.5rem];
+  }
+
+  .lottery-flag--lg .lottery-flag__sphere {
+    @apply text-[0.7rem];
+  }
+
+  .lottery-type-card__title {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-type-card__closed {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-results-board__header-cell {
+    @apply text-sm font-normal;
+  }
+
+  .lottery-results-board__market-name {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-results-board__prize-label {
+    @apply text-[0.625rem] font-medium;
+  }
+
+  .lottery-results-board__prize-value {
+    @apply text-lg font-medium;
+  }
+
+  .lottery-results-board__date-text {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-results-board__empty {
+    @apply text-sm;
+  }
+
+  .lottery-results-board__header-cell {
+    @apply text-base;
+  }
+
+  .lottery-results-board__market-name {
+    @apply text-sm;
+  }
+
+  .lottery-results-board__prize-label {
+    @apply text-xs;
+  }
+
+  .lottery-results-board__prize-value {
+    @apply text-xl;
+  }
+
+  .lottery-results-board__date-text {
+    @apply text-xs;
+  }
+
+  .daily-check-in-desktop__banner-title {
+    @apply text-xl font-medium;
+  }
+
+  .daily-check-in-desktop__banner-sub {
+    @apply text-sm;
+  }
+
+  .daily-check-in-desktop__banner-stat {
+    @apply text-lg font-medium;
+  }
+
+  .daily-check-in-desktop__banner-stat-value {
+    @apply text-2xl font-medium;
+  }
+
+  .daily-check-in-desktop__banner-stat-label {
+    @apply text-sm font-medium;
+  }
+
+  .daily-check-in-desktop__streak-dot {
+    @apply text-[0.625rem] font-medium;
+  }
+
+  .daily-check-in-desktop__streak-label {
+    @apply text-[0.5625rem];
+  }
+
+  .daily-check-in-desktop__terms-hint {
+    @apply text-xs;
+  }
+
+  .daily-check-in-desktop__main-title {
+    @apply text-base font-medium;
+  }
+
+  .daily-check-in-desktop__claim-msg {
+    @apply text-xs font-medium;
+  }
+
+  .daily-check-in-desktop__day-badge-num {
+    @apply text-base font-medium;
+  }
+
+  .daily-check-in-desktop__day-title {
+    @apply text-sm font-medium;
+  }
+
+  .daily-check-in-desktop__day-reward {
+    @apply text-base font-medium;
+  }
+
+  .daily-check-in-desktop__day-desc {
+    @apply text-xs;
+  }
+
+  .lottery-market-sidebar__title {
+    @apply text-xs;
+  }
+
+  .lottery-market-sidebar__item .lottery-countdown {
+    @apply text-[0.625rem];
+  }
+
+  .lottery-market-sidebar__title {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-market-sidebar__meta {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-market-banner__title {
+    @apply text-lg font-medium;
+  }
+
+  .lottery-market-banner__rules {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-market-round-count {
+    @apply text-sm;
+  }
+
+  .lottery-market-round-count__n {
+    @apply font-medium;
+  }
+
+  .lottery-play-round-card__title {
+    @apply text-base font-medium;
+  }
+
+  .lottery-play-round-card__schedule {
+    @apply text-xs;
+  }
+
+  .lottery-play-round-card__schedule {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-play-round-card__countdown {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-play-round-card__opens {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-play-round-grid__round {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-play-round-grid__time {
+    @apply text-lg font-medium;
+  }
+
+  .lottery-play-round-grid__countdown {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-play-rounds__expand {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-play-rounds__expand-chevron {
+    @apply text-[0.65rem];
+  }
+
+  .lottery-price-slip__head {
+    @apply text-sm font-medium;
+  }
+
+  :is(.lottery-price-slip__group-head {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-bet-slip__group-head) {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-price-row__number {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-price-row__tag {
+    @apply text-[0.625rem] font-medium;
+  }
+
+  .lottery-price-row__rate {
+    @apply text-xs;
+  }
+
+  .lottery-price-row__amount .thai-lotto-amount__input {
+    @apply text-sm;
+  }
+
+  .lottery-price-controls__checkbox {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-price-controls__edit {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-price-controls__total-label {
+    @apply text-xs;
+  }
+
+  .lottery-price-controls__total-value {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-price-chip {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-price-controls__back {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-price-controls__submit {
+    @apply text-sm;
+  }
+
+  .thai-lotto-panel__title {
+    @apply text-base font-medium;
+  }
+
+  .thai-lotto-panel__meta {
+    @apply text-xs;
+  }
+
+  .thai-lotto-draw__title {
+    @apply text-lg font-medium;
+  }
+
+  .thai-lotto-draw__meta {
+    @apply text-sm;
+  }
+
+  .thai-lotto-draw__close-label {
+    @apply text-xs;
+  }
+
+  .thai-lotto-draw__close .lottery-countdown {
+    @apply text-sm;
+  }
+
+  :is(.thai-lotto-layout {
+    @apply text-sm;
+  }
+
+  .yiki-layout) .cosmic-segment-btn {
+    @apply text-sm;
+  }
+
+  .thai-lotto-type-chip__label {
+    @apply text-sm font-medium;
+  }
+
+  .thai-lotto-type-chip__rate {
+    @apply text-xs font-medium;
+  }
+
+  /* toggle กลับเลข */
+
+  .thai-lotto-toggle {
+    @apply text-sm font-medium;
+  }
+
+  .thai-lotto-slot {
+    @apply text-lg font-medium;
+  }
+
+  .thai-lotto-pad__key {
+    @apply text-base font-medium;
+  }
+
+  .thai-lotto-pad__key--muted {
+    @apply text-xs;
+  }
+
+  .thai-lotto-mode-tabs__tab {
+    @apply text-sm font-medium;
+  }
+
+  /* แผงเลข */
+
+  .thai-lotto-grid__caption {
+    @apply text-xs font-medium;
+  }
+
+  .thai-lotto-hundreds__btn {
+    @apply text-xs font-medium;
+  }
+
+  .thai-lotto-grid__btn {
+    @apply text-xs font-medium;
+  }
+
+  .thai-lotto-grid--run .thai-lotto-grid__btn {
+    @apply text-base;
+  }
+
+  .thai-lotto-feedback {
+    @apply text-xs;
+  }
+
+  :is(.yiki-layout__slip {
+    @apply text-sm font-medium;
+  }
+
+  .thai-lotto-layout__slip) .lottery-bet-slip__head-count {
+    @apply text-sm font-medium;
+  }
+
+  .thai-lotto-layout__slip .lottery-bet-slip__default-label {
+    @apply text-xs;
+  }
+
+  .thai-lotto-layout__slip .lottery-bet-slip__text-btn {
+    @apply text-xs;
+  }
+
+  .thai-lotto-layout__slip .lottery-bet-slip__total {
+    @apply text-base;
+  }
+
+  .lottery-bet-slip__count {
+    @apply text-xs;
+  }
+
+  .lottery-bet-slip__text-btn {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-bet-slip__default-label {
+    @apply text-sm;
+  }
+
+  .thai-lotto-amount__input {
+    @apply text-base font-medium;
+  }
+
+  .thai-lotto-amount__unit {
+    @apply text-xs;
+  }
+
+  .lottery-bet-slip__empty {
+    @apply text-sm;
+  }
+
+  .lottery-bet-slip__group-head {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-bet-slip__number {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-bet-slip__rate {
+    @apply text-xs font-medium;
+  }
+
+  .thai-lotto-amount--slip-row .thai-lotto-amount__input {
+    @apply text-sm;
+  }
+
+  .lottery-bet-slip__error {
+    @apply text-xs;
+  }
+
+  .lottery-bet-slip__total {
+    @apply text-xl font-medium;
+  }
+
+  .thai-lotto-result__label {
+    @apply text-xs font-medium;
+  }
+
+  .thai-lotto-result__first-value {
+    @apply text-3xl font-medium;
+  }
+
+  .thai-lotto-result__values {
+    @apply text-lg font-medium;
+  }
+
+  .yiki-round-strip__label {
+    @apply text-base font-medium;
+  }
+
+  .yiki-round-strip__close-label {
+    @apply text-xs;
+  }
+
+  .yiki-type-chip__label {
+    @apply text-sm font-medium;
+  }
+
+  .yiki-type-chip__rate {
+    @apply text-xs font-medium;
+  }
+
+  .yiki-price-row__index {
+    @apply text-xs;
+  }
+
+  .yiki-price-row__number {
+    @apply text-lg font-medium;
+  }
+
+  .yiki-price-row__input .thai-lotto-amount__input::placeholder {
+    @apply font-medium;
+  }
+
+  .yiki-price-row__rate {
+    @apply text-xs;
+  }
+
+  .yiki-price-row__payout {
+    @apply text-sm font-medium;
+  }
+
+  .yiki-action-bar__secondary {
+    @apply text-base font-medium;
+  }
+
+  .yiki-action-bar__primary {
+    @apply text-base;
+  }
+
+  .yiki-howto__title {
+    @apply text-base font-medium;
+  }
+
+  .yiki-howto__badge {
+    @apply text-xs font-medium;
+  }
+
+  .yiki-howto__label {
+    @apply text-xs font-medium;
+  }
+
+  .yiki-price-controls__title {
+    @apply text-base font-medium;
+  }
+
+  .yiki-price-controls__preview-label {
+    @apply text-xs;
+  }
+
+  .yiki-price-controls__preview-number {
+    @apply text-3xl font-medium;
+  }
+
+  .yiki-price-controls__preview-rate {
+    @apply text-sm font-medium;
+  }
+
+  .yiki-price-controls__checkbox {
+    @apply text-sm font-medium;
+  }
+
+  .yiki-price-chip {
+    @apply text-sm font-medium;
+  }
+
+  .yiki-price-controls__total {
+    @apply text-sm;
+  }
+
+  .yiki-price-controls__total span:last-child {
+    @apply text-lg font-medium;
+  }
+
+  .yiki-price-controls__back {
+    @apply text-sm font-medium;
+  }
+
+  .yiki-price-controls__submit {
+    @apply text-sm;
+  }
+
+  .yiki-pick-actions__primary {
+    @apply text-sm;
+  }
+
+  .yiki-pick-actions__back {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-bet-result-dialog__amount {
+    @apply text-4xl font-medium;
+  }
+
+  .lottery-slip-summary__meta {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-slip-summary__slip-id {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-slip-summary__status {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-slip-summary__note {
+    @apply text-xs;
+  }
+
+  .lottery-slip-summary__group-head {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-slip-summary__number {
+    @apply text-base font-medium;
+  }
+
+  .lottery-slip-summary__pill {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-slip-summary__total-label {
+    @apply text-xs;
+  }
+
+  .lottery-slip-summary__total-value {
+    @apply text-3xl font-medium;
+  }
+
+  .lottery-slip-summary__total-muted {
+    @apply text-xl font-medium;
+  }
+
+  .lottery-slip-summary__copy-hint {
+    @apply text-xs;
+  }
+
+  .lottery-slip-summary__btn {
+    @apply text-base font-medium;
+  }
+
+  .lottery-slips-list__id {
+    @apply text-sm font-medium;
+  }
+
+  .lottery-slips-list__status {
+    @apply text-xs font-medium;
+  }
+
+  .lottery-slips-list__meta {
+    @apply text-xs;
+  }
+
+  .lottery-slips-list__stake {
+    @apply text-sm font-medium;
+  }
+
+  :is(.cosmic-mobile-sheet {
+    @apply text-[inherit];
+  }
+
+  .sign-up-picker-sheet) :where(input {
+    @apply text-[inherit];
+  }
+
+  textarea {
+    @apply text-[inherit];
+  }
+
+  select):is(:focus {
+    @apply text-[inherit];
+  }
+
+  :focus-visible) {
+    @apply text-[inherit];
+  }
+
+  .profile-hub-accordion__title {
+    @apply text-sm;
+  }
+
+  .profile-hub-row__title {
+    @apply text-xs;
+  }
+
+  .profile-slideover-card .profile-hub-accordion__title {
+    @apply text-sm font-medium;
+  }
+
+  .profile-slideover-card .profile-hub-row__title {
+    @apply text-xs font-medium;
+  }
+
+  .profile-slideover-card .profile-hub-header__name {
+    @apply text-base;
+  }
+
+  .profile-slideover-card .profile-hub-header__meta {
+    @apply text-xs;
+  }
+
+  .profile-slideover-card .profile-hub-header__id span {
+    @apply text-xs;
+  }
+
+  .profile-slideover-card .profile-hub-logout {
+    @apply text-sm font-medium;
+  }
+
+  /** chip เลือกยอด / ตัวเลือกด่วน — มุม panel (คู่ cosmic-inset-card ใน sheet) */
+
+  .cosmic-choice-btn {
+    @apply font-medium;
+  }
+
+  /** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient) แทน .cosmic-action-btn ม่วงทึบ */
+
+  .cosmic-sheet-submit {
+    @apply text-base font-medium;
+  }

@@ -25,7 +25,7 @@ export function SectionHeader({
         {icon && <span className="inline-flex items-center shrink-0">{icon}</span>}
         <h2
           id={titleId}
-          className="text-[18px] sm:text-[20px] font-medium tracking-tight text-[var(--text-primary)] leading-[1.4]"
+          className="cosmic-type-section-title tracking-tight"
         >
           {title}
         </h2>

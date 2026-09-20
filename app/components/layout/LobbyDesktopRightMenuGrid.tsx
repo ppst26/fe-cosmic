@@ -30,11 +30,11 @@ function RightMenuGlassCardContent({
     <div className="lobby-right-menu-card__body">
       <div className="lobby-right-menu-card__text min-w-0">
         <span
-          className={`lobby-right-menu-card__title ${emphasis ? "lobby-right-menu-card__title--emphasis" : ""}`}
+          className={`lobby-right-menu-card__title cosmic-type-rail-card-title ${emphasis ? "lobby-right-menu-card__title--emphasis text-xl lg:text-2xl" : ""}`}
         >
           {title}
         </span>
-        <span className="lobby-right-menu-card__subtitle">{subtitle}</span>
+        <span className="lobby-right-menu-card__subtitle cosmic-type-rail-card-subtitle">{subtitle}</span>
       </div>
       <div className="lobby-right-menu-card__visual" aria-hidden="true">
         <img src={visualSrc} alt="" className="lobby-right-menu-card__visual-img" loading="lazy" decoding="async" />

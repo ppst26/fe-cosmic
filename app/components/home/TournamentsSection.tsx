@@ -1,17 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { LobbyTournamentSectionItem } from "@/app/types/lobby";
 import { MenuItemIcon } from "../layout/MenuItemIcon";
 import { SectionHeader } from "../ui/SectionHeader";
+import { CarouselControls } from "../ui/CarouselControls";
 
 interface TournamentsSectionProps {
   items: LobbyTournamentSectionItem[];
   title?: string;
-  viewAllHref?: string;
-  viewAllLabel?: string;
 }
 
 /**
@@ -22,9 +21,68 @@ interface TournamentsSectionProps {
 export function TournamentsSection({
   items,
   title = "กิจกรรม",
-  viewAllHref = "/event",
-  viewAllLabel = "See all",
 }: TournamentsSectionProps) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+
+  const getSlideStride = useCallback(() => {
+    const track = trackRef.current;
+    if (!track?.firstElementChild) return 0;
+    const first = track.firstElementChild as HTMLElement;
+    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || "8");
+    return first.offsetWidth + gap;
+  }, []);
+
+  const updateScrollState = useCallback(() => {
+    const track = trackRef.current;
+    if (!track || items.length === 0) return;
+
+    const stride = getSlideStride();
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    setCanPrev(track.scrollLeft > 1);
+    setCanNext(track.scrollLeft < maxScroll - 1);
+
+    if (stride > 0) {
+      const index = Math.round(track.scrollLeft / stride);
+      const clamped = Math.min(Math.max(index, 0), items.length - 1);
+      setActiveIndex(clamped);
+    }
+  }, [getSlideStride, items.length]);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    updateScrollState();
+    track.addEventListener("scroll", updateScrollState, { passive: true });
+    const observer = new ResizeObserver(updateScrollState);
+    observer.observe(track);
+    return () => {
+      track.removeEventListener("scroll", updateScrollState);
+      observer.disconnect();
+    };
+  }, [updateScrollState]);
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const track = trackRef.current;
+      const stride = getSlideStride();
+      if (!track || stride <= 0) return;
+      const clamped = Math.min(Math.max(index, 0), items.length - 1);
+      track.scrollTo({ left: clamped * stride, behavior: "smooth" });
+      setActiveIndex(clamped);
+    },
+    [getSlideStride, items.length],
+  );
+
+  const scrollByStep = useCallback(
+    (direction: 1 | -1) => {
+      scrollToIndex(activeIndex + direction);
+    },
+    [activeIndex, scrollToIndex],
+  );
+
   if (items.length === 0) return null;
 
   return (
@@ -37,14 +95,18 @@ export function TournamentsSection({
         title={title}
         titleId="lobby-tournaments-section-title"
         actionContent={
-          <Link href={viewAllHref} className="glass-control glass-pill tournaments-section__view-all">
-            {viewAllLabel}
-            <span className="tournaments-section__view-all-chevron" aria-hidden="true">›</span>
-          </Link>
+          <CarouselControls
+            showViewAll={false}
+            sectionTitle={title}
+            canPrev={canPrev}
+            canNext={canNext}
+            onPrev={() => scrollByStep(-1)}
+            onNext={() => scrollByStep(1)}
+          />
         }
       />
 
-      <div className="carousel-track carousel-tournaments-feature">
+      <div ref={trackRef} className="carousel-track carousel-tournaments-feature">
         {items.map((item) => {
           const image = (
             <Image
@@ -74,6 +136,27 @@ export function TournamentsSection({
             <article key={item.id} className="tournament-feature-card" aria-label={item.brandLabel}>
               {image}
             </article>
+          );
+        })}
+      </div>
+
+      <div className="mt-3 flex items-center justify-center gap-1.5" role="tablist" aria-label={`สไลด์${title}`}>
+        {items.map((item, idx) => {
+          const isActive = idx === activeIndex;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-label={`ไปยัง${item.brandLabel}`}
+              onClick={() => scrollToIndex(idx)}
+              className={`rounded-full transition-all duration-200 ${
+                isActive
+                  ? "h-2 w-2 bg-[var(--text-primary)]"
+                  : "h-2 w-2 bg-[var(--surface-hover)] hover:bg-[var(--text-muted)]"
+              }`}
+            />
           );
         })}
       </div>

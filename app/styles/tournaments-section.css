@@ -1,21 +1,5 @@
 /* กิจกรรม — section หลัง Hall of Fame (TournamentsSection.tsx) */
 
-.tournaments-section__view-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.15rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  text-decoration: none;
-  color: var(--text-primary);
-}
-
-.tournaments-section__view-all-chevron {
-  font-size: 1.125rem;
-  line-height: 1;
-  opacity: 0.85;
-}
-
 .carousel-tournaments-feature {
   --carousel-cols: 1.12;
   --carousel-gap: var(--space-2);

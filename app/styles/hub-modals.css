@@ -93,16 +93,12 @@
   padding: 3px;
   border-radius: var(--radius-pill);
   background: var(--hub-lobby-chrome);
-}
-
-.hub-lobby-modal__segment-btn {
+}.hub-lobby-modal__segment-btn {
   min-height: 36px;
   padding: 0 1rem;
   border: 0;
   border-radius: var(--radius-pill);
   background: transparent;
-  font-size: 0.8125rem;
-  font-weight: 500;
   color: var(--text-muted);
   transition:
     background var(--motion-fast) ease,
@@ -125,24 +121,18 @@
   border-radius: 10px;
   background: var(--hub-lobby-chrome);
   color: var(--text-muted);
-}
-
-.hub-lobby-modal__search-wrap input {
+}.hub-lobby-modal__search-wrap input {
   min-width: 0;
   flex: 1 1 auto;
   border: 0;
   background: transparent;
-  font-size: 0.875rem;
-  font-weight: 500;
   color: var(--text-primary);
   outline: none;
 }
 
 .hub-lobby-modal__search-wrap input::placeholder {
   color: var(--text-muted);
-}
-
-.hub-lobby-modal__chrome-btn {
+}.hub-lobby-modal__chrome-btn {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -152,8 +142,6 @@
   border: 0;
   border-radius: 10px;
   background: var(--hub-lobby-chrome);
-  font-size: 0.8125rem;
-  font-weight: 500;
   color: var(--text-secondary);
   transition: background var(--motion-fast) ease;
 }
@@ -191,9 +179,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.hub-lobby-modal__nav-btn {
+}.hub-lobby-modal__nav-btn {
   display: flex;
   width: 100%;
   align-items: center;
@@ -203,8 +189,6 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  font-size: 0.8125rem;
-  font-weight: 500;
   color: var(--text-secondary);
   text-align: left;
   transition:
@@ -311,34 +295,22 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.hub-lobby-game-tile__badge {
+}.hub-lobby-game-tile__badge {
   position: absolute;
   top: 0.4rem;
   left: 0.4rem;
   padding: 0.15rem 0.4rem;
   border-radius: 6px;
   background: rgb(0 0 0 / 72%);
-  font-size: 0.5625rem;
-  font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #fff;
-}
-
-.hub-lobby-game-tile__title {
-  font-size: 0.6875rem;
-  font-weight: 500;
+}.hub-lobby-game-tile__title {
   line-height: 1.25;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--text-primary);
-}
-
-.hub-lobby-game-tile__provider {
-  font-size: 0.625rem;
-  font-weight: 500;
+}.hub-lobby-game-tile__provider {
   line-height: 1.3;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -545,10 +517,7 @@
   .cosmic-modal-shell--hub .activity-hub-master-row--selected {
     background: color-mix(in srgb, var(--accent-primary) 14%, var(--hub-dialog-card-bg));
     box-shadow: inset 3px 0 0 var(--accent-primary, #7c3aed);
-  }
-}
-
-.activity-hub-thumb__overlay {
+  }} .activity-hub-thumb__overlay {
   position: absolute;
   inset: 0;
   display: flex;
@@ -557,8 +526,6 @@
   padding: 0.35rem;
   background: rgb(0 0 0 / 55%);
   text-align: center;
-  font-size: 10px;
-  font-weight: 500;
   line-height: 1.25;
   color: #fecaca;
 }
@@ -573,15 +540,10 @@
 
 .activity-hub-tier-table__row:nth-child(even) {
   background: color-mix(in srgb, var(--surface-hover) 35%, transparent);
-}
-
-/* --- Lottery hub (/lottery + หมวดหวยโฮม) --- */
-.lottery-countdown {
+}/* --- Lottery hub (/lottery + หมวดหวยโฮม) --- */ .lottery-countdown {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.75rem;
-  font-weight: 500;
   color: var(--success, #41d995);
 }
 
@@ -625,11 +587,7 @@
   flex-direction: column;
   gap: 0.35rem;
   align-items: flex-start;
-}
-
-.lottery-feature-card__title {
-  font-size: 0.9375rem;
-  font-weight: 500;
+}.lottery-feature-card__title {
   line-height: 1.25;
   color: var(--text-primary);
 }
@@ -639,16 +597,12 @@
   flex-shrink: 0;
   width: 3.25rem;
   height: 3.25rem;
-}
-
-.lottery-feature-card__yiki-ball {
+}.lottery-feature-card__yiki-ball {
   display: grid;
   place-items: center;
   width: 3.25rem;
   height: 3.25rem;
   border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
   color: #b91c1c;
   background: radial-gradient(circle at 30% 25%, #fde68a, #f59e0b 55%, #b45309);
   box-shadow: inset 0 -4px 8px rgb(0 0 0 / 25%);
@@ -684,28 +638,18 @@
 .lottery-flag--lg {
   width: 3.5rem;
   height: 3.5rem;
-}
-
-.lottery-flag__sphere {
+}.lottery-flag__sphere {
   display: grid;
   place-items: center;
   width: 100%;
   height: 100%;
   border-radius: 9999px;
-  font-size: 0.625rem;
-  font-weight: 500;
   letter-spacing: -0.02em;
   color: rgb(255 255 255 / 92%);
   text-shadow: 0 1px 2px rgb(0 0 0 / 45%);
   box-shadow: inset 0 -3px 6px rgb(0 0 0 / 28%);
-}
-
-.lottery-flag--sm .lottery-flag__sphere {
-  font-size: 0.5rem;
-}
-
-.lottery-flag--lg .lottery-flag__sphere {
-  font-size: 0.7rem;
+}.lottery-flag--sm .lottery-flag__sphere {
+}.lottery-flag--lg .lottery-flag__sphere {
 }
 
 .lottery-flag__coin {
@@ -838,21 +782,13 @@
   flex-direction: column;
   gap: 0.2rem;
   min-width: 0;
-}
-
-.lottery-type-card__title {
-  font-size: 0.8125rem;
-  font-weight: 500;
+}.lottery-type-card__title {
   line-height: 1.25;
   color: var(--text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.lottery-type-card__closed {
-  font-size: 0.75rem;
-  font-weight: 500;
+}.lottery-type-card__closed {
   color: var(--text-secondary);
 }
 
@@ -883,11 +819,7 @@
 
 .lottery-results-board__header {
   padding: 0 0.15rem 0.4rem;
-}
-
-.lottery-results-board__header-cell {
-  font-size: 0.875rem;
-  font-weight: 400;
+}.lottery-results-board__header-cell {
   line-height: 1.3;
   color: var(--text-secondary);
 }
@@ -930,14 +862,10 @@
   min-width: 0;
   align-items: center;
   gap: 0.5rem;
-}
-
-.lottery-results-board__market-name {
+}.lottery-results-board__market-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.8125rem;
-  font-weight: 500;
   line-height: 1.2;
   color: var(--text-primary);
 }
@@ -949,19 +877,11 @@
   justify-content: center;
   gap: 0.2rem;
   min-width: 0;
-}
-
-.lottery-results-board__prize-label {
-  font-size: 0.625rem;
-  font-weight: 500;
+}.lottery-results-board__prize-label {
   line-height: 1;
   color: var(--text-secondary);
   white-space: nowrap;
-}
-
-.lottery-results-board__prize-value {
-  font-size: 1.125rem;
-  font-weight: 500;
+}.lottery-results-board__prize-value {
   line-height: 1;
   letter-spacing: 0.03em;
   color: #ffe66d;
@@ -972,23 +892,16 @@
   align-items: center;
   justify-content: flex-end;
   min-width: 0;
-}
-
-.lottery-results-board__date-text {
+}.lottery-results-board__date-text {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.6875rem;
-  font-weight: 500;
   line-height: 1.2;
   color: var(--text-secondary);
   white-space: nowrap;
-}
-
-.lottery-results-board__empty {
+}.lottery-results-board__empty {
   padding: 2rem 1rem;
   border-radius: var(--radius-panel);
   text-align: center;
-  font-size: 0.875rem;
   color: var(--text-muted);
   background: var(--glass-fill-subtle);
 }
@@ -996,10 +909,7 @@
 @media (min-width: 640px) {
   .lottery-results-board {
     --lottery-results-board-cols: minmax(0, 1fr) 4.25rem 4.25rem minmax(5rem, 6.25rem);
-  }
-
-  .lottery-results-board__header-cell {
-    font-size: 0.9375rem;
+  }.lottery-results-board__header-cell {
   }
 
   .lottery-results-board__body {
@@ -1008,22 +918,10 @@
 
   .lottery-results-board__row {
     padding: 0.5rem 0.75rem;
-  }
-
-  .lottery-results-board__market-name {
-    font-size: 0.875rem;
-  }
-
-  .lottery-results-board__prize-label {
-    font-size: 0.6875rem;
-  }
-
-  .lottery-results-board__prize-value {
-    font-size: 1.25rem;
-  }
-
-  .lottery-results-board__date-text {
-    font-size: 0.75rem;
+  }.lottery-results-board__market-name {
+  }.lottery-results-board__prize-label {
+  }.lottery-results-board__prize-value {
+  }.lottery-results-board__date-text {
   }
 }
 
@@ -1104,19 +1002,12 @@
   padding: 1.25rem 1.25rem 1rem;
   border-radius: 0;
   border-right: 1px solid rgb(255 255 255 / 0.06);
-}
-
-.daily-check-in-desktop__banner-title {
+}.daily-check-in-desktop__banner-title {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 500;
   line-height: 1.25;
   color: var(--text-primary);
-}
-
-.daily-check-in-desktop__banner-sub {
+}.daily-check-in-desktop__banner-sub {
   margin: 0.35rem 0 0;
-  font-size: 0.8125rem;
   line-height: 1.45;
   color: var(--text-secondary);
 }
@@ -1132,28 +1023,16 @@
 .daily-check-in-desktop__banner-art {
   width: 7.5rem;
   height: auto;
-}
-
-.daily-check-in-desktop__banner-stat {
+}.daily-check-in-desktop__banner-stat {
   display: flex;
   align-items: baseline;
   gap: 0.2rem;
   margin: 0;
-  font-size: 1.125rem;
-  font-weight: 500;
   color: var(--text-primary);
-}
-
-.daily-check-in-desktop__banner-stat-value {
-  font-size: 1.5rem;
-  font-weight: 500;
+}.daily-check-in-desktop__banner-stat-value {
   color: #ffe66d;
-}
-
-.daily-check-in-desktop__banner-stat-label {
+}.daily-check-in-desktop__banner-stat-label {
   margin-left: 0.25rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
   color: var(--text-secondary);
 }
 
@@ -1175,16 +1054,12 @@
   flex-direction: column;
   align-items: center;
   gap: 0.25rem;
-}
-
-.daily-check-in-desktop__streak-dot {
+}.daily-check-in-desktop__streak-dot {
   display: grid;
   place-items: center;
   width: 1.65rem;
   height: 1.65rem;
   border-radius: 9999px;
-  font-size: 0.625rem;
-  font-weight: 500;
   color: var(--text-muted);
   background: rgb(0 0 0 / 0.28);
 }
@@ -1197,17 +1072,11 @@
 .daily-check-in-desktop__streak-dot.is-today {
   color: var(--text-primary);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--action-solid) 70%, transparent);
-}
-
-.daily-check-in-desktop__streak-label {
-  font-size: 0.5625rem;
+}.daily-check-in-desktop__streak-label {
   color: var(--text-muted);
   white-space: nowrap;
-}
-
-.daily-check-in-desktop__terms-hint {
+}.daily-check-in-desktop__terms-hint {
   margin: auto 0 0;
-  font-size: 0.6875rem;
   line-height: 1.4;
   color: var(--text-muted);
 }
@@ -1227,19 +1096,11 @@
   justify-content: space-between;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
-}
-
-.daily-check-in-desktop__main-title {
+}.daily-check-in-desktop__main-title {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 500;
   color: var(--text-primary);
-}
-
-.daily-check-in-desktop__claim-msg {
+}.daily-check-in-desktop__claim-msg {
   margin: 0;
-  font-size: 0.75rem;
-  font-weight: 500;
   color: var(--success, #41d995);
 }
 
@@ -1294,31 +1155,16 @@
 
 .daily-check-in-desktop__day-badge.is-today {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--action-solid) 55%, transparent);
-}
-
-.daily-check-in-desktop__day-badge-num {
-  font-size: 0.9375rem;
-  font-weight: 500;
+}.daily-check-in-desktop__day-badge-num {
   line-height: 1;
-}
-
-.daily-check-in-desktop__day-title {
+}.daily-check-in-desktop__day-title {
   margin: 0;
-  font-size: 0.8125rem;
-  font-weight: 500;
   color: color-mix(in srgb, #f472b6 55%, var(--text-primary));
-}
-
-.daily-check-in-desktop__day-reward {
+}.daily-check-in-desktop__day-reward {
   margin: 0.15rem 0 0;
-  font-size: 0.9375rem;
-  font-weight: 500;
   color: #ffe66d;
-}
-
-.daily-check-in-desktop__day-desc {
+}.daily-check-in-desktop__day-desc {
   margin: 0.2rem 0 0;
-  font-size: 0.6875rem;
   line-height: 1.35;
   color: var(--text-secondary);
 }

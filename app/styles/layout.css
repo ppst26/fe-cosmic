@@ -164,15 +164,12 @@
   min-width: 0;
   flex: 1;
   text-align: right;
-  font-size: 0.875rem;
-  font-weight: 500;
   line-height: 1.35;
   color: var(--text-primary);
 }
 
 @media (min-width: 640px) {
   .promo-detail-modal__title {
-    font-size: 1rem;
   }
 }
 
@@ -212,7 +209,6 @@
 }
 
 .promotion-detail-panel__banner-title {
-  font-weight: 500;
   line-height: 1.35;
   background: var(--promo-detail-title-gold);
   -webkit-background-clip: text;
@@ -226,8 +222,6 @@
 
 .promotion-detail-panel__details-heading {
   padding: 1rem 1rem 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
   color: var(--text-primary);
 }
 
@@ -266,7 +260,6 @@
   margin-top: 0.75rem;
   padding-top: 0.25rem;
   text-align: center;
-  font-size: 0.625rem;
   color: var(--text-muted);
 }
 
@@ -539,7 +532,6 @@
     border: 1px solid color-mix(in srgb, var(--border-active) 32%, var(--border-subtle));
     background: color-mix(in srgb, var(--surface-hover) 72%, transparent);
     padding: 0.4rem 0.75rem;
-    font-size: 0.875rem;
     color: var(--text-primary);
   }
 
@@ -650,8 +642,6 @@
     border-radius: var(--radius-panel);
     padding: 0.5rem 0.65rem;
     font: inherit;
-    font-size: 0.875rem;
-    font-weight: 500;
     line-height: 1.25;
     cursor: pointer;
     transition:
@@ -691,8 +681,6 @@
 
   .lobby-desktop-panel__label {
     margin-bottom: 0.15rem;
-    font-size: 11px;
-    font-weight: 500;
     letter-spacing: 0.04em;
     color: var(--text-muted);
   }
@@ -717,8 +705,6 @@
     gap: 0.5rem;
     border-radius: var(--radius-card);
     padding: 0.45rem 0.35rem;
-    font-size: 13px;
-    font-weight: 500;
     color: var(--text-secondary);
     text-decoration: none;
     transition: background var(--motion-fast) ease;
@@ -839,8 +825,6 @@
   color: var(--nav-text);
 
   font: inherit;
-  font-size: 0.75rem;
-  font-weight: 500;
   line-height: 1.25;
   text-align: center;
 
@@ -856,7 +840,6 @@
   width: 84px;
   min-width: 84px;
   padding-inline: 6px;
-  font-size: 0.6875rem;
   letter-spacing: -0.01em;
 }
 
@@ -914,7 +897,6 @@
   border-radius: var(--radius-panel);
   background: var(--action-solid);
   color: var(--primary-foreground);
-  font-weight: 500;
   transition:
     filter var(--motion-fast) ease,
     opacity var(--motion-fast) ease,
@@ -942,7 +924,6 @@
 
 .cosmic-segment-btn {
   border-radius: calc(var(--radius-panel) - 4px);
-  font-weight: 500;
   transition:
     color var(--motion-fast) ease,
     background var(--motion-fast) ease,

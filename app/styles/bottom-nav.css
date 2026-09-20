@@ -52,8 +52,6 @@
   background: transparent;
   color: var(--nav-text);
   font: inherit;
-  font-size: 0.75rem;
-  font-weight: 500;
   line-height: 1.2;
   white-space: nowrap;
   text-decoration: none;

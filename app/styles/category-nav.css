@@ -115,13 +115,11 @@
     width: 94px;
     min-width: 94px;
     min-height: 70px;
-    font-size: 0.75rem;
   }
 
   .category-nav__chip {
     min-height: 70px;
     min-width: 88px;
-    font-size: 0.8125rem;
   }
 }
 

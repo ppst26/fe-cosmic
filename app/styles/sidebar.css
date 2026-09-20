@@ -169,8 +169,6 @@
   .lobby-desktop-sidebar__section-label {
     margin-bottom: 0.35rem;
     padding-inline: 0.5rem 0.35rem;
-    font-size: 0.75rem;
-    font-weight: 500;
     letter-spacing: 0.03em;
     text-align: right;
     text-transform: none;
@@ -206,8 +204,6 @@
     border-radius: var(--radius-control);
     padding: 0.35rem 0.45rem;
     min-height: 2.625rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
     text-align: left;
     color: var(--text-secondary);
     background: transparent;
@@ -294,7 +290,6 @@
   }
 
   .lobby-desktop-sidebar:not(.is-collapsed) .lobby-desktop-sidebar__link.is-active {
-    font-weight: 500;
   }
 
   .lobby-desktop-sidebar__link.is-active .lobby-desktop-sidebar__link-icon-wrap {
@@ -335,8 +330,6 @@
     border: 0;
     border-radius: 10px;
     padding: 0.5rem;
-    font-size: 12px;
-    font-weight: 500;
     color: var(--text-muted);
     background: transparent;
     cursor: pointer;
@@ -415,15 +408,11 @@
     min-height: 2.5rem;
     padding: 0.45rem 0.6rem;
     border-radius: 12px;
-    font-size: 0.8125rem;
-    font-weight: 500;
     line-height: 1.3;
     color: rgb(255 255 255 / 0.58);
   }
 
   .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--primary .lobby-desktop-sidebar__link {
-    font-size: 0.875rem;
-    font-weight: 500;
     color: rgb(255 255 255 / 0.94);
   }
 
@@ -442,7 +431,6 @@
   }
 
   .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-label {
-    font-weight: inherit;
   }
 
   .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link:hover {
@@ -485,8 +473,6 @@
     justify-content: flex-start;
     padding: 0.45rem 0.6rem;
     border-radius: 12px;
-    font-size: 0.8125rem;
-    font-weight: 500;
     color: rgb(255 255 255 / 0.5);
   }
 
@@ -640,21 +626,16 @@
   }
 
   .lobby-right-menu-card__title {
-    font-size: 1.1875rem;
-    font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.01em;
     color: var(--text-primary);
   }
 
   .lobby-right-menu-card__title--emphasis {
-    font-size: 1.25rem;
     letter-spacing: -0.02em;
   }
 
   .lobby-right-menu-card__subtitle {
-    font-size: 0.875rem;
-    font-weight: 500;
     line-height: 1.3;
     letter-spacing: 0.02em;
     color: var(--text-secondary);
@@ -771,8 +752,6 @@
     flex: 1 1 auto;
     min-width: 0;
     padding-top: 0.1rem;
-    font-size: 0.625rem;
-    font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.01em;
     color: var(--text-primary);

@@ -158,7 +158,9 @@ export function HomeDesktopPeekCarousel({
                   aria-label={item.title}
                   role="img"
                 >
-                  <span className="home-desktop-peek-carousel__mock-label">{index + 1}</span>
+                  <span className="home-desktop-peek-carousel__mock-label text-3xl font-medium tracking-wide text-white/35">
+                    {index + 1}
+                  </span>
                 </div>
               );
             }

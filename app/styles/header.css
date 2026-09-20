@@ -177,15 +177,11 @@
   height: 1.25rem;
   max-width: min(42vw, 9.25rem);
   border-radius: 6px;
-}
-
-.cosmic-nav__wallet-balance {
+}.cosmic-nav__wallet-balance {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.875rem;
-  font-weight: 500;
   font-variant-numeric: tabular-nums;
   line-height: 1;
   color: var(--text-primary);
@@ -205,9 +201,7 @@
 .cosmic-nav__wallet-cluster.wallet-button--skeleton {
   width: 7.5rem;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.cosmic-nav__deposit-cta {
+}.cosmic-nav__deposit-cta {
   display: grid;
   flex-shrink: 0;
   place-items: center;
@@ -215,8 +209,6 @@
   min-height: 32px;
   padding: 0 8px;
   border-radius: var(--radius-sm);
-  font-size: 1.25rem;
-  font-weight: 500;
   line-height: 1;
 }
 
@@ -259,15 +251,11 @@
   max-width: min(42vw, 9.25rem);
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   background: rgb(255 255 255 / 0.06);
-}
-
-.wallet-button span {
+}.wallet-button span {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 14px;
-  font-weight: 500;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
@@ -286,16 +274,12 @@
   align-items: center;
   gap: 8px;
   min-width: 0;
-}
-
-.cosmic-nav__auth-login {
+}.cosmic-nav__auth-login {
   min-height: 36px;
   padding: 0 10px;
   border: 0;
   color: var(--text-secondary);
   font: inherit;
-  font-size: 10px;
-  font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   cursor: pointer;
@@ -365,31 +349,22 @@
     max-width: min(48vw, 10.5rem);
     min-height: 36px;
     padding: 3px 3px 3px 6px;
-  }
-
-  .wallet-button span {
-    font-size: 12px;
+  }.wallet-button span {
   }
 
   .wallet-button svg {
     width: 18px;
     height: 18px;
-  }
-
-  .cosmic-nav__deposit-cta {
+  }.cosmic-nav__deposit-cta {
     min-width: 30px;
     min-height: 28px;
-    font-size: 1.125rem;
   }
 
   .cosmic-nav__auth {
     gap: 4px;
-  }
-
-  .cosmic-nav__auth-login {
+  }.cosmic-nav__auth-login {
     min-height: 32px;
     padding-inline: 8px;
-    font-size: 9px;
   }
 }
 
@@ -677,20 +652,13 @@
 .header-desktop-bar__search--compact:focus-within {
   width: min(14rem, 36vw);
   max-width: 14rem;
-}
-
-.header-desktop-bar__search--compact .header-desktop-bar__search-input {
-  font-size: 0.8125rem;
-}
-
-.header-desktop-bar__search-input {
+}.header-desktop-bar__search--compact .header-desktop-bar__search-input {
+}.header-desktop-bar__search-input {
   width: 100%;
   min-width: 0;
   border: 0;
   background: transparent;
   color: var(--text-primary);
-  font-size: 0.875rem;
-  font-weight: 500;
   outline: none;
   box-shadow: none;
 }
@@ -714,18 +682,13 @@
 @media (min-width: 1280px) {
   .header-desktop-bar__nav {
     display: flex;
-  }
-}
-
-.header-desktop-bar__nav-link {
+  }} .header-desktop-bar__nav-link {
   position: relative;
   display: inline-flex;
   min-height: 2.25rem;
   align-items: center;
   justify-content: center;
   padding-inline: 0.95rem;
-  font-size: 0.75rem;
-  font-weight: 500;
   letter-spacing: 0.02em;
   text-align: center;
   text-decoration: none;
@@ -751,16 +714,12 @@
   gap: 0.45rem;
   border-radius: var(--header-chip-radius);
   padding: 0 0.9rem;
-}
-
-.header-desktop-bar__auth-login {
+}.header-desktop-bar__auth-login {
   min-height: 2.25rem;
   padding-inline: 0.75rem;
   border: 0;
   border-radius: var(--header-chip-radius);
   cursor: pointer;
-  font-size: 0.75rem;
-  font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-secondary);
@@ -823,9 +782,7 @@
   align-items: stretch;
   overflow: hidden;
   padding: 0;
-}
-
-.header-desktop-bar__cashier-btn {
+}.header-desktop-bar__cashier-btn {
   display: inline-flex;
   min-width: 0;
   align-items: center;
@@ -833,8 +790,6 @@
   border: 0;
   background: transparent;
   padding: 0 0.85rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
   line-height: 1;
   color: var(--text-primary);
   cursor: pointer;
@@ -899,12 +854,8 @@
   padding: 0.45rem 0.85rem;
   color: var(--text-primary);
   white-space: nowrap;
-}
-
-.header-desktop-bar__wallet-segment--action {
+}.header-desktop-bar__wallet-segment--action {
   cursor: pointer;
-  font-size: 0.8125rem;
-  font-weight: 500;
   transition: background var(--motion-fast) ease, color var(--motion-fast) ease;
 }
 
@@ -926,14 +877,10 @@
 
 .header-desktop-bar__wallet-segment--action:hover .header-desktop-bar__action-icon {
   color: var(--icon-active);
-}
-
-.header-desktop-bar__wallet-balance {
+}.header-desktop-bar__wallet-balance {
   max-width: min(100%, 7.5rem);
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.875rem;
-  font-weight: 500;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
 }
@@ -1002,28 +949,18 @@
   flex-direction: column;
   align-items: flex-start;
   line-height: 1.15;
-}
-
-.header-desktop-bar__stat-label {
-  font-size: 0.6875rem;
-  font-weight: 500;
+}.header-desktop-bar__stat-label {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-}
-
-.header-desktop-bar__stat-value {
+}.header-desktop-bar__stat-value {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.9375rem;
-  font-weight: 500;
   color: var(--text-primary);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-}
-
-.header-desktop-bar__deposit {
+}.header-desktop-bar__deposit {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -1032,8 +969,6 @@
   border-radius: var(--radius-pill);
   background: var(--gold-gradient);
   padding: 0.5rem 1.1rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
   color: #1a1200;
   cursor: pointer;
   box-shadow:
@@ -1086,21 +1021,13 @@
   flex-direction: column;
   align-items: flex-start;
   line-height: 1.15;
-}
-
-.header-desktop-bar__user-name {
+}.header-desktop-bar__user-name {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.875rem;
-  font-weight: 500;
   color: var(--text-primary);
   white-space: nowrap;
-}
-
-.header-desktop-bar__user-rank {
-  font-size: 0.6875rem;
-  font-weight: 500;
+}.header-desktop-bar__user-rank {
   color: #d99a08;
   letter-spacing: 0.06em;
 }

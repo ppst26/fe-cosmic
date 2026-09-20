@@ -125,7 +125,7 @@ function HallOfFameRowLimitSelect({
     <div ref={rootRef} className="hall-of-fame__row-limit relative shrink-0">
       <button
         type="button"
-        className="hall-of-fame__row-limit-btn"
+        className="hall-of-fame__row-limit-btn cosmic-type-toolbar-control"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
@@ -150,7 +150,7 @@ function HallOfFameRowLimitSelect({
                   type="button"
                   role="option"
                   aria-selected={selected}
-                  className={`hall-of-fame__row-limit-option${selected ? " is-selected" : ""}`}
+                  className={`hall-of-fame__row-limit-option cosmic-type-toolbar-control${selected ? " is-selected" : ""}`}
                   onClick={() => {
                     onChange(option);
                     setOpen(false);
@@ -211,7 +211,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                 aria-selected={selected}
                 aria-controls={`${panelId}-panel`}
                 onClick={() => setActiveTab(tab.id)}
-                className={`hall-of-fame__tab-btn ${selected ? "is-active" : ""}`}
+                className={`hall-of-fame__tab-btn cosmic-type-chip-tab ${selected ? "is-active" : ""}`}
               >
                 {tab.label}
               </button>
@@ -273,7 +273,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--player">
                       <div className="flex min-w-0 items-center gap-2">
                         <span
-                          className="hall-of-fame-table__avatar shrink-0"
+                          className="hall-of-fame-table__avatar cosmic-type-caption shrink-0 font-medium text-text-primary"
                           aria-hidden="true"
                         >
                           {row.playerMasked.charAt(0).toUpperCase()}

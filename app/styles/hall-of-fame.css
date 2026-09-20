@@ -27,8 +27,6 @@
   backdrop-filter: blur(12px) saturate(1.12);
   box-shadow: 0 8px 22px rgb(0 0 0 / 0.2);
   padding: 0.45rem 1rem;
-  font-size: 0.6875rem;
-  font-weight: 500;
   color: var(--text-muted);
   white-space: nowrap;
   cursor: pointer;
@@ -42,7 +40,6 @@
   .hall-of-fame__tab-btn {
     min-height: 2.5rem;
     padding-inline: 1.1rem;
-    font-size: 0.75rem;
   }
 }
 
@@ -86,8 +83,6 @@
   backdrop-filter: blur(12px) saturate(1.12);
   box-shadow: 0 8px 22px rgb(0 0 0 / 0.2);
   padding: 0.35rem 0.65rem;
-  font-size: 0.75rem;
-  font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
   transition:
@@ -128,8 +123,6 @@
   border-radius: calc(var(--radius-panel) - 4px);
   background: transparent;
   padding: 0.45rem 0.65rem;
-  font-size: 0.75rem;
-  font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--text-secondary);
   cursor: pointer;
@@ -192,7 +185,6 @@
 
 .hall-of-fame-table__th {
   padding: 0.35rem 0 0.5rem;
-  font-weight: 500;
 }
 
 .hall-of-fame-table__th--value {
@@ -240,8 +232,6 @@
   justify-content: center;
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--surface-hover) 70%, transparent);
-  font-size: 0.6875rem;
-  font-weight: 500;
   color: var(--text-primary);
 }
 

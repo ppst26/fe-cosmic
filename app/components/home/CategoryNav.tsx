@@ -123,7 +123,10 @@ export function CategoryNav({
               key={category.id}
               type="button"
               onClick={() => handleCategoryClick(category)}
-              className={`category-nav__chip ${isActive ? "is-active" : ""}`}
+              className={cn(
+                "category-nav__chip text-xs font-medium sm:text-sm",
+                isActive && "is-active",
+              )}
               aria-pressed={isActive}
             >
               <span className="category-nav__icon" aria-hidden="true">

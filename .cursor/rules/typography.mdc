@@ -1,0 +1,26 @@
+---
+description: Typography — Tailwind / cosmic-type-*; ห้าม font-size ใน feature CSS
+globs: "**/*.{tsx,css}"
+alwaysApply: false
+---
+
+# Typography
+
+ต้นฉบับ: `design.md` §4
+
+## กฎ
+
+- ขนาดและน้ำหนัก: **Tailwind ใน TSX** หรือ **`cosmic-type-*`** / **`typography-bridge.css`** (`@layer components` ใน `base.css` chain)
+- **ห้าม** `font-size` และ `font-weight` ใน feature CSS ภายใต้ `app/styles/` ยกเว้น:
+  - `base.css`, `tokens.css`, `buttons.css`, `typography-bridge.css` (generated/maintained)
+  - edge case: `font-size: inherit`, icon-only
+- น้ำหนักสูงสุด **500** (`font-medium`) — ไม่ใช้ semibold/bold
+- สร้าง/อัปเดต bridge: `node scripts/strip-feature-font-css.mjs` (หลัง `git checkout` ไฟล์เป้าหมายถ้าต้อง regenerate)
+
+## ไล่ refactor (สถานะ)
+
+| โดเมน | สถานะ |
+| :--- | :--- |
+| **lobby** | ✅ sidebar, category, bottom-nav, HoF, tournaments, peek + header, menu-drawer, footer, layout promo |
+| **hub** | ✅ `hub-modals.css` → `typography-bridge.css` |
+| **lottery** | ✅ `lottery.css` → bridge + TSX จุด responsive บางจุด |

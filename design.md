@@ -129,6 +129,12 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 - ยอดเงิน: `tabular-nums`; payout เน้นใช้ gold (`--gold-gradient` หรือ `#ffe66d`) แบบ Dexsport leaderboard
 - ไทย: ไม่ uppercase / letter-spacing กว้าง; ไม่ตัดสระด้วย line-height ต่ำ
 
+**Implementation (Tailwind):**
+
+- กำหนดขนาด/น้ำหนักใน **TSX** (`text-*`, `font-normal` / `font-medium`) หรือ class ใน `app/styles/base.css` → `@layer components` (`cosmic-type-*`)
+- **ห้าม** `font-size` / `font-weight` ใน feature CSS (`app/styles/*.css` ยกเว้น `base.css`, `tokens.css`, `buttons.css` และ edge case เช่น mock/debug label, icon-only)
+- ไล่ refactor ตามโดเมน: **lobby** → **hub** → **lottery** (ดูสถานะใน `.cursor/rules/typography.mdc`)
+
 ---
 
 ## 5. Layout และ responsive

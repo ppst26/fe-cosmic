@@ -62,7 +62,9 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
         <header className="lottery-market-banner">
           <LotteryFlagOrb label={activeEntry.flagLabel} tone={activeEntry.flagTone} size="lg" />
           <div className="lottery-market-banner__body min-w-0">
-            <h1 className="lottery-market-banner__title">{activeEntry.title}</h1>
+            <h1 className="lottery-market-banner__title text-sm font-medium lg:text-base">
+              {activeEntry.title}
+            </h1>
             <Link href="/promotions" className="lottery-market-banner__rules">
               กติกา / อัตราการจ่าย
             </Link>

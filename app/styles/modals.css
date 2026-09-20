@@ -165,10 +165,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
     outline: none;
     outline-offset: 0;
     box-shadow: none;
-  }
-
-  :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(input, textarea, select):is(:focus, :focus-visible) {
-    font-size: inherit;
+  }:is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(input, textarea, select):is(:focus, :focus-visible) {
   }
 }
 
@@ -344,10 +341,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
 
 .profile-hub-accordion__icon {
   background: color-mix(in srgb, var(--surface-mid) 88%, transparent);
-}
-
-.profile-hub-accordion__title {
-  font-size: 0.875rem;
+}.profile-hub-accordion__title {
 }
 
 .profile-hub-accordion__panel {
@@ -358,10 +352,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
 
 .profile-hub-row__icon {
   background: color-mix(in srgb, var(--surface-hover) 70%, var(--surface-mid));
-}
-
-.profile-hub-row__title {
-  font-size: 0.75rem;
+}.profile-hub-row__title {
 }
 
 .profile-slideover-card .profile-hub-body {
@@ -396,11 +387,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
 .profile-slideover-card .profile-hub-accordion__icon {
   background: transparent;
   color: var(--icon-default);
-}
-
-.profile-slideover-card .profile-hub-accordion__title {
-  font-size: 0.875rem;
-  font-weight: 500;
+}.profile-slideover-card .profile-hub-accordion__title {
   color: var(--text-primary);
 }
 
@@ -436,11 +423,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
   border-radius: 0;
   background: transparent;
   color: var(--icon-default);
-}
-
-.profile-slideover-card .profile-hub-row__title {
-  font-size: 0.75rem;
-  font-weight: 500;
+}.profile-slideover-card .profile-hub-row__title {
   color: var(--text-secondary);
 }
 
@@ -455,15 +438,8 @@ button.cosmic-sheet-soft-glass--interactive:active {
 .profile-slideover-card .profile-hub-header__avatar svg {
   height: 1.35rem;
   width: 1.35rem;
-}
-
-.profile-slideover-card .profile-hub-header__name {
-  font-size: 0.9375rem;
-}
-
-.profile-slideover-card .profile-hub-header__meta,
-.profile-slideover-card .profile-hub-header__id span {
-  font-size: 0.6875rem;
+}.profile-slideover-card .profile-hub-header__name {
+}.profile-slideover-card .profile-hub-header__meta, .profile-slideover-card .profile-hub-header__id span {
 }
 
 .profile-slideover-card .profile-hub-accordion__trigger {
@@ -473,13 +449,9 @@ button.cosmic-sheet-soft-glass--interactive:active {
 .profile-slideover-card .profile-hub-accordion__icon {
   height: 1.75rem;
   width: 1.75rem;
-}
-
-.profile-slideover-card .profile-hub-logout {
+}.profile-slideover-card .profile-hub-logout {
   margin-top: 0.5rem;
   padding: 0.5rem 0.35rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
   color: #f87171;
 }
 
@@ -513,13 +485,9 @@ button.cosmic-sheet-soft-glass--interactive:active {
   background: var(--cta-white-bg);
   color: var(--cta-white-fg);
   box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
-}
-
-/** chip เลือกยอด / ตัวเลือกด่วน — มุม panel (คู่ cosmic-inset-card ใน sheet) */
-.cosmic-choice-btn {
+}/** chip เลือกยอด / ตัวเลือกด่วน — มุม panel (คู่ cosmic-inset-card ใน sheet) */ .cosmic-choice-btn {
   border: 0;
   border-radius: var(--radius-panel);
-  font-weight: 500;
   background: color-mix(in srgb, var(--surface-hover) 38%, transparent);
   color: var(--text-secondary);
   box-shadow:
@@ -557,10 +525,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
 
 .cosmic-mobile-sheet .cosmic-choice-btn:hover:not(.is-active) {
   background: var(--sheet-soft-fill-hover);
-}
-
-/** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient) แทน .cosmic-action-btn ม่วงทึบ */
-.cosmic-sheet-submit {
+}/** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient) แทน .cosmic-action-btn ม่วงทึบ */ .cosmic-sheet-submit {
   display: flex;
   width: 100%;
   min-height: 3rem;
@@ -570,8 +535,6 @@ button.cosmic-sheet-soft-glass--interactive:active {
   border: 0;
   border-radius: var(--radius-panel);
   padding: 0.65rem 1.25rem;
-  font-size: 1rem;
-  font-weight: 500;
   line-height: 1.2;
   color: var(--cta-primary-fg);
   background: var(--cta-primary-gradient);

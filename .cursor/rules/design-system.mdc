@@ -19,7 +19,7 @@ alwaysApply: false
 - **กิจกรรม lobby (มือถือ):** carousel รูป `public/tournament/` — dots กลาง + prev/next ไม่มี View All (`JackpotSection.tsx`)
 - **Providers:** marquee โลโก้ ไม่ glass card; ช่องว่างบน ~48px
 - **Hall of Fame:** แถวแยกการ์ด + gap แนวตั้งชัด; แท็บ soft glass
-- **Typography:** Noto Sans Thai (`app/layout.tsx` → `--font-noto-sans-thai`); น้ำหนักสูงสุด **500 (medium)** — ห้าม bold/extrabold; หัวข้อใช้ขนาด+สี · ดู `design.md` §4
+- **Typography:** Noto Sans Thai; น้ำหนักสูงสุด **500** · ขนาดผ่าน Tailwind / `cosmic-type-*` — **ห้าม** `font-size` ใน feature CSS · ดู `design.md` §4 และ rule `typography.mdc`
 - Mobile-first; `max-width` 1200px; gutter จาก `design.md`
 - ลำดับ section หมวด 6 + แผนไฟล์หมวด 10 ใน `design.md`
 - เกณฑ์ตรวจ: หมวด 11 ใน `design.md` หรือ skill `ui-qa-checklist`

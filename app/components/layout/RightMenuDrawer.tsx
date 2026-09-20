@@ -119,7 +119,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             ) : null}
 
             <div className="menu-panel glass-menu-panel">
-              <Dialog.Title id="menu-title" className="menu-tab">
+              <Dialog.Title id="menu-title" className="menu-tab text-2xl font-medium leading-none">
                 เมนู
               </Dialog.Title>
 
@@ -136,7 +136,12 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
                     className="menu-section"
                     aria-labelledby={`menu-section-${section.id}`}
                   >
-                    <h3 id={`menu-section-${section.id}`}>{section.sectionLabel}</h3>
+                    <h3
+                      id={`menu-section-${section.id}`}
+                      className="text-xs font-medium text-[var(--menu-muted)]"
+                    >
+                      {section.sectionLabel}
+                    </h3>
                     <div
                       className={`menu-grid ${section.columns === 4 ? "menu-grid--four" : "menu-grid--three"}`}
                     >

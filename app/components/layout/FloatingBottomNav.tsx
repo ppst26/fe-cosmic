@@ -80,7 +80,7 @@ export function FloatingBottomNav({
       <span className="bottom-nav__icon" aria-hidden="true">
         <BottomNavIcon icon={item.icon} />
       </span>
-      <span className="bottom-nav__label">{item.label}</span>
+      <span className="bottom-nav__label cosmic-type-nav-label">{item.label}</span>
     </>
   );
 

@@ -93,4 +93,86 @@ body {
   html {
     @apply font-sans;
   }
+
+  /* Cosmicbet typography — design.md §4 */
+  h1 {
+    @apply text-2xl font-medium leading-tight text-text-primary md:text-3xl lg:text-4xl;
+  }
+
+  h2 {
+    @apply text-xl font-medium leading-snug text-text-primary md:text-2xl lg:text-3xl;
+  }
+
+  h3 {
+    @apply text-lg font-medium leading-snug text-text-primary md:text-xl lg:text-2xl;
+  }
+
+  h4 {
+    @apply text-base font-medium leading-snug text-text-primary md:text-lg lg:text-xl;
+  }
+
+  p {
+    @apply text-sm font-normal leading-relaxed text-text-secondary md:text-base;
+  }
+
+  a {
+    @apply text-sm font-normal leading-relaxed text-text-primary md:text-base;
+  }
+
+  li {
+    @apply text-sm font-normal leading-relaxed text-text-secondary md:text-base;
+  }
 }
+
+@layer components {
+  .cosmic-type-section-title {
+    @apply text-lg font-medium leading-snug text-text-primary md:text-xl;
+  }
+
+  .cosmic-type-hub-title {
+    @apply flex min-h-full flex-1 items-center justify-center text-center text-lg font-normal leading-tight text-text-primary lg:text-xl;
+  }
+
+  .cosmic-type-body {
+    @apply text-sm font-normal leading-normal text-text-primary md:text-base;
+  }
+
+  .cosmic-type-caption {
+    @apply text-xs font-normal leading-normal text-text-muted md:text-sm;
+  }
+
+  .cosmic-type-nav-label {
+    @apply text-[0.6875rem] font-medium leading-tight text-text-secondary md:text-xs;
+  }
+
+  .cosmic-type-sidebar-section {
+    @apply text-xs font-medium leading-normal;
+  }
+
+  .cosmic-type-sidebar-link {
+    @apply text-sm font-medium leading-normal;
+  }
+
+  .cosmic-type-sidebar-link-lg {
+    @apply text-sm font-medium leading-normal lg:text-base;
+  }
+
+  .cosmic-type-chip-tab {
+    @apply text-[0.6875rem] font-medium leading-normal sm:text-xs;
+  }
+
+  .cosmic-type-toolbar-control {
+    @apply text-xs font-medium leading-normal tabular-nums;
+  }
+
+  .cosmic-type-rail-card-title {
+    @apply text-lg font-medium leading-snug lg:text-xl;
+  }
+
+  .cosmic-type-rail-card-subtitle {
+    @apply text-sm font-medium leading-normal;
+  }
+}
+
+/* Typography bridge — ฟอนต์จาก hub/lottery/header (ไม่ใส่ @layer ในไฟล์แยก — Turbopack) */
+@import "./typography-bridge.css" layer(components);

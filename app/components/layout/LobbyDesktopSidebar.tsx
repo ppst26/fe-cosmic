@@ -82,7 +82,7 @@ function renderMenuTile(
     return (
       <button
         type="button"
-        className="lobby-desktop-sidebar__link"
+        className="lobby-desktop-sidebar__link cosmic-type-sidebar-link"
         title={tile.label}
         onClick={() => onMenuAction?.(tile.action!)}
       >
@@ -92,7 +92,7 @@ function renderMenuTile(
   }
 
   if (tile.href) {
-    const linkClass = "lobby-desktop-sidebar__link";
+    const linkClass = "lobby-desktop-sidebar__link cosmic-type-sidebar-link";
     if (hrefToHubId(tile.href)) {
       return (
         <HubNavLink href={tile.href} className={linkClass} title={tile.label}>
@@ -174,7 +174,7 @@ export function LobbyDesktopSidebar({
         className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--primary"
         aria-label="หมวดเกม"
       >
-        <p className="lobby-desktop-sidebar__section-label">เกม</p>
+        <p className="lobby-desktop-sidebar__section-label cosmic-type-sidebar-section">เกม</p>
         <ul className="lobby-desktop-sidebar__list">
           {categories.map((category) => {
             const isActive = category.id === activeCategoryId;
@@ -184,7 +184,7 @@ export function LobbyDesktopSidebar({
                   type="button"
                   onClick={() => handleCategoryClick(category)}
                   className={cn(
-                    "lobby-desktop-sidebar__link",
+                    "lobby-desktop-sidebar__link cosmic-type-sidebar-link-lg",
                     isActive && "is-active",
                   )}
                   aria-current={isActive ? "page" : undefined}
@@ -207,7 +207,7 @@ export function LobbyDesktopSidebar({
           className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--services"
           aria-label={section.sectionLabel}
         >
-          <p className="lobby-desktop-sidebar__section-label">
+          <p className="lobby-desktop-sidebar__section-label cosmic-type-sidebar-section">
             {section.sectionLabel}
           </p>
           <ul className="lobby-desktop-sidebar__list">
@@ -219,10 +219,14 @@ export function LobbyDesktopSidebar({
       ))}
 
       <nav className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--services" aria-label="ระบบ">
-        <p className="lobby-desktop-sidebar__section-label">ระบบ</p>
+        <p className="lobby-desktop-sidebar__section-label cosmic-type-sidebar-section">ระบบ</p>
         <ul className="lobby-desktop-sidebar__list">
           <li>
-            <Link href="/support" className="lobby-desktop-sidebar__link" title="ติดต่อเรา">
+            <Link
+              href="/support"
+              className="lobby-desktop-sidebar__link cosmic-type-sidebar-link"
+              title="ติดต่อเรา"
+            >
               <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
                 <ContactNavIcon className="h-5 w-5 shrink-0" />
               </span>
@@ -233,7 +237,7 @@ export function LobbyDesktopSidebar({
             <li>
               <button
                 type="button"
-                className="lobby-desktop-sidebar__link lobby-desktop-sidebar__link--danger"
+                className="lobby-desktop-sidebar__link cosmic-type-sidebar-link lobby-desktop-sidebar__link--danger"
                 title="ออกจากระบบ"
                 onClick={onLogout}
               >
@@ -264,7 +268,7 @@ export function LobbyDesktopSidebar({
               <SidebarDockIcon className="h-[18px] w-[18px]" />
             )}
           </span>
-          <span className="lobby-desktop-sidebar__toggle-label">
+          <span className="lobby-desktop-sidebar__toggle-label cosmic-type-nav-label">
             {collapsed ? "ขยาย" : "ย่อเมนู"}
           </span>
         </button>

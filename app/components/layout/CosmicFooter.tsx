@@ -32,7 +32,7 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
           className="cosmic-footer__partners max-lg:hidden"
           aria-labelledby="cosmic-footer-partners-title"
         >
-          <h2 id="cosmic-footer-partners-title" className="cosmic-footer__heading-lg">
+          <h2 id="cosmic-footer-partners-title" className="cosmic-footer__heading-lg text-xl font-medium">
             พันธมิตรของเรา
           </h2>
           <ul className="cosmic-footer__provider-list">
@@ -47,12 +47,12 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
             <Link href="/" className="cosmic-footer__brandmark" aria-label="cosmicbet หน้าหลัก">
               cosmic<span>bet</span>
             </Link>
-            <p className="cosmic-footer__brand-text">{FOOTER_TAGLINE}</p>
+            <p className="cosmic-footer__brand-text text-base font-medium">{FOOTER_TAGLINE}</p>
           </div>
 
           <section className="cosmic-footer__contact" aria-labelledby="cosmic-footer-contact-title">
             <div className="cosmic-footer__contact-group">
-              <h3 id="cosmic-footer-contact-title" className="cosmic-footer__heading-sm">
+              <h3 id="cosmic-footer-contact-title" className="cosmic-footer__heading-sm text-sm font-medium">
                 ติดต่อเรา
               </h3>
               <div className="cosmic-footer__social">
@@ -73,7 +73,7 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
               </div>
             </div>
             <div className="cosmic-footer__contact-group">
-              <h3 className="cosmic-footer__heading-sm">ช่องทางชำระเงิน</h3>
+              <h3 className="cosmic-footer__heading-sm text-sm font-medium">ช่องทางชำระเงิน</h3>
               <ul className="cosmic-footer__payments">
                 {FOOTER_PAYMENT_LABELS.map((label) => (
                   <li key={label} className={`cosmic-footer__payment-chip ${COSMIC_SHEET_SOFT_GLASS}`}>
@@ -85,7 +85,7 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
           </section>
         </div>
 
-        <div className="cosmic-footer__bottom">
+        <div className="cosmic-footer__bottom text-xs font-medium min-[600px]:text-xs">
           <p>{FOOTER_COPYRIGHT}</p>
           <nav className="cosmic-footer__legal" aria-label="ข้อกำหนดและนโยบาย">
             {FOOTER_LEGAL_LINKS.map((item) => (

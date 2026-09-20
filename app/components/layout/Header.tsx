@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -36,6 +36,11 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
     useAuth();
   const { openDeposit } = useDeposit();
   const { openWithdraw } = useWithdraw();
+  const [isClientReady, setIsClientReady] = useState(false);
+
+  useEffect(() => {
+    setIsClientReady(true);
+  }, []);
 
   const handleProfileClick = () => {
     if (isAuthenticated) {
@@ -49,7 +54,8 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
     onLoginClick?.();
   };
 
-  const showWallet = !isLoading && isAuthenticated;
+  const showAuthSkeleton = !isClientReady || isLoading;
+  const showWallet = isClientReady && !isLoading && isAuthenticated;
   const balanceLabel = formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE);
   const rankId = DESKTOP_PLAYER_PANEL_MOCK.rankId as VipRankId;
 
@@ -62,7 +68,34 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
           </Link>
 
           <div className="cosmic-actions">
-            {isLoading ? null : !showWallet ? (
+            {showAuthSkeleton ? (
+              <div
+                className="h-9 w-[8.75rem] animate-pulse rounded-[var(--radius-pill)] bg-[var(--surface-hover)]"
+                aria-hidden="true"
+              />
+            ) : showWallet ? (
+              <div className="cosmic-nav__user-cluster glass-card--soft">
+                <div className="cosmic-nav__wallet-inline" aria-live="polite">
+                  <HeaderWalletIcon
+                    className="h-5 w-5 shrink-0 text-[var(--icon-active)]"
+                    aria-hidden="true"
+                  />
+                  <span className="cosmic-nav__wallet-balance text-sm font-medium tabular-nums">
+                    {balanceLabel}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleProfileClick}
+                  className={`cosmic-nav__profile-in-cluster profile-button${isProfileOpen ? " is-active" : ""}`}
+                  aria-label="โปรไฟล์"
+                  aria-expanded={isProfileOpen}
+                  aria-haspopup="dialog"
+                >
+                  <ProfileNavIcon className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+            ) : (
               <div className="cosmic-nav__auth">
                 <button
                   type="button"
@@ -79,29 +112,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   Sign up
                 </button>
               </div>
-            ) : null}
-
-            {showWallet ? (
-              <div className="cosmic-nav__user-cluster glass-card--soft">
-                <div className="cosmic-nav__wallet-inline" aria-live="polite">
-                  <HeaderWalletIcon
-                    className="h-5 w-5 shrink-0 text-[var(--icon-active)]"
-                    aria-hidden="true"
-                  />
-                  <span className="cosmic-nav__wallet-balance">{balanceLabel}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleProfileClick}
-                  className={`cosmic-nav__profile-in-cluster profile-button${isProfileOpen ? " is-active" : ""}`}
-                  aria-label="โปรไฟล์"
-                  aria-expanded={isProfileOpen}
-                  aria-haspopup="dialog"
-                >
-                  <ProfileNavIcon className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </div>
-            ) : null}
+            )}
           </div>
         </div>
       </header>
@@ -126,7 +137,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   <Link
                     key={item.id}
                     href={item.href}
-                    className={`header-desktop-bar__nav-link glass-card--soft${isActive ? " is-active" : ""}`}
+                    className={`header-desktop-bar__nav-link cosmic-type-nav-label text-xs font-medium glass-card--soft${isActive ? " is-active" : ""}`}
                   >
                     {item.label}
                     {showBadge ? (
@@ -142,7 +153,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
               <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
               <input
                 type="search"
-                className="header-desktop-bar__search-input"
+                className="header-desktop-bar__search-input text-sm font-medium"
                 placeholder="ค้นหา"
                 autoComplete="off"
               />
@@ -150,7 +161,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
           </div>
 
           <div className="header-desktop-bar__end">
-            {isLoading ? (
+            {showAuthSkeleton ? (
               <div
                 className="h-11 w-48 animate-pulse rounded-[var(--radius-pill)] bg-[var(--surface-hover)]"
                 aria-hidden="true"
@@ -159,14 +170,16 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
               <div className="header-desktop-bar__actions">
                 <div className="header-desktop-bar__wallet glass-card--soft" aria-live="polite">
                   <HeaderWalletIcon className="h-[18px] w-[18px] shrink-0 text-[var(--icon-active)]" />
-                  <span className="header-desktop-bar__wallet-balance">{balanceLabel}</span>
+                  <span className="header-desktop-bar__wallet-balance text-sm font-medium tabular-nums">
+                    {balanceLabel}
+                  </span>
                 </div>
 
                 <div className="header-desktop-bar__cashier glass-card--soft">
                   <button
                     type="button"
                     onClick={openDeposit}
-                    className="header-desktop-bar__cashier-btn header-desktop-bar__cashier-btn--deposit"
+                    className="header-desktop-bar__cashier-btn header-desktop-bar__cashier-btn--deposit text-sm font-medium"
                     aria-label="ฝากเงิน"
                     aria-haspopup="dialog"
                   >
@@ -176,7 +189,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   <button
                     type="button"
                     onClick={openWithdraw}
-                    className="header-desktop-bar__cashier-btn"
+                    className="header-desktop-bar__cashier-btn text-sm font-medium"
                     aria-label="ถอนเงิน"
                     aria-haspopup="dialog"
                   >
@@ -209,7 +222,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={onLoginClick}
-                  className="header-desktop-bar__auth-login glass-card--soft"
+                  className="header-desktop-bar__auth-login text-xs font-medium uppercase tracking-wide glass-card--soft"
                 >
                   Log in
                 </button>
