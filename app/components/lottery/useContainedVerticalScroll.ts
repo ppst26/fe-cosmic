@@ -22,6 +22,8 @@ export function useContainedVerticalScroll(ref: RefObject<HTMLElement | null>) {
       const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
       if ((deltaY < 0 && !atTop) || (deltaY > 0 && !atBottom)) {
+        el.scrollTop += deltaY;
+        event.preventDefault();
         event.stopPropagation();
         return;
       }

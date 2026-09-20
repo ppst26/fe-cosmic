@@ -65,10 +65,14 @@
     overflow: hidden;
   }
 
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-shell__desk-body,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-shell__center-container,
   .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-shell__frame,
   .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-shell__row,
   .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-main,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-workspace,
   .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-workspace--over-right-rail,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-center,
   .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-center--over-rail {
     display: flex;
     flex: 1 1 auto;
@@ -78,10 +82,12 @@
   }
 
   .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-shell__header-band,
+  .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-center > .lg\:hidden,
   .lobby-desktop-shell:has(main.lottery-page-main) .lobby-desktop-center--over-rail > .lg\:hidden {
     flex-shrink: 0;
   }
 
+  .lobby-desktop-center > main.page-shell--feature.lottery-page-main,
   .lobby-desktop-center--over-rail > main.page-shell--feature.lottery-page-main {
     display: flex;
     flex: 1 1 auto;
