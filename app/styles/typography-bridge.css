@@ -1,6 +1,6 @@
 /**
  * Typography bridge — สร้างโดย scripts/strip-feature-font-css.mjs
- * ห้ามแก้ font-size ใน hub-modals / lottery โดยตรง
+ * โหลดผ่าน base.css (@import layer(components)) — ห้ามใส่ @layer ในไฟล์นี้
  */
 
 .cosmic-nav__wallet-balance {
@@ -898,3 +898,139 @@
   .cosmic-sheet-submit {
     @apply text-base font-medium;
   }
+
+  .provider-category-toolbar__search-input {
+    @apply text-sm;
+  }
+
+  .provider-category-toolbar__filter-btn {
+    @apply text-[11px] font-medium;
+  }
+
+  .provider-filter-dialog__title {
+    @apply text-sm font-medium;
+  }
+
+  .provider-filter-dialog__row-label {
+    @apply text-base font-medium;
+  }
+
+  .provider-filter-dialog__option-label {
+    @apply text-base font-medium;
+  }
+
+  .provider-filter-dialog__row-value {
+    @apply text-xs font-medium;
+  }
+
+  .provider-filter-dialog__toggle-label {
+    @apply text-base font-medium;
+  }
+
+.glass-card__title {
+  @apply text-lg font-medium;
+}
+
+.glass-card__desc {
+  @apply text-sm font-medium;
+}
+
+.lucky-wheel-page__status {
+  @apply text-xs font-medium;
+}
+
+.lucky-wheel-intro__title {
+  font-size: clamp(1.35rem, 2.4vw, 1.875rem);
+  @apply font-medium;
+}
+
+  .lucky-wheel-intro__lead {
+    @apply text-sm;
+  }
+
+  .lucky-wheel-intro__tagline {
+    @apply text-xs font-medium;
+  }
+
+  .lucky-wheel-benefit__title {
+    @apply text-xs font-medium;
+  }
+
+  .lucky-wheel-wallet__balance-label {
+    @apply text-xs font-medium;
+  }
+
+  .lucky-wheel-wallet__balance-value {
+    @apply text-base font-medium;
+  }
+
+  .lucky-wheel-wallet__mini-cta {
+    @apply text-[0.625rem] font-medium;
+  }
+
+  .lucky-wheel-wallet__section-title {
+    @apply text-xs font-medium;
+  }
+
+  .lucky-wheel-wallet__method-check {
+    @apply text-[0.625rem] font-medium;
+  }
+
+.lucky-wheel-wallet__stepper-btn {
+  @apply text-base font-medium;
+}
+
+.lucky-wheel-wallet__stepper-max {
+  @apply text-xs font-medium;
+}
+
+  .lucky-wheel-wallet__stepper-input {
+    @apply text-sm font-medium;
+  }
+
+  .lucky-wheel-wallet__spin-cta {
+    @apply text-base font-medium;
+  }
+
+  .lucky-wheel-wallet__spin-cost {
+    @apply text-xs font-medium;
+  }
+
+  .lucky-wheel-feed__live {
+    @apply text-[0.5625rem] font-medium;
+  }
+
+  .lucky-wheel-feed__pulse {
+    @apply text-[0.625rem];
+  }
+
+  .lucky-wheel-feed__avatar {
+    @apply text-sm font-medium;
+  }
+
+  .lucky-wheel-history__table {
+    @apply text-xs;
+  }
+
+  .lucky-wheel-history__table th {
+    @apply font-medium;
+  }
+
+  .lucky-wheel-history__amount {
+    @apply font-medium;
+  }
+
+.lucky-wheel__hub-btn {
+  @apply text-xs font-medium;
+}
+
+.lucky-wheel__slice-label {
+  @apply text-[11px] font-medium;
+}
+
+@media (width >= 1024px) {
+  .lucky-wheel__hub-btn {
+    font-size: clamp(0.625rem, 1.6vmin, 0.8125rem);
+    @apply font-medium;
+  }
+}

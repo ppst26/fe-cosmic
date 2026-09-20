@@ -82,22 +82,12 @@
 
 .glass-card__title {
   display: block;
-  font-size: 1.0625rem;
-  font-weight: 500;
   line-height: 1.35;
   color: var(--text-primary);
 }
 
-@media (min-width: 640px) {
-  .glass-card__title {
-    font-size: 1.125rem;
-  }
-}
-
 .glass-card__desc {
   margin-top: 0.35rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
 }
 
 /** แถว Hall of Fame — glass แยกแถว (ไม่ใช้พื้นสลับสี) */

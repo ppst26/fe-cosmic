@@ -63,7 +63,6 @@
   border: 0;
   background: transparent;
   color: var(--text-primary);
-  font-size: 14px;
   outline: none;
   box-shadow: none;
 }
@@ -78,23 +77,21 @@
     padding-inline: 16px;
   }
 
-  .provider-category-toolbar__filter-btn {
+.provider-category-toolbar__filter-btn {
     width: auto;
     height: 46px;
     padding-inline: 16px;
     font: inherit;
-    font-size: 11px;
-    font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  .provider-category-toolbar__filter-label,
+.provider-category-toolbar__filter-label,
   .provider-category-toolbar__filter-chevron {
     display: inline;
   }
 
-  .provider-category-toolbar__filter-btn:hover {
+.provider-category-toolbar__filter-btn:hover {
     color: var(--text-primary);
     filter: brightness(1.04);
   }
@@ -249,8 +246,6 @@
 .provider-filter-dialog__title {
   margin: 0;
   text-align: center;
-  font-size: 0.8125rem;
-  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-primary);
@@ -306,16 +301,11 @@
   gap: 2px;
 }
 
-.provider-filter-dialog__row-label,
-.provider-filter-dialog__option-label {
-  font-size: 0.9375rem;
-  font-weight: 500;
+.provider-filter-dialog__row-label, .provider-filter-dialog__option-label {
   color: var(--text-primary);
 }
 
 .provider-filter-dialog__row-value {
-  font-size: 0.75rem;
-  font-weight: 500;
   color: var(--text-muted);
 }
 
@@ -368,8 +358,6 @@
 
 .provider-filter-dialog__toggle-label {
   flex: 1;
-  font-size: 0.9375rem;
-  font-weight: 500;
   color: var(--text-primary);
 }
 

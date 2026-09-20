@@ -34,6 +34,17 @@
 }
 
 @media (max-width: 1023px) {
+  /** หวย / feature — กรอบกลางเต็มความกว้างจอ (ไม่จำกัดแบบ desktop cluster) */
+  .lobby-desktop-shell__desk-body,
+  .lobby-desktop-shell__center-container,
+  .lobby-desktop-shell__frame.lobby-desktop-shell__frame--dex {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
   .mobile-standalone-main {
     padding-bottom: var(--menu-nav-clearance);
   }

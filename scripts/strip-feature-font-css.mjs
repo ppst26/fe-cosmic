@@ -16,6 +16,9 @@ const TARGETS = [
   "app/styles/hub-modals.css",
   "app/styles/lottery.css",
   "app/styles/modals.css",
+  "app/styles/providers-filter.css",
+  "app/styles/glass-cards.css",
+  "app/styles/lucky-wheel.css",
 ];
 
 const SIZE_TO_APPLY = [
@@ -96,8 +99,8 @@ function processFile(relPath) {
 
     const selectors = block.selector.split(",").map((s) => s.trim()).filter(Boolean);
     for (const sel of selectors) {
-      if (sel.includes("@")) continue;
-      bridgeRules.push(`  ${sel} {\n    @apply ${applies.join(" ")};\n  }`);
+      if (sel.includes("@") || sel.includes("}")) continue;
+      bridgeRules.push(`${sel} {\n  @apply ${applies.join(" ")};\n}`);
     }
 
     let newBody = block.body
@@ -112,13 +115,36 @@ function processFile(relPath) {
   return bridgeRules;
 }
 
+const header = `/**\n * Typography bridge — สร้างโดย scripts/strip-feature-font-css.mjs\n * โหลดผ่าน base.css (@import layer(components)) — ห้ามใส่ @layer ในไฟล์นี้\n */\n\n`;
+const footer = "\n";
+
+function readBridgeBody() {
+  if (!fs.existsSync(BRIDGE)) return "";
+  const raw = fs.readFileSync(BRIDGE, "utf8");
+  return raw.replace(/^\/\*\*[\s\S]*?\*\/\s*\n?/, "").trimEnd();
+}
+
+const appendIdx = process.argv.indexOf("--append");
+const filesToProcess =
+  appendIdx >= 0 ? process.argv.slice(appendIdx + 1).filter((a) => a.endsWith(".css")) : TARGETS;
+
+if (filesToProcess.length === 0) {
+  console.error("ไม่มีไฟล์ .css — ใช้: node scripts/strip-feature-font-css.mjs --append app/styles/foo.css");
+  process.exit(1);
+}
+
 const allRules = [];
-for (const t of TARGETS) {
+for (const t of filesToProcess) {
   allRules.push(...processFile(t));
 }
 
-const header = `/**\n * Typography bridge — สร้างโดย scripts/strip-feature-font-css.mjs\n * โหลดผ่าน base.css (@import layer(components)) — ห้ามใส่ @layer ในไฟล์นี้\n */\n\n`;
-const footer = "\n";
-fs.writeFileSync(BRIDGE, header + allRules.join("\n\n") + footer);
-
-console.log(`Wrote ${allRules.length} rules to typography-bridge.css`);
+const newBlock = allRules.join("\n\n");
+if (appendIdx >= 0) {
+  const existing = readBridgeBody();
+  const merged = existing && newBlock ? `${existing}\n\n${newBlock}` : existing || newBlock;
+  fs.writeFileSync(BRIDGE, header + merged + footer);
+  console.log(`Appended ${allRules.length} rules to typography-bridge.css`);
+} else {
+  fs.writeFileSync(BRIDGE, header + newBlock + footer);
+  console.log(`Wrote ${allRules.length} rules to typography-bridge.css (full replace)`);
+}

@@ -15,7 +15,7 @@ alwaysApply: false
   - `base.css`, `tokens.css`, `buttons.css`, `typography-bridge.css` (generated/maintained)
   - edge case: `font-size: inherit`, icon-only
 - น้ำหนักสูงสุด **500** (`font-medium`) — ไม่ใช้ semibold/bold
-- สร้าง/อัปเดต bridge: `node scripts/strip-feature-font-css.mjs` (หลัง `git checkout` ไฟล์เป้าหมายถ้าต้อง regenerate)
+- สร้าง/อัปเดต bridge: `node scripts/strip-feature-font-css.mjs --append app/styles/…css` (อย่า full replace ถ้าไฟล์เก่า strip แล้ว); ถ้า CSS ติด `}.class` รัน `node scripts/fix-css-brace-glue.mjs`
 
 ## ไล่ refactor (สถานะ)
 
@@ -24,3 +24,4 @@ alwaysApply: false
 | **lobby** | ✅ sidebar, category, bottom-nav, HoF, tournaments, peek + header, menu-drawer, footer, layout promo |
 | **hub** | ✅ `hub-modals.css` → `typography-bridge.css` |
 | **lottery** | ✅ `lottery.css` → bridge + TSX จุด responsive บางจุด |
+| **providers / glass / wheel** | ✅ `providers-filter.css`, `glass-cards.css`, `lucky-wheel.css` → bridge |
