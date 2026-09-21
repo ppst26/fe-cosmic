@@ -25,7 +25,7 @@ export default function LotterySlipsListPage() {
     <LobbyDesktopPageShell
       activeCategoryId="lottery"
       subHeader={{ title: "โพยทั้งหมด", backHref: "/lottery" }}
-      mainClassName="mx-auto max-w-[var(--content-max)] pb-8 lg:mx-0 lg:max-w-none"
+      mainClassName="lottery-slips-page mx-auto max-w-[var(--content-max)] pb-8 lg:mx-0 lg:max-w-none"
     >
       {loading ? (
         <p className="py-12 text-center text-sm text-[var(--text-secondary)]">กำลังโหลด…</p>

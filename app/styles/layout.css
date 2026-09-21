@@ -49,7 +49,7 @@
     padding-bottom: var(--menu-nav-clearance);
   }
 
-  .lobby-desktop-center--over-rail > main.page-shell--feature {
+  .lobby-desktop-center--over-rail > main.page-shell--feature:not(.lottery-page-main) {
     padding-bottom: var(--menu-nav-clearance);
     box-sizing: border-box;
   }
@@ -93,7 +93,21 @@
     flex: 1 1 auto;
     flex-direction: column;
     min-height: 0;
+    box-sizing: border-box;
+    /* เว้นล่างให้เลื่อนสุดแล้วไม่โดน FloatingBottomNav (fixed) ทับ */
+    padding-bottom: calc(
+      var(--nav-height) + var(--nav-float-offset) + var(--nav-safe) + var(--nav-scroll-gap)
+    );
     overflow: hidden;
+  }
+
+  /* หน้าสรุป/รายการโพย — scroll ทั้ง main (ไม่ใช้เลย์เอาต์เต็มจอแบบแทงหวย) */
+  .lobby-desktop-center > main.page-shell--feature.lottery-page-main.lottery-slips-page,
+  .lobby-desktop-center--over-rail > main.page-shell--feature.lottery-page-main.lottery-slips-page {
+    overflow-x: clip;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

@@ -57,15 +57,16 @@ export function LotteryBetSlip({
 
   return (
     <section
-      className="lottery-panel lottery-bet-slip lottery-bet-slip--pick-only flex flex-col gap-3 p-3 sm:gap-4 sm:p-4 md:p-5"
+      className="lottery-panel lottery-bet-slip lottery-bet-slip--pick-only flex min-h-0 flex-1 flex-col gap-2 overflow-hidden px-1.5 py-2 sm:gap-4 sm:p-4 md:p-5"
       aria-labelledby={titleId}
     >
-      <div className="lottery-bet-slip__head">
+      <div className="lottery-bet-slip__head shrink-0">
         <h2 id={titleId} className="lottery-bet-slip__head-count">
           {entries.length} รายการ
         </h2>
       </div>
 
+      <div className="lottery-bet-slip__body min-h-0 flex-1 overflow-y-auto overscroll-y-contain">
       {entries.length === 0 ? (
         <p className="lottery-bet-slip__empty">{emptyMessage}</p>
       ) : (
@@ -111,13 +112,16 @@ export function LotteryBetSlip({
           })}
         </div>
       )}
+      </div>
 
-      <LotterySlipToolbar
-        visible={entries.length > 0}
-        canUndo={canUndo}
-        onUndo={() => onUndo?.()}
-        onClearAll={onClearAll}
-      />
+      <div className="lottery-bet-slip__dock shrink-0 pt-1.5">
+        <LotterySlipToolbar
+          visible={entries.length > 0}
+          canUndo={canUndo}
+          onUndo={() => onUndo?.()}
+          onClearAll={onClearAll}
+        />
+      </div>
     </section>
   );
 }

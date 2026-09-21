@@ -145,8 +145,8 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
             </div>
           </header>
 
-          <div className="cosmic-modal-shell--hub vip-modal-typography vip-modal__scroll min-h-0 flex-1 overflow-hidden pt-1 lg:pt-0">
-            <div className="vip-modal__body hidden min-h-0 flex-1 overflow-hidden lg:flex lg:flex-col">
+          <div className="cosmic-modal-shell--hub vip-modal-typography vip-modal__scroll flex min-h-0 flex-1 flex-col overflow-hidden pt-1 lg:pt-0">
+            <div className="vip-modal__body hidden min-h-0 flex-1 lg:flex lg:flex-col lg:overflow-y-auto">
               <VipModalDesktopLayout
                 tab={tab}
                 player={player}

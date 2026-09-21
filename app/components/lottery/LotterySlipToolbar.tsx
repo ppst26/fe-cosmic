@@ -21,7 +21,7 @@ export function LotterySlipToolbar({
 
   return (
     <div
-      className="lottery-slip-toolbar grid grid-cols-[1fr_1px_1fr] items-stretch mt-auto overflow-hidden"
+      className="lottery-slip-toolbar grid grid-cols-[1fr_1px_1fr] items-stretch overflow-hidden"
       role="toolbar"
       aria-label="เครื่องมือโพย"
     >

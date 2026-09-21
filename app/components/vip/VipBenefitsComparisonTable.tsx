@@ -17,7 +17,6 @@ interface VipBenefitsComparisonTableProps {
   variant?: "default" | "desktop-full";
 }
 
-const STICKY_BG = "bg-[var(--surface-mid)]";
 const COL_MIN = "min-w-[5.75rem] w-[5.75rem]";
 
 /**
@@ -41,25 +40,25 @@ export function VipBenefitsComparisonTable({
   }, [currentRankId]);
 
   return (
-    <div className={`space-y-2 ${isDesktopFull ? "vip-benefits-table--desktop-full" : ""}`}>
+    <div
+      className={`space-y-2 ${isDesktopFull ? "vip-benefits-table--desktop-full min-h-0 flex-1 pb-1" : "pb-2"}`}
+    >
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-sm font-medium text-[var(--text-primary)]">
+        <h3 className="text-sm font-medium text-[var(--text-primary)] sm:text-[0.9375rem]">
           สิทธิประโยชน์แต่ละระดับ
         </h3>
-        <p className="max-w-[9rem] text-right text-[10px] leading-snug text-[var(--text-muted)]">
+        <p className="max-w-[9rem] text-right text-xs leading-snug text-[var(--text-muted)]">
           เลื่อนเพื่อดูระดับเพิ่มเติม
         </p>
       </div>
 
       <div
-        className={`relative overflow-hidden ${
-          isDesktopFull
-            ? "vip-benefits-table__scroll-wrap rounded-[var(--radius-control)]"
-            : "cosmic-inset-card"
+        className={`vip-benefits-table__scroll-wrap relative overflow-x-hidden ${
+          isDesktopFull ? "vip-benefits-table__scroll-wrap--desktop-full rounded-[var(--radius-control)]" : "cosmic-inset-card"
         }`}
       >
         <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-30 w-8 rounded-r-[10px] bg-gradient-to-l from-[var(--surface-mid)] to-transparent"
+          className="vip-benefits-table__edge-fade pointer-events-none absolute inset-y-0 right-0 z-30 w-10"
           aria-hidden="true"
         />
 
@@ -67,11 +66,11 @@ export function VipBenefitsComparisonTable({
           ref={scrollRef}
           className="overflow-x-auto overscroll-x-contain"
         >
-          <table className="w-max min-w-full border-collapse text-[11px]">
+          <table className="vip-benefits-table w-max min-w-full border-collapse text-xs sm:text-[0.8125rem]">
             <thead>
-              <tr className="border-b border-[var(--border-subtle)]/50">
+              <tr>
                 <th
-                  className={`sticky left-0 z-20 ${STICKY_BG} min-w-[7.5rem] px-3 py-2.5 text-left font-medium text-[var(--text-secondary)] shadow-[4px_0_12px_rgba(0,0,0,0.25)]`}
+                  className="vip-benefits-table__label-head sticky left-0 z-20 min-w-[8.25rem] px-3 py-3 text-left sm:min-w-[9rem] sm:px-4"
                 >
                   สิทธิประโยชน์
                 </th>
@@ -81,10 +80,8 @@ export function VipBenefitsComparisonTable({
                     <th
                       key={tier.id}
                       ref={isCurrent ? currentColRef : undefined}
-                      className={`${COL_MIN} px-1 py-2 align-bottom ${
-                        isCurrent
-                          ? "bg-[var(--surface-hover)]/70 ring-1 ring-inset ring-[var(--border-active)]/45"
-                          : ""
+                      className={`vip-benefits-table__rank-head ${COL_MIN} px-1 py-2 align-bottom ${
+                        isCurrent ? "vip-benefits-table__rank-head--current" : ""
                       }`}
                     >
                       <div className="flex flex-col items-center gap-1 pb-0.5">
@@ -111,13 +108,11 @@ export function VipBenefitsComparisonTable({
                 <tr
                   key={row.id}
                   className={
-                    rowIndex % 2 === 0
-                      ? "bg-[var(--surface-hover)]/20"
-                      : "bg-transparent"
+                    rowIndex % 2 === 0 ? "vip-benefits-table__row--alt" : "vip-benefits-table__row"
                   }
                 >
                   <td
-                    className={`sticky left-0 z-10 ${STICKY_BG} border-r border-[var(--border-subtle)]/40 px-3 py-2.5 font-medium text-[var(--text-primary)] shadow-[4px_0_12px_rgba(0,0,0,0.2)]`}
+                    className="vip-benefits-table__label sticky left-0 z-10 min-w-[8.25rem] px-3 py-3 sm:min-w-[9rem] sm:px-4"
                   >
                     {row.label}
                   </td>
@@ -127,9 +122,9 @@ export function VipBenefitsComparisonTable({
                     return (
                       <td
                         key={tier.id}
-                        className={`${COL_MIN} px-2 py-2.5 text-center tabular-nums ${
+                        className={`vip-benefits-table__value ${COL_MIN} px-2 py-3 text-center tabular-nums ${
                           isCurrent
-                            ? "bg-[var(--surface-hover)]/50 font-medium text-[var(--text-primary)]"
+                            ? "vip-benefits-table__value--current font-medium"
                             : locked
                               ? "text-[var(--text-muted)]"
                               : "text-[var(--text-secondary)]"
@@ -145,7 +140,7 @@ export function VipBenefitsComparisonTable({
           </table>
         </div>
 
-        <div className="flex items-center justify-end gap-1 border-t border-[var(--border-subtle)]/40 px-2 py-1.5 text-[var(--text-muted)]">
+        <div className="vip-benefits-table__hint flex items-center justify-end gap-1 px-2 py-1.5 text-[var(--text-muted)]">
           <ChevronRightIcon className="h-3.5 w-3.5 opacity-60" />
         </div>
       </div>

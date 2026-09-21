@@ -309,9 +309,10 @@ export function YikiBetBoard({
 
         {step === "pick" ? (
           <section
-            className="thai-lotto-panel thai-lotto-layout__input flex flex-col gap-3 p-3 sm:gap-4 sm:p-4 md:p-5"
+            className="thai-lotto-panel thai-lotto-layout__input flex min-h-0 flex-col gap-0 px-1.5 py-2 sm:gap-4 sm:p-4 md:p-5"
             aria-label="เลือกเลข"
           >
+            <div className="thai-lotto-layout__input-body flex min-h-0 flex-1 flex-col gap-2">
             <ThaiLottoBetTypePicker
               groups={groups}
               betTypes={pickerBetTypes}
@@ -353,8 +354,9 @@ export function YikiBetBoard({
                 {feedback}
               </p>
             ) : null}
+            </div>
 
-            <div className="yiki-pick-actions grid gap-2 mt-1" aria-label="ดำเนินการต่อ">
+            <div className="thai-lotto-layout__input-dock yiki-pick-actions grid shrink-0 gap-2 pt-1.5" aria-label="ดำเนินการต่อ">
               <Link href={backHref} className="yiki-pick-actions__back">
                 กลับหน้าก่อนหน้า
               </Link>

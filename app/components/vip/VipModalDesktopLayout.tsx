@@ -31,7 +31,7 @@ export function VipModalDesktopLayout({
 
   if (tab === "benefits") {
     return (
-      <div className="vip-modal-desktop w-full min-w-0">
+      <div className="vip-modal-desktop vip-modal-desktop--benefits w-full min-w-0 flex-1">
         <VipBenefitsComparisonTable currentRankId={player.currentRankId} variant="desktop-full" />
       </div>
     );
