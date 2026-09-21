@@ -4,58 +4,82 @@ import React from "react";
 import { LUCKY_WHEEL_LIVE_WINNERS } from "@/app/data/luckyWheelMockData";
 
 /**
- * รายการผู้เล่นอื่นได้รับรางวัลแบบเรียลไทม์ (mock) — ใช้ใน LuckyWheelPageContent
+ * รายการผู้เล่นคนอื่นได้รับรางวัล — ดีไซน์การ์ดมนตามภาพตัวอย่าง
  */
 export function LuckyWheelLiveWinners() {
   return (
     <section
-      className="lucky-wheel-feed lucky-wheel-surface-glass cosmic-inset-card flex h-full min-h-0 flex-col"
+      className="flex h-full min-h-0 flex-col rounded-2xl border border-white/10 bg-[#0e0b16]/90 p-4 shadow-xl"
       aria-labelledby="wheel-live-title"
     >
-      <header className="lucky-wheel-feed__head">
-        <div className="flex min-w-0 items-center gap-2">
-          <UsersIcon className="h-5 w-5 shrink-0 text-[var(--icon-active)]" />
-          <h2 id="wheel-live-title" className="truncate text-sm font-medium text-[var(--text-primary)]">
+      <header className="flex items-center justify-between pb-3.5">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-500/20 text-purple-400">
+            <UsersIcon className="h-4 w-4" />
+          </span>
+          <h2 id="wheel-live-title" className="text-sm font-bold text-white">
             ผู้เล่นคนอื่นได้รับรางวัล
           </h2>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <span className="lucky-wheel-feed__live">LIVE</span>
-          <span className="lucky-wheel-feed__pulse">
-            <span className="lucky-wheel-feed__dot" aria-hidden="true" />
-            อัปเดตแบบเรียลไทม์
-          </span>
+        <div className="flex items-center gap-1.5 rounded-full border border-rose-500/40 bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-bold text-rose-400">
+          <span className="h-1.5 w-1.5 rounded-full bg-rose-400 animate-pulse" />
+          <span>LIVE</span>
         </div>
       </header>
 
-      <ul className="lucky-wheel-feed__list min-h-0 flex-1">
+      {/* รายการผู้เล่นแบบการ์ดแถวมน ตรงตามรูปที่ 2 */}
+      <div className="flex flex-1 flex-col gap-2 min-h-0">
         {LUCKY_WHEEL_LIVE_WINNERS.map((entry) => (
-          <li key={entry.id} className="lucky-wheel-feed__item">
-            <span className="lucky-wheel-feed__avatar" aria-hidden="true">
-              {entry.avatarLetter}
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-[var(--text-primary)]">{entry.maskedName}</p>
-              <p className="text-xs text-[var(--text-secondary)]">
-                ได้รับ{" "}
-                <span className="font-medium text-[var(--icon-active)] tabular-nums">{entry.gemsAmount}</span> เพชร
-              </p>
+          <div
+            key={entry.id}
+            className="flex items-center justify-between rounded-xl border border-white/5 bg-[#14101e] px-3.5 py-3 text-xs transition-colors hover:bg-[#181326]"
+          >
+            <div className="flex w-24 shrink-0 items-center gap-2">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-white/90">
+                {entry.avatarLetter}
+              </span>
+              <span className="truncate font-medium text-white/80 text-[11px]">
+                {entry.maskedName}
+              </span>
             </div>
-            <span className="shrink-0 text-[11px] text-[var(--text-muted)]">{entry.timeLabel}</span>
-          </li>
+
+            <div className="flex flex-1 items-center justify-center gap-1.5 font-medium text-white">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-white/90">
+                <DiamondSmallIcon />
+              </span>
+              <span>
+                ได้รับ{" "}
+                <span className="font-bold text-purple-300">
+                  {entry.gemsAmount.toFixed(2)} เพชร
+                </span>
+              </span>
+            </div>
+
+            <span className="w-20 shrink-0 text-right text-[11px] text-white/40 tabular-nums">
+              {entry.timeLabel}
+            </span>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
 
 function UsersIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
-      <circle cx="9" cy="8" r="3" />
-      <path d="M4 19c0-2.5 2.2-4 5-4s5 1.5 5 4" strokeLinecap="round" />
-      <circle cx="17" cy="9" r="2.5" />
-      <path d="M15 19c.3-1.8 1.8-3 3.5-3" strokeLinecap="round" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className} aria-hidden="true">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
+
+function DiamondSmallIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0 text-white" fill="currentColor" aria-hidden="true">
+      <path d="M8 2 13 7 10 14 6 14 3 7Z" />
     </svg>
   );
 }

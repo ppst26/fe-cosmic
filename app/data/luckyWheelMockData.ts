@@ -47,7 +47,7 @@ export interface WheelPrizeHistoryRow {
 
 export const LUCKY_WHEEL_GEMS_PER_SPIN = 10;
 export const LUCKY_WHEEL_TICKETS_PER_SPIN = 1;
-export const LUCKY_WHEEL_INITIAL_GEMS = 49_720;
+export const LUCKY_WHEEL_INITIAL_GEMS = 48_931;
 export const LUCKY_WHEEL_INITIAL_TICKETS = 0;
 export const LUCKY_WHEEL_HISTORY_PAGE_SIZE = 5;
 export const LUCKY_WHEEL_HISTORY_TOTAL_PAGES = 15;

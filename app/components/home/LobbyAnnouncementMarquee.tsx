@@ -1,15 +1,22 @@
 "use client";
 
 import React from "react";
+import { cn } from "@/lib/utils";
 
 interface LobbyAnnouncementMarqueeProps {
   messages: readonly string[];
+  className?: string;
+  variant?: "default" | "mobile";
 }
 
 /**
- * แถบประกาศเลื่อน — วางก่อน CategoryNav หน้าแรก (HomeLobbyPage)
+ * แถบประกาศเลื่อน — มือถืออยู่ใต้ header (variant="mobile") · desktop อยู่ก่อน CategoryNav (variant="default")
  */
-export function LobbyAnnouncementMarquee({ messages }: LobbyAnnouncementMarqueeProps) {
+export function LobbyAnnouncementMarquee({
+  messages,
+  className,
+  variant = "default",
+}: LobbyAnnouncementMarqueeProps) {
   if (messages.length === 0) return null;
 
   const renderGroup = (groupKey: string, ariaHidden?: boolean) => (
@@ -20,7 +27,7 @@ export function LobbyAnnouncementMarquee({ messages }: LobbyAnnouncementMarqueeP
       {messages.map((text, index) => (
         <li
           key={`${groupKey}-${index}`}
-          className="lobby-announcement-marquee__item flex shrink-0 items-center gap-8 whitespace-nowrap text-sm text-[var(--text-secondary)]"
+          className="lobby-announcement-marquee__item flex shrink-0 items-center gap-8 whitespace-nowrap text-xs sm:text-sm text-[var(--text-secondary)]"
         >
           <span>{text}</span>
           <span className="lobby-announcement-marquee__sep text-[var(--text-muted)]" aria-hidden="true">
@@ -33,7 +40,13 @@ export function LobbyAnnouncementMarquee({ messages }: LobbyAnnouncementMarqueeP
 
   return (
     <section
-      className="lobby-announcement-marquee flex min-w-0 items-center gap-2.5 px-3 py-2 sm:gap-3 sm:px-3.5 sm:py-2.5"
+      className={cn(
+        "lobby-announcement-marquee flex min-w-0 items-center gap-2.5",
+        variant === "mobile"
+          ? "lobby-announcement-marquee--mobile px-3 py-1.5"
+          : "px-3 py-2 sm:gap-3 sm:px-3.5 sm:py-2.5",
+        className,
+      )}
       aria-label="ประกาศจากระบบ"
     >
       <span className="lobby-announcement-marquee__label shrink-0 text-xs font-medium text-[var(--accent-highlight)]">

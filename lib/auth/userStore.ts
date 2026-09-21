@@ -127,6 +127,7 @@ export function toProfileUser(user: StoredUser): ProfileUser {
     lastName: user.lastName,
     bankId: user.bankId,
     bankLabel: bank?.label ?? user.bankId,
+    bankAccountNumber: user.bankAccountNumber.replace(/\D/g, ""),
     bankAccountMasked: maskBankAccount(user.bankAccountNumber),
     createdAt: user.createdAt,
     joinedLabel: formatJoinedDate(user.createdAt),

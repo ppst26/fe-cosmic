@@ -25,6 +25,8 @@ interface CategoryNavProps {
   className?: string;
   /** route = ไปหน้า /casino ฯลฯ · none = สลับ state บนหน้าเดียว (หน้าแรก) */
   navigationMode?: "route" | "none";
+  /** "desktop" = การ์ดชิปเต็มคอลัมน์เดิม · "mobile" = ไอคอนกล่องมน 44px + ข้อความนอก */
+  variant?: "desktop" | "mobile";
 }
 
 /**
@@ -64,6 +66,7 @@ export function CategoryNav({
   onSelectCategory,
   navigationMode = "route",
   className = "",
+  variant = "desktop",
 }: CategoryNavProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -109,14 +112,50 @@ export function CategoryNav({
     }
   };
 
+  if (variant === "desktop") {
+    return (
+      <nav
+        className={cn("category-nav relative w-full min-w-0 my-[0.875rem] overflow-visible", className)}
+        aria-label="แถบเลือกหมวดหมู่เกม"
+      >
+        <div
+          ref={trackRef}
+          className="category-nav__track flex flex-nowrap items-stretch justify-center gap-2.5 w-full overflow-x-auto pt-1 pb-1 pr-[0.35rem] pl-0.5"
+        >
+          {categories.map((category) => {
+            const isActive = category.id === activeId;
+
+            return (
+              <button
+                key={category.id}
+                type="button"
+                onClick={() => handleCategoryClick(category)}
+                className={cn(
+                  "category-nav__chip flex min-h-16 min-w-[76px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-1 py-2 text-center text-xs font-medium sm:text-sm",
+                  isActive && "is-active",
+                )}
+                aria-pressed={isActive}
+              >
+                <span className="category-nav__icon flex items-center justify-center" aria-hidden="true">
+                  {getCategoryIcon(category.id, "h-[22px] w-[22px] sm:h-6 sm:w-6")}
+                </span>
+                <span className="category-nav__label max-w-full truncate">{category.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+    );
+  }
+
   return (
     <nav
-      className={cn("category-nav relative w-full min-w-0 my-[0.875rem] overflow-visible", className)}
+      className={cn("category-nav category-nav--mobile relative w-full min-w-0 overflow-visible", className)}
       aria-label="แถบเลือกหมวดหมู่เกม"
     >
       <div
         ref={trackRef}
-        className="category-nav__track flex flex-nowrap items-stretch justify-center gap-2.5 w-full overflow-x-auto pt-1 pb-1 pr-[0.35rem] pl-0.5"
+        className="category-nav__track flex flex-nowrap items-start justify-start gap-2.5 w-full overflow-x-auto py-1 px-0.5"
       >
         {categories.map((category) => {
           const isActive = category.id === activeId;
@@ -127,15 +166,42 @@ export function CategoryNav({
               type="button"
               onClick={() => handleCategoryClick(category)}
               className={cn(
-                "category-nav__chip flex min-h-16 min-w-[76px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-1 py-2 text-center text-xs font-medium sm:text-sm",
+                "category-nav__item group flex flex-col items-center gap-1.5 flex-none cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] rounded-xl transition-transform duration-150 active:scale-95",
                 isActive && "is-active",
               )}
               aria-pressed={isActive}
+              aria-label={category.label}
             >
-              <span className="category-nav__icon flex items-center justify-center" aria-hidden="true">
-                {getCategoryIcon(category.id, "h-[22px] w-[22px] sm:h-6 sm:w-6")}
+              <div
+                className={cn(
+                  "category-nav__icon-box flex h-11 w-11 items-center justify-center rounded-[14px] transition-all duration-200",
+                  isActive
+                    ? "category-nav__icon-box--active"
+                    : "category-nav__icon-box--idle",
+                )}
+              >
+                <span
+                  className={cn(
+                    "category-nav__icon flex items-center justify-center transition-colors duration-200",
+                    isActive
+                      ? "text-white"
+                      : "text-[var(--text-secondary)] group-hover:text-white",
+                  )}
+                  aria-hidden="true"
+                >
+                  {getCategoryIcon(category.id, "h-[19px] w-[19px]")}
+                </span>
+              </div>
+              <span
+                className={cn(
+                  "category-nav__label text-[11px] font-medium tracking-tight text-center whitespace-nowrap transition-colors duration-200",
+                  isActive
+                    ? "text-white"
+                    : "text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]",
+                )}
+              >
+                {category.label}
               </span>
-              <span className="category-nav__label max-w-full truncate">{category.label}</span>
             </button>
           );
         })}

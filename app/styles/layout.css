@@ -129,11 +129,9 @@
   }
 
   .mobile-standalone-page .cosmic-segment-btn.is-active {
-    background: color-mix(in srgb, var(--glass-fill) 70%, rgb(255 255 255 / 0.1));
-    color: var(--text-primary);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.12),
-      0 2px 10px rgb(0 0 0 / 0.28);
+    background: var(--cta-white-bg);
+    color: var(--cta-white-fg);
+    box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
   }
 
   .mobile-standalone-page .cosmic-segment-btn:hover:not(.is-active) {
@@ -324,6 +322,11 @@
   }
 
   /** แถบ header เต็ม viewport — inner กว้างเต็มจอ (main ยังอยู่กรอบกลาง) */
+  .lobby-desktop-shell__header-band {
+    background: transparent !important;
+    background-image: none !important;
+  }
+
   .lobby-desktop-shell__header-band::before {
     display: none;
   }
@@ -414,17 +417,11 @@
     transform 160ms ease;
 }
 
-.page-subnav__chip--filter {
-  letter-spacing: -0.01em;
-}
-
 .category-nav__chip {
-  border: 0;
   background: var(--glass-fill-subtle);
   -webkit-backdrop-filter: blur(12px) saturate(1.12);
   backdrop-filter: blur(12px) saturate(1.12);
   box-shadow: 0 10px 28px rgb(0 0 0 / 0.22);
-  color: var(--text-secondary);
 }
 
 .category-nav__chip:hover:not(.is-active) {
@@ -433,7 +430,6 @@
     rgb(255 255 255 / 0.1),
     rgb(151 112 213 / 0.14)
   );
-  color: var(--text-primary);
   box-shadow: 0 12px 32px rgb(0 0 0 / 0.26);
 }
 
@@ -443,11 +439,14 @@
     rgb(255 255 255 / 0.12),
     rgb(151 112 213 / 0.18)
   );
-  color: var(--text-primary);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.12),
     0 10px 28px rgb(0 0 0 / 0.22);
   transform: none;
+}
+
+.page-subnav__chip--filter {
+  letter-spacing: -0.01em;
 }
 
 .page-subnav__chip:hover:not(.is-active) {

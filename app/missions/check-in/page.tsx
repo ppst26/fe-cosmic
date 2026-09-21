@@ -20,7 +20,7 @@ export default function DailyCheckInPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="ภารกิจ" backHref="/" />
+      <SlotProvidersHeader title="เช็คอินรายวัน" backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <DailyCheckInPageContent />

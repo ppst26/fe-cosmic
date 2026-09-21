@@ -25,6 +25,7 @@ function ActivityMasterRow({
       <div className="flex gap-3">
         <ActivityHubThumb
           tone={item.thumbTone}
+          imageUrl={item.imageUrl}
           overlay={item.statusOverlay}
           className="h-[72px] w-[72px] sm:h-20 sm:w-20"
         />

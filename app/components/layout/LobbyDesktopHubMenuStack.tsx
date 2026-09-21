@@ -22,7 +22,7 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
     <div className="lobby-hub-menu-stack w-full min-w-0" aria-label="เมนูด่วน">
       {tiles.map((tile, index) => {
         const isWideSpan =
-          ("variant" in tile && tile.variant === "wide") ||
+          ("variant" in tile && (tile as { variant?: string }).variant === "wide") ||
           (index === tiles.length - 1 && tiles.length % 2 === 1);
         const className = cn(
           "lobby-hub-menu-card glass-card glass-card--soft lobby-hub-menu-card--glass",

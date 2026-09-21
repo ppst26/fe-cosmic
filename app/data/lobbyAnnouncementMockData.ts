@@ -1,5 +1,5 @@
 /**
- * ข้อความประกาศเลื่อนหน้าแรก — แสดงก่อน CategoryNav (LobbyAnnouncementMarquee)
+ * ข้อความประกาศเลื่อนหน้าแรก — มือถือใต้ header · desktop ก่อน CategoryNav
  */
 export const LOBBY_ANNOUNCEMENT_MESSAGES: readonly string[] = [
   "ยินดีต้อนรับสู่ Cosmicbet — ฝากครั้งแรกรับโบนัสต้อนรับพิเศษ",

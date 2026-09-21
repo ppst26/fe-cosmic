@@ -1,4 +1,5 @@
 import type { TransactionKind, TransactionKindTab } from "@/app/types/transaction";
+import { COSMIC_SEGMENT_GLASS_WHITE } from "../ui/cosmicButtonClasses";
 
 interface TransactionKindTabsProps {
   tabs: TransactionKindTab[];
@@ -15,7 +16,7 @@ export function TransactionKindTabs({ tabs, activeKind, onSelect }: TransactionK
     <div
       role="tablist"
       aria-label="ประเภทรายการธุรกรรม"
-      className="cosmic-segment-track grid grid-cols-2 gap-2"
+      className={`${COSMIC_SEGMENT_GLASS_WHITE} grid grid-cols-2 gap-2`}
     >
       {tabs.map((tab) => {
         const isActive = tab.id === activeKind;
@@ -26,7 +27,7 @@ export function TransactionKindTabs({ tabs, activeKind, onSelect }: TransactionK
             role="tab"
             aria-selected={isActive}
             onClick={() => onSelect(tab.id)}
-            className={`cosmic-segment-btn py-2.5 text-sm ${isActive ? "is-active" : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"}`}
+            className={`cosmic-segment-btn py-2.5 text-sm ${isActive ? "is-active" : ""}`}
           >
             {tab.label}
           </button>

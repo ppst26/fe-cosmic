@@ -609,6 +609,68 @@ export function HeaderWalletIcon({ className = "w-5 h-5" }: { className?: string
   );
 }
 
+/**
+ * ไอคอนกระเป๋าทองคำ 3D-styled — สำหรับ Header mobile capsule
+ */
+export function HeaderGoldWalletIcon({ className = "w-6 h-5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 28 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="cmGoldWalletBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f59e0b" />
+          <stop offset="100%" stopColor="#d97706" />
+        </linearGradient>
+        <linearGradient id="cmGoldWalletFlap" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#fef08a" />
+          <stop offset="40%" stopColor="#fbbf24" />
+          <stop offset="100%" stopColor="#f59e0b" />
+        </linearGradient>
+        <linearGradient id="cmGoldWalletClasp" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#fffbeb" />
+          <stop offset="100%" stopColor="#f59e0b" />
+        </linearGradient>
+      </defs>
+
+      {/* Back flap edge for depth */}
+      <rect x="2" y="3" width="22" height="17" rx="3.5" fill="#b45309" />
+      {/* Wallet main body */}
+      <rect x="2" y="6" width="24" height="15" rx="3.5" fill="url(#cmGoldWalletBody)" />
+      {/* Front flap with curve */}
+      <path
+        d="M2 7C2 5.343 3.343 4 5 4H21C22.657 4 24 5.343 24 7V10C24 11.657 22.657 13 21 13H5C3.343 13 2 11.657 2 10V7Z"
+        fill="url(#cmGoldWalletFlap)"
+      />
+      {/* Clasp tab on right side */}
+      <rect x="21" y="9.5" width="4.5" height="4.5" rx="1.5" fill="url(#cmGoldWalletClasp)" stroke="#b45309" strokeWidth="0.5" />
+      <circle cx="23.25" cy="11.75" r="0.75" fill="#78350f" />
+    </svg>
+  );
+}
+
+/**
+ * ไอคอนผู้ใช้ทึบ (Solid Avatar) — สำหรับ Header mobile profile circle
+ */
+export function SolidUserIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="7.5" r="4.25" />
+      <path d="M4 19.5C4 15.5 7.5 13 12 13s8 2.5 8 6.5V20H4v-0.5Z" />
+    </svg>
+  );
+}
+
+
 export function DepositNavIcon({ className = "w-6 h-6" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden="true">

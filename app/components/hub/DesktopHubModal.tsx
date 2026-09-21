@@ -17,6 +17,7 @@ import {
 import { DesktopHubAccountBody } from "./DesktopHubAccountBody";
 import { DesktopHubTransactionsBody } from "./DesktopHubTransactionsBody";
 import { DailyCheckInPageContent } from "@/app/components/missions/DailyCheckInPageContent";
+import { DailyCheckInCard } from "@/app/components/missions/DailyCheckInCard";
 import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
 import {
   HUB_MODAL_TITLES,
@@ -80,7 +81,9 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
   const sheetVariant = hubId && useSheetShell
     ? getHubSheetSize(hubId) === "wide"
       ? "hubWide"
-      : "hub"
+      : getHubSheetSize(hubId) === "hubCompact"
+        ? "hubCompact"
+        : "hub"
     : "default";
 
   return (
@@ -90,44 +93,37 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
           <>
             <Dialog.Overlay className={responsiveSheetOverlayClass()} />
             <Dialog.Content
-              aria-describedby={hubId === "check-in" ? "hub-check-in-desc" : undefined}
+              aria-describedby={undefined}
               className={responsiveSheetContentClass(
-                `hub-modal-shell${hubId === "check-in" ? " cosmic-modal-shell--check-in" : ""}`,
+                `hub-modal-shell${hubId === "check-in" ? " hub-modal-shell--check-in !p-0 overflow-hidden" : ""}`,
                 { variant: sheetVariant },
               )}
             >
               <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
-              <ResponsiveSheetHeader
-                closeAriaLabel="ปิด"
-                titleAlign="start"
-                className={`responsive-sheet-header--hub responsive-sheet-header--hub-shell${
-                  hubId === "check-in" ? " responsive-sheet-header--check-in" : ""
-                }`}
-                title={
-                  <Dialog.Title className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">
-                    {title}
-                  </Dialog.Title>
-                }
-                subtitle={
-                  hubId === "check-in" ? (
-                    <p
-                      id="hub-check-in-desc"
-                      className="mt-1 text-sm text-[var(--text-secondary)]"
-                    >
-                      เข้าเช็คอิน รับรางวัลเครดิตฟรี
-                    </p>
-                  ) : undefined
-                }
-              />
+              {hubId === "check-in" ? (
+                <>
+                  <Dialog.Title className="sr-only">เช็คอินรายวัน</Dialog.Title>
+                  <DailyCheckInCard onClose={onClose} />
+                </>
+              ) : (
+                <>
+                  <ResponsiveSheetHeader
+                    closeAriaLabel="ปิด"
+                    titleAlign="start"
+                    className="responsive-sheet-header--hub responsive-sheet-header--hub-shell"
+                    title={
+                      <Dialog.Title className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">
+                        {title}
+                      </Dialog.Title>
+                    }
+                  />
 
-              <div
-                className={`cosmic-modal-shell--hub min-h-0 flex-1 overflow-y-auto pb-4 pt-1 ${
-                  hubId === "check-in" ? "daily-check-in-desktop-modal-body relative" : ""
-                }`}
-              >
-                <HubModalBody hubId={hubId} options={options} />
-              </div>
+                  <div className="cosmic-modal-shell--hub min-h-0 flex-1 overflow-y-auto pb-4 pt-1">
+                    <HubModalBody hubId={hubId} options={options} />
+                  </div>
+                </>
+              )}
             </Dialog.Content>
           </>
         ) : (

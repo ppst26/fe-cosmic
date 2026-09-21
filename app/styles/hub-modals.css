@@ -443,6 +443,11 @@
 
 .activity-hub-tier-table__row:nth-child(even) {
   background: color-mix(in srgb, var(--surface-hover) 35%, transparent);
+}
+
+.activity-hub-rules-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%), var(--surface-mid);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }/* --- Lottery hub (/lottery + หมวดหวยโฮม) --- */ .lottery-countdown {
   display: inline-flex;
   align-items: center;
@@ -754,7 +759,7 @@
 }
 
 .daily-check-in-desktop__banner-stat-value {
-  color: #ffe66d;
+  color: var(--text-primary);
 }
 
 .daily-check-in-desktop__banner-stat-label {
@@ -768,8 +773,8 @@
 }
 
 .daily-check-in-desktop__streak-dot.is-claimed {
-  color: #422006;
-  background: #facc15;
+  color: #ffffff;
+  background: var(--action-solid);
 }
 
 .daily-check-in-desktop__streak-dot.is-today {
@@ -846,8 +851,8 @@
 }
 
 .daily-check-in-desktop__day-badge.is-claimed {
-  color: #422006;
-  background: linear-gradient(180deg, #fde047, #ca8a04);
+  color: #ffffff;
+  background: var(--action-solid);
 }
 
 .daily-check-in-desktop__day-badge.is-today {
@@ -855,11 +860,11 @@
 }
 
 .daily-check-in-desktop__day-title {
-  color: color-mix(in srgb, #f472b6 55%, var(--text-primary));
+  color: var(--text-primary);
 }
 
 .daily-check-in-desktop__day-reward {
-  color: #ffe66d;
+  color: var(--text-primary);
 }
 
 .daily-check-in-desktop__day-desc {
@@ -1330,6 +1335,10 @@
     0 0 36px rgb(var(--hub-modal-lift-rgb) / 0.28);
   -webkit-backdrop-filter: blur(22px);
   backdrop-filter: blur(22px);
+}
+
+.cosmic-mobile-sheet.hub-modal-shell.hub-modal-shell--check-in {
+  max-width: 500px;
 }
 
 .cosmic-mobile-sheet.hub-modal-shell::after {

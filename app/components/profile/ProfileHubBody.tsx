@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import type { ProfileUser } from "@/app/types/auth";
 import { PROFILE_HUB_STATS_MOCK } from "@/app/data/profileHubMockData";
 import { getVipRankTier, VIP_PLAYER_MOCK } from "@/app/data/vipMockData";
 import { ProfileHubHeader } from "./ProfileHubHeader";
-import { ProfileHubAccordion, ProfileHubRow } from "./ProfileHubAccordion";
+import { ProfileHubRow } from "./ProfileHubAccordion";
 import {
   CrownIcon,
   DiamondGemIcon,
@@ -15,7 +15,6 @@ import {
   PromoTagIcon,
   RefundIcon,
   UsersGroupIcon,
-  WalletCryptoIcon,
   LogOutIcon,
 } from "../ui/Icons";
 
@@ -46,7 +45,7 @@ function formatDiamonds(value: number): string {
 }
 
 /**
- * การ์ด hub โปรไฟล์ — หัว + accordion 3 กลุ่ม
+ * เนื้อหา hub โปรไฟล์ — รายการเมนูแบน (ProfileSlideOverCard)
  */
 export function ProfileHubBody({
   profile,
@@ -57,34 +56,23 @@ export function ProfileHubBody({
   onLogout,
   showHeader = true,
 }: ProfileHubBodyProps) {
-  const [expanded, setExpanded] = useState({
-    account: true,
-    finance: false,
-    privileges: false,
-  });
-
-  const toggle = (key: keyof typeof expanded) => {
-    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
+  const rowLayout = showHeader ? "default" : "sheet";
 
   return (
-    <div className="profile-hub-body flex flex-col gap-2 pb-1">
+    <div className="profile-hub-body flex flex-col pb-1">
       {showHeader ? <ProfileHubHeader profile={profile} /> : null}
 
-      <ProfileHubAccordion
-        title="บัญชีของฉัน"
-        headerIcon={<ProfileNavIcon className="h-4 w-4" />}
-        expanded={expanded.account}
-        onToggle={() => toggle("account")}
-      >
+      <nav className="profile-hub-nav flex flex-col" aria-label="เมนูโปรไฟล์">
         <ProfileHubRow
-          icon={<ProfileNavIcon className="h-4 w-4" />}
+          layout={rowLayout}
+          icon={<ProfileNavIcon className="h-5 w-5" />}
           title="ข้อมูลบัญชี"
           showChevron
           onClick={onOpenAccountDetail}
         />
         <ProfileHubRow
-          icon={<CrownIcon className="h-4 w-4 text-[#ffe66d]" />}
+          layout={rowLayout}
+          icon={<CrownIcon className="h-5 w-5 text-[#ffe66d]" />}
           title="ระดับชั้น VIP"
           showChevron
           onClick={onOpenVip}
@@ -92,74 +80,63 @@ export function ProfileHubBody({
             <span className="text-xs font-medium text-[#ffe66d]">{vipRankLabel}</span>
           }
         />
-      </ProfileHubAccordion>
-
-      <ProfileHubAccordion
-        title="การเงิน"
-        headerIcon={<WalletCryptoIcon className="h-4 w-4" />}
-        expanded={expanded.finance}
-        onToggle={() => toggle("finance")}
-      >
         <ProfileHubRow
-          icon={<HistoryIcon className="h-4 w-4" />}
+          layout={rowLayout}
+          icon={<HistoryIcon className="h-5 w-5" />}
           title="รายการฝากถอน"
           showChevron
           onClick={onOpenTransactions}
         />
         <ProfileHubRow
-          icon={<DiamondGemIcon className="h-4 w-4" />}
+          layout={rowLayout}
+          icon={<DiamondGemIcon className="h-5 w-5" />}
           title="เพชรของฉัน"
           trailing={
-            <span className="text-sm font-medium tabular-nums text-[var(--text-primary)]">
+            <span className="text-sm font-medium tabular-nums text-[var(--text-secondary)]">
               {formatDiamonds(stats.diamonds)}
             </span>
           }
         />
         <ProfileHubRow
-          icon={<RefundIcon className="h-4 w-4" />}
+          layout={rowLayout}
+          icon={<RefundIcon className="h-5 w-5" />}
           title="โบนัสยอดเสีย"
           showChevron
           onClick={onOpenLossRebate}
           trailing={
-            <span className="text-sm font-medium tabular-nums text-[var(--text-primary)]">
+            <span className="text-sm font-medium tabular-nums text-[var(--text-secondary)]">
               {formatThb(stats.lossBonusThb)}
             </span>
           }
         />
-      </ProfileHubAccordion>
-
-      <ProfileHubAccordion
-        title="สิทธิพิเศษ"
-        headerIcon={<GiftIcon className="h-4 w-4" />}
-        expanded={expanded.privileges}
-        onToggle={() => toggle("privileges")}
-      >
         <ProfileHubRow
-          icon={<UsersGroupIcon className="h-4 w-4" />}
+          layout={rowLayout}
+          icon={<UsersGroupIcon className="h-5 w-5" />}
           title="ยอด Affiliate"
           trailing={
-            <span className="text-sm font-medium tabular-nums text-[var(--text-primary)]">
+            <span className="text-sm font-medium tabular-nums text-[var(--text-secondary)]">
               {formatThb(stats.affiliateBalanceThb)}
             </span>
           }
         />
         <ProfileHubRow
-          icon={<PromoTagIcon className="h-4 w-4" />}
+          layout={rowLayout}
+          icon={<PromoTagIcon className="h-5 w-5" />}
           title="โปรโมชั่นที่ใช้อยู่"
           trailing={
-            <span className="max-w-[42%] truncate rounded-full bg-[var(--surface-selected)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--border-active)]">
+            <span className="max-w-[46%] truncate text-xs font-medium text-[var(--text-secondary)]">
               {stats.activePromotionLabel}
             </span>
           }
         />
-      </ProfileHubAccordion>
+      </nav>
 
       <button
         type="button"
         onClick={onLogout}
-        className="profile-hub-logout mt-1 flex w-full items-center gap-2 px-0.5 py-1 text-left transition-colors"
+        className="profile-hub-logout mt-2 flex w-full items-center gap-3 rounded-[var(--radius-control)] px-1 py-2.5 text-left text-sm font-medium transition-colors"
       >
-        <LogOutIcon className="h-3.5 w-3.5" />
+        <LogOutIcon className="h-5 w-5 shrink-0" />
         ออกจากระบบ
       </button>
     </div>

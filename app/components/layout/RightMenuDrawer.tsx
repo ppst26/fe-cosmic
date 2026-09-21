@@ -66,7 +66,9 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const renderItem = (tile: MenuDialogTile) => {
     const body = (
       <>
-        <MenuItemIcon iconId={tile.iconId} variant="asset" />
+        <div className="menu-item__icon-circle" aria-hidden="true">
+          <MenuItemIcon iconId={tile.iconId} variant="svg" />
+        </div>
         <span>{tile.label}</span>
       </>
     );

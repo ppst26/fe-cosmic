@@ -110,13 +110,15 @@ export function isResponsiveSheetHub(id: DesktopHubId): boolean {
   return RESPONSIVE_SHEET_HUB_IDS.has(id);
 }
 
-/** ความกว้าง sheet บน desktop — wide สำหรับ master–detail */
-export function getHubSheetSize(id: DesktopHubId): "compact" | "wide" {
+/** ความกว้าง sheet บน desktop — wide สำหรับ master–detail · hubCompact สำหรับเช็คอิน */
+export function getHubSheetSize(id: DesktopHubId): "compact" | "wide" | "hubCompact" {
+  if (id === "check-in") {
+    return "hubCompact";
+  }
   if (
     id === "referral" ||
     id === "promotions" ||
-    id === "activities" ||
-    id === "check-in"
+    id === "activities"
   ) {
     return "wide";
   }

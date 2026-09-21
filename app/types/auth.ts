@@ -56,6 +56,8 @@ export interface ProfileUser {
   lastName: string;
   bankId: string;
   bankLabel: string;
+  /** เลขบัญชีเต็ม — แสดงในหัวโปรไฟล์ของเจ้าของบัญชีเท่านั้น */
+  bankAccountNumber: string;
   bankAccountMasked: string;
   createdAt: string;
   joinedLabel: string;

@@ -60,6 +60,7 @@ export function ActivitiesMobileHub() {
           >
             <ActivityHubThumb
               tone={item.thumbTone}
+              imageUrl={item.imageUrl}
               overlay={item.statusOverlay}
               className="h-[72px] w-[72px]"
             />

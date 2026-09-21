@@ -22,6 +22,20 @@
   display: none;
 }
 
+/**
+ * มือถือ — chrome sticky ก้อนเดียว: Header + หมวดหมู่เกม (HomeLobbyPage)
+ */
+@media (max-width: 1023px) {
+  .lobby-mobile-sticky-chrome {
+    box-shadow: 0 10px 28px rgb(0 0 0 / 0.22);
+  }
+
+  .lobby-mobile-sticky-chrome__nav {
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+}
+
 /* หน้าแรก — แถบค้นหา/ตัวกรองใต้ CategoryNav */
 
 .lobby-category-stack .category-nav {
@@ -37,8 +51,43 @@
   gap: 0.625rem;
 }
 
+/* ── หมวดหมู่เกม: ไอคอนกล่องมน + ไตเติ้ลด้านนอก (ม่วงเข้ม ไล่เฉดไปดำ) ── */
+.category-nav__item {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  scroll-snap-align: start;
+}
+
+.category-nav__icon-box {
+  background: linear-gradient(180deg, #241a3f 0%, #150f27 55%, #080610 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.35);
+  border-radius: 14px;
+}
+
+.category-nav__item:hover:not(.is-active) .category-nav__icon-box {
+  background: linear-gradient(180deg, #2d2250 0%, #1a1332 55%, #0c0918 100%);
+  border-color: rgba(155, 124, 240, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+.category-nav__item.is-active .category-nav__icon-box {
+  background: linear-gradient(180deg, #3f277a 0%, #25164f 55%, #100824 100%);
+  border: 1px solid rgba(168, 125, 255, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 0 14px rgba(119, 71, 229, 0.45),
+    0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
 @media (min-width: 1024px) {
-  /* ปุ่มหมวดเท่ากันเต็มความกว้างคอลัมนกลาง desktop */
+  /* ปุ่มหมวดเท่ากันเต็มความกว้างคอลัมน์กลาง desktop */
   .lobby-category-stack .category-nav .category-nav__track {
     justify-content: stretch;
     gap: var(--space-2);
@@ -50,19 +99,6 @@
     flex: 1 1 0;
     min-width: 0;
     max-width: none;
-  }
-}
-
-/* CategoryNav มือถือ — soft glass เบาลงเล็กน้อย (ประหยัด GPU) */
-@media (max-width: 1023px) {
-  .category-nav__chip:not(.is-active) {
-    color: var(--text-secondary);
-  }
-
-  .category-nav__chip {
-    -webkit-backdrop-filter: blur(8px) saturate(1.08);
-    backdrop-filter: blur(8px) saturate(1.08);
-    box-shadow: 0 8px 22px rgb(0 0 0 / 0.2);
   }
 }
 

@@ -1,12 +1,27 @@
-/** ข้อมูล mock หน้าเช็คอินรายวัน */
+/** ข้อมูล mock หน้าเช็คอินรายวัน (ธีมเพชรและทองคำหรูหรา) */
 
 export type DailyCheckInDayStatus = "claimed" | "today" | "locked";
 
 export interface DailyCheckInDayReward {
   day: number;
+  label: string;
   credits: number;
   status: DailyCheckInDayStatus;
+  isBigReward?: boolean;
 }
+
+export interface CumulativeCheckInMilestone {
+  milestoneDay: number;
+  gemsReward: number;
+  isUnlocked: boolean;
+}
+
+export const CUMULATIVE_CHECKIN_MILESTONES: CumulativeCheckInMilestone[] = [
+  { milestoneDay: 7, gemsReward: 20, isUnlocked: true },
+  { milestoneDay: 14, gemsReward: 30, isUnlocked: false },
+  { milestoneDay: 21, gemsReward: 40, isUnlocked: false },
+  { milestoneDay: 28, gemsReward: 70, isUnlocked: false },
+];
 
 export const DAILY_CHECKIN_TERMS: string[] = [
   "เช็คอิน 1 ครั้งต่อวันตามเวลาระบบ (00:00–23:59)",
@@ -16,17 +31,17 @@ export const DAILY_CHECKIN_TERMS: string[] = [
 ];
 
 export const DAILY_CHECKIN_INITIAL: DailyCheckInDayReward[] = [
-  { day: 1, credits: 5, status: "claimed" },
-  { day: 2, credits: 5, status: "claimed" },
-  { day: 3, credits: 15, status: "today" },
-  { day: 4, credits: 10, status: "locked" },
-  { day: 5, credits: 15, status: "locked" },
-  { day: 6, credits: 20, status: "locked" },
-  { day: 7, credits: 50, status: "locked" },
+  { day: 1, label: "จ.", credits: 5, status: "claimed" },
+  { day: 2, label: "อ.", credits: 5, status: "today" },
+  { day: 3, label: "พ.", credits: 5, status: "locked" },
+  { day: 4, label: "พฤ.", credits: 5, status: "locked" },
+  { day: 5, label: "ศ.", credits: 5, status: "locked" },
+  { day: 6, label: "ส.", credits: 5, status: "locked" },
+  { day: 7, label: "อา.", credits: 20, status: "locked", isBigReward: true },
 ];
 
 export function formatCheckInCredits(value: number): string {
-  return `${new Intl.NumberFormat("th-TH").format(value)} เครดิต`;
+  return `${new Intl.NumberFormat("th-TH").format(value)} เพชร`;
 }
 
 export function countCheckedInDays(days: DailyCheckInDayReward[]): number {

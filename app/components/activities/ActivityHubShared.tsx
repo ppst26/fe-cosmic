@@ -15,28 +15,39 @@ import {
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM, COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 
 /**
- * รูปย่อกิจกรรม — gradient mock ตามประเภท (ใช้ใน list ซ้าย / การ์ดมือถือ)
+ * รูปย่อกิจกรรม — รูปภาพจริง (ถ้ามี) หรือ gradient mock (ใช้ใน list ซ้าย / การ์ดมือถือ)
  */
 export function ActivityHubThumb({
   tone,
   className,
   overlay,
+  imageUrl,
 }: {
-  tone: ActivityThumbTone;
+  tone?: ActivityThumbTone;
   className?: string;
   overlay?: string;
+  imageUrl?: string;
 }) {
-  const gradient = thumbGradientForTone(tone);
+  const gradient = tone ? thumbGradientForTone(tone) : "linear-gradient(135deg, #2c1a56 0%, #100a24 100%)";
 
   return (
     <div
-      className={`activity-hub-thumb relative shrink-0 overflow-hidden rounded-[var(--radius-control)] ${className ?? ""}`}
+      className={`activity-hub-thumb relative shrink-0 overflow-hidden rounded-[var(--radius-control)] border border-white/8 ${className ?? ""}`}
       style={{ background: gradient }}
       aria-hidden={overlay ? undefined : true}
     >
-      <ActivityThumbArt tone={tone} />
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt=""
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
+      ) : (
+        <ActivityThumbArt tone={tone ?? "turn"} />
+      )}
       {overlay ? (
-        <span className="activity-hub-thumb__overlay">{overlay}</span>
+        <span className="activity-hub-thumb__overlay font-medium text-xs">{overlay}</span>
       ) : null}
     </div>
   );
@@ -281,6 +292,67 @@ export function ActivityInfoDetail({ item }: { item: ActivityHubItem }) {
   );
 }
 
+export function ActivityRulesSection({
+  rules,
+  period,
+  className = "",
+}: {
+  rules?: string[];
+  period?: string;
+  className?: string;
+}) {
+  if (!rules || rules.length === 0) return null;
+
+  return (
+    <section
+      className={`activity-hub-rules-card rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/35 bg-[var(--surface-mid)]/40 p-4 sm:p-5 ${className}`}
+      aria-label="กติกาและเงื่อนไขกิจกรรม"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)]/30 pb-3">
+        <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[var(--accent-primary)]/15 text-[var(--accent-primary)]">
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+          </span>
+          <h3 className="text-sm font-semibold tracking-tight text-[var(--text-primary)] sm:text-base">
+            กติกาและเงื่อนไขกิจกรรม
+          </h3>
+        </div>
+        {period ? (
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-[var(--text-secondary)] border border-white/8">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-highlight)]" aria-hidden="true" />
+            <span>{period}</span>
+          </span>
+        ) : null}
+      </div>
+
+      <ol className="mt-3.5 space-y-2.5 text-xs text-[var(--text-secondary)] sm:text-[13px] leading-relaxed">
+        {rules.map((rule, idx) => (
+          <li key={idx} className="flex items-start gap-2.5">
+            <span className="flex h-5 w-5 shrink-0 select-none items-center justify-center rounded-full bg-white/6 text-[10px] font-medium text-[var(--accent-primary)] tabular-nums border border-white/6">
+              {idx + 1}
+            </span>
+            <span className="flex-1 pt-0.5">{rule}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
 export function ActivityDetailBody({
   item,
   showTitle = true,
@@ -302,6 +374,18 @@ export function ActivityDetailBody({
 
   return (
     <div className="flex min-h-0 flex-col gap-4">
+      {/* ภาพปกกิจกรรมขนาดใหญ่ (ถ้ามี imageUrl) */}
+      {item.imageUrl ? (
+        <div className="relative w-full overflow-hidden rounded-[var(--radius-control)] border border-white/10 aspect-[21/8] max-h-44 sm:max-h-52 bg-black/40 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0d091a] via-transparent to-transparent opacity-80" />
+        </div>
+      ) : null}
+
       <div className="flex flex-col gap-3">
         {showTitle ? (
           <h2 className="text-base font-medium leading-snug text-[var(--text-primary)] sm:text-lg">
@@ -326,6 +410,9 @@ export function ActivityDetailBody({
       ) : (
         <ActivityInfoDetail item={item} />
       )}
+
+      {/* กติกาและเงื่อนไขกิจกรรม */}
+      <ActivityRulesSection rules={item.rules} period={item.period} />
     </div>
   );
 }

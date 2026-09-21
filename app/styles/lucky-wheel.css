@@ -309,16 +309,15 @@
 .lucky-wheel-benefits {
   display: grid;
   gap: var(--space-2);
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 @media (width >= 1024px) {
   .lucky-wheel-benefits {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-2);
   }
 
-.lucky-wheel-intro {
+  .lucky-wheel-intro {
     gap: var(--space-6);
   }
 }
@@ -328,17 +327,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   min-height: 5.25rem;
-  padding: var(--space-3) var(--space-2);
+  height: 100%;
+  padding: 10px 4px;
   text-align: center;
   background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
 }
 
 .lucky-wheel-benefit__icon {
   display: flex;
-  height: 2.75rem;
-  width: 2.75rem;
+  height: 2.25rem;
+  width: 2.25rem;
   shrink: 0;
   align-items: center;
   justify-content: center;
@@ -700,15 +700,15 @@
 .lucky-wheel__stage {
   position: relative;
   margin-inline: auto;
-  width: min(100%, 320px);
+  width: min(100%, 350px);
   aspect-ratio: 1;
 }
 
 @media (width >= 1024px) {
   .lucky-wheel__stage {
     width: 100%;
-    max-width: min(42rem, 100%);
-    max-height: min(72vh, 42rem);
+    max-width: 420px;
+    max-height: 420px;
   }
 
 .lucky-wheel__pointer {
@@ -734,8 +734,8 @@
   transform: translateX(-50%);
   border-left: 11px solid transparent;
   border-right: 11px solid transparent;
-  border-top: 18px solid var(--border-active);
-  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.35));
+  border-top: 18px solid #8b5cf6;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.65)) drop-shadow(0 2px 6px rgb(0 0 0 / 0.4));
 }
 
 .lucky-wheel__disc {
@@ -752,7 +752,7 @@
 }
 
 .lucky-wheel__rim {
-  stroke: color-mix(in srgb, var(--border-active) 40%, var(--border-subtle));
+  stroke: color-mix(in srgb, #8b5cf6 45%, var(--border-subtle));
 }
 
 .lucky-wheel__rim-dot {
@@ -778,7 +778,7 @@
 }
 
 .lucky-wheel__hub-ring {
-  stroke: color-mix(in srgb, var(--border-active) 55%, transparent);
+  stroke: color-mix(in srgb, #8b5cf6 60%, transparent);
   stroke-width: 1.5;
 }
 
@@ -795,10 +795,11 @@
   transform: translate(-50%, -50%);
   border: 0;
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--surface-mid) 92%, transparent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--border-active) 35%, transparent);
+  background: linear-gradient(135deg, #241442, #140b28);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.45), 0 0 0 2px rgba(139, 92, 246, 0.6);
   letter-spacing: 0.12em;
-  color: var(--text-primary);
+  color: #ffffff;
+  font-weight: 800;
 }
 
 .lucky-wheel__hub-btn:disabled {

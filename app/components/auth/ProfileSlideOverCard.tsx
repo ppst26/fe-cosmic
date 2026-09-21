@@ -140,29 +140,31 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
             </div>
           </header>
 
-          <div
-            className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4"
-          >
-            {!loading && profile ? (
-              <ProfileHubBody
-                profile={profile}
-                showHeader={false}
-                onOpenAccountDetail={handleOpenAccountPage}
-                onOpenTransactions={handleOpenTransactions}
-                onOpenLossRebate={handleOpenLossRebate}
-                onOpenVip={handleOpenVip}
-                onLogout={() => void handleLogout()}
-              />
-            ) : null}
-          </div>
+          <div className="profile-hub-sheet__pane flex min-h-0 flex-1 flex-col">
+            <div
+              className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4"
+            >
+              {!loading && profile ? (
+                <ProfileHubBody
+                  profile={profile}
+                  showHeader={false}
+                  onOpenAccountDetail={handleOpenAccountPage}
+                  onOpenTransactions={handleOpenTransactions}
+                  onOpenLossRebate={handleOpenLossRebate}
+                  onOpenVip={handleOpenVip}
+                  onLogout={() => void handleLogout()}
+                />
+              ) : null}
+            </div>
 
-          <footer className="profile-hub-sheet__footer shrink-0 border-t border-[var(--border-subtle)]/40 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-            <Dialog.Close asChild>
-              <button type="button" className={`${COSMIC_BTN_NAV} w-full justify-center py-3`}>
-                ปิด
-              </button>
-            </Dialog.Close>
-          </footer>
+            <footer className="profile-hub-sheet__footer shrink-0 border-t border-[var(--glass-border)] px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+              <Dialog.Close asChild>
+                <button type="button" className={`${COSMIC_BTN_NAV} w-full justify-center py-3`}>
+                  ปิด
+                </button>
+              </Dialog.Close>
+            </footer>
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

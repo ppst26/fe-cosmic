@@ -7,7 +7,8 @@ type ResponsiveSheetVariant =
   | "wide"
   | "profile"
   | "hub"
-  | "hubWide";
+  | "hubWide"
+  | "hubCompact";
 
 /**
  * Overlay — มือถือ sheet · desktop modal (lg+)
@@ -34,13 +35,15 @@ export function responsiveSheetContentClass(
       ? "lg:w-[min(94vw,1040px)]"
       : variant === "hub"
         ? "lg:w-[min(92vw,720px)]"
-        : variant === "wide"
-          ? "lg:w-[min(92vw,520px)]"
-          : variant === "signup"
-            ? "lg:w-[min(92vw,480px)]"
-            : variant === "profile"
-              ? "lg:w-[min(92vw,360px)]"
-              : "lg:w-[min(92vw,440px)]";
+        : variant === "hubCompact"
+          ? "lg:w-[min(92vw,500px)]"
+          : variant === "wide"
+            ? "lg:w-[min(92vw,520px)]"
+            : variant === "signup"
+              ? "lg:w-[min(92vw,480px)]"
+              : variant === "profile"
+                ? "lg:w-[min(92vw,360px)]"
+                : "lg:w-[min(92vw,440px)]";
 
   const lgMaxHeight =
     variant === "hubWide"
@@ -49,13 +52,18 @@ export function responsiveSheetContentClass(
         ? "lg:max-h-[min(90dvh,800px)]"
         : "lg:max-h-[min(90dvh,680px)]";
 
-  const isHubSheet = variant === "hub" || variant === "hubWide";
+  const isHubSheet = variant === "hub" || variant === "hubWide" || variant === "hubCompact";
+  const isProfileSheet = variant === "profile";
+
+  const sheetSurfaceChrome = isHubSheet
+    ? "rounded-t-[24px] border-0"
+    : isProfileSheet
+      ? "rounded-t-[20px] border-t border-[var(--cosmic-mobile-sheet-border)] lg:bg-[var(--cosmic-dialog-shell-bg)]"
+      : "rounded-t-[20px] border-t border-[var(--cosmic-mobile-sheet-border)] max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)]";
 
   return cn(
     "cosmic-mobile-sheet cosmic-modal-shell relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
-    isHubSheet
-      ? "rounded-t-[24px] border-0"
-      : "rounded-t-[20px] border-t border-[var(--cosmic-mobile-sheet-border)] max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)]",
+    sheetSurfaceChrome,
     isHubSheet
       ? "cosmic-mobile-sheet--hub px-[var(--page-gutter)] pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3"
       : "px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 sm:px-5",

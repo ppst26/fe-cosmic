@@ -12,22 +12,39 @@ export function ProfileHubRow({
   onClick,
   trailing,
   showChevron = false,
+  layout = "default",
 }: {
   icon: React.ReactNode;
   title: string;
   onClick?: () => void;
   trailing?: React.ReactNode;
   showChevron?: boolean;
+  /** sheet — แถวเมนูแบนใน bottom sheet โปรไฟล์ */
+  layout?: "default" | "sheet";
 }) {
-  const className =
-    "profile-hub-row flex w-full items-center gap-2 rounded-[var(--radius-control)] px-2 py-1.5 text-left transition-colors";
+  const isSheet = layout === "sheet";
+  const className = isSheet
+    ? "profile-hub-row profile-hub-row--sheet flex w-full items-center gap-3 rounded-[var(--radius-control)] px-1 py-2.5 text-left transition-colors"
+    : "profile-hub-row flex w-full items-center gap-2 rounded-[var(--radius-control)] px-2 py-1.5 text-left transition-colors";
 
   const inner = (
     <>
-      <span className="profile-hub-row__icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--icon-default)]">
+      <span
+        className={
+          isSheet
+            ? "profile-hub-row__icon flex h-5 w-5 shrink-0 items-center justify-center text-[var(--icon-default)]"
+            : "profile-hub-row__icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--icon-default)]"
+        }
+      >
         {icon}
       </span>
-      <span className="profile-hub-row__title min-w-0 flex-1 font-medium text-[var(--text-secondary)]">
+      <span
+        className={
+          isSheet
+            ? "profile-hub-row__title min-w-0 flex-1 text-sm font-medium text-[var(--text-primary)]"
+            : "profile-hub-row__title min-w-0 flex-1 font-medium text-[var(--text-secondary)]"
+        }
+      >
         {title}
       </span>
       {trailing}

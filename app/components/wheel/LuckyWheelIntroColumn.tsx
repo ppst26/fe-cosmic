@@ -42,9 +42,9 @@ export function LuckyWheelIntroColumn({ embedded = false }: LuckyWheelIntroColum
         </header>
       )}
 
-      <ul className="lucky-wheel-benefits" aria-label="สิทธิประโยชน์">
+      <ul className="lucky-wheel-benefits grid grid-cols-3 gap-2" aria-label="สิทธิประโยชน์">
         {LUCKY_WHEEL_BENEFITS.map((card) => (
-          <li key={card.id}>
+          <li key={card.id} className="h-full">
             <BenefitCard card={card} />
           </li>
         ))}
@@ -59,11 +59,11 @@ export function LuckyWheelIntroColumn({ embedded = false }: LuckyWheelIntroColum
 
 function BenefitCard({ card }: { card: WheelBenefitCard }) {
   return (
-    <article className="lucky-wheel-benefit cosmic-inset-card">
+    <article className="lucky-wheel-benefit cosmic-inset-card h-full">
       <span className="lucky-wheel-benefit__icon" aria-hidden="true">
         <BenefitIcon iconId={card.iconId} />
       </span>
-      <h3 className="lucky-wheel-benefit__title">
+      <h3 className="lucky-wheel-benefit__title text-[11px] sm:text-xs">
         <span className="block">{card.titleLines[0]}</span>
         <span className="block">{card.titleLines[1]}</span>
       </h3>

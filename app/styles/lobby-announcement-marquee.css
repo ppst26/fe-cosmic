@@ -1,5 +1,7 @@
 /*
- * ประกาศเลื่อนก่อน CategoryNav — LobbyAnnouncementMarquee.tsx
+ * ประกาศเลื่อน — LobbyAnnouncementMarquee.tsx
+ * Desktop: กรอบมนมี border ก่อน CategoryNav
+ * มือถือ: ไร้กรอบ ไร้ rounded พื้นหลังม่วงเกือบดำ พร้อม edge fade
  */
 .lobby-announcement-marquee {
   border: 1px solid rgb(255 255 255 / 0.08);
@@ -15,6 +17,54 @@
 .lobby-announcement-marquee__viewport {
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* ── สไตล์เฉพาะมือถือ — ไร้กรอบ ขอบเข้ามุมมืด ── */
+.lobby-announcement-marquee--mobile {
+  border: none;
+  border-radius: 0;
+  background: #0e091b;
+  box-shadow: none;
+}
+
+.lobby-announcement-marquee--mobile .lobby-announcement-marquee__viewport {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 44px,
+    #000 calc(100% - 44px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 44px,
+    #000 calc(100% - 44px),
+    transparent 100%
+  );
+}
+
+.lobby-announcement-marquee--mobile .lobby-announcement-marquee__viewport::before,
+.lobby-announcement-marquee--mobile .lobby-announcement-marquee__viewport::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 44px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.lobby-announcement-marquee--mobile .lobby-announcement-marquee__viewport::before {
+  left: 0;
+  background: linear-gradient(90deg, #0e091b 0%, rgba(14, 9, 27, 0) 100%);
+}
+
+.lobby-announcement-marquee--mobile .lobby-announcement-marquee__viewport::after {
+  right: 0;
+  background: linear-gradient(270deg, #0e091b 0%, rgba(14, 9, 27, 0) 100%);
 }
 
 .lobby-announcement-marquee__track {

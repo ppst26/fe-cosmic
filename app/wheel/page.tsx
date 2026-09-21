@@ -11,7 +11,6 @@ export default function LuckyWheelPage() {
   return (
     <LobbyDesktopPageShell
       activeCategoryId="home"
-      subHeader={{ title: "วงล้อพารวย", backHref: "/" }}
       mainClassName="lucky-wheel-page-shell w-full min-w-0 max-w-[var(--content-max)] lg:max-w-none"
     >
       <LuckyWheelPageContent />
