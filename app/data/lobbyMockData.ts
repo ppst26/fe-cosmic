@@ -158,6 +158,39 @@ export const PROMO_CAROUSEL_DATA: PromoItem[] = [
   },
 ];
 
+/** ขนาดจริง ProBan*.avif — ใช้คำนวณอัตราส่วนใน HomeDesktopPeekCarousel */
+export const HOME_DESKTOP_PEEK_BANNER_SIZE = {
+  width: 800,
+  height: 342,
+} as const;
+
+/** แบนเนอร์ peek carousel บน desktop lobby — public/HomeProBanner ProBan*.avif */
+export const HOME_DESKTOP_PEEK_BANNER_SRCS = [
+  "/HomeProBanner/ProBan00.avif",
+  "/HomeProBanner/ProBan11.avif",
+  "/HomeProBanner/ProBan22.avif",
+  "/HomeProBanner/ProBan33.avif",
+] as const;
+
+/**
+ * สไลด์ HomeDesktopPeekCarousel — 4 ใบแรกของ PROMO + รูป ProBan
+ * ถูกเรียกใช้ใน HomeLobbyPage.tsx (แถบใต้ header desktop)
+ */
+export const HOME_DESKTOP_PEEK_CAROUSEL_DATA: PromoItem[] =
+  HOME_DESKTOP_PEEK_BANNER_SRCS.map((bannerSrc, index) => {
+    const promo = PROMO_CAROUSEL_DATA[index];
+    if (promo) {
+      return { ...promo, bannerSrc };
+    }
+    return {
+      id: `peek-proban-${index}`,
+      title: "โปรโมชัน",
+      subtitle: "",
+      href: "#",
+      bannerSrc,
+    };
+  });
+
 /**
  * ตัวเลขตัวอย่างสำหรับ Cosmic Intro — ไม่ใช่สถิติยืนยัน ต้องแทนด้วยข้อมูลจริงจาก API
  * ถูกเรียกใช้โดย CosmicIntro.tsx

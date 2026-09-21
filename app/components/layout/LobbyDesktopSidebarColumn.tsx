@@ -34,7 +34,7 @@ export function LobbyDesktopSidebarColumn({
         onMenuAction={onMenuAction}
         navigationMode={navigationMode}
       />
-      <div className="lobby-desktop-shell__sidebar-hub">
+      <div className="lobby-desktop-shell__sidebar-hub lg:flex-1 lg:min-h-0 lg:overflow-x-hidden lg:overflow-y-auto lg:overscroll-contain">
         <LobbyDesktopHubMenuStack onMenuAction={onMenuAction} />
       </div>
     </>

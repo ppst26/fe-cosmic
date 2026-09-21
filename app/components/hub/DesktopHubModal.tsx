@@ -92,7 +92,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
             <Dialog.Content
               aria-describedby={hubId === "check-in" ? "hub-check-in-desc" : undefined}
               className={responsiveSheetContentClass(
-                hubId === "check-in" ? "cosmic-modal-shell--check-in" : undefined,
+                `hub-modal-shell${hubId === "check-in" ? " cosmic-modal-shell--check-in" : ""}`,
                 { variant: sheetVariant },
               )}
             >
@@ -101,7 +101,9 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
               <ResponsiveSheetHeader
                 closeAriaLabel="ปิด"
                 titleAlign="start"
-                className="responsive-sheet-header--hub"
+                className={`responsive-sheet-header--hub responsive-sheet-header--hub-shell${
+                  hubId === "check-in" ? " responsive-sheet-header--check-in" : ""
+                }`}
                 title={
                   <Dialog.Title className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">
                     {title}
@@ -120,10 +122,8 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
               />
 
               <div
-                className={`cosmic-modal-shell--hub min-h-0 flex-1 overflow-y-auto ${
-                  hubId === "check-in"
-                    ? "daily-check-in-desktop-modal-body relative p-0"
-                    : "pb-4 pt-1"
+                className={`cosmic-modal-shell--hub min-h-0 flex-1 overflow-y-auto pb-4 pt-1 ${
+                  hubId === "check-in" ? "daily-check-in-desktop-modal-body relative" : ""
                 }`}
               >
                 <HubModalBody hubId={hubId} options={options} />

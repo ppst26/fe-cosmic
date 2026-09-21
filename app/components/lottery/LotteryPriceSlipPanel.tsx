@@ -50,32 +50,32 @@ export function LotteryPriceSlipPanel({
   };
 
   return (
-    <div className="lottery-price-slip">
-      <div className="lottery-price-slip__head">{totalCount} รายการ</div>
+    <div className="lottery-price-slip flex flex-col gap-2 min-w-0">
+      <div className="lottery-price-slip__head m-0">{totalCount} รายการ</div>
 
-      <div className="lottery-price-slip__list">
+      <div className="lottery-price-slip__list flex flex-col gap-2">
         {groups.map((group) => (
           <section key={group.key} className="lottery-price-slip__group" aria-label={group.label}>
-            <div className="lottery-price-slip__group-head">
+            <div className="lottery-price-slip__group-head flex items-center justify-between px-2 py-[0.35rem]">
               <span>{group.label}</span>
               <span>{group.entries.length} รายการ</span>
             </div>
-            <ul className="lottery-price-slip__rows">
+            <ul className="lottery-price-slip__rows flex flex-col gap-1 m-0 p-0">
               {group.entries.map((entry) => {
                 const inputId = `lottery-price-amount-${entry.id}`;
                 const isSelected = entry.id === selectedEntryId;
                 return (
                   <li
                     key={entry.id}
-                    className={`lottery-price-row${isSelected ? " is-selected" : ""}`}
+                    className={`lottery-price-row flex items-center gap-1 py-[0.3rem] pr-[0.35rem] pl-2${isSelected ? " is-selected" : ""}`}
                     onClick={() => onSelectEntry(entry.id)}
                   >
-                    <span className="lottery-price-row__number">
+                    <span className="lottery-price-row__number flex-1 min-w-0">
                       {formatLotteryDigitsDisplay(entry.number)}
                     </span>
                     <button
                       type="button"
-                      className="lottery-price-row__tag"
+                      className="lottery-price-row__tag shrink-0 min-h-[1.65rem] px-[0.45rem]"
                       onClick={(event) => {
                         event.stopPropagation();
                         focusAmount(entry.id);
@@ -83,8 +83,8 @@ export function LotteryPriceSlipPanel({
                     >
                       ใส่ราคา
                     </button>
-                    <span className="lottery-price-row__rate">x{entry.payoutRate}</span>
-                    <span className="thai-lotto-amount thai-lotto-amount--sm lottery-price-row__amount">
+                    <span className="lottery-price-row__rate shrink-0">x{entry.payoutRate}</span>
+                    <span className="thai-lotto-amount thai-lotto-amount--sm lottery-price-row__amount inline-flex items-center gap-1 min-h-9 flex-[0_0_2.75rem] min-w-0 px-[0.35rem]">
                       <input
                         ref={(node) => {
                           inputRefs.current[entry.id] = node;
@@ -96,12 +96,12 @@ export function LotteryPriceSlipPanel({
                         onFocus={() => onSelectEntry(entry.id)}
                         onClick={(event) => event.stopPropagation()}
                         onChange={(event) => onAmountChange(entry.id, parseAmount(event.target.value))}
-                        className="thai-lotto-amount__input"
+                        className="thai-lotto-amount__input w-full min-w-0 text-center"
                       />
                     </span>
                     <button
                       type="button"
-                      className="lottery-price-row__remove"
+                      className="lottery-price-row__remove grid shrink-0 place-items-center w-7 h-7"
                       onClick={(event) => {
                         event.stopPropagation();
                         onRemove(entry.id);

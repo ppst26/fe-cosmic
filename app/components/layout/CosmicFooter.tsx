@@ -6,10 +6,6 @@ import {
   FOOTER_COPYRIGHT,
   FOOTER_DESKTOP_COLUMNS,
   FOOTER_DESKTOP_SOCIAL,
-  FOOTER_DISCLAIMER,
-  FOOTER_EXTERNAL_MOCK_LINKS,
-  FOOTER_LEGAL_LINKS,
-  FOOTER_PARTNER_NAMES,
   FOOTER_PAYMENT_LABELS,
   FOOTER_SOCIAL_LINKS,
   FOOTER_TAGLINE,
@@ -45,15 +41,18 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
 function CosmicFooterMobile() {
   return (
     <div className="lg:hidden">
-      <div className="cosmic-footer__main">
-        <div className="cosmic-footer__brand max-lg:text-center">
+      <div className="cosmic-footer__main grid grid-cols-1 gap-5 pt-5">
+        <div className="cosmic-footer__brand min-w-0 max-lg:text-center">
           <Link href="/" className="cosmic-footer__brandmark" aria-label="cosmicbet หน้าหลัก">
             cosmic<span>bet</span>
           </Link>
           <p className="cosmic-footer__brand-text text-base font-medium">{FOOTER_TAGLINE}</p>
         </div>
 
-        <section className="cosmic-footer__contact" aria-labelledby="cosmic-footer-contact-title">
+        <section
+          className="cosmic-footer__contact min-w-0"
+          aria-labelledby="cosmic-footer-contact-title"
+        >
           <div className="cosmic-footer__contact-group">
             <h3 id="cosmic-footer-contact-title" className="cosmic-footer__heading-sm text-sm font-medium">
               ติดต่อเรา
@@ -90,29 +89,15 @@ function CosmicFooterMobile() {
 
       <div className="cosmic-footer__bottom text-xs font-medium min-[600px]:text-xs">
         <p>{FOOTER_COPYRIGHT}</p>
-        <nav className="cosmic-footer__legal" aria-label="ข้อกำหนดและนโยบาย">
-          {FOOTER_LEGAL_LINKS.slice(0, 2).map((item) => (
-            <Link key={item.label} href={item.href}>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
       </div>
     </div>
   );
 }
 
-/** Footer desktop — โลโก้ + social · 6 คอลัมน์ · trust · CTA · disclaimer */
+/** Footer desktop — โลโก้ + social · 6 คอลัมน์ · trust · CTA · copyright */
 function CosmicFooterDesktop() {
   return (
-    <div
-      className={cn(
-        "cosmic-footer__dex hidden lg:flex lg:flex-col lg:gap-8",
-        "rounded-[var(--radius-panel)]",
-        "bg-gradient-to-b from-[color-mix(in_srgb,var(--surface-elevated)_92%,#1a1030)] to-[color-mix(in_srgb,var(--surface-mid)_88%,#0c0713)]",
-        "px-8 py-10 xl:px-10",
-      )}
-    >
+    <div className="cosmic-footer__dex hidden lg:flex lg:flex-col lg:gap-8 lg:px-0 lg:py-0">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
           <Link
@@ -211,58 +196,8 @@ function CosmicFooterDesktop() {
         </div>
       </div>
 
-      <section
-        className="cosmic-footer__partners border-t border-[var(--border-subtle)] pt-6"
-        aria-labelledby="cosmic-footer-partners-title-desktop"
-      >
-        <h2
-          id="cosmic-footer-partners-title-desktop"
-          className="cosmic-footer__heading-lg mb-4 text-lg font-semibold text-[var(--text-primary)]"
-        >
-          พันธมิตรของเรา
-        </h2>
-        <ul className="cosmic-footer__provider-list !mt-0">
-          {FOOTER_PARTNER_NAMES.map((name) => (
-            <li key={name} className="!text-sm !font-medium !text-[var(--text-secondary)]">
-              {name}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <div className="flex flex-col gap-6 border-t border-[var(--border-subtle)] pt-6 xl:flex-row xl:items-start xl:justify-between">
-        <p className="m-0 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)]">{FOOTER_DISCLAIMER}</p>
-        <div className="flex shrink-0 flex-wrap items-center gap-3 text-xs font-medium text-[var(--text-secondary)]">
-          <span className="rounded-md bg-[color-mix(in_srgb,var(--surface-elevated)_60%,transparent)] px-2.5 py-1">
-            18+
-          </span>
-          <span className="rounded-md bg-[color-mix(in_srgb,var(--surface-elevated)_60%,transparent)] px-2.5 py-1">
-            เล่นอย่างมีสติ
-          </span>
-        </div>
-      </div>
-
       <div className="cosmic-footer__bottom !mt-0 border-t border-[var(--border-subtle)] pt-5 !text-sm !text-[var(--text-secondary)]">
         <p>{FOOTER_COPYRIGHT}</p>
-        <nav className="cosmic-footer__legal" aria-label="ข้อกำหนดและนโยบาย">
-          {FOOTER_LEGAL_LINKS.map((item) => (
-            <Link key={item.label} href={item.href}>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
-
-      <div className="flex flex-wrap justify-end gap-4 border-t border-[var(--border-subtle)] pt-4 text-sm">
-        {FOOTER_EXTERNAL_MOCK_LINKS.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-          >
-            {item.label}
-          </Link>
-        ))}
       </div>
     </div>
   );

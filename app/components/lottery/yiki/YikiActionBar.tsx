@@ -19,22 +19,29 @@ interface YikiActionBarProps {
 export function YikiActionBar({ className = "", secondary, primary }: YikiActionBarProps) {
   return (
     <div
-      className={`yiki-action-bar${!secondary ? " yiki-action-bar--single" : ""}${className ? ` ${className}` : ""}`}
+      className={`yiki-action-bar flex gap-3 px-[var(--page-gutter)] pt-3 pb-[calc(var(--space-3)+var(--nav-safe))]${!secondary ? " yiki-action-bar--single" : ""}${className ? ` ${className}` : ""}`}
     >
       {secondary ? (
         "href" in secondary ? (
-          <Link href={secondary.href} className="yiki-action-bar__secondary">
+          <Link
+            href={secondary.href}
+            className="yiki-action-bar__secondary grid flex-1 place-items-center min-h-12 text-center"
+          >
             {secondary.label}
           </Link>
         ) : (
-          <button type="button" className="yiki-action-bar__secondary" onClick={secondary.onClick}>
+          <button
+            type="button"
+            className="yiki-action-bar__secondary grid flex-1 place-items-center min-h-12 text-center"
+            onClick={secondary.onClick}
+          >
             {secondary.label}
           </button>
         )
       ) : null}
       <button
         type="button"
-        className="cosmic-cta-primary cosmic-cta-primary--lg yiki-action-bar__primary"
+        className="cosmic-cta-primary cosmic-cta-primary--lg yiki-action-bar__primary flex-1 min-h-12"
         disabled={primary.disabled}
         onClick={primary.onClick}
       >

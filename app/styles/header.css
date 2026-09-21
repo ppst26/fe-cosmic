@@ -1,46 +1,23 @@
 /*
  * Mobile header — cosmic-nav + glass-mobile-nav (Header.tsx · lg:hidden)
+ * Layout / ระยะ / ขนาด / มุมโค้ง ย้ายไปเป็น Tailwind ใน TSX แล้ว
+ * ไฟล์นี้เหลือเฉพาะ token, สี, ผิวกระจก, เงา และ transition
  */
-.cosmic-nav-shell {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  padding: calc(env(safe-area-inset-top, 0px) + 8px) var(--layout-inline-gutter) 8px;
-  background: transparent;
-  box-shadow: none;
-}
-
 .cosmic-nav {
-  --wallet-bg: transparent;
   --text: #f7f5ff;
-  --border: rgb(255 255 255 / 0.22);
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-
-  width: 100%;
-  max-width: var(--content-max);
-  margin-inline: auto;
-  min-height: 52px;
-  padding: 8px 10px 8px 12px;
-  box-sizing: border-box;
   color: var(--text);
 }
 
 .cosmic-nav.glass-mobile-nav {
-  border: 0;
-  border-radius: var(--header-chip-radius);
   background: var(--glass-fill-subtle);
   -webkit-backdrop-filter: blur(12px) saturate(1.12);
   backdrop-filter: blur(12px) saturate(1.12);
   box-shadow: 0 10px 28px rgb(0 0 0 / 0.2);
 }
 
-/** ชิปในแถบมือถือ — glass-card--soft · มุม sm */
+/** ชิปในแถบมือถือ — glass-card--soft ไม่ซ้อนเงาบนพื้นกระจกของแถบ */
 .cosmic-nav.glass-mobile-nav .glass-card--soft {
-  border-radius: var(--header-chip-radius);
   box-shadow: none;
 }
 
@@ -52,261 +29,8 @@
   );
 }
 
-.cosmic-nav.glass-mobile-nav .cosmic-nav__chip,
-.cosmic-nav.glass-mobile-nav .cosmic-nav__wallet-cluster,
-.cosmic-nav.glass-mobile-nav .cosmic-nav__user-cluster,
-.cosmic-nav.glass-mobile-nav .profile-button,
-.cosmic-nav.glass-mobile-nav .cosmic-nav__deposit-cta,
-.cosmic-nav.glass-mobile-nav .cosmic-nav__auth-login,
-.cosmic-nav.glass-mobile-nav .cosmic-cta-primary {
-  border-radius: var(--header-chip-radius);
-}
-
-.cosmic-nav,
-.cosmic-nav * {
-  box-sizing: border-box;
-}
-
-.cosmic-logo {
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
-  outline: none;
-  border-radius: var(--radius-control);
-}
-
-.cosmic-logo:focus-visible {
-  outline: 2px solid #bca4ff;
-  outline-offset: 4px;
-}
-
-.cosmic-logo img {
-  display: block;
-  width: clamp(112px, 25vw, 150px);
-  height: auto;
-}
-
-.cosmic-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-  flex-shrink: 1;
-}
-
-.cosmic-nav__chip {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-}
-
-.cosmic-nav__chip.is-active {
-  color: var(--icon-active);
-  background: rgb(255 255 255 / 0.1);
-}
-
-/* Mobile — กระเป๋า + โปรไฟล์ใน glass เดียว */
-.cosmic-nav__user-cluster {
-  display: inline-flex;
-  min-width: 0;
-  max-width: min(72vw, 14.5rem);
-  align-items: center;
-  gap: 0.25rem;
-  min-height: 40px;
-  padding: 0.25rem 0.3rem 0.25rem 0.55rem;
-}
-
-.cosmic-nav__user-cluster .cosmic-nav__wallet-inline {
-  flex: 1 1 auto;
-  min-width: 0;
-  max-width: none;
-}
-
-.cosmic-nav__profile-in-cluster {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 2.125rem;
-  height: 2.125rem;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: calc(var(--header-chip-radius) - 4px);
-  background: transparent;
-  color: var(--icon-default);
-  cursor: pointer;
-  transition:
-    background var(--motion-fast) ease,
-    color var(--motion-fast) ease;
-}
-
-.cosmic-nav__user-cluster .profile-button.cosmic-nav__profile-in-cluster {
-  width: 2.125rem;
-  height: 2.125rem;
-  background: transparent;
-}
-
-.cosmic-nav__profile-in-cluster.is-active {
-  color: var(--icon-active);
-  background: rgb(255 255 255 / 0.08);
-}
-
-.cosmic-nav__profile-in-cluster:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-/* Mobile — ยอดเครดิต + ไอคอนกระเป๋า (ภายใน user-cluster) */
-.cosmic-nav__wallet-inline {
-  display: inline-flex;
-  min-width: 0;
-  max-width: min(48vw, 10.75rem);
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-}
-
-.cosmic-nav__wallet-inline.wallet-button--skeleton {
-  width: 5.75rem;
-  height: 1.25rem;
-  max-width: min(42vw, 9.25rem);
-  border-radius: 6px;
-}
-
-.cosmic-nav__wallet-balance {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  color: var(--text-primary);
-}
-
-.cosmic-nav__wallet-cluster {
-  display: inline-flex;
-  max-width: min(52vw, 11.5rem);
-  min-width: 0;
-  align-items: center;
-  gap: 4px;
-  min-height: 40px;
-  padding: 4px 4px 4px 8px;
-  border-radius: var(--radius-sm);
-}
-
-.cosmic-nav__wallet-cluster.wallet-button--skeleton {
-  width: 7.5rem;
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.cosmic-nav__deposit-cta {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  min-width: 34px;
-  min-height: 32px;
-  padding: 0 8px;
-  border-radius: var(--radius-sm);
-  line-height: 1;
-}
-
-.wallet-button,
-.profile-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-
-  padding: 0;
-  border: 0;
-  color: var(--text);
-  font: inherit;
-  cursor: default;
-  -webkit-tap-highlight-color: transparent;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease;
-}
-
-.wallet-button {
-  gap: 6px;
-  min-width: 0;
-  max-width: min(42vw, 9.25rem);
-  min-height: 32px;
-  padding: 0 6px 0 0;
-  border-radius: 8px;
-  background: var(--wallet-bg);
-}
-
-.wallet-button--cluster {
-  max-width: none;
-  flex: 1 1 auto;
-  padding: 0;
-}
-
-.wallet-button--skeleton {
-  width: 6.5rem;
-  max-width: min(42vw, 9.25rem);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  background: rgb(255 255 255 / 0.06);
-}
-
-.wallet-button span {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-}
-
-.profile-button {
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: rgb(255 255 255 / 0.04);
-  cursor: pointer;
-}
-
-.cosmic-nav__auth {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-
-.cosmic-nav__auth-login {
-  min-height: 36px;
-  padding: 0 10px;
-  border: 0;
-  color: var(--text-secondary);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.cosmic-nav__auth .cosmic-cta-primary--sm {
-  min-height: 36px;
-  padding-inline: 0.65rem;
-  letter-spacing: 0.04em;
-}
-
-.cosmic-nav__auth-login:hover {
-  color: var(--text-primary);
-}
-
+/** ไอคอนในแถบมือถือ — เส้นบางน้ำหนักเดียว (ขนาดกำหนดที่ icon ใน TSX) */
 .cosmic-actions svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.6;
@@ -314,17 +38,38 @@
   stroke-linejoin: round;
 }
 
+/** ปุ่มโปรไฟล์ในกลุ่มกระเป๋า (Header.tsx มือถือ) */
+.cosmic-nav__profile-in-cluster {
+  color: var(--text);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
 @media (hover: hover) {
-  .profile-button:hover,
-  .profile-button.is-active {
+  .cosmic-nav__profile-in-cluster:hover {
     color: var(--icon-active);
     background: rgb(255 255 255 / 0.1);
   }
 }
 
-.profile-button.is-active {
+.cosmic-nav__profile-in-cluster.is-active {
   color: var(--icon-active);
   background: rgb(255 255 255 / 0.1);
+}
+
+/** ยอดเครดิตในแถบมือถือ */
+.cosmic-nav__wallet-balance {
+  color: var(--text-primary);
+}
+
+/** ปุ่มเข้าสู่ระบบของผู้เยี่ยมชม — มือถือ (HeaderGuestAuthButtons) */
+.cosmic-nav__auth-login {
+  color: var(--text-primary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .cosmic-nav a:focus-visible,
@@ -337,300 +82,25 @@
   :root {
     --header-mobile-bar-height: 64px;
   }
-
-.cosmic-nav-shell {
-    padding-inline: 10px;
-  }
-
-.cosmic-nav {
-    min-height: 48px;
-    padding: 6px 8px 6px 10px;
-    gap: 8px;
-  }
-
-.cosmic-actions {
-    gap: 4px;
-  }
-
-.cosmic-nav__chip,
-  .profile-button {
-    width: 36px;
-    height: 36px;
-  }
-
-.cosmic-nav__wallet-cluster {
-    max-width: min(48vw, 10.5rem);
-    min-height: 36px;
-    padding: 3px 3px 3px 6px;
-  }
-
-.wallet-button span {
-  }
-
-.wallet-button svg {
-    width: 18px;
-    height: 18px;
-  }
-
-.cosmic-nav__deposit-cta {
-    min-width: 30px;
-    min-height: 28px;
-  }
-
-.cosmic-nav__auth {
-    gap: 4px;
-  }
-
-.cosmic-nav__auth-login {
-    min-height: 32px;
-    padding-inline: 8px;
-  }
 }
 
 /*
- * Header notch — legacy (desktop lobby overrides) · มือถือใช้ .cosmic-nav แทน
- */
-.header-notch-shell {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  isolation: isolate;
-  overflow: visible;
-
-  padding-top: env(safe-area-inset-top, 0px);
-  background: var(--header-wing);
-  box-shadow: 0 4px 20px rgb(0 0 0 / 18%);
-}
-
-/* เส้นบนเต็มความกว้าง — ต่อเนื่องไปแท็บกลางที่ย้อยลง */
-.header-notch-shell::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  height: 1px;
-  pointer-events: none;
-  background: var(--header-top-line);
-}
-
-.header-notch-inner {
-  position: relative;
-  z-index: 1;
-
-  display: grid;
-  width: 100%;
-  max-width: var(--content-max);
-  margin-inline: auto;
-  padding-inline: var(--page-gutter);
-  padding-top: 6px;
-  padding-bottom: 6px;
-
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: start;
-}
-
-.header-notch-wing {
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  height: var(--header-wing-bar);
-  min-height: var(--header-wing-bar);
-  max-height: var(--header-wing-bar);
-}
-
-.header-notch-wing--end {
-  justify-content: flex-end;
-}
-
-.header-notch-profile-btn {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-
-  width: 36px;
-  height: 36px;
-  padding: 0;
-
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 80%, transparent);
-  border-radius: 50%;
-  background: var(--header-wing);
-  color: var(--icon-active);
-
-  transition:
-    border-color var(--motion-fast) ease,
-    background var(--motion-fast) ease,
-    transform var(--motion-fast) ease;
-}
-
-.header-notch-profile-btn:hover {
-  border-color: var(--border-active);
-  background: var(--surface-hover);
-}
-
-.header-notch-profile-btn:active {
-  transform: scale(0.95);
-}
-
-.header-notch-profile-btn:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-.header-notch-center {
-  display: flex;
-  justify-content: center;
-  padding-inline: 4px;
-}
-
-.header-notch-tab {
-  position: relative;
-  isolation: isolate;
-  overflow: visible;
-  flex-shrink: 0;
-  align-self: flex-start;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  min-width: 148px;
-  min-height: calc(var(--header-wing-bar) + var(--header-notch-extra));
-  padding: 8px 16px 10px;
-  box-sizing: border-box;
-
-  color: var(--text-primary);
-  background: var(--header-notch);
-  border: 0;
-  border-radius:
-    0 0
-    var(--header-notch-radius)
-    var(--header-notch-radius);
-
-  /* ไฮไลต์ใต้เส้นบน — ให้แท็บดูย้อยจากแถบบน */
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.07),
-    0 6px 16px rgb(0 0 0 / 0.22);
-}
-
-.header-notch-tab::before,
-.header-notch-tab::after {
-  content: "";
-  position: absolute;
-  top: 0;
-
-  width: var(--header-notch-curve);
-  height: var(--header-notch-curve);
-
-  pointer-events: none;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-.header-notch-tab::before {
-  left: calc(-1 * var(--header-notch-curve));
-
-  background: radial-gradient(
-    circle at 0 100%,
-    var(--header-wing)
-      calc(var(--header-notch-curve) - 0.5px),
-    var(--header-notch)
-      var(--header-notch-curve)
-  );
-}
-
-.header-notch-tab::after {
-  right: calc(-1 * var(--header-notch-curve));
-
-  background: radial-gradient(
-    circle at 100% 100%,
-    var(--header-wing)
-      calc(var(--header-notch-curve) - 0.5px),
-    var(--header-notch)
-      var(--header-notch-curve)
-  );
-}
-
-@media (min-width: 640px) {
-  .header-notch-tab {
-    min-width: 168px;
-    padding-inline: 20px;
-  }
-}
-
-/*
- * Header desktop bar — แถบเต็มความกว้าง lg+ (Cosmicbet tokens)
- * ใช้โดย app/components/layout/Header.tsx
+ * Header desktop bar — แถบเต็มความกว้าง lg+ (Header.tsx)
+ * Layout ย้ายไป Tailwind ใน TSX แล้ว — ที่นี่เหลือ token ของแถบ + สี/แสง
  */
 .header-desktop-bar {
   --header-control-height: 2.75rem;
   /* มุมโค้งที่ปุ่ม/ช่องค้นหา — ไม่ทาที่แถบ outer */
   --header-chip-radius: var(--radius-pill);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  isolation: isolate;
-  width: 100%;
-  max-width: 100%;
-  flex-shrink: 0;
-  padding-top: env(safe-area-inset-top, 0px);
-  background: transparent;
-  box-shadow: none;
-}
-
-.header-desktop-bar::before {
-  display: none;
-}
-
-.header-desktop-bar__inner {
-  position: relative;
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  min-height: var(--header-desktop-bar-height);
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0 clamp(12px, 2vw, 28px);
-  box-sizing: border-box;
-}
-
-.header-desktop-bar__inner--split {
-  gap: 0.75rem 1.25rem;
-}
-
-.header-desktop-bar__start {
-  display: flex;
-  min-width: 0;
-  flex: 1 1 auto;
-  align-items: center;
-  gap: 0.55rem 0.65rem;
 }
 
 .header-desktop-bar .glass-card--soft {
-  border-radius: var(--header-chip-radius);
   box-shadow: none;
 }
 
 .header-desktop-bar .glass-card--soft:hover {
   box-shadow: none;
   filter: brightness(1.04);
-}
-
-.header-desktop-bar .cosmic-cta-primary {
-  border-radius: var(--header-chip-radius);
-}
-
-.header-desktop-bar .cosmic-cta-primary--sm {
-  min-height: var(--header-control-height);
-  padding-block: 0;
-  padding-inline: 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  letter-spacing: 0.04em;
 }
 
 .header-desktop-bar__nav-link.glass-card--soft.is-active {
@@ -642,135 +112,34 @@
   );
 }
 
-.header-desktop-bar__profile-pill.glass-card--soft.is-active {
-  background: linear-gradient(
-    135deg,
-    rgb(119 71 229 / 0.28),
-    rgb(90 70 130 / 0.18)
-  );
-}
-
-.header-desktop-bar__search {
-  display: flex;
-  width: 100%;
-  max-width: 36rem;
-  min-height: var(--header-control-height);
-  align-items: center;
-  gap: 0.65rem;
-  border-radius: var(--header-chip-radius);
-  padding-inline: 1rem;
-}
-
+/** ช่องค้นหากะทัดรัด — ความกว้างและ focus-within อยู่ใน TSX เหลือแค่จังหวะ transition */
 .header-desktop-bar__search--compact {
-  flex: 0 1 auto;
-  width: min(10.5rem, 28vw);
-  max-width: 10.5rem;
-  min-width: 6.75rem;
-  padding-inline: 0.65rem 0.75rem;
   transition:
     max-width var(--motion-fast) ease,
     width var(--motion-fast) ease;
 }
 
-.header-desktop-bar__search--compact:focus-within {
-  width: min(14rem, 36vw);
-  max-width: 14rem;
-}
-
-.header-desktop-bar__search--compact .header-desktop-bar__search-input {
-}
-
 .header-desktop-bar__search-input {
-  width: 100%;
-  min-width: 0;
-  border: 0;
   background: transparent;
   color: var(--text-primary);
-  outline: none;
-  box-shadow: none;
 }
 
 .header-desktop-bar__search-input::placeholder {
   color: var(--text-muted);
 }
 
-.header-desktop-bar__search-input:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.header-desktop-bar__nav {
-  display: none;
-  align-items: center;
-  gap: 0.35rem;
-  margin-inline-start: 0.35rem;
-}
-
-@media (min-width: 1280px) {
-  .header-desktop-bar__nav {
-    display: flex;
-  }}
-
-.header-desktop-bar__nav-link {
-  position: relative;
-  display: inline-flex;
-  min-height: var(--header-control-height);
-  align-items: center;
-  justify-content: center;
-  padding-inline: 0.95rem;
-  letter-spacing: 0.02em;
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
 .header-desktop-bar__nav-badge {
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
   background: var(--destructive);
   box-shadow: 0 0 0 2px rgb(0 0 0 / 35%);
 }
 
-.header-desktop-bar__wallet {
-  display: inline-flex;
-  max-width: min(100%, 10.5rem);
-  min-height: var(--header-control-height);
-  align-items: center;
-  gap: 0.45rem;
-  border-radius: var(--header-chip-radius);
-  padding: 0 0.9rem;
-}
-
+/** ปุ่มเข้าสู่ระบบของผู้เยี่ยมชม — desktop (Header.tsx + LobbyDesktopTopBar.tsx) */
 .header-desktop-bar__auth-login {
-  min-height: var(--header-control-height);
-  padding-inline: 0.75rem;
-  border: 0;
-  border-radius: var(--header-chip-radius);
-  cursor: pointer;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-}
-
-.header-desktop-bar__auth-login:hover {
   color: var(--text-primary);
+  cursor: pointer;
 }
 
 .header-desktop-bar__menu-btn {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: var(--header-control-height);
-  height: var(--header-control-height);
-  min-width: var(--header-control-height);
-  min-height: var(--header-control-height);
-  padding: 0;
-  border: 0;
-  border-radius: var(--header-chip-radius);
   color: var(--icon-active);
   cursor: pointer;
   transition:
@@ -792,83 +161,7 @@
   );
 }
 
-.header-desktop-bar__logo {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-}
-
-.header-desktop-bar__end {
-  display: flex;
-  min-width: 0;
-  flex: 0 0 auto;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.5rem 0.65rem;
-}
-
-/** Desktop ขวา — pill borderless: ยอด · ฝาก · ถอน + โปรไฟล์ */
-.header-desktop-bar__actions {
-  display: inline-flex;
-  max-width: 100%;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.45rem;
-}
-
-.header-desktop-bar__cashier {
-  display: inline-flex;
-  min-height: var(--header-control-height);
-  align-items: stretch;
-  overflow: hidden;
-  padding: 0;
-}
-
-.header-desktop-bar__cashier-btn {
-  display: inline-flex;
-  min-width: 0;
-  min-height: var(--header-control-height);
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  background: transparent;
-  padding: 0 0.85rem;
-  line-height: 1;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: background var(--motion-fast) ease, filter var(--motion-fast) ease;
-}
-
-.header-desktop-bar__cashier-btn--deposit {
-  color: #fff;
-  background: var(--action-solid);
-  border-radius: var(--header-chip-radius);
-}
-
-.header-desktop-bar__cashier-btn--deposit:hover {
-  filter: brightness(1.06);
-}
-
-.header-desktop-bar__cashier-btn:not(.header-desktop-bar__cashier-btn--deposit):hover {
-  background: color-mix(in srgb, var(--surface-hover) 65%, transparent);
-}
-
-.header-desktop-bar__cashier-divider {
-  flex-shrink: 0;
-  align-self: stretch;
-  width: 1px;
-  background: rgb(255 255 255 / 0.1);
-}
-
 .header-desktop-bar__rank-btn {
-  display: inline-grid;
-  place-items: center;
-  min-width: var(--header-control-height);
-  min-height: var(--header-control-height);
-  border: 0;
-  padding: 0.2rem;
   cursor: pointer;
 }
 
@@ -880,245 +173,10 @@
   );
 }
 
-.header-desktop-bar__wallet-pill {
-  display: inline-flex;
-  max-width: 100%;
-  align-items: stretch;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--surface-mid) 90%, var(--bg-page));
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
-}
-
-.header-desktop-bar__wallet-segment {
-  display: inline-flex;
-  min-width: 0;
-  align-items: center;
-  gap: 0.45rem;
-  border: 0;
-  background: transparent;
-  padding: 0.45rem 0.85rem;
-  color: var(--text-primary);
-  white-space: nowrap;
-}
-
-.header-desktop-bar__wallet-segment--action {
-  cursor: pointer;
-  transition: background var(--motion-fast) ease, color var(--motion-fast) ease;
-}
-
-.header-desktop-bar__wallet-segment--action:hover {
-  background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
-}
-
-.header-desktop-bar__wallet-segment-icon {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  color: var(--icon-active);
-}
-
-.header-desktop-bar__action-icon {
-  flex-shrink: 0;
-  color: var(--icon-default);
-}
-
-.header-desktop-bar__wallet-segment--action:hover .header-desktop-bar__action-icon {
-  color: var(--icon-active);
-}
-
-.header-desktop-bar__wallet-balance {
-  max-width: min(100%, 7.5rem);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
-}
-
-.header-desktop-bar__wallet-rule {
-  flex-shrink: 0;
-  align-self: stretch;
-  width: 1px;
-  margin-block: 0.35rem;
-  background: color-mix(in srgb, var(--border-subtle) 75%, transparent);
-}
-
-.header-desktop-bar__profile-pill {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  border: 0;
-  border-radius: var(--header-chip-radius);
-  height: var(--header-control-height);
-  min-height: var(--header-control-height);
-  padding: 0 0.5rem 0 0.35rem;
-  cursor: pointer;
-  transition:
-    border-color var(--motion-fast) ease,
-    background var(--motion-fast) ease;
-}
-
-.header-desktop-bar__profile-pill.is-active {
-  border-color: rgb(155 124 240 / 0.42);
-}
-
-.header-desktop-bar__stat {
-  display: inline-flex;
-  max-width: min(100%, 10.5rem);
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.header-desktop-bar__stat-icon {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  color: var(--text-primary);
-}
-
-.header-desktop-bar__stat-icon--wallet {
-  background: linear-gradient(145deg, #0968f8, #0546a8);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%);
-}
-
-.header-desktop-bar__gems-img {
-  flex-shrink: 0;
-  width: 1.75rem;
-  height: 1.75rem;
-  object-fit: contain;
-}
-
-.header-desktop-bar__stat-text {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1.15;
-}
-
-.header-desktop-bar__stat-label {
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.header-desktop-bar__stat-value {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--text-primary);
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
-.header-desktop-bar__deposit {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.4rem;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: var(--gold-gradient);
-  padding: 0.5rem 1.1rem;
-  color: #1a1200;
-  cursor: pointer;
-  box-shadow:
-    0 2px 8px rgb(217 154 8 / 35%),
-    inset 0 1px 0 rgb(255 255 255 / 35%);
-  transition:
-    filter var(--motion-fast) ease,
-    transform var(--motion-fast) ease;
-}
-
-.header-desktop-bar__deposit:hover {
-  filter: brightness(1.06);
-}
-
-.header-desktop-bar__deposit:active {
-  transform: scale(0.99);
-}
-
-.header-desktop-bar__divider {
-  flex-shrink: 0;
-  align-self: stretch;
-  width: 1px;
-  min-height: 2rem;
-  margin-inline: 0.15rem;
-  background: color-mix(in srgb, var(--border-subtle) 85%, transparent);
-}
-
-.header-desktop-bar__user {
-  display: inline-flex;
-  max-width: min(100%, 14rem);
-  align-items: center;
-  gap: 0.55rem;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: transparent;
-  padding: 0.25rem 0.35rem 0.25rem 0.15rem;
-  color: inherit;
-  cursor: pointer;
-  text-align: left;
-  transition: background var(--motion-fast) ease;
-}
-
-.header-desktop-bar__user:hover {
-  background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
-}
-
-.header-desktop-bar__user-text {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1.15;
-}
-
-.header-desktop-bar__user-name {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--text-primary);
-  white-space: nowrap;
-}
-
-.header-desktop-bar__user-rank {
-  color: #d99a08;
-  letter-spacing: 0.06em;
-}
-
 .header-desktop-bar__icon-btn {
-  position: relative;
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: var(--header-control-height);
-  height: var(--header-control-height);
-  border: 0;
-  border-radius: var(--header-chip-radius);
-  color: var(--icon-default);
   cursor: pointer;
-  text-decoration: none;
-}
-
-.header-desktop-bar__icon-btn.glass-icon-btn {
-  width: var(--header-control-height);
-  height: var(--header-control-height);
 }
 
 .header-desktop-bar__badge {
-  position: absolute;
-  top: 6px;
-  right: 7px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
   background: var(--destructive);
 }
-

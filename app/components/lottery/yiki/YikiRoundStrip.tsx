@@ -18,10 +18,13 @@ interface YikiRoundStripProps {
  */
 export function YikiRoundStrip({ round, remainingMs, flagLabel = "YK", flagTone = "gold" }: YikiRoundStripProps) {
   return (
-    <section className="yiki-round-strip" aria-label="ข้อมูลงวด">
+    <section
+      className="yiki-round-strip flex flex-wrap items-center gap-3 px-4 py-3"
+      aria-label="ข้อมูลงวด"
+    >
       <LotteryFlagOrb label={flagLabel} tone={flagTone} size="sm" />
-      <span className="yiki-round-strip__label">{round.label}</span>
-      <span className="yiki-round-strip__close">
+      <span className="yiki-round-strip__label flex-1 min-w-0">{round.label}</span>
+      <span className="yiki-round-strip__close flex flex-col items-end gap-[0.2rem]">
         <span className="yiki-round-strip__close-label">ปิดรับใน</span>
         <LotteryCountdown label={remainingMs === null ? "--:--" : formatCountdown(remainingMs)} />
       </span>

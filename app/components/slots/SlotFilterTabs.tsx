@@ -84,7 +84,10 @@ export function SlotFilterTabs({
 }: SlotFilterTabsProps) {
   return (
     <nav className="my-3 w-full min-w-0 overflow-hidden" aria-label={ariaLabel}>
-      <div role="tablist" className="page-subnav__track no-scrollbar gap-2.5 sm:gap-3">
+      <div
+        role="tablist"
+        className="page-subnav__track no-scrollbar flex gap-2.5 overflow-x-auto py-1 sm:gap-3"
+      >
         {tabs.map((tab) => {
           const isActive = tab.id === activeTabId;
 
@@ -95,15 +98,17 @@ export function SlotFilterTabs({
               type="button"
               onClick={() => onSelectTab(tab.id)}
               aria-selected={isActive}
-              className={`page-subnav__chip page-subnav__chip--filter ${isActive ? "is-active" : ""}`}
+              className={`page-subnav__chip page-subnav__chip--filter flex min-h-16 flex-none flex-col items-center justify-center gap-1.5 shrink-0 w-[84px] min-w-[84px] px-[6px] py-2 text-center ${isActive ? "is-active" : ""}`}
             >
               <span
-                className={`page-subnav__icon mb-0.5 ${isActive ? "is-active" : ""}`}
+                className={`page-subnav__icon flex items-center justify-center mb-0.5 ${isActive ? "is-active" : ""}`}
                 aria-hidden="true"
               >
                 {getTabIcon(tab.iconId)}
               </span>
-              <span className="page-subnav__label">{tab.label}</span>
+              <span className="page-subnav__label max-w-full truncate text-center">
+                {tab.label}
+              </span>
             </button>
           );
         })}

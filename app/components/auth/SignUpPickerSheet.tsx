@@ -49,12 +49,12 @@ export function SignUpPickerSheet({
         role="dialog"
         aria-modal="true"
         aria-label={ariaLabel}
-        className="sign-up-picker-sheet relative z-10 flex max-h-[min(72dvh,520px)] w-full flex-col overflow-hidden rounded-t-[var(--radius-panel)] bg-[var(--surface-mid)] pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-8px_32px_rgba(0,0,0,0.45)] animate-in slide-in-from-bottom duration-300 lg:max-h-[min(70dvh,420px)] lg:max-w-sm lg:rounded-[var(--radius-panel)] lg:shadow-[0_0_32px_rgba(119,112,183,0.18),0_16px_40px_rgba(0,0,0,0.5)] lg:zoom-in-95"
+        className="sign-up-picker-sheet relative z-10 flex max-h-[min(72dvh,520px)] w-full flex-col overflow-hidden rounded-t-[var(--radius-panel)] pb-[max(1rem,env(safe-area-inset-bottom))] animate-in slide-in-from-bottom duration-300 lg:max-h-[min(70dvh,420px)] lg:max-w-sm lg:rounded-[var(--radius-panel)] lg:bg-[var(--cosmic-dialog-shell-bg)] lg:shadow-[0_0_32px_rgba(119,112,183,0.18),0_16px_40px_rgba(0,0,0,0.5)] lg:zoom-in-95"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex shrink-0 justify-center pt-3 pb-2 lg:hidden">
           <span
-            className="h-1 w-10 rounded-full bg-[var(--border-subtle)]"
+            className="h-1 w-10 rounded-full bg-[var(--cosmic-mobile-sheet-handle)]"
             aria-hidden="true"
           />
         </div>

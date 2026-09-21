@@ -14,15 +14,24 @@ const STEPS: { label: string; icon: React.ReactNode }[] = [
  */
 export function YikiHowToBet() {
   return (
-    <section className="yiki-howto" aria-label="วิธีการแทงหวย">
-      <h2 className="yiki-howto__title">วิธีการแทงหวย</h2>
-      <ol className="yiki-howto__list">
+    <section className="yiki-howto p-5 text-center" aria-label="วิธีการแทงหวย">
+      <h2 className="yiki-howto__title mb-4">วิธีการแทงหวย</h2>
+      <ol className="yiki-howto__list grid grid-cols-5 gap-3 m-0 p-0 list-none">
         {STEPS.map((step, index) => (
-          <li key={step.label} className="yiki-howto__item">
-            <span className="yiki-howto__badge" aria-hidden="true">
+          <li
+            key={step.label}
+            className="yiki-howto__item flex flex-col items-center gap-2"
+          >
+            <span
+              className="yiki-howto__badge grid place-items-center w-5 h-5 rounded-full"
+              aria-hidden="true"
+            >
               {index + 1}
             </span>
-            <span className="yiki-howto__icon" aria-hidden="true">
+            <span
+              className="yiki-howto__icon grid place-items-center w-11 h-11 rounded-[var(--radius-panel)]"
+              aria-hidden="true"
+            >
               {step.icon}
             </span>
             <span className="yiki-howto__label">{step.label}</span>

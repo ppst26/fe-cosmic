@@ -59,7 +59,24 @@
   text-align: left;
 }
 
-.cosmic-mobile-sheet--hub .cosmic-modal-shell--hub:not(.daily-check-in-desktop-modal-body) {
+/* Hub sheet — หัวข้อชิด gutter เดียวกับเนื้อหา */
+.cosmic-mobile-sheet--hub .responsive-sheet-header--hub-shell {
+  width: 100%;
+  padding-inline: 0;
+}
+
+@media (min-width: 1024px) {
+  .cosmic-mobile-sheet--hub .responsive-sheet-header--hub-shell {
+    padding-top: 0;
+    padding-bottom: 0.5rem;
+  }
+
+  .cosmic-mobile-sheet--hub .daily-check-in-desktop-modal-body {
+    padding-top: 0.25rem;
+  }
+}
+
+.cosmic-mobile-sheet--hub .cosmic-modal-shell--hub {
   padding-inline: 0;
 }
 
@@ -87,32 +104,12 @@
   flex-direction: column;
 }
 
-.hub-lobby-modal__toolbar {
-  display: flex;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.65rem 0.75rem;
-  padding: 0.75rem 1rem 0.65rem;
-}
-
-.hub-lobby-modal__toolbar-close {
-  margin-left: auto;
-}
-
 .hub-lobby-modal__segment {
-  display: inline-flex;
-  flex-shrink: 0;
-  padding: 3px;
-  border-radius: var(--radius-pill);
   background: var(--hub-lobby-chrome);
 }
 
 .hub-lobby-modal__segment-btn {
-  min-height: 36px;
-  padding: 0 1rem;
   border: 0;
-  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--text-muted);
   transition:
@@ -126,21 +123,11 @@
 }
 
 .hub-lobby-modal__search-wrap {
-  display: flex;
-  min-width: min(100%, 12rem);
-  flex: 1 1 12rem;
-  align-items: center;
-  gap: 0.5rem;
-  height: 42px;
-  padding-inline: 0.85rem;
-  border-radius: 10px;
   background: var(--hub-lobby-chrome);
   color: var(--text-muted);
 }
 
 .hub-lobby-modal__search-wrap input {
-  min-width: 0;
-  flex: 1 1 auto;
   border: 0;
   background: transparent;
   color: var(--text-primary);
@@ -152,14 +139,7 @@
 }
 
 .hub-lobby-modal__chrome-btn {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.4rem;
-  min-height: 42px;
-  padding-inline: 0.85rem;
   border: 0;
-  border-radius: 10px;
   background: var(--hub-lobby-chrome);
   color: var(--text-secondary);
   transition: background var(--motion-fast) ease;
@@ -177,41 +157,12 @@
 }
 
 .hub-lobby-modal__sidebar {
-  display: none;
-  width: var(--hub-lobby-sidebar-width);
-  flex-shrink: 0;
-  overflow-y: auto;
-  padding: 0.65rem 0.5rem 1rem 0.75rem;
   border-right: 1px solid var(--border-subtle);
 }
 
-@media (min-width: 1024px) {
-  .hub-lobby-modal__sidebar {
-    display: block;
-  }
-}
-
-.hub-lobby-modal__nav {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .hub-lobby-modal__nav-btn {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 0.55rem;
-  min-height: 40px;
-  padding: 0.35rem 0.65rem;
-  border: 0;
-  border-radius: 8px;
   background: transparent;
   color: var(--text-secondary);
-  text-align: left;
   transition:
     background var(--motion-fast) ease,
     color var(--motion-fast) ease;
@@ -236,22 +187,12 @@
 }
 
 .hub-lobby-modal__categories-mobile {
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding: 0.5rem 0.75rem;
   border-bottom: 1px solid var(--border-subtle);
   scrollbar-width: none;
 }
 
 .hub-lobby-modal__categories-mobile::-webkit-scrollbar {
   display: none;
-}
-
-@media (min-width: 1024px) {
-  .hub-lobby-modal__categories-mobile {
-    display: none;
-  }
 }
 
 .hub-lobby-modal__grid-scroll {
@@ -261,69 +202,19 @@
   padding: 0.75rem 1rem 1.25rem;
 }
 
-.hub-lobby-modal__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--hub-lobby-grid-gap);
-}
-
-@media (min-width: 480px) {
-  .hub-lobby-modal__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 768px) {
-  .hub-lobby-modal__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .hub-lobby-modal__grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1280px) {
-  .hub-lobby-modal__grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-}
-
 .hub-lobby-game-tile {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
   border: 0;
-  padding: 0;
   background: transparent;
   color: inherit;
-  text-align: left;
   text-decoration: none;
   cursor: pointer;
 }
 
 .hub-lobby-game-tile__cover {
-  position: relative;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  border-radius: 14px;
   background: var(--hub-lobby-chrome);
 }
 
-.hub-lobby-game-tile__cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .hub-lobby-game-tile__badge {
-  position: absolute;
-  top: 0.4rem;
-  left: 0.4rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: 6px;
   background: rgb(0 0 0 / 72%);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -343,13 +234,6 @@
   text-transform: uppercase;
 }
 
-/** ฟิลด์/การ์ดย่อยใน hub dialog */
-.hub-desktop-field {
-  border: 0;
-  border-radius: var(--radius-control);
-  background: color-mix(in srgb, var(--surface-hover) 55%, transparent);
-}
-
 @media (min-width: 1024px) {
   .cosmic-modal-shell--hub .hub-desktop-card,
   .cosmic-modal-shell--hub .cosmic-inset-card {
@@ -367,10 +251,6 @@
     background: rgb(14 10 22 / 0.55);
     -webkit-backdrop-filter: blur(20px) saturate(1.15);
     backdrop-filter: blur(20px) saturate(1.15);
-  }
-
-.cosmic-modal-shell--hub .hub-desktop-field {
-    background: var(--hub-dialog-card-bg);
   }
 
 .cosmic-modal-shell--hub .referral-desktop-hub .cosmic-segment-track {
@@ -570,25 +450,7 @@
   color: var(--success, #41d995);
 }
 
-.lottery-feature-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-3);
-}
-
-@media (min-width: 640px) {
-  .lottery-feature-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 .lottery-feature-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-height: 5.5rem;
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-panel);
   text-decoration: none;
   color: inherit;
   transition:
@@ -605,93 +467,30 @@
   box-shadow: none;
 }
 
-.lottery-feature-card__text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  align-items: flex-start;
-}
-
 .lottery-feature-card__title {
   line-height: 1.25;
   color: var(--text-primary);
 }
 
-.lottery-feature-card__yiki {
-  position: relative;
-  flex-shrink: 0;
-  width: 3.25rem;
-  height: 3.25rem;
-}
-
 .lottery-feature-card__yiki-ball {
-  display: grid;
-  place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  border-radius: 9999px;
   color: #b91c1c;
   background: radial-gradient(circle at 30% 25%, #fde68a, #f59e0b 55%, #b45309);
   box-shadow: inset 0 -4px 8px rgb(0 0 0 / 25%);
 }
 
 .lottery-feature-card__yiki-coin {
-  position: absolute;
-  right: -0.15rem;
-  bottom: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 9999px;
   background: var(--gold-gradient);
   border: 2px solid rgb(0 0 0 / 35%);
 }
 
-.lottery-flag {
-  position: relative;
-  display: inline-flex;
-  flex-shrink: 0;
-}
-
-.lottery-flag--sm {
-  width: 2.5rem;
-  height: 2.5rem;
-}
-
-.lottery-flag--md {
-  width: 3rem;
-  height: 3rem;
-}
-
-.lottery-flag--lg {
-  width: 3.5rem;
-  height: 3.5rem;
-}
-
 .lottery-flag__sphere {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  border-radius: 9999px;
   letter-spacing: -0.02em;
   color: rgb(255 255 255 / 92%);
   text-shadow: 0 1px 2px rgb(0 0 0 / 45%);
   box-shadow: inset 0 -3px 6px rgb(0 0 0 / 28%);
 }
 
-.lottery-flag--sm .lottery-flag__sphere {
-}
-
-.lottery-flag--lg .lottery-flag__sphere {
-}
-
 .lottery-flag__coin {
-  position: absolute;
-  right: -0.1rem;
-  bottom: 0.05rem;
-  width: 38%;
-  height: 38%;
-  border-radius: 9999px;
   background: var(--gold-gradient);
   border: 1.5px solid rgb(0 0 0 / 35%);
 }
@@ -768,31 +567,7 @@
   color: #b91c1c;
 }
 
-.lottery-type-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2);
-}
-
-@media (min-width: 768px) {
-  .lottery-type-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-3);
-  }
-}
-
-@media (min-width: 1024px) {
-  .lottery-type-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-}
-
 .lottery-type-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 4.25rem;
-  padding: var(--space-2) var(--space-3);
   border-radius: calc(var(--radius-panel) - 4px);
   text-decoration: none;
   color: inherit;
@@ -810,19 +585,9 @@
   box-shadow: none;
 }
 
-.lottery-type-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
-}
-
 .lottery-type-card__title {
   line-height: 1.25;
   color: var(--text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .lottery-type-card__closed {
@@ -846,43 +611,12 @@
   color: var(--text-primary);
 }
 
-.lottery-results-board__header,
-.lottery-results-board__row {
-  display: grid;
-  grid-template-columns: var(--lottery-results-board-cols);
-  column-gap: 0.5rem;
-  align-items: center;
-}
-
-.lottery-results-board__header {
-  padding: 0 0.15rem 0.4rem;
-}
-
 .lottery-results-board__header-cell {
   line-height: 1.3;
   color: var(--text-secondary);
 }
 
-.lottery-results-board__header-cell--prize {
-  text-align: center;
-}
-
-.lottery-results-board__header-cell--date {
-  text-align: right;
-}
-
-.lottery-results-board__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .lottery-results-board__row {
-  margin: 0;
-  padding: 0.45rem 0.65rem;
   border-radius: var(--radius-panel);
   transition: filter var(--motion-fast) ease;
 }
@@ -896,34 +630,14 @@
   box-shadow: none;
 }
 
-.lottery-results-board__market {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .lottery-results-board__market-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   line-height: 1.2;
   color: var(--text-primary);
-}
-
-.lottery-results-board__prize {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  min-width: 0;
 }
 
 .lottery-results-board__prize-label {
   line-height: 1;
   color: var(--text-secondary);
-  white-space: nowrap;
 }
 
 .lottery-results-board__prize-value {
@@ -932,19 +646,9 @@
   color: #ffe66d;
 }
 
-.lottery-results-board__date {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-width: 0;
-}
-
 .lottery-results-board__date-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
   line-height: 1.2;
   color: var(--text-secondary);
-  white-space: nowrap;
 }
 
 .lottery-results-board__empty {
@@ -958,29 +662,6 @@
 @media (min-width: 640px) {
   .lottery-results-board {
     --lottery-results-board-cols: minmax(0, 1fr) 4.25rem 4.25rem minmax(5rem, 6.25rem);
-  }
-
-.lottery-results-board__header-cell {
-  }
-
-.lottery-results-board__body {
-    gap: 0.4rem;
-  }
-
-.lottery-results-board__row {
-    padding: 0.5rem 0.75rem;
-  }
-
-.lottery-results-board__market-name {
-  }
-
-.lottery-results-board__prize-label {
-  }
-
-.lottery-results-board__prize-value {
-  }
-
-.lottery-results-board__date-text {
   }
 }
 
@@ -1055,44 +736,20 @@
 }
 
 .daily-check-in-desktop__banner {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.25rem 1.25rem 1rem;
-  border-radius: 0;
   border-right: 1px solid rgb(255 255 255 / 0.06);
 }
 
 .daily-check-in-desktop__banner-title {
-  margin: 0;
   line-height: 1.25;
   color: var(--text-primary);
 }
 
 .daily-check-in-desktop__banner-sub {
-  margin: 0.35rem 0 0;
   line-height: 1.45;
   color: var(--text-secondary);
 }
 
-.daily-check-in-desktop__banner-progress {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0 0.25rem;
-}
-
-.daily-check-in-desktop__banner-art {
-  width: 7.5rem;
-  height: auto;
-}
-
 .daily-check-in-desktop__banner-stat {
-  display: flex;
-  align-items: baseline;
-  gap: 0.2rem;
-  margin: 0;
   color: var(--text-primary);
 }
 
@@ -1101,35 +758,10 @@
 }
 
 .daily-check-in-desktop__banner-stat-label {
-  margin-left: 0.25rem;
   color: var(--text-secondary);
 }
 
-.daily-check-in-desktop__banner-cta {
-  margin-top: 0.25rem;
-}
-
-.daily-check-in-desktop__streak {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.daily-check-in-desktop__streak-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-}
-
 .daily-check-in-desktop__streak-dot {
-  display: grid;
-  place-items: center;
-  width: 1.65rem;
-  height: 1.65rem;
   border-radius: 9999px;
   color: var(--text-muted);
   background: rgb(0 0 0 / 0.28);
@@ -1147,11 +779,9 @@
 
 .daily-check-in-desktop__streak-label {
   color: var(--text-muted);
-  white-space: nowrap;
 }
 
 .daily-check-in-desktop__terms-hint {
-  margin: auto 0 0;
   line-height: 1.4;
   color: var(--text-muted);
 }
@@ -1160,8 +790,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding: 1rem 1rem 1.25rem;
-  padding-top: 2.75rem;
+  padding: 0.5rem 0 0;
 }
 
 .daily-check-in-desktop__main-head {
@@ -1170,7 +799,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0;
 }
 
 .daily-check-in-desktop__main-title {
@@ -1196,11 +825,6 @@
 }
 
 .daily-check-in-desktop__day-row {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
-  align-items: center;
-  gap: 0.65rem 0.75rem;
-  padding: 0.65rem 0.75rem;
   border-radius: var(--radius-panel);
 }
 
@@ -1217,12 +841,6 @@
 }
 
 .daily-check-in-desktop__day-badge {
-  display: grid;
-  place-items: center;
-  width: 2.35rem;
-  height: 2.35rem;
-  flex-shrink: 0;
-  border-radius: 9999px;
   background: rgb(0 0 0 / 0.32);
   color: var(--text-primary);
 }
@@ -1236,50 +854,17 @@
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--action-solid) 55%, transparent);
 }
 
-.daily-check-in-desktop__day-badge-num {
-  line-height: 1;
-}
-
 .daily-check-in-desktop__day-title {
-  margin: 0;
   color: color-mix(in srgb, #f472b6 55%, var(--text-primary));
 }
 
 .daily-check-in-desktop__day-reward {
-  margin: 0.15rem 0 0;
   color: #ffe66d;
 }
 
 .daily-check-in-desktop__day-desc {
-  margin: 0.2rem 0 0;
   line-height: 1.35;
   color: var(--text-secondary);
-}
-
-.daily-check-in-desktop__day-visual {
-  display: none;
-}
-
-@media (min-width: 640px) {
-  .daily-check-in-desktop__day-visual {
-    display: block;
-  }
-}
-
-.daily-check-in-desktop__day-action {
-  display: flex;
-  justify-content: flex-end;
-  min-width: 5.5rem;
-}
-
-.daily-check-in-desktop__claim-btn {
-  min-width: 5.25rem;
-  white-space: nowrap;
-}
-
-.daily-check-in-desktop__claim-pill {
-  min-width: 5.25rem;
-  white-space: nowrap;
 }
 
 /*
@@ -1310,8 +895,12 @@
 
 .daily-check-in-desktop--flat .daily-check-in-desktop__day-row.is-today {
   border-left: 2px solid color-mix(in srgb, var(--accent-primary) 65%, transparent);
-  padding-left: calc(0.75rem - 2px);
+  padding-left: calc(0.5rem - 2px);
   box-shadow: none;
+}
+
+.daily-check-in-desktop--flat .daily-check-in-desktop__day-row.is-locked {
+  opacity: 0.72;
 }
 
 .cosmic-mobile-sheet .daily-check-in-desktop--flat .daily-check-in-desktop__day-row.is-today {
@@ -1322,16 +911,56 @@
   border-right-color: rgb(255 255 255 / 0.1);
 }
 
-.cosmic-modal-shell--check-in {
-  padding: 0;
+@media (min-width: 1024px) {
+  .cosmic-mobile-sheet .daily-check-in-desktop--flat {
+    gap: 0;
+  }
+
+  .cosmic-mobile-sheet .daily-check-in-desktop--flat > .daily-check-in-desktop__banner {
+    padding-right: 1.25rem;
+    border-right: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .cosmic-mobile-sheet .daily-check-in-desktop--flat > .daily-check-in-desktop__main {
+    padding-left: 1.25rem;
+  }
+}
+
+.cosmic-mobile-sheet .cosmic-modal-shell--hub .daily-check-in-desktop--flat .daily-check-in-desktop__day-row.is-today {
+  box-shadow: none;
+}
+
+.cosmic-mobile-sheet .cosmic-modal-shell--hub .daily-check-in-desktop--flat .daily-check-in-desktop__day-row.glass-card--soft {
+  box-shadow: none;
 }
 
 /*
- * VipModal — ขนาดคงที่ desktop · ซ้ายระดับ/เทิร์น · ขวาภารกิจ
+ * VipModal — hub-modal-shell · ขนาดคงที่ desktop · typography อ่านง่ายบนพื้นม่วงเทา
  */
+.hub-modal-shell.vip-modal {
+  --text-secondary: #c4bfd2;
+  --text-muted: #a39eb2;
+}
+
+.hub-modal-shell.vip-modal .vip-modal-subtitle {
+  color: var(--text-secondary);
+}
+
 @media (min-width: 1024px) {
-  .vip-modal.cosmic-modal-shell--hub,
-  .cosmic-mobile-sheet.vip-modal {
+  .hub-modal-shell.vip-modal .vip-modal__header .vip-modal__segment-track {
+    width: 100%;
+    max-width: 28rem;
+  }
+}
+
+.hub-modal-shell.vip-modal .vip-modal-typography h3 {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 1024px) {
+  .cosmic-mobile-sheet.hub-modal-shell.vip-modal {
     width: min(94vw, 1040px);
     height: 560px;
     min-height: 560px;
@@ -1346,8 +975,7 @@
 }
 
 .vip-modal-desktop {
-  width: 100%;
-  min-width: 0;
+  /* min-height: 0 คงไว้ — ต่อ chain ความสูงคงที่ของ .vip-modal ที่ lg (ดู @media ด้านล่าง) */
   min-height: 0;
 }
 
@@ -1359,14 +987,9 @@
   }
 }
 
-.vip-modal-desktop__split {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
-}
-
 @media (min-width: 1024px) {
   .vip-modal-desktop__split {
+    /* min-height: 0 คงไว้ — ต่อ chain ความสูงคงที่ */
     flex: 1;
     min-height: 0;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1375,7 +998,7 @@
 }
 
 .vip-modal-desktop__panel {
-  min-width: 0;
+  /* min-height: 0 คงไว้ — ต่อ chain ความสูงคงที่ */
   min-height: 0;
 }
 
@@ -1384,14 +1007,6 @@
     overflow-y: auto;
     scrollbar-width: thin;
   }
-}
-
-.vip-modal-desktop__level {
-  justify-content: flex-start;
-}
-
-.vip-modal-desktop__benefits {
-  min-width: 0;
 }
 
 .vip-benefits-table--desktop-full .vip-benefits-table__scroll-wrap {
@@ -1432,13 +1047,6 @@
     0 10px 26px rgb(0 0 0 / 0.18);
 }
 
-.cosmic-mobile-sheet .cosmic-modal-shell--hub .hub-desktop-field {
-  border: 1px solid var(--sheet-soft-border, rgb(255 255 255 / 0.1));
-  background: var(
-    --sheet-soft-fill,
-    linear-gradient(145deg, rgb(255 255 255 / 0.11), rgb(255 255 255 / 0.045))
-  );
-}
 
 .cosmic-mobile-sheet .cosmic-modal-shell--hub .hub-modal-segment-track,
 .cosmic-mobile-sheet .cosmic-modal-shell--hub .cosmic-segment-track {
@@ -1593,13 +1201,95 @@
 }
 
 /*
- * ร้าน Gems (sheet) — การ์ดแลกโปร่ง + ปุ่ม glass
+ * Hub responsive sheet — shell ม่วงเทา (ทุก hub สิทธิพิเศษ) · การ์ด hub-modal-card
  */
+.cosmic-mobile-sheet.hub-modal-shell {
+  --hub-modal-base: #111016;
+  --hub-modal-base-rgb: 17 16 22;
+  --hub-modal-lift: #1f1e28;
+  --hub-modal-lift-rgb: 31 30 40;
+  --hub-modal-accent: #6a6678;
+
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--hub-modal-accent) 32%, rgb(255 255 255 / 0.1));
+  border-radius: 24px;
+  color: #ebe9f0;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--hub-modal-lift) 62%, rgb(98 94 112) 38%) 0%,
+      transparent 46%
+    ),
+    linear-gradient(
+      148deg,
+      color-mix(in srgb, var(--hub-modal-base) 70%, var(--hub-modal-lift)) 0%,
+      var(--hub-modal-base) 50%,
+      #09090c 100%
+    );
+  box-shadow:
+    0 30px 80px rgb(0 0 0 / 0.68),
+    inset 0 0 0 1px rgb(255 255 255 / 0.02),
+    0 0 36px rgb(var(--hub-modal-lift-rgb) / 0.28);
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+}
+
+.cosmic-mobile-sheet.hub-modal-shell::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  left: 10%;
+  right: 10%;
+  bottom: -1px;
+  height: 2px;
+  opacity: 0.85;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #454350,
+    #8a8698,
+    #454350,
+    transparent
+  );
+  box-shadow:
+    0 0 10px rgb(100 96 118 / 0.45),
+    0 0 24px rgb(70 68 82 / 0.28);
+}
+
+.hub-modal-shell .hub-modal-card {
+  border: 1px solid color-mix(in srgb, var(--hub-modal-lift) 40%, rgb(255 255 255 / 0.12));
+  border-radius: 18px;
+  background: linear-gradient(
+    148deg,
+    color-mix(in srgb, var(--hub-modal-lift) 65%, var(--hub-modal-base)),
+    var(--hub-modal-base)
+  );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.035),
+    0 10px 28px rgb(0 0 0 / 0.28);
+}
+
+.hub-modal-shell .hub-modal-card.is-active {
+  border-color: color-mix(in srgb, var(--hub-modal-accent) 48%, rgb(175 170 188));
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--hub-modal-lift) 55%, rgb(108 104 122) 30%) 0%,
+      transparent 56%
+    ),
+    linear-gradient(
+      148deg,
+      color-mix(in srgb, var(--hub-modal-lift) 80%, var(--hub-modal-base)),
+      var(--hub-modal-base)
+    );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.045),
+    0 0 20px rgb(var(--hub-modal-lift-rgb) / 0.38);
+}
+
 .cosmic-mobile-sheet .gems-store-hub--flat .gems-store-redeem-card--flat {
-  border: 1px solid rgb(255 255 255 / 0.1);
-  border-radius: var(--radius-panel);
-  background: transparent;
-  box-shadow: none;
+  border-radius: 18px;
 }
 
 .cosmic-mobile-sheet .gems-store-hub--flat .gems-store-terms {

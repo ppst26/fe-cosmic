@@ -53,7 +53,9 @@ export function responsiveSheetContentClass(
 
   return cn(
     "cosmic-mobile-sheet cosmic-modal-shell relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
-    "rounded-t-[20px] border-t border-[var(--border-subtle)]/50 max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)]",
+    isHubSheet
+      ? "rounded-t-[24px] border-0"
+      : "rounded-t-[20px] border-t border-[var(--cosmic-mobile-sheet-border)] max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)]",
     isHubSheet
       ? "cosmic-mobile-sheet--hub px-[var(--page-gutter)] pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3"
       : "px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 sm:px-5",
@@ -63,9 +65,11 @@ export function responsiveSheetContentClass(
     "lg:inset-auto lg:left-1/2 lg:top-1/2 lg:bottom-auto lg:-translate-x-1/2 lg:-translate-y-1/2",
     lgWidth,
     lgMaxHeight,
-    "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
-    "lg:bg-[var(--cosmic-dialog-shell-bg)] lg:backdrop-blur-none",
-    "lg:shadow-[0_0_32px_rgba(119,112,183,0.2),0_24px_48px_rgba(0,0,0,0.55)]",
+    isHubSheet ? "lg:min-h-0 lg:rounded-[24px] lg:border-0" : "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
+    !isHubSheet && "lg:bg-[var(--cosmic-dialog-shell-bg)] lg:backdrop-blur-none",
+    isHubSheet
+      ? "lg:shadow-none"
+      : "lg:shadow-[0_0_32px_rgba(119,112,183,0.2),0_24px_48px_rgba(0,0,0,0.55)]",
     "lg:data-[state=closed]:zoom-out-95 lg:data-[state=open]:zoom-in-95 lg:duration-200",
     extra,
   );
@@ -73,7 +77,7 @@ export function responsiveSheetContentClass(
 
 /** มือถือ — แถบลาก sheet · desktop ซ่อน */
 export const RESPONSIVE_SHEET_HANDLE_CLASS =
-  "mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-white/20 lg:hidden";
+  "mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-[var(--cosmic-mobile-sheet-handle)] lg:hidden";
 
 /**
  * ปุ่มปิด sheet — ไม่ใช้ Tailwind ring (โฟกัสดูแลใน globals ภายใน .cosmic-mobile-sheet)

@@ -185,7 +185,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
       aria-labelledby="top-performance-title"
     >
       <div className="hall-of-fame__head mb-3 flex items-center gap-2">
-        <TopPerformanceBadge className="hall-of-fame__title-icon h-7 w-7 sm:h-8 sm:w-8" />
+        <TopPerformanceBadge className="hall-of-fame__title-icon block h-7 w-7 sm:h-8 sm:w-8" />
         <h2
           id="top-performance-title"
           className="text-[18px] font-medium tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
@@ -196,7 +196,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
 
       <div className="hall-of-fame__toolbar mt-4 flex flex-wrap items-center justify-between gap-3">
         <div
-          className="hall-of-fame__tabs inline-flex max-w-full flex-wrap gap-2"
+          className="hall-of-fame__tabs inline-flex max-w-full flex-wrap items-center gap-2"
           role="tablist"
           aria-label="เลือกตาราง Top Performance"
         >
@@ -211,7 +211,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                 aria-selected={selected}
                 aria-controls={`${panelId}-panel`}
                 onClick={() => setActiveTab(tab.id)}
-                className={`hall-of-fame__tab-btn cosmic-type-chip-tab ${selected ? "is-active" : ""}`}
+                className={`hall-of-fame__tab-btn cosmic-type-chip-tab min-h-9 whitespace-nowrap px-4 py-[0.45rem] sm:min-h-10 sm:px-[1.1rem] ${selected ? "is-active" : ""}`}
               >
                 {tab.label}
               </button>
@@ -226,27 +226,39 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
         id={`${panelId}-panel`}
         role="tabpanel"
         aria-labelledby={`${panelId}-tab-${activeTab}`}
-        className="hall-of-fame__table-band hall-of-fame__table-band--borderless hall-of-fame__table-band--with-time relative mt-4 -mx-[var(--page-gutter)] w-[calc(100%+2*var(--page-gutter))] max-w-none lg:mx-0 lg:w-full"
+        className="hall-of-fame__table-band hall-of-fame__table-band--borderless hall-of-fame__table-band--with-time relative mt-4 -mx-[var(--page-gutter)] w-[calc(100%+2*var(--page-gutter))] max-w-none pt-1 pb-0 lg:mx-0 lg:w-full"
       >
         <div className="hall-of-fame-table-wrap px-[var(--page-gutter)] lg:px-0">
-          <table className="hall-of-fame-table w-full min-w-0 border-collapse text-left text-sm">
-            <thead>
-              <tr className="hall-of-fame-table__head-row text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] sm:text-[11px]">
-                <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--game">
+          <table className="hall-of-fame-table block w-full min-w-0 border-collapse text-left text-sm">
+            <thead className="block">
+              <tr className="hall-of-fame-table__head-row grid items-center gap-x-[0.65rem] text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] sm:text-[11px]">
+                <th
+                  scope="col"
+                  className="hall-of-fame-table__th hall-of-fame-table__th--game pt-[0.35rem] px-0 pb-2"
+                >
                   Game
                 </th>
-                <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--player">
+                <th
+                  scope="col"
+                  className="hall-of-fame-table__th hall-of-fame-table__th--player pt-[0.35rem] px-0 pb-2"
+                >
                   Player
                 </th>
-                <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--time">
+                <th
+                  scope="col"
+                  className="hall-of-fame-table__th hall-of-fame-table__th--time pt-[0.35rem] px-0 pb-2"
+                >
                   Time
                 </th>
-                <th scope="col" className="hall-of-fame-table__th hall-of-fame-table__th--value">
+                <th
+                  scope="col"
+                  className="hall-of-fame-table__th hall-of-fame-table__th--value pt-[0.35rem] px-0 pb-2 text-right"
+                >
                   {valueColumnLabel}
                 </th>
               </tr>
             </thead>
-            <tbody className="hall-of-fame-table__body">
+            <tbody className="hall-of-fame-table__body flex flex-col gap-2 mt-2">
               {rows.length === 0 ? (
                 <tr className="hall-of-fame-table__row hall-of-fame-table__row--empty">
                   <td
@@ -260,9 +272,9 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                 rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="hall-of-fame-table__row glass-card glass-card--hof-row"
+                    className="hall-of-fame-table__row glass-card glass-card--hof-row grid items-center gap-x-[0.65rem]"
                   >
-                    <td className="hall-of-fame-table__td hall-of-fame-table__td--game">
+                    <td className="hall-of-fame-table__td hall-of-fame-table__td--game py-[0.2rem] px-0">
                       <div className="flex min-w-0 items-center gap-2.5">
                         <HallOfFameGameThumb row={row} />
                         <span className="line-clamp-2 text-xs font-medium leading-snug text-[var(--text-primary)] sm:text-sm">
@@ -270,10 +282,10 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                         </span>
                       </div>
                     </td>
-                    <td className="hall-of-fame-table__td hall-of-fame-table__td--player">
+                    <td className="hall-of-fame-table__td hall-of-fame-table__td--player py-[0.2rem] px-0">
                       <div className="flex min-w-0 items-center gap-2">
                         <span
-                          className="hall-of-fame-table__avatar cosmic-type-caption shrink-0 font-medium text-text-primary"
+                          className="hall-of-fame-table__avatar cosmic-type-caption inline-flex h-7 w-7 shrink-0 items-center justify-center font-medium text-text-primary"
                           aria-hidden="true"
                         >
                           {row.playerMasked.charAt(0).toUpperCase()}
@@ -283,19 +295,19 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                         </span>
                       </div>
                     </td>
-                    <td className="hall-of-fame-table__td hall-of-fame-table__td--time">
+                    <td className="hall-of-fame-table__td hall-of-fame-table__td--time py-[0.2rem] px-0">
                       <span className="block truncate text-[10px] tabular-nums text-[var(--text-secondary)] sm:text-xs">
                         {row.wonAtLabel ?? "—"}
                       </span>
                     </td>
-                    <td className="hall-of-fame-table__td hall-of-fame-table__td--value">
+                    <td className="hall-of-fame-table__td hall-of-fame-table__td--value py-[0.2rem] px-0 text-right">
                       {isLatestWinner && row.payout != null ? (
                         <span className="hall-of-fame-table__payout text-xs font-medium tabular-nums sm:text-sm">
                           {formatPayoutThb(row.payout)}
                         </span>
                       ) : null}
                       {!isLatestWinner && row.winMultiple != null ? (
-                        <span className="hall-of-fame-table__coef-pill text-xs font-medium tabular-nums sm:text-sm">
+                        <span className="hall-of-fame-table__coef-pill inline-flex items-center justify-end min-w-[2.75rem] px-[0.45rem] py-[0.2rem] text-xs font-medium tabular-nums sm:text-sm">
                           x{row.winMultiple}
                         </span>
                       ) : null}

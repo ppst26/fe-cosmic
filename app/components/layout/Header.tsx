@@ -21,6 +21,7 @@ import {
 } from "@/app/data/walletMockData";
 import { useLobbyShellSidebarOptional } from "./LobbyShellSidebarContext";
 import { cn } from "@/lib/utils";
+import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
 
 interface HeaderProps {
   onLoginClick?: () => void;
@@ -63,33 +64,43 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
 
   return (
     <>
-      <header className="cosmic-nav-shell w-full min-w-0 lg:hidden">
-        <div className="cosmic-nav glass-mobile-nav">
-          <Link href="/" className="cosmic-logo" aria-label="Cosmicbet หน้าแรก">
-            <CosmicbetLogo className="!h-auto !max-w-none w-[clamp(96px,22vw,132px)] object-contain" />
+      <header className="sticky top-0 z-50 w-full min-w-0 px-(--layout-inline-gutter) pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2 max-[420px]:px-2.5 lg:hidden">
+        <div className="cosmic-nav glass-mobile-nav mx-auto flex min-h-13 w-full max-w-(--content-max) items-center justify-between gap-2.5 rounded-(--header-chip-radius) border-0 py-2 pr-2.5 pl-3 max-[420px]:min-h-12 max-[420px]:gap-2 max-[420px]:py-1.5 max-[420px]:pr-2 max-[420px]:pl-2.5">
+          <Link
+            href="/"
+            className="inline-flex shrink-0 items-center rounded-(--radius-control) outline-none"
+            aria-label="Cosmicbet หน้าแรก"
+          >
+            <CosmicbetLogo className="block h-auto! max-w-none! w-[clamp(96px,22vw,132px)] object-contain" />
           </Link>
 
-          <div className="cosmic-actions">
+          <div className="cosmic-actions flex min-w-0 shrink items-center gap-1.5 max-[420px]:gap-1">
             {showAuthSkeleton ? (
               <div
-                className="h-9 w-[8.75rem] animate-pulse rounded-[var(--radius-pill)] bg-[var(--surface-hover)]"
+                className="h-9 w-35 animate-pulse rounded-(--radius-pill) bg-surface-hover"
                 aria-hidden="true"
               />
             ) : showWallet ? (
-              <div className="cosmic-nav__user-cluster glass-card--soft">
-                <div className="cosmic-nav__wallet-inline" aria-live="polite">
+              <div className="glass-card--soft inline-flex min-h-10 min-w-0 max-w-[min(72vw,14.5rem)] items-center gap-1 rounded-(--header-chip-radius) py-1 pr-[0.3rem] pl-[0.55rem]">
+                <div
+                  className="inline-flex min-w-0 flex-auto items-center gap-[0.35rem]"
+                  aria-live="polite"
+                >
                   <HeaderWalletIcon
-                    className="h-5 w-5 shrink-0 text-[var(--icon-active)]"
+                    className="h-5 w-5 shrink-0 text-icon-active"
                     aria-hidden="true"
                   />
-                  <span className="cosmic-nav__wallet-balance text-sm font-medium tabular-nums">
+                  <span className="cosmic-nav__wallet-balance min-w-0 truncate text-sm font-medium leading-none tabular-nums">
                     {balanceLabel}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={handleProfileClick}
-                  className={`cosmic-nav__profile-in-cluster profile-button${isProfileOpen ? " is-active" : ""}`}
+                  className={cn(
+                    "cosmic-nav__profile-in-cluster inline-flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-(--header-chip-radius) border-0 bg-transparent p-0",
+                    isProfileOpen && "is-active",
+                  )}
                   aria-label="โปรไฟล์"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
@@ -98,33 +109,26 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 </button>
               </div>
             ) : (
-              <div className="cosmic-nav__auth">
-                <button
-                  type="button"
-                  onClick={onLoginClick}
-                  className="cosmic-nav__auth-login glass-card--soft text-xs font-medium uppercase tracking-wide"
-                >
-                  Log in
-                </button>
-                <button
-                  type="button"
-                  onClick={onSignUpClick}
-                  className="cosmic-cta-primary cosmic-cta-primary--sm text-xs font-medium uppercase tracking-wide"
-                >
-                  Sign up
-                </button>
-              </div>
+              <HeaderGuestAuthButtons
+                onLoginClick={onLoginClick}
+                onSignUpClick={onSignUpClick}
+                signUpLabelCompact
+                className="min-w-0 max-[420px]:gap-1"
+                loginClassName="cosmic-nav__auth-login glass-card--soft min-h-9 rounded-(--header-chip-radius) border-0 px-2.5 max-[420px]:min-h-8 max-[420px]:px-2"
+                signUpClassName="min-h-9! rounded-(--header-chip-radius)! px-3!"
+              />
             )}
           </div>
         </div>
       </header>
 
-      <header className="header-desktop-bar hidden lg:block">
-        <div className="header-desktop-bar__inner header-desktop-bar__inner--split">
-          <div className="header-desktop-bar__start">
+      {/* static/pt-0 เสมอ — ถูกครอบด้วย .lobby-desktop-shell__header-band ที่ sticky แทนแล้วเท่านั้น (Header ไม่ได้ mount เดี่ยวที่อื่น) */}
+      <header className="header-desktop-bar static z-50 isolate hidden w-full max-w-full shrink-0 pt-0 lg:block">
+        <div className="header-desktop-bar__inner relative flex min-h-(--header-desktop-bar-height) w-full max-w-full items-center justify-between gap-x-5 gap-y-3 px-[clamp(12px,2vw,28px)]">
+          <div className="flex min-w-0 flex-auto items-center gap-x-[0.65rem] gap-y-[0.55rem]">
             <Link
               href="/"
-              className="header-desktop-bar__logo outline-none transition-transform hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+              className="flex min-w-0 items-center outline-none transition-transform hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-focus-ring"
               aria-label="Cosmicbet หน้าแรก"
             >
               <CosmicbetLogo className="h-7 w-auto max-w-[min(100%,200px)]" />
@@ -134,7 +138,7 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
               <button
                 type="button"
                 className={cn(
-                  "header-desktop-bar__menu-btn glass-card--soft",
+                  "header-desktop-bar__menu-btn glass-card--soft grid h-(--header-control-height) w-(--header-control-height) min-h-(--header-control-height) min-w-(--header-control-height) shrink-0 place-items-center rounded-(--header-chip-radius) border-0 p-0",
                   sidebarHidden && "is-active",
                 )}
                 aria-expanded={!sidebarHidden}
@@ -145,7 +149,10 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
               </button>
             ) : null}
 
-            <nav className="header-desktop-bar__nav" aria-label="หมวดหลัก">
+            <nav
+              className="ms-[0.35rem] hidden items-center gap-[0.35rem] xl:flex"
+              aria-label="หมวดหลัก"
+            >
               {HEADER_DESKTOP_NAV.map((item) => {
                 const isActive =
                   pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -154,48 +161,58 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                   <Link
                     key={item.id}
                     href={item.href}
-                    className={`header-desktop-bar__nav-link cosmic-type-nav-label text-xs font-medium glass-card--soft${isActive ? " is-active" : ""}`}
+                    className={cn(
+                      "header-desktop-bar__nav-link cosmic-type-nav-label glass-card--soft relative inline-flex min-h-(--header-control-height) items-center justify-center rounded-(--header-chip-radius) px-[0.95rem] text-center text-xs font-medium tracking-[0.02em] whitespace-nowrap no-underline",
+                      isActive && "is-active",
+                    )}
                   >
                     {item.label}
                     {showBadge ? (
-                      <span className="header-desktop-bar__nav-badge" aria-hidden />
+                      <span
+                        className="header-desktop-bar__nav-badge absolute top-1.5 right-2 h-1.5 w-1.5 rounded-full"
+                        aria-hidden
+                      />
                     ) : null}
                   </Link>
                 );
               })}
             </nav>
 
-            <label className="header-desktop-bar__search header-desktop-bar__search--compact glass-card--soft">
+            <label className="header-desktop-bar__search--compact glass-card--soft flex min-h-(--header-control-height) w-[min(10.5rem,28vw)] max-w-42 min-w-27 flex-[0_1_auto] items-center gap-[0.65rem] rounded-(--header-chip-radius) pr-3 pl-[0.65rem] focus-within:w-[min(14rem,36vw)] focus-within:max-w-56">
               <span className="sr-only">ค้นหาเกมหรือค่าย</span>
-              <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
+              <SearchIcon className="h-4.5 w-4.5 shrink-0 text-text-muted" aria-hidden />
               <input
                 type="search"
-                className="header-desktop-bar__search-input text-sm font-medium"
+                className="header-desktop-bar__search-input w-full min-w-0 border-0 text-sm font-medium shadow-none outline-none focus:shadow-none focus:outline-none"
                 placeholder="ค้นหา"
                 autoComplete="off"
               />
             </label>
           </div>
 
-          <div className="header-desktop-bar__end">
+          <div className="flex min-w-0 flex-none flex-nowrap items-center justify-end gap-x-[0.65rem] gap-y-2">
             {showAuthSkeleton ? (
               <div
-                className="h-11 w-48 animate-pulse rounded-[var(--radius-pill)] bg-[var(--surface-hover)]"
+                className="h-11 w-48 animate-pulse rounded-(--radius-pill) bg-surface-hover"
                 aria-hidden="true"
               />
             ) : showWallet ? (
-              <div className="header-desktop-bar__actions">
-                <div className="header-desktop-bar__wallet glass-card--soft" aria-live="polite">
-                  <HeaderWalletIcon className="h-[18px] w-[18px] shrink-0 text-[var(--icon-active)]" />
-                  <span className="header-desktop-bar__wallet-balance text-sm font-medium tabular-nums">
+              <div className="inline-flex max-w-full flex-nowrap items-center justify-end gap-[0.45rem]">
+                <div
+                  className="glass-card--soft inline-flex min-h-(--header-control-height) max-w-[min(100%,10.5rem)] items-center gap-[0.45rem] rounded-(--header-chip-radius) px-[0.9rem] py-0"
+                  aria-live="polite"
+                >
+                  <HeaderWalletIcon className="h-4.5 w-4.5 shrink-0 text-icon-active" />
+                  <span className="max-w-[min(100%,7.5rem)] truncate text-sm font-medium tracking-[-0.01em] tabular-nums">
                     {balanceLabel}
                   </span>
                 </div>
 
+                {/* `!` จำเป็น — .cosmic-cta-primary--sm อยู่นอก @layer จึงชนะ utility ปกติ */}
                 <button
                   type="button"
                   onClick={openDeposit}
-                  className="cosmic-cta-primary cosmic-cta-primary--sm text-sm font-medium"
+                  className="cosmic-cta-primary cosmic-cta-primary--sm min-h-(--header-control-height)! rounded-(--header-chip-radius)! px-3! py-0! text-sm font-medium tracking-[0.04em]!"
                   aria-label="ฝากเงิน"
                   aria-haspopup="dialog"
                 >
@@ -204,17 +221,23 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
 
                 <button
                   type="button"
-                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn"
+                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn relative inline-flex h-(--header-control-height)! w-(--header-control-height)! shrink-0 items-center justify-center rounded-(--header-chip-radius) border-0 no-underline"
                   aria-label="การแจ้งเตือน"
                 >
                   <HeaderBellIcon />
-                  <span className="header-desktop-bar__badge" aria-hidden />
+                  <span
+                    className="header-desktop-bar__badge absolute top-1.5 right-1.75 h-1.75 w-1.75 rounded-full"
+                    aria-hidden
+                  />
                 </button>
 
                 <button
                   type="button"
                   onClick={handleProfileClick}
-                  className={`header-desktop-bar__rank-btn glass-card--soft${isProfileOpen ? " is-active" : ""}`}
+                  className={cn(
+                    "header-desktop-bar__rank-btn glass-card--soft inline-grid min-h-(--header-control-height) min-w-(--header-control-height) place-items-center rounded-(--header-chip-radius) border-0 p-[0.2rem]",
+                    isProfileOpen && "is-active",
+                  )}
                   aria-label="ยศ VIP และโปรไฟล์"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
@@ -223,22 +246,13 @@ export function Header({ onLoginClick, onSignUpClick }: HeaderProps) {
                 </button>
               </div>
             ) : (
-              <div className="header-desktop-bar__actions">
-                <button
-                  type="button"
-                  onClick={onLoginClick}
-                  className="header-desktop-bar__auth-login text-xs font-medium uppercase tracking-wide glass-card--soft"
-                >
-                  Log in
-                </button>
-                <button
-                  type="button"
-                  onClick={onSignUpClick}
-                  className="cosmic-cta-primary cosmic-cta-primary--sm text-xs font-medium uppercase tracking-wide"
-                >
-                  Sign up
-                </button>
-              </div>
+              <HeaderGuestAuthButtons
+                onLoginClick={onLoginClick}
+                onSignUpClick={onSignUpClick}
+                className="max-w-full flex-nowrap justify-end gap-[0.45rem]"
+                loginClassName="header-desktop-bar__auth-login glass-card--soft min-h-(--header-control-height) rounded-(--header-chip-radius) border-0 px-[0.85rem]"
+                signUpClassName="min-h-(--header-control-height)! rounded-(--header-chip-radius)! px-3! py-0! tracking-[0.04em]!"
+              />
             )}
           </div>
         </div>

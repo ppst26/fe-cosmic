@@ -124,7 +124,7 @@ export function TournamentsSection({
               <Link
                 key={item.id}
                 href={item.href}
-                className="tournament-feature-card tournament-feature-card__link"
+                className="tournament-feature-card tournament-feature-card__link relative block w-full aspect-[4/5] overflow-hidden rounded-[var(--radius-panel)] lg:aspect-[3/4]"
                 aria-label={`${item.brandLabel}: ${item.description}`}
               >
                 {image}
@@ -133,7 +133,11 @@ export function TournamentsSection({
           }
 
           return (
-            <article key={item.id} className="tournament-feature-card" aria-label={item.brandLabel}>
+            <article
+              key={item.id}
+              className="tournament-feature-card relative block w-full aspect-[4/5] overflow-hidden rounded-[var(--radius-panel)] lg:aspect-[3/4]"
+              aria-label={item.brandLabel}
+            >
               {image}
             </article>
           );

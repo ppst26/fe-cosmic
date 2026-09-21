@@ -7,6 +7,7 @@ import {
   formatHeaderWalletBalance,
   MOCK_MAIN_WALLET_BALANCE,
 } from "@/app/data/walletMockData";
+import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
 
 interface LobbyDesktopTopBarProps {
   onLoginClick?: () => void;
@@ -58,22 +59,12 @@ export function LobbyDesktopTopBar({
             <span className="tabular-nums font-medium">{balanceLabel}</span>
           </div>
         ) : (
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={onLoginClick}
-              className="px-2 py-1 text-xs font-medium uppercase text-[var(--text-secondary)] hover:text-white"
-            >
-              Log in
-            </button>
-            <button
-              type="button"
-              onClick={onSignUpClick}
-              className="cosmic-cta-primary cosmic-cta-primary--sm uppercase tracking-wide"
-            >
-              Sign up
-            </button>
-          </div>
+          <HeaderGuestAuthButtons
+            onLoginClick={onLoginClick}
+            onSignUpClick={onSignUpClick}
+            loginClassName="header-desktop-bar__auth-login glass-card--soft rounded-(--header-chip-radius) border-0 px-[0.85rem]"
+            signUpClassName=""
+          />
         )}
 
         <button

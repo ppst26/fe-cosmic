@@ -57,7 +57,7 @@ export function LotteryBetSlip({
 
   return (
     <section
-      className="lottery-panel lottery-bet-slip lottery-bet-slip--pick-only"
+      className="lottery-panel lottery-bet-slip lottery-bet-slip--pick-only flex flex-col gap-3 p-3 sm:gap-4 sm:p-4 md:p-5"
       aria-labelledby={titleId}
     >
       <div className="lottery-bet-slip__head">
@@ -76,21 +76,28 @@ export function LotteryBetSlip({
             const label = group?.label ?? groupKey;
             const payoutRate = group?.payoutRate ?? 0;
             return (
-              <section key={groupKey} className="lottery-bet-slip__group" aria-label={label}>
-                <div className="lottery-bet-slip__group-head">
+              <section
+                key={groupKey}
+                className="lottery-bet-slip__group flex flex-col gap-1 min-w-0"
+                aria-label={label}
+              >
+                <div className="lottery-bet-slip__group-head flex items-center justify-between px-2 py-[0.35rem]">
                   <span>{label}</span>
                   <span>{groupEntries.length} รายการ</span>
                 </div>
-                <ul className="lottery-bet-slip__rows">
+                <ul className="lottery-bet-slip__rows flex flex-col gap-1 m-0 p-0">
                   {groupEntries.map((entry) => (
-                    <li key={entry.id} className="lottery-bet-slip__row">
-                      <span className="lottery-bet-slip__number">
+                    <li
+                      key={entry.id}
+                      className="lottery-bet-slip__row flex items-center gap-[0.35rem] py-[0.3rem] pr-[0.35rem] pl-2"
+                    >
+                      <span className="lottery-bet-slip__number flex-1 min-w-0 whitespace-nowrap">
                         {formatLotteryDigitsDisplay(entry.number)}
                       </span>
-                      <span className="lottery-bet-slip__rate">x{payoutRate}</span>
+                      <span className="lottery-bet-slip__rate shrink-0">x{payoutRate}</span>
                       <button
                         type="button"
-                        className="lottery-bet-slip__remove"
+                        className="lottery-bet-slip__remove grid shrink-0 place-items-center w-[1.75rem] h-[1.75rem]"
                         onClick={() => onRemove(entry.id)}
                         aria-label={`ลบ ${label} ${entry.number}`}
                       >

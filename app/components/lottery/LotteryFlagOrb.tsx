@@ -1,6 +1,13 @@
 import React from "react";
 import type { LotteryFlagTone } from "@/app/types/lottery";
 
+/** ขนาดวงกลมธง — แม็ปกับ lottery-flag--{size} เดิม */
+const FLAG_SIZE_CLASS: Record<"sm" | "md" | "lg", string> = {
+  sm: "w-10 h-10",
+  md: "w-12 h-12",
+  lg: "w-14 h-14",
+};
+
 /**
  * ไอคอนธง/เหรียญ mock ของตลาดหวย
  * ใช้ใน LotteryHubContent (feature / grid / ผลหวย) และหน้าแทงหวยรัฐบาลไทย
@@ -18,11 +25,13 @@ export function LotteryFlagOrb({
 }) {
   return (
     <span
-      className={`lottery-flag lottery-flag--${size} lottery-flag--${tone}${className ? ` ${className}` : ""}`}
+      className={`lottery-flag lottery-flag--${size} lottery-flag--${tone} relative inline-flex shrink-0 ${FLAG_SIZE_CLASS[size]}${className ? ` ${className}` : ""}`}
       aria-hidden="true"
     >
-      <span className="lottery-flag__sphere">{label.slice(0, 2)}</span>
-      <span className="lottery-flag__coin" />
+      <span className="lottery-flag__sphere grid place-items-center w-full h-full rounded-full">
+        {label.slice(0, 2)}
+      </span>
+      <span className="lottery-flag__coin absolute right-[-0.1rem] bottom-[0.05rem] w-[38%] h-[38%] rounded-full" />
     </span>
   );
 }

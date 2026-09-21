@@ -65,9 +65,13 @@ export function HubLobbyModalLayout({
     <div className="hub-lobby-modal min-h-0 flex-1">
       <p className="sr-only">{ariaTitle}</p>
 
-      <div className="hub-lobby-modal__toolbar">
+      <div className="hub-lobby-modal__toolbar flex shrink-0 flex-wrap items-center gap-x-3 gap-y-[0.65rem] px-4 pt-3 pb-[0.65rem]">
         {showSegment && onSegmentChange ? (
-          <div className="hub-lobby-modal__segment" role="tablist" aria-label="โหมด lobby">
+          <div
+            className="hub-lobby-modal__segment inline-flex shrink-0 p-[3px] rounded-[var(--radius-pill)]"
+            role="tablist"
+            aria-label="โหมด lobby"
+          >
             {segmentButtons.map((item) => {
               const selected = segment === item.id;
               return (
@@ -76,7 +80,7 @@ export function HubLobbyModalLayout({
                   type="button"
                   role="tab"
                   aria-selected={selected}
-                  className={`hub-lobby-modal__segment-btn${selected ? " is-active" : ""}`}
+                  className={`hub-lobby-modal__segment-btn min-h-9 px-4 rounded-[var(--radius-pill)]${selected ? " is-active" : ""}`}
                   onClick={() => onSegmentChange(item.id)}
                 >
                   {item.label}
@@ -86,11 +90,12 @@ export function HubLobbyModalLayout({
           </div>
         ) : null}
 
-        <label className="hub-lobby-modal__search-wrap">
+        <label className="hub-lobby-modal__search-wrap flex min-w-[min(100%,12rem)] flex-[1_1_12rem] items-center gap-2 h-[42px] px-[0.85rem] rounded-[10px]">
           <SearchIcon className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
           <span className="sr-only">ค้นหาเกม</span>
           <input
             type="search"
+            className="min-w-0 flex-1"
             value={searchValue}
             placeholder={searchPlaceholder}
             onChange={(event) => onSearchChange?.(event.target.value)}
@@ -99,13 +104,21 @@ export function HubLobbyModalLayout({
         </label>
 
         {onFiltersClick ? (
-          <button type="button" className="hub-lobby-modal__chrome-btn" onClick={onFiltersClick}>
+          <button
+            type="button"
+            className="hub-lobby-modal__chrome-btn inline-flex shrink-0 items-center gap-[0.4rem] min-h-[42px] px-[0.85rem] rounded-[10px]"
+            onClick={onFiltersClick}
+          >
             {filtersLabel}
           </button>
         ) : null}
 
         {onSortClick ? (
-          <button type="button" className="hub-lobby-modal__chrome-btn" onClick={onSortClick}>
+          <button
+            type="button"
+            className="hub-lobby-modal__chrome-btn inline-flex shrink-0 items-center gap-[0.4rem] min-h-[42px] px-[0.85rem] rounded-[10px]"
+            onClick={onSortClick}
+          >
             {sortLabel}
           </button>
         ) : null}
@@ -115,7 +128,7 @@ export function HubLobbyModalLayout({
         {onClose ? (
           <button
             type="button"
-            className="hub-lobby-modal__toolbar-close inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] text-[var(--icon-default)] transition-colors hover:bg-[var(--hub-lobby-chrome)] hover:text-[var(--text-primary)]"
+            className="hub-lobby-modal__toolbar-close ml-auto inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] text-[var(--icon-default)] transition-colors hover:bg-[var(--hub-lobby-chrome)] hover:text-[var(--text-primary)]"
             aria-label="ปิด"
             onClick={onClose}
           >
@@ -125,15 +138,18 @@ export function HubLobbyModalLayout({
       </div>
 
       <div className="hub-lobby-modal__body">
-        <nav className="hub-lobby-modal__sidebar" aria-label="หมวดเกม">
-          <ul className="hub-lobby-modal__nav">
+        <nav
+          className="hub-lobby-modal__sidebar hidden w-(--hub-lobby-sidebar-width) shrink-0 overflow-y-auto pt-[0.65rem] pr-2 pb-4 pl-3 lg:block"
+          aria-label="หมวดเกม"
+        >
+          <ul className="hub-lobby-modal__nav flex flex-col gap-0.5 m-0 p-0 list-none">
             {categories.map((cat) => {
               const active = cat.id === activeCategoryId;
               return (
                 <li key={cat.id}>
                   <button
                     type="button"
-                    className={`hub-lobby-modal__nav-btn${active ? " is-active" : ""}`}
+                    className={`hub-lobby-modal__nav-btn flex w-full items-center gap-[0.55rem] min-h-10 px-[0.65rem] py-[0.35rem] border-0 rounded-lg text-left${active ? " is-active" : ""}`}
                     aria-current={active ? "true" : undefined}
                     onClick={() => onCategoryChange(cat.id)}
                   >
@@ -160,7 +176,7 @@ export function HubLobbyModalLayout({
                   type="button"
                   role="tab"
                   aria-selected={active}
-                  className={`hub-lobby-modal__nav-btn shrink-0${active ? " is-active" : ""}`}
+                  className={`hub-lobby-modal__nav-btn flex w-full items-center gap-[0.55rem] min-h-10 px-[0.65rem] py-[0.35rem] border-0 rounded-lg text-left shrink-0${active ? " is-active" : ""}`}
                   onClick={() => onCategoryChange(cat.id)}
                 >
                   {cat.label}
@@ -170,7 +186,9 @@ export function HubLobbyModalLayout({
           </div>
 
           <div className="hub-lobby-modal__grid-scroll">
-            <div className="hub-lobby-modal__grid">{children}</div>
+            <div className="hub-lobby-modal__grid grid grid-cols-2 gap-3 min-[480px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              {children}
+            </div>
           </div>
         </div>
       </div>
@@ -200,12 +218,24 @@ export function HubLobbyGameTile({
   href,
   onClick,
 }: HubLobbyGameTileProps) {
-  const className = "hub-lobby-game-tile";
+  const className = "hub-lobby-game-tile flex flex-col gap-[0.35rem] p-0 text-left";
   const inner = (
     <>
-      <span className="hub-lobby-game-tile__cover">
-        {imageSrc ? <img src={imageSrc} alt={imageAlt} loading="lazy" decoding="async" /> : null}
-        {badge ? <span className="hub-lobby-game-tile__badge">{badge}</span> : null}
+      <span className="hub-lobby-game-tile__cover relative aspect-[3/4] overflow-hidden rounded-[14px]">
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            className="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : null}
+        {badge ? (
+          <span className="hub-lobby-game-tile__badge absolute top-[0.4rem] left-[0.4rem] px-[0.4rem] py-[0.15rem] rounded-md">
+            {badge}
+          </span>
+        ) : null}
       </span>
       <span className="hub-lobby-game-tile__title line-clamp-2">{title}</span>
       <span className="hub-lobby-game-tile__provider truncate">{provider}</span>

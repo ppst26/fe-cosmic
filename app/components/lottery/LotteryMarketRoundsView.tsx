@@ -51,7 +51,7 @@ export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewP
         <LotteryPlayRoundList rounds={rounds} marketSlug={marketSlug} basePath={entry.roundsHref} />
       )}
       {showThaiLastResult ? (
-        <div className="lottery-market-rounds__result">
+        <div className="lottery-market-rounds__result hidden mt-4 min-w-0 lg:block">
           <ThaiLottoResultPanel result={THAI_LOTTO_LAST_RESULT} />
         </div>
       ) : null}

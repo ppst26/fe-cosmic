@@ -53,7 +53,7 @@ export function ProfilePageContent() {
 
   if (isLoading || loadingProfile) {
     return (
-      <main className="page-shell mx-auto w-full max-w-[var(--content-max)] px-[var(--page-gutter)] pb-10">
+      <main className="page-shell mx-auto w-full max-w-[var(--content-max)] px-[var(--page-gutter)] pb-6">
         <ProfilePageHeader title="โปรไฟล์" />
         <p className="py-12 text-center text-sm text-[var(--text-muted)]">กำลังโหลด...</p>
       </main>
@@ -62,7 +62,7 @@ export function ProfilePageContent() {
 
   if (!profile) {
     return (
-      <main className="page-shell mx-auto w-full max-w-[var(--content-max)] px-[var(--page-gutter)] pb-10">
+      <main className="page-shell mx-auto w-full max-w-[var(--content-max)] px-[var(--page-gutter)] pb-6">
         <ProfilePageHeader title="โปรไฟล์" />
         <p className="py-12 text-center text-sm text-[var(--text-muted)]">
           ไม่พบข้อมูลโปรไฟล์
@@ -72,7 +72,7 @@ export function ProfilePageContent() {
   }
 
   return (
-    <main className="page-shell mx-auto w-full max-w-[var(--content-max)] px-[var(--page-gutter)] pb-10">
+    <main className="page-shell mx-auto w-full max-w-[var(--content-max)] px-[var(--page-gutter)] pb-6">
       <ProfilePageHeader title="โปรไฟล์" />
 
       <div className="mt-2 flex flex-col gap-5">

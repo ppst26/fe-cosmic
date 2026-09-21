@@ -64,18 +64,20 @@ function renderMenuTile(
 ) {
   const inner = (
     <>
-      <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
+      <span className="lobby-desktop-sidebar__link-icon-wrap flex shrink-0 items-center justify-center" aria-hidden="true">
         <MenuItemIcon iconId={tile.iconId} className="h-5 w-5 shrink-0 text-current" />
       </span>
-      <span className="lobby-desktop-sidebar__link-label">{tile.label}</span>
+      <span className="lobby-desktop-sidebar__link-label min-w-0 flex-1 truncate">{tile.label}</span>
     </>
   );
+
+  const linkLayout = "relative flex w-full items-center border-0 text-left";
 
   if (tile.action) {
     return (
       <button
         type="button"
-        className="lobby-desktop-sidebar__link cosmic-type-sidebar-link"
+        className={`lobby-desktop-sidebar__link cosmic-type-sidebar-link ${linkLayout}`}
         title={tile.label}
         onClick={() => onMenuAction?.(tile.action!)}
       >
@@ -85,7 +87,7 @@ function renderMenuTile(
   }
 
   if (tile.href) {
-    const linkClass = "lobby-desktop-sidebar__link cosmic-type-sidebar-link";
+    const linkClass = `lobby-desktop-sidebar__link cosmic-type-sidebar-link ${linkLayout}`;
     if (hrefToHubId(tile.href)) {
       return (
         <HubNavLink href={tile.href} className={linkClass} title={tile.label}>
@@ -145,17 +147,17 @@ export function LobbyDesktopSidebar({
 
   return (
     <aside
-      className="lobby-desktop-sidebar-rail hidden shrink-0 lg:flex"
+      className="lobby-desktop-sidebar-rail hidden shrink-0 lg:sticky lg:top-(--lobby-sidebar-sticky-top) lg:z-[5] lg:flex lg:w-full lg:min-w-0 lg:flex-col lg:flex-[0_1_auto] lg:self-start lg:h-(--lobby-sidebar-panel-height) lg:max-h-[min(var(--lobby-sidebar-panel-height),52dvh)] lg:overflow-visible lg:pt-(--lobby-workspace-pad-top) lg:px-0 lg:pb-4"
       aria-label="เมนูหลักเดสก์ท็อป"
     >
-      <div className="lobby-desktop-sidebar glass-sidebar lobby-desktop-sidebar--borderless">
-      <div className="lobby-desktop-sidebar__body">
+      <div className="lobby-desktop-sidebar glass-sidebar lobby-desktop-sidebar--borderless relative flex w-full min-w-0 max-w-full flex-none flex-col h-(--lobby-sidebar-panel-height) min-h-0 max-h-[calc(100dvh-80px)] overflow-hidden p-2 rounded-(--radius-panel)">
+      <div className="lobby-desktop-sidebar__body flex flex-1 flex-col min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain">
       <nav
         className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--primary"
         aria-label="หมวดเกม"
       >
         <p className="lobby-desktop-sidebar__section-label cosmic-type-sidebar-section">เกม</p>
-        <ul className="lobby-desktop-sidebar__list">
+        <ul className="lobby-desktop-sidebar__list flex flex-col m-0 p-0">
           {categories.map((category) => {
             const isActive = category.id === activeCategoryId;
             return (
@@ -164,16 +166,16 @@ export function LobbyDesktopSidebar({
                   type="button"
                   onClick={() => handleCategoryClick(category)}
                   className={cn(
-                    "lobby-desktop-sidebar__link cosmic-type-sidebar-link-lg",
+                    "lobby-desktop-sidebar__link cosmic-type-sidebar-link-lg relative flex w-full items-center border-0 text-left",
                     isActive && "is-active",
                   )}
                   aria-current={isActive ? "page" : undefined}
                   title={category.label}
                 >
-                  <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
+                  <span className="lobby-desktop-sidebar__link-icon-wrap flex shrink-0 items-center justify-center" aria-hidden="true">
                     {getCategoryIcon(category.id)}
                   </span>
-                  <span className="lobby-desktop-sidebar__link-label">{category.label}</span>
+                  <span className="lobby-desktop-sidebar__link-label min-w-0 flex-1 truncate">{category.label}</span>
                 </button>
               </li>
             );
@@ -184,13 +186,13 @@ export function LobbyDesktopSidebar({
       {SIDEBAR_MENU_SECTIONS.map((section) => (
         <nav
           key={section.id}
-          className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--services"
+          className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--services shrink-0"
           aria-label={section.sectionLabel}
         >
           <p className="lobby-desktop-sidebar__section-label cosmic-type-sidebar-section">
             {section.sectionLabel}
           </p>
-          <ul className="lobby-desktop-sidebar__list">
+          <ul className="lobby-desktop-sidebar__list flex flex-col m-0 p-0">
             {section.items.map((tile) => (
               <li key={tile.id}>{renderMenuTile(tile, onMenuAction)}</li>
             ))}
@@ -198,19 +200,19 @@ export function LobbyDesktopSidebar({
         </nav>
       ))}
 
-      <nav className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--services" aria-label="ระบบ">
+      <nav className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--services shrink-0" aria-label="ระบบ">
         <p className="lobby-desktop-sidebar__section-label cosmic-type-sidebar-section">ระบบ</p>
-        <ul className="lobby-desktop-sidebar__list">
+        <ul className="lobby-desktop-sidebar__list flex flex-col m-0 p-0">
           <li>
             <Link
               href="/support"
-              className="lobby-desktop-sidebar__link cosmic-type-sidebar-link"
+              className="lobby-desktop-sidebar__link cosmic-type-sidebar-link relative flex w-full items-center border-0 text-left"
               title="ติดต่อเรา"
             >
-              <span className="lobby-desktop-sidebar__link-icon-wrap" aria-hidden="true">
+              <span className="lobby-desktop-sidebar__link-icon-wrap flex shrink-0 items-center justify-center" aria-hidden="true">
                 <ContactNavIcon className="h-5 w-5 shrink-0" />
               </span>
-              <span className="lobby-desktop-sidebar__link-label">ติดต่อเรา</span>
+              <span className="lobby-desktop-sidebar__link-label min-w-0 flex-1 truncate">ติดต่อเรา</span>
             </Link>
           </li>
         </ul>

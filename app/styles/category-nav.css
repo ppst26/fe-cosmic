@@ -1,7 +1,4 @@
 .page-subnav__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: inherit;
 }
 
@@ -11,24 +8,12 @@
 }
 
 .page-subnav__label {
-  max-width: 100%;
   line-height: 1.25;
-  white-space: nowrap;
-  text-align: center;
 }
 
 .category-nav__track {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  padding-block: 4px;
-  padding-inline: 2px 0.35rem;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -37,18 +22,7 @@
   display: none;
 }
 
-.category-nav {
-  position: relative;
-  margin-block: 0.875rem;
-  overflow: visible;
-}
-
 /* หน้าแรก — แถบค้นหา/ตัวกรองใต้ CategoryNav */
-.lobby-category-stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
 
 .lobby-category-stack .category-nav {
   margin-block: 0;
@@ -64,10 +38,6 @@
 }
 
 @media (min-width: 1024px) {
-  .lobby-category-stack {
-    gap: var(--space-4);
-  }
-
   /* ปุ่มหมวดเท่ากันเต็มความกว้างคอลัมนกลาง desktop */
   .lobby-category-stack .category-nav .category-nav__track {
     justify-content: stretch;
@@ -97,17 +67,7 @@
 }
 
 .category-nav__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: inherit;
-}
-
-.category-nav__label {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 @media (min-width: 640px) {

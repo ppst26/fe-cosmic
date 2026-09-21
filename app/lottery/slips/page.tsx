@@ -32,17 +32,22 @@ export default function LotterySlipsListPage() {
       ) : slips.length === 0 ? (
         <p className="py-12 text-center text-sm text-[var(--text-secondary)]">ยังไม่มีโพยที่ส่ง</p>
       ) : (
-        <ul className="lottery-slips-list">
+        <ul className="lottery-slips-list flex flex-col gap-[0.65rem] m-0 pt-2">
           {slips.map((slip) => (
             <li key={slip.id}>
-              <Link href={`/lottery/slips/${slip.id}`} className="lottery-slips-list__card glass-card--soft">
-                <div className="lottery-slips-list__row">
+              <Link
+                href={`/lottery/slips/${slip.id}`}
+                className="lottery-slips-list__card glass-card--soft block px-4 py-[0.85rem]"
+              >
+                <div className="lottery-slips-list__row flex items-center justify-between gap-2">
                   <span className="lottery-slips-list__id">โพย #{slip.shortId}</span>
                   <span className="lottery-slips-list__status">ส่งโพยแล้ว</span>
                 </div>
-                <p className="lottery-slips-list__meta">{slip.drawLabel}</p>
-                <p className="lottery-slips-list__meta">ซื้อ {formatLotterySlipDateTime(slip.purchasedAt)}</p>
-                <p className="lottery-slips-list__stake">เดิมพัน {formatBaht(slip.totalStake)}</p>
+                <p className="lottery-slips-list__meta mt-[0.35rem] mb-0">{slip.drawLabel}</p>
+                <p className="lottery-slips-list__meta mt-[0.35rem] mb-0">
+                  ซื้อ {formatLotterySlipDateTime(slip.purchasedAt)}
+                </p>
+                <p className="lottery-slips-list__stake mt-2 mb-0">เดิมพัน {formatBaht(slip.totalStake)}</p>
               </Link>
             </li>
           ))}

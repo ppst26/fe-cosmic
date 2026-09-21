@@ -36,34 +36,46 @@ export function LotteryPriceControls({
   selectedAmount = null,
 }: LotteryPriceControlsProps) {
   return (
-    <div className="lottery-price-controls" aria-label="ใส่ราคาและส่งโพย">
-      <div className="lottery-price-controls__toolbar">
-        <label className="lottery-price-controls__checkbox">
+    <div className="lottery-price-controls flex flex-col gap-3" aria-label="ใส่ราคาและส่งโพย">
+      <div className="lottery-price-controls__toolbar grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2">
+        <label className="lottery-price-controls__checkbox inline-flex min-w-0 items-center gap-2 text-[var(--text-secondary)]">
           <input
             type="checkbox"
+            className="h-4 w-4"
             checked={sameForAll}
             onChange={(event) => onToggleSameForAll(event.target.checked)}
           />
           <span>ราคาเท่ากันทั้งหมด</span>
         </label>
-        <button type="button" className="lottery-price-controls__edit" onClick={onBack}>
+        <button
+          type="button"
+          className="lottery-price-controls__edit inline-flex min-h-8 items-center gap-1 px-2"
+          onClick={onBack}
+        >
           <PencilIcon />
           แก้ไข
         </button>
-        <div className="lottery-price-controls__total-badge" aria-live="polite">
+        <div
+          className="lottery-price-controls__total-badge inline-flex items-center gap-[0.35rem] py-[0.2rem] pr-[0.55rem] pl-[0.45rem]"
+          aria-live="polite"
+        >
           <span className="lottery-price-controls__total-label">รวม</span>
           <span className="lottery-price-controls__total-value">{formatBaht(total)}</span>
         </div>
       </div>
 
-      <div className="lottery-price-controls__chips" role="group" aria-label="เลือกราคา">
+      <div
+        className="lottery-price-controls__chips grid grid-cols-5 gap-2"
+        role="group"
+        aria-label="เลือกราคา"
+      >
         {QUICK_AMOUNTS.map((amount) => (
           <button
             key={amount}
             type="button"
             aria-pressed={selectedAmount === amount}
             onClick={() => onQuickAmount(amount)}
-            className={`lottery-price-chip lottery-price-chip--${amount}${
+            className={`lottery-price-chip lottery-price-chip--${amount} min-h-10${
               selectedAmount === amount ? " is-active" : ""
             }`}
           >
@@ -72,13 +84,17 @@ export function LotteryPriceControls({
         ))}
       </div>
 
-      <div className="lottery-price-controls__actions">
-        <button type="button" className="lottery-price-controls__back" onClick={onBack}>
+      <div className="lottery-price-controls__actions grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          className="lottery-price-controls__back min-h-11"
+          onClick={onBack}
+        >
           กลับแก้ไขเลข
         </button>
         <button
           type="button"
-          className="cosmic-cta-primary cosmic-cta-primary--lg lottery-price-controls__submit"
+          className="cosmic-cta-primary cosmic-cta-primary--lg lottery-price-controls__submit min-h-11"
           onClick={onSubmit}
           disabled={submitDisabled || isSubmitting}
           aria-busy={isSubmitting}

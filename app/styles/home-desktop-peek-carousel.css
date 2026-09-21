@@ -12,20 +12,48 @@
 
 .home-desktop-peek-carousel--shell-band {
   margin-bottom: 0;
+  /** ระยะจากขอบจอ — สไลด์ peek ไม่ชิดขอบ viewport */
+  --home-peek-edge-gutter: clamp(14px, 2.5vw, var(--page-gutter, 24px));
 }
 
 .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__viewport {
   width: 100%;
   max-width: none;
   margin-inline: 0;
-  padding-inline: 0;
+  padding-inline: var(--home-peek-edge-gutter);
   overflow: hidden;
   box-sizing: border-box;
+  /** fade ขอบ — โผล่จากมุมมืด (โทนเดียว provider marquee) */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 11%,
+    #000 89%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(90deg, transparent 0%, #000 11%, #000 89%, transparent 100%);
 }
 
 .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__viewport::before,
 .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__viewport::after {
-  display: none;
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 4;
+  width: clamp(2.25rem, 9vw, 5.5rem);
+  pointer-events: none;
+}
+
+.home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__viewport::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg-page, #090810) 0%, transparent 100%);
+}
+
+.home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__viewport::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg-page, #090810) 0%, transparent 100%);
 }
 
 .home-desktop-peek-carousel__nav {
@@ -61,11 +89,11 @@
 }
 
 .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__nav--prev {
-  left: 0.65rem;
+  left: calc(var(--home-peek-edge-gutter) + 0.35rem);
 }
 
 .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__nav--next {
-  right: 0.65rem;
+  right: calc(var(--home-peek-edge-gutter) + 0.35rem);
 }
 
 .home-desktop-peek-carousel__nav--prev {
@@ -76,12 +104,16 @@
   right: 0;
 }
 
+/**
+ * shell band — สไลด์ active กลาง (~86%+) · ซ้าย/ขวา peek · สูงตามอัตราส่วนรูป
+ */
 .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__track {
-  --home-peek-slide-share: calc((100% - 2 * var(--home-peek-gap)) / 3);
   --home-peek-gap: var(--space-3);
+  --home-peek-slide-share: 86%;
   gap: var(--home-peek-gap);
   padding-block: var(--space-2);
-  padding-inline: 0;
+  padding-inline: calc((100% - var(--home-peek-slide-share)) / 2);
+  scroll-padding-inline: calc((100% - var(--home-peek-slide-share)) / 2);
 }
 
 .home-desktop-peek-carousel--mock.home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__track {
@@ -129,13 +161,33 @@
 }
 
 .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__slide {
-  scroll-snap-align: start;
+  display: block;
+  flex: 0 0 var(--home-peek-slide-share);
+  width: var(--home-peek-slide-share);
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: auto;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
   opacity: 1;
   transform: none;
-  max-height: none;
-  min-height: 12.5rem;
-  aspect-ratio: auto;
-  height: 12.5rem;
+  transition:
+    opacity 200ms ease,
+    filter 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__slide:not(.is-active) {
+  opacity: 0.82;
+  filter: brightness(0.9);
+  box-shadow: 0 8px 22px rgb(0 0 0 / 0.22);
+}
+
+.home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__slide.is-active {
+  opacity: 1;
+  filter: none;
+  box-shadow: 0 16px 38px rgb(0 0 0 / 0.38);
 }
 
 .home-desktop-peek-carousel--mock .home-desktop-peek-carousel__slide--mock {
@@ -178,9 +230,14 @@
     --home-peek-slide-share: 68%;
   }
 
-  .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__slide {
-    min-height: 13.25rem;
-    height: 13.25rem;
+  .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__track {
+    --home-peek-slide-share: 90%;
+  }
+}
+
+@media (min-width: 1536px) {
+  .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__track {
+    --home-peek-slide-share: min(92%, 52rem);
   }
 }
 
@@ -206,13 +263,23 @@
   pointer-events: auto;
 }
 
+.home-desktop-peek-carousel__dots-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: rgb(12 10 24 / 72%);
+  pointer-events: auto;
+}
+
 .home-desktop-peek-carousel__dot {
   width: 0.45rem;
   height: 0.45rem;
   padding: 0;
   border: 0;
   border-radius: 999px;
-  background: rgb(255 255 255 / 0.28);
+  background: rgb(120 115 150 / 85%);
   cursor: pointer;
   transition:
     width 180ms ease,
@@ -221,11 +288,23 @@
 }
 
 .home-desktop-peek-carousel__dot:hover {
-  background: rgb(255 255 255 / 0.42);
+  background: rgb(160 155 185 / 95%);
 }
 
 .home-desktop-peek-carousel__dot.is-active {
   width: 1.35rem;
-  background: #e53935;
-  box-shadow: 0 0 10px rgb(229 57 53 / 0.55);
+  background: var(--accent-primary);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-primary) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__viewport::before,
+  .home-desktop-peek-carousel--shell-band .home-desktop-peek-carousel__viewport::after {
+    display: none;
+  }
 }

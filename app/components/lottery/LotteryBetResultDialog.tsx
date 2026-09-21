@@ -46,7 +46,10 @@ export function LotteryBetResultDialog({ state, onClose }: LotteryBetResultDialo
           </Dialog.Close>
 
           <div className="flex flex-col items-center pt-2 text-center">
-            <span className="lottery-bet-result-dialog__icon is-error" aria-hidden="true">
+            <span
+              className="lottery-bet-result-dialog__icon is-error flex h-14 w-14 items-center justify-center"
+              aria-hidden="true"
+            >
               <CloseIcon className="h-6 w-6" />
             </span>
             <Dialog.Title className="mt-3 text-lg font-medium">ส่งโพยไม่สำเร็จ</Dialog.Title>

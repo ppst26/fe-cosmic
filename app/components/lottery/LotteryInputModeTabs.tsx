@@ -38,7 +38,11 @@ export function LotteryInputModeTabs({
   };
 
   return (
-    <div className="thai-lotto-mode-tabs" role="tablist" aria-label="วิธีใส่เลข">
+    <div
+      className="thai-lotto-mode-tabs grid grid-cols-2"
+      role="tablist"
+      aria-label="วิธีใส่เลข"
+    >
       {modes.map((mode, index) => {
         const isActive = mode.id === activeMode;
         return (
@@ -55,7 +59,7 @@ export function LotteryInputModeTabs({
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(mode.id)}
             onKeyDown={(event) => handleKeyDown(event, index)}
-            className={`thai-lotto-mode-tabs__tab${isActive ? " is-active" : ""}`}
+            className={`thai-lotto-mode-tabs__tab relative min-h-9${isActive ? " is-active" : ""}`}
           >
             {mode.label}
           </button>

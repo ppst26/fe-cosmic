@@ -34,6 +34,62 @@
     rgb(40 39 48 / 0.94),
     rgb(26 25 32 / 0.97)
   );
+  /**
+   * Mobile bottom sheet — ดำม่วงโปร่งเล็กน้อย + backdrop blur (Dexsport-style)
+   * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet · ช่อง input ใน sheet
+   */
+  --cosmic-mobile-sheet-bg: linear-gradient(
+    180deg,
+    rgb(22 18 28 / 0.78) 0%,
+    rgb(12 10 16 / 0.86) 100%
+  );
+  --cosmic-mobile-sheet-blur: 14px;
+  --cosmic-mobile-sheet-saturate: 1.06;
+  --cosmic-mobile-sheet-border: rgb(255 255 255 / 0.09);
+  --cosmic-mobile-sheet-shadow:
+    0 -24px 56px rgb(0 0 0 / 0.58),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
+  --cosmic-mobile-sheet-handle: rgb(255 255 255 / 0.18);
+  /** chip / panel รองใน sheet — เข้มกว่าช่องกรอกเล็กน้อย */
+  --sheet-soft-fill: linear-gradient(
+    145deg,
+    rgb(28 26 34 / 0.62),
+    rgb(18 16 24 / 0.7)
+  );
+  --sheet-soft-fill-hover: linear-gradient(
+    145deg,
+    rgb(36 34 42 / 0.68),
+    rgb(22 20 28 / 0.74)
+  );
+  --sheet-soft-border: rgb(255 255 255 / 0.1);
+  --sheet-soft-blur: 10px;
+  /** แถวเลือก / panel ใน sheet — อ่อนกว่า shell เล็กน้อย (ฝาก-ถอน ช่องทาง ฯลฯ) */
+  --sheet-row-fill: linear-gradient(
+    145deg,
+    rgb(28 26 34 / 0.86),
+    rgb(20 18 26 / 0.9)
+  );
+  --sheet-row-fill-hover: linear-gradient(
+    145deg,
+    rgb(34 32 40 / 0.88),
+    rgb(24 22 30 / 0.92)
+  );
+  --sheet-icon-well-fill: rgb(255 255 255 / 0.08);
+  --sheet-icon-well-border: rgb(255 255 255 / 0.1);
+  /** ช่องกรอกใน bottom sheet — ใกล้โทน shell แต่ขอบ/เงาช่วยแยกชั้น */
+  --sheet-field-fill: linear-gradient(
+    145deg,
+    rgb(30 28 36 / 0.88),
+    rgb(22 20 28 / 0.9)
+  );
+  --sheet-field-fill-focus: linear-gradient(
+    145deg,
+    rgb(34 32 40 / 0.9),
+    rgb(26 24 32 / 0.92)
+  );
+  --sheet-field-border: rgb(255 255 255 / 0.11);
+  --sheet-field-border-focus: rgb(255 255 255 / 0.15);
+  --sheet-field-addon-bg: rgb(255 255 255 / 0.05);
   --glass-blur: 32px;
   --glass-blur-overlay: 28px;
   /* Scrim dialog — ไม่ blur (ประหยัด GPU มือถือ) */

@@ -81,7 +81,7 @@ export const COSMIC_SHEET_SOFT_GLASS_INTERACTIVE =
 
 
 
-/** แถว input มาตรฐาน sheet */
+/** แถว input มาตรฐาน sheet — พื้น --sheet-field-* ใน modals.css */
 
 export const COSMIC_SHEET_FIELD_ROW =
 

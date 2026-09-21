@@ -47,22 +47,27 @@ export function LotteryHubContent({
       ) : null}
 
       <section className="lottery-hub__featured" aria-label="หวยแนะนำ">
-        <div className="lottery-feature-grid">
+        <div className="lottery-feature-grid grid grid-cols-1 gap-3 sm:grid-cols-3">
           {featured.map((item) => (
             <Link
               key={item.id}
               href={item.href}
-              className={`lottery-feature-card glass-card--soft lottery-feature-card--${item.visual}`}
+              className={`lottery-feature-card glass-card--soft lottery-feature-card--${item.visual} flex items-center gap-3 min-h-[5.5rem] px-4 py-3 rounded-[var(--radius-panel)]`}
             >
               {item.visual === "thai-gov" ? (
                 <LotteryFlagOrb label="TH" tone="th" size="lg" />
               ) : (
-                <span className="lottery-feature-card__yiki" aria-hidden="true">
-                  <span className="lottery-feature-card__yiki-ball">YK</span>
-                  <span className="lottery-feature-card__yiki-coin" />
+                <span
+                  className="lottery-feature-card__yiki relative shrink-0 w-[3.25rem] h-[3.25rem]"
+                  aria-hidden="true"
+                >
+                  <span className="lottery-feature-card__yiki-ball grid place-items-center w-[3.25rem] h-[3.25rem] rounded-full">
+                    YK
+                  </span>
+                  <span className="lottery-feature-card__yiki-coin absolute right-[-0.15rem] bottom-0 w-5 h-5 rounded-full" />
                 </span>
               )}
-              <span className="lottery-feature-card__text min-w-0">
+              <span className="lottery-feature-card__text flex min-w-0 flex-col items-start gap-[0.35rem]">
                 <span className="lottery-feature-card__title">{item.title}</span>
                 <LotteryCountdown label={item.countdownLabel} />
               </span>
@@ -72,12 +77,16 @@ export function LotteryHubContent({
       </section>
 
       <section className="lottery-hub__markets min-w-0" aria-label="ประเภทหวยทั้งหมด">
-        <div className="lottery-type-grid">
+        <div className="lottery-type-grid grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
           {gridItems.map((item) => (
-            <Link key={item.id} href={item.href} className="lottery-type-card glass-card--soft">
+            <Link
+              key={item.id}
+              href={item.href}
+              className="lottery-type-card glass-card--soft flex items-center gap-2 min-h-[4.25rem] px-3 py-2"
+            >
               <LotteryFlagOrb label={item.flagLabel} tone={item.flagTone} size="sm" />
-              <span className="lottery-type-card__body min-w-0">
-                <span className="lottery-type-card__title">{item.title}</span>
+              <span className="lottery-type-card__body flex min-w-0 flex-col gap-[0.2rem]">
+                <span className="lottery-type-card__title truncate">{item.title}</span>
                 {item.status === "closed" ? (
                   <span className="lottery-type-card__closed">ปิดรับแทง</span>
                 ) : (

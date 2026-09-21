@@ -54,7 +54,11 @@ export function ThaiLottoBetTypePicker({
         })}
       </div>
 
-      <div className="thai-lotto-type-grid" role="group" aria-label="ประเภทการแทง">
+      <div
+        className="thai-lotto-type-grid grid grid-cols-2 gap-1.5"
+        role="group"
+        aria-label="ประเภทการแทง"
+      >
         {groupTypes.map((type) => {
           const isSelected = selectedTypeIds.includes(type.id);
           return (
@@ -63,12 +67,15 @@ export function ThaiLottoBetTypePicker({
               type="button"
               aria-pressed={isSelected}
               onClick={() => onToggleType(type.id)}
-              className={`thai-lotto-type-chip${isSelected ? " is-active" : ""}`}
+              className={`thai-lotto-type-chip grid grid-cols-[auto_minmax(0,1fr)] grid-rows-2 items-center gap-x-1.5 min-h-[2.625rem] px-2 py-1.5 text-left${isSelected ? " is-active" : ""}`}
             >
-              <span className="thai-lotto-type-chip__check" aria-hidden="true">
+              <span
+                className="thai-lotto-type-chip__check grid h-[0.9375rem] w-[0.9375rem] shrink-0 place-items-center rounded"
+                aria-hidden="true"
+              >
                 {isSelected ? <CheckIcon /> : null}
               </span>
-              <span className="thai-lotto-type-chip__label">{type.label}</span>
+              <span className="thai-lotto-type-chip__label whitespace-nowrap">{type.label}</span>
               <span className="thai-lotto-type-chip__rate">จ่าย {type.payoutRate}</span>
             </button>
           );

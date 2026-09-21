@@ -21,7 +21,11 @@ function formatRate(betType: YikiBetType, settlementTypes: Record<YikiSettlement
  */
 export function YikiTypeChips({ betTypes, settlementTypes, activeTypeId, onSelect }: YikiTypeChipsProps) {
   return (
-    <div className="yiki-type-grid" role="radiogroup" aria-label="ประเภทการแทง">
+    <div
+      className="yiki-type-grid grid grid-cols-2 gap-2"
+      role="radiogroup"
+      aria-label="ประเภทการแทง"
+    >
       {betTypes.map((betType) => {
         const isActive = betType.id === activeTypeId;
         return (
@@ -31,10 +35,12 @@ export function YikiTypeChips({ betTypes, settlementTypes, activeTypeId, onSelec
             role="radio"
             aria-checked={isActive}
             onClick={() => onSelect(betType.id)}
-            className={`yiki-type-chip${isActive ? " is-active" : ""}`}
+            className={`yiki-type-chip flex flex-row flex-nowrap items-center gap-[0.35rem] min-w-0 min-h-8 px-2 py-1 text-left${isActive ? " is-active" : ""}`}
           >
-            <span className="yiki-type-chip__label">{betType.label}</span>
-            <span className="yiki-type-chip__rate">x{formatRate(betType, settlementTypes)}</span>
+            <span className="yiki-type-chip__label flex-1 min-w-0 truncate">{betType.label}</span>
+            <span className="yiki-type-chip__rate shrink-0 whitespace-nowrap">
+              x{formatRate(betType, settlementTypes)}
+            </span>
           </button>
         );
       })}

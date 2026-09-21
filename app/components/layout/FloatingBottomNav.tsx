@@ -73,14 +73,19 @@ export function FloatingBottomNav({
   const { openWithdraw } = useWithdraw();
 
   const itemClass = (item: BottomNavItem) =>
-    cn("bottom-nav__item", isNavItemActive(item, pathname, isMenuOpen) && "is-active");
+    cn(
+      "bottom-nav__item relative flex min-w-0 min-h-0 flex-col items-center justify-center gap-1 m-0 px-0.5 py-1",
+      isNavItemActive(item, pathname, isMenuOpen) && "is-active",
+    );
 
   const itemContent = (item: BottomNavItem) => (
     <>
-      <span className="bottom-nav__icon" aria-hidden="true">
-        <BottomNavIcon icon={item.icon} />
+      <span className="bottom-nav__icon grid shrink-0 place-items-center" aria-hidden="true">
+        <BottomNavIcon icon={item.icon} className="h-[22px] w-[22px]" />
       </span>
-      <span className="bottom-nav__label cosmic-type-nav-label">{item.label}</span>
+      <span className="bottom-nav__label cosmic-type-nav-label max-w-full overflow-hidden text-center text-ellipsis">
+        {item.label}
+      </span>
     </>
   );
 
@@ -139,8 +144,13 @@ export function FloatingBottomNav({
   };
 
   return (
-    <div className="bottom-nav-shell lg:hidden">
-      <nav className="bottom-nav" aria-label="เมนูหลักด้านล่าง">
+    <div
+      className="bottom-nav-shell fixed inset-x-0 bottom-0 z-50 px-[var(--layout-inline-gutter)] pb-[calc(var(--nav-float-offset)+var(--nav-safe))] lg:hidden"
+    >
+      <nav
+        className="bottom-nav grid w-full max-w-[28rem] h-[var(--nav-height)] mx-auto grid-cols-5 items-stretch box-border px-1 py-1.5"
+        aria-label="เมนูหลักด้านล่าง"
+      >
         {items.map(renderItem)}
       </nav>
     </div>

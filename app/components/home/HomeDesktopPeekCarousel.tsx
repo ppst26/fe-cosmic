@@ -6,8 +6,15 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/components/ui/Icons";
 import type { PromoItem } from "@/app/types/lobby";
+import { HOME_DESKTOP_PEEK_BANNER_SIZE } from "@/app/data/lobbyMockData";
 
 const MOCK_SHELL_SLIDE_COUNT = 6;
+
+type TrackSlide = {
+  slide: PromoItem;
+  key: string;
+  isClone: boolean;
+};
 
 interface HomeDesktopPeekCarouselProps {
   items: PromoItem[];
@@ -18,7 +25,7 @@ interface HomeDesktopPeekCarouselProps {
 }
 
 /**
- * แบนเนอร์ peek carousel บน desktop lobby — กลาง + ขอบซ้ายขวา · ปุ่มเลื่อน · dots
+ * แบนเนอร์ peek carousel บน desktop lobby — กลาง + peek ข้าง · infinite · dots
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx (แถบ shellBand ใต้ header)
  */
 export function HomeDesktopPeekCarousel({
@@ -41,10 +48,28 @@ export function HomeDesktopPeekCarousel({
     })) satisfies PromoItem[];
   }, [imageSlides, usePlaceholderSlides]);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const isShellBand = placement === "shellBand";
+  const isMock = usePlaceholderSlides && isShellBand;
+  const loopEnabled = isShellBand && !isMock && slides.length > 1;
+
+  const trackSlides = useMemo((): TrackSlide[] => {
+    if (!loopEnabled) {
+      return slides.map((slide) => ({ slide, key: slide.id, isClone: false }));
+    }
+    const last = slides[slides.length - 1]!;
+    const first = slides[0]!;
+    return [
+      { slide: last, key: `${last.id}--peek-clone-prev`, isClone: true },
+      ...slides.map((slide) => ({ slide, key: slide.id, isClone: false })),
+      { slide: first, key: `${first.id}--peek-clone-next`, isClone: true },
+    ];
+  }, [loopEnabled, slides]);
+
+  const [trackIndex, setTrackIndex] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollJumpLockRef = useRef(false);
 
   const getSlideStride = useCallback(() => {
     const container = scrollContainerRef.current;
@@ -55,54 +80,142 @@ export function HomeDesktopPeekCarousel({
     return first.offsetWidth + gap;
   }, []);
 
-  const scrollToIndex = useCallback(
-    (index: number) => {
+  const getTrackIndexFromScroll = useCallback(() => {
+    const container = scrollContainerRef.current;
+    const stride = getSlideStride();
+    if (!container || stride <= 0) return 0;
+    return Math.round(container.scrollLeft / stride);
+  }, [getSlideStride]);
+
+  const logicalIndex = useMemo(() => {
+    if (!loopEnabled) {
+      return Math.min(Math.max(trackIndex, 0), slides.length - 1);
+    }
+    if (trackIndex <= 0) return slides.length - 1;
+    if (trackIndex >= trackSlides.length - 1) return 0;
+    return trackIndex - 1;
+  }, [loopEnabled, slides.length, trackIndex, trackSlides.length]);
+
+  const scrollToTrackIndex = useCallback(
+    (index: number, behavior: ScrollBehavior = "smooth") => {
       const container = scrollContainerRef.current;
       const stride = getSlideStride();
       if (!container || stride <= 0) return;
-      const clamped = Math.min(Math.max(index, 0), slides.length - 1);
-      container.scrollTo({ left: clamped * stride, behavior: "smooth" });
-      setActiveIndex(clamped);
+      const clamped = Math.min(Math.max(index, 0), trackSlides.length - 1);
+      container.scrollTo({ left: clamped * stride, behavior });
+      setTrackIndex(clamped);
     },
-    [getSlideStride, slides.length],
+    [getSlideStride, trackSlides.length],
   );
+
+  const scrollToLogicalIndex = useCallback(
+    (index: number, behavior: ScrollBehavior = "smooth") => {
+      const target = loopEnabled ? index + 1 : index;
+      scrollToTrackIndex(target, behavior);
+    },
+    [loopEnabled, scrollToTrackIndex],
+  );
+
+  const reconcileLoopScroll = useCallback(() => {
+    if (!loopEnabled) return;
+    const container = scrollContainerRef.current;
+    const stride = getSlideStride();
+    if (!container || stride <= 0 || scrollJumpLockRef.current) return;
+
+    const index = getTrackIndexFromScroll();
+
+    if (index <= 0) {
+      scrollJumpLockRef.current = true;
+      const jumpTo = slides.length;
+      container.scrollTo({ left: jumpTo * stride, behavior: "auto" });
+      setTrackIndex(jumpTo);
+      window.requestAnimationFrame(() => {
+        scrollJumpLockRef.current = false;
+      });
+      return;
+    }
+
+    if (index >= trackSlides.length - 1) {
+      scrollJumpLockRef.current = true;
+      container.scrollTo({ left: stride, behavior: "auto" });
+      setTrackIndex(1);
+      window.requestAnimationFrame(() => {
+        scrollJumpLockRef.current = false;
+      });
+      return;
+    }
+
+    setTrackIndex(index);
+  }, [getSlideStride, getTrackIndexFromScroll, loopEnabled, slides.length, trackSlides.length]);
 
   const updateScrollState = useCallback(() => {
     const container = scrollContainerRef.current;
-    if (!container || slides.length === 0) return;
+    if (!container || trackSlides.length === 0) return;
 
     const stride = getSlideStride();
     const maxScroll = container.scrollWidth - container.clientWidth;
-    setCanPrev(container.scrollLeft > 1);
-    setCanNext(container.scrollLeft < maxScroll - 1);
 
-    if (stride > 0) {
-      const index = Math.round(container.scrollLeft / stride);
-      const clamped = Math.min(Math.max(index, 0), slides.length - 1);
-      setActiveIndex(clamped);
+    if (loopEnabled) {
+      setCanPrev(true);
+      setCanNext(true);
+    } else {
+      setCanPrev(container.scrollLeft > 1);
+      setCanNext(container.scrollLeft < maxScroll - 1);
     }
-  }, [getSlideStride, slides.length]);
+
+    if (stride > 0 && !scrollJumpLockRef.current) {
+      const index = getTrackIndexFromScroll();
+      const clamped = Math.min(Math.max(index, 0), trackSlides.length - 1);
+      setTrackIndex(clamped);
+    }
+  }, [getSlideStride, getTrackIndexFromScroll, loopEnabled, trackSlides.length]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
+
+    const initialIndex = loopEnabled ? 1 : 0;
+    scrollToTrackIndex(initialIndex, "auto");
     updateScrollState();
-    container.addEventListener("scroll", updateScrollState, { passive: true });
-    const observer = new ResizeObserver(updateScrollState);
+
+    const onScroll = () => updateScrollState();
+    const onScrollEnd = () => {
+      reconcileLoopScroll();
+      updateScrollState();
+    };
+
+    container.addEventListener("scroll", onScroll, { passive: true });
+    container.addEventListener("scrollend", onScrollEnd);
+
+    const observer = new ResizeObserver(() => {
+      const index = loopEnabled
+        ? Math.min(Math.max(getTrackIndexFromScroll(), 1), slides.length)
+        : getTrackIndexFromScroll();
+      scrollToTrackIndex(index, "auto");
+      updateScrollState();
+    });
     observer.observe(container);
+
     return () => {
-      container.removeEventListener("scroll", updateScrollState);
+      container.removeEventListener("scroll", onScroll);
+      container.removeEventListener("scrollend", onScrollEnd);
       observer.disconnect();
     };
-  }, [updateScrollState]);
+  }, [
+    getTrackIndexFromScroll,
+    loopEnabled,
+    reconcileLoopScroll,
+    scrollToTrackIndex,
+    slides.length,
+    trackSlides.length,
+    updateScrollState,
+  ]);
 
   if (slides.length === 0) {
     return null;
   }
 
-  const isShellBand = placement === "shellBand";
   const showNav = isShellBand && slides.length > 1;
-  const isMock = usePlaceholderSlides && isShellBand;
 
   return (
     <section
@@ -119,8 +232,8 @@ export function HomeDesktopPeekCarousel({
             <button
               type="button"
               className="home-desktop-peek-carousel__nav home-desktop-peek-carousel__nav--prev"
-              onClick={() => scrollToIndex(activeIndex - 1)}
-              disabled={!canPrev}
+              onClick={() => scrollToTrackIndex(trackIndex - 1)}
+              disabled={!loopEnabled && !canPrev}
               aria-label="สไลด์ก่อนหน้า"
             >
               <ChevronLeftIcon className="h-5 w-5" />
@@ -128,8 +241,8 @@ export function HomeDesktopPeekCarousel({
             <button
               type="button"
               className="home-desktop-peek-carousel__nav home-desktop-peek-carousel__nav--next"
-              onClick={() => scrollToIndex(activeIndex + 1)}
-              disabled={!canNext}
+              onClick={() => scrollToTrackIndex(trackIndex + 1)}
+              disabled={!loopEnabled && !canNext}
               aria-label="สไลด์ถัดไป"
             >
               <ChevronRightIcon className="h-5 w-5" />
@@ -143,17 +256,18 @@ export function HomeDesktopPeekCarousel({
           tabIndex={0}
           aria-label="เลื่อนดูแบนเนอร์"
         >
-          {slides.map((item, index) => {
+          {trackSlides.map((entry, index) => {
+            const item = entry.slide;
             const slideClass = cn(
               "home-desktop-peek-carousel__slide group",
-              index === activeIndex && "is-active",
+              index === trackIndex && "is-active",
               isMock && "home-desktop-peek-carousel__slide--mock",
             );
 
             if (isMock) {
               return (
                 <div
-                  key={item.id}
+                  key={entry.key}
                   className={slideClass}
                   aria-label={item.title}
                   role="img"
@@ -165,44 +279,62 @@ export function HomeDesktopPeekCarousel({
               );
             }
 
+            const bannerIntrinsic = isShellBand ? HOME_DESKTOP_PEEK_BANNER_SIZE : null;
+
             return (
               <Link
-                key={item.id}
+                key={entry.key}
                 href={item.href}
                 className={slideClass}
                 aria-label={`${item.title}${item.subtitle ? `: ${item.subtitle}` : ""}`}
+                aria-hidden={entry.isClone ? true : undefined}
+                tabIndex={entry.isClone ? -1 : undefined}
               >
-                <Image
-                  src={item.bannerSrc!}
-                  alt=""
-                  fill
-                  sizes={
-                    isShellBand
-                      ? "(min-width: 1280px) 33vw, 40vw"
-                      : "(min-width: 1280px) 72vw, 68vw"
-                  }
-                  className="object-cover object-center transition duration-200 group-hover:brightness-[1.04]"
-                  priority={index === 0}
-                />
+                {bannerIntrinsic ? (
+                  <Image
+                    src={item.bannerSrc!}
+                    alt=""
+                    width={bannerIntrinsic.width}
+                    height={bannerIntrinsic.height}
+                    sizes="(min-width: 1536px) 52rem, (min-width: 1280px) 90vw, 86vw"
+                    className="block h-auto w-full max-w-full object-contain transition duration-200 group-hover:brightness-[1.04]"
+                    priority={!entry.isClone && logicalIndex === 0}
+                  />
+                ) : (
+                  <Image
+                    src={item.bannerSrc!}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1280px) 72vw, 68vw"
+                    className="object-cover object-center transition duration-200 group-hover:brightness-[1.04]"
+                    priority={!entry.isClone && logicalIndex === 0}
+                  />
+                )}
               </Link>
             );
           })}
         </div>
 
         {slides.length > 1 ? (
-          <div className="home-desktop-peek-carousel__dots" aria-hidden="true">
-            {slides.map((item, idx) => {
-              const isActive = idx === activeIndex;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => scrollToIndex(idx)}
-                  className={`home-desktop-peek-carousel__dot${isActive ? " is-active" : ""}`}
-                  aria-label={`ไปยังสไลด์ที่ ${idx + 1}`}
-                />
-              );
-            })}
+          <div
+            className="home-desktop-peek-carousel__dots"
+            role="tablist"
+            aria-label="เลือกสไลด์แบนเนอร์"
+          >
+            <div className="home-desktop-peek-carousel__dots-pill">
+              {slides.map((item, idx) => {
+                const isActive = idx === logicalIndex;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => scrollToLogicalIndex(idx)}
+                    className={`home-desktop-peek-carousel__dot${isActive ? " is-active" : ""}`}
+                    aria-label={`ไปยังสไลด์ที่ ${idx + 1}`}
+                  />
+                );
+              })}
+            </div>
           </div>
         ) : null}
       </div>

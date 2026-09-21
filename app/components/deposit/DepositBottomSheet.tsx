@@ -536,17 +536,18 @@ function KbankLogoGraphic({ className }: { className?: string }) {
 
 function DepositMethodIcon({ methodId, className }: { methodId: DepositMethodId; className?: string }) {
   const frame =
-    "cosmic-inset-card flex items-center justify-center bg-[#1e1b4b]/80";
+    "cosmic-sheet-icon-well cosmic-inset-card flex shrink-0 items-center justify-center rounded-[var(--radius-panel)]";
+
+  const iconClass = "h-7 w-7 sm:h-8 sm:w-8 text-white";
 
   if (methodId === "bank") {
     return (
       <span className={`${frame} ${className ?? ""}`} aria-hidden="true">
-        <svg viewBox="0 0 48 48" className="h-8 w-8 sm:h-9 sm:w-9">
-          <path d="M6 22 24 12 42 22" stroke="#c4b5fd" strokeWidth="2" fill="none" strokeLinecap="round" />
-          <rect x="10" y="22" width="6" height="14" rx="1" fill="#7c3aed" />
-          <rect x="21" y="22" width="6" height="14" rx="1" fill="#8b5cf6" />
-          <rect x="32" y="22" width="6" height="14" rx="1" fill="#7c3aed" />
-          <rect x="8" y="36" width="32" height="4" rx="1" fill="#5b21b6" />
+        <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75">
+          <path d="M3 10h18" strokeLinecap="round" />
+          <path d="M5 10V18M9 10V18M15 10V18M19 10V18" strokeLinecap="round" />
+          <path d="M4 18h16" strokeLinecap="round" />
+          <path d="M12 4 3 10h18L12 4Z" strokeLinejoin="round" />
         </svg>
       </span>
     );
@@ -555,12 +556,10 @@ function DepositMethodIcon({ methodId, className }: { methodId: DepositMethodId;
   if (methodId === "gateway") {
     return (
       <span className={`${frame} ${className ?? ""}`} aria-hidden="true">
-        <svg viewBox="0 0 48 48" className="h-8 w-8 sm:h-9 sm:w-9">
-          <rect x="8" y="14" width="32" height="22" rx="4" fill="#6d28d9" stroke="#c4b5fd" strokeWidth="1.5" />
-          <rect x="8" y="20" width="32" height="6" fill="#4c1d95" />
-          <rect x="12" y="30" width="10" height="2" rx="1" fill="#ddd6fe" />
-          <circle cx="36" cy="12" r="7" fill="#22c55e" opacity="0.9" />
-          <path d="M33 12 35.5 14.5 39 10" stroke="#fff" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+        <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75">
+          <rect x="3" y="6" width="18" height="12" rx="2" />
+          <path d="M3 10h18" />
+          <path d="M7 15h4" strokeLinecap="round" />
         </svg>
       </span>
     );
@@ -568,11 +567,10 @@ function DepositMethodIcon({ methodId, className }: { methodId: DepositMethodId;
 
   return (
     <span className={`${frame} ${className ?? ""}`} aria-hidden="true">
-      <svg viewBox="0 0 48 48" className="h-8 w-8 sm:h-9 sm:w-9">
-        <rect x="10" y="16" width="28" height="20" rx="4" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="1.5" />
-        <rect x="10" y="22" width="28" height="6" fill="#e2e8f0" />
-        <circle cx="32" cy="28" r="4" fill="#f97316" />
-        <rect x="14" y="30" width="12" height="2" rx="1" fill="#94a3b8" />
+      <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75">
+        <rect x="4" y="7" width="16" height="11" rx="2" />
+        <path d="M4 11h16" />
+        <circle cx="16" cy="14" r="1.25" fill="currentColor" stroke="none" />
       </svg>
     </span>
   );

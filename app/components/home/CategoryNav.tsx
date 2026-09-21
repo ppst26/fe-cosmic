@@ -111,10 +111,13 @@ export function CategoryNav({
 
   return (
     <nav
-      className={cn("category-nav w-full min-w-0", className)}
+      className={cn("category-nav relative w-full min-w-0 my-[0.875rem] overflow-visible", className)}
       aria-label="แถบเลือกหมวดหมู่เกม"
     >
-      <div ref={trackRef} className="category-nav__track">
+      <div
+        ref={trackRef}
+        className="category-nav__track flex flex-nowrap items-stretch justify-center gap-2.5 w-full overflow-x-auto pt-1 pb-1 pr-[0.35rem] pl-0.5"
+      >
         {categories.map((category) => {
           const isActive = category.id === activeId;
 
@@ -124,15 +127,15 @@ export function CategoryNav({
               type="button"
               onClick={() => handleCategoryClick(category)}
               className={cn(
-                "category-nav__chip text-xs font-medium sm:text-sm",
+                "category-nav__chip flex min-h-16 min-w-[76px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-1 py-2 text-center text-xs font-medium sm:text-sm",
                 isActive && "is-active",
               )}
               aria-pressed={isActive}
             >
-              <span className="category-nav__icon" aria-hidden="true">
+              <span className="category-nav__icon flex items-center justify-center" aria-hidden="true">
                 {getCategoryIcon(category.id, "h-[22px] w-[22px] sm:h-6 sm:w-6")}
               </span>
-              <span className="category-nav__label">{category.label}</span>
+              <span className="category-nav__label max-w-full truncate">{category.label}</span>
             </button>
           );
         })}

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { HubNavLink } from "@/app/components/hub/HubNavLink";
 import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
 import type { MenuDialogAction } from "@/app/data/menuMockData";
@@ -15,11 +16,18 @@ interface LobbyDesktopHubMenuStackProps {
  * การ์ด hub แนวตั้งขนาดเล็ก — ใช้ใน LobbyDesktopSidebarColumn ใต้แผงเมนู
  */
 export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuStackProps) {
+  const tiles = DESKTOP_RIGHT_MENU_TILES;
+
   return (
     <div className="lobby-hub-menu-stack w-full min-w-0" aria-label="เมนูด่วน">
-      {DESKTOP_RIGHT_MENU_TILES.map((tile) => {
-        const className =
-          "lobby-hub-menu-card glass-card glass-card--soft lobby-hub-menu-card--glass";
+      {tiles.map((tile, index) => {
+        const isWideSpan =
+          ("variant" in tile && tile.variant === "wide") ||
+          (index === tiles.length - 1 && tiles.length % 2 === 1);
+        const className = cn(
+          "lobby-hub-menu-card glass-card glass-card--soft lobby-hub-menu-card--glass",
+          isWideSpan && "lobby-hub-menu-card--span-2",
+        );
 
         const body = (
           <>

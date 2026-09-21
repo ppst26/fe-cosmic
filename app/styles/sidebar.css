@@ -5,19 +5,6 @@
   .glass-sidebar {
     --glass-sidebar-bg: #21182db2;
     --glass-sidebar-bg-light: #e9e9e9b2;
-    position: relative;
-    display: flex;
-    flex: 0 0 auto;
-    flex-direction: column;
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    height: var(--lobby-sidebar-panel-height);
-    min-height: 0;
-    max-height: calc(100dvh - 80px);
-    padding: 0.5rem;
-    overflow: hidden;
     border: 1px solid rgb(255 255 255 / 0.08);
     border-radius: 20px;
     background: var(--glass-sidebar-bg);
@@ -36,12 +23,10 @@
   /** Sidebar lobby desktop — glass พื้นหลัง ไม่มีกรอบชัด (LobbyDesktopSidebar) */
   .lobby-desktop-sidebar.glass-sidebar.lobby-desktop-sidebar--borderless {
     border: 0;
-    border-radius: var(--radius-panel);
     background: var(--glass-fill-subtle);
     -webkit-backdrop-filter: blur(12px) saturate(1.12);
     backdrop-filter: blur(12px) saturate(1.12);
     box-shadow: 0 10px 28px rgb(0 0 0 / 0.2);
-    padding: 0.5rem;
   }
 
   :is(.light, html.light) .lobby-desktop-sidebar.glass-sidebar.lobby-desktop-sidebar--borderless {
@@ -52,26 +37,6 @@
     display: none;
   }
 
-  .lobby-desktop-sidebar--borderless.glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__foot {
-    border-top: 0;
-    padding-inline: 0;
-  }
-
-  .lobby-desktop-sidebar {
-    position: relative;
-    display: flex;
-    flex: 0 0 auto;
-    flex-direction: column;
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    height: var(--lobby-sidebar-panel-height);
-    min-height: 0;
-    max-height: calc(100dvh - 80px);
-    overflow: hidden;
-  }
-
   .lobby-desktop-sidebar:not(.glass-sidebar) {
     border: 0;
     border-radius: var(--radius-panel);
@@ -79,67 +44,8 @@
     box-shadow: 0 12px 40px rgb(0 0 0 / 28%);
   }
 
-  .lobby-desktop-sidebar__body {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
-  .lobby-desktop-sidebar__head {
-    flex-shrink: 0;
-    padding: 1.15rem 1.05rem 0.85rem;
-    text-align: left;
-    border-bottom: 0;
-  }
-
-  .lobby-desktop-sidebar__brand {
-    display: inline-flex;
-    justify-content: flex-start;
-  }
-
-  .lobby-desktop-sidebar__brand-compact {
-    display: none;
-  }
-
-  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__brand-full {
-    display: none;
-  }
-
-  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__brand-compact {
-    display: block;
-  }
-
-  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__head {
-    padding-inline: 0.5rem;
-    text-align: center;
-  }
-
-  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__brand {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .lobby-desktop-sidebar__nav--primary {
-    padding-top: 0.65rem;
-  }
-
-  .lobby-desktop-sidebar__nav {
-    padding: 0.2rem 0.15rem 0.35rem;
-  }
-
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__nav {
     padding-inline: 0.1rem;
-  }
-
-  .lobby-desktop-sidebar__nav--services {
-    flex-shrink: 0;
-    padding-top: 0.35rem;
-    padding-bottom: 0.2rem;
   }
 
   /* คั่นกลุ่มบริการด้วยเส้นไล่สีจาง ๆ แทนเส้นขอบเต็มความกว้าง */
@@ -156,15 +62,8 @@
     );
   }
 
-  .lobby-desktop-sidebar__nav--services .lobby-desktop-sidebar__section-label {
-    margin-top: 0;
-  }
-
   .lobby-desktop-sidebar__section-label {
-    margin-bottom: 0.35rem;
-    padding-inline: 0.5rem 0.35rem;
     letter-spacing: 0.03em;
-    text-align: right;
     text-transform: none;
     color: color-mix(in srgb, var(--text-muted) 88%, var(--text-secondary));
     transition: opacity 200ms ease;
@@ -180,25 +79,10 @@
   }
 
   .lobby-desktop-sidebar__list {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
     list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
   .lobby-desktop-sidebar__link {
-    position: relative;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    gap: 0.5rem;
-    border: 0;
-    border-radius: var(--radius-control);
-    padding: 0.35rem 0.45rem;
-    min-height: 2.625rem;
-    text-align: left;
     color: var(--text-secondary);
     background: transparent;
     text-decoration: none;
@@ -214,13 +98,6 @@
   }
 
   .lobby-desktop-sidebar__link-icon-wrap {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    width: 2.125rem;
-    height: 2.125rem;
-    border-radius: var(--radius-pill);
     background: color-mix(in srgb, var(--surface-hover) 62%, transparent);
     color: var(--icon-default);
     transition:
@@ -254,13 +131,8 @@
   }
 
   .lobby-desktop-sidebar__link-label {
-    min-width: 0;
-    flex: 1;
     line-height: 1.25;
     letter-spacing: 0.01em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link-label {
@@ -283,9 +155,6 @@
     box-shadow: none;
   }
 
-  .lobby-desktop-sidebar:not(.is-collapsed) .lobby-desktop-sidebar__link.is-active {
-  }
-
   .lobby-desktop-sidebar__link.is-active .lobby-desktop-sidebar__link-icon-wrap {
     color: var(--icon-active);
     background: color-mix(in srgb, var(--action-solid) 62%, transparent);
@@ -300,78 +169,6 @@
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link.is-active .lobby-desktop-sidebar__link-icon-wrap {
     background: color-mix(in srgb, var(--action-solid) 62%, transparent);
     color: var(--icon-active);
-  }
-
-  .lobby-desktop-sidebar__foot {
-    flex-shrink: 0;
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 0;
-    padding: 0.25rem 0.55rem 0.55rem;
-    border-top: 1px solid color-mix(in srgb, var(--border-subtle) 35%, transparent);
-  }
-
-  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__foot {
-    justify-content: center;
-    padding-inline: 0.5rem;
-  }
-
-  .lobby-desktop-sidebar__toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.35rem;
-    border: 0;
-    border-radius: 10px;
-    padding: 0.5rem;
-    color: var(--text-muted);
-    background: transparent;
-    cursor: pointer;
-    transition:
-      background var(--motion-fast) ease,
-      color var(--motion-fast) ease;
-  }
-
-  .lobby-desktop-sidebar__toggle:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 2px;
-  }
-
-  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__toggle {
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    padding: 0.5rem 0.25rem;
-    background: transparent;
-  }
-
-  .lobby-desktop-sidebar:not(.is-collapsed) .lobby-desktop-sidebar__toggle-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
-
-  .lobby-desktop-sidebar__toggle:hover {
-    color: var(--text-primary);
-    background: color-mix(in srgb, var(--surface-hover) 62%, transparent);
-  }
-
-  .lobby-desktop-sidebar__toggle-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__toggle-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
   }
 
   /* Dexsport-like menu rows — ใช้กับ .glass-sidebar */
@@ -456,25 +253,6 @@
     color: #fca5a5;
   }
 
-  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__foot {
-    margin-top: 0.15rem;
-    padding: 0.45rem 0.35rem 0.35rem;
-    border-top: 1px solid rgb(255 255 255 / 0.06);
-  }
-
-  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__toggle {
-    width: 100%;
-    justify-content: flex-start;
-    padding: 0.45rem 0.6rem;
-    border-radius: 12px;
-    color: rgb(255 255 255 / 0.5);
-  }
-
-  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__toggle:hover {
-    background: rgb(255 255 255 / 0.06);
-    color: rgb(255 255 255 / 0.88);
-  }
-
   .glass-sidebar.lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link {
     min-height: 2.5rem;
     padding: 0.35rem 0.2rem;
@@ -491,57 +269,8 @@
     height: 1.35rem;
   }
 
-  .page-shell--lobby {
-    padding-inline: 12px;
-    padding-bottom: 2rem;
-  }
-
-  .page-shell--feature {
-    display: flex;
-    padding-inline: 12px;
-  }
-
-  @media (min-width: 1024px) {
-    .page-shell--lobby {
-      max-width: none;
-      margin-inline: 0;
-      padding-inline: 0;
-      padding-bottom: 2rem;
-    }
-
-    .page-shell--feature {
-      display: flex;
-      max-width: none;
-      margin-inline: 0;
-      padding-inline: 0;
-    }
-  }
-
-  .lobby-desktop-center .header-notch-shell {
-    width: 100%;
-  }
-
-  .lobby-desktop-right-rail {
-    position: sticky;
-    top: var(--lobby-sidebar-sticky-top);
-    z-index: 5;
-    box-sizing: border-box;
-    align-self: flex-start;
-    max-height: var(--lobby-sidebar-panel-height);
-    margin-top: 0;
-    padding-bottom: 1rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
   /* แถบเมนูขวา desktop — แบนเนอร์เรียงลง 1 คอลัมน์ */
   .lobby-right-menu-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    min-width: 0;
     --lobby-right-menu-banner-height: 5.35rem;
     --lobby-right-menu-visual-share: 40%;
     --lobby-right-menu-visual-scale: 1.12;
@@ -655,10 +384,30 @@
     filter: drop-shadow(0 6px 14px rgb(0 0 0 / 0.35));
   }
 
-  /** Hub การ์ดใต้แผง sidebar (นอก glass) — LobbyDesktopSidebarColumn */
+  /** Hub การ์ดใต้แผง sidebar — กริด 2 คอลัมน์ (แถวสุดท้ายเต็มความกว้างเมื่อจำนวนการ์ดเป็นเลขคี่) */
   .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-stack {
-    gap: 0.4rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
     --lobby-hub-card-height: 4rem;
+  }
+
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card--span-2 {
+    grid-column: 1 / -1;
+    justify-content: center;
+    gap: 0.35rem;
+    padding-inline: 0.65rem;
+  }
+
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card--span-2 .lobby-hub-menu-card__title {
+    flex: 0 1 auto;
+    text-align: center;
+  }
+
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card--span-2 .lobby-hub-menu-card__visual {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 42%;
   }
 
   .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card {
@@ -701,18 +450,18 @@
   }
 
   .lobby-hub-menu-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    width: 100%;
-    min-width: 0;
     --lobby-hub-card-height: 3.75rem;
+  }
+
+  .lobby-hub-menu-card--span-2 {
+    grid-column: 1 / -1;
   }
 
   .lobby-hub-menu-card {
     position: relative;
     display: flex;
     width: 100%;
+    min-width: 0;
     height: var(--lobby-hub-card-height);
     min-height: var(--lobby-hub-card-height);
     max-height: var(--lobby-hub-card-height);

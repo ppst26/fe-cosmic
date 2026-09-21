@@ -31,7 +31,7 @@ export function VipModalDesktopLayout({
 
   if (tab === "benefits") {
     return (
-      <div className="vip-modal-desktop">
+      <div className="vip-modal-desktop w-full min-w-0">
         <VipBenefitsComparisonTable currentRankId={player.currentRankId} variant="desktop-full" />
       </div>
     );
@@ -39,16 +39,16 @@ export function VipModalDesktopLayout({
 
   if (tab === "rank") {
     return (
-      <div className="vip-modal-desktop vip-modal-desktop--flat">
-        <div className="vip-modal-desktop__split">
-          <section className="vip-modal-desktop__panel flex flex-col items-center justify-center gap-3 py-4 lg:pr-4">
+      <div className="vip-modal-desktop vip-modal-desktop--flat w-full min-w-0">
+        <div className="vip-modal-desktop__split grid grid-cols-1 gap-4">
+          <section className="vip-modal-desktop__panel vip-modal-desktop__rank-carousel min-w-0 flex flex-col items-center justify-center gap-3 overflow-visible py-4 lg:pr-4">
             <VipRankCarousel
               focusIndex={rankFocusIndex}
               onFocusChange={onRankFocusChange}
               playerRankId={player.currentRankId}
             />
           </section>
-          <section className="vip-modal-desktop__panel py-4 lg:pl-4">
+          <section className="vip-modal-desktop__panel min-w-0 py-4 lg:pl-4">
             <VipRankRequirementsPanel player={player} focusRankId={focusRankId} />
           </section>
         </div>
@@ -57,40 +57,43 @@ export function VipModalDesktopLayout({
   }
 
   return (
-    <div className="vip-modal-desktop vip-modal-desktop--flat">
-      <div className="vip-modal-desktop__split">
+    <div className="vip-modal-desktop vip-modal-desktop--flat w-full min-w-0">
+      <div className="vip-modal-desktop__split grid grid-cols-1 gap-4">
         <section
-          className="vip-modal-desktop__panel vip-modal-desktop__level flex flex-col items-center py-4 text-center lg:pr-4"
+          className="vip-modal-desktop__panel vip-modal-desktop__level min-w-0 flex flex-col items-stretch justify-start py-4 text-center lg:min-h-0 lg:flex-1 lg:pr-4"
           aria-label="ระดับ VIP ปัจจุบัน"
         >
-          <p className="text-xs font-medium text-[var(--text-muted)]">ระดับ</p>
-          <div className="my-2">
-            <VipRankEmblem rankId={player.currentRankId} size="lg" />
-          </div>
-          <p
-            className="text-2xl font-medium tracking-[0.18em]"
-            style={{ color: currentTier.accent }}
-          >
-            {currentTier.label}
-          </p>
-          {nextTier ? (
-            <p className="mt-1 text-xs text-[var(--text-secondary)]">
-              ระดับถัดไป{" "}
-              <span className="font-medium text-[var(--text-primary)]">{nextTier.label}</span>
+          <div className="flex flex-col items-center">
+            <p className="text-sm font-medium text-[var(--text-secondary)]">ระดับ</p>
+            <div className="my-3 sm:my-4">
+              <VipRankEmblem rankId={player.currentRankId} size="xl" />
+            </div>
+            <p
+              className="text-2xl font-medium tracking-[0.18em] sm:text-3xl"
+              style={{ color: currentTier.accent }}
+            >
+              {currentTier.label}
             </p>
-          ) : null}
+            {nextTier ? (
+              <p className="mt-1.5 text-sm text-[var(--text-secondary)]">
+                ระดับถัดไป{" "}
+                <span className="font-medium text-[var(--text-primary)]">{nextTier.label}</span>
+              </p>
+            ) : null}
+          </div>
 
-          <div className="mt-5 w-full text-left">
+          <div className="vip-modal-desktop__level-progress mt-auto w-full pt-6 text-left lg:pt-8">
             <VipRankRequirementsPanel
               player={player}
               focusRankId={player.currentRankId}
               sections="turnover"
+              turnoverBarProminent
             />
           </div>
         </section>
 
         <section
-          className="vip-modal-desktop__panel vip-modal-desktop__missions flex flex-col gap-4 py-4 lg:pl-4"
+          className="vip-modal-desktop__panel vip-modal-desktop__missions min-w-0 flex flex-col gap-4 py-4 lg:pl-4"
           aria-label="ความคืบหน้าภารกิจ"
         >
           <VipRankRequirementsPanel

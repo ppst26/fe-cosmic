@@ -49,15 +49,18 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
   };
 
   return (
-    <article className="lottery-slip-summary" aria-label="สรุปโพย">
-      <header className="lottery-slip-summary__head">
-        <div className="lottery-slip-summary__head-row">
-          <p className="lottery-slip-summary__meta">
+    <article
+      className="lottery-slip-summary flex flex-col gap-[0.85rem] pt-1 pb-6"
+      aria-label="สรุปโพย"
+    >
+      <header className="lottery-slip-summary__head flex flex-col gap-[0.45rem]">
+        <div className="lottery-slip-summary__head-row flex items-start justify-between gap-3">
+          <p className="lottery-slip-summary__meta m-0">
             งวดวันที่ {drawSchedule}
           </p>
           <button
             type="button"
-            className="lottery-slip-summary__slip-id"
+            className="lottery-slip-summary__slip-id inline-flex items-center gap-[0.35rem] m-0 p-0"
             onClick={() => void handleCopyId()}
             aria-label="คัดลอกเลขโพย"
           >
@@ -65,36 +68,42 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
             <CopyIcon className="h-3.5 w-3.5 shrink-0 opacity-80" />
           </button>
         </div>
-        <div className="lottery-slip-summary__head-row">
-          <p className="lottery-slip-summary__meta">ซื้อ {purchasedLabel}</p>
-          <p className="lottery-slip-summary__status">ส่งโพยแล้ว</p>
+        <div className="lottery-slip-summary__head-row flex items-start justify-between gap-3">
+          <p className="lottery-slip-summary__meta m-0">ซื้อ {purchasedLabel}</p>
+          <p className="lottery-slip-summary__status m-0 whitespace-nowrap">ส่งโพยแล้ว</p>
         </div>
       </header>
 
-      <p className="lottery-slip-summary__note">
+      <p className="lottery-slip-summary__note m-0">
         โน้ต {slip.note?.trim() ? slip.note : "ไม่มีบันทึกข้อความ"}
       </p>
 
       <div className="lottery-slip-summary__groups">
         {groups.map((group) => (
-          <section key={group.typeLabel} className="lottery-slip-summary__group">
-            <div className="lottery-slip-summary__group-head">
+          <section
+            key={group.typeLabel}
+            className="lottery-slip-summary__group overflow-hidden"
+          >
+            <div className="lottery-slip-summary__group-head flex items-center justify-between gap-2 px-[0.85rem] py-[0.55rem]">
               <span>{group.typeLabel}</span>
               <span>{group.items.length} รายการ</span>
             </div>
-            <ul className="lottery-slip-summary__rows">
+            <ul className="lottery-slip-summary__rows m-0 px-2 pt-[0.35rem] pb-2">
               {group.items.map((line) => (
-                <li key={`${line.typeKey}-${line.number}-${line.amount}`} className="lottery-slip-summary__row">
+                <li
+                  key={`${line.typeKey}-${line.number}-${line.amount}`}
+                  className="lottery-slip-summary__row grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-[0.35rem] px-1 py-[0.35rem]"
+                >
                   <span className="lottery-slip-summary__number">
                     {formatLotteryDigitsDisplay(line.number)}
                   </span>
-                  <span className="lottery-slip-summary__pill lottery-slip-summary__pill--stake">
+                  <span className="lottery-slip-summary__pill lottery-slip-summary__pill--stake min-w-[3.25rem] px-[0.45rem] py-[0.28rem] text-center">
                     {formatBaht(line.amount)}
                   </span>
-                  <span className="lottery-slip-summary__pill">
+                  <span className="lottery-slip-summary__pill min-w-[3.25rem] px-[0.45rem] py-[0.28rem] text-center">
                     x{line.payoutRate.toLocaleString("th-TH")}
                   </span>
-                  <span className="lottery-slip-summary__pill lottery-slip-summary__pill--win">
+                  <span className="lottery-slip-summary__pill lottery-slip-summary__pill--win min-w-[4.25rem] px-[0.45rem] py-[0.28rem] text-center">
                     {formatBaht(line.potentialWin)}
                   </span>
                 </li>
@@ -104,12 +113,12 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
         ))}
       </div>
 
-      <footer className="lottery-slip-summary__totals">
-        <div className="lottery-slip-summary__total-cell">
+      <footer className="lottery-slip-summary__totals grid grid-cols-2 gap-2 mt-1 px-[0.65rem] py-[0.85rem]">
+        <div className="lottery-slip-summary__total-cell flex flex-col items-center gap-[0.35rem] text-center">
           <span className="lottery-slip-summary__total-label">เดิมพัน</span>
           <strong className="lottery-slip-summary__total-value">{formatBaht(slip.totalStake)}</strong>
         </div>
-        <div className="lottery-slip-summary__total-cell">
+        <div className="lottery-slip-summary__total-cell flex flex-col items-center gap-[0.35rem] text-center">
           <span className="lottery-slip-summary__total-label">แพ้/ชนะ</span>
           <span className="lottery-slip-summary__total-muted">
             {slip.winLoss === null ? "—" : formatBaht(slip.winLoss)}
@@ -118,14 +127,22 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
       </footer>
 
       {copied ? (
-        <p className="lottery-slip-summary__copy-hint" role="status">คัดลอกเลขโพยแล้ว</p>
+        <p className="lottery-slip-summary__copy-hint m-0 text-center" role="status">
+          คัดลอกเลขโพยแล้ว
+        </p>
       ) : null}
 
-      <div className="lottery-slip-summary__actions">
-        <Link href="/lottery/slips" className="lottery-slip-summary__btn lottery-slip-summary__btn--ghost">
+      <div className="lottery-slip-summary__actions grid grid-cols-2 gap-[0.65rem] mt-[0.35rem]">
+        <Link
+          href="/lottery/slips"
+          className="lottery-slip-summary__btn lottery-slip-summary__btn--ghost flex min-h-11 items-center justify-center px-3 py-[0.55rem] text-center"
+        >
           โพยทั้งหมด
         </Link>
-        <Link href={playHref} className="lottery-slip-summary__btn lottery-slip-summary__btn--primary">
+        <Link
+          href={playHref}
+          className="lottery-slip-summary__btn lottery-slip-summary__btn--primary flex min-h-11 items-center justify-center px-3 py-[0.55rem] text-center"
+        >
           แทงต่อ
         </Link>
       </div>

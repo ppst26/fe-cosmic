@@ -38,7 +38,11 @@ export function LotteryNumberGrid({
           <span className="thai-lotto-grid__caption" id="thai-lotto-hundred-label">
             หลักร้อย
           </span>
-          <div className="thai-lotto-hundreds" role="group" aria-labelledby="thai-lotto-hundred-label">
+          <div
+            className="thai-lotto-hundreds grid grid-cols-5 gap-1 sm:grid-cols-10"
+            role="group"
+            aria-labelledby="thai-lotto-hundred-label"
+          >
             {DIGITS.map((value) => {
               const count = countInHundred(value);
               const isActive = value === hundred;
@@ -49,10 +53,15 @@ export function LotteryNumberGrid({
                   aria-pressed={isActive}
                   aria-label={`${value}00–${value}99${count ? ` เลือกแล้ว ${count}` : ""}`}
                   onClick={() => setHundred(value)}
-                  className={`thai-lotto-hundreds__btn${isActive ? " is-active" : ""}`}
+                  className={`thai-lotto-hundreds__btn relative min-h-[1.875rem] px-1 py-[0.15rem]${isActive ? " is-active" : ""}`}
                 >
                   {value}00
-                  {count > 0 ? <span className="thai-lotto-hundreds__dot" aria-hidden="true" /> : null}
+                  {count > 0 ? (
+                    <span
+                      className="thai-lotto-hundreds__dot absolute top-1 right-1 w-[5px] h-[5px] rounded-full"
+                      aria-hidden="true"
+                    />
+                  ) : null}
                 </button>
               );
             })}
@@ -61,7 +70,7 @@ export function LotteryNumberGrid({
       ) : null}
 
       <div
-        className={`thai-lotto-grid${digits === 1 ? " thai-lotto-grid--run" : ""}`}
+        className={`thai-lotto-grid grid grid-cols-5 gap-1${digits === 1 ? " thai-lotto-grid--run" : " sm:grid-cols-10"}`}
         role="group"
         aria-label="แผงเลข"
       >
@@ -74,7 +83,7 @@ export function LotteryNumberGrid({
               aria-pressed={isSelected}
               disabled={disabled}
               onClick={() => onToggle(number)}
-              className={`thai-lotto-grid__btn${isSelected ? " is-active" : ""}`}
+              className={`thai-lotto-grid__btn min-h-[1.875rem] px-1 py-[0.15rem]${isSelected ? " is-active" : ""}`}
             >
               {number}
             </button>

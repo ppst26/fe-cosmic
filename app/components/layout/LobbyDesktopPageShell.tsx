@@ -54,14 +54,14 @@ export function LobbyDesktopPageShell({
   return (
     <>
       <div
-        className={`lobby-desktop-shell text-[var(--text-primary)]${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
+        className={`lobby-desktop-shell text-[var(--text-primary)] lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-center${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
       >
-        <div className="lobby-desktop-shell__header-band">
+        <div className="lobby-desktop-shell__header-band lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:pt-[env(safe-area-inset-top,0px)]">
           <Header onSignUpClick={openSignUp} onLoginClick={openLogin} />
         </div>
 
-        <div className="lobby-desktop-shell__desk-body">
-          <div className="lobby-desktop-shell__sidebar-outside hidden shrink-0 lg:flex">
+        <div className="lobby-desktop-shell__desk-body lg:relative lg:w-full lg:min-w-0 lg:flex-1">
+          <div className="lobby-desktop-shell__sidebar-outside hidden shrink-0 lg:fixed lg:left-(--lobby-desktop-cluster-gutter) lg:top-(--lobby-sidebar-sticky-top) lg:z-[6] lg:flex lg:w-(--lobby-sidebar-card-width) lg:flex-col lg:items-stretch lg:gap-2 lg:max-h-[calc(100dvh-var(--lobby-sidebar-sticky-top)-var(--space-6))] lg:overflow-visible">
             <LobbyDesktopSidebarColumn
               categories={CATEGORIES_DATA}
               activeCategoryId={activeCategoryId}
@@ -71,11 +71,11 @@ export function LobbyDesktopPageShell({
             />
           </div>
 
-          <div className="lobby-desktop-shell__center-container min-w-0 flex-1">
-            <div className="lobby-desktop-shell__frame lobby-desktop-shell__frame--dex">
-            <div className="lobby-desktop-main min-w-0 w-full">
-              <div className="lobby-desktop-workspace">
-                <div className="lobby-desktop-center min-w-0 flex-1">
+          <div className="lobby-desktop-shell__center-container min-w-0 flex-1 lg:flex lg:w-full lg:justify-center">
+            <div className="lobby-desktop-shell__frame lobby-desktop-shell__frame--dex lg:flex lg:min-w-0 lg:w-(--lobby-desktop-center-width) lg:max-w-none lg:flex-col lg:mx-auto lg:px-0 lg:flex-[0_1_var(--lobby-desktop-center-width)]">
+            <div className="lobby-desktop-main min-w-0 w-full lg:flex lg:flex-col lg:items-stretch lg:flex-1">
+              <div className="lobby-desktop-workspace lg:flex lg:w-full lg:min-w-0 lg:max-w-none lg:mx-0 lg:items-start lg:gap-4 lg:pt-(--lobby-workspace-pad-top) lg:px-0 lg:pb-5">
+                <div className="lobby-desktop-center min-w-0 flex-1 lg:w-full lg:max-w-none lg:mx-0 lg:px-0">
                   <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
                   <SignUpBottomDrawer
@@ -101,7 +101,7 @@ export function LobbyDesktopPageShell({
 
                   <main
                     className={cn(
-                      "page-shell page-shell--feature min-h-0 min-w-0 flex-col overflow-x-clip lg:pb-4 lg:pt-0",
+                      "page-shell page-shell--feature mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col overflow-x-clip px-3 pb-6 lg:mx-0 lg:max-w-none lg:px-0",
                       activeCategoryId === "lottery" ? "lottery-page-main pt-0" : "pt-4",
                       mainClassName,
                     )}

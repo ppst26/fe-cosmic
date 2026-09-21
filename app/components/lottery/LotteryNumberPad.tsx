@@ -25,14 +25,18 @@ export function LotteryNumberPad({
 }: LotteryNumberPadProps) {
   return (
     <div className="lottery-number-pad flex flex-col gap-1.5">
-      <div className="thai-lotto-slots" aria-live="polite" aria-label={`เลขที่กรอก ${value || "ว่าง"}`}>
+      <div
+        className="thai-lotto-slots flex justify-center gap-1.5"
+        aria-live="polite"
+        aria-label={`เลขที่กรอก ${value || "ว่าง"}`}
+      >
         {Array.from({ length: digits }, (_, index) => {
           const char = value[index];
           const isNext = index === value.length;
           return (
             <span
               key={index}
-              className={`thai-lotto-slot${char ? " is-filled" : ""}${isNext ? " is-next" : ""}`}
+              className={`thai-lotto-slot grid place-items-center w-8 h-9${char ? " is-filled" : ""}${isNext ? " is-next" : ""}`}
               aria-hidden="true"
             >
               {char ?? ""}
@@ -41,26 +45,35 @@ export function LotteryNumberPad({
         })}
       </div>
 
-      <div className="thai-lotto-pad">
+      <div className="thai-lotto-pad grid grid-cols-3 gap-1 lg:mx-auto lg:w-full lg:max-w-[420px]">
         {PAD_DIGITS.map((digit) => (
-          <button key={digit} type="button" className="thai-lotto-pad__key" onClick={() => onDigit(digit)}>
+          <button
+            key={digit}
+            type="button"
+            className="thai-lotto-pad__key grid place-items-center min-h-[1.875rem]"
+            onClick={() => onDigit(digit)}
+          >
             {digit}
           </button>
         ))}
         <button
           type="button"
-          className="thai-lotto-pad__key thai-lotto-pad__key--muted"
+          className="thai-lotto-pad__key thai-lotto-pad__key--muted grid place-items-center min-h-[1.875rem]"
           onClick={onClear}
           disabled={!value}
         >
           ล้าง
         </button>
-        <button type="button" className="thai-lotto-pad__key" onClick={() => onDigit("0")}>
+        <button
+          type="button"
+          className="thai-lotto-pad__key grid place-items-center min-h-[1.875rem]"
+          onClick={() => onDigit("0")}
+        >
           0
         </button>
         <button
           type="button"
-          className="thai-lotto-pad__key thai-lotto-pad__key--muted"
+          className="thai-lotto-pad__key thai-lotto-pad__key--muted grid place-items-center min-h-[1.875rem]"
           onClick={onBackspace}
           disabled={!value}
           aria-label="ลบตัวเลขล่าสุด"

@@ -65,15 +65,18 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
 
   if (useGridLayout) {
     return (
-      <div className="lottery-play-rounds lottery-play-rounds--grid-mode">
-        <ul className="lottery-play-round-grid" aria-label="รายการรอบ">
+      <div className="lottery-play-rounds lottery-play-rounds--grid-mode gap-2">
+        <ul
+          className="lottery-play-round-grid grid grid-cols-2 gap-2 m-0 p-0 list-none min-[480px]:grid-cols-3 md:grid-cols-4 md:gap-3"
+          aria-label="รายการรอบ"
+        >
           {visibleGridRounds.map((round, index) => {
             const playable = round.status === "open";
             const countdown =
               nowMs === null
                 ? "--:--"
                 : formatCountdown(new Date(round.closeAt).getTime() - nowMs);
-            const className = `lottery-play-round-grid__cell${
+            const className = `lottery-play-round-grid__cell flex flex-col items-center justify-center gap-[0.35rem] min-h-[5.5rem] px-1 py-2 text-center${
               playable ? " is-playable" : ""
             }${round.status === "open" ? " is-open" : ""}`;
 
@@ -83,7 +86,9 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
                   {round.drawLabel.replace(/^รอบ\s*/, "รอบ ") || `รอบ ${index + 1}`}
                 </span>
                 <span className="lottery-play-round-grid__time">{formatRoundClock(round.closeAt)}</span>
-                <span className="lottery-play-round-grid__countdown tabular-nums">{countdown}</span>
+                <span className="lottery-play-round-grid__countdown inline-flex min-w-[4.5rem] justify-center px-[0.45rem] py-[0.2rem] tabular-nums">
+                  {countdown}
+                </span>
               </>
             );
 
@@ -106,7 +111,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
         {!showAllGrid && hiddenGridCount > 0 ? (
           <button
             type="button"
-            className="lottery-play-rounds__expand glass-control glass-pill"
+            className="lottery-play-rounds__expand glass-control glass-pill flex w-full min-h-11 items-center justify-center gap-[0.35rem] mt-3"
             onClick={() => setShowAllGrid(true)}
           >
             แสดงรอบทั้งหมด ({rounds.length} รอบ)
@@ -123,7 +128,10 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
   return (
     <div className="lottery-play-rounds flex flex-col gap-4">
       {openRounds.map((round) => (
-        <article key={round.id} className="lottery-play-round-card lottery-play-round-card--open">
+        <article
+          key={round.id}
+          className="lottery-play-round-card lottery-play-round-card--open flex flex-col gap-3 p-3"
+        >
           <div className="lottery-play-round-card__content">
             <p className="lottery-play-round-card__title">{round.drawLabel}</p>
             <p className="lottery-play-round-card__schedule">{round.scheduleLabel}</p>
@@ -135,7 +143,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
           </div>
           <Link
             href={`${basePath}/${round.id}`}
-            className="cosmic-btn-nav cosmic-btn-nav--lg lottery-play-round-card__cta"
+            className="cosmic-btn-nav cosmic-btn-nav--lg lottery-play-round-card__cta w-full max-w-[12rem]"
           >
             แทงหวย
           </Link>
@@ -148,30 +156,12 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
             {otherRounds.map((round) => (
               <li key={round.id}>
                 <article
-                  className={`lottery-play-round-card${
+                  className={`lottery-play-round-card flex flex-col gap-3 p-3${
                     round.status === "upcoming" ? " lottery-play-round-card--upcoming" : ""
                   }`}
                 >
                   <div className="lottery-play-round-card__content">
                     <p className="lottery-play-round-card__title">{round.drawLabel}</p>
-                    <p className="lottery-play-round-card__schedule">{round.scheduleLabel}</p>
-                    {round.status === "upcoming" ? (
-                      <p className="lottery-play-round-card__opens">
-                        เปิดแทง{" "}
-                        {new Intl.DateTimeFormat("th-TH", {
-                          weekday: "long",
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                          hour: "numeric",
-                          minute: "2-digit",
-                          hour12: false,
-                          timeZone: "Asia/Bangkok",
-                        }).format(new Date(round.openAt))}
-                      </p>
-                    ) : (
-                      <p className="lottery-play-round-card__opens">ปิดรับแทงแล้ว</p>
-                    )}
                   </div>
                 </article>
               </li>

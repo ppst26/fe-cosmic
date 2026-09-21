@@ -20,10 +20,14 @@ export function LotterySlipToolbar({
   if (!visible) return null;
 
   return (
-    <div className="lottery-slip-toolbar" role="toolbar" aria-label="เครื่องมือโพย">
+    <div
+      className="lottery-slip-toolbar grid grid-cols-[1fr_1px_1fr] items-stretch mt-auto overflow-hidden"
+      role="toolbar"
+      aria-label="เครื่องมือโพย"
+    >
       <button
         type="button"
-        className="lottery-slip-toolbar__btn"
+        className="lottery-slip-toolbar__btn grid place-items-center min-h-10"
         onClick={onUndo}
         disabled={!canUndo}
         aria-label="ย้อนกลับรายการล่าสุด"
@@ -33,7 +37,7 @@ export function LotterySlipToolbar({
       <div className="lottery-slip-toolbar__divider" aria-hidden="true" />
       <button
         type="button"
-        className="lottery-slip-toolbar__btn"
+        className="lottery-slip-toolbar__btn grid place-items-center min-h-10"
         onClick={onClearAll}
         aria-label="ล้างโพยทั้งหมด"
       >

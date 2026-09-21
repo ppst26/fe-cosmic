@@ -23,6 +23,8 @@ interface VipRankRequirementsPanelProps {
   sectionSubtitle?: string;
   /** desktop VIP modal — แยกคอลัมน์เทิร์น / ภารกิจ */
   sections?: "all" | "turnover" | "missions";
+  /** แถบเทิร์นหลอดใหญ่ — คอลัมน์ซ้าย modal ระดับของฉัน */
+  turnoverBarProminent?: boolean;
 }
 
 /**
@@ -34,6 +36,7 @@ export function VipRankRequirementsPanel({
   sectionTitle = "เงื่อนไขการเลื่อนระดับ",
   sectionSubtitle = "ทำครบทุกข้อเพื่อเลื่อนแรงค์",
   sections = "all",
+  turnoverBarProminent = false,
 }: VipRankRequirementsPanelProps) {
   const showTurnover = sections === "all" || sections === "turnover";
   const showMissions = sections === "all" || sections === "missions";
@@ -61,7 +64,7 @@ export function VipRankRequirementsPanel({
       {isLocked && (
         <div className="cosmic-inset-card mb-3 flex items-center gap-2 px-3 py-2">
           <LockIcon className="h-4 w-4 shrink-0 text-[var(--text-muted)]" />
-          <p className="text-[11px] leading-snug text-[var(--text-muted)]">
+          <p className="text-xs leading-snug text-[var(--text-secondary)]">
             แรงค์ {getVipRankTier(focusRankId).label} — เป้าสะสมทวีคูณ ×
             {getVipRankMultiplier(focusRankId)} จากฐาน Silver
           </p>
@@ -69,7 +72,7 @@ export function VipRankRequirementsPanel({
       )}
 
       {isLocked && (
-        <p className="mb-3 text-center text-[11px] text-[var(--text-muted)]">
+        <p className="mb-3 text-center text-xs text-[var(--text-secondary)]">
           ถึง{" "}
           <span className="font-medium text-[var(--text-secondary)]">
             {getVipRankTier(focusRankId).label}
@@ -79,8 +82,14 @@ export function VipRankRequirementsPanel({
       )}
 
       {showTurnover ? (
-      <div className="w-full space-y-2">
-        <div className="flex items-center justify-between text-[11px] tabular-nums">
+      <div
+        className={`w-full ${turnoverBarProminent ? "vip-turnover-progress vip-turnover-progress--prominent space-y-3" : "space-y-2"}`}
+      >
+        <div
+          className={`flex items-center justify-between tabular-nums ${
+            turnoverBarProminent ? "text-sm sm:text-base" : "text-xs sm:text-sm"
+          }`}
+        >
           <span
             className={
               isLocked ? "text-[var(--text-muted)]" : "text-[var(--text-secondary)]"
@@ -94,15 +103,15 @@ export function VipRankRequirementsPanel({
             </span>
           )}
           {isLocked && (
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-secondary)]">
               ล็อก
             </span>
           )}
         </div>
         <div
-          className={`h-2.5 overflow-hidden rounded-full ${
-            isLocked ? "bg-[var(--surface-hover)]/50" : "bg-[var(--surface-hover)]"
-          }`}
+          className={`vip-turnover-progress__track overflow-hidden rounded-full ${
+            turnoverBarProminent ? "h-5 sm:h-6" : "h-2.5"
+          } ${isLocked ? "bg-[var(--surface-hover)]/50" : "bg-[var(--surface-hover)]"}`}
         >
           <div
             className={`h-full rounded-full transition-[width] duration-500 ${
@@ -121,7 +130,11 @@ export function VipRankRequirementsPanel({
             }
           />
         </div>
-        <p className="text-center text-[11px] text-[var(--text-muted)]">
+        <p
+          className={`text-center leading-snug text-[var(--text-secondary)] ${
+            turnoverBarProminent ? "text-sm" : "text-xs"
+          }`}
+        >
           {isLocked
             ? `เป้าเทิร์น ${formatVipAmount(req.turnoverTarget)} สำหรับ ${reqTier.label}`
             : isCleared
@@ -138,7 +151,7 @@ export function VipRankRequirementsPanel({
         >
           {sectionTitle}
         </h3>
-        <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">{sectionSubtitle}</p>
+        <p className="mt-1 text-xs leading-snug text-[var(--text-secondary)]">{sectionSubtitle}</p>
 
         {isActive ? (
           <div className="mt-3 flex flex-wrap justify-center gap-2 sm:justify-start">
@@ -169,7 +182,7 @@ export function VipRankRequirementsPanel({
                   }`}
                 >
                   <span className="text-xs font-medium">{mission.label}</span>
-                  <span className="shrink-0 text-[11px] tabular-nums text-[var(--text-secondary)]">
+                  <span className="shrink-0 text-xs tabular-nums text-[var(--text-secondary)]">
                     {isLocked
                       ? `0 / ${formatVipAmount(mission.target)} ${mission.unit}`
                       : formatVipMissionStatus(mission)}
@@ -181,7 +194,7 @@ export function VipRankRequirementsPanel({
         )}
 
         {isLocked && (
-          <p className="mt-2 text-center text-[10px] text-[var(--text-muted)]/90">
+          <p className="mt-2 text-center text-[11px] leading-snug text-[var(--text-muted)]">
             ตัวเลขทวีคูนตามแรงค์ — ฐาน Silver ×1 · Gold ×2 · Platinum ×4 · …
           </p>
         )}

@@ -45,7 +45,7 @@ function RightMenuGlassCardContent({
 
 export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMenuGridProps) {
   return (
-    <div className="lobby-right-menu-stack w-full min-w-0" aria-label="เมนูด่วน">
+    <div className="lobby-right-menu-stack flex w-full min-w-0 flex-col gap-2" aria-label="เมนูด่วน">
       {DESKTOP_RIGHT_MENU_TILES.map((tile) => {
         const className = [
           "lobby-right-menu-card",

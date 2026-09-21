@@ -17,7 +17,7 @@ export function VipRankEmblem({
   playing = true,
 }: {
   rankId: VipRankId;
-  size?: "xs" | "sm" | "lg";
+  size?: "xs" | "sm" | "lg" | "xl";
   inactive?: boolean;
   playing?: boolean;
 }) {
@@ -27,9 +27,22 @@ export function VipRankEmblem({
   const [preferStatic, setPreferStatic] = useState(false);
 
   const dim =
-    size === "lg" ? "h-[88px] w-[88px]" : size === "sm" ? "h-12 w-12" : "h-8 w-8";
+    size === "xl"
+      ? "h-32 w-32 sm:h-36 sm:w-36"
+      : size === "lg"
+        ? "h-[88px] w-[88px]"
+        : size === "sm"
+          ? "h-12 w-12"
+          : "h-8 w-8";
   const gem =
-    size === "lg" ? "h-7 w-7" : size === "sm" ? "h-4 w-4" : "h-3 w-3";
+    size === "xl"
+      ? "h-10 w-10"
+      : size === "lg"
+        ? "h-7 w-7"
+        : size === "sm"
+          ? "h-4 w-4"
+          : "h-3 w-3";
+  const lockLg = size === "xl" || size === "lg";
   const gradId = React.useId().replace(/:/g, "");
 
   useEffect(() => {
@@ -68,9 +81,11 @@ export function VipRankEmblem({
           preload="metadata"
           className="h-full w-full object-contain"
         />
-        {inactive && size === "lg" && (
+        {inactive && lockLg && (
           <span className="absolute inset-0 flex items-center justify-center">
-            <LockIcon className="h-5 w-5 text-[var(--text-muted)]/90" />
+            <LockIcon
+              className={`text-[var(--text-muted)]/90 ${size === "xl" ? "h-7 w-7" : "h-5 w-5"}`}
+            />
           </span>
         )}
       </div>
@@ -109,9 +124,11 @@ export function VipRankEmblem({
           inactive ? "shadow-none" : "shadow-[0_0_12px_rgba(251,191,36,0.6)]"
         }`}
       />
-      {inactive && size === "lg" && (
+      {inactive && lockLg && (
         <span className="absolute inset-0 flex items-center justify-center">
-          <LockIcon className="h-5 w-5 text-[var(--text-muted)]/90" />
+          <LockIcon
+            className={`text-[var(--text-muted)]/90 ${size === "xl" ? "h-7 w-7" : "h-5 w-5"}`}
+          />
         </span>
       )}
     </div>

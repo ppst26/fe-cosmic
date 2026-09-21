@@ -15,7 +15,7 @@ interface LobbyDesktopRightRailProps {
 export function LobbyDesktopRightRail({ onMenuAction }: LobbyDesktopRightRailProps) {
   return (
     <aside
-      className="lobby-desktop-right-rail hidden w-[280px] shrink-0 flex-col lg:flex xl:w-[300px]"
+      className="lobby-desktop-right-rail sticky top-(--lobby-sidebar-sticky-top) z-[5] hidden w-[280px] shrink-0 flex-col self-start overflow-x-hidden overflow-y-auto overscroll-contain mt-0 max-h-(--lobby-sidebar-panel-height) pb-4 lg:flex xl:w-[300px]"
       aria-label="เมนูกิจกรรมและโปรโมชัน"
     >
       <LobbyDesktopRightMenuGrid onMenuAction={onMenuAction} />

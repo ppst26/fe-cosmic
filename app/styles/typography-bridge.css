@@ -7,28 +7,7 @@
     @apply text-sm font-medium;
   }
 
-  .cosmic-nav__deposit-cta {
-    @apply text-xl font-medium;
-  }
-
-  .wallet-button span {
-    @apply text-sm font-medium;
-  }
-
   .cosmic-nav__auth-login {
-    @apply text-xs font-medium;
-  }
-
-  .wallet-button span {
-    @apply text-xs;
-  }
-
-  .cosmic-nav__deposit-cta {
-    @apply text-lg;
-  }
-
-  .cosmic-nav__auth .cosmic-cta-primary--sm,
-  .header-desktop-bar__actions .cosmic-cta-primary--sm {
     @apply text-xs font-medium;
   }
 
@@ -45,38 +24,6 @@
   }
 
   .header-desktop-bar__auth-login {
-    @apply text-xs font-medium;
-  }
-
-  .header-desktop-bar__cashier-btn {
-    @apply text-sm font-medium;
-  }
-
-  .header-desktop-bar__wallet-segment--action {
-    @apply text-sm font-medium;
-  }
-
-  .header-desktop-bar__wallet-balance {
-    @apply text-sm font-medium;
-  }
-
-  .header-desktop-bar__stat-label {
-    @apply text-xs font-medium;
-  }
-
-  .header-desktop-bar__stat-value {
-    @apply text-base font-medium;
-  }
-
-  .header-desktop-bar__deposit {
-    @apply text-sm font-medium;
-  }
-
-  .header-desktop-bar__user-name {
-    @apply text-sm font-medium;
-  }
-
-  .header-desktop-bar__user-rank {
     @apply text-xs font-medium;
   }
 

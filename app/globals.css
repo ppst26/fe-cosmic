@@ -20,6 +20,7 @@
 /* ── Navigation ── */
 @import "./styles/header.css";
 @import "./styles/category-nav.css";
+@import "./styles/lobby-announcement-marquee.css";
 @import "./styles/bottom-nav.css";
 
 /* ── Modals & sheets ── */

@@ -14,9 +14,10 @@ import {
   VIP_PLAYER_MOCK,
   VIP_RANK_TIERS,
 } from "@/app/data/vipMockData";
-import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
+import { CloseIcon } from "../ui/Icons";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
+  responsiveSheetCloseButtonClass,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
@@ -77,6 +78,32 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
     }
   };
 
+  const tabList = (
+    <div
+      role="tablist"
+      aria-label="เมนู VIP"
+      className={`${COSMIC_SEGMENT_GLASS_WHITE} vip-modal__segment-track grid shrink-0 grid-cols-3 gap-1.5`}
+    >
+      {VIP_TABS.map((item) => {
+        const active = tab === item.id;
+        return (
+          <button
+            key={item.id}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            onClick={() => selectTab(item.id)}
+            className={`cosmic-segment-btn px-1 py-2 text-xs leading-snug sm:text-sm lg:py-2 ${
+              active ? "is-active" : ""
+            }`}
+          >
+            {item.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
@@ -85,53 +112,40 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
         <Dialog.Content
           aria-describedby="vip-modal-desc"
           className={responsiveSheetContentClass(
-            "vip-modal flex flex-col overflow-hidden max-lg:max-h-[min(92dvh,640px)]",
+            "hub-modal-shell vip-modal flex flex-col overflow-hidden max-lg:max-h-[min(92dvh,640px)]",
             { variant: "hubWide" },
           )}
         >
           <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
-          <ResponsiveSheetHeader
-            closeAriaLabel="ปิด VIP"
-            titleAlign="start"
-            className="responsive-sheet-header--hub"
-            title={
-              <Dialog.Title className="text-xl font-medium tracking-wide sm:text-2xl">
-                VIP
-              </Dialog.Title>
-            }
-            subtitle={
-              <p id="vip-modal-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
-                ระดับ แร็งค์ และสิทธิประโยชน์
-              </p>
-            }
-          />
-
-          <div
-            role="tablist"
-            aria-label="เมนู VIP"
-            className={`${COSMIC_SEGMENT_GLASS_WHITE} vip-modal__segment-track mt-1 grid shrink-0 grid-cols-3 gap-1.5 lg:mx-auto lg:max-w-xl`}
+          <header
+            className="vip-modal__header responsive-sheet-header--hub responsive-sheet-header--hub-shell w-full shrink-0 pb-1 pt-0.5 max-lg:space-y-2 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,28rem)_auto] lg:items-center lg:gap-x-4 lg:pb-2"
           >
-            {VIP_TABS.map((item) => {
-              const active = tab === item.id;
-              return (
+            <div className="flex min-w-0 items-start justify-between gap-3 lg:contents">
+              <div className="min-w-0 text-left lg:col-start-1 lg:row-start-1">
+                <Dialog.Title className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">
+                  VIP
+                </Dialog.Title>
+                <p id="vip-modal-desc" className="vip-modal-subtitle mt-1 text-sm leading-snug">
+                  ระดับ แร็งค์ และสิทธิประโยชน์
+                </p>
+              </div>
+              <Dialog.Close asChild>
                 <button
-                  key={item.id}
                   type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => selectTab(item.id)}
-                  className={`cosmic-segment-btn px-1 py-2 text-[11px] leading-tight sm:text-xs lg:py-2.5 ${
-                    active ? "is-active" : ""
-                  }`}
+                  className={`${responsiveSheetCloseButtonClass()} lg:col-start-3 lg:row-start-1 lg:self-center`}
+                  aria-label="ปิด VIP"
                 >
-                  {item.label}
+                  <CloseIcon className="h-4 w-4" />
                 </button>
-              );
-            })}
-          </div>
+              </Dialog.Close>
+            </div>
+            <div className="w-full min-w-0 lg:col-start-2 lg:row-start-1 lg:justify-self-center">
+              {tabList}
+            </div>
+          </header>
 
-          <div className="cosmic-modal-shell--hub vip-modal__scroll min-h-0 flex-1 overflow-hidden pt-2 lg:pt-3">
+          <div className="cosmic-modal-shell--hub vip-modal-typography vip-modal__scroll min-h-0 flex-1 overflow-hidden pt-1 lg:pt-0">
             <div className="vip-modal__body hidden min-h-0 flex-1 overflow-hidden lg:flex lg:flex-col">
               <VipModalDesktopLayout
                 tab={tab}
@@ -144,7 +158,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
             <div className="min-h-0 flex-1 overflow-y-auto pb-1 lg:hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {tab === "my-level" && (
                 <div className="flex flex-col items-center gap-4">
-                  <p className="text-xs text-[var(--text-muted)]">ระดับปัจจุบัน</p>
+                  <p className="text-sm font-medium text-[var(--text-secondary)]">ระดับปัจจุบัน</p>
                   <VipRankEmblem rankId={player.currentRankId} size="lg" />
                   <p
                     className="text-2xl font-medium tracking-[0.2em]"
@@ -153,7 +167,7 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
                     {currentTier.label}
                   </p>
                   {nextTier && (
-                    <p className="text-xs text-[var(--text-secondary)]">
+                    <p className="text-sm text-[var(--text-secondary)]">
                       ระดับถัดไป{" "}
                       <span className="font-medium text-[var(--text-primary)]">
                         {nextTier.label}

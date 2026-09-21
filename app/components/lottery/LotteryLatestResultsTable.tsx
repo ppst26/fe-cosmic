@@ -53,31 +53,37 @@ export function LotteryLatestResultsTable({
       </div>
 
       <div className="lottery-results-board__table" role="table" aria-label="รายการผลหวยล่าสุด">
-        <div className="lottery-results-board__header" role="row">
+        <div
+          className="lottery-results-board__header grid grid-cols-[var(--lottery-results-board-cols)] items-center gap-x-2 px-[0.15rem] pb-[0.4rem]"
+          role="row"
+        >
           <span className="lottery-results-board__header-cell" role="columnheader">
             ประเภทหวย
           </span>
           <span
-            className="lottery-results-board__header-cell lottery-results-board__header-cell--prize"
+            className="lottery-results-board__header-cell lottery-results-board__header-cell--prize text-center"
             role="columnheader"
           >
             3 ตัวบน
           </span>
           <span
-            className="lottery-results-board__header-cell lottery-results-board__header-cell--prize"
+            className="lottery-results-board__header-cell lottery-results-board__header-cell--prize text-center"
             role="columnheader"
           >
             2 ตัวล่าง
           </span>
           <span
-            className="lottery-results-board__header-cell lottery-results-board__header-cell--date"
+            className="lottery-results-board__header-cell lottery-results-board__header-cell--date text-right"
             role="columnheader"
           >
             งวด / วันที่
           </span>
         </div>
 
-        <ul className="lottery-results-board__body" role="rowgroup">
+        <ul
+          className="lottery-results-board__body m-0 flex list-none flex-col gap-[0.35rem] p-0 sm:gap-[0.4rem]"
+          role="rowgroup"
+        >
           {results.length === 0 ? (
             <li className="lottery-results-board__empty" role="row">
               <span role="cell">ยังไม่มีผลหวย</span>
@@ -86,36 +92,36 @@ export function LotteryLatestResultsTable({
             results.map((row) => (
               <li
                 key={row.id}
-                className="lottery-results-board__row glass-card--soft"
+                className="lottery-results-board__row glass-card--soft grid grid-cols-[var(--lottery-results-board-cols)] items-center gap-x-2 m-0 px-[0.65rem] py-[0.45rem] sm:px-3 sm:py-2"
                 role="row"
               >
-                <div className="lottery-results-board__market" role="cell">
+                <div className="lottery-results-board__market flex min-w-0 items-center gap-2" role="cell">
                   <LotteryFlagOrb label={row.flagLabel} tone={row.flagTone} size="sm" />
-                  <span className="lottery-results-board__market-name">{row.title}</span>
+                  <span className="lottery-results-board__market-name truncate">{row.title}</span>
                 </div>
 
                 <div
-                  className="lottery-results-board__prize"
+                  className="lottery-results-board__prize flex min-w-0 flex-col items-center justify-center gap-[0.2rem]"
                   role="cell"
                   aria-label={`3 ตัวบน ${row.top3}`}
                 >
-                  <span className="lottery-results-board__prize-label">3 ตัวบน</span>
+                  <span className="lottery-results-board__prize-label whitespace-nowrap">3 ตัวบน</span>
                   <span className="lottery-results-board__prize-value tabular-nums">{row.top3}</span>
                 </div>
 
                 <div
-                  className="lottery-results-board__prize"
+                  className="lottery-results-board__prize flex min-w-0 flex-col items-center justify-center gap-[0.2rem]"
                   role="cell"
                   aria-label={`2 ตัวล่าง ${row.bottom2}`}
                 >
-                  <span className="lottery-results-board__prize-label">2 ตัวล่าง</span>
+                  <span className="lottery-results-board__prize-label whitespace-nowrap">2 ตัวล่าง</span>
                   <span className="lottery-results-board__prize-value tabular-nums">
                     {row.bottom2}
                   </span>
                 </div>
 
-                <div className="lottery-results-board__date" role="cell">
-                  <span className="lottery-results-board__date-text tabular-nums">
+                <div className="lottery-results-board__date flex min-w-0 items-center justify-end" role="cell">
+                  <span className="lottery-results-board__date-text truncate tabular-nums">
                     {row.dateLabel}
                   </span>
                 </div>

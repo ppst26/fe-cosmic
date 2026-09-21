@@ -275,7 +275,10 @@ export function ThaiLottoBetBoard({
         ) : null}
 
         {step === "pick" ? (
-          <section className="thai-lotto-panel thai-lotto-layout__input" aria-label="เลือกเลข">
+          <section
+            className="thai-lotto-panel thai-lotto-layout__input flex flex-col gap-3 p-3 sm:gap-4 sm:p-4 md:p-5"
+            aria-label="เลือกเลข"
+          >
         <ThaiLottoBetTypePicker
           groups={groups}
           betTypes={betTypes}
@@ -290,10 +293,13 @@ export function ThaiLottoBetBoard({
             type="button"
             aria-pressed={isReverse}
             onClick={() => setIsReverse((prev) => !prev)}
-            className={`thai-lotto-toggle${isReverse ? " is-active" : ""}`}
+            className={`thai-lotto-toggle inline-flex items-center gap-2 self-start min-h-8${isReverse ? " is-active" : ""}`}
           >
-            <span className="thai-lotto-toggle__track" aria-hidden="true">
-              <span className="thai-lotto-toggle__thumb" />
+            <span
+              className="thai-lotto-toggle__track relative w-9 h-5"
+              aria-hidden="true"
+            >
+              <span className="thai-lotto-toggle__thumb absolute top-0.5 left-0.5 h-4 w-4 rounded-full" />
             </span>
             กลับเลข
           </button>
@@ -331,13 +337,13 @@ export function ThaiLottoBetBoard({
               </p>
             ) : null}
 
-            <div className="yiki-pick-actions" aria-label="ดำเนินการต่อ">
+            <div className="yiki-pick-actions grid gap-2 mt-1" aria-label="ดำเนินการต่อ">
               <Link href={backHref} className="yiki-pick-actions__back">
                 กลับหน้าก่อนหน้า
               </Link>
               <button
                 type="button"
-                className="cosmic-cta-primary cosmic-cta-primary--lg yiki-pick-actions__primary"
+                className="cosmic-cta-primary cosmic-cta-primary--lg yiki-pick-actions__primary min-h-11 w-full"
                 disabled={entries.length === 0 || isClosed}
                 onClick={handleGoToPrice}
               >

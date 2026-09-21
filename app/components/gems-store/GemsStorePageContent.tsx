@@ -156,8 +156,8 @@ function GemsRedeemCard({
   return (
     <article
       className={`gems-store-redeem-card flex flex-col p-2.5 sm:p-3 ${
-        flat ? "gems-store-redeem-card--flat" : COSMIC_PANEL_GLASS
-      } ${affordable ? "" : "opacity-85"}`}
+        flat ? "gems-store-redeem-card--flat hub-modal-card" : COSMIC_PANEL_GLASS
+      }${affordable ? " is-active" : ""}${affordable ? "" : " opacity-85"}`}
     >
       <div className="flex flex-1 flex-col items-center text-center">
         <div className="relative mb-2 h-14 w-full max-w-[100px] sm:h-16 sm:max-w-[112px]">

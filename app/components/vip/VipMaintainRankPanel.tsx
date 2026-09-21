@@ -22,11 +22,11 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
     <section className="vip-maintain-rank-panel vip-maintain-rank-panel--flat w-full border-t border-[var(--border-subtle)]/45 pt-4">
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-[var(--text-primary)]">รักษาระดับ VIP</h3>
-        <span className="shrink-0 text-[11px] font-medium tabular-nums text-[var(--text-primary)]">
+        <span className="shrink-0 text-xs font-medium tabular-nums text-[var(--accent-highlight)]">
           {maintain.daysRemaining} วันคงเหลือ
         </span>
       </div>
-      <p className="mt-1 text-[11px] leading-snug text-[var(--text-muted)]">
+      <p className="mt-1 text-xs leading-snug text-[var(--text-secondary)]">
         ทำครบทั้งสองเงื่อนไขเพื่อรักษาระดับ {tier.label.charAt(0) + tier.label.slice(1).toLowerCase()}
       </p>
 
@@ -45,7 +45,7 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
         />
       </div>
 
-      <p className="mt-2.5 text-center text-[10px] text-[var(--text-muted)]">ตัวเลขตัวอย่าง</p>
+      <p className="mt-2.5 text-center text-[11px] text-[var(--text-muted)]">ตัวเลขตัวอย่าง</p>
     </section>
   );
 }
@@ -73,9 +73,9 @@ function MaintainMetricCard({
         ) : (
           <TurnoverMiniIcon className="h-4 w-4 text-[var(--icon-default)]" />
         )}
-        <span className="text-[11px] font-medium text-[var(--text-secondary)]">{label}</span>
+        <span className="text-xs font-medium text-[var(--text-secondary)]">{label}</span>
       </div>
-      <p className="text-[11px] font-medium tabular-nums text-[var(--text-primary)]">
+      <p className="text-xs font-medium tabular-nums text-[var(--text-primary)] sm:text-sm">
         {formatVipAmount(progress)} / {formatVipAmount(target)}
       </p>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--surface-hover)]">
@@ -87,8 +87,8 @@ function MaintainMetricCard({
         />
       </div>
       <p
-        className={`mt-1.5 text-[10px] font-medium ${
-          complete ? "text-[var(--success)]" : "text-[var(--text-muted)]"
+        className={`mt-1.5 text-xs font-medium ${
+          complete ? "text-[var(--success)]" : "text-[var(--text-secondary)]"
         }`}
       >
         {complete ? "✓ ครบแล้ว" : `ขาดอีก ${formatVipAmount(remaining)}`}

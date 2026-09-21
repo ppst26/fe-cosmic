@@ -83,8 +83,8 @@ export function VipCircularProgress({
           <MissionCenterIcon kind={iconKind} />
         </div>
       </div>
-      <p className="text-center text-[11px] font-medium text-[var(--text-primary)]">{label}</p>
-      <p className="text-center text-[10px] text-[var(--text-muted)]">{statusText}</p>
+      <p className="text-center text-xs font-medium text-[var(--text-primary)]">{label}</p>
+      <p className="text-center text-[11px] leading-snug text-[var(--text-secondary)]">{statusText}</p>
     </div>
   );
 }

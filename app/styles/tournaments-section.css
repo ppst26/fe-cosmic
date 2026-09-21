@@ -36,19 +36,7 @@
 }
 
 .tournament-feature-card {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border-radius: var(--radius-panel);
   background: var(--surface-mid);
-}
-
-@media (min-width: 1024px) {
-  .tournament-feature-card {
-    aspect-ratio: 3 / 4;
-  }
 }
 
 .tournament-feature-card__image {
