@@ -177,7 +177,7 @@ export function HomeLobbyPage() {
                     {/* มือถือ: แถบหมวดหมู่เกม — เลื่อนถึง viewport/header แล้ว sticky ต่อเนื่อง */}
                     <div
                       className={cn(
-                        "sticky z-40 bg-[var(--bg-page)] -mx-3 px-3 py-1.5 lg:hidden transition-shadow duration-200",
+                        "sticky z-40 bg-linear-to-t from-[#0c0818] to-[#0d0c33] -mx-3 px-3 py-1.5 lg:hidden transition-shadow duration-200",
                         isCategorySticky && "shadow-[0_10px_26px_rgba(0,0,0,0.45)] border-b border-white/5",
                       )}
                       style={{

@@ -62,7 +62,7 @@ export function ProfileHubBody({
     <div className="profile-hub-body flex flex-col pb-1">
       {showHeader ? <ProfileHubHeader profile={profile} /> : null}
 
-      <nav className="profile-hub-nav flex flex-col" aria-label="เมนูโปรไฟล์">
+      <nav className="profile-hub-nav flex flex-col gap-0.5" aria-label="เมนูโปรไฟล์">
         <ProfileHubRow
           layout={rowLayout}
           icon={<ProfileNavIcon className="h-5 w-5" />}
@@ -77,7 +77,7 @@ export function ProfileHubBody({
           showChevron
           onClick={onOpenVip}
           trailing={
-            <span className="text-xs font-medium text-[#ffe66d]">{vipRankLabel}</span>
+            <span className="text-sm font-medium text-[#ffe66d]">{vipRankLabel}</span>
           }
         />
         <ProfileHubRow
@@ -92,7 +92,7 @@ export function ProfileHubBody({
           icon={<DiamondGemIcon className="h-5 w-5" />}
           title="เพชรของฉัน"
           trailing={
-            <span className="text-sm font-medium tabular-nums text-[var(--text-secondary)]">
+            <span className="tabular-nums text-[var(--text-secondary)]">
               {formatDiamonds(stats.diamonds)}
             </span>
           }
@@ -104,7 +104,7 @@ export function ProfileHubBody({
           showChevron
           onClick={onOpenLossRebate}
           trailing={
-            <span className="text-sm font-medium tabular-nums text-[var(--text-secondary)]">
+            <span className="tabular-nums text-[var(--text-secondary)]">
               {formatThb(stats.lossBonusThb)}
             </span>
           }
@@ -114,7 +114,7 @@ export function ProfileHubBody({
           icon={<UsersGroupIcon className="h-5 w-5" />}
           title="ยอด Affiliate"
           trailing={
-            <span className="text-sm font-medium tabular-nums text-[var(--text-secondary)]">
+            <span className="tabular-nums text-[var(--text-secondary)]">
               {formatThb(stats.affiliateBalanceThb)}
             </span>
           }
@@ -124,7 +124,7 @@ export function ProfileHubBody({
           icon={<PromoTagIcon className="h-5 w-5" />}
           title="โปรโมชั่นที่ใช้อยู่"
           trailing={
-            <span className="max-w-[46%] truncate text-xs font-medium text-[var(--text-secondary)]">
+            <span className="max-w-[46%] truncate text-[var(--text-secondary)]">
               {stats.activePromotionLabel}
             </span>
           }
@@ -134,7 +134,7 @@ export function ProfileHubBody({
       <button
         type="button"
         onClick={onLogout}
-        className="profile-hub-logout mt-2 flex w-full items-center gap-3 rounded-[var(--radius-control)] px-1 py-2.5 text-left text-sm font-medium transition-colors"
+        className="profile-hub-logout mt-3 flex w-full items-center gap-3.5 rounded-[var(--radius-control)] px-1.5 py-3 text-left text-[0.9375rem] font-medium transition-colors"
       >
         <LogOutIcon className="h-5 w-5 shrink-0" />
         ออกจากระบบ

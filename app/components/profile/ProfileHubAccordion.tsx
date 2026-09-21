@@ -24,7 +24,7 @@ export function ProfileHubRow({
 }) {
   const isSheet = layout === "sheet";
   const className = isSheet
-    ? "profile-hub-row profile-hub-row--sheet flex w-full items-center gap-3 rounded-[var(--radius-control)] px-1 py-2.5 text-left transition-colors"
+    ? "profile-hub-row profile-hub-row--sheet flex w-full items-center gap-3.5 rounded-[var(--radius-control)] px-1.5 py-3 text-left transition-colors"
     : "profile-hub-row flex w-full items-center gap-2 rounded-[var(--radius-control)] px-2 py-1.5 text-left transition-colors";
 
   const inner = (
@@ -32,7 +32,7 @@ export function ProfileHubRow({
       <span
         className={
           isSheet
-            ? "profile-hub-row__icon flex h-5 w-5 shrink-0 items-center justify-center text-[var(--icon-default)]"
+            ? "profile-hub-row__icon flex h-6 w-6 shrink-0 items-center justify-center text-[var(--text-primary)]"
             : "profile-hub-row__icon flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[var(--icon-default)]"
         }
       >
@@ -41,15 +41,19 @@ export function ProfileHubRow({
       <span
         className={
           isSheet
-            ? "profile-hub-row__title min-w-0 flex-1 text-sm font-medium text-[var(--text-primary)]"
+            ? "profile-hub-row__title min-w-0 flex-1 text-[0.9375rem] font-medium text-[var(--text-primary)]"
             : "profile-hub-row__title min-w-0 flex-1 font-medium text-[var(--text-secondary)]"
         }
       >
         {title}
       </span>
-      {trailing}
+      {trailing ? (
+        <span className={isSheet ? "profile-hub-row__trailing shrink-0" : undefined}>{trailing}</span>
+      ) : null}
       {showChevron && (
-        <ChevronRightIcon className="h-4 w-4 shrink-0 text-[var(--icon-default)]" />
+        <ChevronRightIcon
+          className={`h-4 w-4 shrink-0 ${isSheet ? "text-[var(--text-muted)]" : "text-[var(--icon-default)]"}`}
+        />
       )}
     </>
   );

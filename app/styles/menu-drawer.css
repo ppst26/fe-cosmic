@@ -366,7 +366,7 @@
     transform 160ms ease;
 }
 
-/* ช่องเมนูมือถือ — RightMenuDrawer (เอา bg สี่เหลี่ยมออก ให้เหลือแต่ไอคอนวงกลมและข้อความ) */
+/* ช่องเมนูมือถือ — RightMenuDrawer (พื้นโปร่ง · ไอคอนในกรอบสี่เหลี่ยม) */
 .menu-item.menu-item--solid {
   display: flex;
   flex-direction: column;
@@ -383,14 +383,14 @@
   color: var(--text-secondary);
 }
 
-/* วงกลมล้อมรอบไอคอนเดิม */
-.menu-item__icon-circle {
+/* กรอบสี่เหลี่ยมล้อมไอคอน */
+.menu-item__icon-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 9999px;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-control);
   background: linear-gradient(180deg, #251a42 0%, #150f28 55%, #090612 100%);
   border: 1px solid rgba(255, 255, 255, 0.09);
   box-shadow:
@@ -406,7 +406,7 @@
     color 160ms ease;
 }
 
-.menu-item:hover .menu-item__icon-circle {
+.menu-item:hover .menu-item__icon-box {
   background: linear-gradient(180deg, #35245f 0%, #1f143c 55%, #0d081b 100%);
   border-color: rgba(168, 125, 255, 0.5);
   box-shadow:
@@ -417,13 +417,13 @@
   transform: scale(1.05);
 }
 
-.menu-item:active .menu-item__icon-circle {
+.menu-item:active .menu-item__icon-box {
   transform: scale(0.95);
 }
 
-.menu-item .menu-item__icon-circle svg {
-  width: 22px;
-  height: 22px;
+.menu-item .menu-item__icon-box svg {
+  width: 26px;
+  height: 26px;
   flex-shrink: 0;
 }
 
@@ -433,7 +433,7 @@
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
 }
 
-.menu-item:not(:has(.menu-item__icon-circle)) svg,
+.menu-item:not(:has(.menu-item__icon-box)) svg,
 .menu-item__icon-img {
   width: 2.5rem;
   height: 2.5rem;

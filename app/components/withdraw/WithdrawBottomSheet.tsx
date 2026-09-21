@@ -144,7 +144,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                     inputMode="numeric"
                     value={amountInput}
                     onChange={(event) => handleAmountChange(event.target.value)}
-                    className="min-w-[2ch] max-w-[min(72vw,320px)] bg-transparent text-5xl font-medium leading-none tracking-tight text-[var(--text-primary)] outline-none sm:text-6xl"
+                    className="input-keep-size min-w-[2ch] max-w-[min(72vw,320px)] bg-transparent text-5xl font-medium leading-none tracking-tight text-[var(--text-primary)] outline-none sm:text-6xl"
                     style={{ width: `${Math.max(2, amountInput.length || 1)}.5ch` }}
                     aria-label="จำนวนเงินที่ต้องการถอน"
                   />

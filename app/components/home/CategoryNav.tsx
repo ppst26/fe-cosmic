@@ -137,7 +137,7 @@ export function CategoryNav({
                 aria-pressed={isActive}
               >
                 <span className="category-nav__icon flex items-center justify-center" aria-hidden="true">
-                  {getCategoryIcon(category.id, "h-[22px] w-[22px] sm:h-6 sm:w-6")}
+                  {getCategoryIcon(category.id, "h-[24px] w-[24px] sm:h-8 sm:w-8")}
                 </span>
                 <span className="category-nav__label max-w-full truncate">{category.label}</span>
               </button>
@@ -174,7 +174,7 @@ export function CategoryNav({
             >
               <div
                 className={cn(
-                  "category-nav__icon-box flex h-11 w-11 items-center justify-center rounded-[14px] transition-all duration-200",
+                  "category-nav__icon-box flex h-16 w-16 items-center justify-center rounded-[14px] transition-all duration-200",
                   isActive
                     ? "category-nav__icon-box--active"
                     : "category-nav__icon-box--idle",
@@ -182,19 +182,19 @@ export function CategoryNav({
               >
                 <span
                   className={cn(
-                    "category-nav__icon flex items-center justify-center transition-colors duration-200",
+                    "category-nav__icon flex items-center justify-center transition-colors duration-200 ",
                     isActive
                       ? "text-white"
                       : "text-[var(--text-secondary)] group-hover:text-white",
                   )}
                   aria-hidden="true"
                 >
-                  {getCategoryIcon(category.id, "h-[19px] w-[19px]")}
+                  {getCategoryIcon(category.id, "h-[24px] w-[24px]")}
                 </span>
               </div>
               <span
                 className={cn(
-                  "category-nav__label text-[11px] font-medium tracking-tight text-center whitespace-nowrap transition-colors duration-200",
+                  "category-nav__label text-[14px] font-medium tracking-tight text-center whitespace-nowrap transition-colors duration-200",
                   isActive
                     ? "text-white"
                     : "text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]",

@@ -44,14 +44,14 @@ export function ProfileHubHeader({
     return (
       <section className="profile-hub-header profile-hub-header--sheet flex items-center gap-3 pb-0">
         <div
-          className="profile-hub-header__avatar profile-hub-header__avatar--sheet flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white/95 text-[var(--icon-default)] shadow-[0_4px_14px_rgb(0_0_0_/_0.22)]"
+          className="profile-hub-header__avatar profile-hub-header__avatar--sheet flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[var(--surface-hover)] text-[var(--icon-default)] shadow-[0_4px_14px_rgb(0_0_0_/_0.18)]"
           aria-hidden="true"
         >
           <ProfileAvatarIcon className="h-8 w-8" />
         </div>
 
         <div className="min-w-0 flex-1">
-          <p className="profile-hub-header__phone truncate text-xl font-semibold leading-tight tracking-tight text-white tabular-nums">
+          <p className="profile-hub-header__phone truncate text-xl font-semibold leading-tight tracking-tight text-[var(--text-primary)] tabular-nums">
             {formatPhoneForHeader(profile.phone)}
           </p>
           <div className="profile-hub-header__bank mt-1.5 flex min-w-0 items-center gap-2">
@@ -62,7 +62,7 @@ export function ProfileHubHeader({
             >
               {bankMarkLabel}
             </span>
-            <span className="profile-hub-header__account truncate text-sm font-medium tabular-nums text-white/90">
+            <span className="profile-hub-header__account truncate text-sm font-medium tabular-nums text-[var(--text-secondary)]">
               {profile.bankAccountNumber}
             </span>
           </div>

@@ -325,7 +325,7 @@ function DepositBankStep({
               inputMode="numeric"
               value={amountInput}
               onChange={(event) => onAmountChange(event.target.value)}
-              className="min-w-0 flex-1 bg-transparent px-3 text-2xl font-medium text-[var(--text-primary)] outline-none"
+              className="input-keep-size min-w-0 flex-1 bg-transparent px-3 text-2xl font-medium text-[var(--text-primary)] outline-none"
               aria-label="จำนวนเงินที่ต้องการฝาก"
             />
             <span className="shrink-0 px-3 text-sm text-[var(--text-muted)]">บาท</span>

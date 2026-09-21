@@ -1,0 +1,39 @@
+/**
+ * ป้องกัน auto-zoom ตอนโฟกัส input บนมือถือ
+ *
+ * Safari บน iOS จะซูมหน้าจอเข้าอัตโนมัติเมื่อโฟกัสช่องกรอกที่ computed font-size < 16px
+ * วิธีแก้ที่ปลอดภัย (ไม่ปิด pinch-zoom ของผู้ใช้) คือบังคับให้ช่องกรอกทุกตัวมีขนาด ≥ 16px
+ * เฉพาะบนจอมือถือ/แท็บเล็ต — ขนาดตัวอักษรฝั่ง desktop ยังเป็นไปตาม design.md เหมือนเดิม
+ *
+ * ไฟล์นี้ import ท้ายสุดใน globals.css และอยู่ "นอก @layer"
+ * จึงทับ utility ของ Tailwind (text-sm ฯลฯ ที่อยู่ใน layer utilities) ได้โดยไม่ต้องใช้ !important
+ */
+
+/* กัน iOS ขยายข้อความเองตอนหมุนจอ (ไม่เกี่ยวกับ zoom ตอนโฟกัส แต่ทำให้ขนาดคงที่) */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (max-width: 1023.98px) {
+  /**
+   * ครอบคลุมช่องกรอกที่เปิดคีย์บอร์ดได้ทุกชนิด
+   * ยกเว้น control ที่ไม่มีการพิมพ์ (checkbox/radio/range/file/color/ปุ่ม) และตัวที่ติดคลาส input-keep-size
+   */
+  input:not(
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="file"],
+      [type="color"],
+      [type="submit"],
+      [type="button"],
+      [type="reset"],
+      [type="image"],
+      .input-keep-size
+    ),
+  textarea:not(.input-keep-size),
+  select:not(.input-keep-size) {
+    font-size: 16px;
+  }
+}

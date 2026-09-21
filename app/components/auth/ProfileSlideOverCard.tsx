@@ -12,7 +12,6 @@ import { getIsDesktopViewport } from "../hub/useIsDesktop";
 import { ProfileHubBody } from "../profile/ProfileHubBody";
 import { ProfileHubHeader } from "../profile/ProfileHubHeader";
 import { CloseIcon } from "../ui/Icons";
-import { COSMIC_BTN_NAV } from "../ui/cosmicButtonClasses";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
   responsiveSheetCloseButtonClass,
@@ -110,7 +109,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
           <header className="profile-hub-sheet__hero shrink-0">
             <div className={`${RESPONSIVE_SHEET_HANDLE_CLASS} profile-hub-sheet__handle`} aria-hidden="true" />
 
-            <div className="profile-hub-sheet__hero-bar flex items-center justify-between gap-2 px-4 pb-1 pt-0.5">
+            <div className="profile-hub-sheet__hero-bar flex items-center justify-between gap-2 px-4 pb-3 pt-0.5">
               <Dialog.Title className="text-base font-medium text-white">โปรไฟล์</Dialog.Title>
               <Dialog.Close asChild>
                 <button
@@ -124,42 +123,42 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
                 </button>
               </Dialog.Close>
             </div>
-
-            <div className="profile-hub-sheet__hero-body px-4 pb-4 pt-1">
-              {loading ? (
-                <p className="py-4 text-center text-xs text-white/70">กำลังโหลด...</p>
-              ) : null}
-
-              {!loading && profile === null ? (
-                <p className="py-4 text-center text-xs text-white/70">ไม่พบข้อมูลโปรไฟล์</p>
-              ) : null}
-
-              {!loading && profile ? (
-                <ProfileHubHeader profile={profile} variant="sheet" />
-              ) : null}
-            </div>
           </header>
 
           <div className="profile-hub-sheet__pane flex min-h-0 flex-1 flex-col">
-            <div
-              className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4"
-            >
+            <div className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4">
+              {loading ? (
+                <p className="py-4 text-center text-xs text-[var(--text-muted)]">กำลังโหลด...</p>
+              ) : null}
+
+              {!loading && profile === null ? (
+                <p className="py-4 text-center text-xs text-[var(--text-muted)]">ไม่พบข้อมูลโปรไฟล์</p>
+              ) : null}
+
               {!loading && profile ? (
-                <ProfileHubBody
-                  profile={profile}
-                  showHeader={false}
-                  onOpenAccountDetail={handleOpenAccountPage}
-                  onOpenTransactions={handleOpenTransactions}
-                  onOpenLossRebate={handleOpenLossRebate}
-                  onOpenVip={handleOpenVip}
-                  onLogout={() => void handleLogout()}
-                />
+                <>
+                  <div className="mb-3 px-0.5">
+                    <ProfileHubHeader profile={profile} variant="sheet" />
+                  </div>
+                  <ProfileHubBody
+                    profile={profile}
+                    showHeader={false}
+                    onOpenAccountDetail={handleOpenAccountPage}
+                    onOpenTransactions={handleOpenTransactions}
+                    onOpenLossRebate={handleOpenLossRebate}
+                    onOpenVip={handleOpenVip}
+                    onLogout={() => void handleLogout()}
+                  />
+                </>
               ) : null}
             </div>
 
             <footer className="profile-hub-sheet__footer shrink-0 border-t border-[var(--glass-border)] px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
               <Dialog.Close asChild>
-                <button type="button" className={`${COSMIC_BTN_NAV} w-full justify-center py-3`}>
+                <button
+                  type="button"
+                  className="cosmic-sheet-soft-glass flex w-full items-center justify-center rounded-[var(--radius-panel)] py-3.5 text-sm font-medium text-[var(--text-primary)] transition-[background,transform] duration-[var(--motion-fast)]"
+                >
                   ปิด
                 </button>
               </Dialog.Close>

@@ -279,16 +279,16 @@ button.cosmic-sheet-soft-glass--interactive:active {
   }
 }
 
-/** ใต้หัวม่วง — โทน glass-card--soft เดียวกับการ์ด lobby */
+/** ใต้หัว — โปร่ง ใช้พื้น --cosmic-mobile-sheet-* จาก shell (เดียวกับฝาก/ถอน) */
 .profile-hub-sheet__pane {
   display: flex;
   flex-direction: column;
   min-height: 0;
   flex: 1;
-  background: var(--glass-fill-subtle);
-  -webkit-backdrop-filter: blur(12px) saturate(1.12);
-  backdrop-filter: blur(12px) saturate(1.12);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08);
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
 }
 
 .profile-hub-sheet__hero {
@@ -311,7 +311,17 @@ button.cosmic-sheet-soft-glass--interactive:active {
   background: transparent;
 }
 
-/** รายการเมนูแบน — โทน Dexsport-style ใน sheet */
+/**
+ * รายการเมนูแบน — ตัวอักษรชัดแบบ Dexsport · ไอคอนขาว
+ * ProfileHubBody layout="sheet"
+ */
+.profile-hub-sheet .profile-hub-row--sheet {
+  gap: 0.875rem;
+  padding-block: 0.75rem;
+  padding-inline: 0.35rem;
+  color: var(--text-primary);
+}
+
 .profile-hub-sheet .profile-hub-row--sheet:hover,
 .profile-hub-sheet .profile-hub-row--sheet:focus-visible {
   background: rgb(255 255 255 / 0.06);
@@ -319,16 +329,38 @@ button.cosmic-sheet-soft-glass--interactive:active {
 
 .profile-hub-sheet .profile-hub-row--sheet .profile-hub-row__icon {
   background: transparent;
+  color: var(--text-primary);
+}
+
+.profile-hub-sheet .profile-hub-row--sheet .profile-hub-row__title {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+}
+
+.profile-hub-sheet .profile-hub-row--sheet .profile-hub-row__trailing {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .profile-hub-sheet .profile-hub-logout {
+  gap: 0.875rem;
+  padding-block: 0.75rem;
+  padding-inline: 0.35rem;
   color: var(--destructive);
+  font-size: 0.9375rem;
 }
 
 .profile-hub-sheet .profile-hub-logout:hover,
 .profile-hub-sheet .profile-hub-logout:focus-visible {
   background: color-mix(in srgb, var(--destructive) 12%, transparent);
   color: var(--destructive);
+}
+
+.profile-hub-sheet .profile-hub-sheet__footer {
+  border-color: rgb(255 255 255 / 0.08);
 }
 
 @media (min-width: 1024px) {
