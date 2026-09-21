@@ -44,7 +44,7 @@ export function ThaiLottoBetTypePicker({
               type="button"
               aria-pressed={isActive}
               onClick={() => onGroupChange(group.id)}
-              className={`cosmic-segment-btn text-sm ${
+              className={`cosmic-segment-btn text-xs ${
                 isActive ? "is-active" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -67,9 +67,9 @@ export function ThaiLottoBetTypePicker({
               type="button"
               aria-pressed={isSelected}
               onClick={() => onToggleType(type.id)}
-              className={`thai-lotto-type-chip flex min-h-[2.625rem] flex-col items-start justify-center gap-0.5 px-2 py-1.5 text-left${isSelected ? " is-active" : ""}`}
+              className={`thai-lotto-type-chip flex min-h-[2.5rem] min-w-0 flex-col items-start justify-center gap-0.5 px-1.5 py-1.5 text-left${isSelected ? " is-active" : ""}`}
             >
-              <span className="thai-lotto-type-chip__label whitespace-nowrap">{type.label}</span>
+              <span className="thai-lotto-type-chip__label max-w-full truncate">{type.label}</span>
               <span className="thai-lotto-type-chip__rate">จ่าย {type.payoutRate}</span>
             </button>
           );

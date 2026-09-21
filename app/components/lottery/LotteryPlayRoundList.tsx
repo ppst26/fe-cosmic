@@ -123,52 +123,33 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
   }
 
   const openRounds = cardRounds.filter((round) => round.status === "open");
-  const otherRounds = cardRounds.filter((round) => round.status !== "open");
 
   return (
     <div className="lottery-play-rounds flex flex-col gap-4">
+      {openRounds.length === 0 ? (
+        <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ยังไม่มีรอบที่เปิดรับแทง</p>
+      ) : null}
       {openRounds.map((round) => (
         <article
           key={round.id}
-          className="lottery-play-round-card lottery-play-round-card--open flex flex-col gap-3 p-3"
+          className="lottery-play-round-card lottery-play-round-card--open flex flex-col items-center gap-3 p-3 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left"
         >
-          <div className="lottery-play-round-card__content">
-            <p className="lottery-play-round-card__title">{round.drawLabel}</p>
-            <p className="lottery-play-round-card__schedule">{round.scheduleLabel}</p>
+          <div className="lottery-play-round-card__content flex w-full flex-col items-center gap-1 sm:items-start">
+            <p className="lottery-play-round-card__title m-0">{round.drawLabel}</p>
             {nowMs !== null ? (
-              <p className="lottery-play-round-card__countdown">
+              <p className="lottery-play-round-card__countdown m-0">
                 ปิดรับใน {formatCountdown(new Date(round.closeAt).getTime() - nowMs)}
               </p>
             ) : null}
           </div>
           <Link
             href={`${basePath}/${round.id}`}
-            className="cosmic-btn-nav cosmic-btn-nav--lg lottery-play-round-card__cta w-full max-w-[12rem]"
+            className="cosmic-btn-nav cosmic-btn-nav--lg lottery-play-round-card__cta w-full max-w-[12rem] shrink-0 sm:w-auto"
           >
             แทงหวย
           </Link>
         </article>
       ))}
-
-      {otherRounds.length > 0 ? (
-        <section className="lottery-play-rounds__upcoming" aria-label="รอบถัดไป">
-          <ul className="lottery-play-rounds__queue">
-            {otherRounds.map((round) => (
-              <li key={round.id}>
-                <article
-                  className={`lottery-play-round-card flex flex-col gap-3 p-3${
-                    round.status === "upcoming" ? " lottery-play-round-card--upcoming" : ""
-                  }`}
-                >
-                  <div className="lottery-play-round-card__content">
-                    <p className="lottery-play-round-card__title">{round.drawLabel}</p>
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
     </div>
   );
 }

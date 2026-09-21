@@ -355,14 +355,6 @@
     @apply text-base font-medium;
   }
 
-  .lottery-play-round-card__schedule {
-    @apply text-xs;
-  }
-
-  .lottery-play-round-card__schedule {
-    @apply text-sm font-medium;
-  }
-
   .lottery-play-round-card__countdown {
     @apply text-xs font-medium;
   }
@@ -480,7 +472,7 @@
   }
 
   .thai-lotto-type-chip__label {
-    @apply text-sm font-medium;
+    @apply text-xs font-medium;
   }
 
   .thai-lotto-type-chip__rate {

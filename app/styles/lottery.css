@@ -190,10 +190,6 @@
   color: var(--text-primary);
 }
 
-.lottery-play-round-card__schedule {
-  color: var(--text-secondary);
-}
-
 .lottery-play-round-card__countdown {
   color: var(--success);
 }

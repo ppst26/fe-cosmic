@@ -123,7 +123,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
       <div
         className={cn(
           "lottery-market-main min-h-0 min-w-0",
-          "max-lg:grid max-lg:h-full max-lg:max-h-full max-lg:grid-cols-[minmax(0,1fr)] max-lg:grid-rows-[auto_minmax(0,1fr)] max-lg:overflow-hidden max-lg:p-0",
+          "max-lg:grid max-lg:h-full max-lg:max-h-full max-lg:grid-cols-[minmax(0,1fr)] max-lg:grid-rows-[auto_minmax(0,1fr)] max-lg:gap-3 max-lg:overflow-hidden max-lg:p-0",
           "lg:flex lg:h-full lg:flex-col lg:overflow-hidden lg:px-1 lg:py-2",
         )}
       >
@@ -131,7 +131,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
           className={cn(
             "lottery-market-banner",
             "flex shrink-0 flex-nowrap items-center border-0 bg-[var(--surface-solid-inner)]",
-            "max-lg:relative max-lg:z-[2] max-lg:justify-center max-lg:gap-1 max-lg:rounded-[calc(var(--radius-panel)-4px)] max-lg:p-2",
+            "max-lg:relative max-lg:z-[2] max-lg:min-h-[4.25rem] max-lg:justify-center max-lg:gap-1.5 max-lg:rounded-[calc(var(--radius-panel)-4px)] max-lg:px-3 max-lg:py-3",
             "max-lg:shadow-[0_1px_0_color-mix(in_srgb,var(--border-subtle)_55%,transparent)]",
             "lg:gap-2 lg:rounded-[var(--radius-panel)] lg:p-4",
             "[&>.lottery-flag]:max-lg:hidden",
@@ -148,7 +148,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
             <h1
               className={cn(
                 "lottery-market-banner__title m-0 font-medium text-[var(--text-primary)]",
-                "max-lg:text-[0.6875rem] max-lg:leading-tight",
+                "max-lg:text-xs max-lg:leading-snug",
                 "lg:text-base lg:leading-snug",
               )}
               style={{ fontFamily: "var(--font-heading)" }}
@@ -159,7 +159,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               href="/promotions"
               className={cn(
                 "lottery-market-banner__rules text-[var(--text-secondary)] no-underline hover:text-[var(--text-primary)] hover:underline",
-                "max-lg:mt-0.5 max-lg:block max-lg:text-[0.625rem] max-lg:leading-tight",
+                "max-lg:mt-1 max-lg:block max-lg:text-[0.6875rem] max-lg:leading-snug",
                 "lg:mt-1 lg:inline-block lg:text-xs",
               )}
             >
