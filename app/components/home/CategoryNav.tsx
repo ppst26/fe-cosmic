@@ -189,7 +189,7 @@ export function CategoryNav({
                   )}
                   aria-hidden="true"
                 >
-                  {getCategoryIcon(category.id, "h-[24px] w-[24px]")}
+                  {getCategoryIcon(category.id, "h-[23px] w-[23px]")}
                 </span>
               </div>
               <span
