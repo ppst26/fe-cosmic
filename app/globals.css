@@ -37,6 +37,7 @@
 @import "./styles/lottery.css";
 @import "./styles/carousel.css";
 @import "./styles/footer.css";
+@import "./styles/dashboard.css";
 
 /* ── Utilities ── */
 @import "./styles/focus-input.css";

@@ -41,8 +41,8 @@
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   transition:
     border-color var(--motion-fast) ease,
-    box-shadow var(--motion-fast) ease,
-    background var(--motion-fast) ease;
+    box-shadow var(--motion-fast) ease;
+    /* ลบ background transition — trigger repaint ทุก frame ระหว่าง hover */
 }
 
 .glass-card--feature-action:hover {

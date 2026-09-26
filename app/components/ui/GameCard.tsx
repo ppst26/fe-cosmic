@@ -19,7 +19,8 @@ export function GameCard({ game }: GameCardProps) {
     <Link
       href={href}
       aria-label={`${title} — ${provider}`}
-      className="group relative block aspect-[3/4] w-full min-w-0 overflow-hidden rounded-[var(--radius-panel)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110"
+      className="group relative block aspect-[3/4] w-full min-w-0 overflow-hidden rounded-[var(--radius-panel)] bg-[var(--surface-mid)] transition-opacity duration-[var(--motion-fast)] hover:opacity-90"
+      style={{ willChange: "transform" }}
     >
       {coverSrc ? (
         <Image
@@ -27,6 +28,8 @@ export function GameCard({ game }: GameCardProps) {
           alt=""
           fill
           sizes="(min-width: 1024px) 11vw, (min-width: 768px) 18vw, 33vw"
+          loading="lazy"
+          decoding="async"
           className="object-cover"
         />
       ) : (

@@ -51,7 +51,7 @@
   gap: 0.625rem;
 }
 
-/* ── หมวดหมู่เกม: ไอคอนกล่องมน + ไตเติ้ลด้านนอก (ม่วงเข้ม ไล่เฉดไปดำ) ── */
+/* ── หมวดหมู่เกม: ไอคอนกล่องมน สไตล์สีทึบแบบ desktop (ไม่ไล่สี) ── */
 .category-nav__item {
   cursor: pointer;
   border: 0;
@@ -61,29 +61,36 @@
 }
 
 .category-nav__icon-box {
-  background: linear-gradient(180deg, #241a3f 0%, #150f27 55%, #080610 100%);
+  background: var(--surface-mid);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 4px 12px rgba(0, 0, 0, 0.35);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.28);
   border-radius: 14px;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
 .category-nav__item:hover:not(.is-active) .category-nav__icon-box {
-  background: linear-gradient(180deg, #2d2250 0%, #1a1332 55%, #0c0918 100%);
-  border-color: rgba(155, 124, 240, 0.35);
+  background: var(--surface-hover);
+  border-color: rgba(168, 125, 255, 0.3);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 6px 16px rgba(0, 0, 0, 0.45);
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 16px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
 }
 
 .category-nav__item.is-active .category-nav__icon-box {
-  background: linear-gradient(180deg, #3f277a 0%, #25164f 55%, #100824 100%);
-  border: 1px solid rgba(168, 125, 255, 0.7);
+  background: var(--surface-selected);
+  border: 1px solid rgba(168, 125, 255, 0.75);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    0 0 14px rgba(119, 71, 229, 0.45),
-    0 6px 18px rgba(0, 0, 0, 0.5);
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 14px rgba(124, 108, 240, 0.35),
+    0 4px 14px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
 }
 
 @media (min-width: 1024px) {

@@ -19,16 +19,27 @@ function RightMenuGlassCardContent({
   title,
   subtitle,
   visualSrc,
+  isBg,
   emphasis,
 }: {
   title: string;
   subtitle: string;
   visualSrc: string;
+  isBg?: boolean;
   emphasis?: boolean;
 }) {
   return (
-    <div className="lobby-right-menu-card__body">
-      <div className="lobby-right-menu-card__text min-w-0">
+    <div className="lobby-right-menu-card__body relative overflow-hidden">
+      {isBg ? (
+        <img
+          src={visualSrc}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-right pointer-events-none"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : null}
+      <div className={`lobby-right-menu-card__text min-w-0 ${isBg ? "relative z-10" : ""}`}>
         <span
           className={`lobby-right-menu-card__title cosmic-type-rail-card-title ${emphasis ? "lobby-right-menu-card__title--emphasis text-xl lg:text-2xl" : ""}`}
         >
@@ -36,9 +47,11 @@ function RightMenuGlassCardContent({
         </span>
         <span className="lobby-right-menu-card__subtitle cosmic-type-rail-card-subtitle">{subtitle}</span>
       </div>
-      <div className="lobby-right-menu-card__visual" aria-hidden="true">
-        <img src={visualSrc} alt="" className="lobby-right-menu-card__visual-img" loading="lazy" decoding="async" />
-      </div>
+      {!isBg ? (
+        <div className="lobby-right-menu-card__visual" aria-hidden="true">
+          <img src={visualSrc} alt="" className="lobby-right-menu-card__visual-img" loading="lazy" decoding="async" />
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -54,11 +67,13 @@ export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMen
           "lobby-right-menu-card--glass",
         ].join(" ");
 
+        const isBg = Boolean("isBg" in tile && tile.isBg);
         const body = (
           <RightMenuGlassCardContent
             title={tile.title}
             subtitle={tile.subtitle}
             visualSrc={tile.visualSrc}
+            isBg={isBg}
             emphasis={false}
           />
         );

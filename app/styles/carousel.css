@@ -14,6 +14,8 @@
   padding-block: var(--space-1);
   -ms-overflow-style: none;
   scrollbar-width: none;
+  will-change: scroll-position;        /* โปรโมต scroll เป็น compositor layer */
+  contain: layout style paint;         /* ลด recalc ทั้งหน้าขณะ swipe */
 }
 .carousel-track::-webkit-scrollbar {
   display: none;

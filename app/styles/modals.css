@@ -5,39 +5,42 @@
   backdrop-filter: none;
 }
 
-/** โครง modal / bottom sheet — glass shell มุมจาก --radius-panel */
+/** โครง modal / bottom sheet — สไตล์เดียวกับ mobile sheet (สีเข้ม เบลอน้อย 8px สบายตา ไม่กิน GPU) */
 .cosmic-modal-shell {
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--cosmic-mobile-sheet-border);
   border-radius: var(--radius-panel);
-  background: var(--glass-fill);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  box-shadow: var(--glass-shadow);
+  background: var(--cosmic-mobile-sheet-bg);
+  -webkit-backdrop-filter: blur(var(--cosmic-mobile-sheet-blur))
+    saturate(var(--cosmic-mobile-sheet-saturate));
+  backdrop-filter: blur(var(--cosmic-mobile-sheet-blur))
+    saturate(var(--cosmic-mobile-sheet-saturate));
+  box-shadow:
+    0 24px 56px rgb(0 0 0 / 0.65),
+    0 4px 16px rgb(0 0 0 / 0.3),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
 }
 
-/** มือถือ — shell ไม่ blur พื้นหลัง (โทน glass จาก gradient ทึบขึ้น) */
+/** โครงสร้างสำหรับ .cosmic-mobile-sheet ทั้งบน mobile และ desktop */
+.cosmic-mobile-sheet.cosmic-modal-shell {
+  border-color: var(--cosmic-mobile-sheet-border);
+  background: var(--cosmic-mobile-sheet-bg);
+  -webkit-backdrop-filter: blur(var(--cosmic-mobile-sheet-blur))
+    saturate(var(--cosmic-mobile-sheet-saturate));
+  backdrop-filter: blur(var(--cosmic-mobile-sheet-blur))
+    saturate(var(--cosmic-mobile-sheet-saturate));
+  box-shadow:
+    0 24px 56px rgb(0 0 0 / 0.65),
+    0 4px 16px rgb(0 0 0 / 0.3),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+/** มือถือ — ปรับเงาขึ้นด้านบนตามตำแหน่ง bottom sheet */
 @media (max-width: 1023px) {
   :is(.cosmic-modal-shell, .cosmic-modal-shell--hub, .cosmic-modal-shell--lobby) {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    background: linear-gradient(
-      145deg,
-      rgb(36 32 48 / 0.96),
-      rgb(22 18 32 / 0.98)
-    );
+    background: var(--cosmic-mobile-sheet-bg);
   }
 
-  /**
-   * Bottom sheet มือถือ — โปร่ง + blur เห็น lobby ด้านหลัง (tokens --cosmic-mobile-sheet-*)
-   * responsiveSheetDialog.ts · ฝาก/ถอน/คูปอง/login/signup/hub/profile
-   */
   .cosmic-mobile-sheet.cosmic-modal-shell {
-    border-color: var(--cosmic-mobile-sheet-border);
-    background: var(--cosmic-mobile-sheet-bg);
-    -webkit-backdrop-filter: blur(var(--cosmic-mobile-sheet-blur))
-      saturate(var(--cosmic-mobile-sheet-saturate));
-    backdrop-filter: blur(var(--cosmic-mobile-sheet-blur))
-      saturate(var(--cosmic-mobile-sheet-saturate));
     box-shadow: var(--cosmic-mobile-sheet-shadow);
   }
 
@@ -50,22 +53,23 @@
       saturate(var(--cosmic-mobile-sheet-saturate));
     box-shadow: var(--cosmic-mobile-sheet-shadow);
   }
+}
 
+/** ปุ่ม/คอนโทรลใน modal/sheet — soft glass สีเข้ม เบลอน้อยทั้งบน mobile และ desktop */
 .cosmic-mobile-sheet .glass-control {
-    border-color: var(--sheet-soft-border);
-    background: var(--sheet-soft-fill);
-    -webkit-backdrop-filter: blur(var(--sheet-soft-blur)) saturate(1.05);
-    backdrop-filter: blur(var(--sheet-soft-blur)) saturate(1.05);
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
-  }
+  border-color: var(--sheet-soft-border);
+  background: var(--sheet-soft-fill);
+  -webkit-backdrop-filter: blur(var(--sheet-soft-blur)) saturate(1.05);
+  backdrop-filter: blur(var(--sheet-soft-blur)) saturate(1.05);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
 
 .cosmic-mobile-sheet .glass-control:hover:not(:disabled):not(.is-active) {
-    background: var(--sheet-soft-fill-hover);
-  }
+  background: var(--sheet-soft-fill-hover);
+}
 
 .cosmic-modal-shell--hub {
-    background: linear-gradient(155deg, rgb(28 26 36 / 0.98), rgb(14 13 20 / 0.99));
-  }
+  background: linear-gradient(155deg, rgb(28 26 36 / 0.98), rgb(14 13 20 / 0.99));
 }
 
 .cosmic-sheet-shell {

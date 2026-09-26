@@ -176,3 +176,15 @@ body {
 
 /* Typography bridge — ฟอนต์จาก hub/lottery/header (ไม่ใส่ @layer ในไฟล์แยก — Turbopack) */
 @import "./typography-bridge.css" layer(components);
+
+/* ── Accessibility: ลด animation เมื่อ OS ขอ ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

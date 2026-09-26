@@ -9,7 +9,7 @@ const notoSansThai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
   subsets: ["thai", "latin"],
   weight: ["400", "500"],
-  display: "swap",
+  display: "optional", // ลด CLS — ไม่ swap font หลัง paint (จาก 'swap')
 });
 
 const geistMono = Geist_Mono({

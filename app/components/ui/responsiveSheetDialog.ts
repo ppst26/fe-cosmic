@@ -57,9 +57,7 @@ export function responsiveSheetContentClass(
 
   const sheetSurfaceChrome = isHubSheet
     ? "rounded-t-[24px] border-0"
-    : isProfileSheet
-      ? "rounded-t-[20px] border-t border-[var(--cosmic-mobile-sheet-border)] lg:bg-[var(--cosmic-dialog-shell-bg)]"
-      : "rounded-t-[20px] border-t border-[var(--cosmic-mobile-sheet-border)] max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)]";
+    : "rounded-t-[20px] border-t border-[var(--cosmic-mobile-sheet-border)]";
 
   return cn(
     "cosmic-mobile-sheet cosmic-modal-shell relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
@@ -73,11 +71,12 @@ export function responsiveSheetContentClass(
     "lg:inset-auto lg:left-1/2 lg:top-1/2 lg:bottom-auto lg:-translate-x-1/2 lg:-translate-y-1/2",
     lgWidth,
     lgMaxHeight,
-    isHubSheet ? "lg:min-h-0 lg:rounded-[24px] lg:border-0" : "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
-    !isHubSheet && "lg:bg-[var(--cosmic-dialog-shell-bg)] lg:backdrop-blur-none",
+    isHubSheet
+      ? "lg:min-h-0 lg:rounded-[24px] lg:border lg:border-[var(--cosmic-mobile-sheet-border)]"
+      : "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border lg:border-[var(--cosmic-mobile-sheet-border)]",
     isHubSheet
       ? "lg:shadow-none"
-      : "lg:shadow-[0_0_32px_rgba(119,112,183,0.2),0_24px_48px_rgba(0,0,0,0.55)]",
+      : "lg:shadow-[0_24px_56px_rgba(0,0,0,0.6),0_0_32px_rgba(119,112,183,0.12)]",
     "lg:data-[state=closed]:zoom-out-95 lg:data-[state=open]:zoom-in-95 lg:duration-200",
     extra,
   );
@@ -119,8 +118,8 @@ export function RESPONSIVE_SHEET_HEADER_ROW_CLASS(extra?: string) {
 export function responsiveAuthSheetContentClass(extra?: string) {
   return cn(
     responsiveSheetContentClass(undefined, { variant: "signup" }),
-    "cosmic-sheet-shell max-lg:bg-transparent lg:bg-[var(--cosmic-dialog-shell-bg)] shadow-[0_-12px_40px_rgba(0,0,0,0.45)]",
-    "lg:shadow-[0_0_32px_rgba(119,112,183,0.2),0_24px_48px_rgba(0,0,0,0.55)]",
+    "cosmic-sheet-shell shadow-[0_-12px_40px_rgba(0,0,0,0.45)]",
+    "lg:shadow-[0_24px_56px_rgba(0,0,0,0.6),0_0_32px_rgba(119,112,183,0.12)]",
     extra,
   );
 }

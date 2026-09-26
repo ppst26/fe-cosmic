@@ -1241,10 +1241,10 @@
 
 /* Dialog ผลส่งโพย — LotteryBetResultDialog.tsx */
 .lottery-bet-result-dialog.cosmic-modal-shell {
-  border: 1px solid var(--glass-border);
-  background: linear-gradient(145deg, rgb(30 28 38 / 0.72), rgb(14 12 20 / 0.78));
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--cosmic-mobile-sheet-border);
+  background: var(--cosmic-mobile-sheet-bg);
+  -webkit-backdrop-filter: blur(var(--cosmic-mobile-sheet-blur)) saturate(var(--cosmic-mobile-sheet-saturate));
+  backdrop-filter: blur(var(--cosmic-mobile-sheet-blur)) saturate(var(--cosmic-mobile-sheet-saturate));
 }
 
 .lottery-bet-result-dialog__icon {

@@ -43,7 +43,7 @@
     rgb(22 18 28 / 0.78) 0%,
     rgb(12 10 16 / 0.86) 100%
   );
-  --cosmic-mobile-sheet-blur: 14px;
+  --cosmic-mobile-sheet-blur: 8px;   /* ลดจาก 14px — sheet blur มือถือ */
   --cosmic-mobile-sheet-saturate: 1.06;
   --cosmic-mobile-sheet-border: rgb(255 255 255 / 0.09);
   --cosmic-mobile-sheet-shadow:
@@ -90,8 +90,8 @@
   --sheet-field-border: rgb(255 255 255 / 0.11);
   --sheet-field-border-focus: rgb(255 255 255 / 0.15);
   --sheet-field-addon-bg: rgb(255 255 255 / 0.05);
-  --glass-blur: 32px;
-  --glass-blur-overlay: 28px;
+  --glass-blur: 20px;          /* ลดจาก 32px — ลด GPU overdraw มือถือ */
+  --glass-blur-overlay: 18px;  /* ลดจาก 28px */
   /* Scrim dialog — ไม่ blur (ประหยัด GPU มือถือ) */
   --dialog-overlay-bg: rgb(0 0 0 / 0.74);
   --glass-saturate: 1.28;
@@ -170,8 +170,8 @@
   /** gutter แนวนอนมาตรฐาน — หน้าแรก (.page-shell) และ standalone ใช้ค่าเดียวกัน */
   --layout-inline-gutter: var(--page-gutter);
   --content-max: 1200px;
-  --nav-height: 64px;
-  --nav-float-offset: 12px;
+  --nav-height: 84px;
+  --nav-float-offset: 0px;
   --nav-safe: env(safe-area-inset-bottom, 0px);
   --nav-scroll-gap: 20px;
   --nav-text: #9199a8;

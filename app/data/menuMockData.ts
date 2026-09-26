@@ -14,12 +14,13 @@ export interface MenuDialogTile {
 export interface MenuDialogSection {
   id: string;
   sectionLabel: string;
-  columns: 3 | 4;
+  columns: 2 | 3 | 4;
+  layout?: "vertical" | "horizontal";
   items: MenuDialogTile[];
 }
 
 /**
- * กลุ่มเมนู dialog — เลเบลด้านบนแต่ละกลุ่ม · grid 3 / 4 / 4
+ * กลุ่มเมนู dialog — เลเบลด้านบนแต่ละกลุ่ม · grid 3 / 2 (row) / 4
  * ใช้โดย app/components/layout/RightMenuDrawer.tsx
  */
 export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
@@ -27,6 +28,7 @@ export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
     id: "personal",
     sectionLabel: "ข้อมูลส่วนตัว",
     columns: 3,
+    layout: "vertical",
     items: [
       { id: "profile", label: "โปรไฟล์", href: "/profile/account", iconId: "profile" },
       { id: "transactions", label: "ธุรกรรม", href: "/transactions", iconId: "transactions" },
@@ -36,7 +38,8 @@ export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
   {
     id: "privileges",
     sectionLabel: "สิทธิพิเศษ",
-    columns: 4,
+    columns: 2,
+    layout: "horizontal",
     items: [
       { id: "promotions", label: "โปรโมชั่น", href: "/promotions", iconId: "promotions" },
       { id: "activities", label: "กิจกรรม", href: "/event", iconId: "activities" },
@@ -48,6 +51,7 @@ export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
     id: "rewards",
     sectionLabel: "ลุ้นรางวัล",
     columns: 4,
+    layout: "vertical",
     items: [
       { id: "wheel", label: "วงล้อ", href: "/wheel", iconId: "wheel" },
       { id: "gems-shop", label: "ร้านค้า Gems", href: "/gems-store", iconId: "gems" },

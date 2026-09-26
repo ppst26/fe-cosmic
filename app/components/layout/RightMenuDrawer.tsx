@@ -14,6 +14,7 @@ import {
   MENU_DIALOG_MODEL_SRC,
   MENU_DIALOG_SECTIONS,
   type MenuDialogAction,
+  type MenuDialogSection,
   type MenuDialogTile,
 } from "../../data/menuMockData";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
@@ -63,22 +64,32 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     }
   };
 
-  const renderItem = (tile: MenuDialogTile) => {
-    const body = (
-      <>
-        <div className="menu-item__icon-box" aria-hidden="true">
-          <MenuItemIcon iconId={tile.iconId} variant="svg" />
-        </div>
-        <span>{tile.label}</span>
-      </>
+  const renderItem = (tile: MenuDialogTile, section: MenuDialogSection) => {
+    const isHorizontal = section.layout === "horizontal";
+    const body = isHorizontal ? (
+      <div className="menu-item__inner menu-item__inner--horizontal flex w-full items-center justify-start gap-3 px-3.5 py-3">
+        <span className="menu-item__icon flex shrink-0 items-center justify-center text-white" aria-hidden="true">
+          <MenuItemIcon iconId={tile.iconId} className="h-6 w-6 text-white" />
+        </span>
+        <span className="menu-item__label text-[13px] font-medium text-white truncate">{tile.label}</span>
+      </div>
+    ) : (
+      <div className="menu-item__inner menu-item__inner--vertical flex flex-col items-center justify-center gap-1.5 w-full py-3 px-1 text-center">
+        <span className="menu-item__icon flex shrink-0 items-center justify-center text-white" aria-hidden="true">
+          <MenuItemIcon iconId={tile.iconId} className={section.columns === 3 ? "h-7 w-7 text-white" : "h-6 w-6 text-white"} />
+        </span>
+        <span className="menu-item__label text-[13px] font-medium text-white truncate max-w-full leading-tight">{tile.label}</span>
+      </div>
     );
+
+    const buttonClass = `menu-item menu-item--card ${isHorizontal ? "menu-item--row" : "menu-item--col"}`;
 
     if (tile.action) {
       return (
         <button
           key={tile.id}
           type="button"
-          className="menu-item menu-item--solid"
+          className={buttonClass}
           onClick={() => runAction(tile.action!)}
         >
           {body}
@@ -91,7 +102,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       <Link
         key={tile.id}
         href={href}
-        className="menu-item menu-item--solid"
+        className={buttonClass}
         onClick={(event) => {
           if (href.startsWith("/")) {
             event.preventDefault();
@@ -121,7 +132,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             ) : null}
 
             <div className="menu-panel glass-menu-panel">
-              <Dialog.Title id="menu-title" className="menu-tab text-2xl font-medium leading-none">
+              <Dialog.Title id="menu-title" className="menu-tab text-2xl font-bold leading-none text-white">
                 เมนู
               </Dialog.Title>
 
@@ -140,14 +151,20 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
                   >
                     <h3
                       id={`menu-section-${section.id}`}
-                      className="text-xs font-medium text-[var(--menu-muted)]"
+                      className="text-[15px] font-semibold text-white mb-2"
                     >
                       {section.sectionLabel}
                     </h3>
                     <div
-                      className={`menu-grid ${section.columns === 4 ? "menu-grid--four" : "menu-grid--three"}`}
+                      className={`menu-grid ${
+                        section.columns === 2
+                          ? "menu-grid--two"
+                          : section.columns === 3
+                            ? "menu-grid--three"
+                            : "menu-grid--four"
+                      }`}
                     >
-                      {section.items.map((tile) => renderItem(tile))}
+                      {section.items.map((tile) => renderItem(tile, section))}
                     </div>
                   </section>
                 ))}

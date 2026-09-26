@@ -29,18 +29,36 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
           isWideSpan && "lobby-hub-menu-card--span-2",
         );
 
+        const isBg = Boolean("isBg" in tile && tile.isBg);
         const body = (
           <>
-            <span className="lobby-hub-menu-card__title cosmic-type-hub-title">{tile.title}</span>
-            <span className="lobby-hub-menu-card__visual" aria-hidden="true">
+            {isBg ? (
               <img
                 src={tile.visualSrc}
                 alt=""
-                className="lobby-hub-menu-card__visual-img"
+                className="absolute inset-0 h-full w-full object-cover object-right pointer-events-none"
                 loading="lazy"
                 decoding="async"
               />
+            ) : null}
+            <span
+              className={`lobby-hub-menu-card__title cosmic-type-hub-title ${
+                isBg ? "relative z-10 max-w-[54%] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]" : ""
+              }`}
+            >
+              {tile.title}
             </span>
+            {!isBg ? (
+              <span className="lobby-hub-menu-card__visual" aria-hidden="true">
+                <img
+                  src={tile.visualSrc}
+                  alt=""
+                  className="lobby-hub-menu-card__visual-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            ) : null}
           </>
         );
 
