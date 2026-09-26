@@ -133,10 +133,6 @@ export function BottomNav({
     <>
       {showSpacer ? <div className={styles.spacer} aria-hidden="true" /> : null}
       <nav className={styles.nav} aria-label="เมนูหลัก">
-        {/* Fixed-width crest keeps its curve circular at every viewport width. */}
-        <svg className={styles.crest} viewBox="0 0 144 44" aria-hidden="true">
-          <path d="M0 44C17 44 24 39 32 23C40 7 52 0 72 0C92 0 104 7 112 23C120 39 127 44 144 44Z" />
-        </svg>
         <div className={styles.surface} aria-hidden="true" />
         <div className={styles.items}>
           {defaultItems.map(({ id, label }) => {
@@ -146,7 +142,7 @@ export function BottomNav({
               <button
                 type="button"
                 key={id}
-                className={`${styles.item} ${isMenu ? styles.menu : ""}`}
+                className={styles.item}
                 data-active={selected}
                 onClick={() => handleAction(id)}
                 aria-haspopup={isMenu ? "dialog" : undefined}

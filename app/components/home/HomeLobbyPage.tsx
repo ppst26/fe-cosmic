@@ -12,7 +12,6 @@ import { LobbyDesktopSidebarColumn } from "../layout/LobbyDesktopSidebarColumn";
 import { HomeDesktopPeekCarousel } from "./HomeDesktopPeekCarousel";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { PromoCarousel } from "./PromoCarousel";
-import { CosmicIntro } from "./CosmicIntro";
 import { PopularHighlights } from "./PopularHighlights";
 import { CategoryNav } from "./CategoryNav";
 import { LobbyAnnouncementMarquee } from "./LobbyAnnouncementMarquee";
@@ -32,7 +31,6 @@ import {
   CATEGORIES_DATA,
   HOME_DESKTOP_PEEK_CAROUSEL_DATA,
   PROMO_CAROUSEL_DATA,
-  INTRO_STATS_DATA,
   POPULAR_HIGHLIGHTS_DATA,
   GAME_SECTIONS_DATA,
   HOME_LOBBY_TOURNAMENT_ITEMS,
@@ -171,27 +169,6 @@ export function HomeLobbyPage() {
                       <WelcomeBanner onCtaClick={openSignUp} />
                     </div>
 
-                    {/* Sentinel สำหรับตรวจจับตำแหน่ง viewport เมื่อ scroll ถึงขอบล่างของ Header */}
-                    <div ref={categorySentinelRef} className="h-0 w-full pointer-events-none lg:hidden" />
-
-                    {/* มือถือ: แถบหมวดหมู่เกม — เลื่อนถึง viewport/header แล้ว sticky ต่อเนื่อง */}
-                    <div
-                      className={cn(
-                        "sticky z-40 bg-linear-to-t from-[#0c0818] to-[#0d0c33] -mx-3 px-3 py-1.5 lg:hidden transition-shadow duration-200",
-                        isCategorySticky && "shadow-[0_10px_26px_rgba(0,0,0,0.45)] border-b border-white/5",
-                      )}
-                      style={{
-                        top: headerHeight > 0 ? `${headerHeight}px` : "calc(env(safe-area-inset-top, 0px) + 68px)",
-                      }}
-                    >
-                      <CategoryNav
-                        categories={CATEGORIES_DATA}
-                        navigationMode="route"
-                        variant="mobile"
-                        className="!my-0"
-                      />
-                    </div>
-
                     {/* มือถือ: โปรโมชัน */}
                     <div className="lg:hidden">
                       <PromoCarousel items={PROMO_CAROUSEL_DATA} />
@@ -199,10 +176,28 @@ export function HomeLobbyPage() {
 
                     <div className="relative flex min-w-0 flex-col gap-4 overflow-x-clip rounded-none pb-6 pt-1 lg:gap-3 lg:overflow-hidden lg:pb-0 lg:pt-0">
                       <div className="relative flex min-w-0 flex-col gap-4 lg:gap-3">
+                        {/* Sentinel สำหรับตรวจจับตำแหน่ง viewport เมื่อ scroll ถึงขอบล่างของ Header */}
+                        <div ref={categorySentinelRef} className="h-0 w-full pointer-events-none lg:hidden" />
+
+                        {/* มือถือ: แถบหมวดหมู่เกม — เลื่อนถึง viewport/header แล้ว sticky ต่อเนื่อง */}
+                        <div
+                          className={cn(
+                            "sticky z-40 bg-[var(--cosmic-page-base)] -mx-3 px-3 py-1.5 lg:hidden transition-shadow duration-200",
+                            isCategorySticky && "shadow-[0_10px_26px_rgba(0,0,0,0.45)] border-b border-white/5",
+                          )}
+                          style={{
+                            top: headerHeight > 0 ? `${headerHeight}px` : "calc(env(safe-area-inset-top, 0px) + 68px)",
+                          }}
+                        >
+                          <CategoryNav
+                            categories={CATEGORIES_DATA}
+                            navigationMode="route"
+                            variant="mobile"
+                            className="!my-0"
+                          />
+                        </div>
+
                         <div className={showMobileLobbySections}>
-                          <div className="lg:hidden">
-                            <CosmicIntro stats={INTRO_STATS_DATA} />
-                          </div>
                           <div className="lg:hidden">
                             <PopularHighlights items={POPULAR_HIGHLIGHTS_DATA} />
                           </div>

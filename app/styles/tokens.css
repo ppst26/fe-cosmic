@@ -170,7 +170,7 @@
   /** gutter แนวนอนมาตรฐาน — หน้าแรก (.page-shell) และ standalone ใช้ค่าเดียวกัน */
   --layout-inline-gutter: var(--page-gutter);
   --content-max: 1200px;
-  --nav-height: 84px;
+  --nav-height: 68px;
   --nav-float-offset: 0px;
   --nav-safe: env(safe-area-inset-bottom, 0px);
   --nav-scroll-gap: 20px;

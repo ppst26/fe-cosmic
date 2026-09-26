@@ -51,46 +51,33 @@
   gap: 0.625rem;
 }
 
-/* ── หมวดหมู่เกม: ไอคอนกล่องมน สไตล์สีทึบแบบ desktop (ไม่ไล่สี) ── */
-.category-nav__item {
-  cursor: pointer;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  scroll-snap-align: start;
+/* ── หมวดหมู่เกม: ชิปปุ่มมน (ไอคอนบน + ข้อความล่างในกรอบเดียวกัน) ── */
+.category-nav__chip {
+  border: 0 !important;
+  outline: none;
 }
 
-.category-nav__icon-box {
-  background: var(--surface-mid);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 4px 12px rgba(0, 0, 0, 0.28);
+.category-nav__chip.is-active {
+  border: 0 !important;
+  outline: none !important;
+  color: #ffffff !important;
+}
+
+.category-nav__chip.is-active .category-nav__icon,
+.category-nav__chip.is-active .category-nav__label {
+  color: #ffffff !important;
+}
+
+.category-nav--mobile .category-nav__track {
+  gap: 8px;
+  padding-block: 4px;
+  padding-inline: 4px;
+}
+
+.category-nav--mobile .category-nav__chip {
+  min-height: 66px;
+  min-width: 76px;
   border-radius: 14px;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
-}
-
-.category-nav__item:hover:not(.is-active) .category-nav__icon-box {
-  background: var(--surface-hover);
-  border-color: rgba(168, 125, 255, 0.3);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 6px 16px rgba(0, 0, 0, 0.35);
-  transform: translateY(-1px);
-}
-
-.category-nav__item.is-active .category-nav__icon-box {
-  background: var(--surface-selected);
-  border: 1px solid rgba(168, 125, 255, 0.75);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    0 0 14px rgba(124, 108, 240, 0.35),
-    0 4px 14px rgba(0, 0, 0, 0.4);
-  transform: translateY(-1px);
 }
 
 @media (min-width: 1024px) {

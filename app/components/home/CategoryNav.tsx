@@ -155,7 +155,7 @@ export function CategoryNav({
     >
       <div
         ref={trackRef}
-        className="category-nav__track flex flex-nowrap items-start justify-start gap-2.5 w-full overflow-x-auto py-1 px-0.5"
+        className="category-nav__track flex flex-nowrap items-stretch justify-start gap-2 w-full overflow-x-auto py-1 px-0.5"
       >
         {categories.map((category) => {
           const isActive = category.id === activeId;
@@ -166,42 +166,16 @@ export function CategoryNav({
               type="button"
               onClick={() => handleCategoryClick(category)}
               className={cn(
-                "category-nav__item group flex flex-col items-center gap-1.5 flex-none cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] rounded-xl transition-transform duration-150 active:scale-95",
+                "category-nav__chip flex min-h-[66px] min-w-[76px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-2 py-2 text-center text-xs font-medium cursor-pointer select-none outline-none rounded-[14px] transition-transform duration-150 active:scale-95",
                 isActive && "is-active",
               )}
               aria-pressed={isActive}
               aria-label={category.label}
             >
-              <div
-                className={cn(
-                  "category-nav__icon-box flex h-16 w-16 items-center justify-center rounded-[14px] transition-all duration-200",
-                  isActive
-                    ? "category-nav__icon-box--active"
-                    : "category-nav__icon-box--idle",
-                )}
-              >
-                <span
-                  className={cn(
-                    "category-nav__icon flex items-center justify-center transition-colors duration-200 ",
-                    isActive
-                      ? "text-white"
-                      : "text-[var(--text-secondary)] group-hover:text-white",
-                  )}
-                  aria-hidden="true"
-                >
-                  {getCategoryIcon(category.id, "h-[23px] w-[23px]")}
-                </span>
-              </div>
-              <span
-                className={cn(
-                  "category-nav__label text-[14px] font-medium tracking-tight text-center whitespace-nowrap transition-colors duration-200",
-                  isActive
-                    ? "text-white"
-                    : "text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]",
-                )}
-              >
-                {category.label}
+              <span className="category-nav__icon flex items-center justify-center" aria-hidden="true">
+                {getCategoryIcon(category.id, "h-[22px] w-[22px]")}
               </span>
+              <span className="category-nav__label max-w-full truncate text-[12px] font-medium">{category.label}</span>
             </button>
           );
         })}

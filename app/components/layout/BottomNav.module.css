@@ -1,8 +1,8 @@
 .nav {
-  --nav-bg: #0f0c22;
+  --nav-bg: #18181c;
   --nav-accent: #7047eb;
-  --nav-muted: #bab5d6;
-  --nav-height: 84px;
+  --nav-muted: #9e9ea7;
+  --nav-height: 68px;
   position: fixed;
   z-index: 50;
   inset: auto 0 0;
@@ -18,26 +18,16 @@
   inset: 0;
   z-index: -1;
   background: var(--nav-bg);
-  border-radius: 24px 24px 0 0;
-}
-
-.crest {
-  position: absolute;
-  z-index: -1;
-  width: 144px;
-  height: 44px;
-  top: -29px;
-  left: 50%;
-  transform: translateX(-50%);
-  fill: var(--nav-bg);
-  pointer-events: none;
+  border-radius: 20px 20px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.45);
 }
 
 .items {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   height: var(--nav-height);
-  padding-inline: max(4px, env(safe-area-inset-left, 0px)) max(4px, env(safe-area-inset-right, 0px));
+  padding-inline: max(6px, env(safe-area-inset-left, 0px)) max(6px, env(safe-area-inset-right, 0px));
 }
 
 .item {
@@ -45,53 +35,40 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
+  justify-content: center;
+  gap: 4px;
   min-width: 0;
   min-height: 44px;
-  padding: 13px 2px 12px;
+  padding: 8px 2px;
   border: 0;
-  border-radius: 16px;
+  border-radius: 12px;
   background: transparent;
   color: inherit;
   font: inherit;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  transition: color 150ms ease;
+  transition: color 150ms ease, transform 150ms ease;
 }
 
-.icon { display: grid; place-items: center; width: 28px; height: 28px; flex-shrink: 0; }
-.icon svg { display: block; width: 26px; height: 26px; }
-.label { font-size: 12px; line-height: 18px; font-weight: 500; white-space: nowrap; }
-.dot { position: absolute; bottom: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--nav-accent); opacity: 0; }
+.icon { display: grid; place-items: center; width: 26px; height: 26px; flex-shrink: 0; }
+.icon svg { display: block; width: 24px; height: 24px; }
+.label { font-size: 11px; line-height: 16px; font-weight: 500; white-space: nowrap; }
+.dot { position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: var(--nav-accent); opacity: 0; }
 .item[data-active="true"] { color: #fff; }
 .item[data-active="true"] .dot { opacity: 1; }
 
-.menu { padding-top: 0; }
-.menu .icon {
-  width: 56px;
-  height: 56px;
-  margin-top: -24px;
-  background: var(--nav-accent);
-  border-radius: 50%;
-  color: #fff;
-  transition: transform 150ms ease, background-color 150ms ease;
-}
-.menu .icon svg { width: 29px; height: 29px; stroke-width: 2.2; }
-.menu .label { margin-top: 5px; }
 .item:focus-visible { outline: 2px solid #c8baff; outline-offset: -3px; }
-.menu:active .icon { transform: scale(.94); }
+.item:active { transform: scale(0.95); }
 
-/* Keep the last page content clear of the dock AND the raised center button. */
-.spacer { height: calc(120px + env(safe-area-inset-bottom, 0px)); }
+/* Keep the last page content clear of the dock */
+.spacer { height: calc(var(--nav-height) + 16px + env(safe-area-inset-bottom, 0px)); }
 
 @media (hover: hover) {
   .item:hover { color: #fff; }
-  .menu:hover .icon { background: #8058f2; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .item, .menu .icon { transition: none; }
+  .item { transition: none; }
 }
 /* Remove this query if you also want the dock on desktop. */
 @media (min-width: 1024px) {
