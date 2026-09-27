@@ -56,7 +56,6 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       case "vip-rank":
         openVipModal();
         onClose();
-        break;
       case "coupon":
         openCouponRedeem();
         onClose();
@@ -64,35 +63,32 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     }
   };
 
-  const renderItem = (tile: MenuDialogTile, section: MenuDialogSection) => {
-    const isHorizontal = section.layout === "horizontal";
-    const body = isHorizontal ? (
-      <div className="menu-item__inner menu-item__inner--horizontal flex w-full items-center justify-start gap-3 px-3.5 py-3">
-        <span className="menu-item__icon flex shrink-0 items-center justify-center text-white" aria-hidden="true">
-          <MenuItemIcon iconId={tile.iconId} className="h-6 w-6 text-white" />
+  const renderGridTile = (tile: MenuDialogTile) => {
+    const content = (
+      <div className="flex flex-col items-center justify-center gap-1.5 w-full text-center">
+        <MenuItemIcon
+          iconId={tile.iconId}
+          variant="svg"
+          className="h-6.5 w-6.5 text-white shrink-0 transition-transform duration-150 group-hover:scale-110"
+        />
+        <span className="text-[11.5px] font-medium text-white truncate max-w-full leading-tight">
+          {tile.label}
         </span>
-        <span className="menu-item__label text-[13px] font-medium text-white truncate">{tile.label}</span>
-      </div>
-    ) : (
-      <div className="menu-item__inner menu-item__inner--vertical flex flex-col items-center justify-center gap-1.5 w-full py-3 px-1 text-center">
-        <span className="menu-item__icon flex shrink-0 items-center justify-center text-white" aria-hidden="true">
-          <MenuItemIcon iconId={tile.iconId} className={section.columns === 3 ? "h-7 w-7 text-white" : "h-6 w-6 text-white"} />
-        </span>
-        <span className="menu-item__label text-[13px] font-medium text-white truncate max-w-full leading-tight">{tile.label}</span>
       </div>
     );
 
-    const buttonClass = `menu-item menu-item--card ${isHorizontal ? "menu-item--row" : "menu-item--col"}`;
+    const tileClass =
+      "group flex flex-col items-center justify-center rounded-xl bg-[#0f0c22] border border-white/[0.08] py-2.5 px-1 min-h-[66px] hover:bg-[#191538] hover:border-white/[0.18] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
 
     if (tile.action) {
       return (
         <button
           key={tile.id}
           type="button"
-          className={buttonClass}
+          className={tileClass}
           onClick={() => runAction(tile.action!)}
         >
-          {body}
+          {content}
         </button>
       );
     }
@@ -102,7 +98,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       <Link
         key={tile.id}
         href={href}
-        className={buttonClass}
+        className={tileClass}
         onClick={(event) => {
           if (href.startsWith("/")) {
             event.preventDefault();
@@ -112,7 +108,75 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           onClose();
         }}
       >
-        {body}
+        {content}
+      </Link>
+    );
+  };
+
+  const renderRow = (tile: MenuDialogTile) => {
+    const content = (
+      <>
+        <div className="flex items-center gap-3 min-w-0">
+          <MenuItemIcon
+            iconId={tile.iconId}
+            variant="svg"
+            className="h-5.5 w-5.5 text-white shrink-0"
+          />
+          <span className="text-[13.5px] font-medium text-white truncate leading-none">
+            {tile.label}
+          </span>
+        </div>
+        <span
+          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/70 group-hover:bg-white/[0.14] group-hover:text-white transition-colors"
+          aria-hidden="true"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-2.5 w-2.5"
+          >
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </span>
+      </>
+    );
+
+    const rowClass =
+      "group flex w-full items-center justify-between px-3.5 py-2.5 text-left transition-colors duration-150 hover:bg-white/[0.04] active:bg-white/[0.08] cursor-pointer select-none outline-none";
+
+    if (tile.action) {
+      return (
+        <button
+          key={tile.id}
+          type="button"
+          className={rowClass}
+          onClick={() => runAction(tile.action!)}
+        >
+          {content}
+        </button>
+      );
+    }
+
+    const href = tile.href ?? "#";
+    return (
+      <Link
+        key={tile.id}
+        href={href}
+        className={rowClass}
+        onClick={(event) => {
+          if (href.startsWith("/")) {
+            event.preventDefault();
+            navigateAndClose(href);
+            return;
+          }
+          onClose();
+        }}
+      >
+        {content}
       </Link>
     );
   };
@@ -132,40 +196,44 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             ) : null}
 
             <div className="menu-panel glass-menu-panel">
-              <Dialog.Title id="menu-title" className="menu-tab text-2xl font-bold leading-none text-white">
-                เมนู
-              </Dialog.Title>
+              <div className="flex items-center justify-between mb-2.5 px-1">
+                <Dialog.Title id="menu-title" className="text-2xl sm:text-3xl font-bold leading-tight text-white tracking-tight">
+                  เมนู
+                </Dialog.Title>
 
-              <Dialog.Close asChild>
-                <button type="button" className="menu-close glass-menu-close" aria-label="ปิดเมนู">
-                  <CloseIcon />
-                </button>
-              </Dialog.Close>
+                <Dialog.Close asChild>
+                  <button
+                    type="button"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-white/80 hover:text-white border border-white/[0.12] cursor-pointer active:scale-95 transition-all"
+                    aria-label="ปิดเมนู"
+                  >
+                    <CloseIcon className="h-4 w-4" />
+                  </button>
+                </Dialog.Close>
+              </div>
 
-              <div className="menu-content">
+              <div className="menu-content flex flex-col gap-2.5">
                 {MENU_DIALOG_SECTIONS.map((section) => (
                   <section
                     key={section.id}
-                    className="menu-section"
+                    className="menu-section flex flex-col"
                     aria-labelledby={`menu-section-${section.id}`}
                   >
                     <h3
                       id={`menu-section-${section.id}`}
-                      className="text-[15px] font-semibold text-white mb-2"
+                      className="text-[12.5px] font-semibold text-[#8f88ab] mb-1 px-0.5"
                     >
                       {section.sectionLabel}
                     </h3>
-                    <div
-                      className={`menu-grid ${
-                        section.columns === 2
-                          ? "menu-grid--two"
-                          : section.columns === 3
-                            ? "menu-grid--three"
-                            : "menu-grid--four"
-                      }`}
-                    >
-                      {section.items.map((tile) => renderItem(tile, section))}
-                    </div>
+                    {section.layout === "vertical" ? (
+                      <div className="menu-card-group rounded-xl bg-[#0f0c22] border border-white/[0.08] shadow-[0_4px_16px_rgba(0,0,0,0.4)] overflow-hidden divide-y divide-white/[0.04] flex flex-col">
+                        {section.items.map((tile) => renderRow(tile))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-4 gap-1.5 w-full">
+                        {section.items.map((tile) => renderGridTile(tile))}
+                      </div>
+                    )}
                   </section>
                 ))}
               </div>

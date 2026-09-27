@@ -83,72 +83,69 @@ export function Header({ onLoginClick, onSignUpClick, mobileSticky = true }: Hea
             : "relative bg-transparent",
         )}
       >
-        <div className="mx-auto flex h-11 w-full max-w-(--content-max) items-center justify-between gap-2">
+        <div
+          className={cn(
+            "mx-auto flex h-11 w-full max-w-(--content-max) items-center",
+            showWallet ? "justify-between gap-2" : "justify-center"
+          )}
+        >
           <Link
             href="/"
-            className="flex flex-col items-start justify-center gap-0.5 outline-none transition-transform hover:scale-102"
+            className={cn(
+              "flex flex-col gap-0.5 outline-none transition-transform hover:scale-102",
+              showWallet ? "items-start justify-center" : "items-center justify-center text-center"
+            )}
             aria-label="Cosmicbet หน้าแรก"
           >
             <CosmicbetLogo className="h-[21px] w-auto max-w-[115px] object-contain sm:h-6 sm:max-w-[130px]" />
-            <span className="text-[7.5px] font-bold tracking-[0.24em] text-white/85 uppercase font-sans select-none pl-0.5">
+            <span
+              className={cn(
+                "text-[7.5px] font-bold tracking-[0.24em] text-white/85 uppercase font-sans select-none",
+                showWallet && "pl-0.5"
+              )}
+            >
               PLAY BEYOND LIMITS
             </span>
           </Link>
 
-          <div className="flex min-w-0 shrink-0 items-center gap-2">
-            {showAuthSkeleton ? (
-              <div className="flex items-center gap-2">
-                <div className="h-9.5 w-28 animate-pulse rounded-full bg-white/10" />
-                <div className="h-9.5 w-9.5 animate-pulse rounded-full bg-white/10" />
-              </div>
-            ) : showWallet ? (
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (isAuthenticated) {
-                      openDeposit();
-                    } else {
-                      onLoginClick?.();
-                    }
-                  }}
-                  className="inline-flex h-9.5 items-center gap-2 rounded-full border border-purple-500/35 bg-gradient-to-b from-[#29174d]/90 to-[#140b28]/95 px-3 py-1 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_4px_12px_rgba(0,0,0,0.35)] transition-all hover:border-purple-400/50 active:scale-97 cursor-pointer"
-                  aria-label="ฝากเงินและดูยอดเครดิต"
-                >
-                  <HeaderGoldWalletIcon className="h-5.5 w-auto shrink-0" />
-                  <span className="text-[13px] font-semibold tracking-tight text-white tabular-nums">
-                    {balanceLabel}
-                  </span>
-                  <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 text-white/80" />
-                </button>
+          {showWallet && (
+            <div className="flex min-w-0 shrink-0 items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  if (isAuthenticated) {
+                    openDeposit();
+                  } else {
+                    onLoginClick?.();
+                  }
+                }}
+                className="inline-flex h-9.5 items-center gap-2 rounded-full border border-purple-500/35 bg-gradient-to-b from-[#29174d]/90 to-[#140b28]/95 px-3 py-1 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_4px_12px_rgba(0,0,0,0.35)] transition-all hover:border-purple-400/50 active:scale-97 cursor-pointer"
+                aria-label="ฝากเงินและดูยอดเครดิต"
+              >
+                <HeaderGoldWalletIcon className="h-5.5 w-auto shrink-0" />
+                <span className="text-[13px] font-semibold tracking-tight text-white tabular-nums">
+                  {balanceLabel}
+                </span>
+                <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 text-white/80" />
+              </button>
 
-                <button
-                  type="button"
-                  onClick={handleProfileClick}
-                  className={cn(
-                    "flex h-9.5 w-9.5 shrink-0 items-center justify-center rounded-full bg-[#150d2c] text-white transition-all active:scale-95 cursor-pointer",
-                    "border-2 border-[#8b5cf6]",
-                    "shadow-[0_0_12px_rgba(168,85,247,0.75),inset_0_0_4px_rgba(168,85,247,0.35)]",
-                    isProfileOpen && "ring-2 ring-purple-300"
-                  )}
-                  aria-label="โปรไฟล์"
-                  aria-expanded={isProfileOpen}
-                  aria-haspopup="dialog"
-                >
-                  <SolidUserIcon className="h-4.5 w-4.5 text-white" />
-                </button>
-              </div>
-            ) : (
-              <HeaderGuestAuthButtons
-                onLoginClick={onLoginClick}
-                onSignUpClick={onSignUpClick}
-                signUpLabelCompact
-                className="min-w-0 max-[420px]:gap-1"
-                loginClassName="cosmic-nav__auth-login glass-card--soft min-h-9 rounded-(--header-chip-radius) border-0 px-2.5 max-[420px]:min-h-8 max-[420px]:px-2"
-                signUpClassName="min-h-9! rounded-(--header-chip-radius)! px-3!"
-              />
-            )}
-          </div>
+              <button
+                type="button"
+                onClick={handleProfileClick}
+                className={cn(
+                  "flex h-9.5 w-9.5 shrink-0 items-center justify-center rounded-full bg-[#150d2c] text-white transition-all active:scale-95 cursor-pointer",
+                  "border-2 border-[#8b5cf6]",
+                  "shadow-[0_0_12px_rgba(168,85,247,0.75),inset_0_0_4px_rgba(168,85,247,0.35)]",
+                  isProfileOpen && "ring-2 ring-purple-300"
+                )}
+                aria-label="โปรไฟล์"
+                aria-expanded={isProfileOpen}
+                aria-haspopup="dialog"
+              >
+                <SolidUserIcon className="h-4.5 w-4.5 text-white" />
+              </button>
+            </div>
+          )}
         </div>
       </header>
 

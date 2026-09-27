@@ -68,16 +68,85 @@
   color: #ffffff !important;
 }
 
-.category-nav--mobile .category-nav__track {
-  gap: 8px;
-  padding-block: 4px;
-  padding-inline: 4px;
+/* ── Mobile Category Nav: แนวนอน ไอคอนหน้า ตัวหนังสือหลัง + ปุ่ม active สีม่วง + progress bar ── */
+.category-nav--mobile {
+  padding-bottom: 2px;
 }
 
-.category-nav--mobile .category-nav__chip {
-  min-height: 66px;
-  min-width: 76px;
-  border-radius: 14px;
+.category-nav--mobile .category-nav__track {
+  gap: 8px;
+  padding-block: 2px;
+  padding-inline: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.category-nav--mobile .category-nav__track::-webkit-scrollbar {
+  display: none;
+}
+
+.category-nav--mobile .category-nav__pill {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding-inline: 14px;
+  border-radius: 12px;
+  border: 0;
+  background: transparent;
+  color: #bab5d6;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  outline: none;
+  transition: all 160ms ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.category-nav--mobile .category-nav__pill:active {
+  transform: scale(0.96);
+}
+
+.category-nav--mobile .category-nav__pill.is-active {
+  background: rgba(112, 71, 235, 0.28);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.category-nav--mobile .category-nav__pill .category-nav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.category-nav--mobile .category-nav__progress-track {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.category-nav--mobile .category-nav__progress-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6366f1, #7047eb, #a855f7);
+  box-shadow: 0 0 8px rgba(112, 71, 235, 0.8);
+  transition: left 75ms linear, width 150ms ease;
 }
 
 @media (min-width: 1024px) {

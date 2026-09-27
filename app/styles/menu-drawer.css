@@ -142,10 +142,10 @@
 .menu-model {
   position: absolute;
   z-index: 0;
-  right: 4px;
-  bottom: calc(100% - 18px);
-  width: min(52%, 220px);
-  height: var(--menu-model-height);
+  right: 6px;
+  bottom: calc(100% - 14px);
+  width: min(44%, 185px);
+  height: var(--menu-model-height, 210px);
   object-fit: contain;
   object-position: bottom right;
   pointer-events: none;
@@ -156,9 +156,9 @@
 .menu-panel {
   position: relative;
   z-index: 1;
-  padding: 50px 12px 14px;
+  padding: 16px 14px 18px;
   border: 0;
-  border-radius: 26px;
+  border-radius: 24px;
   background: var(--menu-panel-bg);
   box-shadow:
     0 24px 64px rgb(0 0 0 / 45%),
@@ -213,6 +213,15 @@
 .menu-panel.glass-menu-panel .menu-content {
   position: relative;
   z-index: 1;
+  max-height: calc(85dvh - var(--menu-nav-clearance));
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 2px;
+}
+
+.menu-panel.glass-menu-panel .menu-content::-webkit-scrollbar {
+  display: none;
 }
 
 .menu-panel.glass-menu-panel .menu-tab {
@@ -319,14 +328,14 @@
 }
 
 .menu-section + .menu-section {
-  margin-top: 14px;
+  margin-top: 0;
 }
 
 .menu-section h3 {
-  margin: 0 0 8px;
-  font-size: 15px;
+  margin: 0 0 3px;
+  font-size: 12px;
   font-weight: 600;
-  color: #ffffff;
+  color: #b0a8d4;
 }
 
 .menu-grid {

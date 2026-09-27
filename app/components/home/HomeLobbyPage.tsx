@@ -6,7 +6,7 @@ import { Header } from "../layout/Header";
 import { RightMenuDrawer } from "../layout/RightMenuDrawer";
 import { SignUpBottomDrawer } from "../auth/SignUpBottomDrawer";
 import { LoginBottomDrawer } from "../auth/LoginBottomDrawer";
-import { AuthGate } from "../auth/AuthProvider";
+import { useAuth, AuthGate } from "../auth/AuthProvider";
 import { useLobbyShellSidebar } from "../layout/LobbyShellSidebarContext";
 import { LobbyDesktopSidebarColumn } from "../layout/LobbyDesktopSidebarColumn";
 import { HomeDesktopPeekCarousel } from "./HomeDesktopPeekCarousel";
@@ -55,6 +55,7 @@ export function HomeLobbyPage() {
   const { isOpen: isSignUpOpen, open: openSignUp, close: closeSignUp } = useOverlayLayer("signup");
   const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useOverlayLayer("login");
   const { sidebarHidden: isSidebarCollapsed } = useLobbyShellSidebar();
+  const { isAuthenticated } = useAuth();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
 
@@ -160,13 +161,34 @@ export function HomeLobbyPage() {
                   <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 lg:mx-0 lg:max-w-none lg:px-0">
                     {/* มือถือ: ประกาศ + banner */}
                     <div className="lg:hidden">
+                      <WelcomeBanner onCtaClick={openSignUp} />
                       <div className="mb-2 -mx-3">
                         <LobbyAnnouncementMarquee
                           messages={LOBBY_ANNOUNCEMENT_MESSAGES}
                           variant="mobile"
                         />
                       </div>
-                      <WelcomeBanner onCtaClick={openSignUp} />
+
+                      {/* ปุ่มเข้าสู่ระบบ / สมัครสมาชิก (แสดงเมื่อยังไม่ได้ล็อกอิน) */}
+                      {!isAuthenticated && (
+                        <div className="mt-3 mb-1 grid grid-cols-2 gap-2.5">
+                          <button
+                            type="button"
+                            onClick={() => openLogin()}
+                            className="flex h-11 items-center justify-center rounded-xl border border-white/10 bg-[#1e1b30] text-[14px] font-medium text-white shadow-sm transition-all hover:bg-[#282245] active:scale-98 cursor-pointer"
+                          >
+                            เข้าสู่ระบบ
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => openSignUp()}
+                            className="cosmic-cta-primary !rounded-xl rounded-xl! flex h-11 items-center justify-center text-[14px] font-medium text-white shadow-[0_4px_16px_rgba(112,71,235,0.35)] transition-all active:scale-98 cursor-pointer"
+                            style={{ borderRadius: "0.75rem" }}
+                          >
+                            สมัครสมาชิก
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     {/* มือถือ: โปรโมชัน */}

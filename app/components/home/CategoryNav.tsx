@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CategoryItem, CategoryId } from "../../types/lobby";
 import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
@@ -76,6 +76,33 @@ export function CategoryNav({
   );
   const [pickedId, setPickedId] = useState<CategoryId>(defaultActiveId);
   const trackRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [thumbWidthPercent, setThumbWidthPercent] = useState(28);
+
+  const updateScrollProgress = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (maxScroll > 0) {
+      setScrollProgress(Math.max(0, Math.min(1, el.scrollLeft / maxScroll)));
+      setThumbWidthPercent(Math.max(20, Math.min(45, (el.clientWidth / el.scrollWidth) * 100)));
+    } else {
+      setScrollProgress(0);
+      setThumbWidthPercent(100);
+    }
+  }, []);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    updateScrollProgress();
+    el.addEventListener("scroll", updateScrollProgress, { passive: true });
+    window.addEventListener("resize", updateScrollProgress);
+    return () => {
+      el.removeEventListener("scroll", updateScrollProgress);
+      window.removeEventListener("resize", updateScrollProgress);
+    };
+  }, [updateScrollProgress]);
 
   useEffect(() => {
     if (activeIdProp) {
@@ -88,6 +115,20 @@ export function CategoryNav({
       ? (activeIdProp ?? pickedId)
       : (routeActiveId ?? activeIdProp ?? pickedId);
 
+  // เมื่อ activeId เปลี่ยนใน mobile ให้เลื่อนปุ่มที่ active เข้ามาในมุมมอง
+  useEffect(() => {
+    if (variant === "mobile" && trackRef.current) {
+      const activeEl = trackRef.current.querySelector<HTMLElement>('[data-active="true"]');
+      if (activeEl) {
+        activeEl.scrollIntoView({
+          behavior: "smooth",
+          inline: "nearest",
+          block: "nearest",
+        });
+      }
+    }
+  }, [activeId, variant]);
+
   const pushCategoryRoute = (href: string) => {
     const scrollY = window.scrollY;
     router.push(href, { scroll: false });
@@ -96,9 +137,16 @@ export function CategoryNav({
     });
   };
 
-  const handleCategoryClick = (category: CategoryItem) => {
+  const handleCategoryClick = (category: CategoryItem, e?: React.MouseEvent) => {
     setPickedId(category.id);
     onSelectCategory?.(category.id);
+    if (e?.currentTarget) {
+      (e.currentTarget as HTMLElement).scrollIntoView({
+        behavior: "smooth",
+        inline: "nearest",
+        block: "nearest",
+      });
+    }
     if (navigationMode !== "route") return;
 
     if (category.href.startsWith("#")) {
@@ -129,7 +177,7 @@ export function CategoryNav({
               <button
                 key={category.id}
                 type="button"
-                onClick={() => handleCategoryClick(category)}
+                onClick={(e) => handleCategoryClick(category, e)}
                 className={cn(
                   "category-nav__chip flex min-h-16 min-w-[76px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-1 py-2 text-center text-xs font-medium sm:text-sm",
                   isActive && "is-active",
@@ -155,7 +203,7 @@ export function CategoryNav({
     >
       <div
         ref={trackRef}
-        className="category-nav__track flex flex-nowrap items-stretch justify-start gap-2 w-full overflow-x-auto py-1 px-0.5"
+        className="category-nav__track flex flex-nowrap items-center justify-start gap-1.5 w-full overflow-x-auto py-1 px-0.5 no-scrollbar scroll-smooth"
       >
         {categories.map((category) => {
           const isActive = category.id === activeId;
@@ -164,21 +212,42 @@ export function CategoryNav({
             <button
               key={category.id}
               type="button"
-              onClick={() => handleCategoryClick(category)}
+              data-active={isActive}
+              onClick={(e) => handleCategoryClick(category, e)}
               className={cn(
-                "category-nav__chip flex min-h-[66px] min-w-[76px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-2 py-2 text-center text-xs font-medium cursor-pointer select-none outline-none rounded-[14px] transition-transform duration-150 active:scale-95",
-                isActive && "is-active",
+                "category-nav__pill flex h-9.5 flex-none flex-row items-center gap-2 px-3.5 rounded-xl text-[13.5px] font-medium transition-all duration-150 cursor-pointer select-none outline-none active:scale-96",
+                isActive
+                  ? "is-active bg-[rgba(112,71,235,0.28)] text-white font-semibold"
+                  : "bg-transparent text-[#bab5d6] hover:text-white hover:bg-white/5",
               )}
               aria-pressed={isActive}
               aria-label={category.label}
             >
-              <span className="category-nav__icon flex items-center justify-center" aria-hidden="true">
-                {getCategoryIcon(category.id, "h-[22px] w-[22px]")}
+              <span
+                className={cn(
+                  "category-nav__icon flex items-center justify-center shrink-0 transition-colors duration-150",
+                  isActive ? "text-white" : "text-[#9d97c5] group-hover:text-white",
+                )}
+                aria-hidden="true"
+              >
+                {getCategoryIcon(category.id, "h-4.5 w-4.5")}
               </span>
-              <span className="category-nav__label max-w-full truncate text-[12px] font-medium">{category.label}</span>
+              <span className="category-nav__label whitespace-nowrap tracking-tight">{category.label}</span>
             </button>
           );
         })}
+      </div>
+
+      {/* Progress bar ที่เคลื่อนตามตำแหน่ง scroll แนวนอน เหมือนในตัวอย่าง */}
+      <div className="category-nav__progress-track relative w-full h-[2.5px] bg-white/10 rounded-full mt-1.5 overflow-hidden">
+        <div
+          className="category-nav__progress-bar absolute top-0 bottom-0 rounded-full bg-gradient-to-r from-[#6366f1] via-[#7047eb] to-[#a855f7] shadow-[0_0_8px_rgba(112,71,235,0.8)]"
+          style={{
+            width: `${thumbWidthPercent}%`,
+            left: `${scrollProgress * (100 - thumbWidthPercent)}%`,
+            transition: "left 75ms linear, width 150ms ease",
+          }}
+        />
       </div>
     </nav>
   );

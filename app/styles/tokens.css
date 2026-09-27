@@ -217,7 +217,7 @@
   --menu-nav-clearance: calc(
     var(--nav-height) + var(--nav-float-offset) + var(--nav-safe) + 16px
   );
-  --menu-model-height: clamp(168px, 30dvh, 280px);
+  --menu-model-height: clamp(140px, 25dvh, 230px);
   --menu-motion-in: 400ms;
   --menu-motion-out: 280ms;
 
