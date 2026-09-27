@@ -110,6 +110,12 @@
     height: 1.125rem;
   }
 
+  .lobby-desktop-sidebar:not(.is-collapsed) .lobby-desktop-sidebar__link-icon-wrap img {
+    width: 1.75rem;
+    height: 1.75rem;
+    object-fit: contain;
+  }
+
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link {
     flex-direction: row;
     align-items: center;
@@ -121,13 +127,19 @@
   }
 
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link-icon-wrap {
-    width: 2rem;
-    height: 2rem;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 
   .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link-icon-wrap svg {
     width: 1.0625rem;
     height: 1.0625rem;
+  }
+
+  .lobby-desktop-sidebar.is-collapsed .lobby-desktop-sidebar__link-icon-wrap img {
+    width: 1.625rem;
+    height: 1.625rem;
+    object-fit: contain;
   }
 
   .lobby-desktop-sidebar__link-label {
@@ -208,8 +220,8 @@
   }
 
   .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-icon-wrap {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.75rem;
+    height: 1.75rem;
     border-radius: 0;
     background: transparent;
     color: inherit;
@@ -219,6 +231,13 @@
   .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-icon-wrap svg {
     width: 1.25rem;
     height: 1.25rem;
+  }
+
+  .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-icon-wrap img {
+    width: 1.75rem;
+    height: 1.75rem;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
   }
 
   .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-label {

@@ -29,6 +29,7 @@ export function MenuItemIcon({
       <img
         src={assetSrc}
         alt=""
+        draggable={false}
         className={className === DEFAULT_CLASS ? MENU_TILE_ICON_CLASS : className}
         loading="lazy"
         decoding="async"

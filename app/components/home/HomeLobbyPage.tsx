@@ -116,6 +116,7 @@ export function HomeLobbyPage() {
           <Header
             onSignUpClick={openSignUp}
             onLoginClick={openLogin}
+            onMenuClick={() => setIsMenuOpen(true)}
             mobileSticky={false}
           />
         </div>
@@ -218,13 +219,6 @@ export function HomeLobbyPage() {
                             className="!my-0"
                           />
                         </div>
-
-                        <div className={showMobileLobbySections}>
-                          <div className="lg:hidden">
-                            <PopularHighlights items={POPULAR_HIGHLIGHTS_DATA} />
-                          </div>
-                        </div>
-
                         <div className="lobby-category-stack flex flex-col gap-3 lg:gap-4">
                           <div className="hidden lg:block">
                             <LobbyAnnouncementMarquee

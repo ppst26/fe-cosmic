@@ -3,7 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import type { CategoryId, CategoryItem } from "@/app/types/lobby";
+import { CATEGORY_3D_ICONS } from "@/app/data/lobbyMockData";
 import {
   CardsIcon,
   ContactNavIcon,
@@ -35,7 +37,20 @@ interface LobbyDesktopSidebarProps {
 }
 
 /** ไอคอนหมวด — ใช้ชุดเดียวกับ CategoryNav */
-function getCategoryIcon(id: CategoryId, className = "h-5 w-5 shrink-0") {
+function getCategoryIcon(id: CategoryId, className = "h-7 w-7 shrink-0 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]") {
+  const iconSrc = CATEGORY_3D_ICONS[id];
+  if (iconSrc) {
+    return (
+      <Image
+        src={iconSrc}
+        alt=""
+        width={48}
+        height={48}
+        className={cn("object-contain shrink-0 select-none pointer-events-none", className)}
+      />
+    );
+  }
+
   switch (id) {
     case "home":
       return <HomeNavIcon className={className} />;

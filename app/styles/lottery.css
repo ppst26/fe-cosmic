@@ -1243,8 +1243,8 @@
 .lottery-bet-result-dialog.cosmic-modal-shell {
   border: 1px solid var(--cosmic-mobile-sheet-border);
   background: var(--cosmic-mobile-sheet-bg);
-  -webkit-backdrop-filter: blur(var(--cosmic-mobile-sheet-blur)) saturate(var(--cosmic-mobile-sheet-saturate));
-  backdrop-filter: blur(var(--cosmic-mobile-sheet-blur)) saturate(var(--cosmic-mobile-sheet-saturate));
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .lottery-bet-result-dialog__icon {

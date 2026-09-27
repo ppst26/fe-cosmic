@@ -198,12 +198,12 @@
   color: var(--cta-white-fg);
 }
 
-/* Dialog ตัวกรองค่ายเกม (FILTER) — ProviderFilterDialog.tsx · สไตล์ dark sheet เบลอน้อย */
+/* Dialog ตัวกรองค่ายเกม (FILTER) — ProviderFilterDialog.tsx · solid dark sheet */
 .provider-filter-dialog.cosmic-modal-shell {
   border: 1px solid var(--cosmic-mobile-sheet-border);
   background: var(--cosmic-mobile-sheet-bg);
-  -webkit-backdrop-filter: blur(var(--cosmic-mobile-sheet-blur)) saturate(var(--cosmic-mobile-sheet-saturate));
-  backdrop-filter: blur(var(--cosmic-mobile-sheet-blur)) saturate(var(--cosmic-mobile-sheet-saturate));
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   box-shadow: 0 24px 56px rgb(0 0 0 / 0.6), inset 0 1px 0 rgb(255 255 255 / 0.06);
 }
 

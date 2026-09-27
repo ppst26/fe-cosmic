@@ -68,8 +68,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       <div className="flex flex-col items-center justify-center gap-1.5 w-full text-center">
         <MenuItemIcon
           iconId={tile.iconId}
-          variant="svg"
-          className="h-6.5 w-6.5 text-white shrink-0 transition-transform duration-150 group-hover:scale-110"
+          variant="asset"
+          className="h-9 w-9 object-contain shrink-0 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] transition-transform duration-150 group-hover:scale-110"
         />
         <span className="text-[11.5px] font-medium text-white truncate max-w-full leading-tight">
           {tile.label}
@@ -78,7 +78,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
 
     const tileClass =
-      "group flex flex-col items-center justify-center rounded-xl bg-[#0f0c22] border border-white/[0.08] py-2.5 px-1 min-h-[66px] hover:bg-[#191538] hover:border-white/[0.18] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
+      "group flex flex-col items-center justify-center rounded-xl bg-[#0f0c22] border border-white/[0.08] py-2 px-1 min-h-[72px] hover:bg-[#191538] hover:border-white/[0.18] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
 
     if (tile.action) {
       return (
@@ -119,8 +119,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         <div className="flex items-center gap-3 min-w-0">
           <MenuItemIcon
             iconId={tile.iconId}
-            variant="svg"
-            className="h-5.5 w-5.5 text-white shrink-0"
+            variant="asset"
+            className="h-7 w-7 object-contain shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] transition-transform duration-150 group-hover:scale-105"
           />
           <span className="text-[13.5px] font-medium text-white truncate leading-none">
             {tile.label}

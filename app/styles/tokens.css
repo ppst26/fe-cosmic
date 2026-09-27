@@ -35,16 +35,16 @@
     rgb(26 25 32 / 0.97)
   );
   /**
-   * Mobile bottom sheet — ดำม่วงโปร่งเล็กน้อย + backdrop blur (Dexsport-style)
+   * Mobile bottom sheet — solid สีเข้ม ไม่ blur (ลด GPU overdraw / กระตุกบนมือถือ)
    * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet · ช่อง input ใน sheet
    */
   --cosmic-mobile-sheet-bg: linear-gradient(
     180deg,
-    rgb(22 18 28 / 0.78) 0%,
-    rgb(12 10 16 / 0.86) 100%
+    #1a1520 0%,
+    #0e0c12 100%
   );
-  --cosmic-mobile-sheet-blur: 8px;   /* ลดจาก 14px — sheet blur มือถือ */
-  --cosmic-mobile-sheet-saturate: 1.06;
+  --cosmic-mobile-sheet-blur: 0px;   /* solid — ปิด backdrop-blur เพื่อลดกระตุก */
+  --cosmic-mobile-sheet-saturate: 1;
   --cosmic-mobile-sheet-border: rgb(255 255 255 / 0.09);
   --cosmic-mobile-sheet-shadow:
     0 -24px 56px rgb(0 0 0 / 0.58),
@@ -62,7 +62,7 @@
     rgb(22 20 28 / 0.74)
   );
   --sheet-soft-border: rgb(255 255 255 / 0.1);
-  --sheet-soft-blur: 10px;
+  --sheet-soft-blur: 0px;   /* solid — ปิด blur ใน chip/panel ย่อยใน sheet */
   /** แถวเลือก / panel ใน sheet — อ่อนกว่า shell เล็กน้อย (ฝาก-ถอน ช่องทาง ฯลฯ) */
   --sheet-row-fill: linear-gradient(
     145deg,

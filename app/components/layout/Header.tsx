@@ -6,11 +6,8 @@ import { usePathname } from "next/navigation";
 import {
   CosmicbetLogo,
   HeaderWalletIcon,
-  HeaderGoldWalletIcon,
-  SolidUserIcon,
-  ChevronDownIcon,
-  ProfileNavIcon,
   SearchIcon,
+  HamburgerMenuIcon,
 } from "../ui/Icons";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
@@ -31,6 +28,7 @@ import { parseHubFromHref } from "../hub/hubModalRegistry";
 interface HeaderProps {
   onLoginClick?: () => void;
   onSignUpClick?: () => void;
+  onMenuClick?: () => void;
   /**
    * มือถือ — sticky เอง (default)
    * false เมื่อถูกห่อด้วย .lobby-mobile-sticky-chrome ที่ sticky ทั้งก้อนกับหมวดหมู่
@@ -39,10 +37,15 @@ interface HeaderProps {
 }
 
 /**
- * Header — มือถือ: โลโก้ · ยอดเครดิต+ไอคอนกระเป๋า (ล็อกอิน) · โปรไฟล์ · ไม่มีการ์ด/ค้นหา/ปุ่ม +
+ * Header — มือถือ: ซ้าย เมนู · กลาง โลโก้ · ขวา ยอดเครดิต+ไอคอนวอลเลท (ล็อกอิน)
  * Desktop lg+: full-width — ซ้าย logo · โปรโมชัน · ค้นหาแบบกะทัดรัด · ขวายอด · ฝาก · แจ้งเตือน · ยศ
  */
-export function Header({ onLoginClick, onSignUpClick, mobileSticky = true }: HeaderProps) {
+export function Header({
+  onLoginClick,
+  onSignUpClick,
+  onMenuClick,
+  mobileSticky = true,
+}: HeaderProps) {
   const pathname = usePathname();
   const { isAuthenticated, isLoading, openProfile, closeProfile, isProfileOpen } =
     useAuth();
@@ -66,6 +69,18 @@ export function Header({ onLoginClick, onSignUpClick, mobileSticky = true }: Hea
     onLoginClick?.();
   };
 
+  const handleMenuClick = () => {
+    if (onMenuClick) {
+      onMenuClick();
+      return;
+    }
+    window.dispatchEvent(new CustomEvent("cosmic:open-menu"));
+    const bottomNavMenu = document.querySelector<HTMLButtonElement>(
+      'button[aria-label="เมนู"], nav[aria-label="เมนูหลัก"] button:nth-child(3)'
+    );
+    bottomNavMenu?.click();
+  };
+
   const showAuthSkeleton = !isClientReady || isLoading;
   const showWallet = isClientReady && !isLoading && isAuthenticated;
   const balanceLabel = formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE);
@@ -83,33 +98,45 @@ export function Header({ onLoginClick, onSignUpClick, mobileSticky = true }: Hea
             : "relative bg-transparent",
         )}
       >
-        <div
-          className={cn(
-            "mx-auto flex h-11 w-full max-w-(--content-max) items-center",
-            showWallet ? "justify-between gap-2" : "justify-center"
-          )}
-        >
-          <Link
-            href="/"
-            className={cn(
-              "flex flex-col gap-0.5 outline-none transition-transform hover:scale-102",
-              showWallet ? "items-start justify-center" : "items-center justify-center text-center"
-            )}
-            aria-label="Cosmicbet หน้าแรก"
-          >
-            <CosmicbetLogo className="h-[21px] w-auto max-w-[115px] object-contain sm:h-6 sm:max-w-[130px]" />
-            <span
-              className={cn(
-                "text-[7.5px] font-bold tracking-[0.24em] text-white/85 uppercase font-sans select-none",
-                showWallet && "pl-0.5"
-              )}
+        <div className="relative mx-auto flex h-11 w-full max-w-(--content-max) items-center justify-between">
+          {/* ซ้าย: ไอคอนเมนู (หลังล็อกอิน) — ไม่มี card ครอบ */}
+          {showWallet ? (
+            <button
+              type="button"
+              onClick={handleMenuClick}
+              className="relative z-10 flex h-9.5 w-9.5 shrink-0 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
+              aria-label="เปิดเมนู"
             >
-              PLAY BEYOND LIMITS
-            </span>
-          </Link>
+              <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
+            </button>
+          ) : (
+            <div className="w-0 shrink-0" aria-hidden="true" />
+          )}
 
-          {showWallet && (
-            <div className="flex min-w-0 shrink-0 items-center gap-2">
+          {/* กลาง: โลโก้ */}
+          <div
+            className={cn(
+              "pointer-events-auto",
+              showWallet
+                ? "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                : "mx-auto"
+            )}
+          >
+            <Link
+              href="/"
+              className="flex flex-col items-center justify-center text-center outline-none transition-transform hover:scale-102"
+              aria-label="Cosmicbet หน้าแรก"
+            >
+              <CosmicbetLogo className="h-[21px] w-auto max-w-[115px] object-contain sm:h-6 sm:max-w-[130px]" />
+              <span className="text-[7.5px] font-bold tracking-[0.24em] text-white/85 uppercase font-sans select-none">
+                PLAY BEYOND LIMITS
+              </span>
+            </Link>
+          </div>
+
+          {/* ขวา: ยอดเครดิต พร้อมไอคอนวอลเลท (หลังล็อกอิน) — ไอคอนเส้นขาว ตัวอักษรเล็กบาง ไม่มี arrow down */}
+          {showWallet ? (
+            <div className="relative z-10 flex min-w-0 shrink-0 items-center">
               <button
                 type="button"
                 onClick={() => {
@@ -119,32 +146,17 @@ export function Header({ onLoginClick, onSignUpClick, mobileSticky = true }: Hea
                     onLoginClick?.();
                   }
                 }}
-                className="inline-flex h-9.5 items-center gap-2 rounded-full border border-purple-500/35 bg-gradient-to-b from-[#29174d]/90 to-[#140b28]/95 px-3 py-1 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_4px_12px_rgba(0,0,0,0.35)] transition-all hover:border-purple-400/50 active:scale-97 cursor-pointer"
+                className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#1a1624] px-3 text-white transition-all hover:bg-[#2b1b54] active:scale-97 cursor-pointer"
                 aria-label="ฝากเงินและดูยอดเครดิต"
               >
-                <HeaderGoldWalletIcon className="h-5.5 w-auto shrink-0" />
-                <span className="text-[13px] font-semibold tracking-tight text-white tabular-nums">
+                <HeaderWalletIcon className="h-3.5 w-3.5 shrink-0 text-white" />
+                <span className="text-xs font-normal tracking-tight text-white tabular-nums">
                   {balanceLabel}
                 </span>
-                <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 text-white/80" />
-              </button>
-
-              <button
-                type="button"
-                onClick={handleProfileClick}
-                className={cn(
-                  "flex h-9.5 w-9.5 shrink-0 items-center justify-center rounded-full bg-[#150d2c] text-white transition-all active:scale-95 cursor-pointer",
-                  "border-2 border-[#8b5cf6]",
-                  "shadow-[0_0_12px_rgba(168,85,247,0.75),inset_0_0_4px_rgba(168,85,247,0.35)]",
-                  isProfileOpen && "ring-2 ring-purple-300"
-                )}
-                aria-label="โปรไฟล์"
-                aria-expanded={isProfileOpen}
-                aria-haspopup="dialog"
-              >
-                <SolidUserIcon className="h-4.5 w-4.5 text-white" />
               </button>
             </div>
+          ) : (
+            <div className="w-0 shrink-0" aria-hidden="true" />
           )}
         </div>
       </header>

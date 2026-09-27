@@ -60,7 +60,7 @@ export default function ProviderGamesPage() {
   return (
     <div className="mobile-standalone-page">
       {/* 1. Global Header ด้านบนสุด */}
-      <Header />
+      <Header onMenuClick={() => setIsMenuOpen(true)} />
 
       {/* Menu Slide Over ด้านขวา */}
       <RightMenuDrawer

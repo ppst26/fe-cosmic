@@ -15,7 +15,7 @@ export default function PromotionsPage() {
 
   return (
     <div className="mobile-standalone-page">
-      <Header />
+      <Header onMenuClick={() => setIsMenuOpen(true)} />
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 

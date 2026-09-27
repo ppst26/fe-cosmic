@@ -213,15 +213,12 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
           <li key={method.id}>
             <button
               type="button"
-              className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex w-full items-center gap-3 px-3 py-3.5 sm:px-4 sm:py-4`}
+              className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex w-full items-center gap-3.5 px-3.5 py-3.5 text-left sm:gap-4 sm:px-4 sm:py-4`}
               onClick={() => onSelectMethod(method.id)}
             >
-              <DepositMethodIcon methodId={method.id} className="h-12 w-12 shrink-0 sm:h-[52px] sm:w-[52px]" />
-              <span className="min-w-0 flex-1">
-                <span className="block text-sm font-medium text-[var(--text-primary)] sm:text-base">
-                  {method.title}
-                </span>
-                <span className="mt-0.5 block text-xs text-[var(--text-secondary)]">{method.subtitle}</span>
+              <DepositMethodIcon methodId={method.id} className="h-6 w-6 shrink-0 text-white sm:h-7 sm:w-7" />
+              <span className="min-w-0 flex-1 text-sm font-medium text-[var(--text-primary)] sm:text-base">
+                {method.title}
               </span>
               <ChevronRightIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
             </button>
@@ -535,43 +532,34 @@ function KbankLogoGraphic({ className }: { className?: string }) {
 }
 
 function DepositMethodIcon({ methodId, className }: { methodId: DepositMethodId; className?: string }) {
-  const frame =
-    "cosmic-sheet-icon-well cosmic-inset-card flex shrink-0 items-center justify-center rounded-[var(--radius-panel)]";
-
-  const iconClass = "h-7 w-7 sm:h-8 sm:w-8 text-white";
+  const iconClass = className ?? "h-6 w-6 shrink-0 text-white sm:h-7 sm:w-7";
 
   if (methodId === "bank") {
     return (
-      <span className={`${frame} ${className ?? ""}`} aria-hidden="true">
-        <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75">
-          <path d="M3 10h18" strokeLinecap="round" />
-          <path d="M5 10V18M9 10V18M15 10V18M19 10V18" strokeLinecap="round" />
-          <path d="M4 18h16" strokeLinecap="round" />
-          <path d="M12 4 3 10h18L12 4Z" strokeLinejoin="round" />
-        </svg>
-      </span>
+      <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+        <path d="M3 10h18" strokeLinecap="round" />
+        <path d="M5 10V18M9 10V18M15 10V18M19 10V18" strokeLinecap="round" />
+        <path d="M4 18h16" strokeLinecap="round" />
+        <path d="M12 4 3 10h18L12 4Z" strokeLinejoin="round" />
+      </svg>
     );
   }
 
   if (methodId === "gateway") {
     return (
-      <span className={`${frame} ${className ?? ""}`} aria-hidden="true">
-        <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75">
-          <rect x="3" y="6" width="18" height="12" rx="2" />
-          <path d="M3 10h18" />
-          <path d="M7 15h4" strokeLinecap="round" />
-        </svg>
-      </span>
+      <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+        <rect x="3" y="6" width="18" height="12" rx="2" />
+        <path d="M3 10h18" />
+        <path d="M7 15h4" strokeLinecap="round" />
+      </svg>
     );
   }
 
   return (
-    <span className={`${frame} ${className ?? ""}`} aria-hidden="true">
-      <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75">
-        <rect x="4" y="7" width="16" height="11" rx="2" />
-        <path d="M4 11h16" />
-        <circle cx="16" cy="14" r="1.25" fill="currentColor" stroke="none" />
-      </svg>
-    </span>
+    <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+      <rect x="4" y="7" width="16" height="11" rx="2" />
+      <path d="M4 11h16" />
+      <circle cx="16" cy="14" r="1.25" fill="currentColor" stroke="none" />
+    </svg>
   );
 }

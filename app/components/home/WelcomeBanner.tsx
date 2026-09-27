@@ -67,7 +67,7 @@ export function WelcomeBanner({
           {items.map((slide, index) => (
             <article
               key={slide.id}
-              className="welcome-banner__slide relative flex min-h-[300px] w-full shrink-0 snap-start items-center justify-center overflow-hidden sm:min-h-[320px]"
+              className="welcome-banner__slide relative flex aspect-[16/10] w-full shrink-0 snap-start items-center justify-center overflow-hidden"
               aria-label={`${slide.title} — ${slide.subtitle}`}
             >
               <Image
@@ -83,11 +83,11 @@ export function WelcomeBanner({
                 aria-hidden="true"
               />
 
-              <div className="relative z-10 flex w-full max-w-sm flex-col items-center justify-center px-4 pb-10 text-center sm:pb-11">
-                <h2 className="mb-1.5 text-2xl font-medium tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-3xl">
+              <div className="relative z-10 flex w-full max-w-sm flex-col items-center justify-center px-4 pb-8 text-center sm:pb-9">
+                <h2 className="mb-1 text-xl font-medium tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-2xl">
                   {slide.title}
                 </h2>
-                <p className="mb-4 text-sm font-medium text-[var(--text-secondary)] drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)] sm:mb-5 sm:text-base">
+                <p className="mb-3 text-xs font-medium text-[var(--text-secondary)] drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)] sm:mb-4 sm:text-sm">
                   {slide.subtitle}
                 </p>
 
@@ -95,7 +95,7 @@ export function WelcomeBanner({
                   <button
                     type="button"
                     onClick={onCtaClick}
-                    className="cosmic-action-btn cursor-pointer px-10 py-2.5 text-sm tracking-wide sm:px-12 sm:py-3 sm:text-base"
+                    className="cosmic-action-btn cursor-pointer px-9 py-2 text-sm tracking-wide sm:px-11 sm:py-2.5 sm:text-base"
                   >
                     {slide.ctaText}
                   </button>
@@ -107,7 +107,7 @@ export function WelcomeBanner({
 
         {items.length > 1 ? (
           <div
-            className="welcome-banner__dots pointer-events-none absolute inset-x-0 bottom-5 z-20 flex justify-center sm:bottom-6"
+            className="welcome-banner__dots pointer-events-none absolute inset-x-0 bottom-3.5 z-20 flex justify-center sm:bottom-4"
             aria-hidden="true"
           >
             <div className="welcome-banner__dots-pill pointer-events-auto">

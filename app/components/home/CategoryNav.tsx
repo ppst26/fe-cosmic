@@ -2,8 +2,10 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import { CategoryItem, CategoryId } from "../../types/lobby";
 import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
+import { CATEGORY_3D_ICONS } from "@/app/data/lobbyMockData";
 import {
   CardsIcon,
   FishIcon,
@@ -30,9 +32,22 @@ interface CategoryNavProps {
 }
 
 /**
- * ไอคอนหมวดหมู่เกม mock (คาสิโน / สล็อต / ยิงปลา / กีฬา / หวย / เกมส์)
+ * ไอคอนหมวดหมู่เกม — ใช้รูป 3D เมนูไอคอนจาก public/assets/3d/menuicon/
  */
 function getCategoryIcon(id: CategoryId, className = "w-6 h-6") {
+  const iconSrc = CATEGORY_3D_ICONS[id];
+  if (iconSrc) {
+    return (
+      <Image
+        src={iconSrc}
+        alt=""
+        width={48}
+        height={48}
+        className={cn("object-contain shrink-0 select-none pointer-events-none", className)}
+      />
+    );
+  }
+
   switch (id) {
     case "home":
       return <HomeNavIcon className={className} />;
@@ -179,13 +194,13 @@ export function CategoryNav({
                 type="button"
                 onClick={(e) => handleCategoryClick(category, e)}
                 className={cn(
-                  "category-nav__chip flex min-h-16 min-w-[76px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-1 py-2 text-center text-xs font-medium sm:text-sm",
+                  "category-nav__chip flex min-h-[92px] min-w-[84px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-2 py-2 text-center text-xs font-medium sm:min-h-[102px] sm:min-w-[96px] sm:text-sm",
                   isActive && "is-active",
                 )}
                 aria-pressed={isActive}
               >
-                <span className="category-nav__icon flex items-center justify-center" aria-hidden="true">
-                  {getCategoryIcon(category.id, "h-[24px] w-[24px] sm:h-8 sm:w-8")}
+                <span className="category-nav__icon flex items-center justify-center shrink-0" aria-hidden="true">
+                  {getCategoryIcon(category.id, "h-12 w-12 sm:h-14 sm:w-14 drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-transform duration-200 group-hover:scale-105")}
                 </span>
                 <span className="category-nav__label max-w-full truncate">{category.label}</span>
               </button>
@@ -203,7 +218,7 @@ export function CategoryNav({
     >
       <div
         ref={trackRef}
-        className="category-nav__track flex flex-nowrap items-center justify-start gap-1.5 w-full overflow-x-auto py-1 px-0.5 no-scrollbar scroll-smooth"
+        className="category-nav__track flex flex-nowrap items-center justify-start gap-2 w-full overflow-x-auto py-1 px-0.5 no-scrollbar scroll-smooth"
       >
         {categories.map((category) => {
           const isActive = category.id === activeId;
@@ -215,9 +230,9 @@ export function CategoryNav({
               data-active={isActive}
               onClick={(e) => handleCategoryClick(category, e)}
               className={cn(
-                "category-nav__pill flex h-9.5 flex-none flex-row items-center gap-2 px-3.5 rounded-xl text-[13.5px] font-medium transition-all duration-150 cursor-pointer select-none outline-none active:scale-96",
+                "category-nav__pill flex h-11 flex-none flex-row items-center gap-2.5 px-3.5 rounded-xl text-[14px] font-medium transition-all duration-150 cursor-pointer select-none outline-none active:scale-96",
                 isActive
-                  ? "is-active bg-[rgba(112,71,235,0.28)] text-white font-semibold"
+                  ? "is-active bg-[rgba(112,71,235,0.32)] text-white font-semibold"
                   : "bg-transparent text-[#bab5d6] hover:text-white hover:bg-white/5",
               )}
               aria-pressed={isActive}
@@ -225,12 +240,12 @@ export function CategoryNav({
             >
               <span
                 className={cn(
-                  "category-nav__icon flex items-center justify-center shrink-0 transition-colors duration-150",
-                  isActive ? "text-white" : "text-[#9d97c5] group-hover:text-white",
+                  "category-nav__icon flex items-center justify-center shrink-0 transition-transform duration-150",
+                  isActive ? "scale-115" : "opacity-95 group-hover:opacity-100",
                 )}
                 aria-hidden="true"
               >
-                {getCategoryIcon(category.id, "h-4.5 w-4.5")}
+                {getCategoryIcon(category.id, "h-8 w-8 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]")}
               </span>
               <span className="category-nav__label whitespace-nowrap tracking-tight">{category.label}</span>
             </button>

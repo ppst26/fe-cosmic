@@ -57,7 +57,11 @@ export function LobbyDesktopPageShell({
         className={`lobby-desktop-shell text-[var(--text-primary)] lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-center${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
       >
         <div className="lobby-desktop-shell__header-band lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:pt-[env(safe-area-inset-top,0px)]">
-          <Header onSignUpClick={openSignUp} onLoginClick={openLogin} />
+          <Header
+            onSignUpClick={openSignUp}
+            onLoginClick={openLogin}
+            onMenuClick={() => setIsMenuOpen(true)}
+          />
         </div>
 
         <div className="lobby-desktop-shell__desk-body lg:relative lg:w-full lg:min-w-0 lg:flex-1">
