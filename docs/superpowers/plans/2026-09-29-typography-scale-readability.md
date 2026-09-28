@@ -4,7 +4,7 @@
 
 **Goal:** ยกระดับขนาดตัวอักษรและ Contrast ทั้งระบบ ขจัดฟอนต์ขนาดเล็กกว่า 12px สำหรับภาษาไทยทั้งหมด เพื่อให้อ่านง่าย ชัดเจน สระไม่ตกหล่น และคงความพรีเมียมตามข้อกำหนด Mobile-first
 
-**Architecture:** ปรับปรุงค่า `--text-muted` ใน `tokens.css` ให้อ่านง่ายขึ้นบนพื้นหลังมืด, อัปเดตเอกสาร `design.md` §4, และทยอย Refactor คลาส typography (`text-[...]`, `leading-*`, `text-[var(--text-*)]`) ใน Component กลุ่มต่าง ๆ โดยใช้ Tailwind utility classes ตามตาราง Hierarchy ใหม่
+**Architecture:** ปรับปรุงค่า `--text-muted` ใน `tokens.css` ให้อ่านง่ายขึ้นบนพื้นหลังมืด, อัปเดตเอกสาร `design.md` §4, และทยอย Refactor คลาส typography (`text-[...]`, `leading-*`, `text-[var(--text-secondary)]`) ใน Component กลุ่มต่าง ๆ โดยใช้ Tailwind utility classes ตามตาราง Hierarchy ใหม่
 
 **Tech Stack:** Next.js 16 (App Router), React 19, Tailwind CSS 4, TypeScript
 
