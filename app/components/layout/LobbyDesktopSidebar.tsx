@@ -162,11 +162,11 @@ export function LobbyDesktopSidebar({
 
   return (
     <aside
-      className="lobby-desktop-sidebar-rail hidden shrink-0 lg:sticky lg:top-(--lobby-sidebar-sticky-top) lg:z-[5] lg:flex lg:w-full lg:min-w-0 lg:flex-col lg:flex-[0_1_auto] lg:self-start lg:h-(--lobby-sidebar-panel-height) lg:max-h-[min(var(--lobby-sidebar-panel-height),52dvh)] lg:overflow-visible lg:pt-(--lobby-workspace-pad-top) lg:px-0 lg:pb-4"
+      className="lobby-desktop-sidebar-rail hidden shrink-0 lg:flex lg:w-full lg:min-w-0 lg:flex-col lg:flex-none lg:self-start lg:h-auto lg:overflow-visible lg:px-0"
       aria-label="เมนูหลักเดสก์ท็อป"
     >
-      <div className="lobby-desktop-sidebar glass-sidebar lobby-desktop-sidebar--borderless relative flex w-full min-w-0 max-w-full flex-none flex-col h-(--lobby-sidebar-panel-height) min-h-0 max-h-[calc(100dvh-80px)] overflow-hidden p-2 rounded-(--radius-panel)">
-      <div className="lobby-desktop-sidebar__body flex flex-1 flex-col min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain">
+      <div className="lobby-desktop-sidebar glass-sidebar lobby-desktop-sidebar--borderless relative flex w-full min-w-0 max-w-full flex-none flex-col h-auto min-h-0 overflow-hidden p-2 rounded-(--radius-panel)">
+      <div className="lobby-desktop-sidebar__body flex flex-col min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain">
       <nav
         className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--primary"
         aria-label="หมวดเกม"

@@ -343,8 +343,8 @@
   }
 
   .lobby-desktop-shell__sidebar-outside .lobby-desktop-sidebar.glass-sidebar {
-    height: 100%;
-    max-height: 100%;
+    height: auto;
+    max-height: none;
   }
 
   .lobby-desktop-shell__frame--dex .lobby-desktop-main:has(.lobby-desktop-main__peek) .lobby-desktop-workspace {
