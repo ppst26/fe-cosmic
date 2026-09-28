@@ -106,7 +106,7 @@ export function DailyCheckInCard({
                 <path d="m9 16 2 2 4-4" />
               </svg>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+            <h2 className="text-xl sm:text-2xl font-medium tracking-tight text-[var(--text-primary)]">
               เช็คอินรายวัน
             </h2>
           </div>
@@ -115,8 +115,8 @@ export function DailyCheckInCard({
             เช็คอินต่อเนื่องรับเพชรโบนัสพิเศษ
           </p>
           <p className="mt-0.5 text-xs sm:text-sm text-[var(--text-secondary)] leading-snug">
-            อีก <span className="font-semibold text-white">{daysRemainingForBonus} วัน</span> ได้โบนัส{" "}
-            <span className="font-semibold text-[#a78bfa]">เพชร 20</span>
+            อีก <span className="font-medium text-white">{daysRemainingForBonus} วัน</span> ได้โบนัส{" "}
+            <span className="font-medium text-[#a78bfa]">เพชร 20</span>
           </p>
         </div>
 
@@ -141,7 +141,7 @@ export function DailyCheckInCard({
             style={{ width: `${progressPercent}%` }}
           />
         </div>
-        <span className="shrink-0 text-xs sm:text-sm font-bold tabular-nums">
+        <span className="shrink-0 text-xs sm:text-sm font-medium tabular-nums">
           <span className="text-white">{checkedInCount}</span>
           <span className="text-[var(--text-muted)] font-medium"> / 7 วัน</span>
         </span>
@@ -198,7 +198,7 @@ export function DailyCheckInCard({
               {/* Day Label */}
               <span
                 className={cn(
-                  "text-[10.5px] sm:text-xs font-semibold leading-tight",
+                  "text-[10.5px] sm:text-xs font-medium leading-tight",
                   isClaimed ? "text-[#c4b5fd]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
                 )}
               >
@@ -226,7 +226,7 @@ export function DailyCheckInCard({
               {/* Reward Amount */}
               <span
                 className={cn(
-                  "text-[11px] sm:text-xs font-bold leading-none mb-1 tabular-nums",
+                  "text-[11px] sm:text-xs font-medium leading-none mb-1 tabular-nums",
                   isClaimed ? "text-[#d8b4fe]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
                 )}
               >
@@ -236,10 +236,10 @@ export function DailyCheckInCard({
               {/* Action Button/Tag */}
               <div
                 className={cn(
-                  "w-full rounded py-0.5 text-center text-[9.5px] sm:text-[10.5px] font-bold transition-all whitespace-nowrap",
+                  "w-full rounded py-0.5 text-center text-[9.5px] sm:text-[10.5px] font-medium transition-all whitespace-nowrap",
                   isClaimed && "border border-[#7747e5]/30 bg-[#7747e5]/15 text-[#c4b5fd]",
                   isToday &&
-                    "bg-gradient-to-r from-[#7747e5] to-[#5b8cff] text-white shadow-[0_0_10px_rgba(119,71,229,0.5)] group-hover:brightness-110 font-bold",
+                    "bg-gradient-to-r from-[#7747e5] to-[#5b8cff] text-white shadow-[0_0_10px_rgba(119,71,229,0.5)] group-hover:brightness-110 font-medium",
                   isLocked && "bg-white/6 text-[var(--text-muted)]",
                 )}
               >
@@ -257,7 +257,7 @@ export function DailyCheckInCard({
           <div className="flex items-center justify-center gap-1.5">
             <span className="text-[#7747e5] text-xs">✦</span>
             <span className="text-base">🎁</span>
-            <h3 className="text-sm sm:text-base font-bold text-[var(--text-primary)]">
+            <h3 className="text-sm sm:text-base font-medium text-[var(--text-primary)]">
               รางวัลเช็คอินสะสม
             </h3>
             <span className="text-[#7747e5] text-xs">✦</span>
@@ -289,7 +289,7 @@ export function DailyCheckInCard({
                 {/* Reward Badge */}
                 <div
                   className={cn(
-                    "rounded-md px-1.5 sm:px-2 py-0.5 text-[9.5px] sm:text-[11px] font-bold tabular-nums transition-all whitespace-nowrap",
+                    "rounded-md px-1.5 sm:px-2 py-0.5 text-[9.5px] sm:text-[11px] font-medium tabular-nums transition-all whitespace-nowrap",
                     isReached
                       ? "border border-[#7747e5]/40 bg-[#7747e5]/20 text-[#e9d5ff] shadow-[0_0_8px_rgba(119,71,229,0.25)]"
                       : "border border-white/8 bg-[#14121a] text-[var(--text-muted)]",
@@ -358,9 +358,9 @@ export function DailyCheckInCard({
         disabled={isTodayClaimed}
         onClick={() => todayReward && handleClaim(todayReward.day)}
         className={cn(
-          "relative flex h-11 sm:h-12.5 w-full items-center justify-center gap-1.5 rounded-2xl font-bold text-base sm:text-lg transition-all duration-200",
+          "relative flex h-11 sm:h-12.5 w-full items-center justify-center gap-1.5 rounded-2xl font-medium text-base sm:text-lg transition-all duration-200",
           isTodayClaimed
-            ? "border border-white/8 bg-[var(--surface-elevated)] text-[var(--text-muted)] shadow-none cursor-default opacity-60 font-semibold"
+            ? "border border-white/8 bg-[var(--surface-elevated)] text-[var(--text-muted)] shadow-none cursor-default opacity-60 font-medium"
             : "bg-gradient-to-r from-[#7747e5] via-[#8253ea] to-[#5b8cff] text-white shadow-[0_0_24px_rgba(119,71,229,0.45),inset_0_1px_0_rgba(255,255,255,0.3)] hover:brightness-110 active:scale-[0.99] cursor-pointer",
         )}
       >

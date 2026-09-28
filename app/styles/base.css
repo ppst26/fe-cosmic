@@ -122,6 +122,10 @@ body {
   li {
     @apply text-sm font-normal leading-relaxed text-text-secondary md:text-base;
   }
+
+  strong, b {
+    font-weight: 500;
+  }
 }
 
 @layer components {

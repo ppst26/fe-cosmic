@@ -6,6 +6,7 @@ import { useAuth } from "@/app/components/auth/AuthProvider";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
+import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { ReferralPageContent } from "@/app/components/referral/ReferralPageContent";
 import { REFERRAL_MOCK_REF_CODE } from "@/app/data/referralMockData";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
@@ -39,6 +40,8 @@ export default function ReferralPage() {
       <Header onMenuClick={() => setIsMenuOpen(true)} />
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+      <SlotProvidersHeader title="แนะนำเพื่อน" backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <ReferralPageContent refCode={refCode} />

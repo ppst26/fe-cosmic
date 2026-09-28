@@ -40,15 +40,13 @@
    */
   --cosmic-mobile-sheet-bg: linear-gradient(
     180deg,
-    #1a1520 0%,
-    #0e0c12 100%
+    #140f1c 0%,
+    #0d0912 100%
   );
   --cosmic-mobile-sheet-blur: 0px;   /* solid — ปิด backdrop-blur เพื่อลดกระตุก */
   --cosmic-mobile-sheet-saturate: 1;
-  --cosmic-mobile-sheet-border: rgb(255 255 255 / 0.09);
-  --cosmic-mobile-sheet-shadow:
-    0 -24px 56px rgb(0 0 0 / 0.58),
-    inset 0 1px 0 rgb(255 255 255 / 0.06);
+  --cosmic-mobile-sheet-border: transparent;
+  --cosmic-mobile-sheet-shadow: 0 -24px 56px rgb(0 0 0 / 0.58);
   --cosmic-mobile-sheet-handle: rgb(255 255 255 / 0.18);
   /** chip / panel รองใน sheet — เข้มกว่าช่องกรอกเล็กน้อย */
   --sheet-soft-fill: linear-gradient(
@@ -61,7 +59,7 @@
     rgb(36 34 42 / 0.68),
     rgb(22 20 28 / 0.74)
   );
-  --sheet-soft-border: rgb(255 255 255 / 0.1);
+  --sheet-soft-border: transparent;
   --sheet-soft-blur: 0px;   /* solid — ปิด blur ใน chip/panel ย่อยใน sheet */
   /** แถวเลือก / panel ใน sheet — อ่อนกว่า shell เล็กน้อย (ฝาก-ถอน ช่องทาง ฯลฯ) */
   --sheet-row-fill: linear-gradient(
@@ -75,7 +73,7 @@
     rgb(24 22 30 / 0.92)
   );
   --sheet-icon-well-fill: rgb(255 255 255 / 0.08);
-  --sheet-icon-well-border: rgb(255 255 255 / 0.1);
+  --sheet-icon-well-border: transparent;
   /** ช่องกรอกใน bottom sheet — ใกล้โทน shell แต่ขอบ/เงาช่วยแยกชั้น */
   --sheet-field-fill: linear-gradient(
     145deg,
@@ -87,8 +85,8 @@
     rgb(34 32 40 / 0.9),
     rgb(26 24 32 / 0.92)
   );
-  --sheet-field-border: rgb(255 255 255 / 0.11);
-  --sheet-field-border-focus: rgb(255 255 255 / 0.15);
+  --sheet-field-border: transparent;
+  --sheet-field-border-focus: transparent;
   --sheet-field-addon-bg: rgb(255 255 255 / 0.05);
   --glass-blur: 20px;          /* ลดจาก 32px — ลด GPU overdraw มือถือ */
   --glass-blur-overlay: 18px;  /* ลดจาก 28px */
@@ -143,8 +141,8 @@
   --cta-white-fg: #0a0a0f;
   --cta-white-hover: #f4f2ff;
   --action-gradient: linear-gradient(90deg, #4930df, #0968f8);
-  /* CTA หลักแบบ Deposit — น้ำเงิน → ม่วง */
-  --cta-primary-gradient: linear-gradient(90deg, #6366f1 0%, #7c6cf0 48%, #a855f7 100%);
+  /* CTA หลักแบบ Deposit / Bottom sheet — โทนม่วงเฉดเข้ม */
+  --cta-primary-gradient: linear-gradient(90deg, #4a148c 0%, #6d28d9 100%);
   --cta-primary-fg: #ffffff;
   --category-active-gradient: linear-gradient(110deg, #26205b, #202d65);
   --gold-gradient: linear-gradient(180deg, #ffe66d, #d99a08);

@@ -41,13 +41,13 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-500/20 text-purple-400">
             <ClockIcon className="h-4 w-4" />
           </span>
-          <h2 id="wheel-history-title" className="text-sm font-bold text-white">
+          <h2 id="wheel-history-title" className="text-sm font-medium text-white">
             ประวัติการหมุนของฉัน
           </h2>
         </div>
         <button
           type="button"
-          className="text-xs font-semibold text-purple-400 transition-colors hover:text-purple-300 hover:underline cursor-pointer"
+          className="text-xs font-medium text-purple-400 transition-colors hover:text-purple-300 hover:underline cursor-pointer"
         >
           ดูทั้งหมด &rsaquo;
         </button>
@@ -63,7 +63,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
             <span className="w-24 shrink-0 text-white/50 text-[11px] tabular-nums">
               {row.atLabel}
             </span>
-            <div className="flex flex-1 items-center justify-center gap-1.5 font-bold text-white">
+            <div className="flex flex-1 items-center justify-center gap-1.5 font-medium text-white">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-white/90">
                 <DiamondSmallIcon />
               </span>

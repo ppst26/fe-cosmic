@@ -25,9 +25,9 @@ import {
 type ReferralTabId = "overview" | "users" | "earning";
 
 const TABS: { id: ReferralTabId; label: string }[] = [
-  { id: "overview", label: "Overview" },
-  { id: "users", label: "Referral users" },
-  { id: "earning", label: "Earning" },
+  { id: "overview", label: "ภาพรวม" },
+  { id: "users", label: "เพื่อนที่แนะนำ" },
+  { id: "earning", label: "รายได้" },
 ];
 
 function TabIcon({ tab }: { tab: ReferralTabId }) {

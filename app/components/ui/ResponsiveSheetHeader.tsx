@@ -22,6 +22,8 @@ type ResponsiveSheetHeaderProps = {
   /** center = กลาง (ฝาก/ถอน) · start = ชิดซ้ายสุด (hub modal) */
   titleAlign?: "center" | "start";
   className?: string;
+  /** องค์ประกอบนำหน้า (เช่น ไอคอน 3D / ภาพประกอบ) เมื่อไม่มี onBack */
+  leadingSlot?: React.ReactNode;
 };
 
 /**
@@ -36,6 +38,7 @@ export function ResponsiveSheetHeader({
   backAriaLabel = "กลับขั้นตอนก่อนหน้า",
   titleAlign = "center",
   className,
+  leadingSlot,
 }: ResponsiveSheetHeaderProps) {
   const closeButton = (
     <Dialog.Close asChild>
@@ -63,6 +66,8 @@ export function ResponsiveSheetHeader({
             >
               <ChevronLeftIcon className="h-5 w-5" />
             </button>
+          ) : leadingSlot ? (
+            leadingSlot
           ) : null}
           <div className="min-w-0 text-left [&_h2]:text-left">
             {title}
@@ -74,8 +79,12 @@ export function ResponsiveSheetHeader({
     );
   }
 
+  const colClass = leadingSlot
+    ? "grid-cols-[2.75rem_minmax(0,1fr)_2.75rem] sm:grid-cols-[3rem_minmax(0,1fr)_3rem]"
+    : undefined;
+
   return (
-    <header className={RESPONSIVE_SHEET_HEADER_ROW_CLASS(className)}>
+    <header className={RESPONSIVE_SHEET_HEADER_ROW_CLASS(cn(colClass, className))}>
       <div className="flex min-h-9 items-center justify-start">
         {onBack ? (
           <button
@@ -86,6 +95,8 @@ export function ResponsiveSheetHeader({
           >
             <ChevronLeftIcon className="h-5 w-5" />
           </button>
+        ) : leadingSlot ? (
+          leadingSlot
         ) : (
           <span className="h-9 w-9 shrink-0" aria-hidden="true" />
         )}

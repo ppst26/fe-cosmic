@@ -14,7 +14,7 @@ import {
   type WheelSpinMethod,
 } from "@/app/data/luckyWheelMockData";
 import { formatGemsBalance } from "@/app/data/gemsStoreMockData";
-import { ChevronDownIcon, ChevronLeftIcon } from "../ui/Icons";
+import { ArrowLeftIcon } from "../ui/Icons";
 import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
 import { LuckyWheelLiveWinners } from "./LuckyWheelLiveWinners";
 import { LuckyWheelPrizeHistory } from "./LuckyWheelPrizeHistory";
@@ -79,20 +79,18 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
 
   return (
     <div className={`lucky-wheel-page ${embedded ? "lucky-wheel-page--embedded" : ""}`}>
-      {/* 1. Header Bar: ย้อนกลับ, หัวข้อ, และจำนวนเพชร/ตั๋วมินิมอลบนขวา */}
-      <div className="flex w-full items-center justify-between gap-3 px-1 py-1 sm:px-2">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-[#161224]/80 text-white/80 shadow-sm transition-all hover:bg-white/10 hover:text-white active:scale-95 cursor-pointer"
-            aria-label="ย้อนกลับไปหน้าแรก"
-          >
-            <ChevronLeftIcon className="h-5 w-5" />
-          </Link>
-          <div className="flex flex-col">
-            <h1 className="text-base font-bold text-white sm:text-lg">วงล้อพารวย</h1>
-            <p className="text-[11px] text-white/50">หมุนลุ้นรับรางวัลใหญ่ทุกวัน</p>
-          </div>
+      {/* 1. Header Bar: ย้อนกลับ arrow back ไร้ card ครอบ, หัวข้อกึ่งกลาง, และจำนวนเพชร/ตั๋วมินิมอลบนขวา */}
+      <div className="relative flex w-full items-center justify-between gap-3 px-1 py-1 sm:px-2">
+        <Link
+          href="/"
+          className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
+          aria-label="ย้อนกลับไปหน้าแรก"
+        >
+          <ArrowLeftIcon className="h-6 w-6 text-white" />
+        </Link>
+        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center text-center pointer-events-none">
+          <h1 className="text-base font-medium text-white sm:text-lg leading-tight">วงล้อพารวย</h1>
+          <p className="hidden text-[11px] text-white/50 sm:block">หมุนลุ้นรับรางวัลใหญ่ทุกวัน</p>
         </div>
 
         {/* ปุ่มเพชร และ ตั๋วมินิมอลบนขวา (ธีม Cosmicbet) */}
@@ -104,7 +102,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
             aria-label="ยอดเพชรของคุณ"
           >
             <GoldGemIcon className="h-3.5 w-3.5 shrink-0 text-sky-400" />
-            <span className="text-xs font-bold text-white tabular-nums tracking-tight">
+            <span className="text-xs font-medium text-white tabular-nums tracking-tight">
               {formatGemsBalance(gemsBalance)}
             </span>
           </Link>
@@ -115,7 +113,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
             aria-label="จำนวนตั๋วของคุณ"
           >
             <GoldTicketIcon className="h-3.5 w-3.5 shrink-0 text-purple-400" />
-            <span className="text-xs font-bold text-white tabular-nums tracking-tight">
+            <span className="text-xs font-medium text-white tabular-nums tracking-tight">
               {ticketCount}
             </span>
           </div>
@@ -134,7 +132,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
             aria-label="กติกาและเงื่อนไข"
             title="กติกาและเงื่อนไข"
           >
-            <span className="text-xs font-serif font-bold italic">i</span>
+            <span className="text-xs font-serif font-medium italic">i</span>
           </button>
 
           {/* ดีไซน์วงล้อเดิม (ห้ามเปลี่ยนดีไซน์) */}
@@ -164,9 +162,9 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
             role="tab"
             aria-selected={spinMethod === "gems"}
             onClick={() => setSpinMethod("gems")}
-            className={`rounded-xl px-5 py-2 text-xs font-semibold sm:text-sm transition-all cursor-pointer ${
+            className={`rounded-xl px-5 py-2 text-xs font-medium sm:text-sm transition-all cursor-pointer ${
               spinMethod === "gems"
-                ? "border border-[#8b5cf6] bg-gradient-to-r from-[#7747e5]/40 to-[#9333ea]/30 text-purple-200 shadow-[0_0_14px_rgba(139,92,246,0.35)] font-bold"
+                ? "border border-[#8b5cf6] bg-gradient-to-r from-[#7747e5]/40 to-[#9333ea]/30 text-purple-200 shadow-[0_0_14px_rgba(139,92,246,0.35)] font-medium"
                 : "text-white/60 hover:text-white"
             }`}
           >
@@ -177,9 +175,9 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
             role="tab"
             aria-selected={spinMethod === "ticket"}
             onClick={() => setSpinMethod("ticket")}
-            className={`rounded-xl px-5 py-2 text-xs font-semibold sm:text-sm transition-all cursor-pointer ${
+            className={`rounded-xl px-5 py-2 text-xs font-medium sm:text-sm transition-all cursor-pointer ${
               spinMethod === "ticket"
-                ? "border border-[#8b5cf6] bg-gradient-to-r from-[#7747e5]/40 to-[#9333ea]/30 text-purple-200 shadow-[0_0_14px_rgba(139,92,246,0.35)] font-bold"
+                ? "border border-[#8b5cf6] bg-gradient-to-r from-[#7747e5]/40 to-[#9333ea]/30 text-purple-200 shadow-[0_0_14px_rgba(139,92,246,0.35)] font-medium"
                 : "text-white/60 hover:text-white"
             }`}
           >
@@ -207,11 +205,11 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
           >
             <div className="flex items-center justify-center gap-2">
               <SpinArrowIcon className={`h-5 w-5 shrink-0 text-white ${spinning ? "animate-spin" : ""}`} />
-              <span className="text-lg font-black tracking-wide text-white">
+              <span className="text-lg font-medium tracking-wide text-white">
                 {spinning ? "กำลังหมุน…" : "หมุนเลย"}
               </span>
             </div>
-            <span className="text-[11px] font-semibold text-purple-200">
+            <span className="text-[11px] font-medium text-purple-200">
               {spinMethod === "ticket"
                 ? `ใช้ตั๋ว ${LUCKY_WHEEL_TICKETS_PER_SPIN} ใบ`
                 : `ใช้ ${LUCKY_WHEEL_GEMS_PER_SPIN.toFixed(2)} เพชร`}
@@ -239,7 +237,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
           )}
 
           {lastWin ? (
-            <div className="mt-2 text-center text-xs font-semibold text-emerald-400 animate-fade-in" role="status">
+            <div className="mt-2 text-center text-xs font-medium text-emerald-400 animate-fade-in" role="status">
               {lastWin}
             </div>
           ) : null}
@@ -250,7 +248,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
       {termsOpen ? (
         <section className="mx-auto w-full max-w-[640px] overflow-hidden rounded-2xl border border-white/10 bg-[#120e20]/90 p-4 shadow-xl">
           <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
-            <h2 className="text-sm font-bold text-white">กติกาและเงื่อนไขการหมุนวงล้อ</h2>
+            <h2 className="text-sm font-medium text-white">กติกาและเงื่อนไขการหมุนวงล้อ</h2>
             <button
               type="button"
               onClick={() => setTermsOpen(false)}

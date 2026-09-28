@@ -6,6 +6,7 @@ import { useAuth } from "@/app/components/auth/AuthProvider";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
+import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { CashbackPageContent } from "@/app/components/cashback/CashbackPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 import type { CashbackTabId } from "@/app/data/cashbackMockData";
@@ -38,6 +39,8 @@ function CashbackPageInner() {
       <Header onMenuClick={() => setIsMenuOpen(true)} />
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+      <SlotProvidersHeader title="คืนยอด" backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <CashbackPageContent initialTab={initialTab} />

@@ -51,7 +51,7 @@ export function HomeLobbyPage() {
     [pathname],
   );
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isOpen: isMenuOpen, open: openMenu, close: closeMenu } = useOverlayLayer("menu");
   const { isOpen: isSignUpOpen, open: openSignUp, close: closeSignUp } = useOverlayLayer("signup");
   const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useOverlayLayer("login");
   const { sidebarHidden: isSidebarCollapsed } = useLobbyShellSidebar();
@@ -116,7 +116,7 @@ export function HomeLobbyPage() {
           <Header
             onSignUpClick={openSignUp}
             onLoginClick={openLogin}
-            onMenuClick={() => setIsMenuOpen(true)}
+            onMenuClick={() => openMenu()}
             mobileSticky={false}
           />
         </div>
@@ -144,7 +144,7 @@ export function HomeLobbyPage() {
                 <div className="lobby-desktop-center min-w-0 flex-1 lg:w-full lg:max-w-none lg:mx-0 lg:px-0">
                   <RightMenuDrawer
                     isOpen={isMenuOpen}
-                    onClose={() => setIsMenuOpen(false)}
+                    onClose={closeMenu}
                   />
 
                   <SignUpBottomDrawer
@@ -263,7 +263,7 @@ export function HomeLobbyPage() {
                       <FloatingBottomNav
                         items={BOTTOM_NAV_DATA}
                         isMenuOpen={isMenuOpen}
-                        onMenuClick={() => setIsMenuOpen(true)}
+                        onMenuClick={() => (isMenuOpen ? closeMenu() : openMenu())}
                       />
                     </div>
 

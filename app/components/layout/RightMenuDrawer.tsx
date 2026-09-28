@@ -56,6 +56,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       case "vip-rank":
         openVipModal();
         onClose();
+        break;
       case "coupon":
         openCouponRedeem();
         onClose();
@@ -78,7 +79,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
 
     const tileClass =
-      "group flex flex-col items-center justify-center rounded-xl bg-[#0f0c22] border border-white/[0.08] py-2 px-1 min-h-[72px] hover:bg-[#191538] hover:border-white/[0.18] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
+      "group flex flex-col items-center justify-center rounded-xl bg-[#0f0c22] py-2 px-1 min-h-[72px] hover:bg-[#191538] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
 
     if (tile.action) {
       return (
@@ -197,14 +198,14 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
 
             <div className="menu-panel glass-menu-panel">
               <div className="flex items-center justify-between mb-2.5 px-1">
-                <Dialog.Title id="menu-title" className="text-2xl sm:text-3xl font-bold leading-tight text-white tracking-tight">
+                <Dialog.Title id="menu-title" className="text-2xl sm:text-3xl font-medium leading-tight text-white tracking-tight">
                   เมนู
                 </Dialog.Title>
 
                 <Dialog.Close asChild>
                   <button
                     type="button"
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-white/80 hover:text-white border border-white/[0.12] cursor-pointer active:scale-95 transition-all"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-white/80 hover:text-white cursor-pointer active:scale-95 transition-all"
                     aria-label="ปิดเมนู"
                   >
                     <CloseIcon className="h-4 w-4" />
@@ -221,12 +222,12 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
                   >
                     <h3
                       id={`menu-section-${section.id}`}
-                      className="text-[12.5px] font-semibold text-[#8f88ab] mb-1 px-0.5"
+                      className="text-[12.5px] font-medium text-[#8f88ab] mb-1 px-0.5"
                     >
                       {section.sectionLabel}
                     </h3>
                     {section.layout === "vertical" ? (
-                      <div className="menu-card-group rounded-xl bg-[#0f0c22] border border-white/[0.08] shadow-[0_4px_16px_rgba(0,0,0,0.4)] overflow-hidden divide-y divide-white/[0.04] flex flex-col">
+                      <div className="menu-card-group rounded-xl bg-[#0f0c22] shadow-[0_4px_16px_rgba(0,0,0,0.4)] overflow-hidden divide-y divide-white/[0.04] flex flex-col">
                         {section.items.map((tile) => renderRow(tile))}
                       </div>
                     ) : (

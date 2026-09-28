@@ -98,66 +98,66 @@ export function Header({
             : "relative bg-transparent",
         )}
       >
-        <div className="relative mx-auto flex h-11 w-full max-w-(--content-max) items-center justify-between">
-          {/* ซ้าย: ไอคอนเมนู (หลังล็อกอิน) — ไม่มี card ครอบ */}
-          {showWallet ? (
-            <button
-              type="button"
-              onClick={handleMenuClick}
-              className="relative z-10 flex h-9.5 w-9.5 shrink-0 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
-              aria-label="เปิดเมนู"
-            >
-              <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
-            </button>
-          ) : (
-            <div className="w-0 shrink-0" aria-hidden="true" />
-          )}
-
-          {/* กลาง: โลโก้ */}
-          <div
-            className={cn(
-              "pointer-events-auto",
-              showWallet
-                ? "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                : "mx-auto"
-            )}
-          >
-            <Link
-              href="/"
-              className="flex flex-col items-center justify-center text-center outline-none transition-transform hover:scale-102"
-              aria-label="Cosmicbet หน้าแรก"
-            >
-              <CosmicbetLogo className="h-[21px] w-auto max-w-[115px] object-contain sm:h-6 sm:max-w-[130px]" />
-              <span className="text-[7.5px] font-bold tracking-[0.24em] text-white/85 uppercase font-sans select-none">
-                PLAY BEYOND LIMITS
-              </span>
-            </Link>
-          </div>
-
-          {/* ขวา: ยอดเครดิต พร้อมไอคอนวอลเลท (หลังล็อกอิน) — ไอคอนเส้นขาว ตัวอักษรเล็กบาง ไม่มี arrow down */}
-          {showWallet ? (
-            <div className="relative z-10 flex min-w-0 shrink-0 items-center">
+          <div className="relative mx-auto flex h-11 w-full max-w-(--content-max) items-center justify-between">
+            {/* ซ้าย: ไอคอนเมนู (หลังล็อกอิน) — ไม่มี card ครอบ */}
+            {showWallet ? (
               <button
                 type="button"
-                onClick={() => {
-                  if (isAuthenticated) {
-                    openDeposit();
-                  } else {
-                    onLoginClick?.();
-                  }
-                }}
-                className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#1a1624] px-3 text-white transition-all hover:bg-[#2b1b54] active:scale-97 cursor-pointer"
-                aria-label="ฝากเงินและดูยอดเครดิต"
+                onClick={handleMenuClick}
+                className="relative z-10 flex h-9.5 w-9.5 shrink-0 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
+                aria-label="เปิดเมนู"
               >
-                <HeaderWalletIcon className="h-3.5 w-3.5 shrink-0 text-white" />
-                <span className="text-xs font-normal tracking-tight text-white tabular-nums">
-                  {balanceLabel}
-                </span>
+                <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
               </button>
+            ) : (
+              <div className="w-0 shrink-0" aria-hidden="true" />
+            )}
+
+            {/* กลาง: โลโก้ */}
+            <div
+              className={cn(
+                "pointer-events-auto",
+                showWallet
+                  ? "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                  : "mx-auto"
+              )}
+            >
+              <Link
+                href="/"
+                className="flex flex-col items-center justify-center text-center outline-none transition-transform hover:scale-102"
+                aria-label="Cosmicbet หน้าแรก"
+              >
+                <CosmicbetLogo className="h-[21px] w-auto max-w-[115px] object-contain sm:h-6 sm:max-w-[130px]" />
+                <span className="text-[7.5px] font-medium tracking-[0.24em] text-white/85 uppercase font-sans select-none">
+                  PLAY BEYOND LIMITS
+                </span>
+              </Link>
             </div>
-          ) : (
-            <div className="w-0 shrink-0" aria-hidden="true" />
-          )}
+
+            {/* ขวา: ยอดเครดิต พร้อมไอคอนวอลเลท (หลังล็อกอิน) — ไอคอนเส้นขาว ตัวอักษรเล็กบาง ไม่มี arrow down */}
+            {showWallet ? (
+              <div className="relative z-10 flex min-w-0 shrink-0 items-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      openDeposit();
+                    } else {
+                      onLoginClick?.();
+                    }
+                  }}
+                  className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#1a1624] px-3 text-white transition-all hover:bg-[#2b1b54] active:scale-97 cursor-pointer"
+                  aria-label="ฝากเงินและดูยอดเครดิต"
+                >
+                  <HeaderWalletIcon className="h-3.5 w-3.5 shrink-0 text-white" />
+                  <span className="text-xs font-normal tracking-tight text-white tabular-nums">
+                    {balanceLabel}
+                  </span>
+                </button>
+              </div>
+            ) : (
+              <div className="w-0 shrink-0" aria-hidden="true" />
+            )}
         </div>
       </header>
 

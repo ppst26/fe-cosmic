@@ -327,7 +327,7 @@ export function ActivityRulesSection({
               <polyline points="10 9 9 9 8 9" />
             </svg>
           </span>
-          <h3 className="text-sm font-semibold tracking-tight text-[var(--text-primary)] sm:text-base">
+          <h3 className="text-sm font-medium tracking-tight text-[var(--text-primary)] sm:text-base">
             กติกาและเงื่อนไขกิจกรรม
           </h3>
         </div>

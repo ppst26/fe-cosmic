@@ -53,8 +53,8 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
       <div className={`flex flex-col gap-5 pb-4 ${showDesktopHub ? "lg:hidden" : ""}`}>
         <header className="flex flex-col gap-3">
           {!embedded ? (
-            <h1 className="text-xl font-medium tracking-tight text-[var(--text-primary)] sm:text-2xl">
-              Promotions
+            <h1 className="hidden text-xl font-medium tracking-tight text-[var(--text-primary)] sm:text-2xl lg:block">
+              โปรโมชั่น
             </h1>
           ) : null}
           <PromotionsCategoryTabs

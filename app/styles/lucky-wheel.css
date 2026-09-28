@@ -799,7 +799,7 @@
   box-shadow: 0 0 16px rgba(139, 92, 246, 0.45), 0 0 0 2px rgba(139, 92, 246, 0.6);
   letter-spacing: 0.12em;
   color: #ffffff;
-  font-weight: 800;
+  font-weight: 500;
 }
 
 .lucky-wheel__hub-btn:disabled {

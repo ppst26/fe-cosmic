@@ -276,6 +276,26 @@ export function ChevronLeftIcon({ className = "w-4 h-4" }: { className?: string 
   );
 }
 
+/**
+ * ไอคอนลูกศรย้อนกลับ Arrow Left — ใช้ในแถบหัวหน้า standalone มือถือ (ไร้ card ครอบ)
+ */
+export function ArrowLeftIcon({ className = "w-6 h-6" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M19 12H5M12 19l-7-7 7-7" />
+    </svg>
+  );
+}
+
 /** ไอคอนคัดลอก — ID สมาชิก */
 export function CopyIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (

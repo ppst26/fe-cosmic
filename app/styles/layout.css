@@ -20,16 +20,15 @@
   box-sizing: border-box;
 }
 
-/** แถบหัวย่อย (ย้อนกลับ + ชื่อหน้า) — ไม่ทาพื้น ให้ละกับพื้น cosmic */
+/** แถบหัวย่อย (ย้อนกลับ + ชื่อหน้า) — ใช้ร่วมกันทุกหน้า standalone */
 @media (max-width: 1023px) {
+  .mobile-standalone-page .standalone-sub-header,
+  .mobile-standalone-page .page-sub-header,
   .mobile-standalone-page .slot-providers-header,
-  .mobile-standalone-page .provider-breadcrumb-nav,
-  .mobile-standalone-page .profile-page-header {
-    background: transparent;
-    border-bottom: 0;
-    box-shadow: none;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+  .mobile-standalone-page .profile-page-header,
+  .mobile-standalone-page .provider-breadcrumb-nav {
+    background: #140f1c;
+    border-bottom: 1px solid rgba(45, 27, 78, 0.5);
   }
 }
 

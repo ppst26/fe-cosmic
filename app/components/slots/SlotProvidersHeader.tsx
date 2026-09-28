@@ -2,39 +2,59 @@
 
 import React from "react";
 import Link from "next/link";
-import { ChevronLeftIcon } from "../ui/Icons";
-import { COSMIC_BTN_GLASS_ICON } from "../ui/cosmicButtonClasses";
+import { useRouter } from "next/navigation";
+import { ArrowLeftIcon } from "../ui/Icons";
 
-interface SlotProvidersHeaderProps {
+export interface PageSubHeaderProps {
   title?: string;
   backHref?: string;
+  className?: string;
 }
+
+export type SlotProvidersHeaderProps = PageSubHeaderProps;
 
 /**
- * แถบ Header ย่อยสำหรับหน้าค่ายเกมสล็อต (/category/slots)
- * แสดงปุ่มย้อนกลับ < และชื่อหมวดหมู่ "สล็อต"
+ * แถบ Header ย่อยสำหรับหน้า standalone มือถือ (แชร์ร่วมกันทุกหน้า)
+ * ปุ่มย้อนกลับ arrow back ไร้ card ครอบ + ชื่อหัวข้อจัดกึ่งกลาง
  */
-export function SlotProvidersHeader({
+export function StandaloneSubHeader({
   title = "สล็อต",
   backHref = "/",
-}: SlotProvidersHeaderProps) {
+  className = "",
+}: PageSubHeaderProps) {
+  const router = useRouter();
+
+  const handleBack = (e: React.MouseEvent) => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      e.preventDefault();
+      router.back();
+    }
+  };
+
   return (
-    <div className="slot-providers-header w-full min-w-0">
-      <div className="slot-providers-header__inner mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center gap-3 px-[var(--layout-inline-gutter)]">
-        {/* ปุ่มย้อนกลับ < */}
+    <header className={`standalone-sub-header page-sub-header w-full min-w-0 bg-[#140f1c] border-b border-[#2d1b4e]/50 ${className}`}>
+      <div className="standalone-sub-header__inner relative mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
+        {/* ปุ่มย้อนกลับ arrow back (ไม่มี card ครอบ) */}
         <Link
           href={backHref}
-          className={`${COSMIC_BTN_GLASS_ICON} text-[var(--icon-active)] active:scale-95`}
-          aria-label="ย้อนกลับไปหน้าแรก"
+          onClick={handleBack}
+          className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
+          aria-label="ย้อนกลับ"
         >
-          <ChevronLeftIcon className="h-5 w-5" />
+          <ArrowLeftIcon className="h-6 w-6 text-white" />
         </Link>
 
-        {/* ชื่อหน้า */}
-        <h2 className="text-base font-medium tracking-wide text-white sm:text-lg">
+        {/* ชื่อหน้า กึ่งกลาง */}
+        <h1 className="absolute left-1/2 -translate-x-1/2 text-base font-medium tracking-tight text-white sm:text-lg select-none pointer-events-none truncate max-w-[70%] text-center leading-none">
           {title}
-        </h2>
+        </h1>
+
+        {/* กล่องรักษาสมดุลด้านขวา */}
+        <div className="w-10 h-10 shrink-0" aria-hidden="true" />
       </div>
-    </div>
+    </header>
   );
 }
+
+export const PageSubHeader = StandaloneSubHeader;
+export const SlotProvidersHeader = StandaloneSubHeader;

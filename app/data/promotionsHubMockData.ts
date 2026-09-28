@@ -37,10 +37,10 @@ export const PROMOTIONS_HUB_CATEGORY_TABS: {
   id: PromoHubCategoryFilterId;
   label: string;
 }[] = [
-  { id: "all", label: "All Promotions" },
-  { id: "slots", label: "Slots" },
-  { id: "casino", label: "Casino" },
-  { id: "sport", label: "Sport" },
+  { id: "all", label: "ทั้งหมด" },
+  { id: "slots", label: "สล็อต" },
+  { id: "casino", label: "คาสิโน" },
+  { id: "sport", label: "กีฬา" },
 ];
 
 export const PROMOTIONS_HUB_HERO: PromoHubHero = {

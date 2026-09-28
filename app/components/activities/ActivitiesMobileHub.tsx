@@ -5,7 +5,7 @@ import { ACTIVITIES_HUB_ITEMS, type ActivityHubItem } from "@/app/data/activitie
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 import { PromoHubPillLabel, promoCardButtonClass } from "../promotions/promoHubCardPrimitives";
 import { COSMIC_BTN_GLASS_ICON, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
-import { ChevronLeftIcon } from "../ui/Icons";
+import { ArrowLeftIcon } from "../ui/Icons";
 
 type MobileView = "list" | "detail";
 
@@ -29,18 +29,19 @@ export function ActivitiesMobileHub() {
   if (view === "detail" && selected) {
     return (
       <div className="activities-mobile-hub flex flex-col gap-4 pb-2">
-        <div className="flex items-center gap-2">
+        <div className="relative flex items-center justify-between h-12 w-full">
           <button
             type="button"
             onClick={backToList}
-            className={`${COSMIC_BTN_GLASS_ICON} shrink-0 text-[var(--icon-default)]`}
+            className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
             aria-label="กลับรายการกิจกรรม"
           >
-            <ChevronLeftIcon className="h-5 w-5" />
+            <ArrowLeftIcon className="h-6 w-6 text-white" />
           </button>
-          <h2 className="min-w-0 flex-1 text-base font-medium leading-snug text-[var(--text-primary)]">
+          <h2 className="absolute left-1/2 -translate-x-1/2 text-base font-medium text-white truncate max-w-[70%] text-center">
             {selected.title}
           </h2>
+          <div className="w-10 h-10 shrink-0" aria-hidden="true" />
         </div>
         <div className={`${COSMIC_PANEL_GLASS} px-3 py-4 sm:px-4`}>
           <ActivityDetailBody item={selected} showTitle={false} />

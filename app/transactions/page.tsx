@@ -52,7 +52,7 @@ function TransactionsPageInner() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="รายการธุรกรรม" backHref="/" />
+      <SlotProvidersHeader title="ประวัติการทำรายการ" backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <TransactionsPageContent

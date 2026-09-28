@@ -65,7 +65,7 @@ function PromotionDetailBanner({
           <h2
             className={
               isHub
-                ? "text-xl font-semibold leading-snug text-[var(--text-primary)] sm:text-2xl"
+                ? "text-xl font-medium leading-snug text-[var(--text-primary)] sm:text-2xl"
                 : "promotion-detail-panel__banner-title text-lg sm:text-xl"
             }
           >
@@ -114,7 +114,7 @@ function PromotionDetailBodyExpanded({
       aria-label="รายละเอียดโปรโมชั่น"
     >
       {isHub ? (
-        <h3 className="text-base font-semibold text-[var(--text-primary)] sm:text-lg">รายละเอียด</h3>
+        <h3 className="text-base font-medium text-[var(--text-primary)] sm:text-lg">รายละเอียด</h3>
       ) : null}
       <div className={isHub ? "space-y-4" : "promotion-detail-panel__blocks"}>
         {body.blocks.map((block, index) => (
@@ -142,7 +142,7 @@ function PromotionDetailBlockRow({
           <h3
             className={
               isHub
-                ? "text-base font-semibold text-[var(--text-primary)]"
+                ? "text-base font-medium text-[var(--text-primary)]"
                 : "promotion-detail-panel__block-title text-sm font-medium"
             }
           >

@@ -63,7 +63,7 @@
   display: flex; align-items: center; gap: .45rem; padding: .48rem .7rem;
   border: 1px solid rgba(255,255,255,.08); border-radius: 10px; background: rgba(255,255,255,.02); color: rgba(255,255,255,.46);
 }
-.metric-chip strong { color: rgba(255,255,255,.84); font-weight: 600; }
+.metric-chip strong { color: rgba(255,255,255,.84); font-weight: 500; }
 .dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
 .dot--purple { background: #8b5cf6; }
 .dot--white { background: rgba(255,255,255,.9); }
@@ -71,7 +71,7 @@
 .chart-grid { stroke: rgba(255,255,255,.06); stroke-width: 1; }
 
 .journey-row { display: flex; gap: 12px; padding: 14px; border: 1px solid rgba(255,255,255,.075); border-radius: 14px; background: rgba(255,255,255,.018); }
-.journey-step { flex: 0 0 32px; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 999px; color: white; background: linear-gradient(135deg,#7c3aed,#a855f7); font-weight: 700; }
+.journey-step { flex: 0 0 32px; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 999px; color: white; background: linear-gradient(135deg,#7c3aed,#a855f7); font-weight: 500; }
 .progress-track { width: 100%; height: 9px; border-radius: 999px; background: rgba(255,255,255,.09); overflow: hidden; }
 .progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg,#7c3aed,#c084fc); }
 .progress-fill--white { background: linear-gradient(90deg,rgba(255,255,255,.95),rgba(255,255,255,.62)); }

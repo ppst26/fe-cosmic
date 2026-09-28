@@ -102,13 +102,13 @@ function CosmicFooterDesktop() {
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/"
-            className="cosmic-footer__brandmark text-2xl font-semibold tracking-tight"
+            className="cosmic-footer__brandmark text-2xl font-medium tracking-tight"
             aria-label="cosmicbet หน้าหลัก"
           >
             cosmic<span>bet</span>
           </Link>
           <span
-            className="rounded-full bg-[color-mix(in_srgb,var(--action-solid)_35%,#2a1848)] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[var(--text-primary)]"
+            className="rounded-full bg-[color-mix(in_srgb,var(--action-solid)_35%,#2a1848)] px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider text-[var(--text-primary)]"
           >
             Web3
           </span>
@@ -137,7 +137,7 @@ function CosmicFooterDesktop() {
       >
         {FOOTER_DESKTOP_COLUMNS.map((column) => (
           <div key={column.title} className="min-w-0">
-            <h3 className="mb-3 text-base font-semibold text-[var(--text-primary)]">{column.title}</h3>
+            <h3 className="mb-3 text-base font-medium text-[var(--text-primary)]">{column.title}</h3>
             <ul className="m-0 flex list-none flex-col gap-0.5 p-0">
               {column.links.map((link) => (
                 <li key={`${column.title}-${link.label}`}>
@@ -166,7 +166,7 @@ function CosmicFooterDesktop() {
               </span>
               <span className="text-xs leading-snug">
                 {badge.label}
-                <strong className="mt-0.5 block text-sm font-semibold text-[var(--text-primary)]">
+                <strong className="mt-0.5 block text-sm font-medium text-[var(--text-primary)]">
                   {badge.name}
                 </strong>
               </span>

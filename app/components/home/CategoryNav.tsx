@@ -232,7 +232,7 @@ export function CategoryNav({
               className={cn(
                 "category-nav__pill flex h-11 flex-none flex-row items-center gap-2.5 px-3.5 rounded-xl text-[14px] font-medium transition-all duration-150 cursor-pointer select-none outline-none active:scale-96",
                 isActive
-                  ? "is-active bg-[rgba(112,71,235,0.32)] text-white font-semibold"
+                  ? "is-active bg-[rgba(112,71,235,0.32)] text-white font-medium"
                   : "bg-transparent text-[#bab5d6] hover:text-white hover:bg-white/5",
               )}
               aria-pressed={isActive}

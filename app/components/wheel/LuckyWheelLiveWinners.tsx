@@ -17,11 +17,11 @@ export function LuckyWheelLiveWinners() {
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-500/20 text-purple-400">
             <UsersIcon className="h-4 w-4" />
           </span>
-          <h2 id="wheel-live-title" className="text-sm font-bold text-white">
+          <h2 id="wheel-live-title" className="text-sm font-medium text-white">
             ผู้เล่นคนอื่นได้รับรางวัล
           </h2>
         </div>
-        <div className="flex items-center gap-1.5 rounded-full border border-rose-500/40 bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-bold text-rose-400">
+        <div className="flex items-center gap-1.5 rounded-full border border-rose-500/40 bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-medium text-rose-400">
           <span className="h-1.5 w-1.5 rounded-full bg-rose-400 animate-pulse" />
           <span>LIVE</span>
         </div>
@@ -35,7 +35,7 @@ export function LuckyWheelLiveWinners() {
             className="flex items-center justify-between rounded-xl border border-white/5 bg-[#14101e] px-3.5 py-3 text-xs transition-colors hover:bg-[#181326]"
           >
             <div className="flex w-24 shrink-0 items-center gap-2">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-white/90">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-medium text-white/90">
                 {entry.avatarLetter}
               </span>
               <span className="truncate font-medium text-white/80 text-[11px]">
@@ -49,7 +49,7 @@ export function LuckyWheelLiveWinners() {
               </span>
               <span>
                 ได้รับ{" "}
-                <span className="font-bold text-purple-300">
+                <span className="font-medium text-purple-300">
                   {entry.gemsAmount.toFixed(2)} เพชร
                 </span>
               </span>

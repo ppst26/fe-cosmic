@@ -51,12 +51,12 @@ export function ProfileHubHeader({
         </div>
 
         <div className="min-w-0 flex-1">
-          <p className="profile-hub-header__phone truncate text-xl font-semibold leading-tight tracking-tight text-[var(--text-primary)] tabular-nums">
+          <p className="profile-hub-header__phone truncate text-xl font-medium leading-tight tracking-tight text-[var(--text-primary)] tabular-nums">
             {formatPhoneForHeader(profile.phone)}
           </p>
           <div className="profile-hub-header__bank mt-1.5 flex min-w-0 items-center gap-2">
             <span
-              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[9px] font-semibold uppercase text-white ${bankToneClass}`}
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[9px] font-medium uppercase text-white ${bankToneClass}`}
               title={profile.bankLabel}
               aria-hidden="true"
             >

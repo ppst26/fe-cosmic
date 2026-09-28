@@ -57,10 +57,10 @@ export function responsiveSheetContentClass(
 
   const sheetSurfaceChrome = isHubSheet
     ? "rounded-t-[24px] border-0"
-    : "rounded-t-[20px] border-t border-[var(--cosmic-mobile-sheet-border)]";
+    : "rounded-t-[20px] border-0";
 
   return cn(
-    "cosmic-mobile-sheet cosmic-modal-shell relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
+    "cosmic-mobile-sheet cosmic-modal-shell bottom-sheet relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
     sheetSurfaceChrome,
     isHubSheet
       ? "cosmic-mobile-sheet--hub px-[var(--page-gutter)] pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3"
@@ -72,8 +72,8 @@ export function responsiveSheetContentClass(
     lgWidth,
     lgMaxHeight,
     isHubSheet
-      ? "lg:min-h-0 lg:rounded-[24px] lg:border lg:border-[var(--cosmic-mobile-sheet-border)]"
-      : "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border lg:border-[var(--cosmic-mobile-sheet-border)]",
+      ? "lg:min-h-0 lg:rounded-[24px] lg:border-0"
+      : "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
     isHubSheet
       ? "lg:shadow-none"
       : "lg:shadow-[0_24px_56px_rgba(0,0,0,0.6),0_0_32px_rgba(119,112,183,0.12)]",

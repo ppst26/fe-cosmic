@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Dialog } from "radix-ui";
+import { cn } from "@/lib/utils";
 import {
   DEPOSIT_BANK_ACCOUNT_MOCK,
   DEPOSIT_DEFAULT_AMOUNT,
@@ -200,6 +201,13 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
     <>
       <ResponsiveSheetHeader
         closeAriaLabel="ปิดหน้าฝากเงิน"
+        leadingSlot={
+          <img
+            src="/assets/deposit/Wallet2.avif"
+            alt=""
+            className="h-10 w-10 shrink-0 object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] sm:h-11 sm:w-11"
+          />
+        }
         title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ฝากเงิน</Dialog.Title>}
         subtitle={
           <p id="deposit-sheet-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
@@ -216,7 +224,7 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
               className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex w-full items-center gap-3.5 px-3.5 py-3.5 text-left sm:gap-4 sm:px-4 sm:py-4`}
               onClick={() => onSelectMethod(method.id)}
             >
-              <DepositMethodIcon methodId={method.id} className="h-6 w-6 shrink-0 text-white sm:h-7 sm:w-7" />
+              <DepositMethodIcon methodId={method.id} className="h-8 w-8 shrink-0 sm:h-9 sm:w-9" />
               <span className="min-w-0 flex-1 text-sm font-medium text-[var(--text-primary)] sm:text-base">
                 {method.title}
               </span>
@@ -268,42 +276,53 @@ function DepositBankStep({
         id="deposit-bank-desc"
         className="min-h-0 flex-1 overflow-y-auto pb-3"
       >
-        <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 sm:px-4 sm:py-4`}>
-          <div className="flex items-start gap-3">
-            <KbankLogoGraphic className="h-11 w-11 shrink-0 sm:h-12 sm:w-12" />
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">{bank.bankName}</p>
-              <span className="mt-1 inline-flex rounded-full bg-[#5b21b6]/80 px-2 py-0.5 text-[10px] font-medium text-[#e9d5ff]">
-                {bank.sampleBadgeLabel}
-              </span>
+        <section className={`${COSMIC_SHEET_SOFT_GLASS} p-3.5 sm:p-4`}>
+          <div className="flex items-center gap-3.5 sm:gap-4">
+            <div className="shrink-0 flex items-center justify-center">
+              <img
+                src="/assets/bank-logo/KBANK.webp"
+                alt={bank.bankName}
+                className="h-16 w-16 sm:h-[72px] sm:w-[72px] object-contain rounded-xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
+              />
             </div>
-          </div>
 
-          <div className="mt-4 space-y-3">
-            <div>
-              <p className="text-xs text-[var(--text-muted)]">เลขบัญชี</p>
-              <div className="mt-1 flex items-center gap-2">
-                <p className="min-w-0 flex-1 text-lg font-medium tracking-wide text-[var(--text-primary)] sm:text-xl">
-                  {bank.accountNumberDisplay}
-                </p>
-                <button
-                  type="button"
-                  onClick={onCopyAccount}
-                  className="glass-control glass-icon-btn !h-9 !w-9 shrink-0 text-[var(--icon-default)]"
-                  aria-label="คัดลอกเลขบัญชี"
-                >
-                  <CopyIcon className="h-4 w-4" />
-                </button>
+            <div className="min-w-0 flex-1 flex flex-col justify-center gap-2.5">
+              <div className="space-y-1">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xs text-[var(--text-muted)] shrink-0">ธนาคาร</span>
+                  <span className="text-sm font-medium text-[var(--text-primary)] sm:text-base truncate">
+                    {bank.bankName}
+                  </span>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xs text-[var(--text-muted)] shrink-0">ชื่อบัญชี</span>
+                  <span className="text-xs sm:text-sm font-medium text-[var(--text-primary)] truncate">
+                    {bank.accountName}
+                  </span>
+                </div>
               </div>
-              {copied && (
-                <p className="mt-1 text-[11px] text-[var(--success)]" role="status">
-                  คัดลอกแล้ว
-                </p>
-              )}
-            </div>
-            <div>
-              <p className="text-xs text-[var(--text-muted)]">ชื่อบัญชี</p>
-              <p className="mt-1 text-sm font-medium text-[var(--text-primary)]">{bank.accountName}</p>
+
+              <div>
+                <span className="text-xs text-[var(--text-muted)]">เลขที่บัญชี</span>
+                <div className="mt-0.5 flex items-center justify-between gap-2">
+                  <span className="min-w-0 text-base font-medium tracking-wider text-[var(--text-primary)] sm:text-lg select-all">
+                    {bank.accountNumberDisplay}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={onCopyAccount}
+                    className="glass-control glass-icon-btn !h-8 !w-8 shrink-0 text-[var(--icon-default)] hover:text-white cursor-pointer active:scale-95 transition-all"
+                    aria-label="คัดลอกเลขบัญชี"
+                  >
+                    <CopyIcon className="h-4 w-4" />
+                  </button>
+                </div>
+                {copied && (
+                  <p className="mt-1 text-[11px] text-[var(--success)]" role="status">
+                    คัดลอกแล้ว
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -353,24 +372,15 @@ function DepositBankStep({
       </div>
 
       <div className="mt-auto shrink-0 pt-3">
-        <div className="flex items-end gap-2">
-          <button
-            type="button"
-            onClick={onEdit}
-            className="shrink-0 px-1 py-2.5 text-sm font-medium text-[var(--text-primary)] underline-offset-2 hover:underline"
-          >
-            แก้ไข
-          </button>
-          <button
-            type="button"
-            disabled={!canProceed}
-            onClick={onNext}
-            className={`${COSMIC_SHEET_SUBMIT} min-w-0 flex-1 !w-auto`}
-          >
-            ถัดไป
-            <ChevronRightIcon className="h-4 w-4" />
-          </button>
-        </div>
+        <button
+          type="button"
+          disabled={!canProceed}
+          onClick={onNext}
+          className={`${COSMIC_SHEET_SUBMIT} w-full flex items-center justify-center gap-1.5`}
+        >
+          <span>ถัดไป</span>
+          <ChevronRightIcon className="h-4 w-4" />
+        </button>
       </div>
     </>
   );
@@ -426,7 +436,11 @@ function DepositConfirmStep({
 
         <section className={`${COSMIC_SHEET_SOFT_GLASS} mt-3 px-3 py-3 sm:px-4 sm:py-3.5`}>
           <div className="flex items-start gap-3">
-            <KbankLogoGraphic className="h-10 w-10 shrink-0" />
+            <img
+              src="/assets/bank-logo/KBANK.webp"
+              alt={bank.bankName}
+              className="h-10 w-10 shrink-0 object-contain rounded-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+            />
             <div className="min-w-0 flex-1 space-y-1.5 text-sm">
               <p className="font-medium text-[var(--text-primary)]">{bank.bankName}</p>
               <p className="text-[var(--text-secondary)]">
@@ -521,45 +535,35 @@ function SlipPlaceholderIcon({ className }: { className?: string }) {
   );
 }
 
-function KbankLogoGraphic({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
-      <circle cx="24" cy="24" r="22" fill="#fff" />
-      <path d="M24 8c-6 4-10 10-10 16 0 8 6 14 10 16 4-2 10-8 10-16 0-6-4-12-10-16Z" fill="#138f4a" />
-      <path d="M24 12c-4 3-7 8-7 12 0 5 4 9 7 11 3-2 7-6 7-11 0-4-3-9-7-12Z" fill="#e11d48" opacity="0.85" />
-    </svg>
-  );
-}
+
+
+const DEPOSIT_METHOD_ASSETS: Record<DepositMethodId, { src: string; alt: string }> = {
+  bank: {
+    src: "/assets/deposit/bank.avif",
+    alt: "บัญชีธนาคาร",
+  },
+  gateway: {
+    src: "/assets/deposit/payment.avif",
+    alt: "Payment Gateway",
+  },
+  truemoney: {
+    src: "/assets/deposit/trueWallet.avif",
+    alt: "ทรูวอลเล็ท",
+  },
+};
 
 function DepositMethodIcon({ methodId, className }: { methodId: DepositMethodId; className?: string }) {
-  const iconClass = className ?? "h-6 w-6 shrink-0 text-white sm:h-7 sm:w-7";
-
-  if (methodId === "bank") {
-    return (
-      <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <path d="M3 10h18" strokeLinecap="round" />
-        <path d="M5 10V18M9 10V18M15 10V18M19 10V18" strokeLinecap="round" />
-        <path d="M4 18h16" strokeLinecap="round" />
-        <path d="M12 4 3 10h18L12 4Z" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-
-  if (methodId === "gateway") {
-    return (
-      <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-        <rect x="3" y="6" width="18" height="12" rx="2" />
-        <path d="M3 10h18" />
-        <path d="M7 15h4" strokeLinecap="round" />
-      </svg>
-    );
-  }
+  const asset = DEPOSIT_METHOD_ASSETS[methodId];
+  if (!asset) return null;
 
   return (
-    <svg viewBox="0 0 24 24" className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
-      <rect x="4" y="7" width="16" height="11" rx="2" />
-      <path d="M4 11h16" />
-      <circle cx="16" cy="14" r="1.25" fill="currentColor" stroke="none" />
-    </svg>
+    <img
+      src={asset.src}
+      alt={asset.alt}
+      className={cn(
+        "h-8 w-8 shrink-0 object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] sm:h-9 sm:w-9",
+        className,
+      )}
+    />
   );
 }

@@ -5,43 +5,51 @@
   backdrop-filter: none;
 }
 
-/** โครง modal / bottom sheet — solid เข้ม ไม่ blur (ลด GPU บนมือถือ) */
-.cosmic-modal-shell {
-  border: 1px solid var(--cosmic-mobile-sheet-border);
+/** โครง modal / bottom sheet — borderless ไล่สี #140f1c ไป #0d0912 จากบนลงล่าง */
+.cosmic-modal-shell,
+.cosmic-mobile-sheet,
+.bottom-sheet,
+.cosmic-bottom-sheet {
+  border: 0;
   border-radius: var(--radius-panel);
   background: var(--cosmic-mobile-sheet-bg);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   box-shadow:
     0 24px 56px rgb(0 0 0 / 0.65),
-    0 4px 16px rgb(0 0 0 / 0.3),
-    inset 0 1px 0 rgb(255 255 255 / 0.06);
+    0 4px 16px rgb(0 0 0 / 0.3);
 }
 
-/** โครงสร้างสำหรับ .cosmic-mobile-sheet ทั้งบน mobile และ desktop */
-.cosmic-mobile-sheet.cosmic-modal-shell {
-  border-color: var(--cosmic-mobile-sheet-border);
+/** โครงสร้างสำหรับ .cosmic-mobile-sheet / .bottom-sheet ทั้งบน mobile และ desktop */
+.cosmic-mobile-sheet.cosmic-modal-shell,
+.bottom-sheet,
+.cosmic-bottom-sheet {
+  border: 0;
   background: var(--cosmic-mobile-sheet-bg);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   box-shadow:
     0 24px 56px rgb(0 0 0 / 0.65),
-    0 4px 16px rgb(0 0 0 / 0.3),
-    inset 0 1px 0 rgb(255 255 255 / 0.06);
+    0 4px 16px rgb(0 0 0 / 0.3);
 }
 
 /** มือถือ — ปรับเงาขึ้นด้านบนตามตำแหน่ง bottom sheet */
 @media (max-width: 1023px) {
-  :is(.cosmic-modal-shell, .cosmic-modal-shell--hub, .cosmic-modal-shell--lobby) {
+  :is(.cosmic-modal-shell, .cosmic-modal-shell--hub, .cosmic-modal-shell--lobby, .cosmic-mobile-sheet, .bottom-sheet, .cosmic-bottom-sheet) {
     background: var(--cosmic-mobile-sheet-bg);
+    border: 0;
   }
 
-  .cosmic-mobile-sheet.cosmic-modal-shell {
+  .cosmic-mobile-sheet.cosmic-modal-shell,
+  .bottom-sheet,
+  .cosmic-bottom-sheet {
+    border: 0;
     box-shadow: var(--cosmic-mobile-sheet-shadow);
   }
 
   .sign-up-picker-sheet {
-    border-top: 1px solid var(--cosmic-mobile-sheet-border);
+    border: 0;
+    border-top: 0;
     background: var(--cosmic-mobile-sheet-bg);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -51,11 +59,12 @@
 
 /** ปุ่ม/คอนโทรลใน modal/sheet — soft glass สีเข้ม เบลอน้อยทั้งบน mobile และ desktop */
 .cosmic-mobile-sheet .glass-control {
-  border-color: var(--sheet-soft-border);
+  border: 0;
+  border-color: transparent;
   background: var(--sheet-soft-fill);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  box-shadow: none;
 }
 
 .cosmic-mobile-sheet .glass-control:hover:not(:disabled):not(.is-active) {
@@ -94,7 +103,7 @@
 }
 
 .cosmic-sheet-soft-glass {
-  border: 1px solid var(--sheet-soft-border, rgb(255 255 255 / 0.1));
+  border: 0;
   border-radius: var(--radius-panel);
   background: var(
     --sheet-soft-fill,
@@ -102,9 +111,7 @@
   );
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 6px 18px rgb(0 0 0 / 0.22);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.22);
 }
 
 button.cosmic-sheet-soft-glass--interactive:hover,
@@ -118,10 +125,9 @@ a.cosmic-sheet-soft-glass--interactive:hover {
 /** แถว / panel soft glass ใน bottom sheet — อ่อนกว่า shell เล็กน้อย */
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) .cosmic-sheet-soft-glass {
   background: var(--sheet-row-fill);
-  border-color: var(--sheet-soft-border);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.05),
-    0 4px 14px rgb(0 0 0 / 0.18);
+  border: 0;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.18);
 }
 
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet)
@@ -133,7 +139,7 @@ a.cosmic-sheet-soft-glass--interactive:hover {
 
 .cosmic-mobile-sheet .cosmic-sheet-icon-well,
 .sign-up-picker-sheet .cosmic-sheet-icon-well {
-  border: 1px solid var(--sheet-icon-well-border);
+  border: 0;
   background: var(--sheet-icon-well-fill);
   color: #fff;
 }
@@ -144,7 +150,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
 
 /** แถว input ใน sheet — ใช้ --sheet-field-* (สว่างกว่าพื้น shell) */
 .cosmic-sheet-field {
-  border: 1px solid var(--sheet-field-border, rgb(255 255 255 / 0.14));
+  border: 0;
   border-radius: var(--radius-panel);
   background: var(
     --sheet-field-fill,
@@ -152,21 +158,17 @@ button.cosmic-sheet-soft-glass--interactive:active {
   );
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 2px 10px rgb(0 0 0 / 0.2);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
   transition:
-    border-color var(--motion-fast) ease,
     background var(--motion-fast) ease,
     box-shadow var(--motion-fast) ease;
 }
 
 .cosmic-sheet-field:focus-within {
-  border-color: var(--sheet-field-border-focus, rgb(255 255 255 / 0.2));
+  border: 0;
+  border-color: transparent;
   background: var(--sheet-field-fill-focus);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.08),
-    0 4px 14px rgb(0 0 0 / 0.22);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.22);
 }
 
 .cosmic-sheet-field--amount {
@@ -177,7 +179,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
   display: flex;
   align-items: center;
   align-self: stretch;
-  border-right: 1px solid rgb(255 255 255 / 0.1);
+  border-right: 0;
   background: var(--sheet-field-addon-bg, rgb(255 255 255 / 0.08));
 }
 
@@ -187,32 +189,31 @@ button.cosmic-sheet-soft-glass--interactive:active {
  */
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet)
   .cosmic-sheet-soft-glass:has(input, textarea, select) {
-  border-color: var(--sheet-field-border);
+  border: 0;
+  border-color: transparent;
   background: var(--sheet-field-fill);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 2px 10px rgb(0 0 0 / 0.2);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
 }
 
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet)
   .cosmic-sheet-soft-glass:has(input, textarea, select):focus-within {
-  border-color: var(--sheet-field-border-focus);
+  border: 0;
+  border-color: transparent;
   background: var(--sheet-field-fill-focus);
 }
 
 /* Lobby catalog search ใน sheet มือถือ — โทนเดียวกับ cosmic-sheet-field */
 .cosmic-mobile-sheet .hub-lobby-modal__search-wrap {
-  border: 1px solid var(--sheet-field-border);
+  border: 0;
   background: var(--sheet-field-fill);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 2px 10px rgb(0 0 0 / 0.2);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
 }
 
 .cosmic-mobile-sheet .hub-lobby-modal__search-wrap:focus-within {
-  border-color: var(--sheet-field-border-focus);
+  border: 0;
+  border-color: transparent;
   background: var(--sheet-field-fill-focus);
 }
 
@@ -267,7 +268,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
 
 @media (max-width: 1023px) {
   .profile-hub-sheet.cosmic-mobile-sheet.cosmic-modal-shell {
-    border-color: var(--cosmic-mobile-sheet-border);
+    border: 0;
     background: var(--cosmic-mobile-sheet-bg);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -653,18 +654,16 @@ button.cosmic-sheet-soft-glass--interactive:active {
 }
 
 .cosmic-mobile-sheet .cosmic-choice-btn:not(.is-active) {
-  border: 1px solid var(--sheet-soft-border);
+  border: 0;
   background: var(--sheet-soft-fill);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 4px 14px rgb(0 0 0 / 0.16);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.16);
 }
 
 .cosmic-mobile-sheet .cosmic-choice-btn:hover:not(.is-active) {
   background: var(--sheet-soft-fill-hover);
-}/** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient) แทน .cosmic-action-btn ม่วงทึบ */ .cosmic-sheet-submit {
+}/** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient ม่วงเข้ม) */ .cosmic-sheet-submit {
   display: flex;
   width: 100%;
   min-height: 3rem;
@@ -677,18 +676,16 @@ button.cosmic-sheet-soft-glass--interactive:active {
   line-height: 1.2;
   color: var(--cta-primary-fg);
   background: var(--cta-primary-gradient);
-  box-shadow:
-    0 6px 22px rgb(99 102 241 / 0.38),
-    inset 0 1px 0 rgb(255 255 255 / 0.38);
+  box-shadow: none;
   cursor: pointer;
   transition:
     filter var(--motion-fast) ease,
-    box-shadow var(--motion-fast) ease,
     transform var(--motion-fast) ease;
 }
 
 .cosmic-sheet-submit:hover:not(:disabled) {
-  filter: brightness(1.07);
+  filter: brightness(1.12);
+  box-shadow: none;
 }
 
 .cosmic-sheet-submit:active:not(:disabled) {

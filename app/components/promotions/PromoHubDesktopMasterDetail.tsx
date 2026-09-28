@@ -118,7 +118,7 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
                     selected ? "promotions-desktop-hub__row--selected" : "hover:bg-[var(--surface-hover)]/25"
                   }`}
                 >
-                  <span className="block text-base font-semibold leading-snug text-[var(--text-primary)]">
+                  <span className="block text-base font-medium leading-snug text-[var(--text-primary)]">
                     {item.title}
                   </span>
                   <span className="mt-1 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">

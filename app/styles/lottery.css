@@ -1241,7 +1241,7 @@
 
 /* Dialog ผลส่งโพย — LotteryBetResultDialog.tsx */
 .lottery-bet-result-dialog.cosmic-modal-shell {
-  border: 1px solid var(--cosmic-mobile-sheet-border);
+  border: 0;
   background: var(--cosmic-mobile-sheet-bg);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;

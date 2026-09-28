@@ -115,7 +115,7 @@
 .category-nav--mobile .category-nav__pill.is-active {
   background: rgba(112, 71, 235, 0.32);
   color: #ffffff;
-  font-weight: 600;
+  font-weight: 500;
   box-shadow: none;
 }
 
