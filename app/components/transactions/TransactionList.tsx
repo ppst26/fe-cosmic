@@ -91,7 +91,7 @@ export function TransactionList({ items }: { items: TransactionItem[] }) {
             >
               {formatAmount(item)}
             </p>
-            <p className="mt-0.5 text-[10px] text-[var(--text-muted)]">{item.currency}</p>
+            <p className="mt-0.5 text-xs text-[var(--text-secondary)]">{item.currency}</p>
           </div>
         </li>
       ))}

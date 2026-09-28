@@ -192,7 +192,7 @@ export function CashbackLossRebateExtraSections({
           className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[color-mix(in_srgb,var(--surface-hover)_40%,transparent)]"
           aria-expanded={termsOpen}
         >
-          <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-medium text-[var(--text-muted)]">
+          <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium text-[var(--text-muted)]">
             i
           </span>
           <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการคืนยอดเสีย</span>
@@ -240,7 +240,7 @@ function LossRebateFormulaSection({ summary }: { summary: LossRebateSummaryMock 
           valueClassName="text-[var(--text-primary)]"
         />
       </div>
-      <p className="mt-3 text-[11px] text-[var(--text-muted)]">ข้อมูลและอัตราในภาพเป็นตัวอย่าง</p>
+      <p className="mt-3 text-xs text-[var(--text-secondary)]">ข้อมูลและอัตราในภาพเป็นตัวอย่าง</p>
     </section>
   );
 }
@@ -256,7 +256,7 @@ function FormulaBlock({
 }) {
   return (
     <div className="glass-card--soft min-w-0 flex-1 rounded-[var(--radius-control)] px-2 py-2 sm:px-3 sm:py-2.5">
-      <p className="line-clamp-2 text-[9px] leading-tight text-[var(--text-muted)] sm:text-[10px]">{label}</p>
+      <p className="line-clamp-2 text-xs leading-normal text-[var(--text-secondary)] sm:text-[13px]">{label}</p>
       <p className={`mt-0.5 text-xs font-medium tabular-nums sm:text-base ${valueClassName}`}>{value}</p>
     </div>
   );

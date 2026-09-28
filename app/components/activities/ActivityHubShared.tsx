@@ -164,13 +164,13 @@ export function ActivityTurnProgressCard({
       </h3>
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         <div className="text-center sm:text-left">
-          <p className="text-[11px] text-[var(--text-secondary)] sm:text-xs">ยอดเทิร์นปัจจุบัน</p>
+          <p className="text-xs text-[var(--text-secondary)] sm:text-[13px]">ยอดเทิร์นปัจจุบัน</p>
           <p className="mt-0.5 text-sm font-medium tabular-nums text-[var(--text-primary)]">
             {formatActivityCredits(progress.currentTurn)}
           </p>
         </div>
         <div className="text-center sm:text-right">
-          <p className="text-[11px] text-[var(--text-secondary)] sm:text-xs">เป้าหมายลำดับที่ 1</p>
+          <p className="text-xs text-[var(--text-secondary)] sm:text-[13px]">เป้าหมายลำดับที่ 1</p>
           <p className="mt-0.5 text-sm font-medium tabular-nums text-[var(--text-primary)]">
             {formatActivityCredits(progress.rank1Target)}
           </p>
@@ -182,7 +182,7 @@ export function ActivityTurnProgressCard({
           <div className="activity-hub-progress__track h-2 overflow-hidden rounded-full">
             <div className="activity-hub-progress__fill h-full rounded-full" style={{ width: `${pct}%` }} />
           </div>
-          <p className="mt-1 text-center text-[11px] font-medium tabular-nums text-[var(--text-secondary)]">
+          <p className="mt-1 text-center text-xs font-medium tabular-nums text-[var(--text-secondary)]">
             จำนวนรางวัล {formatActivityNumber(progress.bonusEarned)} / {formatActivityNumber(progress.bonusCap)}
           </p>
         </div>
@@ -200,7 +200,7 @@ export function ActivityTierTable({ rows, flat = false }: { rows: ActivityTierRo
     >
       <table className="activity-hub-tier-table w-full min-w-[520px] border-collapse text-left text-xs sm:text-sm">
         <thead>
-          <tr className="text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)] sm:text-[11px]">
+          <tr className="text-[11.5px] font-medium uppercase tracking-wider text-[var(--text-secondary)] sm:text-xs">
             <th scope="col" className="px-2 py-2 sm:px-3">ลำดับ</th>
             <th scope="col" className="px-2 py-2 sm:px-3">เทิร์น</th>
             <th scope="col" className="px-2 py-2 text-center sm:px-3">โบนัส</th>
@@ -238,7 +238,7 @@ function ActivityClaimButton({
   flat?: boolean;
 }) {
   const base =
-    "activity-hub-claim-btn inline-flex min-w-[5.5rem] justify-center px-2 py-1.5 text-[10px] font-medium leading-tight sm:text-[11px]";
+    "activity-hub-claim-btn inline-flex min-w-[5.5rem] justify-center px-2 py-1.5 text-xs font-medium leading-tight sm:text-[13px]";
 
   if (state === "claimable") {
     return (
@@ -342,7 +342,7 @@ export function ActivityRulesSection({
       <ol className="mt-3.5 space-y-2.5 text-xs text-[var(--text-secondary)] sm:text-[13px] leading-relaxed">
         {rules.map((rule, idx) => (
           <li key={idx} className="flex items-start gap-2.5">
-            <span className="flex h-5 w-5 shrink-0 select-none items-center justify-center rounded-full bg-white/6 text-[10px] font-medium text-[var(--accent-primary)] tabular-nums border border-white/6">
+            <span className="flex h-5 w-5 shrink-0 select-none items-center justify-center rounded-full bg-white/6 text-xs font-medium text-[var(--accent-primary)] tabular-nums border border-white/6">
               {idx + 1}
             </span>
             <span className="flex-1 pt-0.5">{rule}</span>

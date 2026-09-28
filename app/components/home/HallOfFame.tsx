@@ -111,7 +111,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
         <div className="hall-of-fame-table-wrap px-[var(--page-gutter)] lg:px-0">
           <table className="hall-of-fame-table block w-full min-w-0 border-collapse text-left text-sm">
             <thead className="block">
-              <tr className="hall-of-fame-table__head-row grid items-center gap-x-[0.65rem] text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] sm:text-[11px]">
+              <tr className="hall-of-fame-table__head-row grid items-center gap-x-[0.65rem] text-[11.5px] font-medium uppercase tracking-wider text-[var(--text-secondary)] sm:text-xs">
                 <th
                   scope="col"
                   className="hall-of-fame-table__th hall-of-fame-table__th--game pt-[0.35rem] px-0 pb-2"
@@ -176,7 +176,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                       </div>
                     </td>
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--time py-[0.2rem] px-0">
-                      <span className="block truncate text-[10px] tabular-nums text-[var(--text-secondary)] sm:text-xs">
+                      <span className="block truncate text-xs tabular-nums text-[var(--text-secondary)] sm:text-[13px]">
                         {row.wonAtLabel ?? "—"}
                       </span>
                     </td>
