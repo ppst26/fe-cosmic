@@ -45,7 +45,7 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
         />
       </div>
 
-      <p className="mt-2.5 text-center text-[11px] text-[var(--text-muted)]">ตัวเลขตัวอย่าง</p>
+      <p className="mt-2.5 text-center text-xs text-[var(--text-secondary)]">ตัวเลขตัวอย่าง</p>
     </section>
   );
 }

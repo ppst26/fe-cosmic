@@ -120,7 +120,7 @@ export function ReferralEarningPanel({
       ) : (
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-sm font-medium text-[var(--text-primary)]">{sectionTitle}</h2>
-          <p className="text-[11px] text-[var(--text-muted)]">
+          <p className="text-xs text-[var(--text-secondary)]">
             รับสะสม {formatReferralCurrency(received)}
           </p>
         </div>

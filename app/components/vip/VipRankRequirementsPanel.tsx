@@ -103,7 +103,7 @@ export function VipRankRequirementsPanel({
             </span>
           )}
           {isLocked && (
-            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-secondary)]">
+            <span className="text-xs font-medium uppercase tracking-wide text-[var(--text-secondary)]">
               ล็อก
             </span>
           )}
@@ -194,7 +194,7 @@ export function VipRankRequirementsPanel({
         )}
 
         {isLocked && (
-          <p className="mt-2 text-center text-[11px] leading-snug text-[var(--text-muted)]">
+          <p className="mt-2 text-center text-xs leading-normal text-[var(--text-secondary)]">
             ตัวเลขทวีคูนตามแรงค์ — ฐาน Silver ×1 · Gold ×2 · Platinum ×4 · …
           </p>
         )}

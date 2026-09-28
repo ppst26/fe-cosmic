@@ -33,7 +33,7 @@ export function VipProgressAndMissions({
   return (
     <>
       <div className="w-full space-y-2">
-        <div className="flex items-center justify-between text-[11px] tabular-nums">
+        <div className="flex items-center justify-between text-xs tabular-nums">
           <span className="text-[var(--text-secondary)]">
             เทิร์น {formatVipAmount(player.turnoverProgress)} / {formatVipAmount(turnoverTarget)}
           </span>
@@ -48,14 +48,14 @@ export function VipProgressAndMissions({
             }}
           />
         </div>
-        <p className="text-center text-[11px] text-[var(--text-muted)]">
+        <p className="text-center text-xs sm:text-[13px] text-[var(--text-secondary)]">
           อีก {formatVipAmount(turnoverRemaining)} เทิร์นเพื่อเลื่อนระดับ
         </p>
       </div>
 
       <div className="w-full pt-4">
         <h3 className="text-sm font-medium">{missionsTitle}</h3>
-        <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">{missionsSubtitle}</p>
+        <p className="mt-0.5 text-xs sm:text-[13px] text-[var(--text-secondary)]">{missionsSubtitle}</p>
         <div className="mt-3 flex gap-2">
           {player.missions.map((mission) => (
             <VipCircularProgress

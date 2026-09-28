@@ -84,7 +84,7 @@ export function VipCircularProgress({
         </div>
       </div>
       <p className="text-center text-xs font-medium text-[var(--text-primary)]">{label}</p>
-      <p className="text-center text-[11px] leading-snug text-[var(--text-secondary)]">{statusText}</p>
+      <p className="text-center text-xs leading-normal text-[var(--text-secondary)]">{statusText}</p>
     </div>
   );
 }

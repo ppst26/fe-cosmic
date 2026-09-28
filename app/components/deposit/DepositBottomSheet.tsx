@@ -318,7 +318,7 @@ function DepositBankStep({
                   </button>
                 </div>
                 {copied && (
-                  <p className="mt-1 text-[11px] text-[var(--success)]" role="status">
+                  <p className="mt-1 text-xs text-[var(--success)]" role="status">
                     คัดลอกแล้ว
                   </p>
                 )}
@@ -365,7 +365,7 @@ function DepositBankStep({
               );
             })}
           </div>
-          <p className="mt-2 text-center text-[11px] text-[var(--text-muted)]">
+          <p className="mt-2 text-center text-[12.5px] leading-normal text-[var(--text-secondary)]">
             เลือกยอดเงินหรือกรอกจำนวนที่ต้องการ
           </p>
         </div>
@@ -462,13 +462,13 @@ function DepositConfirmStep({
                 </button>
               </div>
               {copied && (
-                <p className="text-[11px] text-[var(--success)]" role="status">
+                <p className="text-xs text-[var(--success)]" role="status">
                   คัดลอกแล้ว
                 </p>
               )}
             </div>
           </div>
-          <p className="mt-3 text-center text-[10px] text-[var(--text-muted)]">ข้อมูลบัญชีเป็นตัวอย่าง</p>
+          <p className="mt-3 text-center text-xs text-[var(--text-secondary)]">ข้อมูลบัญชีเป็นตัวอย่าง</p>
         </section>
 
         <section className="mt-4">
@@ -498,7 +498,7 @@ function DepositConfirmStep({
               +
             </span>
           </button>
-          <p className="mt-2 text-[11px] text-[var(--text-muted)]">แนบสลิปหลังโอนเงินเรียบร้อยแล้ว</p>
+          <p className="mt-2 text-[12.5px] leading-normal text-[var(--text-secondary)]">แนบสลิปหลังโอนเงินเรียบร้อยแล้ว</p>
         </section>
 
         {submitMessage && (

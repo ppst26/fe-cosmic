@@ -72,18 +72,18 @@ export function GemsStorePageContent({
               />
             </div>
             <div className="min-w-0 text-right">
-              <p className="text-[10px] font-medium text-[var(--text-secondary)] sm:text-[11px]">
+              <p className="text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]">
                 Gems ของคุณ
               </p>
               <p className="text-lg font-medium tabular-nums leading-tight text-[var(--text-primary)] sm:text-xl">
                 {formatGemsBalance(gemsBalance)}
               </p>
-              <p className="text-[9px] text-[var(--text-muted)] sm:text-[10px]">ยอดตัวอย่าง</p>
+              <p className="text-xs text-[var(--text-secondary)]">ยอดตัวอย่าง</p>
             </div>
           </aside>
         </div>
 
-        <p className="text-[11px] text-[var(--text-muted)]">{GEMS_STORE_EXCHANGE_RATE_LABEL}</p>
+        <p className="text-[13px] text-[var(--text-secondary)]">{GEMS_STORE_EXCHANGE_RATE_LABEL}</p>
       </header>
       ) : null}
 
@@ -115,7 +115,7 @@ export function GemsStorePageContent({
           className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20"
           aria-expanded={termsOpen}
         >
-          <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-medium text-[var(--text-muted)]">
+          <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium text-[var(--text-muted)]">
             i
           </span>
           <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการแลกรางวัล</span>
@@ -172,7 +172,7 @@ function GemsRedeemCard({
         <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
           {formatGemsCredits(pkg.credits)}
         </p>
-        <p className="mt-1 flex items-center justify-center gap-1.5 text-[10px] font-medium text-[var(--text-secondary)] sm:text-xs">
+        <p className="mt-1 flex items-center justify-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]">
           <span className="relative h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4">
             <Image src={GEMS_STORE_GEM_ASSET} alt="" fill sizes="16px" className="object-contain" />
           </span>
@@ -185,8 +185,8 @@ function GemsRedeemCard({
         onClick={onRedeem}
         className={
           affordable
-            ? `${COSMIC_BTN_NAV} cosmic-btn-nav--sm mt-3 flex w-full items-center justify-center !py-2 !text-[10px] sm:!text-xs`
-            : `${COSMIC_BTN_GLASS_PILL_SM} mt-3 flex w-full items-center justify-center !py-2 !text-[10px] text-[var(--text-muted)] sm:!text-xs`
+            ? `${COSMIC_BTN_NAV} cosmic-btn-nav--sm mt-3 flex w-full items-center justify-center !py-2 !text-xs sm:!text-[13px]`
+            : `${COSMIC_BTN_GLASS_PILL_SM} mt-3 flex w-full items-center justify-center !py-2 !text-xs text-[var(--text-secondary)] sm:!text-[13px]`
         }
       >
         {affordable ? "แลกรางวัล" : "Gems ไม่เพียงพอ"}

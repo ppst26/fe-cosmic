@@ -168,7 +168,7 @@ function ReferralMobileTabs({
 
           <section className={`${COSMIC_PANEL_GLASS} px-4 py-4`}>
             <h2 className="text-sm font-medium text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
-            <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
+            <p className="mt-0.5 text-xs text-[var(--text-secondary)]">
               แชร์ลิงก์แล้วรับส่วนแบ่งจากยอดเทิร์นของเครือข่าย
             </p>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -182,9 +182,9 @@ function ReferralMobileTabs({
                   </div>
                   <div className="min-w-0">
                     <p className="text-xs font-medium text-[var(--text-primary)]">{tier.title}</p>
-                    <p className="text-[10px] text-[var(--text-muted)]">{tier.subtitle}</p>
+                    <p className="text-xs text-[var(--text-secondary)]">{tier.subtitle}</p>
                     <p className="mt-1 text-2xl font-medium text-[var(--text-primary)]">{tier.rateLabel}</p>
-                    <p className="text-[10px] text-[var(--text-muted)]">{tier.rateHint}</p>
+                    <p className="text-xs text-[var(--text-secondary)]">{tier.rateHint}</p>
                   </div>
                 </div>
               ))}
@@ -193,7 +193,7 @@ function ReferralMobileTabs({
               {REFERRAL_FEATURE_CHECKS.map((line) => (
                 <li
                   key={line}
-                  className="flex items-center gap-1.5 text-[11px] text-[var(--text-secondary)]"
+                  className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]"
                 >
                   <span className="text-[var(--success)]" aria-hidden="true">✓</span>
                   {line}
@@ -212,7 +212,7 @@ function ReferralMobileTabs({
                   <div className="glass-control flex h-12 w-12 items-center justify-center rounded-full text-xs font-medium text-[var(--text-primary)]">
                     {String(index + 1).padStart(2, "0")}
                   </div>
-                  <p className="mt-2 text-[11px] font-medium text-[var(--text-primary)]">{step.label}</p>
+                  <p className="mt-2 text-xs sm:text-[13px] font-medium text-[var(--text-primary)]">{step.label}</p>
                 </div>
               ))}
             </div>

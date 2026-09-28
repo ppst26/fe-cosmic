@@ -56,10 +56,10 @@ export function ReferralPromoBanner({
           </p>
           {!compact ? (
             <>
-              <p className="mt-3 text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--border-active)]">
+              <p className="mt-3 text-[11.5px] font-medium uppercase tracking-[0.12em] text-[var(--border-active)]">
                 Play together · Earn together
               </p>
-              <p className="text-[10px] font-medium uppercase tracking-wider text-[#ffe66d]">
+              <p className="text-[11.5px] font-medium uppercase tracking-wider text-[#ffe66d]">
                 More play · More rewards
               </p>
             </>
@@ -204,7 +204,7 @@ function StatCard({
     >
       <div className={COSMIC_PANEL_GLASS_ICON}>{icon}</div>
       <div className="min-w-0">
-        <p className="text-[11px] text-[var(--text-muted)]">{label}</p>
+        <p className="text-xs text-[var(--text-secondary)]">{label}</p>
         <p className={`text-sm font-medium tabular-nums ${valueClassName}`}>{value}</p>
       </div>
     </div>

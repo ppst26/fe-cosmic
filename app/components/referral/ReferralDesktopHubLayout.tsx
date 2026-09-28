@@ -91,7 +91,7 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
           >
             รับโบนัส
           </button>
-          <p className="text-[11px] text-[var(--text-muted)]">
+          <p className="text-xs text-[var(--text-secondary)]">
             รับสะสมแล้ว {formatReferralCurrency(received)}
           </p>
         </section>
