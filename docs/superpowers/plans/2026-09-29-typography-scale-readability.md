@@ -31,7 +31,7 @@
 - Consumes: Design spec requirements for `--text-muted` tuning and Typography scale
 - Produces: Updated CSS variable `--text-muted: #a8a3c5;` and synced `design.md` guidelines
 
-- [ ] **Step 1: Update `--text-muted` token in `app/styles/tokens.css`**
+- [x] **Step 1: Update `--text-muted` token in `app/styles/tokens.css`**
 
 เปลี่ยนค่าตัวแปร `--text-muted` ใน `app/styles/tokens.css` บรรทัดที่ 131:
 ```css
@@ -41,7 +41,7 @@
   --icon-default: #b9b5df;
 ```
 
-- [ ] **Step 2: Update typography guidelines in `design.md`**
+- [x] **Step 2: Update typography guidelines in `design.md`**
 
 อัปเดตตารางขนาดตัวอักษรใน `design.md` §4 ให้ตรงกับ Hierarchy ใหม่ (เริ่มขั้นต่ำ 12px สำหรับภาษาไทย):
 ```markdown
@@ -56,12 +56,12 @@
 | **Table Header** | 11.5–12px | 12px | 500 / 1.3 | เฉพาะหัวตารางภาษาอังกฤษ (`uppercase tracking-wider`) |
 ```
 
-- [ ] **Step 3: Run git diff to verify changes**
+- [x] **Step 3: Run git diff to verify changes**
 
 Run: `git diff app/styles/tokens.css design.md`
 Expected: Diff แสดงการแก้ค่า `--text-muted` และตารางใน `design.md` ครบถ้วน
 
-- [ ] **Step 4: Commit Task 1**
+- [x] **Step 4: Commit Task 1**
 
 ```bash
 git add app/styles/tokens.css design.md
@@ -89,7 +89,7 @@ git commit -m "docs(design): update typography baseline and text-muted token"
 - Consumes: Task 1 tokens
 - Produces: Clean, readable modal and bottom sheet content with all Thai hints, labels, and exchange rates >= 12px
 
-- [ ] **Step 1: Refactor Deposit & Withdraw Bottom Sheets**
+- [x] **Step 1: Refactor Deposit & Withdraw Bottom Sheets**
 
 1. ใน `app/components/deposit/DepositBottomSheet.tsx`:
    - ปรับ `text-[10px]` บรรทัด 471 (`ข้อมูลบัญชีเป็นตัวอย่าง`) ให้เป็น `text-xs text-[var(--text-secondary)]`
@@ -102,7 +102,7 @@ git commit -m "docs(design): update typography baseline and text-muted token"
    - ปรับ `text-[11px] text-[var(--text-muted)]` บรรทัด 125 (`{bank.holderLabel}`) ให้เป็น `text-[13px] text-[var(--text-secondary)]`
    - ปรับ `text-[11px] text-[var(--text-muted)]` บรรทัด 183 (`แตะยอดเงินเพื่อแก้ไข`) ให้เป็น `text-[12.5px] text-[var(--text-secondary)]`
 
-- [ ] **Step 2: Refactor Gems Store & Referral Components**
+- [x] **Step 2: Refactor Gems Store & Referral Components**
 
 1. ใน `app/components/gems-store/GemsStorePageContent.tsx`:
    - ปรับ `text-[10px] ... sm:text-[11px]` บรรทัด 75 ให้เป็น `text-xs sm:text-[13px]`
@@ -121,7 +121,7 @@ git commit -m "docs(design): update typography baseline and text-muted token"
 3. ใน `app/components/referral/ReferralOverviewSections.tsx`, `ReferralEarningPanel.tsx`, `ReferralDesktopHubLayout.tsx`:
    - ปรับคำอธิบายย่อยที่เป็น `text-[10px]` / `text-[11px] text-[var(--text-muted)]` ให้เป็น `text-xs text-[var(--text-secondary)]`
 
-- [ ] **Step 3: Refactor VIP Panels**
+- [x] **Step 3: Refactor VIP Panels**
 
 1. ใน `app/components/vip/VipProgressAndMissions.tsx`:
    - ปรับ `text-[11px] tabular-nums` บรรทัด 36 ให้เป็น `text-xs tabular-nums`
@@ -137,12 +137,12 @@ git commit -m "docs(design): update typography baseline and text-muted token"
 4. ใน `app/components/vip/VipCircularProgress.tsx`:
    - ปรับ `text-[11px] leading-snug text-[var(--text-secondary)]` บรรทัด 87 ให้เป็น `text-xs leading-normal text-[var(--text-secondary)]`
 
-- [ ] **Step 4: Verify with TypeScript build check**
+- [x] **Step 4: Verify with TypeScript build check**
 
 Run: `pnpm exec tsc --noEmit`
 Expected: Output clean with 0 errors
 
-- [ ] **Step 5: Commit Task 2**
+- [x] **Step 5: Commit Task 2**
 
 ```bash
 git add app/components/deposit/ app/components/withdraw/ app/components/gems-store/ app/components/referral/ app/components/vip/
@@ -163,7 +163,7 @@ git commit -m "refactor(ui): elevate typography baseline in modals and bottom sh
 - Consumes: Task 1 tokens
 - Produces: Legible, neatly aligned table headers and row items with dates/times >= 12px tabular-nums
 
-- [ ] **Step 1: Refactor HallOfFame.tsx**
+- [x] **Step 1: Refactor HallOfFame.tsx**
 
 1. ปรับหัวตารางบรรทัด 114:
 ```tsx
@@ -180,7 +180,7 @@ git commit -m "refactor(ui): elevate typography baseline in modals and bottom sh
 <span className="block truncate text-xs tabular-nums text-[var(--text-secondary)] sm:text-[13px]">
 ```
 
-- [ ] **Step 2: Refactor CashbackLossRebateExtraSections.tsx & TransactionList.tsx**
+- [x] **Step 2: Refactor CashbackLossRebateExtraSections.tsx & TransactionList.tsx**
 
 1. ใน `app/components/cashback/CashbackLossRebateExtraSections.tsx`:
    - ปรับ badge ตัวเลขลำดับบรรทัด 195: จาก `text-[10px]` เป็น `text-xs`
@@ -189,7 +189,7 @@ git commit -m "refactor(ui): elevate typography baseline in modals and bottom sh
 2. ใน `app/components/transactions/TransactionList.tsx`:
    - ปรับสกุลเงิน/ป้ายบรรทัด 94: จาก `text-[10px] text-[var(--text-muted)]` เป็น `text-xs text-[var(--text-secondary)]`
 
-- [ ] **Step 3: Refactor ActivityHubShared.tsx**
+- [x] **Step 3: Refactor ActivityHubShared.tsx**
 
 1. ใน `app/components/activities/ActivityHubShared.tsx`:
    - ปรับหัวตารางบรรทัด 203: จาก `text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)] sm:text-[11px]` เป็น `text-[11.5px] font-medium uppercase tracking-wider text-[var(--text-secondary)] sm:text-xs`
@@ -198,12 +198,12 @@ git commit -m "refactor(ui): elevate typography baseline in modals and bottom sh
    - ปรับคำอธิบายยอดเทิร์นบรรทัด 167 และ 173: จาก `text-[11px] text-[var(--text-secondary)] sm:text-xs` เป็น `text-xs text-[var(--text-secondary)] sm:text-[13px]`
    - ปรับตัวเลขยอดเทิร์นบรรทัด 185: จาก `text-[11px]` เป็น `text-xs`
 
-- [ ] **Step 4: Verify with TypeScript build check**
+- [x] **Step 4: Verify with TypeScript build check**
 
 Run: `pnpm exec tsc --noEmit`
 Expected: Output clean with 0 errors
 
-- [ ] **Step 5: Commit Task 3**
+- [x] **Step 5: Commit Task 3**
 
 ```bash
 git add app/components/home/HallOfFame.tsx app/components/cashback/CashbackLossRebateExtraSections.tsx app/components/transactions/TransactionList.tsx app/components/activities/ActivityHubShared.tsx
@@ -227,7 +227,7 @@ git commit -m "refactor(ui): elevate table headers, rows and activity grids typo
 - Consumes: Task 1 tokens
 - Produces: Legible check-in day labels and rewards (>= 12px), readable live winners stream and wheel wallet details
 
-- [ ] **Step 1: Refactor DailyCheckInCard.tsx & DailyCheckInDesktopLayout.tsx**
+- [x] **Step 1: Refactor DailyCheckInCard.tsx & DailyCheckInDesktopLayout.tsx**
 
 1. ใน `app/components/missions/DailyCheckInCard.tsx`:
    - ปรับหมายเลขวันที่บรรทัด 229: จาก `text-[11px] sm:text-xs font-medium leading-none mb-1 tabular-nums` เป็น `text-xs sm:text-[13px] font-medium leading-tight mb-1 tabular-nums`
@@ -237,7 +237,7 @@ git commit -m "refactor(ui): elevate table headers, rows and activity grids typo
 2. ใน `app/components/missions/DailyCheckInDesktopLayout.tsx`:
    - ปรับข้อกำหนดเงื่อนไขบรรทัด 100: จาก `text-[11px] leading-snug text-[var(--text-muted)]` เป็น `text-xs leading-normal text-[var(--text-secondary)]`
 
-- [ ] **Step 2: Refactor Lucky Wheel Components**
+- [x] **Step 2: Refactor Lucky Wheel Components**
 
 1. ใน `app/components/wheel/LuckyWheelWalletPanel.tsx`:
    - ปรับรายละเอียดกระเป๋าบรรทัด 187: จาก `text-[10px] leading-snug text-[var(--text-muted)]` เป็น `text-xs leading-normal text-[var(--text-secondary)]`
@@ -257,12 +257,12 @@ git commit -m "refactor(ui): elevate table headers, rows and activity grids typo
    - ปรับประวัติรางวัลบรรทัด 63, 72: จาก `text-[11px]` เป็น `text-xs`
    - ปรับ benefit title บรรทัด 66: จาก `text-[11px] sm:text-xs` เป็น `text-xs sm:text-[13px]`
 
-- [ ] **Step 3: Verify with TypeScript build check**
+- [x] **Step 3: Verify with TypeScript build check**
 
 Run: `pnpm exec tsc --noEmit`
 Expected: Output clean with 0 errors
 
-- [ ] **Step 4: Commit Task 4**
+- [x] **Step 4: Commit Task 4**
 
 ```bash
 git add app/components/missions/ app/components/wheel/
@@ -285,7 +285,7 @@ git commit -m "refactor(ui): elevate typography baseline in missions and lucky w
 - Consumes: Task 1 tokens
 - Produces: Clean, readable cards and grids with zero tiny Thai labels across the entire app
 
-- [ ] **Step 1: Refactor ProviderGameGrid & Provider Cards**
+- [x] **Step 1: Refactor ProviderGameGrid & Provider Cards**
 
 1. ใน `app/components/slots/ProviderGameGrid.tsx`:
    - ปรับชื่อเกมบรรทัด 469:
@@ -305,7 +305,7 @@ git commit -m "refactor(ui): elevate typography baseline in missions and lucky w
 <h3 className="line-clamp-2 text-center text-xs sm:text-[13px] font-medium uppercase leading-snug tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
 ```
 
-- [ ] **Step 2: Refactor JackpotWinnerCard & ProfileHubHeader**
+- [x] **Step 2: Refactor JackpotWinnerCard & ProfileHubHeader**
 
 1. ใน `app/components/ui/JackpotWinnerCard.tsx`:
    - ปรับชื่อผู้เล่นบรรทัด 39: จาก `text-[11px]` เป็น `text-xs sm:text-[13px]`
@@ -319,17 +319,17 @@ git commit -m "refactor(ui): elevate typography baseline in missions and lucky w
    - ปรับ meta บรรทัด 86, 90: จาก `text-[11px]` เป็น `text-xs`
    - ปรับสถานะ verification บรรทัด 102: จาก `text-[10px]` เป็น `text-xs`
 
-- [ ] **Step 3: Verification scan for any remaining tiny Thai fonts**
+- [x] **Step 3: Verification scan for any remaining tiny Thai fonts**
 
 Run: `git grep -E "text-\[(9|9\.5|10|11)px\]" -- "app/components/*.tsx"`
 Expected: Remaining matches should ONLY be English uppercase table headers, trademark symbols (™), or non-Thai micro decorative pills. All Thai body, labels, subtitles, and hints are >= 12px.
 
-- [ ] **Step 4: Final TypeScript typecheck**
+- [x] **Step 4: Final TypeScript typecheck**
 
 Run: `pnpm exec tsc --noEmit`
 Expected: Output clean with 0 errors
 
-- [ ] **Step 5: Commit Task 5**
+- [x] **Step 5: Commit Task 5**
 
 ```bash
 git add app/components/slots/ app/components/sport/ app/components/casino/ app/components/ui/ app/components/promotions/ app/components/profile/
