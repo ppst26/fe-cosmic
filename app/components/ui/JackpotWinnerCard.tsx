@@ -36,17 +36,17 @@ export function JackpotWinnerCard({ winner }: JackpotWinnerCardProps) {
   return (
     <article className="surface flex min-w-0 flex-col items-center rounded-[var(--radius-panel)] px-2 py-3 text-center sm:px-3 sm:py-4">
       <JackpotCategoryIcon category={winner.category} />
-      <p className="mt-2 w-full truncate text-[11px] font-medium text-[var(--text-secondary)]">
+      <p className="mt-2 w-full truncate text-xs sm:text-[13px] font-medium text-[var(--text-secondary)]">
         {winner.maskedUsername}
       </p>
       <p className="mt-1 text-sm font-medium tabular-nums leading-tight text-[var(--text-primary)] sm:text-base">
         {amountText} {winner.currency}
       </p>
-      <p className="mt-2 text-[10px] font-medium text-[var(--icon-default)]">{winner.categoryLabel}</p>
-      <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-[var(--text-muted)]">
+      <p className="mt-2 text-xs font-medium text-[var(--text-secondary)]">{winner.categoryLabel}</p>
+      <p className="mt-0.5 line-clamp-2 text-xs leading-normal text-[var(--text-primary)]">
         {winner.gameName}
       </p>
-      <p className="mt-0.5 truncate text-[9px] text-[var(--text-muted)]">{winner.providerName}</p>
+      <p className="mt-0.5 truncate text-xs text-[var(--text-secondary)]">{winner.providerName}</p>
     </article>
   );
 }

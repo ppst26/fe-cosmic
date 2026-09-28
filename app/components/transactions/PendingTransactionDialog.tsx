@@ -104,7 +104,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
             })}
           </dl>
           {copiedRef && (
-            <p className="mt-2 text-right text-[11px] text-[var(--success)]" role="status">
+            <p className="mt-2 text-right text-xs text-[var(--success)]" role="status">
               คัดลอกเลขอ้างอิงแล้ว
             </p>
           )}

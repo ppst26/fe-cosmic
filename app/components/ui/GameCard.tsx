@@ -38,7 +38,7 @@ export function GameCard({ game }: GameCardProps) {
           className={`cover-tone-${coverTone} flex h-full w-full flex-col items-center px-2.5 pt-2.5 pb-3 text-center text-white`}
           aria-hidden="true"
         >
-          <span className="text-[9px] font-medium uppercase tracking-[0.08em] text-white/80 line-clamp-1">
+          <span className="text-[11px] font-medium uppercase tracking-[0.08em] text-white/80 line-clamp-1">
             {provider}
           </span>
           <span className="mt-2.5 text-base font-medium uppercase leading-[1.1] tracking-tight sm:text-lg line-clamp-3">
@@ -50,7 +50,7 @@ export function GameCard({ game }: GameCardProps) {
       {/* ป้าย EXCLUSIVE ฯลฯ ด้านล่างกลางการ์ด */}
       {badge && (
         <span
-          className="absolute bottom-2.5 left-1/2 -translate-x-1/2 rounded-[var(--radius-control)] px-2 py-0.5 text-[9px] font-medium uppercase tracking-[0.06em] text-[var(--surface-end)]"
+          className="absolute bottom-2.5 left-1/2 -translate-x-1/2 rounded-[var(--radius-control)] px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.06em] text-[var(--surface-end)]"
           style={{ background: "var(--gold-gradient)" }}
         >
           {badge}

@@ -159,7 +159,7 @@ function FeaturedPromoCard({
       <div className="relative z-[1] flex items-center gap-2 px-3 py-3.5 sm:gap-3 sm:px-4 sm:py-4">
         <div className="min-w-0 flex-1">
           <h3 className="text-sm font-medium leading-snug text-[var(--text-primary)] sm:text-base">{item.title}</h3>
-          <p className="mt-1 text-[11px] leading-relaxed text-[var(--text-secondary)] sm:text-xs">{item.subtitle}</p>
+          <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-[13px]">{item.subtitle}</p>
           <div className="mt-2.5">
             <PromoHubPillLabel label={item.ctaLabel} />
           </div>

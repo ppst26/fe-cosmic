@@ -34,7 +34,7 @@ function ActivityMasterRow({
             {item.title}
           </span>
           {item.listMeta ? (
-            <span className="text-[11px] leading-relaxed text-[var(--text-muted)]">{item.listMeta}</span>
+            <span className="text-xs leading-relaxed text-[var(--text-secondary)]">{item.listMeta}</span>
           ) : null}
         </div>
       </div>

@@ -318,12 +318,12 @@ export function CasinoProviderCards({
             {/* 3. แผ่นเงาดำไล่ระดับด้านล่าง (Bottom Gradient Overlay) เพื่อให้อ่านตัวหนังสือชัดเจน */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
 
-            {/* 4. ข้อความหัวข้อสีขาวตัวหนา และชื่อ Provider ด้านล่าง */}
+            {/* 4. ข้อความหัวข้อสีขาว และชื่อ Provider ด้านล่าง */}
             <div className="z-10 mt-auto flex flex-col items-center pb-2 px-1 text-center">
-              <h3 className="line-clamp-2 text-center text-[10px] sm:text-[11.5px] font-medium uppercase leading-tight tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
+              <h3 className="line-clamp-2 text-center text-xs sm:text-[13px] font-medium uppercase leading-snug tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
                 {item.title}
               </h3>
-              <p className="mt-0.5 truncate text-center text-[8.5px] sm:text-[9.5px] font-medium text-white/80 drop-shadow">
+              <p className="mt-0.5 truncate text-center text-[11px] sm:text-xs font-medium text-white/80 drop-shadow">
                 {item.provider}
               </p>
             </div>

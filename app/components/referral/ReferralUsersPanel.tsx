@@ -51,7 +51,7 @@ export function ReferralUsersPanel({ users = REFERRAL_USERS_MOCK }: { users?: Re
         >
           เพื่อนที่แนะนำ
         </h2>
-        <span className="glass-card--soft rounded-[var(--radius-pill)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--text-secondary)]">
+        <span className="glass-card--soft rounded-[var(--radius-pill)] px-2.5 py-0.5 text-xs font-medium text-[var(--text-secondary)]">
           {formatReferralCount(total)}
         </span>
       </div>

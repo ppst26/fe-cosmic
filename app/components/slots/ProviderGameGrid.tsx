@@ -382,12 +382,12 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
             <span className="text-2xl drop-shadow" style={{ color: accentColor }}>
               🎰
             </span>
-            <span className="mt-1 line-clamp-2 text-[9px] font-medium text-white drop-shadow">
+            <span className="mt-1 line-clamp-2 text-xs font-medium text-white drop-shadow">
               {game.title}
             </span>
           </div>
           {game.badge && (
-            <div className="absolute top-1 left-1 rounded bg-amber-500 px-1 py-0.5 text-[7px] font-medium text-black shadow">
+            <div className="absolute top-1 left-1 rounded bg-amber-500 px-1.5 py-0.5 text-[9.5px] font-medium text-black shadow">
               {game.badge}
             </div>
           )}
@@ -466,7 +466,7 @@ export function ProviderGameGrid({
               </div>
 
               {/* 2. ชื่อเกมด้านล่าง */}
-              <p className="mt-1.5 line-clamp-2 min-h-[28px] text-[10px] sm:text-[11.5px] font-medium tracking-tight text-[var(--text-primary)] text-center leading-tight transition-colors group-hover:text-white">
+              <p className="mt-1.5 line-clamp-2 min-h-[32px] text-xs sm:text-[13px] font-medium tracking-tight text-[var(--text-primary)] text-center leading-snug transition-colors group-hover:text-white">
                 {game.title}
               </p>
             </div>

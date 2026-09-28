@@ -83,11 +83,11 @@ export function ProfileHubHeader({
         <p className="profile-hub-header__name truncate text-sm font-medium text-[var(--text-primary)]">
           สวัสดี {profile.displayName}
         </p>
-        <p className="profile-hub-header__meta mt-0.5 text-[11px] leading-snug text-[var(--text-secondary)]">
+        <p className="profile-hub-header__meta mt-0.5 text-xs leading-normal text-[var(--text-secondary)]">
           เข้าร่วมเมื่อ: {profile.joinedLabel}
         </p>
         <div className="profile-hub-header__id mt-1 flex items-center gap-1.5">
-          <span className="truncate text-[11px] text-[var(--text-muted)]">
+          <span className="truncate text-xs text-[var(--text-secondary)]">
             ID ผู้เล่น: {profile.memberId}
           </span>
           <button
@@ -99,7 +99,7 @@ export function ProfileHubHeader({
             <CopyIcon className="h-3 w-3" />
           </button>
           {copied && (
-            <span className="text-[10px] text-[var(--success)]" role="status">
+            <span className="text-xs text-[var(--success)]" role="status">
               คัดลอกแล้ว
             </span>
           )}

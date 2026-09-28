@@ -79,7 +79,7 @@ export function CashbackLossRebateExtraSections({
           <h2 className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
             ประวัติการรับคืนยอดเสีย
           </h2>
-          <div className="flex items-center gap-2 text-[11px] text-[var(--text-muted)]">
+          <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
             <CosmicSelectField
               aria-label="เลือกเดือน"
               value={monthId}
@@ -97,16 +97,16 @@ export function CashbackLossRebateExtraSections({
           <Table className="text-sm">
             <TableHeader>
               <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
-                <TableHead className="h-11 px-3 text-[11px] font-medium text-[var(--border-active)] sm:px-4">
+                <TableHead className="h-11 px-3 text-xs font-medium text-[var(--border-active)] sm:px-4">
                   รอบคำนวณ
                 </TableHead>
-                <TableHead className="h-11 px-3 text-right text-[11px] font-medium text-[var(--border-active)] sm:px-4">
+                <TableHead className="h-11 px-3 text-right text-xs font-medium text-[var(--border-active)] sm:px-4">
                   ยอดเสียสุทธิ
                 </TableHead>
-                <TableHead className="h-11 px-3 text-right text-[11px] font-medium text-[var(--border-active)] sm:px-4">
+                <TableHead className="h-11 px-3 text-right text-xs font-medium text-[var(--border-active)] sm:px-4">
                   โบนัสที่ได้รับ
                 </TableHead>
-                <TableHead className="hidden h-11 px-3 text-right text-[11px] font-medium text-[var(--border-active)] sm:table-cell sm:px-4">
+                <TableHead className="hidden h-11 px-3 text-right text-xs font-medium text-[var(--border-active)] sm:table-cell sm:px-4">
                   วันที่รับ
                 </TableHead>
               </TableRow>
@@ -140,7 +140,7 @@ export function CashbackLossRebateExtraSections({
                     <TableCell className="px-3 py-3 text-right text-xs font-medium tabular-nums text-[var(--text-primary)] sm:px-4">
                       {formatLossRebateCurrency(row.bonusThb)}
                     </TableCell>
-                    <TableCell className="hidden px-3 py-3 text-right text-[11px] tabular-nums text-[var(--text-muted)] sm:table-cell sm:px-4">
+                    <TableCell className="hidden px-3 py-3 text-right text-xs tabular-nums text-[var(--text-secondary)] sm:table-cell sm:px-4">
                       {formatLossRebateDateTime(row.receivedAt)}
                     </TableCell>
                   </TableRow>

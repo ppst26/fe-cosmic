@@ -87,13 +87,13 @@ export function VipBenefitsComparisonTable({
                       <div className="flex flex-col items-center gap-1 pb-0.5">
                         <VipRankEmblem rankId={tier.id} size="sm" playing={false} />
                         <span
-                          className="text-[10px] font-medium tracking-wide"
+                          className="text-xs font-medium tracking-wide"
                           style={{ color: tier.accent }}
                         >
                           {tier.label}
                         </span>
                         {isCurrent && (
-                          <span className="rounded-full bg-[var(--cta-white-bg)] px-2 py-0.5 text-[9px] font-medium text-[var(--cta-white-fg)]">
+                          <span className="rounded-full bg-[var(--cta-white-bg)] px-2 py-0.5 text-xs font-medium text-[var(--cta-white-fg)]">
                             ระดับของฉัน
                           </span>
                         )}

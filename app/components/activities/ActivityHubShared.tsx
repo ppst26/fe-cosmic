@@ -332,7 +332,7 @@ export function ActivityRulesSection({
           </h3>
         </div>
         {period ? (
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-[var(--text-secondary)] border border-white/8">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 text-xs font-medium text-[var(--text-secondary)] border border-white/8">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-highlight)]" aria-hidden="true" />
             <span>{period}</span>
           </span>

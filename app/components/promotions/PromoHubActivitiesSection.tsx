@@ -82,7 +82,7 @@ export function ActivityPromoCard({
       <div className="relative z-[1] flex flex-1 flex-col px-3 pb-3 pt-3 sm:px-4 sm:pb-4 sm:pt-4">
         <div className="mx-auto flex min-h-[100px] w-full items-center justify-center">{graphic}</div>
         <h3 className="mt-2 text-sm font-medium text-[var(--text-primary)]">{activity.title}</h3>
-        <p className="mt-0.5 text-[11px] text-[var(--text-secondary)] sm:text-xs">{activity.subtitle}</p>
+        <p className="mt-0.5 text-xs text-[var(--text-secondary)] sm:text-[13px]">{activity.subtitle}</p>
         <div className="mt-auto flex justify-end pt-3">
           <PromoHubPillLabel label={activity.ctaLabel} />
         </div>

@@ -7,7 +7,7 @@ import { COSMIC_BTN_GLASS_PILL } from "../ui/cosmicButtonClasses";
 export function PromoHubPillLabel({ label }: { label: string }) {
   return (
     <span
-      className={`${COSMIC_BTN_GLASS_PILL} pointer-events-none inline-flex items-center gap-0.5 px-3 py-1.5 text-[11px] font-medium text-[var(--text-primary)] sm:text-xs`}
+      className={`${COSMIC_BTN_GLASS_PILL} pointer-events-none inline-flex items-center gap-0.5 px-3 py-1.5 text-xs font-medium text-[var(--text-primary)] sm:text-[13px]`}
     >
       {label}
       <ChevronRightIcon className="h-3.5 w-3.5" />
