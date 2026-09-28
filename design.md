@@ -62,7 +62,7 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 
   --text-primary: #ffffff;
   --text-secondary: #b8b4c8;
-  --text-muted: #7a758c;
+  --text-muted: #a8a3c5;
   --icon-default: #a8a3b8;
   --icon-active: #ffffff;
   --border-subtle: rgba(255, 255, 255, 0.06);
@@ -116,15 +116,15 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 
 **กฎน้ำหนัก (บังคับ):** ใช้ได้แค่ **400 (normal)** และ **500 (medium)** — **ห้าม** `font-semibold` / `font-bold` / `font-extrabold` / `font-black` และ **ห้าม** `font-weight` ใน CSS เกิน 500 · เน้นหัวข้อด้วย **ขนาด** (`text-lg`, `text-xl`) และสี (`text-primary`) ไม่ใช่ bold
 
-| บทบาท | มือถือ | จอใหญ่ | Weight / line-height |
-| :--- | :--- | :--- | :--- |
-| **Hero / promo title** | 22–28px | 32–40px | 500 / 1.2 |
-| **Section heading** | 18–20px | 20–22px | 500 / 1.35 |
-| **Feature / hub title** | 17–18px | 18–20px | 500 / 1.35 |
-| **Body / game name** | 14px | 14–15px | 400–500 / 1.45 |
-| **Secondary / time / odds** | 12px | 12–13px | 400–500 / 1.45 |
-| **Table header** | 10–11px | 11px | 500 / 1.3, uppercase อังกฤษเท่านั้น |
-| **Bottom nav label** | 10–11px | 11–12px | 500 / 1.25 |
+| บทบาท | มือถือ | จอใหญ่ | Weight / line-height | คำอธิบาย & การใช้งาน |
+| :--- | :--- | :--- | :--- | :--- |
+| **Hero / Promo Title** | 24–28px | 32–40px | 500 / 1.25 | แบนเนอร์ หรือ Modal Hero |
+| **Section Title** | 18–20px | 20–22px | 500 / 1.35 | หัวข้อส่วน เช่น เกมยอดฮิต |
+| **Card / Hub Title** | 16–17px | 17–18px | 500 / 1.35 | ชื่อการ์ด, เมนูด่วน |
+| **Body / Input / Label** | 14–15px | 15–16px | 400–500 / 1.45–1.5 | ข้อความเนื้อหาหลัก, ชื่อเกม, ปุ่มกด |
+| **Secondary / Caption** | 13–14px | 13–14px | 400–500 / 1.45 | คำอธิบายย่อย, subtitle |
+| **Micro / Meta / Badge** *(Min)* | 12px | 12–13px | 500 / 1.4 | **ขั้นต่ำสุดของระบบ** สำหรับวันที่/เวลา/ป้าย |
+| **Table Header** | 11.5–12px | 12px | 500 / 1.3 | เฉพาะหัวตารางภาษาอังกฤษ (`uppercase tracking-wider`) |
 
 - ยอดเงิน: `tabular-nums`; payout เน้นใช้ gold (`--gold-gradient` หรือ `#ffe66d`) แบบ Dexsport leaderboard
 - ไทย: ไม่ uppercase / letter-spacing กว้าง; ไม่ตัดสระด้วย line-height ต่ำ
