@@ -21,7 +21,7 @@ export function LuckyWheelLiveWinners() {
             ผู้เล่นคนอื่นได้รับรางวัล
           </h2>
         </div>
-        <div className="flex items-center gap-1.5 rounded-full border border-rose-500/40 bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-medium text-rose-400">
+        <div className="flex items-center gap-1.5 rounded-full border border-rose-500/40 bg-rose-500/10 px-2.5 py-0.5 text-xs font-medium text-rose-400">
           <span className="h-1.5 w-1.5 rounded-full bg-rose-400 animate-pulse" />
           <span>LIVE</span>
         </div>
@@ -38,7 +38,7 @@ export function LuckyWheelLiveWinners() {
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-medium text-white/90">
                 {entry.avatarLetter}
               </span>
-              <span className="truncate font-medium text-white/80 text-[11px]">
+              <span className="truncate font-medium text-white/90 text-xs sm:text-[13px]">
                 {entry.maskedName}
               </span>
             </div>
@@ -55,7 +55,7 @@ export function LuckyWheelLiveWinners() {
               </span>
             </div>
 
-            <span className="w-20 shrink-0 text-right text-[11px] text-white/40 tabular-nums">
+            <span className="w-20 shrink-0 text-right text-xs text-[var(--text-secondary)] tabular-nums">
               {entry.timeLabel}
             </span>
           </div>

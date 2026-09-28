@@ -198,7 +198,7 @@ export function DailyCheckInCard({
               {/* Day Label */}
               <span
                 className={cn(
-                  "text-[10.5px] sm:text-xs font-medium leading-tight",
+                  "text-xs sm:text-[13px] font-medium leading-tight",
                   isClaimed ? "text-[#c4b5fd]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
                 )}
               >
@@ -226,7 +226,7 @@ export function DailyCheckInCard({
               {/* Reward Amount */}
               <span
                 className={cn(
-                  "text-[11px] sm:text-xs font-medium leading-none mb-1 tabular-nums",
+                  "text-xs sm:text-[13px] font-medium leading-tight mb-1 tabular-nums",
                   isClaimed ? "text-[#d8b4fe]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
                 )}
               >
@@ -236,7 +236,7 @@ export function DailyCheckInCard({
               {/* Action Button/Tag */}
               <div
                 className={cn(
-                  "w-full rounded py-0.5 text-center text-[9.5px] sm:text-[10.5px] font-medium transition-all whitespace-nowrap",
+                  "w-full rounded py-0.5 text-center text-xs font-medium transition-all whitespace-nowrap",
                   isClaimed && "border border-[#7747e5]/30 bg-[#7747e5]/15 text-[#c4b5fd]",
                   isToday &&
                     "bg-gradient-to-r from-[#7747e5] to-[#5b8cff] text-white shadow-[0_0_10px_rgba(119,71,229,0.5)] group-hover:brightness-110 font-medium",
@@ -262,7 +262,7 @@ export function DailyCheckInCard({
             </h3>
             <span className="text-[#7747e5] text-xs">✦</span>
           </div>
-          <p className="mt-0.5 text-[10.5px] sm:text-xs text-[var(--text-secondary)]">
+          <p className="mt-0.5 text-xs sm:text-[13px] text-[var(--text-secondary)]">
             เช็คอินครบตามกำหนด รับเพชรโบนัสใหญ่
           </p>
         </div>
@@ -289,7 +289,7 @@ export function DailyCheckInCard({
                 {/* Reward Badge */}
                 <div
                   className={cn(
-                    "rounded-md px-1.5 sm:px-2 py-0.5 text-[9.5px] sm:text-[11px] font-medium tabular-nums transition-all whitespace-nowrap",
+                    "rounded-md px-2 py-0.5 text-xs sm:text-[12.5px] font-medium tabular-nums transition-all whitespace-nowrap",
                     isReached
                       ? "border border-[#7747e5]/40 bg-[#7747e5]/20 text-[#e9d5ff] shadow-[0_0_8px_rgba(119,71,229,0.25)]"
                       : "border border-white/8 bg-[#14121a] text-[var(--text-muted)]",
@@ -340,7 +340,7 @@ export function DailyCheckInCard({
                 {/* Milestone Label */}
                 <span
                   className={cn(
-                    "text-[9.5px] sm:text-[11px] font-medium whitespace-nowrap",
+                    "text-xs sm:text-[12.5px] font-medium whitespace-nowrap",
                     isReached ? "text-white" : "text-[var(--text-muted)]",
                   )}
                 >

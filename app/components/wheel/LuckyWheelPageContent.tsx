@@ -90,7 +90,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
         </Link>
         <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center text-center pointer-events-none">
           <h1 className="text-base font-medium text-white sm:text-lg leading-tight">วงล้อพารวย</h1>
-          <p className="hidden text-[11px] text-white/50 sm:block">หมุนลุ้นรับรางวัลใหญ่ทุกวัน</p>
+          <p className="hidden text-xs sm:text-[13px] text-[var(--text-secondary)] sm:block">หมุนลุ้นรับรางวัลใหญ่ทุกวัน</p>
         </div>
 
         {/* ปุ่มเพชร และ ตั๋วมินิมอลบนขวา (ธีม Cosmicbet) */}
@@ -209,7 +209,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
                 {spinning ? "กำลังหมุน…" : "หมุนเลย"}
               </span>
             </div>
-            <span className="text-[11px] font-medium text-purple-200">
+            <span className="text-xs font-medium text-purple-200">
               {spinMethod === "ticket"
                 ? `ใช้ตั๋ว ${LUCKY_WHEEL_TICKETS_PER_SPIN} ใบ`
                 : `ใช้ ${LUCKY_WHEEL_GEMS_PER_SPIN.toFixed(2)} เพชร`}
@@ -233,7 +233,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
               เพชรไม่เพียงพอ ลองเติมเพชร
             </Link>
           ) : (
-            <span className="mt-2.5 text-[11px] text-white/40">หมุนสนุก ลุ้นรับของรางวัลได้ทุกวัน</span>
+            <span className="mt-2.5 text-xs text-[var(--text-secondary)]">หมุนสนุก ลุ้นรับของรางวัลได้ทุกวัน</span>
           )}
 
           {lastWin ? (
@@ -274,7 +274,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
         <LuckyWheelLiveWinners />
       </div>
 
-      <p className="pt-2 text-center text-[10px] text-white/30">ตัวอย่างรางวัลและยอดกระเป๋า</p>
+      <p className="pt-2 text-center text-xs text-[var(--text-secondary)]">ตัวอย่างรางวัลและยอดกระเป๋า</p>
     </div>
   );
 }

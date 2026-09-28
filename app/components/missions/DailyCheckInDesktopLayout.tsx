@@ -97,7 +97,7 @@ export function DailyCheckInDesktopLayout({
           })}
         </ol>
 
-        <p className="daily-check-in-desktop__terms-hint mb-0 mt-auto text-[11px] leading-snug text-[var(--text-muted)]">
+        <p className="daily-check-in-desktop__terms-hint mb-0 mt-auto text-xs leading-normal text-[var(--text-secondary)]">
           {DAILY_CHECKIN_TERMS[0]}
         </p>
       </aside>

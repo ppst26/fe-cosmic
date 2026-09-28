@@ -60,7 +60,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
             key={row.id}
             className="flex items-center justify-between rounded-xl border border-white/5 bg-[#14101e] px-3.5 py-3 text-xs transition-colors hover:bg-[#181326]"
           >
-            <span className="w-24 shrink-0 text-white/50 text-[11px] tabular-nums">
+            <span className="w-24 shrink-0 text-[var(--text-secondary)] text-xs tabular-nums">
               {row.atLabel}
             </span>
             <div className="flex flex-1 items-center justify-center gap-1.5 font-medium text-white">
@@ -69,7 +69,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
               </span>
               <span>{row.amount} {row.prizeName}</span>
             </div>
-            <div className="flex w-20 shrink-0 items-center justify-end gap-1 text-white/70 text-[11px]">
+            <div className="flex w-20 shrink-0 items-center justify-end gap-1 text-[var(--text-secondary)] text-xs">
               <DiamondOutlineSmallIcon />
               <span>{row.method === "gems" ? "ใช้เพชร" : "ใช้ตั๋ว"}</span>
             </div>

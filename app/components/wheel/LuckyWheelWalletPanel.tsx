@@ -184,7 +184,7 @@ function MethodOption({
       </span>
       <span className="lucky-wheel-wallet__method-body">
         <span className="block text-xs font-medium leading-tight text-[var(--text-primary)] sm:text-sm">{title}</span>
-        <span className="block text-[10px] leading-snug text-[var(--text-muted)]">{detail}</span>
+        <span className="block text-xs leading-normal text-[var(--text-secondary)]">{detail}</span>
       </span>
     </button>
   );

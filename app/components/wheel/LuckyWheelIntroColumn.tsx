@@ -63,7 +63,7 @@ function BenefitCard({ card }: { card: WheelBenefitCard }) {
       <span className="lucky-wheel-benefit__icon" aria-hidden="true">
         <BenefitIcon iconId={card.iconId} />
       </span>
-      <h3 className="lucky-wheel-benefit__title text-[11px] sm:text-xs">
+      <h3 className="lucky-wheel-benefit__title text-xs sm:text-[13px]">
         <span className="block">{card.titleLines[0]}</span>
         <span className="block">{card.titleLines[1]}</span>
       </h3>
