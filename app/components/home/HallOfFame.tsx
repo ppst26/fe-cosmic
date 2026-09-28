@@ -1,18 +1,14 @@
 "use client";
 
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useId, useState } from "react";
 import Image from "next/image";
 import type { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
 import { SectionIcon } from "../ui/SectionIcon";
-import { ChevronDownIcon } from "../ui/Icons";
 
 const TAB_LABELS: { id: HallOfFameTabId; label: string }[] = [
   { id: "latest-winner", label: "Latest Winner" },
   { id: "top-win-multiple", label: "Top Win Multiple" },
 ];
-
-const ROW_LIMIT_OPTIONS = [10, 30, 50] as const;
-type HallOfFameRowLimit = (typeof ROW_LIMIT_OPTIONS)[number];
 
 interface HallOfFameProps {
   datasets: Record<HallOfFameTabId, HallOfFameRow[]>;
@@ -22,41 +18,6 @@ const payoutFormatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
-
-/**
- * ไอคอนหัวข้อ Top Performance — โทนทองตามธีม
- */
-function TopPerformanceBadge({ className = "h-8 w-8" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      className={`shrink-0 ${className}`}
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M16 4l2.2 6.8H25l-5.6 4.1 2.2 6.8L16 17.6l-5.6 4.1 2.2-6.8L7 10.8h6.8L16 4Z"
-        fill="url(#top-perf-star)"
-      />
-      <text
-        x="16"
-        y="21"
-        textAnchor="middle"
-        fill="#090810"
-        fontSize="7"
-        fontWeight="500"
-      >
-        TOP
-      </text>
-      <defs>
-        <linearGradient id="top-perf-star" x1="8" y1="4" x2="24" y2="22">
-          <stop offset="0%" stopColor="#ffe66d" />
-          <stop offset="100%" stopColor="#d99a08" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
 
 /** จัดรูปแบบยอดชนะ THB (+80,060.00฿) */
 function formatPayoutThb(amount: number): string {
@@ -90,90 +51,12 @@ function HallOfFameGameThumb({ row }: { row: HallOfFameRow }) {
 }
 
 /**
- * เลือกจำนวนแถวที่แสดงในตาราง — 10 / 30 / 50
- */
-function HallOfFameRowLimitSelect({
-  value,
-  onChange,
-}: {
-  value: HallOfFameRowLimit;
-  onChange: (limit: HallOfFameRowLimit) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const listId = useId();
-
-  useEffect(() => {
-    if (!open) return;
-    const onPointerDown = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("mousedown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
-
-  return (
-    <div ref={rootRef} className="hall-of-fame__row-limit relative shrink-0">
-      <button
-        type="button"
-        className="hall-of-fame__row-limit-btn cosmic-type-toolbar-control"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-controls={listId}
-        onClick={() => setOpen((prev) => !prev)}
-      >
-        <span className="tabular-nums">{value}</span>
-        <ChevronDownIcon className="h-3.5 w-3.5 shrink-0 opacity-80" aria-hidden />
-      </button>
-
-      {open ? (
-        <ul
-          id={listId}
-          role="listbox"
-          aria-label="จำนวนแถวที่แสดง"
-          className="hall-of-fame__row-limit-menu"
-        >
-          {ROW_LIMIT_OPTIONS.map((option) => {
-            const selected = option === value;
-            return (
-              <li key={option} role="presentation">
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={selected}
-                  className={`hall-of-fame__row-limit-option cosmic-type-toolbar-control${selected ? " is-selected" : ""}`}
-                  onClick={() => {
-                    onChange(option);
-                    setOpen(false);
-                  }}
-                >
-                  {option}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      ) : null}
-    </div>
-  );
-}
-
-/**
  * HallOfFame (Top Performance) — 2 แท็บ · ตารางเต็มความกว้าง · ธีม Cosmicbet
  * ถูกเรียกใช้ใน app/page.tsx (โฮม lobby มือถือ + desktop)
  */
 export function HallOfFame({ datasets }: HallOfFameProps) {
   const [activeTab, setActiveTab] = useState<HallOfFameTabId>("latest-winner");
-  const [rowLimit, setRowLimit] = useState<HallOfFameRowLimit>(10);
+  const rowLimit = 10;
   const panelId = useId();
   const isLatestWinner = activeTab === "latest-winner";
   const valueColumnLabel = isLatestWinner ? "Payout" : "Multiple";
@@ -184,8 +67,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
       className="hall-of-fame mt-10 w-full min-w-0 sm:mt-12"
       aria-labelledby="top-performance-title"
     >
-      <div className="hall-of-fame__head mb-3 flex items-center gap-2">
-        <TopPerformanceBadge className="hall-of-fame__title-icon block h-7 w-7 sm:h-8 sm:w-8" />
+      <div className="hall-of-fame__head mb-3 flex items-center">
         <h2
           id="top-performance-title"
           className="text-[18px] font-medium tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
@@ -218,8 +100,6 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
             );
           })}
         </div>
-
-        <HallOfFameRowLimitSelect value={rowLimit} onChange={setRowLimit} />
       </div>
 
       <div

@@ -150,18 +150,55 @@
 }
 
 @media (min-width: 1024px) {
-  /* ปุ่มหมวดเท่ากันเต็มความกว้างคอลัมน์กลาง desktop */
-  .lobby-category-stack .category-nav .category-nav__track {
+  /* หมวดหมู่บน Desktop: ขยายเต็มความกว้าง container พอดี + overflow แนวนอนเมื่อแคบ */
+  .lobby-category-stack .category-nav .category-nav__track,
+  .category-nav .category-nav__track {
+    display: flex;
+    width: 100%;
     justify-content: stretch;
-    gap: var(--space-2);
-    overflow-x: visible;
-    padding-inline: 0;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-inline: 0.125rem;
+    padding-block: 0.25rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  .lobby-category-stack .category-nav .category-nav__chip {
+  .lobby-category-stack .category-nav .category-nav__track::-webkit-scrollbar,
+  .category-nav .category-nav__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lobby-category-stack .category-nav .category-nav__chip,
+  .category-nav .category-nav__chip {
     flex: 1 1 0;
-    min-width: 0;
+    min-width: 104px;
     max-width: none;
+    min-height: 54px;
+    height: 54px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-inline: 0.75rem;
+    padding-block: 0.5rem;
+    border-radius: 14px;
+  }
+
+  .lobby-category-stack .category-nav .category-nav__chip .category-nav__icon,
+  .category-nav .category-nav__chip .category-nav__icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+
+  .lobby-category-stack .category-nav .category-nav__chip .category-nav__label,
+  .category-nav .category-nav__chip .category-nav__label {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
   }
 }
 
@@ -169,7 +206,7 @@
   color: inherit;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 640px) and (max-width: 1023px) {
   .page-subnav__chip--filter {
     width: 94px;
     min-width: 94px;

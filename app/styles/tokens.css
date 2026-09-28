@@ -28,21 +28,33 @@
     rgb(30 29 38 / 0.8),
     rgb(14 13 20 / 0.86)
   );
-  /* Shell hub/sheet (desktop) — เทาเข้มทึบพอ อ่านข้อความชัด ยังมี depth เล็กน้อย */
-  --cosmic-dialog-shell-bg: linear-gradient(
-    165deg,
-    rgb(40 39 48 / 0.94),
-    rgb(26 25 32 / 0.97)
-  );
+  /* Shell hub/sheet (desktop) — เทาเข้มทึบพอ อ่านข้อความชัด พร้อม radial โทนม่วงอมเทาตรงกลางด้านบน */
+  --cosmic-dialog-shell-bg: radial-gradient(
+      ellipse 75% 55% at 50% 0%,
+      rgba(95, 85, 120, 0.42) 0%,
+      rgba(50, 45, 65, 0.2) 42%,
+      transparent 72%
+    ),
+    linear-gradient(
+      165deg,
+      rgb(40 39 48 / 0.94),
+      rgb(26 25 32 / 0.97)
+    );
   /**
-   * Mobile bottom sheet — solid สีเข้ม ไม่ blur (ลด GPU overdraw / กระตุกบนมือถือ)
-   * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet · ช่อง input ใน sheet
+   * Surface modal & bottom sheet — มี radial gradient ด้านบนตรงกลางสีม่วงออกไปทางเทา
+   * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet · .cosmic-modal-shell
    */
-  --cosmic-mobile-sheet-bg: linear-gradient(
-    180deg,
-    #140f1c 0%,
-    #0d0912 100%
-  );
+  --cosmic-mobile-sheet-bg: radial-gradient(
+      ellipse 75% 55% at 50% 0%,
+      rgba(98, 88, 124, 0.45) 0%,
+      rgba(52, 46, 68, 0.22) 42%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      #15131c 0%,
+      #0c0b11 100%
+    );
   --cosmic-mobile-sheet-blur: 0px;   /* solid — ปิด backdrop-blur เพื่อลดกระตุก */
   --cosmic-mobile-sheet-saturate: 1;
   --cosmic-mobile-sheet-border: transparent;

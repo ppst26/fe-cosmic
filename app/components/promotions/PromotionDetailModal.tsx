@@ -4,7 +4,7 @@ import React from "react";
 import { Dialog } from "radix-ui";
 import { getPromotionDetail, type PromotionDetailId } from "@/app/data/promotionDetailMockData";
 import { CloseIcon } from "../ui/Icons";
-import { COSMIC_BTN_GLASS_ICON } from "../ui/cosmicButtonClasses";
+import { responsiveSheetCloseButtonClass } from "../ui/responsiveSheetDialog";
 import { PromotionDetailPanel } from "./PromotionDetailPanel";
 
 interface PromotionDetailModalProps {
@@ -42,7 +42,7 @@ export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModal
               <Dialog.Close asChild>
                 <button
                   type="button"
-                  className={`${COSMIC_BTN_GLASS_ICON} shrink-0 text-[var(--icon-active)]`}
+                  className={responsiveSheetCloseButtonClass()}
                   aria-label="ปิดรายละเอียดโปรโมชั่น"
                 >
                   <CloseIcon className="h-4 w-4" />

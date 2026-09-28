@@ -54,16 +54,15 @@ export function responsiveSheetContentClass(
 
   const isHubSheet = variant === "hub" || variant === "hubWide" || variant === "hubCompact";
   const isProfileSheet = variant === "profile";
+  const isSignupSheet = variant === "signup";
 
-  const sheetSurfaceChrome = isHubSheet
-    ? "rounded-t-[24px] border-0"
-    : "rounded-t-[20px] border-0";
+  const sheetSurfaceChrome = "rounded-t-[20px] border-0";
 
   return cn(
     "cosmic-mobile-sheet cosmic-modal-shell bottom-sheet relative fixed inset-x-0 bottom-0 z-[70] flex flex-col outline-none",
     sheetSurfaceChrome,
-    isHubSheet
-      ? "cosmic-mobile-sheet--hub px-[var(--page-gutter)] pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3"
+    isSignupSheet
+      ? "p-0"
       : "px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 sm:px-5",
     "text-[var(--text-primary)] shadow-[0_-16px_48px_rgba(0,0,0,0.55)]",
     "data-[state=closed]:animate-out data-[state=open]:animate-in duration-300",
@@ -71,12 +70,8 @@ export function responsiveSheetContentClass(
     "lg:inset-auto lg:left-1/2 lg:top-1/2 lg:bottom-auto lg:-translate-x-1/2 lg:-translate-y-1/2",
     lgWidth,
     lgMaxHeight,
-    isHubSheet
-      ? "lg:min-h-0 lg:rounded-[24px] lg:border-0"
-      : "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
-    isHubSheet
-      ? "lg:shadow-none"
-      : "lg:shadow-[0_24px_56px_rgba(0,0,0,0.6),0_0_32px_rgba(119,112,183,0.12)]",
+    "lg:min-h-0 lg:rounded-[var(--radius-panel)] lg:border-0",
+    "lg:shadow-[0_24px_56px_rgba(0,0,0,0.65),0_0_32px_rgba(119,112,183,0.12)]",
     "lg:data-[state=closed]:zoom-out-95 lg:data-[state=open]:zoom-in-95 lg:duration-200",
     extra,
   );
@@ -115,9 +110,13 @@ export function RESPONSIVE_SHEET_HEADER_ROW_CLASS(extra?: string) {
 }
 
 /** cosmic-sheet-shell + responsive modal desktop */
-export function responsiveAuthSheetContentClass(extra?: string) {
+export function responsiveAuthSheetContentClass(
+  extra?: string,
+  options?: { variant?: "auth" | "signup" },
+) {
+  const variant = options?.variant ?? "signup";
   return cn(
-    responsiveSheetContentClass(undefined, { variant: "signup" }),
+    responsiveSheetContentClass(undefined, { variant }),
     "cosmic-sheet-shell shadow-[0_-12px_40px_rgba(0,0,0,0.45)]",
     "lg:shadow-[0_24px_56px_rgba(0,0,0,0.6),0_0_32px_rgba(119,112,183,0.12)]",
     extra,

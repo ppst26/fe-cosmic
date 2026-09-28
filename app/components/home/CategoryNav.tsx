@@ -111,10 +111,20 @@ export function CategoryNav({
     const el = trackRef.current;
     if (!el) return;
     updateScrollProgress();
+
+    const handleWheel = (e: WheelEvent) => {
+      if (el.scrollWidth > el.clientWidth && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    };
+
     el.addEventListener("scroll", updateScrollProgress, { passive: true });
+    el.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("resize", updateScrollProgress);
     return () => {
       el.removeEventListener("scroll", updateScrollProgress);
+      el.removeEventListener("wheel", handleWheel);
       window.removeEventListener("resize", updateScrollProgress);
     };
   }, [updateScrollProgress]);
@@ -178,12 +188,12 @@ export function CategoryNav({
   if (variant === "desktop") {
     return (
       <nav
-        className={cn("category-nav relative w-full min-w-0 my-[0.875rem] overflow-visible", className)}
+        className={cn("category-nav relative w-full min-w-0 my-1 overflow-hidden", className)}
         aria-label="แถบเลือกหมวดหมู่เกม"
       >
         <div
           ref={trackRef}
-          className="category-nav__track flex flex-nowrap items-stretch justify-center gap-2.5 w-full overflow-x-auto pt-1 pb-1 pr-[0.35rem] pl-0.5"
+          className="category-nav__track flex flex-nowrap items-center justify-stretch gap-2 w-full overflow-x-auto py-1 px-0.5 no-scrollbar scroll-smooth"
         >
           {categories.map((category) => {
             const isActive = category.id === activeId;
@@ -192,17 +202,19 @@ export function CategoryNav({
               <button
                 key={category.id}
                 type="button"
+                data-active={isActive}
                 onClick={(e) => handleCategoryClick(category, e)}
                 className={cn(
-                  "category-nav__chip flex min-h-[92px] min-w-[84px] max-w-none flex-none flex-col items-center justify-center gap-1.5 px-2 py-2 text-center text-xs font-medium sm:min-h-[102px] sm:min-w-[96px] sm:text-sm",
+                  "category-nav__chip flex h-[54px] min-h-[54px] min-w-[104px] flex-1 flex-row items-center justify-center gap-2 rounded-xl px-2.5 py-2 text-[16px] xl:text-[17px] font-medium whitespace-nowrap transition-all duration-200 cursor-pointer select-none",
                   isActive && "is-active",
                 )}
                 aria-pressed={isActive}
+                aria-label={category.label}
               >
                 <span className="category-nav__icon flex items-center justify-center shrink-0" aria-hidden="true">
-                  {getCategoryIcon(category.id, "h-12 w-12 sm:h-14 sm:w-14 drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-transform duration-200 group-hover:scale-105")}
+                  {getCategoryIcon(category.id, "h-9 w-9 xl:h-10 xl:w-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-transform duration-200 group-hover:scale-105")}
                 </span>
-                <span className="category-nav__label max-w-full truncate">{category.label}</span>
+                <span className="category-nav__label whitespace-nowrap tracking-tight">{category.label}</span>
               </button>
             );
           })}

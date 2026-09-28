@@ -68,6 +68,7 @@ export function LoginBottomDrawer({
           aria-describedby={undefined}
           className={responsiveAuthSheetContentClass(
             "z-[60] max-h-[min(70dvh,480px)] flex-col overflow-hidden pt-14",
+            { variant: "auth" },
           )}
         >
           <Dialog.Close asChild>

@@ -15,6 +15,7 @@ import { PromoCarousel } from "./PromoCarousel";
 import { PopularHighlights } from "./PopularHighlights";
 import { CategoryNav } from "./CategoryNav";
 import { LobbyAnnouncementMarquee } from "./LobbyAnnouncementMarquee";
+import { LobbyDesktopQuickBanners } from "./LobbyDesktopQuickBanners";
 import { LobbyCategoryProviders } from "./LobbyCategoryProviders";
 import { GameSection } from "./GameSection";
 import { ProvidersSection } from "./ProvidersSection";
@@ -226,6 +227,7 @@ export function HomeLobbyPage() {
                               variant="default"
                             />
                           </div>
+                          <LobbyDesktopQuickBanners />
                           <div className="hidden lg:block">
                             <CategoryNav
                               categories={CATEGORIES_DATA}

@@ -104,6 +104,8 @@ export const RESPONSIVE_SHEET_HUB_IDS: ReadonlySet<DesktopHubId> = new Set([
   "gems-store",
   "referral",
   "check-in",
+  "account",
+  "transactions",
 ]);
 
 export function isResponsiveSheetHub(id: DesktopHubId): boolean {
@@ -118,7 +120,9 @@ export function getHubSheetSize(id: DesktopHubId): "compact" | "wide" | "hubComp
   if (
     id === "referral" ||
     id === "promotions" ||
-    id === "activities"
+    id === "activities" ||
+    id === "transactions" ||
+    id === "account"
   ) {
     return "wide";
   }

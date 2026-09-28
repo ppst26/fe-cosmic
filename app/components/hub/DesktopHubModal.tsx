@@ -72,13 +72,12 @@ function HubModalBody({
 export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProps) {
   const isOpen = hubId != null;
   const title = hubId ? HUB_MODAL_TITLES[hubId] : "";
-  const useSheetShell = hubId != null && isResponsiveSheetHub(hubId);
 
   const handleOpenChange = (open: boolean) => {
     if (!open) onClose();
   };
 
-  const sheetVariant = hubId && useSheetShell
+  const sheetVariant = hubId
     ? getHubSheetSize(hubId) === "wide"
       ? "hubWide"
       : getHubSheetSize(hubId) === "hubCompact"
@@ -89,13 +88,13 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
-        {useSheetShell && hubId ? (
+        {hubId && (
           <>
             <Dialog.Overlay className={responsiveSheetOverlayClass()} />
             <Dialog.Content
               aria-describedby={undefined}
               className={responsiveSheetContentClass(
-                `hub-modal-shell${hubId === "check-in" ? " hub-modal-shell--check-in !p-0 overflow-hidden" : ""}`,
+                `vip-modal${hubId === "check-in" ? " !p-0 overflow-hidden" : ""}${hubId === "gems-store" ? " gems-store-modal-surface" : ""}`,
                 { variant: sheetVariant },
               )}
             >
@@ -124,36 +123,6 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                   </div>
                 </>
               )}
-            </Dialog.Content>
-          </>
-        ) : (
-          <>
-            <Dialog.Overlay
-              className="cosmic-dialog-overlay fixed inset-0 z-[65] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0"
-            />
-
-            <Dialog.Content
-              aria-describedby={undefined}
-              className="cosmic-modal-shell cosmic-modal-shell--hub fixed left-1/2 top-1/2 z-[70] flex w-[min(92vw,720px)] max-h-[min(90dvh,800px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-[var(--text-primary)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
-            >
-              <div className="cosmic-modal-shell--hub__header flex shrink-0 items-center justify-between gap-3 px-[var(--page-gutter)] py-3">
-                <Dialog.Title className="text-lg font-medium tracking-tight text-[var(--text-primary)]">
-                  {title}
-                </Dialog.Title>
-                <Dialog.Close asChild>
-                  <button
-                    type="button"
-                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-control)] text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
-                    aria-label="ปิด"
-                  >
-                    <CloseIcon className="h-5 w-5" />
-                  </button>
-                </Dialog.Close>
-              </div>
-
-              <div className="min-h-0 flex-1 overflow-y-auto pb-4 pt-3 px-[var(--page-gutter)]">
-                {hubId ? <HubModalBody hubId={hubId} options={options} /> : null}
-              </div>
             </Dialog.Content>
           </>
         )}

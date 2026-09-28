@@ -21,6 +21,7 @@ import {
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
+import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
 import { COSMIC_SEGMENT_GLASS_WHITE } from "../ui/cosmicButtonClasses";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
 import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
@@ -112,37 +113,52 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
         <Dialog.Content
           aria-describedby="vip-modal-desc"
           className={responsiveSheetContentClass(
-            "hub-modal-shell vip-modal flex flex-col overflow-hidden max-lg:max-h-[min(92dvh,640px)]",
+            "vip-modal flex flex-col overflow-hidden max-lg:max-h-[min(92dvh,640px)] lg:hub-modal-shell",
             { variant: "hubWide" },
           )}
         >
           <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
 
-          <header
-            className="vip-modal__header responsive-sheet-header--hub responsive-sheet-header--hub-shell w-full shrink-0 pb-1 pt-0.5 max-lg:space-y-2 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,28rem)_auto] lg:items-center lg:gap-x-4 lg:pb-2"
-          >
-            <div className="flex min-w-0 items-start justify-between gap-3 lg:contents">
-              <div className="min-w-0 text-left lg:col-start-1 lg:row-start-1">
-                <Dialog.Title className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">
-                  VIP
-                </Dialog.Title>
-                <p id="vip-modal-desc" className="vip-modal-subtitle mt-1 text-sm leading-snug">
+          {/* Header มือถือ — ResponsiveSheetHeader มาตรฐานเดียวกับ bottom sheet อื่น */}
+          <div className="w-full shrink-0 pb-1 lg:hidden">
+            <ResponsiveSheetHeader
+              closeAriaLabel="ปิด VIP"
+              title={<Dialog.Title className="text-xl font-medium sm:text-2xl">VIP</Dialog.Title>}
+              subtitle={
+                <p id="vip-modal-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
                   ระดับ แร็งค์ และสิทธิประโยชน์
                 </p>
-              </div>
-              <Dialog.Close asChild>
-                <button
-                  type="button"
-                  className={`${responsiveSheetCloseButtonClass()} lg:col-start-3 lg:row-start-1 lg:self-center`}
-                  aria-label="ปิด VIP"
-                >
-                  <CloseIcon className="h-4 w-4" />
-                </button>
-              </Dialog.Close>
+              }
+            />
+            <div className="mt-2.5 w-full shrink-0">
+              {tabList}
+            </div>
+          </div>
+
+          {/* Header Desktop — 3 คอลัมน์ (หัวข้อ | แท็บ | ปิด) */}
+          <header
+            className="vip-modal__header responsive-sheet-header--hub responsive-sheet-header--hub-shell hidden w-full shrink-0 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,28rem)_auto] lg:items-center lg:gap-x-4 lg:pb-2"
+          >
+            <div className="min-w-0 text-left lg:col-start-1 lg:row-start-1">
+              <h2 className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">
+                VIP
+              </h2>
+              <p id="vip-modal-desc-desktop" className="vip-modal-subtitle mt-1 text-sm leading-snug">
+                ระดับ แร็งค์ และสิทธิประโยชน์
+              </p>
             </div>
             <div className="w-full min-w-0 lg:col-start-2 lg:row-start-1 lg:justify-self-center">
               {tabList}
             </div>
+            <Dialog.Close asChild>
+              <button
+                type="button"
+                className={`${responsiveSheetCloseButtonClass()} lg:col-start-3 lg:row-start-1 lg:self-center`}
+                aria-label="ปิด VIP"
+              >
+                <CloseIcon className="h-4 w-4" />
+              </button>
+            </Dialog.Close>
           </header>
 
           <div className="cosmic-modal-shell--hub vip-modal-typography vip-modal__scroll flex min-h-0 flex-1 flex-col overflow-hidden pt-1 lg:pt-0">

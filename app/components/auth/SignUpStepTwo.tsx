@@ -146,9 +146,6 @@ export function SignUpStepTwo({
         <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">
           สมัครสมาชิก
         </Dialog.Title>
-        <p className="text-sm text-[var(--text-secondary)]">
-          กรอกข้อมูลส่วนตัวและบัญชีธนาคาร
-        </p>
 
         <div className="grid grid-cols-2 gap-3">
           <SignUpPlainInput

@@ -72,7 +72,8 @@
 }
 
 .cosmic-modal-shell--hub {
-  background: linear-gradient(155deg, rgb(28 26 36 / 0.98), rgb(14 13 20 / 0.99));
+  border: 0;
+  background: var(--cosmic-mobile-sheet-bg);
 }
 
 .cosmic-sheet-shell {
@@ -609,7 +610,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
 
 /** VIP modal — segment glass+white ชนะโทน hub-modal-segment */
 .vip-modal .vip-modal__segment-track.cosmic-segment-track--glass-white {
-  border: 1px solid rgb(255 255 255 / 0.08);
+  border: 0;
   background: var(--glass-fill-subtle);
   -webkit-backdrop-filter: blur(12px) saturate(1.12);
   backdrop-filter: blur(12px) saturate(1.12);

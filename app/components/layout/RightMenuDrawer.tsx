@@ -38,28 +38,32 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const { openHub } = useDesktopHubModal();
 
   const navigateAndClose = (href: string) => {
-    onClose();
     if (getIsDesktopViewport()) {
       const parsed = parseHubFromHref(href);
       if (parsed.id) {
+        onClose();
         openHub(parsed.id, parsed.options);
         return;
       }
     }
     if (href.startsWith("/")) {
+      /* push ก่อน แล้ว close หลัง — ป้องกัน router.replace ของ close ทับ push */
       router.push(href);
+      setTimeout(() => onClose(), 0);
     }
   };
 
   const runAction = (action: MenuDialogAction) => {
     switch (action) {
       case "vip-rank":
-        openVipModal();
+        /* ปิด drawer ก่อน แล้วให้ openVipModal router.replace ทำงานใน tick ถัดไป
+           เพื่อไม่ให้ closeMenu.router.replace(pathname) ทับ ?layer=vip */
         onClose();
+        setTimeout(() => openVipModal(), 0);
         break;
       case "coupon":
-        openCouponRedeem();
         onClose();
+        setTimeout(() => openCouponRedeem(), 0);
         break;
     }
   };

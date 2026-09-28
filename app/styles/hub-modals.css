@@ -4,7 +4,7 @@
 .cosmic-modal-shell--hub .glass-card--soft,
 .cosmic-modal-shell--hub .glass-card:not(.glass-card--hof-row) {
   background: var(--glass-fill-modal-subtle);
-  border: 1px solid rgb(255 255 255 / 0.07);
+  border: 0;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.05),
     0 10px 28px rgb(0 0 0 / 0.28);
@@ -20,7 +20,7 @@
 .cosmic-modal-shell--hub .hub-modal-segment-track,
 .cosmic-modal-shell--hub .cosmic-segment-track {
   padding: 4px;
-  border: 1px solid rgb(255 255 255 / 0.06);
+  border: 0;
   border-radius: 12px;
   background: rgb(0 0 0 / 0.38);
 }

@@ -155,7 +155,6 @@ function SignUpStepOne({
     >
       <div>
         <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">สมัครสมาชิก</Dialog.Title>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">กรอกข้อมูลเพื่อสร้างบัญชี</p>
       </div>
 
       <SignUpField
