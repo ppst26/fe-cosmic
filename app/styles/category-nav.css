@@ -34,6 +34,43 @@
     max-width: var(--content-max);
     margin-inline: auto;
   }
+
+  /**
+   * Header + CategoryNav sticky แยกชั้น — กันช่อง sub-pixel / พื้นต่างสีระหว่างเลื่อน
+   * ใช้ --lobby-mobile-header-h จาก HomeLobbyPage (ResizeObserver, ceil)
+   */
+  .lobby-mobile-header-band {
+    position: relative;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .lobby-mobile-header-band.is-mobile-chrome-stack-active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    z-index: 1;
+    height: 2px;
+    background: inherit;
+    pointer-events: none;
+  }
+
+  .lobby-mobile-category-sticky {
+    top: calc(
+      var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 68px)) - 1px
+    );
+  }
+
+  .lobby-mobile-category-sticky.is-locked {
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  }
+
+  .lobby-desktop-shell__header-band.is-mobile-chrome-stack-active > header {
+    border-bottom-color: transparent;
+  }
 }
 
 /* หน้าแรก — แถบค้นหา/ตัวกรองใต้ CategoryNav */

@@ -61,6 +61,10 @@ function main() {
   const lotteryPage = path.join(ROOT, "app/lottery/page.tsx");
   if (fs.existsSync(hubPage)) {
     fs.copyFileSync(hubPage, lotteryPage);
+    patchFile(lotteryPage, [
+      ['from "./LotteryRouteShell"', `from "${ROUTE_SHELL_IMPORT}"`],
+      ["from './LotteryRouteShell'", `from '${ROUTE_SHELL_IMPORT}'`],
+    ]);
     console.log(`[install] app/lottery/page.tsx (hub standalone)`);
   }
 

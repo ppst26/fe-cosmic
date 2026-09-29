@@ -80,7 +80,7 @@ export function HomeLobbyPage() {
     if (!el) return;
     const updateHeight = () => {
       const h = el.getBoundingClientRect().height;
-      if (h > 0) setHeaderHeight(h);
+      if (h > 0) setHeaderHeight(Math.ceil(h));
     };
     updateHeight();
     const ro = new ResizeObserver(updateHeight);
@@ -109,10 +109,18 @@ export function HomeLobbyPage() {
     <>
       <div
         className={`lobby-desktop-shell lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-center${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
+        style={
+          headerHeight > 0
+            ? ({ "--lobby-mobile-header-h": `${headerHeight}px` } as React.CSSProperties)
+            : undefined
+        }
       >
         <div
           ref={headerBandRef}
-          className="lobby-desktop-shell__header-band cosmic-mobile-chrome-surface sticky top-0 z-50 w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:bg-none lg:bg-transparent lg:pt-[env(safe-area-inset-top,0px)]"
+          className={cn(
+            "lobby-desktop-shell__header-band cosmic-mobile-chrome-surface lobby-mobile-header-band sticky top-0 z-50 w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:bg-none lg:bg-transparent lg:pt-[env(safe-area-inset-top,0px)]",
+            isCategorySticky && "is-mobile-chrome-stack-active",
+          )}
         >
           <Header
             onSignUpClick={openSignUp}
@@ -206,12 +214,11 @@ export function HomeLobbyPage() {
                         {/* มือถือ: แถบหมวดหมู่เกม — เลื่อนถึง viewport/header แล้ว sticky ต่อเนื่อง */}
                         <div
                           className={cn(
-                            "sticky z-40 bg-[var(--cosmic-page-base)] -mx-3 px-3 py-1.5 lg:hidden transition-shadow duration-200",
-                            isCategorySticky && "shadow-[0_10px_26px_rgba(0,0,0,0.45)] border-b border-white/5",
+                            "lobby-mobile-category-sticky sticky z-40 -mx-3 px-3 py-1.5 lg:hidden transition-shadow duration-200",
+                            isCategorySticky
+                              ? "cosmic-mobile-chrome-surface is-locked shadow-[0_10px_26px_rgba(0,0,0,0.45)] border-b border-white/5"
+                              : "bg-[var(--cosmic-page-base)]",
                           )}
-                          style={{
-                            top: headerHeight > 0 ? `${headerHeight}px` : "calc(env(safe-area-inset-top, 0px) + 68px)",
-                          }}
                         >
                           <CategoryNav
                             categories={CATEGORIES_DATA}
