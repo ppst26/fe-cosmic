@@ -208,7 +208,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         >
           <h3
             id={`menu-section-${section.id}`}
-            className="menu-section-heading text-[12.5px] font-medium text-[#8f88ab] mb-1 px-0.5"
+            className="menu-section-heading cosmic-type-caption mb-1 px-0.5 text-[#8f88ab]"
           >
             {section.sectionLabel}
           </h3>

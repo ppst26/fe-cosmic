@@ -27,7 +27,7 @@ export function LobbyAnnouncementMarquee({
       {messages.map((text, index) => (
         <li
           key={`${groupKey}-${index}`}
-          className="lobby-announcement-marquee__item flex shrink-0 items-center gap-8 whitespace-nowrap text-xs sm:text-sm text-[var(--text-secondary)]"
+          className="lobby-announcement-marquee__item cosmic-type-marquee flex shrink-0 items-center gap-8 whitespace-nowrap"
         >
           <span>{text}</span>
           <span className="lobby-announcement-marquee__sep text-[var(--text-muted)]" aria-hidden="true">
@@ -49,7 +49,7 @@ export function LobbyAnnouncementMarquee({
       )}
       aria-label="ประกาศจากระบบ"
     >
-      <span className="lobby-announcement-marquee__label shrink-0 text-xs font-medium text-[var(--accent-highlight)]">
+      <span className="lobby-announcement-marquee__label cosmic-type-marquee-label shrink-0">
         ประกาศ
       </span>
       <MegaphoneGlyph className="lobby-announcement-marquee__icon h-4 w-4 shrink-0 text-[var(--icon-default)]" />

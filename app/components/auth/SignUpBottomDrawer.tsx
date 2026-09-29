@@ -68,7 +68,7 @@ function SignUpDrawerHero() {
         <p className="text-lg font-medium leading-tight text-[var(--text-primary)] sm:text-xl">
           ยินดีต้อนรับสู่ cosmicbet
         </p>
-        <p className="text-xs text-[var(--text-secondary)] sm:text-sm">
+        <p className="cosmic-type-sheet-desc">
           เริ่มต้นความสนุกในแบบคุณ
         </p>
       </div>

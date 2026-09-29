@@ -22,7 +22,7 @@ export function MenuDrawerPromoBanner({ className }: MenuDrawerPromoBannerProps)
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_20%_0%,rgba(119,71,229,0.22),transparent_65%),radial-gradient(ellipse_60%_50%_at_90%_100%,rgba(56,189,248,0.12),transparent_70%)]"
         aria-hidden="true"
       />
-      <span className="relative z-[1] text-xs font-medium text-[var(--text-muted)]">
+      <span className="cosmic-type-sheet-desc relative z-[1] font-medium">
         แบนเนอร์โปรโมชั่น
       </span>
     </div>

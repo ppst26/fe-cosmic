@@ -92,7 +92,7 @@ export default function ProviderGamesPage() {
           {providerId === "pragmatic" && (
             <div className="flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-500 px-2 py-0.5 text-black shadow-md select-none">
               <span className="text-xs">👑</span>
-              <span className="text-[10px] font-medium tracking-tight">PLAY™</span>
+              <span className="text-xs font-medium tracking-tight">PLAY™</span>
             </div>
           )}
         </div>

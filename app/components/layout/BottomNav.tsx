@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useDeposit } from "../deposit/DepositProvider";
 import { useWithdraw } from "../withdraw/WithdrawProvider";
 import type { BottomNavItem } from "../../types/lobby";
+import { cn } from "@/lib/utils";
 import styles from "./BottomNav.module.css";
 
 export type NavId = "withdraw" | "deposit" | "menu" | "cashback" | "contact";
@@ -153,7 +154,7 @@ export function BottomNav({
                 <span className={styles.icon}>
                   <Icon id={id} />
                 </span>
-                <span className={styles.label}>{label}</span>
+                <span className={cn(styles.label, "cosmic-type-nav-label")}>{label}</span>
                 <span className={styles.dot} aria-hidden="true" />
               </button>
             );

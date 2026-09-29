@@ -144,10 +144,10 @@ function GemsRedeemCard({
             className="object-contain object-center"
           />
         </div>
-        <p className="w-full text-[11px] font-medium leading-tight text-[var(--text-primary)] sm:text-sm">
+        <p className="w-full text-xs font-medium leading-tight text-[var(--text-primary)] sm:text-sm">
           {formatGemsCredits(pkg.credits)}
         </p>
-        <p className="mt-1 flex items-center justify-center gap-1 text-[10px] font-medium text-[var(--text-secondary)] sm:text-xs">
+        <p className="cosmic-type-sheet-desc mt-1 flex items-center justify-center gap-1 font-medium">
           <span className="relative h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5">
             <Image src={GEMS_STORE_GEM_ASSET} alt="" fill sizes="14px" className="object-contain" />
           </span>
@@ -161,8 +161,8 @@ function GemsRedeemCard({
         aria-label={redeemAria}
         className={
           affordable
-            ? `${COSMIC_BTN_NAV} cosmic-btn-nav--sm mt-2 flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-[10px] sm:mt-2.5 sm:!text-xs`
-            : `${COSMIC_BTN_GLASS_PILL_SM} mt-2 flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-[10px] text-[var(--text-secondary)] sm:mt-2.5 sm:!text-xs`
+            ? `${COSMIC_BTN_NAV} cosmic-btn-nav--sm mt-2 flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-xs sm:mt-2.5`
+            : `${COSMIC_BTN_GLASS_PILL_SM} mt-2 flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-xs text-[var(--text-secondary)] sm:mt-2.5`
         }
       >
         <span className="sm:hidden">{redeemLabel}</span>

@@ -240,7 +240,7 @@ export function DashboardShell() {
             <div className="text-2xl font-semibold tracking-tight">
               cosmic<span className="text-violet-400">bet</span>
             </div>
-            <div className="mt-1 text-[10px] uppercase tracking-[.32em] text-white/40">
+            <div className="mt-1 text-xs uppercase tracking-[.32em] text-white/40">
               Admin Dashboard
             </div>
           </div>
@@ -427,7 +427,7 @@ export function DashboardShell() {
                   </ChartContainer>
                   <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
                     <span className="text-2xl font-bold tracking-tight text-white">31</span>
-                    <span className="text-[11px] text-white/45">บัญชีทั้งหมด</span>
+                    <span className="text-xs text-white/45">บัญชีทั้งหมด</span>
                   </div>
                 </div>
                 <div className="space-y-2 text-sm">

@@ -12,7 +12,7 @@ export const COSMIC_BTN_GLASS_PILL = "glass-control glass-pill";
 
 /** outline glass ขนาดเล็ก — สถานะรอง / inactive (เช็คอิน รับแล้ว·ล็อค) */
 export const COSMIC_BTN_GLASS_PILL_SM =
-  "glass-control glass-pill !min-h-0 !py-1.5 !px-2.5 !text-[0.6875rem] sm:!text-xs";
+  "glass-control glass-pill !min-h-0 !py-1.5 !px-2.5 !text-xs";
 
 
 

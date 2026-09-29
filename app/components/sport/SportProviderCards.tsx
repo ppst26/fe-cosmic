@@ -254,7 +254,7 @@ export function SportProviderCards({
               <h3 className="line-clamp-2 text-center text-xs sm:text-[13px] font-medium uppercase leading-snug tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
                 {item.title}
               </h3>
-              <p className="mt-0.5 truncate text-center text-[11px] sm:text-xs font-medium text-white/80 drop-shadow">
+              <p className="mt-0.5 truncate text-center text-xs font-medium text-white/80 drop-shadow sm:text-sm">
                 {item.provider}
               </p>
             </div>

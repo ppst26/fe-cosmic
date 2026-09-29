@@ -249,7 +249,7 @@ function InfoHintButton({ label }: { label: string }) {
     <button
       type="button"
       aria-label={label}
-      className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/80 text-[9px] font-medium text-[var(--text-muted)] transition-colors hover:border-[var(--border-active)] hover:text-[var(--text-secondary)]"
+      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/80 text-xs font-medium text-[var(--text-muted)] transition-colors hover:border-[var(--border-active)] hover:text-[var(--text-secondary)]"
     >
       i
     </button>

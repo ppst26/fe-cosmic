@@ -81,7 +81,7 @@
 .donut::after { content: ""; position: absolute; inset: 31px; background: #0c0d12; border-radius: 50%; border: 1px solid rgba(255,255,255,.06); }
 .donut-center { position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; text-align: center; }
 .donut-center strong { font-size: 30px; }
-.donut-center span { font-size: 11px; color: rgba(255,255,255,.45); }
+.donut-center span { font-size: 12px; color: rgba(255,255,255,.45); }
 
 .heatmap { display: grid; grid-template-columns: repeat(24, minmax(0,1fr)); gap: 4px; }
 .heat-cell { aspect-ratio: 1; border-radius: 4px; }
@@ -94,7 +94,7 @@
 
 .bar-chart { height: 180px; display: grid; grid-template-columns: repeat(8, 1fr); align-items: end; gap: 10px; }
 .bar-col { height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 8px; }
-.bar-col span { font-size: 10px; color: rgba(255,255,255,.38); }
+.bar-col span { font-size: 12px; color: rgba(255,255,255,.38); }
 .bar { width: 72%; min-height: 18px; border-radius: 6px 6px 2px 2px; background: linear-gradient(180deg,#c084fc,#7c3aed); }
 .bar--white { background: linear-gradient(180deg,#fff,#a3a3a3); }
 

@@ -36,15 +36,15 @@
   }
 
   .menu-item span {
-    @apply text-[10.5px] font-medium;
+    @apply text-xs font-medium;
   }
 
   .menu-grid--four .menu-item span {
-    @apply text-[9.5px];
+    @apply text-xs;
   }
 
   .menu-section h3 {
-    @apply text-[11px];
+    @apply text-xs;
   }
 
   .cosmic-footer__heading-lg {
@@ -92,7 +92,7 @@
   }
 
   .cosmic-footer__provider-list li {
-    @apply text-[0.625rem];
+    @apply text-xs;
   }
 
   .cosmic-footer__brandmark {
@@ -112,7 +112,7 @@
   }
 
   .promotion-detail-panel__footer {
-    @apply text-[0.625rem];
+    @apply text-xs;
   }
 
   .lobby-desktop-header-dock__balance {
@@ -124,7 +124,7 @@
   }
 
   .lobby-desktop-panel__label {
-    @apply text-[11px] font-medium;
+    @apply text-xs font-medium;
   }
 
   .lobby-desktop-panel__link {
@@ -170,7 +170,7 @@
   }
 
   .hub-lobby-game-tile__badge {
-    @apply text-[0.5625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
   .hub-lobby-game-tile__title {
@@ -178,11 +178,11 @@
   }
 
   .hub-lobby-game-tile__provider {
-    @apply text-[0.625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
   .activity-hub-thumb__overlay {
-    @apply text-[10px] font-medium;
+    @apply text-xs font-medium;
   }
 
   /* --- Lottery hub (/lottery + หมวดหวยโฮม) --- */
@@ -200,15 +200,15 @@
   }
 
   .lottery-flag__sphere {
-    @apply text-[0.625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
   .lottery-flag--sm .lottery-flag__sphere {
-    @apply text-[0.5rem];
+    @apply text-xs;
   }
 
   .lottery-flag--lg .lottery-flag__sphere {
-    @apply text-[0.7rem];
+    @apply text-xs;
   }
 
   .lottery-type-card__title {
@@ -228,7 +228,7 @@
   }
 
   .lottery-results-board__prize-label {
-    @apply text-[0.625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
   .lottery-results-board__prize-value {
@@ -284,11 +284,11 @@
   }
 
   .daily-check-in-desktop__streak-dot {
-    @apply text-[0.625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
   .daily-check-in-desktop__streak-label {
-    @apply text-[0.5625rem];
+    @apply text-xs;
   }
 
   .daily-check-in-desktop__terms-hint {
@@ -324,7 +324,7 @@
   }
 
   .lottery-market-sidebar__item .lottery-countdown {
-    @apply text-[0.625rem];
+    @apply text-xs;
   }
 
   .lottery-market-sidebar__title {
@@ -380,7 +380,7 @@
   }
 
   .lottery-play-rounds__expand-chevron {
-    @apply text-[0.65rem];
+    @apply text-xs;
   }
 
   .lottery-price-slip__head {
@@ -400,7 +400,7 @@
   }
 
   .lottery-price-row__tag {
-    @apply text-[0.625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
   .lottery-price-row__rate {
@@ -800,7 +800,7 @@
   }
 
   .profile-hub-row__title {
-    @apply text-xs;
+    @apply text-sm;
   }
 
   .profile-slideover-card .profile-hub-accordion__title {
@@ -808,7 +808,7 @@
   }
 
   .profile-slideover-card .profile-hub-row__title {
-    @apply text-xs font-medium;
+    @apply text-sm font-medium;
   }
 
   .profile-slideover-card .profile-hub-header__name {
@@ -844,7 +844,7 @@
   }
 
   .provider-category-toolbar__filter-btn {
-    @apply text-[11px] font-medium;
+    @apply text-xs font-medium;
   }
 
   .provider-filter-dialog__title {
@@ -905,7 +905,7 @@
   }
 
   .lucky-wheel-wallet__mini-cta {
-    @apply text-[0.625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
   .lucky-wheel-wallet__section-title {
@@ -913,7 +913,7 @@
   }
 
   .lucky-wheel-wallet__method-check {
-    @apply text-[0.625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
 .lucky-wheel-wallet__stepper-btn {
@@ -937,11 +937,11 @@
   }
 
   .lucky-wheel-feed__live {
-    @apply text-[0.5625rem] font-medium;
+    @apply text-xs font-medium;
   }
 
   .lucky-wheel-feed__pulse {
-    @apply text-[0.625rem];
+    @apply text-xs;
   }
 
   .lucky-wheel-feed__avatar {
@@ -965,12 +965,12 @@
 }
 
 .lucky-wheel__slice-label {
-  @apply text-[11px] font-medium;
+  @apply text-xs font-medium;
 }
 
 @media (width >= 1024px) {
   .lucky-wheel__hub-btn {
-    font-size: clamp(0.625rem, 1.6vmin, 0.8125rem);
+    font-size: clamp(0.75rem, 1.6vmin, 0.8125rem);
     @apply font-medium;
   }
 }

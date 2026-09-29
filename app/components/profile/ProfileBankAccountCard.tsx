@@ -28,7 +28,7 @@ export function ProfileBankAccountCard({ profile }: { profile: ProfileUser }) {
       <div className="flex items-start gap-3">
         <span
           className={cn(
-            "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[10px] font-medium uppercase text-white",
+            "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xs font-medium uppercase text-white",
             bankToneClass,
           )}
           aria-hidden="true"

@@ -64,7 +64,7 @@ export function GemsStoreSummaryCard({ gemsBalance, className }: GemsStoreSummar
         </p>
       </div>
 
-      <p className="text-center text-[10px] leading-relaxed text-[var(--text-muted)] sm:text-[11px]">
+      <p className="cosmic-type-sheet-desc text-center">
         {GEMS_STORE_RESET_NOTICE}
         <span className="mx-1 opacity-40" aria-hidden="true">·</span>
         {GEMS_STORE_EXCHANGE_RATE_LABEL}

@@ -82,7 +82,7 @@ export function LoginBottomDrawer({
           </Dialog.Close>
 
           <Dialog.Title className="text-2xl font-medium">เข้าสู่ระบบ</Dialog.Title>
-          <p className="mt-1 text-sm text-[var(--text-secondary)]">ใช้เบอร์และรหัสผ่านที่สมัครไว้</p>
+          <p className="cosmic-type-sheet-desc mt-1">ใช้เบอร์และรหัสผ่านที่สมัครไว้</p>
 
           <form className="mt-5 flex flex-col gap-4" onSubmit={handleSubmit}>
             {error && (

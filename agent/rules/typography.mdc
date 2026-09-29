@@ -25,3 +25,5 @@ alwaysApply: false
 | **hub** | ✅ `hub-modals.css` → `typography-bridge.css` |
 | **lottery** | ✅ `lottery.css` → bridge + TSX จุด responsive บางจุด |
 | **providers / glass / wheel** | ✅ `providers-filter.css`, `glass-cards.css`, `lucky-wheel.css` → bridge |
+| **sheet tokens (เฟส 1–2)** | ✅ `cosmic-type-marquee` / `sheet-*` / `nav-label` · bridge ≥12px · menu-drawer ไม่กำหนด font-size |
+| **TSX audit (เฟส 3)** | ✅ การ์ดเกม/ค่าย/เมนู/gems/dashboard mock · ขั้นต่ำ `text-xs` บนมือถือ |

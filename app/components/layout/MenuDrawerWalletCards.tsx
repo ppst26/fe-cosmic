@@ -33,14 +33,14 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
   return (
     <div className={cn("grid grid-cols-3 gap-2", className)}>
       <div className={cn(COSMIC_PANEL_GLASS, "flex flex-col gap-1 p-2.5 min-h-[72px] sm:p-3")}>
-        <span className="text-[11px] text-[var(--text-muted)] leading-none">ยอดเงินในเกม</span>
+        <span className="cosmic-type-sheet-meta leading-none">ยอดเงินในเกม</span>
         <p className="text-base font-medium text-white tabular-nums leading-tight mt-1">
           {balanceLabel}
         </p>
       </div>
 
       <div className={cn(COSMIC_PANEL_GLASS, "flex flex-col gap-1 p-2.5 min-h-[72px] sm:p-3")}>
-        <span className="text-[11px] text-[var(--text-muted)] leading-none">เพชร</span>
+        <span className="cosmic-type-sheet-meta leading-none">เพชร</span>
         <div className="flex items-center gap-1.5 mt-1 min-w-0">
           <Image
             src={GEMS_STORE_GEM_ASSET}
@@ -56,7 +56,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
       </div>
 
       <div className={cn(COSMIC_PANEL_GLASS, "flex flex-col gap-1 p-2.5 min-h-[72px] sm:p-3")}>
-        <span className="text-[11px] text-[var(--text-muted)] leading-none">ตั๋ว</span>
+        <span className="cosmic-type-sheet-meta leading-none">ตั๋ว</span>
         <div className="flex items-center gap-1.5 mt-1 min-w-0">
           <Image
             src={MENU_TICKET_ICON_SRC}

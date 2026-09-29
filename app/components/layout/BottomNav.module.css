@@ -53,7 +53,7 @@
 
 .icon { display: grid; place-items: center; width: 26px; height: 26px; flex-shrink: 0; }
 .icon svg { display: block; width: 24px; height: 24px; }
-.label { font-size: 11px; line-height: 16px; font-weight: 500; white-space: nowrap; }
+.label { white-space: nowrap; }
 .dot { position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: var(--nav-accent); opacity: 0; }
 .item[data-active="true"] { color: #fff; }
 .item[data-active="true"] .dot { opacity: 1; }

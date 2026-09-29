@@ -76,10 +76,10 @@ export function TransactionList({ items }: { items: TransactionItem[] }) {
           </span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-[var(--text-primary)]">{item.title}</p>
-            <p className="mt-0.5 text-xs text-[var(--text-muted)]">
+            <p className="cosmic-type-sheet-meta mt-0.5">
               {formatTransactionDate(item.createdAt)} · {item.reference}
             </p>
-            <p className={`mt-1 text-xs font-medium ${statusClass(item.status)}`}>
+            <p className={`cosmic-type-sheet-meta mt-1 font-medium ${statusClass(item.status)}`}>
               {statusLabel(item.status)}
             </p>
           </div>
@@ -91,7 +91,7 @@ export function TransactionList({ items }: { items: TransactionItem[] }) {
             >
               {formatAmount(item)}
             </p>
-            <p className="mt-0.5 text-xs text-[var(--text-secondary)]">{item.currency}</p>
+            <p className="cosmic-type-sheet-meta mt-0.5">{item.currency}</p>
           </div>
         </li>
       ))}

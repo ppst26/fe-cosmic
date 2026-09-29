@@ -77,9 +77,9 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
 
           <ResponsiveSheetHeader
             closeAriaLabel="ปิดหน้าแลกคูปอง"
-            title={<Dialog.Title className="text-xl font-medium sm:text-2xl">แลกคูปอง</Dialog.Title>}
+            title={<Dialog.Title className="cosmic-type-sheet-title text-xl sm:text-2xl">แลกคูปอง</Dialog.Title>}
             subtitle={
-              <p id="coupon-redeem-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
+              <p id="coupon-redeem-desc" className="cosmic-type-sheet-desc mt-1">
                 โค้ดสำหรับแลกเครดิตฟรี
               </p>
             }
@@ -108,7 +108,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
             )}
 
             <div className="space-y-1.5">
-              <label htmlFor="coupon-code" className="text-sm font-medium text-[var(--text-secondary)]">
+              <label htmlFor="coupon-code" className="cosmic-type-sheet-label">
                 รหัสคูปอง
               </label>
               <div className={COSMIC_SHEET_FIELD_ROW}>

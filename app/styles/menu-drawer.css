@@ -361,8 +361,6 @@
 
 .menu-section h3 {
   margin: 0 0 3px;
-  font-size: 12px;
-  font-weight: 500;
   color: #b0a8d4;
 }
 
@@ -537,7 +535,6 @@
 
 .menu-item span {
   color: var(--menu-text);
-  font-size: 11px;
   line-height: 1.25;
   text-align: center;
   white-space: nowrap;

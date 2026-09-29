@@ -56,7 +56,7 @@ export function ProfileHubHeader({
           </p>
           <div className="profile-hub-header__bank mt-1.5 flex min-w-0 items-center gap-2">
             <span
-              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[9px] font-medium uppercase text-white ${bankToneClass}`}
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium uppercase leading-none text-white ${bankToneClass}`}
               title={profile.bankLabel}
               aria-hidden="true"
             >

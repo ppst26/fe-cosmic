@@ -289,7 +289,7 @@ export function DailyCheckInCard({
                 {/* Reward Badge */}
                 <div
                   className={cn(
-                    "rounded-md px-2 py-0.5 text-xs sm:text-[12.5px] font-medium tabular-nums transition-all whitespace-nowrap",
+                    "rounded-md px-2 py-0.5 text-xs sm:text-sm font-medium tabular-nums transition-all whitespace-nowrap",
                     isReached
                       ? "border border-[#7747e5]/40 bg-[#7747e5]/20 text-[#e9d5ff] shadow-[0_0_8px_rgba(119,71,229,0.25)]"
                       : "border border-white/8 bg-[#14121a] text-[var(--text-muted)]",
@@ -340,7 +340,7 @@ export function DailyCheckInCard({
                 {/* Milestone Label */}
                 <span
                   className={cn(
-                    "text-xs sm:text-[12.5px] font-medium whitespace-nowrap",
+                    "text-xs sm:text-sm font-medium whitespace-nowrap",
                     isReached ? "text-white" : "text-[var(--text-muted)]",
                   )}
                 >

@@ -263,8 +263,8 @@ function ProviderLogoBrand({ item }: { item: GridSlotProviderItem }) {
     case "royal-slot-gaming":
       return (
         <div className="flex flex-col">
-          <span className="text-[10px] text-amber-400">👑</span>
-          <span className="text-[11px] font-medium text-amber-300 leading-tight sm:text-xs">ROYAL SLOT</span>
+          <span className="text-xs text-amber-400">👑</span>
+          <span className="text-xs font-medium text-amber-300 leading-tight sm:text-sm">ROYAL SLOT</span>
           <span className="text-[8px] font-medium tracking-widest text-slate-400">GAMING</span>
         </div>
       );
@@ -278,7 +278,7 @@ function ProviderLogoBrand({ item }: { item: GridSlotProviderItem }) {
     case "ka-gaming":
       return (
         <div className="flex items-center gap-1.5">
-          <span className="flex h-5 w-5 items-center justify-center rounded bg-red-600 text-[10px] font-medium text-white">KA</span>
+          <span className="flex h-5 w-5 items-center justify-center rounded bg-red-600 text-xs font-medium text-white">KA</span>
           <span className="text-xs font-medium text-white sm:text-sm">Gaming</span>
         </div>
       );
@@ -380,7 +380,7 @@ export function SlotProviderCards({
                     <h3 className="bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-3xl font-medium tracking-tight text-transparent drop-shadow sm:text-4xl">
                       JILI
                     </h3>
-                    <p className="mt-1 text-[9px] font-medium uppercase tracking-wider text-amber-200/90 sm:text-xs">
+                    <p className="mt-1 text-xs font-medium uppercase tracking-wider text-amber-200/90 sm:text-sm">
                       {feat.slogan}
                     </p>
                   </div>
@@ -390,9 +390,9 @@ export function SlotProviderCards({
                       <span className="text-sm">👑</span>
                     </div>
                     <h3 className="text-xl font-medium tracking-tight text-white drop-shadow sm:text-2xl">
-                      PRAGMATIC PLAY<span className="text-[10px] font-normal">™</span>
+                      PRAGMATIC PLAY<span className="text-xs font-normal">™</span>
                     </h3>
-                    <p className="mt-1 text-[9px] font-medium uppercase tracking-widest text-sky-200/90 sm:text-xs">
+                    <p className="mt-1 text-xs font-medium uppercase tracking-widest text-sky-200/90 sm:text-sm">
                       {feat.slogan}
                     </p>
                   </div>
@@ -403,7 +403,7 @@ export function SlotProviderCards({
               {feat.badge && (
                 <div className="absolute right-3 top-3 z-20 flex items-center gap-1 rounded-full bg-gradient-to-r from-red-600 to-rose-600 px-2.5 py-0.5 shadow-md">
                   <FlameHotIcon className="h-3 w-3 text-amber-300" />
-                  <span className="text-[10px] font-medium text-white">
+                  <span className="text-xs font-medium text-white">
                     {feat.badge}
                   </span>
                 </div>

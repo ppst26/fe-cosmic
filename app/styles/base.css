@@ -142,11 +142,37 @@ body {
   }
 
   .cosmic-type-caption {
-    @apply text-xs font-normal leading-normal text-text-muted md:text-sm;
+    @apply text-sm font-normal leading-normal text-text-muted md:text-xs;
+  }
+
+  /** ข้อความเลื่อนประกาศ lobby — มือถืออ่านง่าย (ขั้นต่ำ 14px) */
+  .cosmic-type-marquee {
+    @apply text-sm font-normal leading-normal text-text-secondary;
+  }
+
+  .cosmic-type-marquee-label {
+    @apply text-sm font-medium leading-normal text-[var(--accent-highlight)];
+  }
+
+  /** Bottom sheet — หัวข้อ / คำอธิบาย / meta */
+  .cosmic-type-sheet-title {
+    @apply text-base font-medium leading-snug text-text-primary sm:text-lg;
+  }
+
+  .cosmic-type-sheet-desc {
+    @apply text-sm font-normal leading-relaxed text-text-secondary;
+  }
+
+  .cosmic-type-sheet-label {
+    @apply text-sm font-medium leading-normal text-text-secondary;
+  }
+
+  .cosmic-type-sheet-meta {
+    @apply text-xs font-normal leading-normal text-text-muted;
   }
 
   .cosmic-type-nav-label {
-    @apply text-[0.6875rem] font-medium leading-tight text-text-secondary md:text-xs;
+    @apply text-xs font-medium leading-tight text-text-secondary;
   }
 
   .cosmic-type-sidebar-section {
@@ -162,7 +188,7 @@ body {
   }
 
   .cosmic-type-chip-tab {
-    @apply text-[0.6875rem] font-medium leading-normal sm:text-xs;
+    @apply text-xs font-medium leading-normal;
   }
 
   .cosmic-type-toolbar-control {

@@ -95,7 +95,7 @@ export function SignUpPickerGridItem({
       >
         {shortLabel.slice(0, 3)}
       </span>
-      <span className="line-clamp-2 text-center text-xs leading-snug text-[var(--text-secondary)]">
+      <span className="cosmic-type-sheet-desc line-clamp-2 text-center leading-snug">
         {label}
       </span>
     </button>

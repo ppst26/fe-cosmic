@@ -268,7 +268,7 @@ function DepositBankStep({
         onBack={onBack}
         backAriaLabel="กลับเลือกช่องทางฝาก"
         title={
-          <Dialog.Title className="text-base font-medium sm:text-lg">ฝากผ่านบัญชีธนาคาร</Dialog.Title>
+          <Dialog.Title className="cosmic-type-sheet-title">ฝากผ่านบัญชีธนาคาร</Dialog.Title>
         }
       />
 
@@ -289,21 +289,21 @@ function DepositBankStep({
             <div className="min-w-0 flex-1 flex flex-col justify-center gap-2.5">
               <div className="space-y-1">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-xs text-[var(--text-muted)] shrink-0">ธนาคาร</span>
+                  <span className="cosmic-type-sheet-meta shrink-0">ธนาคาร</span>
                   <span className="text-sm font-medium text-[var(--text-primary)] sm:text-base truncate">
                     {bank.bankName}
                   </span>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-xs text-[var(--text-muted)] shrink-0">ชื่อบัญชี</span>
-                  <span className="text-xs sm:text-sm font-medium text-[var(--text-primary)] truncate">
+                  <span className="cosmic-type-sheet-meta shrink-0">ชื่อบัญชี</span>
+                  <span className="text-sm font-medium text-[var(--text-primary)] truncate">
                     {bank.accountName}
                   </span>
                 </div>
               </div>
 
               <div>
-                <span className="text-xs text-[var(--text-muted)]">เลขที่บัญชี</span>
+                <span className="cosmic-type-sheet-meta">เลขที่บัญชี</span>
                 <div className="mt-0.5 flex items-center justify-between gap-2">
                   <span className="min-w-0 text-base font-medium tracking-wider text-[var(--text-primary)] sm:text-lg select-all">
                     {bank.accountNumberDisplay}
@@ -328,7 +328,7 @@ function DepositBankStep({
         </section>
 
         <div className="mt-4">
-          <label htmlFor="deposit-amount" className="text-xs font-medium text-[var(--text-secondary)]">
+          <label htmlFor="deposit-amount" className="cosmic-type-sheet-label">
             จำนวนเงินที่ต้องการฝาก
           </label>
           <div className={`${COSMIC_SHEET_FIELD_AMOUNT} mt-2`}>
@@ -349,7 +349,7 @@ function DepositBankStep({
         </div>
 
         <div className="mt-4">
-          <p className="text-xs font-medium text-[var(--text-secondary)]">เลือกยอดเงินด่วน</p>
+          <p className="cosmic-type-sheet-label">เลือกยอดเงินด่วน</p>
           <div className="mt-2 grid grid-cols-3 gap-2">
             {DEPOSIT_QUICK_AMOUNTS.map((value) => {
               const active = amount === value;
@@ -365,7 +365,7 @@ function DepositBankStep({
               );
             })}
           </div>
-          <p className="mt-2 text-center text-[12.5px] leading-normal text-[var(--text-secondary)]">
+          <p className="cosmic-type-sheet-desc mt-2 text-center">
             เลือกยอดเงินหรือกรอกจำนวนที่ต้องการ
           </p>
         </div>
@@ -419,8 +419,8 @@ function DepositConfirmStep({
         closeAriaLabel="ปิดหน้าฝากเงิน"
         onBack={onBack}
         backAriaLabel="กลับแก้ไขยอดฝาก"
-        title={<Dialog.Title className="text-base font-medium sm:text-lg">ยืนยันการฝากเงิน</Dialog.Title>}
-        subtitle={<p className="mt-0.5 text-xs text-[var(--text-muted)]">ขั้นตอน 3 จาก 3</p>}
+        title={<Dialog.Title className="cosmic-type-sheet-title">ยืนยันการฝากเงิน</Dialog.Title>}
+        subtitle={<p className="cosmic-type-sheet-meta mt-0.5">ขั้นตอน 3 จาก 3</p>}
       />
 
       <div
@@ -428,7 +428,7 @@ function DepositConfirmStep({
         className="min-h-0 flex-1 overflow-y-auto pb-3"
       >
         <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 text-center sm:px-4`}>
-          <p className="text-xs text-[var(--text-secondary)]">ยอดเงินที่ต้องโอน</p>
+          <p className="cosmic-type-sheet-desc">ยอดเงินที่ต้องโอน</p>
           <p className="mt-1 text-3xl font-medium text-[var(--accent-muted)] sm:text-4xl">
             ฿ {formatDepositTransferAmount(amount)}
           </p>
@@ -468,7 +468,7 @@ function DepositConfirmStep({
               )}
             </div>
           </div>
-          <p className="mt-3 text-center text-xs text-[var(--text-secondary)]">ข้อมูลบัญชีเป็นตัวอย่าง</p>
+          <p className="cosmic-type-sheet-desc mt-3 text-center">ข้อมูลบัญชีเป็นตัวอย่าง</p>
         </section>
 
         <section className="mt-4">
@@ -490,7 +490,7 @@ function DepositConfirmStep({
               <span className="block text-sm font-medium text-[var(--text-primary)]">
                 {slipFileName ?? "แตะเพื่อแนบสลิป"}
               </span>
-              <span className="mt-0.5 block text-xs text-[var(--text-muted)]">
+              <span className="cosmic-type-sheet-meta mt-0.5 block">
                 {slipFileName ? "เปลี่ยนรูปได้โดยแตะอีกครั้ง" : "เลือกรูปภาพจากอุปกรณ์"}
               </span>
             </span>
@@ -498,7 +498,7 @@ function DepositConfirmStep({
               +
             </span>
           </button>
-          <p className="mt-2 text-[12.5px] leading-normal text-[var(--text-secondary)]">แนบสลิปหลังโอนเงินเรียบร้อยแล้ว</p>
+          <p className="cosmic-type-sheet-desc mt-2">แนบสลิปหลังโอนเงินเรียบร้อยแล้ว</p>
         </section>
 
         {submitMessage && (

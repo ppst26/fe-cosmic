@@ -130,7 +130,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
             <h1
               className={cn(
                 "lottery-market-banner__title m-0 text-[var(--text-primary)]",
-                "max-lg:text-xl max-lg:font-semibold max-lg:leading-tight",
+                "max-lg:text-xl max-lg:font-medium max-lg:leading-tight",
                 "lg:text-base lg:font-medium lg:leading-snug",
               )}
               style={{ fontFamily: "var(--font-heading)" }}
@@ -141,7 +141,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               href="/promotions"
               className={cn(
                 "lottery-market-banner__rules text-[var(--text-secondary)] no-underline hover:text-[var(--text-primary)] hover:underline",
-                "max-lg:mt-1 max-lg:block max-lg:text-xs max-lg:leading-snug",
+                "cosmic-type-sheet-desc max-lg:mt-1 max-lg:block max-lg:leading-snug",
                 "lg:mt-1 lg:inline-block lg:text-xs",
               )}
             >
