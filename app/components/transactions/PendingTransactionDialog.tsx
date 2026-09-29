@@ -7,6 +7,7 @@ import type { PendingTransactionPayload } from "@/app/data/pendingTransactionMoc
 import { CloseIcon, CopyIcon } from "../ui/Icons";
 import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 import { responsiveSheetCloseButtonClass } from "../ui/responsiveSheetDialog";
+import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 
 interface PendingTransactionDialogProps {
   payload: PendingTransactionPayload | null;
@@ -68,10 +69,18 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
             ) : (
               <PendingWithdrawGraphic className="mb-3 h-24 w-24" />
             )}
-            <Dialog.Title className="text-lg font-medium sm:text-xl">{payload.title}</Dialog.Title>
-            <p id="pending-tx-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
-              {payload.subtitle}
-            </p>
+            <ModalDesktopTitleBlock
+              titleIconId="transactions"
+              className="items-center justify-center"
+              title={
+                <Dialog.Title className="text-lg font-medium sm:text-xl">{payload.title}</Dialog.Title>
+              }
+              subtitle={
+                <p id="pending-tx-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
+                  {payload.subtitle}
+                </p>
+              }
+            />
           </div>
 
           <p className="mt-6 text-center text-4xl font-medium tracking-tight text-[var(--text-primary)] sm:text-[2.75rem]">

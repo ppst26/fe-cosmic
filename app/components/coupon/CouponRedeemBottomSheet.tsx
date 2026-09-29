@@ -77,6 +77,8 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
 
           <ResponsiveSheetHeader
             closeAriaLabel="ปิดหน้าแลกคูปอง"
+            titleIconId="coupon"
+            titleIconDesktopOnly
             title={<Dialog.Title className="cosmic-type-sheet-title text-xl sm:text-2xl">แลกคูปอง</Dialog.Title>}
             subtitle={
               <p id="coupon-redeem-desc" className="cosmic-type-sheet-desc mt-1">

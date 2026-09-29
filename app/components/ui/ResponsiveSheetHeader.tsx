@@ -9,6 +9,10 @@ import {
   responsiveSheetBackButtonClass,
   responsiveSheetCloseButtonClass,
 } from "./responsiveSheetDialog";
+import {
+  ModalTitleLeadingAssetIcon,
+  ModalTitleLeadingMenuIcon,
+} from "./ModalTitleLeadingIcon";
 
 type ResponsiveSheetHeaderProps = {
   /** ข้อความหัวข้อ — มักเป็น Dialog.Title */
@@ -24,6 +28,12 @@ type ResponsiveSheetHeaderProps = {
   className?: string;
   /** องค์ประกอบนำหน้า (เช่น ไอคอน 3D / ภาพประกอบ) เมื่อไม่มี onBack */
   leadingSlot?: React.ReactNode;
+  /** ไอคอนเมนู 3D ก่อนหัวข้อ — ใช้เมื่อไม่ส่ง leadingSlot */
+  titleIconId?: string;
+  /** รูป asset ก่อนหัวข้อ — ใช้เมื่อไม่ส่ง leadingSlot */
+  titleIconSrc?: string;
+  /** แสดง titleIcon* เฉพาะ lg+ (ค่าเริ่มต้น true) */
+  titleIconDesktopOnly?: boolean;
 };
 
 /**
@@ -39,7 +49,18 @@ export function ResponsiveSheetHeader({
   titleAlign = "center",
   className,
   leadingSlot,
+  titleIconId,
+  titleIconSrc,
+  titleIconDesktopOnly = true,
 }: ResponsiveSheetHeaderProps) {
+  const resolvedLeading =
+    leadingSlot ??
+    (titleIconId ? (
+      <ModalTitleLeadingMenuIcon iconId={titleIconId} desktopOnly={titleIconDesktopOnly} />
+    ) : titleIconSrc ? (
+      <ModalTitleLeadingAssetIcon src={titleIconSrc} desktopOnly={titleIconDesktopOnly} />
+    ) : null);
+
   const closeButton = (
     <Dialog.Close asChild>
       <button type="button" className={responsiveSheetCloseButtonClass()} aria-label={closeAriaLabel}>
@@ -56,7 +77,7 @@ export function ResponsiveSheetHeader({
           className,
         )}
       >
-        <div className="col-start-1 flex min-w-0 items-start gap-2 self-center">
+        <div className="col-start-1 flex min-w-0 items-center gap-2.5 self-center">
           {onBack ? (
             <button
               type="button"
@@ -66,8 +87,8 @@ export function ResponsiveSheetHeader({
             >
               <ChevronLeftIcon className="h-5 w-5" />
             </button>
-          ) : leadingSlot ? (
-            leadingSlot
+          ) : resolvedLeading ? (
+            resolvedLeading
           ) : null}
           <div className="min-w-0 text-left [&_h2]:text-left">
             {title}
@@ -79,7 +100,7 @@ export function ResponsiveSheetHeader({
     );
   }
 
-  const colClass = leadingSlot
+  const colClass = resolvedLeading
     ? "grid-cols-[2.75rem_minmax(0,1fr)_2.75rem] sm:grid-cols-[3rem_minmax(0,1fr)_3rem]"
     : undefined;
 
@@ -95,8 +116,8 @@ export function ResponsiveSheetHeader({
           >
             <ChevronLeftIcon className="h-5 w-5" />
           </button>
-        ) : leadingSlot ? (
-          leadingSlot
+        ) : resolvedLeading ? (
+          resolvedLeading
         ) : (
           <span className="h-9 w-9 shrink-0" aria-hidden="true" />
         )}

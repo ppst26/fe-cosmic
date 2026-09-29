@@ -20,6 +20,7 @@ import { DailyCheckInPageContent } from "@/app/components/missions/DailyCheckInP
 import { DailyCheckInCard } from "@/app/components/missions/DailyCheckInCard";
 import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
 import {
+  HUB_MODAL_ICON_IDS,
   HUB_MODAL_TITLES,
   getHubSheetSize,
   isResponsiveSheetHub,
@@ -110,6 +111,8 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                   <ResponsiveSheetHeader
                     closeAriaLabel="ปิด"
                     titleAlign="start"
+                    titleIconId={HUB_MODAL_ICON_IDS[hubId]}
+                    titleIconDesktopOnly
                     className="responsive-sheet-header--hub responsive-sheet-header--hub-shell"
                     title={
                       <Dialog.Title className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">

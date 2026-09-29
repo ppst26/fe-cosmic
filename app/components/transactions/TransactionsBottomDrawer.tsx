@@ -16,6 +16,7 @@ import {
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
 import { useAuth } from "../auth/AuthProvider";
+import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 
 interface TransactionsBottomDrawerProps {
   isOpen: boolean;
@@ -68,8 +69,15 @@ export function TransactionsBottomDrawer({
           </Dialog.Close>
 
           <div className="flex min-h-0 flex-1 flex-col px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-14 sm:px-5">
-            <Dialog.Title className="cosmic-type-sheet-title text-2xl sm:text-2xl">รายการธุรกรรม</Dialog.Title>
-            <p className="cosmic-type-sheet-desc mt-1">ฝากและถอนของคุณ</p>
+            <ModalDesktopTitleBlock
+              titleIconId="transactions"
+              title={
+                <Dialog.Title className="cosmic-type-sheet-title text-2xl sm:text-2xl">
+                  รายการธุรกรรม
+                </Dialog.Title>
+              }
+              subtitle={<p className="cosmic-type-sheet-desc mt-1">ฝากและถอนของคุณ</p>}
+            />
 
             <div className="mt-4 shrink-0">
               <TransactionKindTabs

@@ -16,6 +16,7 @@ import {
   COSMIC_SHEET_FIELD_ROW,
   COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
 } from "../ui/cosmicButtonClasses";
+import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 
 /**
  * ช่องกรอกแบบไม่มีไอคอน — ชื่อ / เลขบัญชี
@@ -143,9 +144,14 @@ export function SignUpStepTwo({
           onSubmit();
         }}
       >
-        <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">
-          สมัครสมาชิก
-        </Dialog.Title>
+        <ModalDesktopTitleBlock
+          titleIconId="profile"
+          title={
+            <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">
+              สมัครสมาชิก
+            </Dialog.Title>
+          }
+        />
 
         <div className="grid grid-cols-2 gap-3">
           <SignUpPlainInput

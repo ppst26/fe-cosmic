@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import {
-  PROMOTIONS_HUB_CATEGORY_TABS,
-  PROMOTIONS_MOBILE_CATEGORY_TABS,
-  type PromoHubCategoryFilterId,
-  type PromoHubMobileCategoryFilterId,
-} from "@/app/data/promotionsHubMockData";
+import type {
+  PromoHubCategoryFilterId,
+  PromoHubMobileCategoryFilterId,
+  PromotionsCategoryTab,
+} from "@/app/types/promotions";
 import { COSMIC_BTN_GLASS_PILL } from "../ui/cosmicButtonClasses";
 
 /**
@@ -18,16 +17,20 @@ type PromotionsCategoryTabsProps =
       activeId: PromoHubCategoryFilterId;
       onSelect: (id: PromoHubCategoryFilterId) => void;
       className?: string;
+      hubCategoryTabs: PromotionsCategoryTab<PromoHubCategoryFilterId>[];
       mobileActiveId?: never;
       onMobileSelect?: never;
+      mobileCategoryTabs?: never;
     }
   | {
       variant: "mobile";
       mobileActiveId: PromoHubMobileCategoryFilterId;
       onMobileSelect: (id: PromoHubMobileCategoryFilterId) => void;
       className?: string;
+      mobileCategoryTabs: PromotionsCategoryTab<PromoHubMobileCategoryFilterId>[];
       activeId?: never;
       onSelect?: never;
+      hubCategoryTabs?: never;
     };
 
 /**
@@ -38,7 +41,7 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
   const isFlat = variant === "flat";
   const isMobile = variant === "mobile";
 
-  const tabs = isMobile ? PROMOTIONS_MOBILE_CATEGORY_TABS : PROMOTIONS_HUB_CATEGORY_TABS;
+  const tabs = (isMobile ? props.mobileCategoryTabs : props.hubCategoryTabs) ?? [];
 
   return (
     <div

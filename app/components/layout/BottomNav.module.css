@@ -1,6 +1,6 @@
 .nav {
   --nav-bg: var(--cosmic-chrome-surface-bg);
-  --nav-accent: #7047eb;
+  --nav-accent: #e8eaef;
   --nav-muted: #9e9ea7;
   --nav-height: 68px;
   position: fixed;
@@ -17,10 +17,11 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--nav-bg);
+  background-color: var(--nav-bg);
+  background-image: none;
   border-radius: 20px 20px 0 0;
-  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
-  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.45);
+  border-top: 1px solid var(--cosmic-chrome-border);
+  box-shadow: 0 -4px 24px rgb(0 0 0 / 0.45);
 }
 
 .items {

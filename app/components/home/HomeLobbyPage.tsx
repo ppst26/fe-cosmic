@@ -187,7 +187,7 @@ export function HomeLobbyPage() {
 
                   <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 lg:mx-0 lg:max-w-none lg:px-0">
                     {/* มือถือ: hero → ประกาศ → โปร — ระยะแนบให้คอนเทนต์ต่อเนื่อง (หน้าแรก) */}
-                    <div className="flex flex-col gap-1 lg:hidden">
+                    <div className="flex flex-col gap-2.5 lg:hidden">
                       <WelcomeBanner onCtaClick={openSignUp} />
                       <div className="-mx-3">
                         <LobbyAnnouncementMarquee
@@ -198,19 +198,18 @@ export function HomeLobbyPage() {
 
                       {/* ปุ่มเข้าสู่ระบบ / สมัครสมาชิก (แสดงเมื่อยังไม่ได้ล็อกอิน) */}
                       {!isAuthenticated && (
-                        <div className="grid grid-cols-2 gap-2 pt-0.5">
+                        <div className="auth-actions auth-actions--soft pt-1">
                           <button
                             type="button"
                             onClick={() => openLogin()}
-                            className="flex h-11 items-center justify-center rounded-xl border border-white/10 bg-[#1e1b30] text-[14px] font-medium text-white shadow-sm transition-all hover:bg-[#282245] active:scale-98 cursor-pointer"
+                            className="auth-btn auth-btn--login"
                           >
                             เข้าสู่ระบบ
                           </button>
                           <button
                             type="button"
                             onClick={() => openSignUp()}
-                            className="cosmic-cta-primary !rounded-xl rounded-xl! flex h-11 items-center justify-center text-[14px] font-medium text-white shadow-[0_4px_16px_rgba(112,71,235,0.35)] transition-all active:scale-98 cursor-pointer"
-                            style={{ borderRadius: "0.75rem" }}
+                            className="auth-btn auth-btn--register"
                           >
                             สมัครสมาชิก
                           </button>
@@ -239,7 +238,7 @@ export function HomeLobbyPage() {
                         ref={categoryBarRef}
                         className={cn(
                           "lobby-mobile-category-sticky -mx-3 px-0",
-                          isHomeLobby ? "py-0.5" : "py-1.5",
+                          isHomeLobby ? "py-1.5" : "py-2",
                           isCategoryNavStuck && "is-stuck",
                         )}
                       >
@@ -255,13 +254,13 @@ export function HomeLobbyPage() {
                     <div
                       className={cn(
                         "relative flex min-w-0 flex-col rounded-none pb-6 max-lg:overflow-x-visible lg:gap-3 lg:overflow-hidden lg:overflow-x-clip lg:pb-0 lg:pt-0",
-                        isHomeLobby ? "gap-1.5 pt-0 lg:gap-3" : "gap-4 pt-1 lg:gap-3",
+                        isHomeLobby ? "gap-2.5 pt-1 lg:gap-3" : "gap-4 pt-1 lg:gap-3",
                       )}
                     >
                       <div
                         className={cn(
                           "relative flex min-w-0 flex-col max-lg:overflow-x-visible lg:gap-3",
-                          isHomeLobby ? "gap-1.5" : "gap-4",
+                          isHomeLobby ? "gap-2.5" : "gap-4",
                         )}
                       >
                         <div className="lobby-category-stack flex flex-col gap-3 lg:gap-4">
@@ -289,8 +288,8 @@ export function HomeLobbyPage() {
                               section={section}
                               className={
                                 index === 0
-                                  ? "mt-0 sm:mt-1"
-                                  : "mt-4 sm:mt-6"
+                                  ? "mt-1 sm:mt-2"
+                                  : "mt-5 sm:mt-6"
                               }
                             />
                           ))}

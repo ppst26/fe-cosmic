@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import { PROMOTIONS_HUB_ACTIVITIES } from "@/app/data/promotionsHubMockData";
-import type { PromotionDetailId } from "@/app/data/promotionDetailMockData";
+import type { PromoHubActivityItem, PromotionDetailId } from "@/app/types/promotions";
 import { ChevronRightIcon } from "../ui/Icons";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
 
-type ActivityItem = (typeof PROMOTIONS_HUB_ACTIVITIES)[number];
+type ActivityItem = PromoHubActivityItem;
 
 /**
  * ส่วนกิจกรรมแนวนอน — ใช้ในหน้า /event (มือถือ)

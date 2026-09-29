@@ -10,18 +10,25 @@
 }
 
 .cosmic-nav.glass-mobile-nav {
-  background: var(--cosmic-chrome-surface-bg);
+  background-color: var(--cosmic-chrome-surface-bg);
+  background-image: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+  border: 0;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.06),
     0 8px 24px rgb(0 0 0 / 0.28);
 }
 
-/** พื้นแถบบนมือถือ — โทน bottom sheet (linear) */
+/** พื้นแถบบนมือถือ — graphite ทึบ (ไม่ให้ nebula ทะลุ) */
 .cosmic-mobile-chrome-surface {
-  background: var(--cosmic-chrome-surface-bg);
+  background-color: var(--cosmic-chrome-surface-bg);
+  background-image: none;
+}
+
+.lobby-mobile-header-band.cosmic-mobile-chrome-surface {
+  border-bottom: 0;
+  box-shadow: none;
 }
 
 /** ชิปในแถบมือถือ — glass-card--soft ไม่ซ้อนเงาบนพื้นกระจกของแถบ */

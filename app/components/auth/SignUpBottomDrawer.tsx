@@ -25,6 +25,7 @@ import {
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
+import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 
 interface SignUpBottomDrawerProps {
   isOpen: boolean;
@@ -153,9 +154,12 @@ function SignUpStepOne({
         onSubmit();
       }}
     >
-      <div>
-        <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">สมัครสมาชิก</Dialog.Title>
-      </div>
+      <ModalDesktopTitleBlock
+        titleIconId="profile"
+        title={
+          <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">สมัครสมาชิก</Dialog.Title>
+        }
+      />
 
       <SignUpField
         id="signup-phone"

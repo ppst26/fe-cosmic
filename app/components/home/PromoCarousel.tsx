@@ -50,7 +50,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
 
   return (
     <section
-      className="promo-carousel relative my-0 w-full min-w-0 overflow-hidden sm:my-3"
+      className="promo-carousel relative my-0.5 w-full min-w-0 overflow-hidden sm:my-3"
       aria-label="แบนเนอร์โปรโมชันและสิทธิพิเศษ"
     >
       <div className="relative min-w-0">
@@ -96,7 +96,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
               <div className="pointer-events-none absolute -top-10 -right-10 h-36 w-36 rounded-full bg-indigo-600/20 blur-2xl" />
             )}
 
-            <div className="relative z-10 flex h-full min-h-[100px] items-center p-4 sm:p-5">
+            <div className="relative z-10 flex h-full min-h-[100px] items-center p-4.5 sm:p-5">
               <div className="max-w-[58%] min-w-0 sm:max-w-[55%]">
                 <h3 className="mb-1 text-lg font-medium tracking-tight text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)] transition-colors group-hover:text-blue-100 sm:text-xl">
                   {item.title}

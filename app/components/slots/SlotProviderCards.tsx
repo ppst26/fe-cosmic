@@ -14,7 +14,7 @@ import {
  */
 function JiliArtwork() {
   return (
-    <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-44 sm:w-56 overflow-hidden select-none" aria-hidden="true">
+    <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[55%] max-w-[7.5rem] overflow-hidden select-none sm:max-w-none sm:w-44 lg:w-56" aria-hidden="true">
       <svg viewBox="0 0 200 100" className="h-full w-full object-cover">
         <defs>
           <linearGradient id="sombrero-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -78,7 +78,7 @@ function JiliArtwork() {
  */
 function PragmaticArtwork() {
   return (
-    <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-44 sm:w-56 overflow-hidden select-none" aria-hidden="true">
+    <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[55%] max-w-[7.5rem] overflow-hidden select-none sm:max-w-none sm:w-44 lg:w-56" aria-hidden="true">
       <svg viewBox="0 0 200 100" className="h-full w-full object-cover">
         <defs>
           <linearGradient id="zeus-beard" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -342,17 +342,17 @@ export function SlotProviderCards({
         </div>
       ) : null}
 
-      {/* 1. 2 แบนเนอร์ใหญ่พิเศษด้านบน (JILI & PRAGMATIC PLAY) */}
+      {/* 1. แบนเนอร์ feature 2 คอลัมน์ (JILI & PRAGMATIC PLAY) */}
       {!hideFeatured ? (
-      <div className="space-y-2.5">
+      <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
         {featuredProviders.map((feat) => {
           const isJili = feat.id === "jili";
           const hasCover = Boolean(feat.coverSrc);
 
-          const featClasses = `${cardSurfaceClass} flex h-28 items-center justify-between overflow-hidden rounded-[var(--radius-panel)] px-4 py-3 sm:h-32 sm:px-6 ${
+          const featClasses = `${cardSurfaceClass} flex min-h-[6.75rem] flex-col justify-end overflow-hidden rounded-[var(--radius-panel)] p-2.5 sm:min-h-[7.5rem] sm:p-3 ${
                 hasCover
                   ? "bg-[var(--surface-mid)]"
-                  : `bg-gradient-to-r ${feat.bgGradient}`
+                  : `bg-gradient-to-br ${feat.bgGradient}`
               }`;
 
           const featInner = (
@@ -363,36 +363,36 @@ export function SlotProviderCards({
                     src={feat.coverSrc}
                     alt=""
                     fill
-                    sizes="100vw"
+                    sizes="(min-width: 640px) 50vw, 45vw"
                     className="object-cover"
                   />
                   <div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-black/20"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/25"
                     aria-hidden="true"
                   />
                 </>
               )}
 
               {/* ข้อมูลแบรนด์และสโลแกนฝั่งซ้าย */}
-              <div className="relative z-10 flex flex-col justify-center">
+              <div className="relative z-10 flex flex-col justify-end pr-[38%] sm:pr-[42%]">
                 {isJili ? (
                   <div>
-                    <h3 className="bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-3xl font-medium tracking-tight text-transparent drop-shadow sm:text-4xl">
+                    <h3 className="bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-xl font-medium leading-none tracking-tight text-transparent drop-shadow sm:text-2xl">
                       JILI
                     </h3>
-                    <p className="mt-1 text-xs font-medium uppercase tracking-wider text-amber-200/90 sm:text-sm">
+                    <p className="mt-0.5 line-clamp-2 text-[9px] font-medium uppercase leading-tight tracking-wide text-amber-200/90 sm:mt-1 sm:text-[10px]">
                       {feat.slogan}
                     </p>
                   </div>
                 ) : (
                   <div>
-                    <div className="flex items-center gap-1 text-[#fde047]">
-                      <span className="text-sm">👑</span>
+                    <div className="flex items-center gap-0.5 text-[#fde047]">
+                      <span className="text-[10px] sm:text-xs">👑</span>
                     </div>
-                    <h3 className="text-xl font-medium tracking-tight text-white drop-shadow sm:text-2xl">
-                      PRAGMATIC PLAY<span className="text-xs font-normal">™</span>
+                    <h3 className="text-sm font-medium leading-tight tracking-tight text-white drop-shadow sm:text-base">
+                      PRAGMATIC PLAY<span className="text-[8px] font-normal sm:text-[9px]">™</span>
                     </h3>
-                    <p className="mt-1 text-xs font-medium uppercase tracking-widest text-sky-200/90 sm:text-sm">
+                    <p className="mt-0.5 line-clamp-2 text-[8px] font-medium uppercase leading-tight tracking-wide text-sky-200/90 sm:text-[9px]">
                       {feat.slogan}
                     </p>
                   </div>
@@ -401,9 +401,9 @@ export function SlotProviderCards({
 
               {/* ป้าย HOT มุมบนขวา (เฉพาะ JILI) */}
               {feat.badge && (
-                <div className="absolute right-3 top-3 z-20 flex items-center gap-1 rounded-full bg-gradient-to-r from-red-600 to-rose-600 px-2.5 py-0.5 shadow-md">
-                  <FlameHotIcon className="h-3 w-3 text-amber-300" />
-                  <span className="text-xs font-medium text-white">
+                <div className="absolute right-1.5 top-1.5 z-20 flex items-center gap-0.5 rounded-full bg-gradient-to-r from-red-600 to-rose-600 px-1.5 py-0.5 shadow-md sm:right-2 sm:top-2 sm:px-2">
+                  <FlameHotIcon className="h-2.5 w-2.5 text-amber-300 sm:h-3 sm:w-3" />
+                  <span className="text-[9px] font-medium text-white sm:text-[10px]">
                     {feat.badge}
                   </span>
                 </div>

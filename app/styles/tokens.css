@@ -8,7 +8,9 @@
   --surface-selected: #29264f;
   /** พื้นทึบสองชั้น — กลุ่มข้อมูล / อัตราต่อรอง / ช่องข้อความ (.surface-solid-*) */
   --surface-solid-outer: #131216;
-  --surface-solid-inner: #1d1a22; 
+  --surface-solid-inner: #1d1a22;
+  /** พื้นหน้า standalone มือถือ — flat neutral (ไม่ทับ nebula .cosmic-bg) */
+  --standalone-page-bg: #141416;
   --surface-gradient: linear-gradient(
     110deg,
     var(--surface-start) 0%,
@@ -55,13 +57,12 @@
       #15131c 0%,
       #0c0b11 100%
     );
-  /** Header / bottom nav มือถือ — linear โทนม่วง cosmic (ไม่เทา metallic แบบ sheet base) */
-  --cosmic-chrome-surface-bg: linear-gradient(
-    180deg,
-    #221a38 0%,
-    #161024 52%,
-    #0e0b16 100%
-  );
+  /**
+   * Header / bottom nav — graphite กลาง (R≈G, ไม่ปนม่วง)
+   * ม่วง brand คงที่ chip หมวด active · CTA · progress เท่านั้น
+   */
+  --cosmic-chrome-surface-bg: #141416;
+  --cosmic-chrome-border: rgb(255 255 255 / 0.08);
   --cosmic-mobile-sheet-blur: 0px;   /* solid — ปิด backdrop-blur เพื่อลดกระตุก */
   --cosmic-mobile-sheet-saturate: 1;
   --cosmic-mobile-sheet-border: transparent;
@@ -191,9 +192,9 @@
   --nav-float-offset: 0px;
   --nav-safe: env(safe-area-inset-bottom, 0px);
   --nav-scroll-gap: 20px;
-  --nav-text: #9199a8;
-  --nav-hover: #b8afd9;
-  --nav-active: #d4c4ff;
+  --nav-text: #8b919c;
+  --nav-hover: #c8ccd6;
+  --nav-active: #f2f3f7;
   --nav-capsule-bg: var(--cosmic-chrome-surface-bg);
   --nav-safe-fill: var(--surface-end);
   --nav-top-line: color-mix(in srgb, var(--border-active) 32%, var(--border-subtle));

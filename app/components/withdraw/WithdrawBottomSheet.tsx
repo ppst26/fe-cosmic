@@ -101,6 +101,8 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
 
           <ResponsiveSheetHeader
             closeAriaLabel="ปิดหน้าถอนเงิน"
+            titleIconSrc="/assets/deposit/Wallet2.avif"
+            titleIconDesktopOnly
             title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ถอนเงิน</Dialog.Title>}
           />
 

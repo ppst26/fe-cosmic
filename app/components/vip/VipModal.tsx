@@ -22,6 +22,7 @@ import {
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
 import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
+import { ModalTitleLeadingMenuIcon } from "../ui/ModalTitleLeadingIcon";
 import { COSMIC_SEGMENT_GLASS_WHITE } from "../ui/cosmicButtonClasses";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
 import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
@@ -123,6 +124,8 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
           <div className="w-full shrink-0 pb-1 lg:hidden">
             <ResponsiveSheetHeader
               closeAriaLabel="ปิด VIP"
+              titleIconId="rank"
+              titleIconDesktopOnly
               title={<Dialog.Title className="text-xl font-medium sm:text-2xl">VIP</Dialog.Title>}
               subtitle={
                 <p id="vip-modal-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
@@ -139,13 +142,16 @@ export function VipModal({ isOpen, onClose }: VipModalProps) {
           <header
             className="vip-modal__header responsive-sheet-header--hub responsive-sheet-header--hub-shell hidden w-full shrink-0 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(260px,28rem)_auto] lg:items-center lg:gap-x-4 lg:pb-2"
           >
-            <div className="min-w-0 text-left lg:col-start-1 lg:row-start-1">
+            <div className="flex min-w-0 items-center gap-2.5 text-left lg:col-start-1 lg:row-start-1">
+              <ModalTitleLeadingMenuIcon iconId="rank" />
+              <div className="min-w-0">
               <h2 className="text-2xl font-medium tracking-tight lg:text-[1.625rem]">
                 VIP
               </h2>
               <p id="vip-modal-desc-desktop" className="vip-modal-subtitle mt-1 text-sm leading-snug">
                 ระดับ แร็งค์ และสิทธิประโยชน์
               </p>
+              </div>
             </div>
             <div className="w-full min-w-0 lg:col-start-2 lg:row-start-1 lg:justify-self-center">
               {tabList}

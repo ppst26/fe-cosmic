@@ -28,6 +28,18 @@ export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
   "check-in": "เช็คอินรายวัน",
 };
 
+/** ไอคอน 3D นำหน้าหัวข้อ hub modal บน desktop — อ้าง menuIconAssets */
+export const HUB_MODAL_ICON_IDS: Record<DesktopHubId, string> = {
+  promotions: "promotions",
+  activities: "activities",
+  cashback: "cashback",
+  "gems-store": "gems",
+  account: "profile",
+  referral: "referral",
+  transactions: "transactions",
+  "check-in": "check-in",
+};
+
 const PATH_TO_HUB: Record<string, DesktopHubId> = {
   "/promotions": "promotions",
   "/event": "activities",

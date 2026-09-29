@@ -174,7 +174,8 @@
   pointer-events: none;
 }
 
-.lottery-market-sidebar__bg-img {
+.lottery-market-sidebar__bg-img,
+.lottery-hub-market-card__bg-img {
   object-fit: contain;
   object-position: left center;
   transform: scale(1.05);
@@ -192,6 +193,78 @@
   .lottery-market-sidebar__bg-img {
     transform: scale(1.02);
   }
+}
+
+/*
+ * Lottery hub — การ์ดแนะนำ + กริดประเภท (LotteryHubMarketLink)
+ * รูปซ้ายล้น · gradient ทับ · ข้อความขวา — สไตล์เดียวกับ sidebar ตลาด
+ */
+.lottery-hub-market-card--has-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    95deg,
+    rgb(0 0 0 / 0.08) 0%,
+    color-mix(in srgb, var(--surface-solid-inner) 32%, transparent) 40%,
+    color-mix(in srgb, var(--glass-fill) 90%, transparent) 58%,
+    var(--glass-fill) 100%
+  );
+}
+
+.lottery-hub-market-card__bg {
+  position: absolute;
+  z-index: 0;
+  top: -6%;
+  bottom: -6%;
+  left: -4%;
+  width: 50%;
+  pointer-events: none;
+}
+
+.lottery-hub-market-card--feature .lottery-hub-market-card__bg {
+  top: -8%;
+  bottom: -8%;
+  left: 0;
+  width: 42%;
+}
+
+.lottery-hub-market-card--type .lottery-hub-market-card__bg {
+  top: -8%;
+  bottom: -8%;
+  left: -6%;
+  width: 54%;
+}
+
+.lottery-hub-market-card--has-art .lottery-hub-market-card__bg-img {
+  transform: scale(0.92);
+}
+
+.lottery-hub-market-card--feature .lottery-hub-market-card__bg-img {
+  transform: scale(0.94);
+}
+
+.lottery-hub-market-card--has-art .lottery-hub-market-card__text {
+  max-width: 58%;
+  padding-left: 0.1rem;
+}
+
+.lottery-hub-market-card--type .lottery-hub-market-card__text {
+  max-width: 62%;
+}
+
+.lottery-hub-market-card--type .lottery-type-card__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.lottery-hub-market-card.is-closed .lottery-countdown,
+.lottery-hub-market-card.is-closed .lottery-type-card__closed {
+  opacity: 0.88;
 }
 
 /* แบนเนอร์หัวตลาด (มือถือ) — รูป bg ซ้ายล้น · ข้อความขวา */

@@ -201,13 +201,8 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
     <>
       <ResponsiveSheetHeader
         closeAriaLabel="ปิดหน้าฝากเงิน"
-        leadingSlot={
-          <img
-            src="/assets/deposit/Wallet2.avif"
-            alt=""
-            className="h-10 w-10 shrink-0 object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] sm:h-11 sm:w-11"
-          />
-        }
+        titleIconSrc="/assets/deposit/Wallet2.avif"
+        titleIconDesktopOnly={false}
         title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ฝากเงิน</Dialog.Title>}
         subtitle={
           <p id="deposit-sheet-desc" className="mt-1 text-sm text-[var(--text-secondary)]">

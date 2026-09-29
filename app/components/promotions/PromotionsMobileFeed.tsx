@@ -2,13 +2,14 @@
 
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
-import {
-  PROMOTIONS_MOBILE_LIST,
-  matchesPromoHubMobileCategory,
-  type PromoHubMobileCategoryFilterId,
-} from "@/app/data/promotionsHubMockData";
-import type { PromotionDetailId } from "@/app/data/promotionDetailMockData";
+import { matchesPromoHubMobileCategory } from "@/lib/promotions/promotionFilters";
+import type {
+  PromoHubMobileListItem,
+  PromoHubMobileCategoryFilterId,
+  PromotionDetailId,
+} from "@/app/types/promotions";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
+import { usePromotionsCatalog } from "./PromotionsCatalogProvider";
 import { cn } from "@/lib/utils";
 
 interface PromotionsMobileFeedProps {
@@ -19,15 +20,21 @@ interface PromotionsMobileFeedProps {
  * หน้าโปรโมชั่นมือถือ — แท็บหมวด + รายการแนวตั้ง (รูป · ชื่อ · หมดเขต · อ่านเงื่อนไข)
  */
 export function PromotionsMobileFeed({ onOpenDetail }: PromotionsMobileFeedProps) {
+  const { catalog } = usePromotionsCatalog();
   const [categoryFilter, setCategoryFilter] = useState<PromoHubMobileCategoryFilterId>("all");
+
+  const mobileList = catalog?.mobileList ?? [];
+  const mobileTabs = catalog?.mobileCategoryTabs ?? [];
 
   const items = useMemo(
     () =>
-      PROMOTIONS_MOBILE_LIST.filter((item) =>
+      mobileList.filter((item) =>
         matchesPromoHubMobileCategory(item.mobileCategories, categoryFilter),
       ),
-    [categoryFilter],
+    [mobileList, categoryFilter],
   );
+
+  if (!catalog) return null;
 
   return (
     <div className="promotions-mobile-feed flex flex-col gap-2 pb-2">
@@ -35,6 +42,7 @@ export function PromotionsMobileFeed({ onOpenDetail }: PromotionsMobileFeedProps
         variant="mobile"
         mobileActiveId={categoryFilter}
         onMobileSelect={setCategoryFilter}
+        mobileCategoryTabs={mobileTabs}
         className="-mx-[var(--layout-inline-gutter)] px-[var(--layout-inline-gutter)]"
       />
 
@@ -59,7 +67,7 @@ function PromotionsMobileListCard({
   item,
   onOpenDetail,
 }: {
-  item: (typeof PROMOTIONS_MOBILE_LIST)[number];
+  item: PromoHubMobileListItem;
   onOpenDetail: (id: PromotionDetailId) => void;
 }) {
   return (
@@ -91,15 +99,15 @@ function PromotionsMobileListCard({
         </h2>
 
         <div className="mt-2.5 flex items-center justify-between gap-3 border-t border-[var(--border-subtle)]/50 pt-2.5">
-        <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
-          หมดเขต {item.expiresLabel}
-        </span>
-        <span
-          className="shrink-0 text-xs font-medium text-[var(--destructive)] sm:text-sm"
-          aria-hidden="true"
-        >
-          อ่านเงื่อนไข
-        </span>
+          <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
+            หมดเขต {item.expiresLabel}
+          </span>
+          <span
+            className="shrink-0 text-xs font-medium text-[var(--destructive)] sm:text-sm"
+            aria-hidden="true"
+          >
+            อ่านเงื่อนไข
+          </span>
         </div>
       </div>
     </button>

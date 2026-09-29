@@ -11,6 +11,7 @@ import {
 } from "../ui/Icons";
 import { COSMIC_BTN_GLASS_ICON } from "../ui/cosmicButtonClasses";
 import { getTabIcon, type GenericFilterTabItem } from "./SlotFilterTabs";
+import { ModalTitleLeadingMenuIcon } from "../ui/ModalTitleLeadingIcon";
 
 const PROVIDER_TAB_IDS = new Set(["all-in-one", "all-providers"]);
 
@@ -106,8 +107,9 @@ export function ProviderFilterDialog({
               </button>
             )}
 
-            <Dialog.Title className="provider-filter-dialog__title">
-              {view === "root" ? "FILTER" : subTitle}
+            <Dialog.Title className="provider-filter-dialog__title inline-flex items-center justify-center gap-2">
+              <ModalTitleLeadingMenuIcon iconId="slots" desktopOnly />
+              <span>{view === "root" ? "FILTER" : subTitle}</span>
             </Dialog.Title>
 
             <button

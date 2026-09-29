@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import type {
   LotteryFeaturedItem,
   LotteryGridItem,
@@ -13,8 +12,7 @@ import {
   LOTTERY_LATEST_RESULTS,
 } from "@/app/data/lotteryHubMockData";
 import { lotteryHrefToSlug } from "@/app/data/lotteryIconAssets";
-import { LotteryCountdown } from "./LotteryFlagOrb";
-import { LotteryMarketIcon } from "./LotteryMarketIcon";
+import { LotteryHubMarketLink } from "./LotteryHubMarketLink";
 import { LotteryLatestResultsTable } from "./LotteryLatestResultsTable";
 
 interface LotteryHubContentProps {
@@ -51,22 +49,16 @@ export function LotteryHubContent({
       <section className="lottery-hub__featured" aria-label="หวยแนะนำ">
         <div className="lottery-feature-grid grid grid-cols-1 gap-3 sm:grid-cols-3">
           {featured.map((item) => (
-            <Link
+            <LotteryHubMarketLink
               key={item.id}
               href={item.href}
-              className={`lottery-feature-card glass-card--soft lottery-feature-card--${item.visual} flex items-center gap-3 min-h-[5.5rem] px-4 py-3 rounded-[var(--radius-panel)]`}
-            >
-              <LotteryMarketIcon
-                marketSlug={lotteryHrefToSlug(item.href)}
-                size="feature"
-                fallbackLabel={item.visual === "thai-gov" ? "TH" : "YK"}
-                fallbackTone={item.visual === "thai-gov" ? "th" : "gold"}
-              />
-              <span className="lottery-feature-card__text flex min-w-0 flex-col items-start gap-[0.35rem]">
-                <span className="lottery-feature-card__title">{item.title}</span>
-                <LotteryCountdown label={item.countdownLabel} />
-              </span>
-            </Link>
+              marketSlug={lotteryHrefToSlug(item.href)}
+              variant="feature"
+              title={item.title}
+              countdownLabel={item.countdownLabel}
+              fallbackLabel={item.visual === "thai-gov" ? "TH" : "YK"}
+              fallbackTone={item.visual === "thai-gov" ? "th" : "gold"}
+            />
           ))}
         </div>
       </section>
@@ -74,26 +66,17 @@ export function LotteryHubContent({
       <section className="lottery-hub__markets min-w-0" aria-label="ประเภทหวยทั้งหมด">
         <div className="lottery-type-grid grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
           {gridItems.map((item) => (
-            <Link
+            <LotteryHubMarketLink
               key={item.id}
               href={item.href}
-              className="lottery-type-card glass-card--soft flex items-center gap-2 min-h-[4.25rem] px-3 py-2"
-            >
-              <LotteryMarketIcon
-                marketSlug={lotteryHrefToSlug(item.href)}
-                size="sm"
-                fallbackLabel={item.flagLabel}
-                fallbackTone={item.flagTone}
-              />
-              <span className="lottery-type-card__body flex min-w-0 flex-col gap-[0.2rem]">
-                <span className="lottery-type-card__title truncate">{item.title}</span>
-                {item.status === "closed" ? (
-                  <span className="lottery-type-card__closed">ปิดรับแทง</span>
-                ) : (
-                  <LotteryCountdown label={item.countdownLabel ?? "—"} />
-                )}
-              </span>
-            </Link>
+              marketSlug={lotteryHrefToSlug(item.href)}
+              variant="type"
+              title={item.title}
+              countdownLabel={item.countdownLabel}
+              isClosed={item.status === "closed"}
+              fallbackLabel={item.flagLabel}
+              fallbackTone={item.flagTone}
+            />
           ))}
         </div>
       </section>

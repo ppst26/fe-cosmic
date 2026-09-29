@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { getPromotionDetail, type PromotionDetailId } from "@/app/data/promotionDetailMockData";
-import {
-  PROMOTIONS_HUB_ACTIVITIES,
-  PROMOTIONS_HUB_FEATURED,
-  PROMOTIONS_HUB_HERO,
-  matchesPromoHubCategory,
-  type PromoHubCategoryFilterId,
-} from "@/app/data/promotionsHubMockData";
+import { matchesPromoHubCategory } from "@/lib/promotions/promotionFilters";
+import type {
+  PromotionDetailContent,
+  PromotionDetailId,
+  PromoHubCategoryFilterId,
+} from "@/app/types/promotions";
 import { PromotionDetailPanel } from "./PromotionDetailPanel";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
+import { usePromotionsCatalog } from "./PromotionsCatalogProvider";
 
 export type PromoHubDesktopKind = "promotions" | "activities";
 
@@ -23,26 +22,30 @@ interface PromoMasterListItem {
 
 /**
  * Master–detail โปร / กิจกรรม บน desktop hub — แยกตาม kind (ไม่รวมรายการในหน้าเดียว)
- * ใช้ใน PromotionsHubPageContent และ ActivitiesHubPageContent (embedded + lg+)
+ * ใช้ใน PromotionsHubPageContent (embedded + lg+)
  */
 export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKind }) {
+  const { catalog, fetchDetail, getCachedDetail } = usePromotionsCatalog();
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [detailContent, setDetailContent] = useState<PromotionDetailContent | null>(null);
 
   const listItems = useMemo(() => {
     const items: PromoMasterListItem[] = [];
+    if (!catalog) return items;
 
     if (kind === "promotions") {
-      if (matchesPromoHubCategory(PROMOTIONS_HUB_HERO.categories, categoryFilter)) {
+      const { hero, featured, activities } = catalog;
+      if (matchesPromoHubCategory(hero.categories, categoryFilter)) {
         items.push({
           id: "hero-welcome",
-          title: PROMOTIONS_HUB_HERO.title,
-          subtitle: PROMOTIONS_HUB_HERO.subtitle,
-          detailId: PROMOTIONS_HUB_HERO.detailId,
+          title: hero.title,
+          subtitle: hero.subtitle,
+          detailId: hero.detailId,
         });
       }
 
-      for (const row of PROMOTIONS_HUB_FEATURED) {
+      for (const row of featured) {
         if (!matchesPromoHubCategory(row.categories, categoryFilter)) continue;
         items.push({
           id: row.id,
@@ -51,8 +54,8 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
           detailId: row.detailId,
         });
       }
-    } else {
-      for (const row of PROMOTIONS_HUB_ACTIVITIES) {
+
+      for (const row of activities) {
         if (!matchesPromoHubCategory(row.categories, categoryFilter)) continue;
         items.push({
           id: row.id,
@@ -64,7 +67,7 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
     }
 
     return items;
-  }, [categoryFilter, kind]);
+  }, [catalog, categoryFilter, kind]);
 
   useEffect(() => {
     if (listItems.length === 0) {
@@ -78,7 +81,28 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
   }, [listItems]);
 
   const selectedItem = listItems.find((item) => item.id === selectedItemId) ?? null;
-  const detailContent = selectedItem ? getPromotionDetail(selectedItem.detailId) : null;
+
+  useEffect(() => {
+    if (!selectedItem) {
+      setDetailContent(null);
+      return;
+    }
+
+    const cached = getCachedDetail(selectedItem.detailId);
+    if (cached) {
+      setDetailContent(cached);
+      return;
+    }
+
+    let cancelled = false;
+    fetchDetail(selectedItem.detailId).then((detail) => {
+      if (!cancelled) setDetailContent(detail);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedItem, fetchDetail, getCachedDetail]);
 
   const emptyMessage =
     kind === "promotions"
@@ -86,11 +110,19 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
       : "ยังไม่มีกิจกรรมในหมวดนี้ — ลองเลือก All Promotions";
 
   const listAriaLabel = kind === "promotions" ? "รายการโปรโมชั่น" : "รายการกิจกรรม";
+  const hubTabs = catalog?.hubCategoryTabs ?? [];
+
+  if (!catalog) return null;
 
   return (
     <div className="promotions-desktop-hub promotions-desktop-hub--flat flex min-h-0 flex-col gap-3">
       <div className="promotions-desktop-hub__tabs sticky top-0 z-10 pb-2 pt-0">
-        <PromotionsCategoryTabs activeId={categoryFilter} onSelect={setCategoryFilter} variant="flat" />
+        <PromotionsCategoryTabs
+          activeId={categoryFilter}
+          onSelect={setCategoryFilter}
+          variant="flat"
+          hubCategoryTabs={hubTabs}
+        />
       </div>
 
       {listItems.length === 0 ? (
@@ -136,7 +168,11 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
           >
             {detailContent ? (
               <PromotionDetailPanel key={detailContent.id} content={detailContent} variant="hub" />
-            ) : null}
+            ) : (
+              <p className="px-4 py-10 text-center text-sm text-[var(--text-secondary)]">
+                กำลังโหลดรายละเอียด…
+              </p>
+            )}
           </div>
         </div>
       )}

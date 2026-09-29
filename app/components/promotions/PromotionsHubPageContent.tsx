@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import {
-  PROMOTIONS_HUB_FEATURED,
-  PROMOTIONS_HUB_HERO,
-  matchesPromoHubCategory,
-  type PromoHubCategoryFilterId,
-  type PromoHubFeaturedItem,
-} from "@/app/data/promotionsHubMockData";
-import type { PromotionDetailId } from "@/app/data/promotionDetailMockData";
+import { matchesPromoHubCategory } from "@/lib/promotions/promotionFilters";
+import type {
+  PromoHubCategoryFilterId,
+  PromoHubFeaturedItem,
+  PromoHubHero,
+  PromotionDetailId,
+} from "@/app/types/promotions";
 import { PromotionDetailModal } from "./PromotionDetailModal";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
 import { PromotionsMobileFeed } from "./PromotionsMobileFeed";
 import { PromoHubDesktopMasterDetail } from "./PromoHubDesktopMasterDetail";
+import { PromotionsCatalogProvider, usePromotionsCatalog } from "./PromotionsCatalogProvider";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
 
@@ -20,48 +20,70 @@ import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitive
  * เนื้อหาหน้าโปรโมชั่น — ใช้ใน /promotions (กิจกรรมอยู่ที่ /event)
  */
 export function PromotionsHubPageContent({ embedded = false }: { embedded?: boolean }) {
+  return (
+    <PromotionsCatalogProvider>
+      <PromotionsHubPageContentInner embedded={embedded} />
+    </PromotionsCatalogProvider>
+  );
+}
+
+function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolean }) {
+  const { catalog, loading, error } = usePromotionsCatalog();
   const [detailId, setDetailId] = useState<PromotionDetailId | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
 
   const openDetail = (id: PromotionDetailId) => setDetailId(id);
   const closeDetail = () => setDetailId(null);
 
+  const hero = catalog?.hero;
+  const featured = catalog?.featured ?? [];
+
   const showHero = useMemo(
-    () => matchesPromoHubCategory(PROMOTIONS_HUB_HERO.categories, categoryFilter),
-    [categoryFilter],
+    () => (hero ? matchesPromoHubCategory(hero.categories, categoryFilter) : false),
+    [hero, categoryFilter],
   );
 
   const featuredItems = useMemo(
-    () =>
-      PROMOTIONS_HUB_FEATURED.filter((item) =>
-        matchesPromoHubCategory(item.categories, categoryFilter),
-      ),
-    [categoryFilter],
+    () => featured.filter((item) => matchesPromoHubCategory(item.categories, categoryFilter)),
+    [featured, categoryFilter],
   );
 
   const hasAnyPromo = showHero || featuredItems.length > 0;
-
   const showDesktopHub = embedded;
+  const hubTabs = catalog?.hubCategoryTabs ?? [];
 
   return (
     <>
-      {showDesktopHub ? (
+      {loading ? (
+        <p className="py-8 text-center text-sm text-[var(--text-secondary)]">กำลังโหลดโปรโมชั่น…</p>
+      ) : null}
+      {error ? (
+        <p className="py-8 text-center text-sm text-[var(--destructive)]">{error}</p>
+      ) : null}
+
+      {catalog && showDesktopHub ? (
         <div className="hidden pb-2 lg:block">
           <PromoHubDesktopMasterDetail kind="promotions" />
         </div>
       ) : null}
 
-      <div className="lg:hidden">
-        <PromotionsMobileFeed onOpenDetail={openDetail} />
-      </div>
+      {catalog ? (
+        <div className="lg:hidden">
+          <PromotionsMobileFeed onOpenDetail={openDetail} />
+        </div>
+      ) : null}
 
-      {!showDesktopHub ? (
+      {catalog && !showDesktopHub ? (
         <div className="hidden flex-col gap-5 pb-4 lg:flex">
           <header className="flex flex-col gap-3">
             <h1 className="text-xl font-medium tracking-tight text-[var(--text-primary)] sm:text-2xl">
               โปรโมชั่น
             </h1>
-            <PromotionsCategoryTabs activeId={categoryFilter} onSelect={setCategoryFilter} />
+            <PromotionsCategoryTabs
+              activeId={categoryFilter}
+              onSelect={setCategoryFilter}
+              hubCategoryTabs={hubTabs}
+            />
           </header>
 
           {!hasAnyPromo ? (
@@ -70,8 +92,8 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
             </p>
           ) : null}
 
-          {showHero ? (
-            <PromoHubHeroBanner hero={PROMOTIONS_HUB_HERO} onOpenDetail={openDetail} />
+          {showHero && hero ? (
+            <PromoHubHeroBanner hero={hero} onOpenDetail={openDetail} />
           ) : null}
 
           {featuredItems.length > 0 ? (
@@ -100,7 +122,7 @@ function PromoHubHeroBanner({
   hero,
   onOpenDetail,
 }: {
-  hero: typeof PROMOTIONS_HUB_HERO;
+  hero: PromoHubHero;
   onOpenDetail: (id: PromotionDetailId) => void;
 }) {
   return (

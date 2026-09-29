@@ -18,6 +18,7 @@ import {
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
+import { ModalTitleLeadingMenuIcon } from "../ui/ModalTitleLeadingIcon";
 
 interface ProfileSlideOverCardProps {
   isOpen: boolean;
@@ -110,7 +111,10 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
             <div className={`${RESPONSIVE_SHEET_HANDLE_CLASS} profile-hub-sheet__handle`} aria-hidden="true" />
 
             <div className="profile-hub-sheet__hero-bar flex items-center justify-between gap-2 px-4 pb-3 pt-0.5">
-              <Dialog.Title className="text-base font-medium text-white">โปรไฟล์</Dialog.Title>
+              <div className="flex min-w-0 items-center gap-2">
+                <ModalTitleLeadingMenuIcon iconId="profile" desktopOnly />
+                <Dialog.Title className="text-base font-medium text-white">โปรไฟล์</Dialog.Title>
+              </div>
               <Dialog.Close asChild>
                 <button
                   type="button"

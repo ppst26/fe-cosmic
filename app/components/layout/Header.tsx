@@ -92,7 +92,7 @@ export function Header({
     <>
       <header
         className={cn(
-          "w-full min-w-0 border-b border-[color-mix(in_srgb,var(--border-subtle)_55%,transparent)] px-3.5 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2 sm:px-4 lg:hidden",
+          "w-full min-w-0 border-0 px-3.5 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2 sm:px-4 lg:hidden",
           mobileSticky
             ? "cosmic-mobile-chrome-surface sticky top-0 z-50"
             : "relative bg-transparent",
@@ -146,7 +146,7 @@ export function Header({
                       onLoginClick?.();
                     }
                   }}
-                  className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#1a1624] px-3 text-white transition-all hover:bg-[#2b1b54] active:scale-97 cursor-pointer"
+                  className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#222228] px-3 text-white transition-all hover:bg-[#2c2c34] active:scale-97 cursor-pointer"
                   aria-label="ฝากเงินและดูยอดเครดิต"
                 >
                   <HeaderWalletIcon className="h-3.5 w-3.5 shrink-0 text-white" />

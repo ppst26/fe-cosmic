@@ -5,7 +5,7 @@ import type {
   PromotionDetailBlock,
   PromotionDetailBlockIcon,
   PromotionDetailContent,
-} from "@/app/data/promotionDetailMockData";
+} from "@/app/types/promotions";
 
 export type PromotionDetailPanelVariant = "modal" | "hub";
 
@@ -50,7 +50,7 @@ function PromotionDetailBanner({
       className={
         isHub
           ? "promotion-detail-panel__banner relative overflow-hidden px-4 py-4"
-          : "promotion-detail-panel__banner promotion-detail-panel__banner--modal relative overflow-hidden px-4 py-5"
+          : "promotion-detail-panel__banner promotion-detail-panel__banner--modal relative overflow-hidden px-3.5 py-3.5 sm:px-4 sm:py-4"
       }
       aria-label={content.bannerTitle}
     >
@@ -58,7 +58,11 @@ function PromotionDetailBanner({
       <div className="relative z-[1] flex items-center gap-3">
         <PromotionDetailBannerArt
           art={content.bannerArt}
-          className="h-16 w-16 shrink-0 sm:h-[4.5rem] sm:w-[4.5rem]"
+          className={
+            isHub
+              ? "h-16 w-16 shrink-0 sm:h-[4.5rem] sm:w-[4.5rem]"
+              : "h-14 w-14 shrink-0 sm:h-16 sm:w-16"
+          }
           isHub={isHub}
         />
         <div className="min-w-0 flex-1">
@@ -94,8 +98,10 @@ function PromotionDetailDetailsSection({ body }: { body: PromotionDetailContent 
       aria-label="รายละเอียดโปรโมชั่น"
     >
       <h3 className="promotion-detail-panel__details-heading">รายละเอียด</h3>
-      <hr className="promotion-detail-panel__divider" />
-      <PromotionDetailBodyExpanded body={body} isHub={false} />
+      <hr className="promotion-detail-panel__divider promotion-detail-panel__details-heading-divider" />
+      <div className="promotion-detail-panel__details-scroll">
+        <PromotionDetailBodyExpanded body={body} isHub={false} />
+      </div>
     </section>
   );
 }
