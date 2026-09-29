@@ -1,5 +1,6 @@
 /**
- * Menu dialog — mock ติ่ง「เมนู」+ panel ชิดเหนือ bottom nav (RightMenuDrawer.tsx)
+ * Menu dialog — มือถือเต็มจอ (แบนเนอร์ · เครดิต/เพชร · grid) · เดสก์ท็อป panel ลอย
+ * RightMenuDrawer.tsx
  */
 .menu-dialog-overlay {
   position: fixed;
@@ -25,13 +26,13 @@
 .menu-dialog-root {
   position: fixed;
   z-index: 55;
-  inset: auto 0 calc(var(--menu-nav-clearance) + env(safe-area-inset-bottom, 0px));
-  width: min(440px, calc(100% - 24px));
+  inset: 0;
+  width: 100%;
   max-width: none;
   max-height: none;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
-  overflow: visible;
+  overflow: hidden;
   border: 0;
   background: transparent;
   color: var(--menu-text);
@@ -41,9 +42,43 @@
 .menu-shell {
   position: relative;
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  min-height: 100vh;
   transform: translate3d(0, 0, 0);
-  transform-origin: bottom center;
+  transform-origin: center center;
   backface-visibility: hidden;
+}
+
+.menu-close-btn {
+  position: absolute;
+  z-index: 3;
+  top: max(10px, env(safe-area-inset-top, 0px));
+  right: max(12px, env(safe-area-inset-right, 0px));
+  display: flex;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 10%);
+  color: rgb(255 255 255 / 82%);
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.menu-close-btn:hover {
+  background: rgb(255 255 255 / 16%);
+  color: #fff;
+}
+
+.menu-close-btn:active {
+  transform: scale(0.94);
 }
 
 .menu-dialog-root[data-state="open"] .menu-shell {
@@ -74,38 +109,28 @@
   }
 }
 
-/** เปิด: ขยายจากเล็ก→ใหญ่ + bounce เบา · ปิด: หุบกลับเล็กลง (transform/opacity เท่านั้น) */
+/** เปิด/ปิดเต็มจอ — fade + เลื่อนเบา */
 @keyframes menu-shell-in {
   0% {
     opacity: 0;
-    transform: translate3d(0, 18px, 0) scale(0.78);
-  }
-
-  58% {
-    opacity: 1;
-    transform: translate3d(0, -4px, 0) scale(1.025);
+    transform: translate3d(0, 12px, 0);
   }
 
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes menu-shell-out {
   0% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-
-  45% {
-    opacity: 0.85;
-    transform: translate3d(0, 8px, 0) scale(0.94);
+    transform: translate3d(0, 0, 0);
   }
 
   100% {
     opacity: 0;
-    transform: translate3d(0, 28px, 0) scale(0.76);
+    transform: translate3d(0, 16px, 0);
   }
 }
 
@@ -139,29 +164,20 @@
   }
 }
 
-.menu-model {
-  position: absolute;
-  z-index: 0;
-  right: 6px;
-  bottom: calc(100% - 14px);
-  width: min(44%, 185px);
-  height: var(--menu-model-height, 210px);
-  object-fit: contain;
-  object-position: bottom right;
-  pointer-events: none;
-  user-select: none;
-  filter: drop-shadow(0 0 12px rgb(153 107 245 / 18%));
-}
-
 .menu-panel {
   position: relative;
-  z-index: 1;
-  padding: 16px 14px 18px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  padding: 0;
   border: 0;
-  border-radius: 24px;
+  border-radius: 0;
   background: var(--menu-panel-bg);
   box-shadow:
-    0 24px 64px rgb(0 0 0 / 45%),
+    0 -8px 40px rgb(0 0 0 / 38%),
     inset 0 1px 0 rgb(255 255 255 / 4%);
 }
 
@@ -210,13 +226,25 @@
   pointer-events: none;
 }
 
+.menu-panel--hub {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 .menu-panel.glass-menu-panel .menu-content {
   position: relative;
   z-index: 1;
-  max-height: calc(85dvh - var(--menu-nav-clearance));
-  overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+.menu-panel.glass-menu-panel .menu-content--mobile {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.menu-panel.glass-menu-panel .menu-content:not(.menu-content--mobile) {
   padding-bottom: 2px;
 }
 
@@ -549,11 +577,158 @@
   }
 }
 
-@media (max-height: 700px) {
-  .menu-dialog-root {
-    --menu-model-height: 100px;
+@media (max-width: 1023px) {
+  .menu-grid-tile {
+    min-height: 84px;
   }
 
+  .menu-shell {
+    background-color: var(--cosmic-page-base);
+    background-image:
+      radial-gradient(
+        ellipse 55% 38% at 42% 0%,
+        rgba(65, 19, 100, 0.28),
+        transparent 75%
+      ),
+      radial-gradient(
+        ellipse 42% 32% at 75% 0%,
+        rgba(83, 14, 53, 0.22),
+        transparent 78%
+      ),
+      radial-gradient(
+        ellipse 30% 32% at 29% 55%,
+        rgba(26, 49, 80, 0.38),
+        transparent 78%
+      ),
+      radial-gradient(
+        ellipse 32% 34% at 65% 54%,
+        rgba(48, 22, 79, 0.32),
+        transparent 80%
+      );
+    background-repeat: no-repeat;
+  }
+
+  .menu-panel.glass-menu-panel {
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+  }
+
+  .menu-panel.glass-menu-panel::before {
+    content: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu-dialog-root {
+    inset: auto 0 calc(var(--menu-nav-clearance) + env(safe-area-inset-bottom, 0px));
+    width: min(440px, calc(100% - 24px));
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  .menu-shell {
+    display: block;
+    min-height: unset;
+    background: none;
+    transform-origin: bottom center;
+  }
+
+  .menu-dialog-root[data-state="open"] .menu-shell {
+    animation: menu-shell-in-desktop var(--menu-motion-in) cubic-bezier(0.22, 1.08, 0.36, 1) both;
+  }
+
+  .menu-dialog-root[data-state="closed"] .menu-shell {
+    animation: menu-shell-out-desktop var(--menu-motion-out) cubic-bezier(0.45, 0, 0.75, 0.35) both;
+  }
+
+  .menu-panel {
+    display: block;
+    flex: none;
+    min-height: unset;
+    margin-top: 0;
+    border-radius: 24px;
+    padding: 16px 14px 18px;
+    box-shadow:
+      0 24px 64px rgb(0 0 0 / 45%),
+      inset 0 1px 0 rgb(255 255 255 / 4%);
+  }
+
+  .menu-panel.glass-menu-panel {
+    background-color: var(--cosmic-page-base);
+    background-image:
+      radial-gradient(
+        ellipse 55% 38% at 42% 0%,
+        rgba(65, 19, 100, 0.28),
+        transparent 75%
+      ),
+      radial-gradient(
+        ellipse 42% 32% at 75% 0%,
+        rgba(83, 14, 53, 0.22),
+        transparent 78%
+      ),
+      radial-gradient(
+        ellipse 30% 32% at 29% 55%,
+        rgba(26, 49, 80, 0.38),
+        transparent 78%
+      ),
+      radial-gradient(
+        ellipse 32% 34% at 65% 54%,
+        rgba(48, 22, 79, 0.32),
+        transparent 80%
+      );
+    box-shadow: 0 24px 64px rgb(0 0 0 / 0.48);
+  }
+
+  .menu-panel.glass-menu-panel::before {
+    content: "";
+  }
+
+  .menu-panel.glass-menu-panel .menu-content {
+    max-height: calc(85dvh - var(--menu-nav-clearance));
+  }
+
+  .menu-close-btn {
+    top: 12px;
+    right: 12px;
+  }
+}
+
+@keyframes menu-shell-in-desktop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.78);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translate3d(0, -4px, 0) scale(1.025);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes menu-shell-out-desktop {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  45% {
+    opacity: 0.85;
+    transform: translate3d(0, 8px, 0) scale(0.94);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(0.76);
+  }
+}
+
+@media (max-height: 700px) {
 .menu-panel {
     padding-top: 46px;
     padding-bottom: 12px;

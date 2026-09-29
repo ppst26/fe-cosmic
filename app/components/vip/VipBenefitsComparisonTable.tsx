@@ -53,7 +53,7 @@ export function VipBenefitsComparisonTable({
       </div>
 
       <div
-        className={`vip-benefits-table__scroll-wrap relative overflow-x-hidden ${
+        className={`vip-benefits-table__scroll-wrap relative ${
           isDesktopFull ? "vip-benefits-table__scroll-wrap--desktop-full rounded-[var(--radius-control)]" : "cosmic-inset-card"
         }`}
       >
@@ -64,13 +64,13 @@ export function VipBenefitsComparisonTable({
 
         <div
           ref={scrollRef}
-          className="overflow-x-auto overscroll-x-contain"
+          className="vip-benefits-table__scroller overflow-x-auto overscroll-x-contain"
         >
-          <table className="vip-benefits-table w-max min-w-full border-collapse text-xs sm:text-[0.8125rem]">
+          <table className="vip-benefits-table w-max min-w-full text-xs sm:text-[0.8125rem]">
             <thead>
               <tr>
                 <th
-                  className="vip-benefits-table__label-head sticky left-0 z-20 min-w-[8.25rem] px-3 py-3 text-left sm:min-w-[9rem] sm:px-4"
+                  className="vip-benefits-table__label-head min-w-[8.25rem] px-3 py-3 text-left sm:min-w-[9rem] sm:px-4"
                 >
                   สิทธิประโยชน์
                 </th>
@@ -112,7 +112,7 @@ export function VipBenefitsComparisonTable({
                   }
                 >
                   <td
-                    className="vip-benefits-table__label sticky left-0 z-10 min-w-[8.25rem] px-3 py-3 sm:min-w-[9rem] sm:px-4"
+                    className="vip-benefits-table__label min-w-[8.25rem] px-3 py-3 sm:min-w-[9rem] sm:px-4"
                   >
                     {row.label}
                   </td>

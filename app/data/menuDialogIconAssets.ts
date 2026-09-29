@@ -13,6 +13,7 @@ export const MENU_DIALOG_ICON_SRC: Record<string, string> = {
   gems: "/assets/3d/menuicon/diamond.avif",
   referral: "/assets/3d/menuicon/referral.avif",
   coupon: "/assets/3d/menuicon/coupon.avif",
+  ticket: "/assets/3d/menuicon/lottery.avif",
 };
 
 export function getMenuDialogIconSrc(iconId: string): string | undefined {

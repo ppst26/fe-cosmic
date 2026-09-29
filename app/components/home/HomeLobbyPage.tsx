@@ -112,7 +112,7 @@ export function HomeLobbyPage() {
       >
         <div
           ref={headerBandRef}
-          className="lobby-desktop-shell__header-band sticky top-0 z-50 w-full shrink-0 max-lg:bg-gradient-to-r max-lg:from-[#1c133a] max-lg:via-[#120d24] max-lg:to-[#090710] lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:bg-none lg:bg-transparent lg:pt-[env(safe-area-inset-top,0px)]"
+          className="lobby-desktop-shell__header-band cosmic-mobile-chrome-surface sticky top-0 z-50 w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:bg-none lg:bg-transparent lg:pt-[env(safe-area-inset-top,0px)]"
         >
           <Header
             onSignUpClick={openSignUp}

@@ -38,5 +38,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-# local auth store (demo)
+
+# local mock auth data
 .data/
+
+# generated lottery export bundle (pnpm export:lottery-kit)
+exports/lottery-kit/dist/

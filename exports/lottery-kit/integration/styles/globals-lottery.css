@@ -1,0 +1,16 @@
+/**
+ * วางในโปรเจกต์ปลายทาง — import ต่อจาก tailwind + shadcn ของโปรเจกต์
+ * ตัวอย่างใน app/globals.css:
+ *   @import "tailwindcss";
+ *   @import "./styles/globals-lottery.css";
+ */
+/* ใส่ใน app/globals.css หลัง tailwind — path สมมติว่าไฟล์อยู่ใน app/styles/ */
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+@import "./styles/scrollbars.css";
+@import "./styles/glass-cards.css";
+@import "./styles/buttons.css";
+@import "./styles/layout.css";
+@import "./styles/modals.css";
+@import "./styles/lottery.css";
+@import "./styles/focus-input.css";

@@ -92,9 +92,9 @@ export function Header({
     <>
       <header
         className={cn(
-          "w-full min-w-0 border-b border-[#2d1b4e]/50 px-3.5 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2 sm:px-4 lg:hidden",
+          "w-full min-w-0 border-b border-[color-mix(in_srgb,var(--border-subtle)_55%,transparent)] px-3.5 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2 sm:px-4 lg:hidden",
           mobileSticky
-            ? "sticky top-0 z-50 bg-gradient-to-r from-[#1c133a] via-[#120d24] to-[#090710]"
+            ? "cosmic-mobile-chrome-surface sticky top-0 z-50"
             : "relative bg-transparent",
         )}
       >

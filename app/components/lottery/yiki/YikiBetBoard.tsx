@@ -35,6 +35,8 @@ interface YikiBetBoardProps {
   /** ตราตลาด — ค่าเริ่มต้นเป็นยี่กี (YK/gold) ตลาดหวยหุ้นอื่นส่งธงของตัวเองมาแทน */
   flagLabel?: string;
   flagTone?: LotteryFlagTone;
+  /** slug ตลาดสำหรับไอคอนรูป */
+  marketSlug?: string;
   /** ส่งโพย+ราคาไป API — คืน true เมื่อสำเร็จเพื่อล้างโพย */
   onSubmit?: (entries: YikiBetEntry[]) => void | Promise<boolean>;
   isSubmitting?: boolean;
@@ -70,6 +72,7 @@ export function YikiBetBoard({
   marketTitle,
   flagLabel = "YK",
   flagTone = "gold",
+  marketSlug,
   onSubmit,
   onStepChange,
   isSubmitting = false,
@@ -303,6 +306,7 @@ export function YikiBetBoard({
               remainingMs={remainingMs}
               flagLabel={flagLabel}
               flagTone={flagTone}
+              marketSlug={marketSlug}
             />
           </div>
         ) : null}

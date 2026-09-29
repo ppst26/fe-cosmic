@@ -19,6 +19,7 @@ export function ThaiLottoDrawCard({
       remainingMs={remainingMs}
       flagLabel="TH"
       flagTone="th"
+      marketSlug="thai-government"
     />
   );
 }

@@ -4,6 +4,17 @@ export const GEMS_STORE_EXCHANGE_RATE_LABEL = "อัตราแลก: 20 Gems
 
 export const GEMS_STORE_BALANCE_MOCK = 12_500;
 
+/** โควตาแลก mock — แสดงในการ์ดยอดเพชรด้านบน */
+export const GEMS_STORE_REDEEM_QUOTA_MOCK = {
+  dailyUsed: 1,
+  dailyLimit: 3,
+  weeklyUsed: 2,
+  weeklyLimit: 10,
+} as const;
+
+export const GEMS_STORE_RESET_NOTICE =
+  "รีเซ็ตรายวัน 00:00 · รีเซ็ตรายสัปดาห์ทุกวันจันทร์ 00:00";
+
 /** ไอคอง Gems หัวหน้าร้าน — public/assets/gems */
 export const GEMS_STORE_GEM_ASSET = "/assets/gems/gems.webp";
 

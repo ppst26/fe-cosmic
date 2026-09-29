@@ -4,22 +4,21 @@ import React, { useState } from "react";
 import Image from "next/image";
 import {
   GEMS_STORE_BALANCE_MOCK,
-  GEMS_STORE_EXCHANGE_RATE_LABEL,
   GEMS_STORE_GEM_ASSET,
   GEMS_STORE_PACKAGES,
   GEMS_STORE_TERMS,
-  formatGemsAmount,
   formatGemsBalance,
   formatGemsCredits,
   type GemsStorePackage,
 } from "@/app/data/gemsStoreMockData";
+import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
 import { ChevronDownIcon } from "../ui/Icons";
 import {
-  COSMIC_BTN_GLASS_PILL,
   COSMIC_BTN_GLASS_PILL_SM,
   COSMIC_BTN_NAV,
   COSMIC_PANEL_GLASS,
 } from "../ui/cosmicButtonClasses";
+import { cn } from "@/lib/utils";
 
 /**
  * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal
@@ -43,64 +42,34 @@ export function GemsStorePageContent({
 
   return (
     <div
-      className={`flex flex-col gap-5 pb-4 ${flatHub ? "gems-store-hub gems-store-hub--flat" : ""}`}
+      className={cn("flex flex-col gap-4 pb-4 sm:gap-5", flatHub && "gems-store-hub gems-store-hub--flat")}
     >
-      {!embedded ? (
-        <header className="flex flex-col gap-3">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0 flex-1 pr-1">
-              <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">
-                ร้านค้า <span className="text-[var(--accent-highlight)]">Gems</span>
-              </h1>
-              <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
-                ใช้ Gems แลกรับเครดิตเข้ากระเป๋าของคุณ
-              </p>
-            </div>
-
-          <aside
-            className={`flex shrink-0 items-center gap-2.5 px-2.5 py-2 sm:gap-3 sm:px-3 sm:py-2.5 ${COSMIC_PANEL_GLASS}`}
-            aria-label="ยอด Gems ของคุณ"
-          >
-            <div className="relative h-16 w-16 shrink-0 sm:h-28 sm:w-28">
-              <Image
-                src={GEMS_STORE_GEM_ASSET}
-                alt=""
-                fill
-                sizes="56px"
-                className="object-contain object-center drop-shadow-[0_4px_12px_rgba(124,58,237,0.35)]"
-                priority
-              />
-            </div>
-            <div className="min-w-0 text-right">
-              <p className="text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]">
-                Gems ของคุณ
-              </p>
-              <p className="text-lg font-medium tabular-nums leading-tight text-[var(--text-primary)] sm:text-xl">
-                {formatGemsBalance(gemsBalance)}
-              </p>
-              <p className="text-xs text-[var(--text-secondary)]">ยอดตัวอย่าง</p>
-            </div>
-          </aside>
-        </div>
-
-        <p className="text-[13px] text-[var(--text-secondary)]">{GEMS_STORE_EXCHANGE_RATE_LABEL}</p>
+      <header className={cn(!embedded && "flex flex-col")}>
+        <GemsStoreSummaryCard gemsBalance={gemsBalance} />
       </header>
-      ) : null}
 
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
-        {GEMS_STORE_PACKAGES.map((pkg) => {
-          const affordable = gemsBalance >= pkg.gemsCost;
-          return (
-            <GemsRedeemCard
-              key={pkg.id}
-              pkg={pkg}
-              affordable={affordable}
-              flat={flatHub}
-              onRedeem={() => handleRedeem(pkg)}
-            />
-          );
-        })}
-      </div>
+      <section aria-labelledby="gems-store-redeem-heading">
+        <h2
+          id="gems-store-redeem-heading"
+          className="mb-2.5 px-0.5 text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]"
+        >
+          แลกเครดิต
+        </h2>
+        <div className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-4 lg:gap-3">
+          {GEMS_STORE_PACKAGES.map((pkg) => {
+            const affordable = gemsBalance >= pkg.gemsCost;
+            return (
+              <GemsRedeemCard
+                key={pkg.id}
+                pkg={pkg}
+                affordable={affordable}
+                flat={flatHub}
+                onRedeem={() => handleRedeem(pkg)}
+              />
+            );
+          })}
+        </div>
+      </section>
 
       <section
         className={
@@ -153,43 +122,51 @@ function GemsRedeemCard({
   flat?: boolean;
   onRedeem: () => void;
 }) {
+  const redeemLabel = affordable ? "แลก" : "ไม่พอ";
+  const redeemAria = affordable ? `แลกรางวัล ${formatGemsCredits(pkg.credits)}` : "Gems ไม่เพียงพอ";
+
   return (
     <article
-      className={`gems-store-redeem-card flex flex-col p-2.5 sm:p-3 ${
-        flat ? "gems-store-redeem-card--flat hub-modal-card" : COSMIC_PANEL_GLASS
-      }${affordable ? " is-active" : ""}${affordable ? "" : " opacity-85"}`}
+      className={cn(
+        "gems-store-redeem-card flex min-h-0 flex-col p-2 sm:p-2.5",
+        flat ? "gems-store-redeem-card--flat hub-modal-card" : COSMIC_PANEL_GLASS,
+        affordable && "is-active",
+        !affordable && "opacity-85",
+      )}
     >
       <div className="flex flex-1 flex-col items-center text-center">
-        <div className="relative mb-2 h-14 w-full max-w-[100px] sm:h-16 sm:max-w-[112px]">
+        <div className="relative mb-1.5 h-11 w-full max-w-[4.5rem] sm:mb-2 sm:h-14 sm:max-w-[5.5rem]">
           <Image
             src={pkg.coinSrc}
             alt=""
             fill
-            sizes="(min-width: 640px) 112px, 28vw"
+            sizes="(min-width: 640px) 88px, 22vw"
             className="object-contain object-center"
           />
         </div>
-        <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
+        <p className="w-full text-[11px] font-medium leading-tight text-[var(--text-primary)] sm:text-sm">
           {formatGemsCredits(pkg.credits)}
         </p>
-        <p className="mt-1 flex items-center justify-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]">
-          <span className="relative h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4">
-            <Image src={GEMS_STORE_GEM_ASSET} alt="" fill sizes="16px" className="object-contain" />
+        <p className="mt-1 flex items-center justify-center gap-1 text-[10px] font-medium text-[var(--text-secondary)] sm:text-xs">
+          <span className="relative h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5">
+            <Image src={GEMS_STORE_GEM_ASSET} alt="" fill sizes="14px" className="object-contain" />
           </span>
-          {formatGemsAmount(pkg.gemsCost)}
+          <span className="tabular-nums truncate">{formatGemsBalance(pkg.gemsCost)}</span>
         </p>
       </div>
       <button
         type="button"
         disabled={!affordable}
         onClick={onRedeem}
+        aria-label={redeemAria}
         className={
           affordable
-            ? `${COSMIC_BTN_NAV} cosmic-btn-nav--sm mt-3 flex w-full items-center justify-center !py-2 !text-xs sm:!text-[13px]`
-            : `${COSMIC_BTN_GLASS_PILL_SM} mt-3 flex w-full items-center justify-center !py-2 !text-xs text-[var(--text-secondary)] sm:!text-[13px]`
+            ? `${COSMIC_BTN_NAV} cosmic-btn-nav--sm mt-2 flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-[10px] sm:mt-2.5 sm:!text-xs`
+            : `${COSMIC_BTN_GLASS_PILL_SM} mt-2 flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-[10px] text-[var(--text-secondary)] sm:mt-2.5 sm:!text-xs`
         }
       >
-        {affordable ? "แลกรางวัล" : "Gems ไม่เพียงพอ"}
+        <span className="sm:hidden">{redeemLabel}</span>
+        <span className="hidden sm:inline">{affordable ? "แลกรางวัล" : "Gems ไม่เพียงพอ"}</span>
       </button>
     </article>
   );

@@ -4,35 +4,34 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
-import {
-  CloseIcon,
-} from "../ui/Icons";
+import { CloseIcon } from "../ui/Icons";
 import { MenuItemIcon } from "./MenuItemIcon";
+import { MenuDrawerPromoBanner } from "./MenuDrawerPromoBanner";
+import { MenuDrawerWalletCards } from "./MenuDrawerWalletCards";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
 import {
-  MENU_DIALOG_MODEL_SRC,
+  MENU_DIALOG_ALL_TILES,
   MENU_DIALOG_SECTIONS,
   type MenuDialogAction,
-  type MenuDialogSection,
   type MenuDialogTile,
 } from "../../data/menuMockData";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { parseHubFromHref } from "../hub/hubModalRegistry";
-import { getIsDesktopViewport } from "../hub/useIsDesktop";
+import { getIsDesktopViewport, useIsDesktop } from "../hub/useIsDesktop";
 
 interface RightMenuDrawerProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-
 /**
- * Menu dialog — mock ติ่ง「เมนู」· panel สูงพอดีเนื้อหา · ชิดเหนือ bottom nav
- * ใช้ class ใน globals.css · เปิดจาก FloatingBottomNav
+ * Menu dialog — มือถือเต็มจอ: แบนเนอร์ · เครดิต/เพชร · grid เมนู
+ * เดสก์ท็อป: panel ลอยชิดเหนือ bottom nav · เปิดจาก FloatingBottomNav
  */
 export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const router = useRouter();
+  const isDesktop = useIsDesktop();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
   const { openHub } = useDesktopHubModal();
@@ -47,17 +46,15 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       }
     }
     if (href.startsWith("/")) {
-      /* push ก่อน แล้ว close หลัง — ป้องกัน router.replace ของ close ทับ push */
+      /* ห้าม onClose() หลัง push — closeMenu จาก useOverlayLayer จะ router.replace(pathname)
+         บนหน้า lobby ปัจจุบัน ทับ navigation ไป stand-alone page (modal ใช้ onClose+openLayer จึงไม่พัง) */
       router.push(href);
-      setTimeout(() => onClose(), 0);
     }
   };
 
   const runAction = (action: MenuDialogAction) => {
     switch (action) {
       case "vip-rank":
-        /* ปิด drawer ก่อน แล้วให้ openVipModal router.replace ทำงานใน tick ถัดไป
-           เพื่อไม่ให้ closeMenu.router.replace(pathname) ทับ ?layer=vip */
         onClose();
         setTimeout(() => openVipModal(), 0);
         break;
@@ -70,20 +67,20 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
 
   const renderGridTile = (tile: MenuDialogTile) => {
     const content = (
-      <div className="flex flex-col items-center justify-center gap-1.5 w-full text-center">
+      <div className="flex flex-col items-center justify-center gap-2 w-full text-center">
         <MenuItemIcon
           iconId={tile.iconId}
           variant="asset"
-          className="h-9 w-9 object-contain shrink-0 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] transition-transform duration-150 group-hover:scale-110"
+          className="menu-grid-icon h-11 w-11 lg:h-9 lg:w-9 object-contain shrink-0 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] transition-transform duration-150 group-hover:scale-110"
         />
-        <span className="text-[11.5px] font-medium text-white truncate max-w-full leading-tight">
+        <span className="menu-grid-label text-[12px] sm:text-[13px] lg:text-[11.5px] font-medium text-white truncate max-w-full leading-tight px-0.5">
           {tile.label}
         </span>
       </div>
     );
 
     const tileClass =
-      "group flex flex-col items-center justify-center rounded-xl bg-[#0f0c22] py-2 px-1 min-h-[72px] hover:bg-[#191538] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
+      "menu-grid-tile group flex flex-col items-center justify-center rounded-xl bg-[#0f0c22] py-2.5 px-1 min-h-[84px] lg:min-h-[72px] hover:bg-[#191538] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
 
     if (tile.action) {
       return (
@@ -121,18 +118,18 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const renderRow = (tile: MenuDialogTile) => {
     const content = (
       <>
-        <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center gap-3.5 min-w-0">
           <MenuItemIcon
             iconId={tile.iconId}
             variant="asset"
-            className="h-7 w-7 object-contain shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] transition-transform duration-150 group-hover:scale-105"
+            className="menu-list-icon h-9 w-9 lg:h-7 lg:w-7 object-contain shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] transition-transform duration-150 group-hover:scale-105"
           />
-          <span className="text-[13.5px] font-medium text-white truncate leading-none">
+          <span className="menu-list-label text-[15px] lg:text-[13.5px] font-medium text-white truncate leading-none">
             {tile.label}
           </span>
         </div>
         <span
-          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/70 group-hover:bg-white/[0.14] group-hover:text-white transition-colors"
+          className="menu-list-chevron flex h-6 w-6 lg:h-5 lg:w-5 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/70 group-hover:bg-white/[0.14] group-hover:text-white transition-colors"
           aria-hidden="true"
         >
           <svg
@@ -142,7 +139,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             strokeWidth="2.4"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="h-2.5 w-2.5"
+            className="h-3 w-3 lg:h-2.5 lg:w-2.5"
           >
             <path d="m9 18 6-6-6-6" />
           </svg>
@@ -151,7 +148,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
 
     const rowClass =
-      "group flex w-full items-center justify-between px-3.5 py-2.5 text-left transition-colors duration-150 hover:bg-white/[0.04] active:bg-white/[0.08] cursor-pointer select-none outline-none";
+      "menu-list-row group flex w-full items-center justify-between px-4 py-3.5 lg:px-3.5 lg:py-2.5 text-left transition-colors duration-150 hover:bg-white/[0.04] active:bg-white/[0.08] cursor-pointer select-none outline-none";
 
     if (tile.action) {
       return (
@@ -186,6 +183,49 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
   };
 
+  const renderMobileMenu = () => (
+    <>
+      <div className="menu-drawer-top shrink-0 flex flex-col gap-3 px-4 pt-[max(52px,calc(env(safe-area-inset-top,0px)+44px))] pb-1">
+        <MenuDrawerPromoBanner />
+        <MenuDrawerWalletCards />
+      </div>
+
+      <div className="menu-content menu-content--mobile flex flex-1 flex-col min-h-0 overflow-y-auto px-4 pb-[max(16px,env(safe-area-inset-bottom,0px))]">
+        <div className="menu-grid grid grid-cols-4 gap-2 w-full pb-2">
+          {MENU_DIALOG_ALL_TILES.map((tile) => renderGridTile(tile))}
+        </div>
+      </div>
+    </>
+  );
+
+  const renderDesktopMenu = () => (
+    <div className="menu-content flex flex-col gap-2.5">
+      {MENU_DIALOG_SECTIONS.map((section) => (
+        <section
+          key={section.id}
+          className="menu-section flex flex-col"
+          aria-labelledby={`menu-section-${section.id}`}
+        >
+          <h3
+            id={`menu-section-${section.id}`}
+            className="menu-section-heading text-[12.5px] font-medium text-[#8f88ab] mb-1 px-0.5"
+          >
+            {section.sectionLabel}
+          </h3>
+          {section.layout === "vertical" ? (
+            <div className="menu-card-group rounded-xl bg-[#0f0c22] shadow-[0_4px_16px_rgba(0,0,0,0.4)] overflow-hidden divide-y divide-white/[0.04] flex flex-col">
+              {section.items.map((tile) => renderRow(tile))}
+            </div>
+          ) : (
+            <div className="menu-grid grid grid-cols-4 gap-1.5 w-full">
+              {section.items.map((tile) => renderGridTile(tile))}
+            </div>
+          )}
+        </section>
+      ))}
+    </div>
+  );
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
@@ -196,52 +236,18 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           className="menu-dialog-root outline-none"
         >
           <div className="menu-shell">
-            {MENU_DIALOG_MODEL_SRC ? (
-              <img className="menu-model" src={MENU_DIALOG_MODEL_SRC} alt="" />
-            ) : null}
+            <Dialog.Title id="menu-title" className="sr-only">
+              เมนู
+            </Dialog.Title>
 
-            <div className="menu-panel glass-menu-panel">
-              <div className="flex items-center justify-between mb-2.5 px-1">
-                <Dialog.Title id="menu-title" className="text-2xl sm:text-3xl font-medium leading-tight text-white tracking-tight">
-                  เมนู
-                </Dialog.Title>
+            <Dialog.Close asChild>
+              <button type="button" className="menu-close-btn" aria-label="ปิดเมนู">
+                <CloseIcon className="h-3.5 w-3.5" />
+              </button>
+            </Dialog.Close>
 
-                <Dialog.Close asChild>
-                  <button
-                    type="button"
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-white/80 hover:text-white cursor-pointer active:scale-95 transition-all"
-                    aria-label="ปิดเมนู"
-                  >
-                    <CloseIcon className="h-4 w-4" />
-                  </button>
-                </Dialog.Close>
-              </div>
-
-              <div className="menu-content flex flex-col gap-2.5">
-                {MENU_DIALOG_SECTIONS.map((section) => (
-                  <section
-                    key={section.id}
-                    className="menu-section flex flex-col"
-                    aria-labelledby={`menu-section-${section.id}`}
-                  >
-                    <h3
-                      id={`menu-section-${section.id}`}
-                      className="text-[12.5px] font-medium text-[#8f88ab] mb-1 px-0.5"
-                    >
-                      {section.sectionLabel}
-                    </h3>
-                    {section.layout === "vertical" ? (
-                      <div className="menu-card-group rounded-xl bg-[#0f0c22] shadow-[0_4px_16px_rgba(0,0,0,0.4)] overflow-hidden divide-y divide-white/[0.04] flex flex-col">
-                        {section.items.map((tile) => renderRow(tile))}
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-4 gap-1.5 w-full">
-                        {section.items.map((tile) => renderGridTile(tile))}
-                      </div>
-                    )}
-                  </section>
-                ))}
-              </div>
+            <div className="menu-panel glass-menu-panel menu-panel--hub">
+              {isDesktop ? renderDesktopMenu() : renderMobileMenu()}
             </div>
           </div>
         </Dialog.Content>

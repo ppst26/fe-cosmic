@@ -55,6 +55,13 @@
       #15131c 0%,
       #0c0b11 100%
     );
+  /** Header / bottom nav มือถือ — linear โทนม่วง cosmic (ไม่เทา metallic แบบ sheet base) */
+  --cosmic-chrome-surface-bg: linear-gradient(
+    180deg,
+    #221a38 0%,
+    #161024 52%,
+    #0e0b16 100%
+  );
   --cosmic-mobile-sheet-blur: 0px;   /* solid — ปิด backdrop-blur เพื่อลดกระตุก */
   --cosmic-mobile-sheet-saturate: 1;
   --cosmic-mobile-sheet-border: transparent;
@@ -187,7 +194,7 @@
   --nav-text: #9199a8;
   --nav-hover: #b8afd9;
   --nav-active: #d4c4ff;
-  --nav-capsule-bg: #1c1b22;
+  --nav-capsule-bg: var(--cosmic-chrome-surface-bg);
   --nav-safe-fill: var(--surface-end);
   --nav-top-line: color-mix(in srgb, var(--border-active) 32%, var(--border-subtle));
   --motion-fast: 160ms;
@@ -216,7 +223,7 @@
   --header-desktop-bar-height: 72px;
   --header-top-line: color-mix(in srgb, var(--border-active) 38%, var(--border-subtle));
 
-  /* Menu dialog (RightMenuDrawer) — mock ติ่ง「เมนู」+ panel ชิดเหนือ bottom nav */
+  /* Menu dialog (RightMenuDrawer) — มือถือเต็มจอ · เดสก์ท็อป panel ชิดเหนือ bottom nav */
   /* พื้น panel เมนู — โทนเดียวกับ .cosmic-bg */
   --menu-top: var(--cosmic-page-base);
   --menu-panel-bg: var(--cosmic-page-base);

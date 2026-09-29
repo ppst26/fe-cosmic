@@ -94,7 +94,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
             <Dialog.Content
               aria-describedby={undefined}
               className={responsiveSheetContentClass(
-                `vip-modal${hubId === "check-in" ? " !p-0 overflow-hidden" : ""}${hubId === "gems-store" ? " gems-store-modal-surface" : ""}`,
+                `vip-modal${hubId === "check-in" ? " !p-0 overflow-hidden" : ""}`,
                 { variant: sheetVariant },
               )}
             >

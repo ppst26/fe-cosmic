@@ -1,11 +1,14 @@
 "use client";
 
 import React, { useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useContainedVerticalScroll } from "./useContainedVerticalScroll";
 import type { LotteryCatalogEntry } from "@/app/types/lottery";
 import { LOTTERY_CATALOG_ENTRIES } from "@/app/data/lotteryCatalogMockData";
-import { LotteryCountdown, LotteryFlagOrb } from "./LotteryFlagOrb";
+import { getLotteryIconSrc } from "@/app/data/lotteryIconAssets";
+import { LotteryCountdown } from "./LotteryFlagOrb";
+import { LotteryMarketIcon } from "./LotteryMarketIcon";
 import { cn } from "@/lib/utils";
 
 interface LotteryMarketShellProps {
@@ -21,6 +24,7 @@ interface LotteryMarketShellProps {
 export function LotteryMarketShell({ activeEntry, roundCount, children }: LotteryMarketShellProps) {
   const sidebarScrollRef = useRef<HTMLDivElement>(null);
   const roundsScrollRef = useRef<HTMLDivElement>(null);
+  const bannerArtSrc = getLotteryIconSrc(activeEntry.slug);
   useContainedVerticalScroll(sidebarScrollRef);
   useContainedVerticalScroll(roundsScrollRef);
 
@@ -63,59 +67,14 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               "m-0 flex list-none flex-col gap-1 p-0 lg:gap-2",
             )}
           >
-            {LOTTERY_CATALOG_ENTRIES.map((entry) => {
-              const isActive = entry.slug === activeEntry.slug;
-              return (
-                <li key={entry.slug}>
-                  <Link
-                    href={entry.roundsHref}
-                    className={cn(
-                      "lottery-market-sidebar__item glass-card--soft",
-                      "flex no-underline text-inherit transition-[background,box-shadow] duration-[var(--motion-fast)] ease-linear",
-                      "max-lg:flex-col max-lg:items-center max-lg:gap-1 max-lg:px-1 max-lg:py-2 max-lg:text-center",
-                      "lg:min-h-[3.25rem] lg:items-center lg:gap-2 lg:rounded-[var(--radius-panel)] lg:px-3 lg:py-2",
-                      isActive && "is-active",
-                      entry.status === "closed" && "is-closed",
-                    )}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    <LotteryFlagOrb
-                      label={entry.flagLabel}
-                      tone={entry.flagTone}
-                      size="sm"
-                      className="max-lg:shrink-0"
-                    />
-                    <span
-                      className={cn(
-                        "lottery-market-sidebar__text min-w-0",
-                        "flex flex-col gap-0.5",
-                        "max-lg:w-full max-lg:items-center",
-                      )}
-                    >
-                      <span
-                        className={cn(
-                          "lottery-market-sidebar__title text-[var(--text-primary)]",
-                          "max-lg:line-clamp-2 max-lg:leading-tight",
-                          "lg:leading-snug",
-                        )}
-                      >
-                        {entry.title}
-                      </span>
-                      {entry.status === "closed" ? (
-                        <span className="lottery-market-sidebar__meta text-[var(--text-secondary)]">
-                          ปิดรับแทง
-                        </span>
-                      ) : (
-                        <LotteryCountdown
-                          label={entry.statusLabel}
-                          className="max-lg:justify-center max-lg:gap-0.5 [&_svg]:max-lg:size-3"
-                        />
-                      )}
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
+            {LOTTERY_CATALOG_ENTRIES.map((entry) => (
+              <li key={entry.slug}>
+                <LotteryMarketSidebarLink
+                  entry={entry}
+                  isActive={entry.slug === activeEntry.slug}
+                />
+              </li>
+            ))}
           </ul>
         </div>
       </aside>
@@ -131,25 +90,48 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
           className={cn(
             "lottery-market-banner",
             "flex shrink-0 flex-nowrap items-center border-0 bg-[var(--surface-solid-inner)]",
-            "max-lg:relative max-lg:z-[2] max-lg:min-h-[4.25rem] max-lg:justify-center max-lg:gap-1.5 max-lg:rounded-[calc(var(--radius-panel)-4px)] max-lg:px-3 max-lg:py-3",
+            "max-lg:relative max-lg:z-[2] max-lg:min-h-[4.5rem] max-lg:items-center max-lg:justify-end max-lg:overflow-hidden",
+            "max-lg:rounded-[calc(var(--radius-panel)-4px)] max-lg:px-3 max-lg:py-3",
             "max-lg:shadow-[0_1px_0_color-mix(in_srgb,var(--border-subtle)_55%,transparent)]",
             "lg:gap-2 lg:rounded-[var(--radius-panel)] lg:p-4",
             "[&>.lottery-flag]:max-lg:hidden",
+            bannerArtSrc && "lottery-market-banner--has-art",
           )}
         >
-          <LotteryFlagOrb label={activeEntry.flagLabel} tone={activeEntry.flagTone} size="lg" />
+          {bannerArtSrc ? (
+            <span className="lottery-market-banner__bg max-lg:block lg:hidden" aria-hidden>
+              <Image
+                src={bannerArtSrc}
+                alt=""
+                fill
+                sizes="(max-width: 1023px) 10rem, 0"
+                className="lottery-market-banner__bg-img"
+                priority
+              />
+            </span>
+          ) : null}
+          <LotteryMarketIcon
+            marketSlug={activeEntry.slug}
+            size="lg"
+            fallbackLabel={activeEntry.flagLabel}
+            fallbackTone={activeEntry.flagTone}
+            className={cn(
+              "lottery-market-banner__icon shrink-0",
+              bannerArtSrc && "max-lg:hidden",
+            )}
+          />
           <div
             className={cn(
-              "lottery-market-banner__body min-w-0 flex-1",
-              "max-lg:w-full max-lg:text-center",
+              "lottery-market-banner__body relative z-[1] min-w-0 flex-1",
+              "max-lg:flex max-lg:max-w-[62%] max-lg:flex-col max-lg:items-end max-lg:text-right",
               "lg:text-left",
             )}
           >
             <h1
               className={cn(
-                "lottery-market-banner__title m-0 font-medium text-[var(--text-primary)]",
-                "max-lg:text-xs max-lg:leading-snug",
-                "lg:text-base lg:leading-snug",
+                "lottery-market-banner__title m-0 text-[var(--text-primary)]",
+                "max-lg:text-xl max-lg:font-semibold max-lg:leading-tight",
+                "lg:text-base lg:font-medium lg:leading-snug",
               )}
               style={{ fontFamily: "var(--font-heading)" }}
             >
@@ -159,7 +141,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               href="/promotions"
               className={cn(
                 "lottery-market-banner__rules text-[var(--text-secondary)] no-underline hover:text-[var(--text-primary)] hover:underline",
-                "max-lg:mt-1 max-lg:block max-lg:text-[0.6875rem] max-lg:leading-snug",
+                "max-lg:mt-1 max-lg:block max-lg:text-xs max-lg:leading-snug",
                 "lg:mt-1 lg:inline-block lg:text-xs",
               )}
             >
@@ -186,5 +168,71 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
         </div>
       </div>
     </div>
+  );
+}
+
+/** การ์ดประเภทหวยใน sidebar — รูปเป็นพื้นหลังซ้าย (ล้น) · ข้อความชิดขวา */
+function LotteryMarketSidebarLink({
+  entry,
+  isActive,
+}: {
+  entry: LotteryCatalogEntry;
+  isActive: boolean;
+}) {
+  const iconSrc = getLotteryIconSrc(entry.slug);
+
+  return (
+    <Link
+      href={entry.roundsHref}
+      className={cn(
+        "lottery-market-sidebar__item glass-card--soft",
+        "relative flex min-h-[4.35rem] items-center justify-end overflow-hidden rounded-[var(--radius-panel)]",
+        "no-underline text-inherit transition-[background,box-shadow] duration-[var(--motion-fast)] ease-linear",
+        "px-2 py-2 lg:min-h-[3.5rem] lg:px-3 lg:py-2.5",
+        isActive && "is-active",
+        entry.status === "closed" && "is-closed",
+        iconSrc && "lottery-market-sidebar__item--has-art",
+      )}
+      aria-current={isActive ? "page" : undefined}
+    >
+      {iconSrc ? (
+        <span className="lottery-market-sidebar__bg" aria-hidden>
+          <Image
+            src={iconSrc}
+            alt=""
+            fill
+            sizes="(max-width: 1023px) 7rem, 11rem"
+            className="lottery-market-sidebar__bg-img"
+            priority={isActive}
+          />
+        </span>
+      ) : (
+        <LotteryMarketIcon
+          marketSlug={entry.slug}
+          size="sm"
+          fallbackLabel={entry.flagLabel}
+          fallbackTone={entry.flagTone}
+          className="lottery-market-sidebar__fallback-icon relative z-[1] shrink-0"
+        />
+      )}
+      <span className="lottery-market-sidebar__text relative z-[1] flex min-w-0 flex-col items-end gap-0.5 text-right">
+        <span
+          className={cn(
+            "lottery-market-sidebar__title text-[var(--text-primary)]",
+            "line-clamp-2 max-w-full leading-tight lg:leading-snug",
+          )}
+        >
+          {entry.title}
+        </span>
+        {entry.status === "closed" ? (
+          <span className="lottery-market-sidebar__meta text-[var(--text-secondary)]">ปิดรับแทง</span>
+        ) : (
+          <LotteryCountdown
+            label={entry.statusLabel}
+            className="justify-end gap-0.5 [&_svg]:size-3"
+          />
+        )}
+      </span>
+    </Link>
   );
 }

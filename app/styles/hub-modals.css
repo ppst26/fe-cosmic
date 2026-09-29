@@ -1030,27 +1030,67 @@
   background: transparent;
 }
 
-/* ตารางสิทธิประโยชน์ VIP — คอลัมน์ซ้ายม่วงเทา · borderless · อ่านง่าย */
-.hub-modal-shell.vip-modal .vip-benefits-table__scroll-wrap {
+/* ตารางสิทธิประโยชน์ VIP — คอลัมน์ซ้าย sticky · แถวสลับสี (มือถือ + desktop) */
+.vip-modal {
+  --vip-benefits-row-base: color-mix(in srgb, var(--surface-solid-inner) 28%, transparent);
+  --vip-benefits-row-alt: color-mix(in srgb, var(--surface-solid-inner) 62%, transparent);
+  --vip-benefits-label-base: #131216;
+  --vip-benefits-label-alt: #1d1a22;
+  --vip-benefits-label-head-bg: #18151f;
+  --vip-benefits-fade-base: var(--cosmic-page-base);
+}
+
+.hub-modal-shell.vip-modal {
+  --vip-benefits-row-base: color-mix(in srgb, var(--hub-modal-lift) 18%, var(--hub-modal-base));
+  --vip-benefits-row-alt: color-mix(in srgb, var(--hub-modal-lift) 38%, var(--hub-modal-base));
+  --vip-benefits-label-base: #111016;
+  --vip-benefits-label-alt: #1a1824;
+  --vip-benefits-label-head-bg: #15131c;
+  --vip-benefits-fade-base: var(--hub-modal-base);
+}
+
+.vip-modal .vip-benefits-table__scroll-wrap {
   border: 0;
   background: transparent;
   box-shadow: none;
 }
 
-.hub-modal-shell.vip-modal .vip-benefits-table__edge-fade {
+/* ไม่ใช้พื้นโปร่งของ cosmic-inset-card ทับตาราง */
+.vip-modal .vip-benefits-table__scroll-wrap.cosmic-inset-card {
+  background: transparent;
+  box-shadow: none;
+}
+
+.vip-modal .vip-benefits-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.vip-modal .vip-benefits-table__value,
+.vip-modal .vip-benefits-table__rank-head {
+  position: relative;
+  z-index: 1;
+}
+
+.vip-modal .vip-benefits-table__scroller {
+  -webkit-overflow-scrolling: touch;
+}
+
+.vip-modal .vip-benefits-table__edge-fade {
   background: linear-gradient(
     to left,
-    var(--hub-modal-base) 0%,
-    color-mix(in srgb, var(--hub-modal-base) 55%, transparent) 55%,
+    var(--vip-benefits-fade-base) 0%,
+    color-mix(in srgb, var(--vip-benefits-fade-base) 55%, transparent) 55%,
     transparent 100%
   );
 }
 
-.hub-modal-shell.vip-modal .vip-benefits-table__label-head,
-.hub-modal-shell.vip-modal .vip-benefits-table__label {
+.vip-modal .vip-benefits-table__label-head,
+.vip-modal .vip-benefits-table__label {
+  position: sticky;
+  left: 0;
+  isolation: isolate;
   border: 0;
-  background: transparent;
-  box-shadow: 4px 0 14px rgb(0 0 0 / 0.22);
   color: var(--text-primary);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -1058,53 +1098,69 @@
   letter-spacing: 0.01em;
 }
 
-.hub-modal-shell.vip-modal .vip-benefits-table__label-head {
-  background: color-mix(in srgb, var(--hub-modal-lift) 35%, var(--hub-modal-base));
+.vip-modal .vip-benefits-table__label-head {
+  z-index: 30;
+  background-color: var(--vip-benefits-label-head-bg);
   color: var(--text-secondary);
   font-size: 0.75rem;
-  font-weight: 500;
   letter-spacing: 0.04em;
-  text-transform: none;
+  box-shadow: 8px 0 18px rgb(0 0 0 / 0.45);
 }
 
-/* คอลัมน์ซ้ายสีเดียวกับแถว (sticky ต้องใส่พื้นหลังซ้ำ) */
-.hub-modal-shell.vip-modal .vip-benefits-table__row--alt .vip-benefits-table__label {
-  background: rgb(255 255 255 / 0.03);
+.vip-modal .vip-benefits-table__label {
+  z-index: 20;
+  box-shadow: 8px 0 18px rgb(0 0 0 / 0.38);
 }
 
-.hub-modal-shell.vip-modal .vip-benefits-table__row--alt .vip-benefits-table__value--current {
-  background: color-mix(in srgb, var(--hub-modal-lift) 48%, rgb(255 255 255 / 0.04));
+.vip-modal .vip-benefits-table__label::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: inherit;
+}
+
+.vip-modal .vip-benefits-table__row:not(.vip-benefits-table__row--alt) .vip-benefits-table__label {
+  background-color: var(--vip-benefits-label-base);
+}
+
+.vip-modal .vip-benefits-table__row--alt .vip-benefits-table__label {
+  background-color: var(--vip-benefits-label-alt);
+}
+
+.vip-modal .vip-benefits-table__row:not(.vip-benefits-table__row--alt) .vip-benefits-table__value:not(.vip-benefits-table__value--current) {
+  background: var(--vip-benefits-row-base);
+}
+
+.vip-modal .vip-benefits-table__row--alt .vip-benefits-table__value:not(.vip-benefits-table__value--current) {
+  background: var(--vip-benefits-row-alt);
+}
+
+.vip-modal .vip-benefits-table__row--alt .vip-benefits-table__value--current {
+  background: color-mix(in srgb, var(--hub-modal-lift, var(--surface-selected)) 48%, var(--vip-benefits-row-alt));
 }
 
 @media (min-width: 1024px) {
-  .hub-modal-shell.vip-modal .vip-benefits-table__label-head {
+  .vip-modal .vip-benefits-table__label-head {
     font-size: 0.8125rem;
   }
 
-  .hub-modal-shell.vip-modal .vip-benefits-table__label {
+  .vip-modal .vip-benefits-table__label {
     font-size: 0.875rem;
   }
 }
 
-.hub-modal-shell.vip-modal .vip-benefits-table__row--alt .vip-benefits-table__value:not(.vip-benefits-table__value--current) {
-  background: rgb(255 255 255 / 0.03);
-}
-
-.hub-modal-shell.vip-modal .vip-benefits-table__row:not(.vip-benefits-table__row--alt) .vip-benefits-table__value:not(.vip-benefits-table__value--current) {
-  background: transparent;
-}
-
-.hub-modal-shell.vip-modal .vip-benefits-table__rank-head--current {
-  background: color-mix(in srgb, var(--hub-modal-lift) 55%, rgb(106 102 120 / 0.22));
+.vip-modal .vip-benefits-table__rank-head--current {
+  background: color-mix(in srgb, var(--hub-modal-lift, var(--surface-selected)) 55%, rgb(106 102 120 / 0.22));
   border-radius: var(--radius-control) var(--radius-control) 0 0;
 }
 
-.hub-modal-shell.vip-modal .vip-benefits-table__value--current {
-  background: color-mix(in srgb, var(--hub-modal-lift) 42%, transparent);
+.vip-modal .vip-benefits-table__value--current {
+  background: color-mix(in srgb, var(--hub-modal-lift, var(--surface-selected)) 42%, transparent);
   color: var(--text-primary);
 }
 
-.hub-modal-shell.vip-modal .vip-benefits-table__hint {
+.vip-modal .vip-benefits-table__hint {
   border-top: 0;
   opacity: 0.85;
 }
@@ -1460,11 +1516,5 @@
 
 .cosmic-mobile-sheet.vip-modal .vip-maintain-rank-panel--flat .vip-maintain-metric:first-child {
   border-right: 1px solid rgb(255 255 255 / 0.08);
-}
-
-.cosmic-mobile-sheet.vip-modal .vip-benefits-table__scroll-wrap {
-  border: 0;
-  background: transparent;
-  box-shadow: none;
 }
 

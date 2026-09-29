@@ -1,5 +1,5 @@
-/** รูปนางแบบด้านขวา panel — public/assets/model/girl2.webp */
-export const MENU_DIALOG_MODEL_SRC = "/assets/model/girl2.webp";
+/** จำนวนตั๋ว mock — การ์ดบนเมนูเต็มจอ (MenuDrawerWalletCards) */
+export const MENU_DIALOG_TICKET_COUNT_MOCK = 2;
 
 export type MenuDialogAction = "vip-rank" | "coupon";
 
@@ -57,6 +57,12 @@ export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
       { id: "gems-shop", label: "ร้านค้า Gems", href: "/gems-store", iconId: "gems" },
       { id: "activities", label: "กิจกรรม", href: "/event", iconId: "activities" },
       { id: "coupon", label: "คูปอง", action: "coupon", iconId: "coupon" },
+      { id: "ticket", label: "ตั๋ว", href: "/lottery/slips", iconId: "ticket" },
     ],
   },
 ];
+
+/** รายการเมนูรวมทุกกลุ่ม — grid เต็มจอมือถือ (RightMenuDrawer) */
+export const MENU_DIALOG_ALL_TILES: MenuDialogTile[] = MENU_DIALOG_SECTIONS.flatMap(
+  (section) => section.items,
+);

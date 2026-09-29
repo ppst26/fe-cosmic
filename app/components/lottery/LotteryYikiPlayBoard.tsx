@@ -65,6 +65,7 @@ export function LotteryYikiPlayBoard({
         marketTitle={marketMeta.title}
         flagLabel={marketMeta.flagLabel}
         flagTone={marketMeta.flagTone}
+        marketSlug={marketSlug}
         onStepChange={onStepChange}
         onSubmit={onSubmit}
         isSubmitting={isSubmitting}
