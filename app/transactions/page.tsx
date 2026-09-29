@@ -12,11 +12,15 @@ import { TransactionsPageContent } from "@/app/components/transactions/Transacti
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 
 function kindFromSearchParam(value: string | null): TransactionKind {
-  return value === "withdraw" ? "withdraw" : "deposit";
+  if (value === "withdraw" || value === "promotion" || value === "bet") {
+    return value;
+  }
+  return "deposit";
 }
 
 function transactionsHref(kind: TransactionKind): string {
-  return kind === "withdraw" ? "/transactions?kind=withdraw" : "/transactions";
+  if (kind === "deposit") return "/transactions";
+  return `/transactions?kind=${kind}`;
 }
 
 /**

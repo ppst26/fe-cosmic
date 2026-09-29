@@ -95,7 +95,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
             <Dialog.Content
               aria-describedby={undefined}
               className={responsiveSheetContentClass(
-                `vip-modal${hubId === "check-in" ? " !p-0 overflow-hidden" : ""}`,
+                `vip-modal${hubId === "check-in" ? " vip-modal--daily-check-in !p-0 overflow-hidden" : ""}`,
                 { variant: sheetVariant },
               )}
             >

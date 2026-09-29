@@ -16,27 +16,7 @@ html {
 .cosmic-bg {
   min-height: 100dvh;
   background-color: var(--cosmic-page-base);
-  background-image:
-    radial-gradient(
-      ellipse 55% 38% at 42% 0%,
-      rgba(65, 19, 100, 0.28),
-      transparent 75%
-    ),
-    radial-gradient(
-      ellipse 42% 32% at 75% 0%,
-      rgba(83, 14, 53, 0.22),
-      transparent 78%
-    ),
-    radial-gradient(
-      ellipse 30% 32% at 29% 55%,
-      rgba(26, 49, 80, 0.38),
-      transparent 78%
-    ),
-    radial-gradient(
-      ellipse 32% 34% at 65% 54%,
-      rgba(48, 22, 79, 0.32),
-      transparent 80%
-    );
+  background-image: var(--cosmic-nebula-bg-image);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }

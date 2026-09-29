@@ -7,6 +7,8 @@ import { ArrowLeftIcon } from "../ui/Icons";
 
 export interface PageSubHeaderProps {
   title?: string;
+  /** คำอธิบายใต้ชื่อหน้า — จัดกึ่งกลาง (หน้า standalone) */
+  subtitle?: string;
   backHref?: string;
   className?: string;
 }
@@ -19,6 +21,7 @@ export type SlotProvidersHeaderProps = PageSubHeaderProps;
  */
 export function StandaloneSubHeader({
   title = "สล็อต",
+  subtitle,
   backHref = "/",
   className = "",
 }: PageSubHeaderProps) {
@@ -32,7 +35,7 @@ export function StandaloneSubHeader({
   };
 
   return (
-    <header className={`standalone-sub-header page-sub-header w-full min-w-0 bg-[#140f1c] border-b border-[#2d1b4e]/50 ${className}`}>
+    <header className={`standalone-sub-header page-sub-header w-full min-w-0 ${className}`}>
       <div className="standalone-sub-header__inner relative mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
         {/* ปุ่มย้อนกลับ arrow back (ไม่มี card ครอบ) */}
         <Link
@@ -52,6 +55,12 @@ export function StandaloneSubHeader({
         {/* กล่องรักษาสมดุลด้านขวา */}
         <div className="w-10 h-10 shrink-0" aria-hidden="true" />
       </div>
+
+      {subtitle ? (
+        <p className="standalone-sub-header__subtitle mx-auto max-w-[var(--content-max)] px-4 pb-2.5 pt-0.5 text-center text-xs leading-snug text-[var(--text-secondary)] sm:text-sm">
+          {subtitle}
+        </p>
+      ) : null}
     </header>
   );
 }

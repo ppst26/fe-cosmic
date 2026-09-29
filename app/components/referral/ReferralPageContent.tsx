@@ -17,11 +17,8 @@ import {
   ReferralPromoBanner,
   ReferralStatsSection,
 } from "./ReferralOverviewSections";
-import {
-  COSMIC_PANEL_GLASS,
-  COSMIC_PANEL_GLASS_ICON,
-  COSMIC_SEGMENT_GLASS_WHITE,
-} from "../ui/cosmicButtonClasses";
+import { CosmicLineTabs } from "../ui/CosmicLineTabs";
+import { COSMIC_PANEL_GLASS, COSMIC_PANEL_GLASS_ICON } from "../ui/cosmicButtonClasses";
 type ReferralTabId = "overview" | "users" | "earning";
 
 const TABS: { id: ReferralTabId; label: string }[] = [
@@ -102,7 +99,6 @@ export function ReferralPageContent({
       copied={copied}
       onCopy={(link) => void handleCopy(link)}
       stats={stats}
-      showPageTitle
     />
   );
 }
@@ -114,7 +110,6 @@ function ReferralMobileTabs({
   copied,
   onCopy,
   stats,
-  showPageTitle = false,
 }: {
   refCode: string;
   tab: ReferralTabId;
@@ -122,43 +117,25 @@ function ReferralMobileTabs({
   copied: boolean;
   onCopy: (link: string) => void;
   stats: typeof REFERRAL_STATS_MOCK;
-  showPageTitle?: boolean;
 }) {
   return (
     <div className="referral-mobile flex flex-col gap-5 pb-4">
-      {showPageTitle ? (
-        <div>
-          <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">
-            แนะนำเพื่อน
-          </h1>
-          <p className="mt-0.5 text-xs text-[var(--text-muted)]">Referral Program</p>
-        </div>
-      ) : null}
-
-      <div
-        role="tablist"
-        aria-label="เมนูแนะนำเพื่อน"
-        className={`${COSMIC_SEGMENT_GLASS_WHITE} flex gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`}
-      >
-        {TABS.map((item) => {
-          const active = tab === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => setTab(item.id)}
-              className={`cosmic-segment-btn flex shrink-0 items-center gap-2 px-3.5 py-2 text-xs sm:px-4 sm:text-sm ${
-                active ? "is-active" : ""
-              }`}
-            >
+      <CosmicLineTabs
+        tabs={TABS.map((item) => ({
+          id: item.id,
+          label: (
+            <>
               <TabIcon tab={item.id} />
               {item.label}
-            </button>
-          );
-        })}
-      </div>
+            </>
+          ),
+        }))}
+        activeId={tab}
+        onSelect={setTab}
+        ariaLabel="เมนูแนะนำเพื่อน"
+        columns={3}
+        withIcons
+      />
 
       {tab === "overview" && (
         <div className="flex flex-col gap-5">

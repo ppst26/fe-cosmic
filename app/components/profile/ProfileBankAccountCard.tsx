@@ -17,14 +17,26 @@ function formatBankAccountForDisplay(accountNumber: string): string {
 /**
  * การ์ดบัญชีธนาคารเดียว — ข้อมูลจาก ProfileUser (ProfileAccountTabs)
  */
-export function ProfileBankAccountCard({ profile }: { profile: ProfileUser }) {
+export function ProfileBankAccountCard({
+  profile,
+  embedded = false,
+}: {
+  profile: ProfileUser;
+  /** อยู่ในการ์ดแท็บหลัก — ไม่ห่อ glass ซ้อน */
+  embedded?: boolean;
+}) {
   const bank = getSignUpBankById(profile.bankId);
   const bankMarkLabel = (bank?.label ?? profile.bankLabel).slice(0, 3);
   const bankToneClass = signUpCoverToneClass(bank?.coverTone ?? "emerald");
   const accountFormatted = formatBankAccountForDisplay(profile.bankAccountNumber);
 
   return (
-    <article className={cn(COSMIC_PANEL_GLASS, "flex flex-col gap-3 px-3.5 py-3.5 sm:px-4 sm:py-4")}>
+    <article
+      className={cn(
+        "flex flex-col gap-3",
+        embedded ? "pt-1" : cn(COSMIC_PANEL_GLASS, "px-3.5 py-3.5 sm:px-4 sm:py-4"),
+      )}
+    >
       <div className="flex items-start gap-3">
         <span
           className={cn(

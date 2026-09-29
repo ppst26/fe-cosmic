@@ -26,7 +26,7 @@ export const MENU_ICON_SRC: Record<string, string> = {
   gems: `${MENU_ICON_BASE}/diamond.avif`,
   referral: `${MENU_ICON_BASE}/referral.avif`,
   coupon: `${MENU_ICON_BASE}/coupon.avif`,
-  ticket: `${MENU_ICON_BASE}/lottery.avif`,
+  ticket: `${MENU_ICON_BASE}/ticket.avif`,
 };
 
 /** หมวดเกม lobby — map CategoryId → asset */

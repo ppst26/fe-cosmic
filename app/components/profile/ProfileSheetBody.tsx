@@ -7,6 +7,7 @@ import { ProfileAccountTabs } from "./ProfileAccountTabs";
 interface ProfileSheetBodyProps {
   profile: ProfileUser;
   onLogout: () => void;
+  onOpenVip?: () => void;
   /** ใช้ใน popover โปรไฟล์ — ย่อ spacing */
   compact?: boolean;
 }
@@ -14,6 +15,18 @@ interface ProfileSheetBodyProps {
 /**
  * เนื้อหาหน้าข้อมูลบัญชี (/profile/account)
  */
-export function ProfileSheetBody({ profile, onLogout, compact = false }: ProfileSheetBodyProps) {
-  return <ProfileAccountTabs profile={profile} onLogout={onLogout} compact={compact} />;
+export function ProfileSheetBody({
+  profile,
+  onLogout,
+  onOpenVip,
+  compact = false,
+}: ProfileSheetBodyProps) {
+  return (
+    <ProfileAccountTabs
+      profile={profile}
+      onLogout={onLogout}
+      onOpenVip={onOpenVip}
+      compact={compact}
+    />
+  );
 }

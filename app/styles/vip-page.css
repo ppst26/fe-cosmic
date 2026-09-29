@@ -1,0 +1,13 @@
+/**
+ * หน้า VIP standalone — เลย์เอาต์ (แท็บใช้ cosmic-line-tabs)
+ */
+/* เลย์เอาต์ desktop บนหน้า — ไม่จำกัดความสูงแบบ sheet */
+@media (min-width: 1024px) {
+  .vip-page .vip-modal-desktop {
+    min-height: 0;
+  }
+
+  .vip-page .vip-modal__body {
+    overflow: visible;
+  }
+}

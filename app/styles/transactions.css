@@ -1,0 +1,120 @@
+/**
+ * หน้าประวัติธุรกรรม — ตาราง · ฟิลเตอร์วันที่ (แท็บใช้ cosmic-line-tabs)
+ */
+.tx-date-field {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-panel);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 80%, transparent);
+  background: var(--surface-solid-inner);
+  padding: 0 0.75rem 0 1rem;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) ease;
+}
+
+.tx-date-field:hover {
+  border-color: color-mix(in srgb, var(--border-active) 55%, transparent);
+}
+
+.tx-history-table-wrap {
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 65%, transparent);
+  background: color-mix(in srgb, var(--surface-solid-inner) 88%, transparent);
+}
+
+.tx-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 400px) {
+  .tx-history-table {
+    font-size: 0.8125rem;
+  }
+}
+
+.tx-history-table thead th {
+  padding: 0.65rem 0.5rem;
+  background: color-mix(in srgb, var(--surface-mid) 75%, transparent);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text-secondary);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tx-history-table tbody td {
+  padding: 0.7rem 0.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+  vertical-align: top;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.tx-history-table__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tx-history-empty {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.tx-history-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.25rem 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.tx-calendar-dialog {
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--cosmic-mobile-sheet-bg);
+  box-shadow: 0 24px 56px rgb(0 0 0 / 0.65);
+}
+
+.tx-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+}
+
+.tx-calendar-day {
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.tx-calendar-day.is-outside {
+  color: var(--text-muted);
+  opacity: 0.55;
+}
+
+.tx-calendar-day.is-in-range {
+  background: color-mix(in srgb, var(--accent-primary) 22%, transparent);
+}
+
+.tx-calendar-day.is-range-start,
+.tx-calendar-day.is-range-end {
+  background: var(--action-solid);
+  color: var(--text-primary);
+}

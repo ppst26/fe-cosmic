@@ -3,12 +3,7 @@
 import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import type { TransactionKind } from "@/app/types/transaction";
-import {
-  getTransactionsByKind,
-  TRANSACTION_KIND_TABS,
-} from "@/app/data/transactionsMockData";
-import { TransactionKindTabs } from "./TransactionKindTabs";
-import { TransactionList } from "./TransactionList";
+import { TransactionsPageContent } from "./TransactionsPageContent";
 import { CloseIcon } from "../ui/Icons";
 import {
   responsiveSheetCloseButtonClass,
@@ -44,8 +39,6 @@ export function TransactionsBottomDrawer({
     }
   };
 
-  const items = isAuthenticated ? getTransactionsByKind(activeKind) : [];
-
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
@@ -79,22 +72,13 @@ export function TransactionsBottomDrawer({
               subtitle={<p className="cosmic-type-sheet-desc mt-1">ฝากและถอนของคุณ</p>}
             />
 
-            <div className="mt-4 shrink-0">
-              <TransactionKindTabs
-                tabs={TRANSACTION_KIND_TABS}
-                activeKind={activeKind}
-                onSelect={setUserKind}
-              />
-            </div>
-
             <div className="mt-4 min-h-0 flex-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              {!isAuthenticated ? (
-                <p className="py-12 text-center text-sm text-[var(--text-muted)]">
-                  กรุณาเข้าสู่ระบบเพื่อดูรายการธุรกรรม
-                </p>
-              ) : (
-                <TransactionList items={items} />
-              )}
+              <TransactionsPageContent
+                embedded
+                activeKind={activeKind}
+                onSelectKind={setUserKind}
+                isAuthenticated={isAuthenticated}
+              />
             </div>
           </div>
         </Dialog.Content>

@@ -11,7 +11,7 @@ import {
   type CashbackTabId,
 } from "@/app/data/cashbackMockData";
 import { RefundIcon } from "../ui/Icons";
-import { COSMIC_SEGMENT_GLASS_WHITE } from "../ui/cosmicButtonClasses";
+import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
 
 interface CashbackPageContentProps {
@@ -63,36 +63,13 @@ export function CashbackPageContent({
 
   return (
     <div className="flex flex-col gap-5 pb-6">
-      {!embedded ? (
-        <header>
-          <h1 className="text-xl font-medium text-[var(--text-primary)] sm:text-2xl">คืนยอด</h1>
-          <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
-            ตรวจสอบยอดคืนและกดรับเข้ากระเป๋า
-          </p>
-        </header>
-      ) : null}
-
-      <div
-        role="tablist"
-        aria-label="ประเภทคืนยอด"
-        className={`${COSMIC_SEGMENT_GLASS_WHITE} grid grid-cols-2 gap-2`}
-      >
-        {CASHBACK_TABS.map((item) => {
-          const active = tab === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => setTab(item.id)}
-              className={`cosmic-segment-btn py-2.5 text-sm ${active ? "is-active" : ""}`}
-            >
-              {item.label}
-            </button>
-          );
-        })}
-      </div>
+      <CosmicLineTabs
+        tabs={CASHBACK_TABS}
+        activeId={tab}
+        onSelect={setTab}
+        ariaLabel="ประเภทคืนยอด"
+        columns={2}
+      />
 
       <section className="flex flex-col items-center px-2 pt-2 text-center" aria-live="polite">
         <div className="relative flex h-[88px] w-[88px] items-center justify-center">

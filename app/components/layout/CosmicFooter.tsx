@@ -6,17 +6,15 @@ import {
   FOOTER_COPYRIGHT,
   FOOTER_DESKTOP_COLUMNS,
   FOOTER_DESKTOP_SOCIAL,
-  FOOTER_PAYMENT_LABELS,
-  FOOTER_SOCIAL_LINKS,
-  FOOTER_TAGLINE,
+  FOOTER_DISCLAIMER,
+  FOOTER_EXTERNAL_MOCK_LINKS,
+  FOOTER_LEGAL_LINKS,
+  FOOTER_MOBILE_SOCIAL,
   FOOTER_TRUST_BADGES,
   type FooterSocialIcon,
 } from "@/app/data/footerMockData";
-import {
-  COSMIC_BTN_GLASS_PILL,
-  COSMIC_BTN_NAV,
-  COSMIC_SHEET_SOFT_GLASS,
-} from "@/app/components/ui/cosmicButtonClasses";
+import { COSMIC_BTN_GLASS_PILL, COSMIC_SHEET_SOFT_GLASS } from "@/app/components/ui/cosmicButtonClasses";
+import { CosmicbetLogo } from "@/app/components/ui/Icons";
 import { cn } from "@/lib/utils";
 
 interface CosmicFooterProps {
@@ -37,59 +35,104 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
   );
 }
 
-/** Footer มือถือ — พันธมิตรซ่อน · แบรนด์ + ติดต่อ */
+/** Footer มือถือ — layout อิง Dexsport (CTA · social · trust · legal) */
 function CosmicFooterMobile() {
+  const legalPrimary = FOOTER_LEGAL_LINKS.slice(0, 3);
+  const legalSecondary = FOOTER_LEGAL_LINKS.slice(3);
+
   return (
-    <div className="lg:hidden">
-      <div className="cosmic-footer__main grid grid-cols-1 gap-5 pt-5">
-        <div className="cosmic-footer__brand min-w-0 max-lg:text-center">
-          <Link href="/" className="cosmic-footer__brandmark" aria-label="cosmicbet หน้าหลัก">
-            cosmic<span>bet</span>
+    <div className="cosmic-footer__dex-mobile lg:hidden">
+      <Link href="/" className="cosmic-footer__logo-link" aria-label="cosmicbet หน้าหลัก">
+        <CosmicbetLogo className="h-8 max-w-[148px] sm:h-9 sm:max-w-[168px]" />
+      </Link>
+
+      <FooterCommunityChatCta className="cosmic-footer__cta-row w-full max-w-md" />
+
+      <nav className="cosmic-footer__social-row" aria-label="โซเชียลมีเดีย">
+        {FOOTER_MOBILE_SOCIAL.map((item) => (
+          <Link
+            key={item.label}
+            href={item.href}
+            className="cosmic-footer__social-icon-btn"
+            aria-label={item.label}
+          >
+            <FooterSocialGlyph icon={item.icon} />
           </Link>
-          <p className="cosmic-footer__brand-text text-base font-medium">{FOOTER_TAGLINE}</p>
-        </div>
+        ))}
+      </nav>
 
-        <section
-          className="cosmic-footer__contact min-w-0"
-          aria-labelledby="cosmic-footer-contact-title"
-        >
-          <div className="cosmic-footer__contact-group">
-            <h3 id="cosmic-footer-contact-title" className="cosmic-footer__heading-sm text-sm font-medium">
-              ติดต่อเรา
-            </h3>
-            <div className="cosmic-footer__social">
-              {FOOTER_SOCIAL_LINKS.map((item, index) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`cosmic-footer__social-btn ${
-                    index === 0
-                      ? `${COSMIC_BTN_NAV} cosmic-btn-nav--lg cosmic-footer__social-btn--nav`
-                      : `${COSMIC_BTN_GLASS_PILL} cosmic-footer__social-btn--glass`
-                  }`}
-                >
-                  {item.label === "LINE" ? <LineIcon /> : <TelegramIcon />}
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div className="cosmic-footer__contact-group">
-            <h3 className="cosmic-footer__heading-sm text-sm font-medium">ช่องทางชำระเงิน</h3>
-            <ul className="cosmic-footer__payments">
-              {FOOTER_PAYMENT_LABELS.map((label) => (
-                <li key={label} className={`cosmic-footer__payment-chip ${COSMIC_SHEET_SOFT_GLASS}`}>
-                  {label}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+      <ul className="cosmic-footer__trust-grid m-0 w-full max-w-md list-none p-0" aria-label="การรับรอง">
+        {FOOTER_TRUST_BADGES.map((badge) => (
+          <li key={badge.name} className={`cosmic-footer__trust-card ${COSMIC_SHEET_SOFT_GLASS}`}>
+            <span className="cosmic-footer__trust-check" aria-hidden>✓</span>
+            <span className="cosmic-footer__trust-copy">
+              <span className="cosmic-footer__trust-label">{badge.label}</span>
+              <strong className="cosmic-footer__trust-name">{badge.name}</strong>
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <p className="cosmic-footer__disclaimer max-w-md text-center text-xs leading-relaxed text-[var(--text-secondary)]">
+        {FOOTER_DISCLAIMER}
+      </p>
+
+      <div className="cosmic-footer__compliance" aria-label="เล่นอย่างมีสติ">
+        <span className="cosmic-footer__compliance-badge">เล่นอย่างมีสติ</span>
+        <span className="cosmic-footer__compliance-age" aria-label="อายุ 18 ปีขึ้นไป">
+          18+
+        </span>
+        <span className="cosmic-footer__compliance-seal" aria-hidden />
       </div>
 
-      <div className="cosmic-footer__bottom text-xs font-medium min-[600px]:text-xs">
+      <nav className="cosmic-footer__market-links" aria-label="ลิงก์ตลาด">
+        {FOOTER_EXTERNAL_MOCK_LINKS.map((link) => (
+          <Link key={link.label} href={link.href} className="cosmic-footer__market-link text-sm">
+            {link.label}
+          </Link>
+        ))}
+      </nav>
+
+      <div className="cosmic-footer__bottom cosmic-footer__bottom--dex w-full max-w-md text-xs font-medium">
         <p>{FOOTER_COPYRIGHT}</p>
+        <nav className="cosmic-footer__legal" aria-label="นโยบายและข้อกำหนด">
+          {legalPrimary.map((link) => (
+            <Link key={link.label} href={link.href}>{link.label}</Link>
+          ))}
+        </nav>
+        {legalSecondary.map((link) => (
+          <nav key={link.label} className="cosmic-footer__legal cosmic-footer__legal--solo">
+            <Link href={link.href}>{link.label}</Link>
+          </nav>
+        ))}
       </div>
+    </div>
+  );
+}
+
+/** ปุ่มชุมชน + แชทออนไลน์ — ใช้ทั้ง mobile Dexsport และ desktop footer */
+function FooterCommunityChatCta({ className }: { className?: string }) {
+  return (
+    <div className={cn("grid grid-cols-2 gap-2.5", className)}>
+      <Link
+        href="/support"
+        className={cn(
+          COSMIC_BTN_GLASS_PILL,
+          "cosmic-footer__cta-community inline-flex min-h-11 items-center justify-center rounded-full px-3 text-sm font-medium text-[var(--text-primary)]",
+        )}
+      >
+        ชุมชน
+      </Link>
+      <Link
+        href="/support"
+        className="cosmic-footer__cta-chat inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-3 text-sm font-medium text-[#0a0a0c]"
+      >
+        <span className="relative inline-flex">
+          <HeadsetIcon className="text-[#0a0a0c]" />
+          <span className="cosmic-footer__chat-online" aria-hidden />
+        </span>
+        แชทออนไลน์
+      </Link>
     </div>
   );
 }
@@ -173,27 +216,7 @@ function CosmicFooterDesktop() {
             </li>
           ))}
         </ul>
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/support"
-            className={cn(
-              COSMIC_BTN_GLASS_PILL,
-              "inline-flex min-h-10 items-center justify-center rounded-full px-5 text-sm font-medium text-[var(--text-primary)]",
-            )}
-          >
-            ชุมชน
-          </Link>
-          <Link
-            href="/support"
-            className={cn(
-              COSMIC_BTN_NAV,
-              "cosmic-btn-nav--lg inline-flex min-h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium",
-            )}
-          >
-            <HeadsetIcon />
-            แชทออนไลน์
-          </Link>
-        </div>
+        <FooterCommunityChatCta className="max-w-sm" />
       </div>
 
       <div className="cosmic-footer__bottom !mt-0 border-t border-[var(--border-subtle)] pt-5 !text-sm !text-[var(--text-secondary)]">
@@ -240,6 +263,34 @@ function FooterSocialGlyph({ icon }: { icon: FooterSocialIcon["icon"] }) {
           />
         </svg>
       );
+    case "medium":
+      return (
+        <svg className={common} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <path d="M4 5.5h4.2V18.5H4V5.5zm6.65 0H15v1.1h-.03c.5-.9 1.7-1.85 3.5-1.85 2.8 0 4.5 1.85 4.5 5.35V18.5h-4.2v-8.1c0-2.4-.85-3.55-2.6-3.55-1.8 0-2.9 1.3-2.9 3.55V18.5h-4.2V5.5z" />
+        </svg>
+      );
+    case "linkedin":
+      return (
+        <svg className={common} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <path d="M6.5 8.7H2.9V21h3.6V8.7zM4.7 2.9a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2zM9.2 8.7H12.6v1.8h.05c.5-.9 1.6-1.9 3.3-1.9 3.5 0 4.2 2.3 4.2 5.3V21h-3.7v-7.4c0-1.8-.03-4.1-2.5-4.1-2.5 0-2.9 2-2.9 4v7.5H9.2V8.7z" />
+        </svg>
+      );
+    case "reddit":
+      return (
+        <svg className={common} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <path
+            d="M14.5 11.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm-5 1.2a1.2 1.2 0 1 1 2.4 0 1.2 1.2 0 0 1-2.4 0zm10.2 4.9c.8 1.2-.2 2.7-1.9 2.7-1.1 0-2-.6-2.5-1.4a9.5 9.5 0 0 1-5.3 0c-.5.8-1.4 1.4-2.5 1.4-1.7 0-2.7-1.5-1.9-2.7.1-.2.3-.4.5-.5a6.2 6.2 0 0 1-2.4-5.1c0-3.4 2.8-6.2 6.2-6.2 1.4 0 2.7.5 3.7 1.3l2.3-2.2 1.7 1.7-2 1.9a6.2 6.2 0 0 1 2.2 4.7 6.2 6.2 0 0 1-2.4 5.1c.2.1.4.3.5.5zM8.6 17.1c.3.5.8.8 1.4.8.6 0 1.1-.3 1.4-.8a7.8 7.8 0 0 1-2.8 0zm6.4 0c.3.5.8.8 1.4.8.6 0 1.1-.3 1.4-.8a7.8 7.8 0 0 1-2.8 0z"
+          />
+        </svg>
+      );
+    case "tiktok":
+      return (
+        <svg className={common} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <path
+            d="M16.5 5.2c.9 1.1 2.2 1.8 3.7 2v3.2a7.2 7.2 0 0 1-3.7-1v6.4a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v3.4a2.1 2.1 0 1 0 1.5 2v-9.2h3.1z"
+          />
+        </svg>
+      );
     default:
       return null;
   }
@@ -262,9 +313,16 @@ function TelegramIcon({ className }: { className?: string }) {
   );
 }
 
-function HeadsetIcon() {
+function HeadsetIcon({ className }: { className?: string }) {
   return (
-    <svg className="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+    <svg
+      className={cn("size-4 shrink-0", className)}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      aria-hidden
+    >
       <path d="M4 14v-2a8 8 0 0 1 16 0v2" strokeLinecap="round" />
       <rect x="2" y="14" width="4" height="6" rx="1" />
       <rect x="18" y="14" width="4" height="6" rx="1" />

@@ -41,7 +41,11 @@ export default function ReferralPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="แนะนำเพื่อน" backHref="/" />
+      <SlotProvidersHeader
+        title="แนะนำเพื่อน"
+        subtitle="ชวนเพื่อนรับรางวัลและค่าคอมมิชชัน"
+        backHref="/"
+      />
 
       <main className="mobile-standalone-main pt-4">
         <ReferralPageContent refCode={refCode} />

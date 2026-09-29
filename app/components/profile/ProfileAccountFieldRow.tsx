@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CopyIcon } from "../ui/Icons";
+import { ChevronRightIcon, CopyIcon } from "../ui/Icons";
 import { cn } from "@/lib/utils";
 
 type ProfileAccountFieldRowProps = {
@@ -63,6 +63,42 @@ export function ProfileAccountFieldRow({
         {!onCopy && !onEdit ? <span className="h-8 w-8" aria-hidden="true" /> : null}
       </div>
     </div>
+  );
+}
+
+/**
+ * แถวนำทางในแท็บบัญชี — เช่น VIP (ProfileAccountTabs)
+ */
+export function ProfileAccountNavRow({
+  label,
+  value,
+  onClick,
+  className,
+}: {
+  label: string;
+  value?: string;
+  onClick: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "flex w-full items-center gap-2 rounded-[var(--radius-panel)] bg-[var(--surface-solid-inner)] px-3 py-3 text-left transition-colors hover:bg-[color-mix(in_srgb,var(--text-primary)_5%,var(--surface-solid-inner))] sm:px-3.5 sm:py-3.5",
+        className,
+      )}
+    >
+      <span className="w-[5.5rem] shrink-0 text-xs text-[var(--text-secondary)] sm:w-24 sm:text-[13px]">
+        {label}
+      </span>
+      <span className="min-w-0 flex-1 truncate text-center text-sm font-medium text-[var(--text-primary)]">
+        {value ?? ""}
+      </span>
+      <span className="flex w-9 shrink-0 justify-end text-[var(--icon-default)]">
+        <ChevronRightIcon className="h-4 w-4" />
+      </span>
+    </button>
   );
 }
 

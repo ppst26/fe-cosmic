@@ -574,6 +574,107 @@
   }
 }
 
+/* ช่องเมนูกริด — RightMenuDrawer */
+.menu-grid-tile {
+  border-radius: 1.125rem;
+  background: #17151a;
+  transition:
+    background-color 150ms ease,
+    transform 150ms ease;
+}
+
+.menu-grid-tile:hover {
+  background: #1f1c22;
+}
+
+.menu-grid-tile:active {
+  background: #141216;
+}
+
+.menu-drawer-promo-card {
+  border: 1px solid rgb(255 255 255 / 0.06);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.28);
+}
+
+.menu-drawer-header-logo {
+  opacity: 0.98;
+  transition: opacity 150ms ease;
+}
+
+.menu-drawer-header-logo:active {
+  opacity: 0.88;
+}
+
+/** Avatar mock วงกลม — MenuDrawerUserAvatar */
+.menu-drawer-avatar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.menu-drawer-avatar__ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent-highlight) 55%, transparent),
+    color-mix(in srgb, var(--accent-primary) 40%, transparent)
+  );
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--accent-primary) 28%, transparent),
+    0 8px 20px rgb(0 0 0 / 0.35);
+}
+
+.menu-drawer-avatar__img {
+  display: block;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 999px;
+  border: 2px solid rgb(8 6 18 / 0.85);
+  object-fit: cover;
+  background: var(--surface-mid);
+}
+
+@media (min-width: 380px) {
+  .menu-drawer-avatar__img {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+/** เมนูมือถือ — โลโก้ · avatar · ยอด · grid ต่อกันในสกอลล์เดียว */
+.menu-content--mobile-stack {
+  gap: 1.375rem;
+}
+
+@media (min-width: 380px) {
+  .menu-content--mobile-stack {
+    gap: 1.75rem;
+  }
+}
+
+.menu-drawer-balances {
+  column-gap: 0.75rem;
+}
+
+.menu-drawer-balance {
+  gap: 0.5rem;
+  padding-block: 0.375rem;
+}
+
+.menu-grid--mobile-drawer {
+  gap: 0.625rem;
+}
+
+@media (min-width: 380px) {
+  .menu-grid--mobile-drawer {
+    gap: 0.75rem;
+  }
+}
+
 @media (max-width: 1023px) {
   .menu-grid-tile {
     min-height: 84px;

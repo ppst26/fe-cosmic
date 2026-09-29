@@ -1450,7 +1450,15 @@
  * ใช้คลาส lottery-slips-page บน main จาก /lottery/slips*
  */
 main.page-shell.lottery-page-main.lottery-slips-page {
-  padding-inline: var(--page-gutter);
+  padding-inline: var(--layout-inline-gutter);
+}
+
+@media (max-width: 1023px) {
+  main.page-shell.lottery-page-main.lottery-slips-page {
+    background-color: var(--standalone-page-bg);
+    padding-top: 0.75rem;
+    padding-bottom: 1.25rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -1462,10 +1470,32 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 /* สรุปโพยหลังส่ง — LotterySlipSummary.tsx */
 .lottery-slip-summary {
   color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+@media (max-width: 1023px) {
+  .lottery-slip-summary {
+    padding: 0.35rem 0 1rem;
+    background: transparent;
+    border: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lottery-slip-summary {
+    border-radius: var(--radius-panel);
+    border: 1px solid var(--cosmic-chrome-border);
+    background-color: var(--standalone-page-bg);
+    padding: 0.65rem 0.75rem 0.85rem;
+  }
+}
+
+.lottery-slip-summary__head {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.05);
 }
 
 .lottery-slip-summary__meta {
-  line-height: 1.35;
   color: var(--text-secondary);
 }
 
@@ -1481,22 +1511,27 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 }
 
 .lottery-slip-summary__note {
-  color: color-mix(in srgb, var(--text-muted) 88%, #7dd3fc);
+  color: var(--text-muted);
+}
+
+.lottery-slip-summary__group-count {
+  color: var(--text-muted);
 }
 
 .lottery-slip-summary__group {
-  border-radius: var(--radius-panel);
-  border: 1px solid rgb(255 230 109 / 0.12);
-  background: color-mix(in srgb, var(--surface-solid-inner) 92%, #000);
+  border-radius: calc(var(--radius-panel) - 4px);
+  border: 1px solid rgb(255 255 255 / 0.06);
+  background: var(--surface-solid-inner);
 }
 
 .lottery-slip-summary__group-head {
-  color: #ffe66d;
-  background: linear-gradient(
-    90deg,
-    rgb(80 55 18 / 0.55),
-    rgb(45 32 12 / 0.35)
-  );
+  color: #f3eeff;
+  background-color: var(--cosmic-page-base);
+  background-image: var(--cosmic-nebula-bg-image);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 220% 380%;
+  border-bottom: 1px solid rgb(255 255 255 / 0.06);
 }
 
 .lottery-slip-summary__rows {
@@ -1531,9 +1566,9 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 }
 
 .lottery-slip-summary__totals {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: var(--radius-panel);
-  background: color-mix(in srgb, var(--surface-solid-inner) 88%, #000);
+  border: 1px solid rgb(255 255 255 / 0.06);
+  border-radius: calc(var(--radius-panel) - 4px);
+  background: var(--surface-solid-inner);
 }
 
 .lottery-slip-summary__total-label {

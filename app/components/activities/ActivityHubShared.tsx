@@ -12,6 +12,7 @@ import {
   formatActivityCredits,
   formatActivityNumber,
 } from "@/app/data/activitiesHubMockData";
+import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM, COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 
 /**
@@ -107,6 +108,19 @@ export function ActivityCategoryTabs({
   tabs?: { id: ActivityHubCategoryTab; label: string }[];
   flat?: boolean;
 }) {
+  if (!flat) {
+    return (
+      <CosmicLineTabs
+        tabs={tabs}
+        activeId={activeId}
+        onSelect={onSelect}
+        ariaLabel="หมวดกิจกรรม"
+        scrollable
+        className="activities-hub-cat-tabs"
+      />
+    );
+  }
+
   return (
     <div
       className="promo-hub-category-tabs activities-hub-cat-tabs flex flex-wrap gap-2"
@@ -122,16 +136,7 @@ export function ActivityCategoryTabs({
             role="tab"
             aria-selected={selected}
             onClick={() => onSelect(tab.id)}
-            className={
-              flat
-                ? `${COSMIC_BTN_GLASS_PILL} !px-3 !py-1.5 !text-xs sm:!text-sm ${selected ? "is-active" : ""}`
-                : [
-                    "glass-card--soft rounded-[var(--radius-pill)] px-4 py-1.5 text-xs font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:text-sm",
-                    selected
-                      ? "is-active text-[var(--text-primary)]"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
-                  ].join(" ")
-            }
+            className={`${COSMIC_BTN_GLASS_PILL} !px-3 !py-1.5 !text-xs sm:!text-sm ${selected ? "is-active" : ""}`}
           >
             {tab.label}
           </button>

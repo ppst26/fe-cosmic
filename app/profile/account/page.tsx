@@ -10,6 +10,7 @@ import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { ProfileSheetBody } from "@/app/components/profile/ProfileSheetBody";
+import { useVipModal } from "@/app/components/vip/VipModalProvider";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 
 /**
@@ -18,6 +19,7 @@ import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 export default function ProfileAccountPage() {
   const router = useRouter();
   const { isAuthenticated, isLoading, logout } = useAuth();
+  const { openVipModal } = useVipModal();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
 
@@ -72,7 +74,11 @@ export default function ProfileAccountPage() {
         )}
 
         {!loadingProfile && profile && (
-          <ProfileSheetBody profile={profile} onLogout={() => void handleLogout()} />
+          <ProfileSheetBody
+            profile={profile}
+            onLogout={() => void handleLogout()}
+            onOpenVip={() => openVipModal()}
+          />
         )}
       </main>
 

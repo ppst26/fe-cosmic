@@ -5,12 +5,14 @@ import type { ProfileUser } from "@/app/types/auth";
 import { fetchProfile } from "@/lib/auth/client";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { ProfileSheetBody } from "@/app/components/profile/ProfileSheetBody";
+import { useVipModal } from "@/app/components/vip/VipModalProvider";
 
 /**
  * เนื้อหา hub ข้อมูลบัญชี — โหลดโปรไฟล์เมื่อ mount ใน DesktopHubModal
  */
 export function DesktopHubAccountBody() {
   const { logout } = useAuth();
+  const { openVipModal } = useVipModal();
   const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
   const fetchGenRef = useRef(0);
 
@@ -38,6 +40,10 @@ export function DesktopHubAccountBody() {
   }
 
   return (
-    <ProfileSheetBody profile={profile} onLogout={() => void logout()} />
+    <ProfileSheetBody
+      profile={profile}
+      onLogout={() => void logout()}
+      onOpenVip={() => openVipModal()}
+    />
   );
 }

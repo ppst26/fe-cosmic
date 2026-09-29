@@ -101,26 +101,40 @@ export function ReferralLinkSection({
   refCode,
   copied,
   onCopy,
+  variant = "default",
 }: {
   refCode: string;
   copied: boolean;
   onCopy: (link: string) => void;
+  /** desktop hub modal — ตัวอักษรใหญ่ขึ้น */
+  variant?: "default" | "hub";
 }) {
   const referralLink = buildReferralLink(refCode);
+  const isHub = variant === "hub";
 
   return (
     <section>
-      <p className="mb-2 text-sm font-medium text-[var(--text-primary)]">ลิงก์แนะนำของคุณ</p>
-      <div className="flex gap-2">
+      <p
+        className={`mb-2.5 font-medium text-[var(--text-primary)] ${isHub ? "text-base" : "text-sm"}`}
+      >
+        ลิงก์แนะนำของคุณ
+      </p>
+      <div className="flex gap-2.5">
         <div
-          className={`${COSMIC_SHEET_FIELD_ROW} min-w-0 flex-1 truncate text-xs text-[var(--text-secondary)] sm:text-sm`}
+          className={`${COSMIC_SHEET_FIELD_ROW} min-w-0 flex-1 truncate text-[var(--text-secondary)] ${
+            isHub ? "py-3 text-sm sm:text-base" : "text-xs sm:text-sm"
+          }`}
         >
           {referralLink}
         </div>
         <button
           type="button"
           onClick={() => onCopy(referralLink)}
-          className={`${COSMIC_BTN_NAV} cosmic-btn-nav--sm flex shrink-0 items-center gap-1.5 px-3.5 py-2.5 text-xs sm:text-sm`}
+          className={`${COSMIC_BTN_NAV} flex shrink-0 items-center gap-1.5 ${
+            isHub
+              ? "min-h-11 px-4 py-2.5 text-sm"
+              : "cosmic-btn-nav--sm px-3.5 py-2.5 text-xs sm:text-sm"
+          }`}
         >
           <CopyIcon className="h-4 w-4" />
           {copied ? "คัดลอกแล้ว" : "Copy"}
@@ -137,10 +151,12 @@ export function ReferralStatsSection({
   stats,
   layout = "grid",
   flat = false,
+  variant = "default",
 }: {
   stats: ReferralStatsMock;
   layout?: "grid" | "stack";
   flat?: boolean;
+  variant?: "default" | "hub";
 }) {
   const gridClass =
     layout === "stack"
@@ -149,16 +165,24 @@ export function ReferralStatsSection({
 
   return (
     <section>
-      <h2 className="mb-3 text-sm font-medium text-[var(--text-primary)]">สถิติของคุณ</h2>
+      <h2
+        className={`mb-3 font-medium text-[var(--text-primary)] ${
+          variant === "hub" ? "text-base" : "text-sm"
+        }`}
+      >
+        สถิติของคุณ
+      </h2>
       <div className={gridClass}>
         <StatCard
           flat={flat}
+          emphasized={variant === "hub"}
           icon={<UsersGroupIcon className="h-5 w-5 text-[var(--border-active)]" />}
           label="เพื่อนที่สมัคร"
           value={formatReferralCount(stats.friendsCount)}
         />
         <StatCard
           flat={flat}
+          emphasized={variant === "hub"}
           icon={<WalletCryptoIcon className="h-5 w-5 text-[var(--border-active)]" />}
           label="ยอดเล่นรวม"
           value={formatReferralCurrency(stats.totalTurnoverThb)}
@@ -166,6 +190,7 @@ export function ReferralStatsSection({
         />
         <StatCard
           flat={flat}
+          emphasized={variant === "hub"}
           icon={
             <svg viewBox="0 0 24 24" className="h-5 w-5 text-[var(--border-active)]" aria-hidden="true">
               <path
@@ -189,23 +214,35 @@ function StatCard({
   value,
   valueClassName = "text-[var(--text-primary)]",
   flat = false,
+  emphasized = false,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
   valueClassName?: string;
   flat?: boolean;
+  emphasized?: boolean;
 }) {
   return (
     <div
-      className={`flex items-center gap-3 py-3 ${
+      className={`flex items-center gap-3 ${emphasized ? "py-3.5" : "py-3"} ${
         flat ? "referral-stat-row border-b border-[var(--border-subtle)]/45 px-0 last:border-b-0" : `${COSMIC_PANEL_GLASS} px-3`
       }`}
     >
-      <div className={COSMIC_PANEL_GLASS_ICON}>{icon}</div>
+      <div className={emphasized ? `${COSMIC_PANEL_GLASS_ICON} !h-11 !w-11` : COSMIC_PANEL_GLASS_ICON}>
+        {icon}
+      </div>
       <div className="min-w-0">
-        <p className="text-xs text-[var(--text-secondary)]">{label}</p>
-        <p className={`text-sm font-medium tabular-nums ${valueClassName}`}>{value}</p>
+        <p
+          className={`text-[var(--text-secondary)] ${emphasized ? "text-sm" : "text-xs"}`}
+        >
+          {label}
+        </p>
+        <p
+          className={`font-medium tabular-nums ${emphasized ? "text-lg" : "text-sm"} ${valueClassName}`}
+        >
+          {value}
+        </p>
       </div>
     </div>
   );

@@ -4,9 +4,9 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
-import { CloseIcon } from "../ui/Icons";
+import { CloseIcon, CosmicbetLogo } from "../ui/Icons";
 import { MenuItemIcon } from "./MenuItemIcon";
-import { MenuDrawerPromoBanner } from "./MenuDrawerPromoBanner";
+import { MenuDrawerUserAvatar } from "./MenuDrawerUserAvatar";
 import { MenuDrawerWalletCards } from "./MenuDrawerWalletCards";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
@@ -26,7 +26,7 @@ interface RightMenuDrawerProps {
 }
 
 /**
- * Menu dialog — มือถือเต็มจอ: แบนเนอร์ · เครดิต/เพชร · grid เมนู
+ * Menu dialog — มือถือเต็มจอ: โลโก้ · avatar · เครดิต/เพชร/ตั๋ว · grid เมนู (ต่อกัน)
  * เดสก์ท็อป: panel ลอยชิดเหนือ bottom nav · เปิดจาก FloatingBottomNav
  */
 export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
@@ -80,7 +80,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
 
     const tileClass =
-      "menu-grid-tile group flex flex-col items-center justify-center rounded-xl bg-[#0f0c22] py-2.5 px-1 min-h-[84px] lg:min-h-[72px] hover:bg-[#191538] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
+      "menu-grid-tile group flex flex-col items-center justify-center py-2.5 px-1 min-h-[84px] lg:min-h-[72px] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
 
     if (tile.action) {
       return (
@@ -184,18 +184,26 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   };
 
   const renderMobileMenu = () => (
-    <>
-      <div className="menu-drawer-top shrink-0 flex flex-col gap-3 px-4 pt-[max(52px,calc(env(safe-area-inset-top,0px)+44px))] pb-1">
-        <MenuDrawerPromoBanner />
-        <MenuDrawerWalletCards />
-      </div>
+    <div
+      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-[max(20px,env(safe-area-inset-bottom,0px))] pt-[max(52px,calc(env(safe-area-inset-top,0px)+44px))]"
+    >
+      <Link
+        href="/"
+        className="menu-drawer-header-logo inline-flex w-full shrink-0 justify-center py-1"
+        aria-label="cosmicbet หน้าหลัก"
+        onClick={() => onClose()}
+      >
+        <CosmicbetLogo className="h-9 max-w-[168px] sm:h-10 sm:max-w-[188px]" />
+      </Link>
 
-      <div className="menu-content menu-content--mobile flex flex-1 flex-col min-h-0 overflow-y-auto px-4 pb-[max(16px,env(safe-area-inset-bottom,0px))]">
-        <div className="menu-grid grid grid-cols-4 gap-2 w-full pb-2">
-          {MENU_DIALOG_ALL_TILES.map((tile) => renderGridTile(tile))}
-        </div>
+      <MenuDrawerUserAvatar />
+
+      <MenuDrawerWalletCards className="w-full shrink-0" />
+
+      <div className="menu-grid menu-grid--mobile-drawer grid w-full shrink-0 grid-cols-4 pb-2">
+        {MENU_DIALOG_ALL_TILES.map((tile) => renderGridTile(tile))}
       </div>
-    </>
+    </div>
   );
 
   const renderDesktopMenu = () => (

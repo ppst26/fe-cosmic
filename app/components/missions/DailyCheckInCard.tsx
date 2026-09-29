@@ -56,17 +56,18 @@ export function DailyCheckInCard({
 
   const progressPercent = Math.min(100, Math.max(10, (checkedInCount / 7) * 100));
 
+  const isHubSurface = !isStandalone;
+
   return (
     <div
       className={cn(
-        "relative mx-auto w-full max-w-[500px] text-[var(--text-primary)] select-none",
+        "daily-check-in-card relative mx-auto w-full text-[var(--text-primary)] select-none",
         isStandalone
-          ? "bg-transparent px-0 py-1 shadow-none"
+          ? "max-w-[500px] bg-transparent px-0 py-1 shadow-none"
           : [
-              "rounded-[24px] border border-[color-mix(in_srgb,var(--hub-modal-accent)_32%,rgb(255_255_255_/_0.1))] p-4 sm:p-5",
+              "daily-check-in-card--hub max-w-none border-0 rounded-none p-5 sm:p-6 lg:px-8 lg:py-7",
               "bg-[radial-gradient(circle_at_50%_0%,color-mix(in_srgb,var(--hub-modal-lift)_62%,rgb(98_94_112)_38%)_0%,transparent_46%),linear-gradient(148deg,color-mix(in_srgb,var(--hub-modal-base)_70%,var(--hub-modal-lift))_0%,var(--hub-modal-base)_50%,#09090c_100%)]",
-              "shadow-[0_30px_80px_rgba(0,0,0,0.68),inset_0_0_0_1px_rgba(255,255,255,0.02),0_0_36px_rgba(31,30,40,0.28)]",
-              "backdrop-blur-[22px]",
+              "shadow-none backdrop-blur-0",
             ],
         className,
       )}
@@ -78,7 +79,7 @@ export function DailyCheckInCard({
           onClick={onClose}
           className={cn(
             responsiveSheetCloseButtonClass(),
-            "absolute right-3.5 top-3.5 z-20 cursor-pointer text-[var(--icon-default)] hover:text-white",
+            "absolute right-4 top-4 z-20 cursor-pointer text-[var(--icon-default)] hover:text-white sm:right-5 sm:top-5",
           )}
           aria-label="ปิด"
         >
@@ -91,7 +92,12 @@ export function DailyCheckInCard({
         <div className="min-w-0 flex-1 pt-0.5">
           {/* Icon & Title */}
           <div className="flex items-center gap-2 sm:gap-2.5">
-            <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl border border-[#7747e5]/35 bg-[#7747e5]/15 text-[#7747e5] shadow-[0_0_14px_rgba(119,71,229,0.25)]">
+            <div
+              className={cn(
+                "flex shrink-0 items-center justify-center rounded-xl border border-[#7747e5]/35 bg-[#7747e5]/15 text-[#7747e5] shadow-[0_0_14px_rgba(119,71,229,0.25)]",
+                isHubSurface ? "h-11 w-11 sm:h-12 sm:w-12" : "h-9 w-9 sm:h-10 sm:w-10",
+              )}
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -108,22 +114,44 @@ export function DailyCheckInCard({
                 <path d="m9 16 2 2 4-4" />
               </svg>
             </div>
-            <h2 className="text-xl sm:text-2xl font-medium tracking-tight text-[var(--text-primary)]">
+            <h2
+              className={cn(
+                "font-medium tracking-tight text-[var(--text-primary)]",
+                isHubSurface ? "text-2xl sm:text-[1.75rem]" : "text-xl sm:text-2xl",
+              )}
+            >
               เช็คอินรายวัน
             </h2>
           </div>
 
-          <p className="mt-1.5 text-xs sm:text-sm font-medium text-[var(--text-secondary)] leading-snug">
+          <p
+            className={cn(
+              "mt-2 font-medium text-[var(--text-secondary)] leading-snug",
+              isHubSurface ? "text-sm sm:text-base" : "mt-1.5 text-xs sm:text-sm",
+            )}
+          >
             เช็คอินต่อเนื่องรับเพชรโบนัสพิเศษ
           </p>
-          <p className="mt-0.5 text-xs sm:text-sm text-[var(--text-secondary)] leading-snug">
+          <p
+            className={cn(
+              "text-[var(--text-secondary)] leading-snug",
+              isHubSurface ? "mt-1 text-sm sm:text-base" : "mt-0.5 text-xs sm:text-sm",
+            )}
+          >
             อีก <span className="font-medium text-white">{daysRemainingForBonus} วัน</span> ได้โบนัส{" "}
             <span className="font-medium text-[#a78bfa]">เพชร 20</span>
           </p>
         </div>
 
         {/* 3D Diamond & Luxury Gift Boxes Illustration */}
-        <div className="relative -mt-1 mr-8 sm:mr-9 h-16 w-20 sm:h-18 sm:w-24 shrink-0 pointer-events-none flex items-center justify-center">
+        <div
+          className={cn(
+            "relative -mt-1 shrink-0 pointer-events-none flex items-center justify-center",
+            isHubSurface
+              ? "mr-9 sm:mr-10 h-[4.5rem] w-[5.5rem] sm:h-20 sm:w-28"
+              : "mr-8 sm:mr-9 h-16 w-20 sm:h-18 sm:w-24",
+          )}
+        >
           <Image
             src="/assets/3d/diamon3.avif"
             alt="Diamonds"
@@ -136,21 +164,41 @@ export function DailyCheckInCard({
       </div>
 
       {/* ── Weekly Streak Progress Bar ── */}
-      <div className="relative z-10 mt-3 mb-2.5 flex items-center justify-between gap-3">
-        <div className="relative h-2 sm:h-2.5 flex-1 overflow-hidden rounded-full bg-black/40 border border-white/8">
+      <div
+        className={cn(
+          "relative z-10 flex items-center justify-between gap-3",
+          isHubSurface ? "mt-4 mb-3.5" : "mt-3 mb-2.5",
+        )}
+      >
+        <div
+          className={cn(
+            "relative flex-1 overflow-hidden rounded-full bg-black/40 border border-white/8",
+            isHubSurface ? "h-2.5 sm:h-3" : "h-2 sm:h-2.5",
+          )}
+        >
           <div
             className="h-full rounded-full bg-gradient-to-r from-[#7747e5] to-[#5b8cff] shadow-[0_0_10px_rgba(119,71,229,0.5)] transition-all duration-500 ease-out"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
-        <span className="shrink-0 text-xs sm:text-sm font-medium tabular-nums">
+        <span
+          className={cn(
+            "shrink-0 font-medium tabular-nums",
+            isHubSurface ? "text-sm sm:text-base" : "text-xs sm:text-sm",
+          )}
+        >
           <span className="text-white">{checkedInCount}</span>
           <span className="text-[var(--text-muted)] font-medium"> / 7 วัน</span>
         </span>
       </div>
 
       {/* ── 7-Day Grid (จ. - อา.) ── */}
-      <div className="relative z-10 grid grid-cols-7 gap-1 sm:gap-1.5">
+      <div
+        className={cn(
+          "relative z-10 grid grid-cols-7",
+          isHubSurface ? "gap-1.5 sm:gap-2" : "gap-1 sm:gap-1.5",
+        )}
+      >
         {days.map((item) => {
           const isClaimed = item.status === "claimed";
           const isToday = item.status === "today";
@@ -162,7 +210,8 @@ export function DailyCheckInCard({
               key={item.day}
               onClick={() => isToday && handleClaim(item.day)}
               className={cn(
-                "group relative flex flex-col items-center justify-between rounded-xl py-2 px-1 text-center transition-all duration-200",
+                "group relative flex flex-col items-center justify-between rounded-xl text-center transition-all duration-200",
+                isHubSurface ? "min-h-[7.25rem] py-2.5 px-1 sm:min-h-[7.75rem] sm:py-3" : "py-2 px-1",
                 isClaimed && [
                   "border border-[#7747e5]/30 bg-gradient-to-b from-[#1c162b] to-[#110e1a]",
                   "shadow-[inset_0_1px_0_rgba(119,71,229,0.1)]",
@@ -200,7 +249,8 @@ export function DailyCheckInCard({
               {/* Day Label */}
               <span
                 className={cn(
-                  "text-xs sm:text-[13px] font-medium leading-tight",
+                  "font-medium leading-tight",
+                  isHubSurface ? "text-sm sm:text-[0.9375rem]" : "text-xs sm:text-[13px]",
                   isClaimed ? "text-[#c4b5fd]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
                 )}
               >
@@ -208,12 +258,17 @@ export function DailyCheckInCard({
               </span>
 
               {/* Diamond Image */}
-              <div className="relative my-0.5 sm:my-1 flex h-7.5 w-7.5 sm:h-9 sm:w-9 items-center justify-center">
+              <div
+                className={cn(
+                  "relative my-0.5 flex items-center justify-center sm:my-1",
+                  isHubSurface ? "h-9 w-9 sm:h-10 sm:w-10" : "h-7.5 w-7.5 sm:h-9 sm:w-9",
+                )}
+              >
                 <Image
                   src={isBig ? "/assets/3d/diamonds.avif" : "/assets/3d/diamond.avif"}
                   alt={isBig ? "Diamonds Gift Box" : "Diamond"}
-                  width={isBig ? 40 : 32}
-                  height={isBig ? 40 : 32}
+                  width={isHubSurface ? (isBig ? 48 : 40) : isBig ? 40 : 32}
+                  height={isHubSurface ? (isBig ? 48 : 40) : isBig ? 40 : 32}
                   className={cn(
                     "object-contain transition-transform duration-200",
                     isClaimed
@@ -228,7 +283,8 @@ export function DailyCheckInCard({
               {/* Reward Amount */}
               <span
                 className={cn(
-                  "text-xs sm:text-[13px] font-medium leading-tight mb-1 tabular-nums",
+                  "font-medium leading-tight mb-1 tabular-nums",
+                  isHubSurface ? "text-sm sm:text-[0.9375rem]" : "text-xs sm:text-[13px]",
                   isClaimed ? "text-[#d8b4fe]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
                 )}
               >
@@ -238,7 +294,8 @@ export function DailyCheckInCard({
               {/* Action Button/Tag */}
               <div
                 className={cn(
-                  "w-full rounded py-0.5 text-center text-xs font-medium transition-all whitespace-nowrap",
+                  "w-full rounded text-center font-medium transition-all whitespace-nowrap",
+                  isHubSurface ? "py-1 text-xs sm:text-sm" : "py-0.5 text-xs",
                   isClaimed && "border border-[#7747e5]/30 bg-[#7747e5]/15 text-[#c4b5fd]",
                   isToday &&
                     "bg-gradient-to-r from-[#7747e5] to-[#5b8cff] text-white shadow-[0_0_10px_rgba(119,71,229,0.5)] group-hover:brightness-110 font-medium",
@@ -253,18 +310,33 @@ export function DailyCheckInCard({
       </div>
 
       {/* ── Cumulative Rewards Box (รางวัลเช็คอินสะสม) ── */}
-      <div className="hub-modal-card relative z-10 my-3 sm:my-3.5 rounded-2xl border border-white/8 bg-gradient-to-b from-[#1a1824]/90 to-[#121018]/90 p-3 sm:p-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_10px_28px_rgba(0,0,0,0.28)]">
+      <div
+        className={cn(
+          "hub-modal-card relative z-10 rounded-2xl border border-white/8 bg-gradient-to-b from-[#1a1824]/90 to-[#121018]/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_10px_28px_rgba(0,0,0,0.28)]",
+          isHubSurface ? "my-4 p-4 sm:my-5 sm:p-5" : "my-3 p-3 sm:my-3.5 sm:p-3.5",
+        )}
+      >
         {/* Header */}
         <div className="text-center">
           <div className="flex items-center justify-center gap-1.5">
             <span className="text-[#7747e5] text-xs">✦</span>
             <span className="text-base">🎁</span>
-            <h3 className="text-sm sm:text-base font-medium text-[var(--text-primary)]">
+            <h3
+              className={cn(
+                "font-medium text-[var(--text-primary)]",
+                isHubSurface ? "text-base sm:text-lg" : "text-sm sm:text-base",
+              )}
+            >
               รางวัลเช็คอินสะสม
             </h3>
             <span className="text-[#7747e5] text-xs">✦</span>
           </div>
-          <p className="mt-0.5 text-xs sm:text-[13px] text-[var(--text-secondary)]">
+          <p
+            className={cn(
+              "mt-1 text-[var(--text-secondary)]",
+              isHubSurface ? "text-sm sm:text-base" : "mt-0.5 text-xs sm:text-[13px]",
+            )}
+          >
             เช็คอินครบตามกำหนด รับเพชรโบนัสใหญ่
           </p>
         </div>
@@ -360,7 +432,8 @@ export function DailyCheckInCard({
         disabled={isTodayClaimed}
         onClick={() => todayReward && handleClaim(todayReward.day)}
         className={cn(
-          "relative flex h-11 sm:h-12.5 w-full items-center justify-center gap-1.5 rounded-2xl font-medium text-base sm:text-lg transition-all duration-200",
+          "relative flex w-full items-center justify-center gap-2 rounded-2xl font-medium transition-all duration-200",
+          isHubSurface ? "h-12 sm:h-14 text-lg sm:text-xl" : "h-11 sm:h-12.5 text-base sm:text-lg",
           isTodayClaimed
             ? "border border-white/8 bg-[var(--surface-elevated)] text-[var(--text-muted)] shadow-none cursor-default opacity-60 font-medium"
             : "bg-gradient-to-r from-[#7747e5] via-[#8253ea] to-[#5b8cff] text-white shadow-[0_0_24px_rgba(119,71,229,0.45),inset_0_1px_0_rgba(255,255,255,0.3)] hover:brightness-110 active:scale-[0.99] cursor-pointer",

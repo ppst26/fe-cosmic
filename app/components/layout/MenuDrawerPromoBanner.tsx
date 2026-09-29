@@ -1,30 +1,56 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
+
+/** แบนเนอร์โปรในเมนู — อ้าง asset ใน public/promotions/catalog.json */
+const MENU_DRAWER_PROMO_BANNER = {
+  src: "/promotions/mock-pro1.avif",
+  alt: "โปรโมชัน",
+} as const;
 
 interface MenuDrawerPromoBannerProps {
   className?: string;
+  /** นำทางไปหน้าโปรแล้วปิดเมนู — ส่งจาก RightMenuDrawer */
+  onPromoNavigate?: (href: string) => void;
 }
 
 /**
- * พื้นที่แบนเนอร์ mock บนเมนูเต็มจอมือถือ — รอ asset/ลิงก์โปรโมจริง
- * ใช้ใน RightMenuDrawer.tsx
+ * โปรสองรูป + ปุ่มดูเพิ่มเติม — ใช้ใน RightMenuDrawer.tsx
  */
-export function MenuDrawerPromoBanner({ className }: MenuDrawerPromoBannerProps) {
+export function MenuDrawerPromoBanner({ className, onPromoNavigate }: MenuDrawerPromoBannerProps) {
+  const handlePromoClick = (event: React.MouseEvent, href: string) => {
+    if (!onPromoNavigate) return;
+    event.preventDefault();
+    onPromoNavigate(href);
+  };
+
   return (
-    <div
-      className={cn(
-        "relative flex aspect-[2.35/1] w-full items-center justify-center overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/50 bg-[var(--surface-elevated)]",
-        className,
-      )}
-      role="img"
-      aria-label="แบนเนอร์โปรโมชั่น"
-    >
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_20%_0%,rgba(119,71,229,0.22),transparent_65%),radial-gradient(ellipse_60%_50%_at_90%_100%,rgba(56,189,248,0.12),transparent_70%)]"
-        aria-hidden="true"
-      />
-      <span className="cosmic-type-sheet-desc relative z-[1] font-medium">
-        แบนเนอร์โปรโมชั่น
-      </span>
+    <div className={cn("menu-drawer-promos flex flex-col gap-2", className)}>
+      <Link
+        href="/promotions"
+        className="menu-drawer-promo-card relative block aspect-[2.35/1] w-full overflow-hidden rounded-2xl"
+        onClick={(event) => handlePromoClick(event, "/promotions")}
+      >
+        <Image
+          src={MENU_DRAWER_PROMO_BANNER.src}
+          alt={MENU_DRAWER_PROMO_BANNER.alt}
+          fill
+          sizes="(max-width: 1023px) 100vw, 360px"
+          className="object-cover"
+          priority
+        />
+      </Link>
+
+      <Link
+        href="/promotions"
+        className="menu-drawer-promo-more inline-flex min-h-10 w-full items-center justify-center rounded-2xl border border-white/10 bg-[#17151a] text-sm font-medium text-[var(--text-primary)] transition-colors hover:bg-[#1f1c22] active:scale-[0.99]"
+        onClick={(event) => handlePromoClick(event, "/promotions")}
+      >
+        ดูโปรโมชันทั้งหมด
+      </Link>
     </div>
   );
 }

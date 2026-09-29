@@ -104,7 +104,17 @@ export const FOOTER_DESKTOP_COLUMNS: FooterLinkColumn[] = [
 export interface FooterSocialIcon {
   label: string;
   href: string;
-  icon: "telegram" | "x" | "discord" | "instagram" | "youtube" | "line";
+  icon:
+    | "telegram"
+    | "x"
+    | "discord"
+    | "instagram"
+    | "youtube"
+    | "line"
+    | "medium"
+    | "linkedin"
+    | "reddit"
+    | "tiktok";
 }
 
 export const FOOTER_DESKTOP_SOCIAL: FooterSocialIcon[] = [
@@ -114,6 +124,19 @@ export const FOOTER_DESKTOP_SOCIAL: FooterSocialIcon[] = [
   { label: "Instagram", href: "/support", icon: "instagram" },
   { label: "YouTube", href: "/support", icon: "youtube" },
   { label: "LINE", href: "/support", icon: "line" },
+];
+
+/** แถวไอคอนโซเชียล footer มือถือ (Dexsport-style) */
+export const FOOTER_MOBILE_SOCIAL: FooterSocialIcon[] = [
+  { label: "Medium", href: "/support", icon: "medium" },
+  { label: "Telegram", href: "/support", icon: "telegram" },
+  { label: "X", href: "/support", icon: "x" },
+  { label: "Discord", href: "/support", icon: "discord" },
+  { label: "LinkedIn", href: "/support", icon: "linkedin" },
+  { label: "Reddit", href: "/support", icon: "reddit" },
+  { label: "Instagram", href: "/support", icon: "instagram" },
+  { label: "YouTube", href: "/support", icon: "youtube" },
+  { label: "TikTok", href: "/support", icon: "tiktok" },
 ];
 
 export const FOOTER_TRUST_BADGES: readonly { label: string; name: string }[] = [

@@ -8,7 +8,7 @@ import { ArrowLeftIcon } from "../ui/Icons";
  */
 export function ProfilePageHeader({ title }: { title: string }) {
   return (
-    <header className="profile-page-header standalone-sub-header page-sub-header w-full min-w-0 bg-[#140f1c] border-b border-[#2d1b4e]/50">
+    <header className="profile-page-header standalone-sub-header page-sub-header w-full min-w-0">
       <div className="relative mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
         <Link
           href="/"

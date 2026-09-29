@@ -2,29 +2,41 @@
 
 import React, { useState } from "react";
 import type { ProfileUser } from "@/app/types/auth";
-import { ProfileAccountFieldRow } from "./ProfileAccountFieldRow";
+import { getVipRankTier, VIP_PLAYER_MOCK } from "@/app/data/vipMockData";
+import { ProfileAccountFieldRow, ProfileAccountNavRow } from "./ProfileAccountFieldRow";
 import { ProfileBankAccountCard } from "./ProfileBankAccountCard";
+import { ProfileReferralInviteCard } from "./ProfileReferralInviteCard";
 import { ProfileMenuRow } from "./ProfileMenuCard";
 import { LogOutIcon, SupportHeadsetIcon } from "../ui/Icons";
-import {
-  COSMIC_BTN_LOGOUT,
-  COSMIC_PANEL_GLASS,
-  COSMIC_SEGMENT_GLASS_WHITE,
-} from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_LOGOUT, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
+import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { cn } from "@/lib/utils";
+
+const PROFILE_ACCOUNT_TABS: { id: ProfileAccountTab; label: string }[] = [
+  { id: "personal", label: "ข้อมูลส่วนตัว" },
+  { id: "bank", label: "บัญชีธนาคาร" },
+];
 
 type ProfileAccountTab = "personal" | "bank";
 
 interface ProfileAccountTabsProps {
   profile: ProfileUser;
   onLogout: () => void;
+  onOpenVip?: () => void;
   compact?: boolean;
 }
 
+const vipRankLabel = getVipRankTier(VIP_PLAYER_MOCK.currentRankId).label;
+
 /**
- * หน้าข้อมูลบัญชี — แท็บข้อมูลส่วนตัว / บัญชีธนาคาร (ProfileSheetBody)
+ * หน้าข้อมูลบัญชี — แท็บข้อมูลส่วนตัว / บัญชีธนาคาร + ชวนเพื่อน (ProfileSheetBody)
  */
-export function ProfileAccountTabs({ profile, onLogout, compact = false }: ProfileAccountTabsProps) {
+export function ProfileAccountTabs({
+  profile,
+  onLogout,
+  onOpenVip,
+  compact = false,
+}: ProfileAccountTabsProps) {
   const [activeTab, setActiveTab] = useState<ProfileAccountTab>("personal");
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
@@ -39,60 +51,52 @@ export function ProfileAccountTabs({ profile, onLogout, compact = false }: Profi
   };
 
   return (
-    <div className={cn("flex flex-col", compact ? "gap-3" : "gap-5 pb-2")}>
-      <div
-        role="tablist"
-        aria-label="ข้อมูลบัญชี"
-        className={`${COSMIC_SEGMENT_GLASS_WHITE} grid grid-cols-2 gap-2`}
-      >
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "personal"}
-          onClick={() => setActiveTab("personal")}
-          className={`cosmic-segment-btn py-2.5 text-sm ${activeTab === "personal" ? "is-active" : ""}`}
-        >
-          ข้อมูลส่วนตัว
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeTab === "bank"}
-          onClick={() => setActiveTab("bank")}
-          className={`cosmic-segment-btn py-2.5 text-sm ${activeTab === "bank" ? "is-active" : ""}`}
-        >
-          บัญชีธนาคาร
-        </button>
-      </div>
+    <div className={cn("flex flex-col", compact ? "gap-3" : "gap-4 pb-2")}>
+      <section className={`${COSMIC_PANEL_GLASS} flex flex-col gap-3 px-3.5 py-4 sm:px-4`}>
+        <CosmicLineTabs
+          tabs={PROFILE_ACCOUNT_TABS}
+          activeId={activeTab}
+          onSelect={setActiveTab}
+          ariaLabel="ข้อมูลบัญชี"
+          columns={2}
+          className="-mx-0.5"
+        />
 
-      {copiedField ? (
-        <p className="text-center text-xs text-[var(--success)]" role="status">คัดลอกแล้ว</p>
-      ) : null}
+        {copiedField ? (
+          <p className="text-center text-xs text-[var(--success)]" role="status">คัดลอกแล้ว</p>
+        ) : null}
 
-      {activeTab === "personal" ? (
-        <div role="tabpanel" className="flex flex-col gap-2">
-          <ProfileAccountFieldRow
-            label="ชื่อผู้ใช้"
-            value={profile.displayName}
-            onCopy={() => void copyText("displayName", profile.displayName)}
-            copyLabel="คัดลอกชื่อผู้ใช้"
-          />
-          <ProfileAccountFieldRow label="เบอร์โทร" value={profile.phoneMasked} />
-          <ProfileAccountFieldRow label="วันที่สมัคร" value={profile.joinedLabel} />
-          <ProfileAccountFieldRow
-            label="รหัสผ่าน"
-            value="••••••"
-            onEdit={() => {
-              /* TODO: เปลี่ยนรหัสผ่าน */
-            }}
-            editLabel="เปลี่ยนรหัสผ่าน"
-          />
-        </div>
-      ) : (
-        <div role="tabpanel" className="flex flex-col gap-2">
-          <ProfileBankAccountCard profile={profile} />
-        </div>
-      )}
+        {activeTab === "personal" ? (
+          <div role="tabpanel" className="flex flex-col gap-2">
+            <ProfileAccountFieldRow
+              label="ยูสเซอร์เข้าเกม"
+              value={profile.memberId}
+              onCopy={() => void copyText("memberId", profile.memberId)}
+              copyLabel="คัดลอกยูสเซอร์เข้าเกม"
+            />
+            <ProfileAccountFieldRow
+              label="รหัสผ่าน"
+              value="••••••"
+              onEdit={() => {
+                /* TODO: เปลี่ยนรหัสผ่าน */
+              }}
+              editLabel="เปลี่ยนรหัสผ่าน"
+            />
+            <ProfileAccountFieldRow label="LINE" value="—" />
+            {onOpenVip ? (
+              <ProfileAccountNavRow label="VIP" value={vipRankLabel} onClick={onOpenVip} />
+            ) : (
+              <ProfileAccountFieldRow label="VIP" value={vipRankLabel} />
+            )}
+          </div>
+        ) : (
+          <div role="tabpanel">
+            <ProfileBankAccountCard profile={profile} embedded />
+          </div>
+        )}
+      </section>
+
+      <ProfileReferralInviteCard />
 
       <section className={`${COSMIC_PANEL_GLASS} px-4 py-1`}>
         <ProfileMenuRow

@@ -76,9 +76,6 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
       {catalog && !showDesktopHub ? (
         <div className="hidden flex-col gap-5 pb-4 lg:flex">
           <header className="flex flex-col gap-3">
-            <h1 className="text-xl font-medium tracking-tight text-[var(--text-primary)] sm:text-2xl">
-              โปรโมชั่น
-            </h1>
             <PromotionsCategoryTabs
               activeId={categoryFilter}
               onSelect={setCategoryFilter}

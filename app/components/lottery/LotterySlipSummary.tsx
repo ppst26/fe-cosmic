@@ -51,10 +51,10 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
 
   return (
     <article
-      className="lottery-slip-summary flex flex-col gap-3 pt-1 pb-2"
+      className="lottery-slip-summary flex flex-col gap-4 pb-3 pt-1"
       aria-label="สรุปโพย"
     >
-      <header className="lottery-slip-summary__head flex flex-col gap-[0.45rem]">
+      <header className="lottery-slip-summary__head flex flex-col gap-2">
         <div className="lottery-slip-summary__head-row flex items-start justify-between gap-3">
           <p className="lottery-slip-summary__meta m-0">
             งวดวันที่ {drawSchedule}
@@ -79,21 +79,23 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
         โน้ต {slip.note?.trim() ? slip.note : "ไม่มีบันทึกข้อความ"}
       </p>
 
-      <div className="lottery-slip-summary__groups">
+      <div className="lottery-slip-summary__groups flex flex-col gap-2.5">
         {groups.map((group) => (
           <section
             key={group.typeLabel}
             className="lottery-slip-summary__group overflow-hidden"
           >
-            <div className="lottery-slip-summary__group-head flex items-center justify-between gap-2 px-3 py-2">
-              <span>{group.typeLabel}</span>
-              <span>{group.items.length} รายการ</span>
+            <div className="lottery-slip-summary__group-head flex items-center justify-between gap-3 px-3.5 py-2.5 sm:px-4">
+              <span className="lottery-slip-summary__group-title">{group.typeLabel}</span>
+              <span className="lottery-slip-summary__group-count shrink-0">
+                {group.items.length} รายการ
+              </span>
             </div>
-            <ul className="lottery-slip-summary__rows m-0 px-2.5 pt-1 pb-2 sm:px-3">
+            <ul className="lottery-slip-summary__rows m-0 px-3 pb-2.5 pt-1.5 sm:px-3.5">
               {group.items.map((line) => (
                 <li
                   key={`${line.typeKey}-${line.number}-${line.amount}`}
-                  className="lottery-slip-summary__row grid grid-cols-[minmax(0,1fr)_auto_auto_minmax(4.5rem,auto)] items-center gap-1 py-1.5"
+                  className="lottery-slip-summary__row grid grid-cols-[minmax(0,1fr)_auto_auto_minmax(4.25rem,auto)] items-center gap-1.5 py-2"
                 >
                   <span className="lottery-slip-summary__number">
                     {formatLotteryDigitsDisplay(line.number)}
@@ -114,7 +116,7 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
         ))}
       </div>
 
-      <footer className="lottery-slip-summary__totals grid grid-cols-2 gap-2 mt-1 px-3 py-3">
+      <footer className="lottery-slip-summary__totals mt-0.5 grid grid-cols-2 gap-3 px-3.5 py-3.5 sm:px-4">
         <div className="lottery-slip-summary__total-cell flex flex-col items-center gap-[0.35rem] text-center">
           <span className="lottery-slip-summary__total-label">เดิมพัน</span>
           <strong className="lottery-slip-summary__total-value">{formatBaht(slip.totalStake)}</strong>
@@ -133,7 +135,7 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
         </p>
       ) : null}
 
-      <div className="lottery-slip-summary__actions grid grid-cols-2 gap-2 mt-1">
+      <div className="lottery-slip-summary__actions grid grid-cols-2 gap-2.5">
         <Link
           href="/lottery/slips"
           className="lottery-price-controls__back grid min-h-11 place-items-center px-3 text-center no-underline"

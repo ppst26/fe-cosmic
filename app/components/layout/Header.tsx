@@ -3,12 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  CosmicbetLogo,
-  HeaderWalletIcon,
-  SearchIcon,
-  HamburgerMenuIcon,
-} from "../ui/Icons";
+import { CosmicbetLogo, SearchIcon, HamburgerMenuIcon } from "../ui/Icons";
+import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
 import { VipRankEmblem } from "../vip/VipRankEmblem";
@@ -149,7 +145,7 @@ export function Header({
                   className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#222228] px-3 text-white transition-all hover:bg-[#2c2c34] active:scale-97 cursor-pointer"
                   aria-label="ฝากเงินและดูยอดเครดิต"
                 >
-                  <HeaderWalletIcon className="h-3.5 w-3.5 shrink-0 text-white" />
+                  <HeaderWalletAssetIcon className="h-4 w-4" />
                   <span className="text-xs font-normal tracking-tight text-white tabular-nums">
                     {balanceLabel}
                   </span>
@@ -248,7 +244,7 @@ export function Header({
                   className="glass-card--soft inline-flex min-h-(--header-control-height) max-w-[min(100%,10.5rem)] items-center gap-[0.45rem] rounded-(--header-chip-radius) px-[0.9rem] py-0"
                   aria-live="polite"
                 >
-                  <HeaderWalletIcon className="h-4.5 w-4.5 shrink-0 text-icon-active" />
+                  <HeaderWalletAssetIcon className="h-[18px] w-[18px]" />
                   <span className="max-w-[min(100%,7.5rem)] truncate text-sm font-medium tracking-[-0.01em] tabular-nums">
                     {balanceLabel}
                   </span>

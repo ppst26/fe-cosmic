@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { SearchIcon, HeaderWalletIcon, ProfileNavIcon } from "../ui/Icons";
+import { SearchIcon, ProfileNavIcon } from "../ui/Icons";
+import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { useAuth } from "../auth/AuthProvider";
 import {
   formatHeaderWalletBalance,
@@ -55,7 +56,7 @@ export function LobbyDesktopTopBar({
           <div className="h-10 w-32 animate-pulse rounded-[var(--radius-pill)] bg-[var(--surface-hover)]" />
         ) : isAuthenticated ? (
           <div className="lobby-desktop-topbar__wallet">
-            <HeaderWalletIcon className="h-[18px] w-[18px] text-[var(--icon-default)]" />
+            <HeaderWalletAssetIcon className="h-[18px] w-[18px]" />
             <span className="tabular-nums font-medium">{balanceLabel}</span>
           </div>
         ) : (

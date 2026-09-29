@@ -1,0 +1,96 @@
+/**
+ * Line tabs — underline active (หน้า standalone · hub sheet)
+ */
+.cosmic-line-tablist {
+  border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 90%, transparent);
+}
+
+.cosmic-line-tablist--cols-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cosmic-line-tablist--cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cosmic-line-tablist--cols-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.cosmic-line-tablist--scroll {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  padding-bottom: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.cosmic-line-tablist--scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.cosmic-line-tab {
+  position: relative;
+  margin: 0;
+  padding: 0.125rem 0.25rem 0.875rem;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--motion-fast) ease;
+}
+
+.cosmic-line-tablist--scroll .cosmic-line-tab {
+  flex: 0 0 auto;
+  min-width: max(5.5rem, 28%);
+  padding-inline: 0.75rem;
+  white-space: nowrap;
+}
+
+@media (min-width: 380px) {
+  .cosmic-line-tab {
+    padding-inline: 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+.cosmic-line-tab--with-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+}
+
+.cosmic-line-tab:hover {
+  color: var(--text-secondary);
+}
+
+.cosmic-line-tab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.cosmic-line-tab.is-active {
+  color: var(--accent-highlight);
+}
+
+.cosmic-line-tab.is-active::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--accent-highlight);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-highlight) 38%, transparent);
+  content: "";
+}

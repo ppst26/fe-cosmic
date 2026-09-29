@@ -36,7 +36,7 @@ export function responsiveSheetContentClass(
       : variant === "hub"
         ? "lg:w-[min(92vw,720px)]"
         : variant === "hubCompact"
-          ? "lg:w-[min(92vw,500px)]"
+          ? "lg:w-[min(94vw,640px)]"
           : variant === "wide"
             ? "lg:w-[min(92vw,520px)]"
             : variant === "signup"

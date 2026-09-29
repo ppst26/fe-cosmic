@@ -118,9 +118,13 @@ export function ReferralEarningPanel({
         />
       </div>
       ) : (
-        <div className="flex items-center justify-between gap-2">
-          <h2 className="text-sm font-medium text-[var(--text-primary)]">{sectionTitle}</h2>
-          <p className="text-xs text-[var(--text-secondary)]">
+        <div className="flex items-center justify-between gap-3">
+          <h2
+            className={`font-medium text-[var(--text-primary)] ${flat ? "text-base" : "text-sm"}`}
+          >
+            {sectionTitle}
+          </h2>
+          <p className={`text-[var(--text-secondary)] ${flat ? "text-sm" : "text-xs"}`}>
             รับสะสม {formatReferralCurrency(received)}
           </p>
         </div>
@@ -133,13 +137,21 @@ export function ReferralEarningPanel({
             : `${COSMIC_PANEL_GLASS} min-h-0 overflow-hidden`
         }
       >
-        <Table className="text-sm">
+        <Table className={flat ? "text-base" : "text-sm"}>
           <TableHeader>
             <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
-              <TableHead className="h-11 px-4 text-xs font-medium text-[var(--text-muted)] sm:px-5">
+              <TableHead
+                className={`px-4 font-medium text-[var(--text-muted)] sm:px-5 ${
+                  flat ? "h-12 text-sm" : "h-11 text-xs"
+                }`}
+              >
                 จำนวนโบนัส
               </TableHead>
-              <TableHead className="h-11 px-4 text-right text-xs font-medium text-[var(--text-muted)] sm:px-5">
+              <TableHead
+                className={`px-4 text-right font-medium text-[var(--text-muted)] sm:px-5 ${
+                  flat ? "h-12 text-sm" : "h-11 text-xs"
+                }`}
+              >
                 วันที่
               </TableHead>
             </TableRow>
@@ -162,10 +174,18 @@ export function ReferralEarningPanel({
                     index % 2 === 1 ? "bg-[var(--surface-mid)]/45" : "bg-transparent"
                   }`}
                 >
-                  <TableCell className="px-4 py-3.5 text-sm font-medium tabular-nums text-[var(--text-primary)] sm:px-5">
+                  <TableCell
+                    className={`px-4 font-medium tabular-nums text-[var(--text-primary)] sm:px-5 ${
+                      flat ? "py-4 text-base" : "py-3.5 text-sm"
+                    }`}
+                  >
                     {formatReferralCurrency(row.amountThb)}
                   </TableCell>
-                  <TableCell className="px-4 py-3.5 text-right text-xs tabular-nums text-[var(--text-secondary)] sm:px-5">
+                  <TableCell
+                    className={`px-4 text-right tabular-nums text-[var(--text-secondary)] sm:px-5 ${
+                      flat ? "py-4 text-sm" : "py-3.5 text-xs"
+                    }`}
+                  >
                     {formatReferralEarningDateTime(row.occurredAt)}
                   </TableCell>
                 </TableRow>
@@ -175,8 +195,12 @@ export function ReferralEarningPanel({
         </Table>
 
         {total > 0 && (
-          <div className="flex flex-col gap-3 border-t border-[var(--border-subtle)]/40 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-5">
-            <p className="text-xs text-[var(--text-muted)]">
+          <div
+            className={`flex flex-col gap-3 border-t border-[var(--border-subtle)]/40 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-5 ${
+              flat ? "py-4" : "py-3.5"
+            }`}
+          >
+            <p className={`text-[var(--text-muted)] ${flat ? "text-sm" : "text-xs"}`}>
               แสดง {rangeStart}–{rangeEnd} จาก {formatReferralRecordCount(total)}
             </p>
             <nav className="flex items-center gap-1.5" aria-label="เปลี่ยนหน้าประวัติโบนัส">

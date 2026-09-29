@@ -40,7 +40,11 @@ function CashbackPageInner() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="คืนยอด" backHref="/" />
+      <SlotProvidersHeader
+        title="คืนยอด"
+        subtitle="ตรวจสอบยอดคืนและกดรับเข้ากระเป๋า"
+        backHref="/"
+      />
 
       <main className="mobile-standalone-main pt-4">
         <CashbackPageContent initialTab={initialTab} />

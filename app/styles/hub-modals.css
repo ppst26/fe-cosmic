@@ -257,6 +257,23 @@
     width: 100%;
   }
 
+/* ชวนเพื่อน — แท็บช่วงเวลาใหญ่ อ่านชัดใน hub sheet */
+.cosmic-modal-shell--hub .referral-desktop-hub__period-tabs,
+.cosmic-mobile-sheet .referral-desktop-hub__period-tabs {
+  padding: 6px;
+}
+
+.cosmic-modal-shell--hub .referral-desktop-hub__period-tabs .cosmic-segment-btn,
+.cosmic-mobile-sheet .referral-desktop-hub__period-tabs .cosmic-segment-btn {
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.cosmic-modal-shell--hub .referral-desktop-hub__period-tabs .cosmic-segment-btn.is-active,
+.cosmic-mobile-sheet .referral-desktop-hub__period-tabs .cosmic-segment-btn.is-active {
+  color: var(--cta-white-fg);
+}
+
 .cosmic-modal-shell--hub .referral-mobile .cosmic-segment-track {
     width: 100%;
   }
@@ -277,6 +294,24 @@
 .cosmic-modal-shell--hub .promotions-desktop-hub__row--selected {
     background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
   }
+}
+
+/*
+ * เช็คอินรายวัน — sheet กว้างขึ้น · ไม่มีเส้นขอบซ้อน (พื้นไล่สีในการ์ดเต็ม shell)
+ */
+.cosmic-mobile-sheet.vip-modal--daily-check-in {
+  border: 0;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .cosmic-mobile-sheet.vip-modal--daily-check-in {
+    max-height: min(92dvh, 860px);
+  }
+}
+
+.cosmic-mobile-sheet.vip-modal--daily-check-in .daily-check-in-card--hub {
+  min-height: 100%;
 }
 
 /*
