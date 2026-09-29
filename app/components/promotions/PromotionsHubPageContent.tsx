@@ -11,6 +11,7 @@ import {
 import type { PromotionDetailId } from "@/app/data/promotionDetailMockData";
 import { PromotionDetailModal } from "./PromotionDetailModal";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
+import { PromotionsMobileFeed } from "./PromotionsMobileFeed";
 import { PromoHubDesktopMasterDetail } from "./PromoHubDesktopMasterDetail";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
@@ -50,46 +51,45 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
         </div>
       ) : null}
 
-      <div className={`flex flex-col gap-5 pb-4 ${showDesktopHub ? "lg:hidden" : ""}`}>
-        <header className="flex flex-col gap-3">
-          {!embedded ? (
-            <h1 className="hidden text-xl font-medium tracking-tight text-[var(--text-primary)] sm:text-2xl lg:block">
+      <div className="lg:hidden">
+        <PromotionsMobileFeed onOpenDetail={openDetail} />
+      </div>
+
+      {!showDesktopHub ? (
+        <div className="hidden flex-col gap-5 pb-4 lg:flex">
+          <header className="flex flex-col gap-3">
+            <h1 className="text-xl font-medium tracking-tight text-[var(--text-primary)] sm:text-2xl">
               โปรโมชั่น
             </h1>
+            <PromotionsCategoryTabs activeId={categoryFilter} onSelect={setCategoryFilter} />
+          </header>
+
+          {!hasAnyPromo ? (
+            <p className={`${COSMIC_PANEL_GLASS} px-4 py-8 text-center text-sm text-[var(--text-secondary)]`}>
+              ยังไม่มีโปรโมชั่นในหมวดนี้ — ลองเลือก All Promotions
+            </p>
           ) : null}
-          <PromotionsCategoryTabs
-            activeId={categoryFilter}
-            onSelect={setCategoryFilter}
-            className="-mx-[var(--layout-inline-gutter)] px-[var(--layout-inline-gutter)]"
-          />
-        </header>
 
-        {!hasAnyPromo ? (
-          <p className={`${COSMIC_PANEL_GLASS} px-4 py-8 text-center text-sm text-[var(--text-secondary)]`}>
-            ยังไม่มีโปรโมชั่นในหมวดนี้ — ลองเลือก All Promotions
-          </p>
-        ) : null}
+          {showHero ? (
+            <PromoHubHeroBanner hero={PROMOTIONS_HUB_HERO} onOpenDetail={openDetail} />
+          ) : null}
 
-        {showHero ? (
-          <PromoHubHeroBanner hero={PROMOTIONS_HUB_HERO} onOpenDetail={openDetail} />
-        ) : null}
-
-        {featuredItems.length > 0 ? (
-          <section aria-labelledby="promo-for-you-heading" className="flex flex-col gap-3">
-            <h2 id="promo-for-you-heading" className="text-base font-medium text-[var(--text-primary)] sm:text-lg">
-              โปรโมชั่นสำหรับคุณ
-            </h2>
-            <ul className="flex flex-col gap-3">
-              {featuredItems.map((item) => (
-                <li key={item.id}>
-                  <FeaturedPromoCard item={item} onOpenDetail={openDetail} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
-
-      </div>
+          {featuredItems.length > 0 ? (
+            <section aria-labelledby="promo-for-you-heading" className="flex flex-col gap-3">
+              <h2 id="promo-for-you-heading" className="text-base font-medium text-[var(--text-primary)] sm:text-lg">
+                โปรโมชั่นสำหรับคุณ
+              </h2>
+              <ul className="flex flex-col gap-3">
+                {featuredItems.map((item) => (
+                  <li key={item.id}>
+                    <FeaturedPromoCard item={item} onOpenDetail={openDetail} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+        </div>
+      ) : null}
 
       <PromotionDetailModal detailId={detailId} onClose={closeDetail} />
     </>

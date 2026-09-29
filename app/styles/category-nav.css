@@ -35,41 +35,77 @@
     margin-inline: auto;
   }
 
-  /**
-   * Header + CategoryNav sticky แยกชั้น — กันช่อง sub-pixel / พื้นต่างสีระหว่างเลื่อน
-   * ใช้ --lobby-mobile-header-h จาก HomeLobbyPage (ResizeObserver, ceil)
-   */
   .lobby-mobile-header-band {
-    position: relative;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    transform: translateZ(0);
   }
 
-  .lobby-mobile-header-band.is-mobile-chrome-stack-active::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    z-index: 1;
-    height: 2px;
-    background: inherit;
-    pointer-events: none;
+  /* ไม่มีเส้นคั่นระหว่าง header กับ CategoryNav ตอน sticky */
+  .lobby-desktop-shell__header-band > header {
+    border-bottom-width: 0;
+  }
+
+  .lobby-mobile-category-sticky-host {
+    position: relative;
+    width: 100%;
   }
 
   .lobby-mobile-category-sticky {
+    position: sticky;
+    z-index: 40;
+    width: calc(100% + 1.5rem);
+    max-width: 100vw;
+    background: var(--cosmic-page-base);
+    border: 0;
     top: calc(
       var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 68px)) - 1px
     );
+    margin-top: -1px;
+    box-shadow: none;
+    transition:
+      background 180ms ease,
+      box-shadow 180ms ease,
+      backdrop-filter 180ms ease;
   }
 
-  .lobby-mobile-category-sticky.is-locked {
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  /* ติด header แล้ว — fixed จนสุดหน้า (ไม่หลุดเมื่อ parent scroll จบ) */
+  .lobby-mobile-category-sticky.is-stuck {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100vw;
+    margin-top: 0;
+    margin-inline: 0;
+    top: calc(
+      var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 68px)) - 1px
+    );
+    background: rgb(14 11 22 / 0.78);
+    -webkit-backdrop-filter: blur(12px) saturate(1.12);
+    backdrop-filter: blur(12px) saturate(1.12);
+    box-shadow: 0 10px 26px rgb(0 0 0 / 0.22);
   }
 
-  .lobby-desktop-shell__header-band.is-mobile-chrome-stack-active > header {
-    border-bottom-color: transparent;
+  .lobby-mobile-category-sticky .category-nav__track {
+    padding-inline: 0.75rem;
+  }
+
+  /* หน้าแรกมือถือ — แถบ progress ชิด pills ลดช่องก่อนเกมยอดฮิต */
+  .page-shell--lobby .lobby-mobile-home-sections {
+    margin-top: 0;
+  }
+
+  .page-shell--lobby .lobby-mobile-home-sections .providers-section {
+    margin-top: 1rem;
+  }
+
+  .page-shell--lobby .lobby-mobile-category-sticky .category-nav--mobile {
+    padding-bottom: 0;
+  }
+
+  .page-shell--lobby .lobby-mobile-category-sticky .category-nav__progress-track {
+    margin-top: 2px;
+    height: 2px;
   }
 }
 
@@ -172,7 +208,7 @@
   height: 2px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
-  margin-top: 6px;
+  margin-top: 4px;
   overflow: hidden;
 }
 

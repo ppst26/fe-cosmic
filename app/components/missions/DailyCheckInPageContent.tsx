@@ -17,7 +17,13 @@ export function DailyCheckInPageContent({
   onClose,
 }: DailyCheckInPageContentProps) {
   return (
-    <div className="flex w-full justify-center px-1 py-1 sm:px-2 sm:py-3">
+    <div
+      className={
+        embedded
+          ? "flex w-full justify-center px-1 py-1 sm:px-2 sm:py-3"
+          : "flex w-full justify-center px-0 py-0"
+      }
+    >
       <DailyCheckInCard
         onClose={onClose}
         isStandalone={!embedded}

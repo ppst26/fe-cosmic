@@ -50,7 +50,7 @@ function PromotionDetailBanner({
       className={
         isHub
           ? "promotion-detail-panel__banner relative overflow-hidden px-4 py-4"
-          : "promotion-detail-panel__banner glass-card--soft relative overflow-hidden px-4 py-5"
+          : "promotion-detail-panel__banner promotion-detail-panel__banner--modal relative overflow-hidden px-4 py-5"
       }
       aria-label={content.bannerTitle}
     >
@@ -89,7 +89,10 @@ function PromotionDetailBanner({
 /** บล็อกรายละเอียดใน modal — แสดงเต็ม ไม่มี accordion */
 function PromotionDetailDetailsSection({ body }: { body: PromotionDetailContent }) {
   return (
-    <section className="promotion-detail-panel__details glass-card--soft" aria-label="รายละเอียดโปรโมชั่น">
+    <section
+      className="promotion-detail-panel__details promotion-detail-panel__details--solid"
+      aria-label="รายละเอียดโปรโมชั่น"
+    >
       <h3 className="promotion-detail-panel__details-heading">รายละเอียด</h3>
       <hr className="promotion-detail-panel__divider" />
       <PromotionDetailBodyExpanded body={body} isHub={false} />

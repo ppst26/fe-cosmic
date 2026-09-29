@@ -22,7 +22,7 @@ export default function DailyCheckInPage() {
 
       <SlotProvidersHeader title="เช็คอินรายวัน" backHref="/" />
 
-      <main className="mobile-standalone-main pt-4">
+      <main className="mobile-standalone-main pt-2">
         <DailyCheckInPageContent />
       </main>
 

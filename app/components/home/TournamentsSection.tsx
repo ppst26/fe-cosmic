@@ -91,7 +91,13 @@ export function TournamentsSection({
       aria-labelledby="lobby-tournaments-section-title"
     >
       <SectionHeader
-        icon={<MenuItemIcon iconId="activities" className="h-6 w-6 text-[var(--icon-default)]" />}
+        icon={
+          <MenuItemIcon
+            iconId="activities"
+            variant="asset"
+            className="h-6 w-6 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+          />
+        }
         title={title}
         titleId="lobby-tournaments-section-title"
         actionContent={

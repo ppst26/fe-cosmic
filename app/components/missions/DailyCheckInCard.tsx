@@ -59,13 +59,15 @@ export function DailyCheckInCard({
   return (
     <div
       className={cn(
-        "relative mx-auto w-full max-w-[500px] text-[var(--text-primary)] select-none p-4 sm:p-5",
-        isStandalone && [
-          "rounded-[24px] border border-[color-mix(in_srgb,var(--hub-modal-accent)_32%,rgb(255_255_255_/_0.1))]",
-          "bg-[radial-gradient(circle_at_50%_0%,color-mix(in_srgb,var(--hub-modal-lift)_62%,rgb(98_94_112)_38%)_0%,transparent_46%),linear-gradient(148deg,color-mix(in_srgb,var(--hub-modal-base)_70%,var(--hub-modal-lift))_0%,var(--hub-modal-base)_50%,#09090c_100%)]",
-          "shadow-[0_30px_80px_rgba(0,0,0,0.68),inset_0_0_0_1px_rgba(255,255,255,0.02),0_0_36px_rgba(31,30,40,0.28)]",
-          "backdrop-blur-[22px]",
-        ],
+        "relative mx-auto w-full max-w-[500px] text-[var(--text-primary)] select-none",
+        isStandalone
+          ? "bg-transparent px-0 py-1 shadow-none"
+          : [
+              "rounded-[24px] border border-[color-mix(in_srgb,var(--hub-modal-accent)_32%,rgb(255_255_255_/_0.1))] p-4 sm:p-5",
+              "bg-[radial-gradient(circle_at_50%_0%,color-mix(in_srgb,var(--hub-modal-lift)_62%,rgb(98_94_112)_38%)_0%,transparent_46%),linear-gradient(148deg,color-mix(in_srgb,var(--hub-modal-base)_70%,var(--hub-modal-lift))_0%,var(--hub-modal-base)_50%,#09090c_100%)]",
+              "shadow-[0_30px_80px_rgba(0,0,0,0.68),inset_0_0_0_1px_rgba(255,255,255,0.02),0_0_36px_rgba(31,30,40,0.28)]",
+              "backdrop-blur-[22px]",
+            ],
         className,
       )}
     >

@@ -69,14 +69,16 @@ export function HomeLobbyPage() {
   /** ยอดนิยม + carousel หมวดอื่น + Providers — มือถือเฉพาะหมวด home (design.md §6) */
   const showMobileLobbySections = isHomeLobby ? "" : "hidden";
 
-  const headerBandRef = useRef<HTMLDivElement>(null);
-  const categorySentinelRef = useRef<HTMLDivElement>(null);
+  const headerMeasureRef = useRef<HTMLDivElement>(null);
+  const categoryStickySentinelRef = useRef<HTMLDivElement>(null);
+  const categoryBarRef = useRef<HTMLDivElement>(null);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
-  const [isCategorySticky, setIsCategorySticky] = useState<boolean>(false);
+  const [categoryBarHeight, setCategoryBarHeight] = useState<number>(0);
+  const [isCategoryNavStuck, setIsCategoryNavStuck] = useState(false);
 
-  // วัดความสูงของ header band บนมือถือแบบไดนามิก เพื่อกำหนด top ให้ CategoryNav sticky ได้แนบสนิท
+  // วัดความสูง Header — ตั้ง --lobby-mobile-header-h ให้ CategoryNav sticky (CSS เท่านั้น ไม่สลับ DOM ตอน scroll)
   useEffect(() => {
-    const el = headerBandRef.current;
+    const el = headerMeasureRef.current;
     if (!el) return;
     const updateHeight = () => {
       const h = el.getBoundingClientRect().height;
@@ -88,22 +90,39 @@ export function HomeLobbyPage() {
     return () => ro.disconnect();
   }, []);
 
-  // ตรวจจับตำแหน่ง scroll เมื่อเลื่อนมาถึง CategoryNav ให้ sticky ไปพร้อมกับ Header
+  // CategoryNav ติด header — สลับพื้น solid → glass (IntersectionObserver ไม่ย้าย DOM)
   useEffect(() => {
-    const sentinel = categorySentinelRef.current;
+    const sentinel = categoryStickySentinelRef.current;
     if (!sentinel) return;
 
-    const checkSticky = () => {
-      const rect = sentinel.getBoundingClientRect();
-      const topThreshold = headerHeight > 0 ? headerHeight : 68;
-      const stuck = rect.top <= topThreshold + 2;
-      setIsCategorySticky((prev) => (prev !== stuck ? stuck : prev));
-    };
+    const topInset = headerHeight > 0 ? headerHeight : 68;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsCategoryNavStuck(!entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: `-${topInset}px 0px 0px 0px`,
+        threshold: 0,
+      },
+    );
 
-    window.addEventListener("scroll", checkSticky, { passive: true });
-    checkSticky();
-    return () => window.removeEventListener("scroll", checkSticky);
+    observer.observe(sentinel);
+    return () => observer.disconnect();
   }, [headerHeight]);
+
+  useEffect(() => {
+    const el = categoryBarRef.current;
+    if (!el) return;
+    const updateHeight = () => {
+      const h = el.getBoundingClientRect().height;
+      if (h > 0) setCategoryBarHeight(Math.ceil(h));
+    };
+    updateHeight();
+    const ro = new ResizeObserver(updateHeight);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   return (
     <>
@@ -116,18 +135,16 @@ export function HomeLobbyPage() {
         }
       >
         <div
-          ref={headerBandRef}
-          className={cn(
-            "lobby-desktop-shell__header-band cosmic-mobile-chrome-surface lobby-mobile-header-band sticky top-0 z-50 w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:bg-none lg:bg-transparent lg:pt-[env(safe-area-inset-top,0px)]",
-            isCategorySticky && "is-mobile-chrome-stack-active",
-          )}
+          className="lobby-desktop-shell__header-band cosmic-mobile-chrome-surface lobby-mobile-header-band sticky top-0 z-50 w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:bg-none lg:bg-transparent lg:pt-[env(safe-area-inset-top,0px)]"
         >
-          <Header
-            onSignUpClick={openSignUp}
-            onLoginClick={openLogin}
-            onMenuClick={() => openMenu()}
-            mobileSticky={false}
-          />
+          <div ref={headerMeasureRef} className="min-w-0">
+            <Header
+              onSignUpClick={openSignUp}
+              onLoginClick={openLogin}
+              onMenuClick={() => openMenu()}
+              mobileSticky={false}
+            />
+          </div>
         </div>
 
         <div className="lobby-desktop-shell__desk-body lg:relative lg:w-full lg:min-w-0 lg:flex-1">
@@ -169,10 +186,10 @@ export function HomeLobbyPage() {
                   />
 
                   <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 lg:mx-0 lg:max-w-none lg:px-0">
-                    {/* มือถือ: ประกาศ + banner */}
-                    <div className="lg:hidden">
+                    {/* มือถือ: hero → ประกาศ → โปร — ระยะแนบให้คอนเทนต์ต่อเนื่อง (หน้าแรก) */}
+                    <div className="flex flex-col gap-1 lg:hidden">
                       <WelcomeBanner onCtaClick={openSignUp} />
-                      <div className="mb-2 -mx-3">
+                      <div className="-mx-3">
                         <LobbyAnnouncementMarquee
                           messages={LOBBY_ANNOUNCEMENT_MESSAGES}
                           variant="mobile"
@@ -181,7 +198,7 @@ export function HomeLobbyPage() {
 
                       {/* ปุ่มเข้าสู่ระบบ / สมัครสมาชิก (แสดงเมื่อยังไม่ได้ล็อกอิน) */}
                       {!isAuthenticated && (
-                        <div className="mt-3 mb-1 grid grid-cols-2 gap-2.5">
+                        <div className="grid grid-cols-2 gap-2 pt-0.5">
                           <button
                             type="button"
                             onClick={() => openLogin()}
@@ -199,34 +216,54 @@ export function HomeLobbyPage() {
                           </button>
                         </div>
                       )}
-                    </div>
 
-                    {/* มือถือ: โปรโมชัน */}
-                    <div className="lg:hidden">
                       <PromoCarousel items={PROMO_CAROUSEL_DATA} />
                     </div>
 
-                    <div className="relative flex min-w-0 flex-col gap-4 overflow-x-clip rounded-none pb-6 pt-1 lg:gap-3 lg:overflow-hidden lg:pb-0 lg:pt-0">
-                      <div className="relative flex min-w-0 flex-col gap-4 lg:gap-3">
-                        {/* Sentinel สำหรับตรวจจับตำแหน่ง viewport เมื่อ scroll ถึงขอบล่างของ Header */}
-                        <div ref={categorySentinelRef} className="h-0 w-full pointer-events-none lg:hidden" />
+                    <div
+                      ref={categoryStickySentinelRef}
+                      className="pointer-events-none h-px w-full shrink-0 lg:hidden"
+                      aria-hidden="true"
+                    />
 
-                        {/* มือถือ: แถบหมวดหมู่เกม — เลื่อนถึง viewport/header แล้ว sticky ต่อเนื่อง */}
-                        <div
-                          className={cn(
-                            "lobby-mobile-category-sticky sticky z-40 -mx-3 px-3 py-1.5 lg:hidden transition-shadow duration-200",
-                            isCategorySticky
-                              ? "cosmic-mobile-chrome-surface is-locked shadow-[0_10px_26px_rgba(0,0,0,0.45)] border-b border-white/5"
-                              : "bg-[var(--cosmic-page-base)]",
-                          )}
-                        >
-                          <CategoryNav
-                            categories={CATEGORIES_DATA}
-                            navigationMode="route"
-                            variant="mobile"
-                            className="!my-0"
-                          />
-                        </div>
+                    {/* มือถือ: host คงความสูงใน flow · แถบ fixed ตอนประกบ header จนสุดหน้า */}
+                    <div
+                      className="lobby-mobile-category-sticky-host lg:hidden"
+                      style={
+                        isCategoryNavStuck && categoryBarHeight > 0
+                          ? { height: `${categoryBarHeight}px` }
+                          : undefined
+                      }
+                    >
+                      <div
+                        ref={categoryBarRef}
+                        className={cn(
+                          "lobby-mobile-category-sticky -mx-3 px-0",
+                          isHomeLobby ? "py-0.5" : "py-1.5",
+                          isCategoryNavStuck && "is-stuck",
+                        )}
+                      >
+                        <CategoryNav
+                          categories={CATEGORIES_DATA}
+                          navigationMode="route"
+                          variant="mobile"
+                          className="!my-0"
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      className={cn(
+                        "relative flex min-w-0 flex-col rounded-none pb-6 max-lg:overflow-x-visible lg:gap-3 lg:overflow-hidden lg:overflow-x-clip lg:pb-0 lg:pt-0",
+                        isHomeLobby ? "gap-1.5 pt-0 lg:gap-3" : "gap-4 pt-1 lg:gap-3",
+                      )}
+                    >
+                      <div
+                        className={cn(
+                          "relative flex min-w-0 flex-col max-lg:overflow-x-visible lg:gap-3",
+                          isHomeLobby ? "gap-1.5" : "gap-4",
+                        )}
+                      >
                         <div className="lobby-category-stack flex flex-col gap-3 lg:gap-4">
                           <div className="hidden lg:block">
                             <LobbyAnnouncementMarquee
@@ -245,9 +282,17 @@ export function HomeLobbyPage() {
                           <LobbyCategoryProviders categoryId={activeCategoryId} />
                         </div>
 
-                        <div className={showMobileLobbySections}>
-                          {GAME_SECTIONS_DATA.map((section) => (
-                            <GameSection key={section.id} section={section} />
+                        <div className={cn(showMobileLobbySections, isHomeLobby && "lobby-mobile-home-sections")}>
+                          {GAME_SECTIONS_DATA.map((section, index) => (
+                            <GameSection
+                              key={section.id}
+                              section={section}
+                              className={
+                                index === 0
+                                  ? "mt-0 sm:mt-1"
+                                  : "mt-4 sm:mt-6"
+                              }
+                            />
                           ))}
                           <ProvidersSection />
                         </div>

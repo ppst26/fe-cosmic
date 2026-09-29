@@ -14,7 +14,9 @@ import { MENU_DIALOG_TICKET_COUNT_MOCK } from "@/app/data/menuMockData";
 import { COSMIC_PANEL_GLASS } from "@/app/components/ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 
-const MENU_TICKET_ICON_SRC = "/assets/3d/menuicon/lottery.avif";
+import { getMenuIconSrc } from "@/app/data/menuIconAssets";
+
+const MENU_TICKET_ICON_SRC = getMenuIconSrc("ticket") ?? "/assets/3d/menuicon/lottery.avif";
 
 interface MenuDrawerWalletCardsProps {
   className?: string;

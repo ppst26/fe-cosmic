@@ -36,9 +36,7 @@ export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModal
             className="promo-detail-modal cosmic-modal-shell fixed left-1/2 top-1/2 z-[80] flex max-h-[min(92dvh,680px)] w-[min(calc(100vw-1.25rem),420px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-[var(--text-primary)] outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-200"
           >
             <div className="promo-detail-modal__header">
-              <Dialog.Title className="promo-detail-modal__title text-sm font-medium sm:text-base">
-                รายละเอียดโปรโมชั่น
-              </Dialog.Title>
+              <Dialog.Title className="sr-only">{content.bannerTitle}</Dialog.Title>
               <Dialog.Close asChild>
                 <button
                   type="button"

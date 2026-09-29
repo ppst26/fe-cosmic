@@ -99,10 +99,6 @@
     @apply text-[2.125rem];
   }
 
-  .promo-detail-modal__title {
-    @apply text-sm font-medium;
-  }
-
   .promotion-detail-panel__banner-title {
     @apply font-medium;
   }

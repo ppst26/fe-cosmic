@@ -89,7 +89,13 @@ export function JackpotSection({
   return (
     <section className="mt-10 w-full min-w-0 sm:mt-12" aria-labelledby="lobby-activities-section-title">
       <SectionHeader
-        icon={<MenuItemIcon iconId="activities" className="h-6 w-6 text-[var(--icon-default)]" />}
+        icon={
+          <MenuItemIcon
+            iconId="activities"
+            variant="asset"
+            className="h-6 w-6 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+          />
+        }
         title={title}
         titleId="lobby-activities-section-title"
         actionContent={

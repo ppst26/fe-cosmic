@@ -2,20 +2,9 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 import { CategoryItem, CategoryId } from "../../types/lobby";
 import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
-import { CATEGORY_3D_ICONS } from "@/app/data/lobbyMockData";
-import {
-  CardsIcon,
-  FishIcon,
-  FootballIcon,
-  GameShowsIcon,
-  HomeNavIcon,
-  LiveCasinoIcon,
-  PromoTicketIcon,
-  SlotsIcon,
-} from "../ui/Icons";
+import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { cn } from "@/lib/utils";
 
 interface CategoryNavProps {
@@ -29,45 +18,6 @@ interface CategoryNavProps {
   navigationMode?: "route" | "none";
   /** "desktop" = การ์ดชิปเต็มคอลัมน์เดิม · "mobile" = ไอคอนกล่องมน 44px + ข้อความนอก */
   variant?: "desktop" | "mobile";
-}
-
-/**
- * ไอคอนหมวดหมู่เกม — ใช้รูป 3D เมนูไอคอนจาก public/assets/3d/menuicon/
- */
-function getCategoryIcon(id: CategoryId, className = "w-6 h-6") {
-  const iconSrc = CATEGORY_3D_ICONS[id];
-  if (iconSrc) {
-    return (
-      <Image
-        src={iconSrc}
-        alt=""
-        width={48}
-        height={48}
-        className={cn("object-contain shrink-0 select-none pointer-events-none", className)}
-      />
-    );
-  }
-
-  switch (id) {
-    case "home":
-      return <HomeNavIcon className={className} />;
-    case "casino":
-      return <LiveCasinoIcon className={className} />;
-    case "slots":
-      return <SlotsIcon className={className} />;
-    case "fishing":
-      return <FishIcon className={className} />;
-    case "sports":
-      return <FootballIcon className={className} />;
-    case "lottery":
-      return <PromoTicketIcon className={className} />;
-    case "games":
-      return <GameShowsIcon className={className} />;
-    case "cards":
-      return <CardsIcon className={className} />;
-    default:
-      return <LiveCasinoIcon className={className} />;
-  }
 }
 
 /**
@@ -212,7 +162,10 @@ export function CategoryNav({
                 aria-label={category.label}
               >
                 <span className="category-nav__icon flex items-center justify-center shrink-0" aria-hidden="true">
-                  {getCategoryIcon(category.id, "h-9 w-9 xl:h-10 xl:w-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-transform duration-200 group-hover:scale-105")}
+                  <Menu3DIcon
+                    iconId={category.id}
+                    className="h-9 w-9 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-transform duration-200 group-hover:scale-105 xl:h-10 xl:w-10"
+                  />
                 </span>
                 <span className="category-nav__label whitespace-nowrap tracking-tight">{category.label}</span>
               </button>
@@ -257,7 +210,10 @@ export function CategoryNav({
                 )}
                 aria-hidden="true"
               >
-                {getCategoryIcon(category.id, "h-8 w-8 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]")}
+                <Menu3DIcon
+                  iconId={category.id}
+                  className="h-8 w-8 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]"
+                />
               </span>
               <span className="category-nav__label whitespace-nowrap tracking-tight">{category.label}</span>
             </button>

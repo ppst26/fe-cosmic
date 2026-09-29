@@ -3,32 +3,49 @@
 import React from "react";
 import {
   PROMOTIONS_HUB_CATEGORY_TABS,
+  PROMOTIONS_MOBILE_CATEGORY_TABS,
   type PromoHubCategoryFilterId,
+  type PromoHubMobileCategoryFilterId,
 } from "@/app/data/promotionsHubMockData";
-import { COSMIC_BTN_GLASS_PILL, COSMIC_SEGMENT_GLASS_WHITE } from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_GLASS_PILL } from "../ui/cosmicButtonClasses";
 
 /**
  * แถบฟิลเตอร์หมวดโปรโมชั่น — ใช้ในหน้า /promotions และ PromotionsDesktopHubLayout
  */
-export function PromotionsCategoryTabs({
-  activeId,
-  onSelect,
-  className,
-  variant = "default",
-}: {
-  activeId: PromoHubCategoryFilterId;
-  onSelect: (id: PromoHubCategoryFilterId) => void;
-  className?: string;
-  /** desktop hub sheet — segment glass ไม่ใช่ pill การ์ดซ้อน */
-  variant?: "default" | "flat";
-}) {
+type PromotionsCategoryTabsProps =
+  | {
+      variant?: "default" | "flat";
+      activeId: PromoHubCategoryFilterId;
+      onSelect: (id: PromoHubCategoryFilterId) => void;
+      className?: string;
+      mobileActiveId?: never;
+      onMobileSelect?: never;
+    }
+  | {
+      variant: "mobile";
+      mobileActiveId: PromoHubMobileCategoryFilterId;
+      onMobileSelect: (id: PromoHubMobileCategoryFilterId) => void;
+      className?: string;
+      activeId?: never;
+      onSelect?: never;
+    };
+
+/**
+ * แถบฟิลเตอร์หมวดโปรโมชั่น — ใช้ในหน้า /promotions และ PromotionsDesktopHubLayout
+ */
+export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
+  const { className, variant = "default" } = props;
   const isFlat = variant === "flat";
+  const isMobile = variant === "mobile";
+
+  const tabs = isMobile ? PROMOTIONS_MOBILE_CATEGORY_TABS : PROMOTIONS_HUB_CATEGORY_TABS;
 
   return (
     <div
       className={[
         "promo-hub-category-tabs flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
         isFlat ? "promotions-desktop-hub__category-track promo-hub-category-tabs--flat flex-wrap gap-2 p-0" : "",
+        isMobile ? "promo-hub-category-tabs--mobile gap-3" : "",
         className ?? "",
       ]
         .filter(Boolean)
@@ -36,26 +53,41 @@ export function PromotionsCategoryTabs({
       role="tablist"
       aria-label="กรองโปรโมชั่นตามหมวด"
     >
-      {PROMOTIONS_HUB_CATEGORY_TABS.map((tab) => {
-        const selected = activeId === tab.id;
+      {tabs.map((tab) => {
+        const selected = isMobile
+          ? props.mobileActiveId === tab.id
+          : props.activeId === tab.id;
         return (
           <button
             key={tab.id}
             type="button"
             role="tab"
             aria-selected={selected}
-            onClick={() => onSelect(tab.id)}
+            onClick={() => {
+              if (props.variant === "mobile") {
+                props.onMobileSelect(tab.id as PromoHubMobileCategoryFilterId);
+                return;
+              }
+              props.onSelect(tab.id as PromoHubCategoryFilterId);
+            }}
             className={
-              isFlat
-                ? `${COSMIC_BTN_GLASS_PILL} shrink-0 whitespace-nowrap !px-4 !py-2.5 !text-sm font-medium sm:!px-5 sm:!text-base ${
-                    selected ? "is-active" : ""
-                  }`
-                : [
-                    "glass-card--soft shrink-0 whitespace-nowrap rounded-[var(--radius-pill)] px-4 py-2 text-sm font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:px-5 sm:py-2.5",
+              isMobile
+                ? [
+                    "promo-hub-category-tabs__mobile-pill shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors",
                     selected
-                      ? "is-active text-[var(--text-primary)]"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
+                      ? "is-active"
+                      : "bg-transparent text-[var(--text-secondary)]",
                   ].join(" ")
+                : isFlat
+                  ? `${COSMIC_BTN_GLASS_PILL} shrink-0 whitespace-nowrap !px-4 !py-2.5 !text-sm font-medium sm:!px-5 sm:!text-base ${
+                      selected ? "is-active" : ""
+                    }`
+                  : [
+                      "glass-card--soft shrink-0 whitespace-nowrap rounded-[var(--radius-pill)] px-4 py-2 text-sm font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:px-5 sm:py-2.5",
+                      selected
+                        ? "is-active text-[var(--text-primary)]"
+                        : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
+                    ].join(" ")
             }
           >
             {tab.label}

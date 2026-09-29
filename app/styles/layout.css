@@ -153,6 +153,24 @@
   color: var(--text-primary);
 }
 
+/** รายการโปรมือถือ — แยกการ์ดชัด (PromotionsMobileFeed) */
+.promotions-mobile-feed .promotions-mobile-feed__card.glass-card--soft {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.06) inset,
+    0 10px 28px rgb(0 0 0 / 0.24);
+}
+
+/** แท็บหมวดโปรมือถือ — pill แอคทีฟโทนแดง/ม่วง (ไม่ใช้ glass chip) */
+.promo-hub-category-tabs--mobile .promo-hub-category-tabs__mobile-pill.is-active {
+  background: linear-gradient(
+    135deg,
+    rgb(190 24 93 / 0.55),
+    rgb(126 34 206 / 0.45)
+  );
+  color: var(--text-primary);
+  box-shadow: 0 2px 14px rgb(190 24 93 / 0.22);
+}
+
 /** หน้ากิจกรรม (/event) — การ์ดรายการ + ชิปหมวด (ActivityHubShared · ActivitiesMobileHub) */
 .activities-mobile-hub .activity-hub-mobile-card.glass-card--soft {
   box-shadow: 0 10px 28px rgb(0 0 0 / 0.22);
@@ -184,21 +202,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5rem;
-  padding: 0.875rem 0.75rem 0.625rem;
-}
-
-.promo-detail-modal__title {
-  min-width: 0;
-  flex: 1;
-  text-align: right;
-  line-height: 1.35;
-  color: var(--text-primary);
-}
-
-@media (min-width: 640px) {
-  .promo-detail-modal__title {
-  }
+  padding: 0.625rem 0.625rem 0.25rem;
 }
 
 .promo-detail-modal__scroll {
@@ -215,10 +219,12 @@
   padding-top: var(--space-1);
 }
 
-.promotion-detail-panel__banner.glass-card--soft {
+.promotion-detail-panel--modal .promotion-detail-panel__banner--modal {
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-outer);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.08),
-    0 10px 28px rgb(0 0 0 / 0.22);
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 8px 24px rgb(0 0 0 / 0.28);
 }
 
 .promotion-detail-panel__banner-glow {
@@ -242,8 +248,13 @@
   color: transparent;
 }
 
-.promotion-detail-panel__details.glass-card--soft {
-  box-shadow: none;
+.promotion-detail-panel--modal .promotion-detail-panel__details--solid {
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  background: var(--surface-solid-inner);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 8px 24px rgb(0 0 0 / 0.22);
 }
 
 .promotion-detail-panel__details-heading {

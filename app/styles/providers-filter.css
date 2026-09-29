@@ -131,8 +131,12 @@
   }
 }
 
-/* WelcomeBanner carousel — dots ด้านใน (โทนเดียวกับ promo carousel) */
+/* WelcomeBanner + PromoCarousel — dots ทับล่างรูป */
 .welcome-banner__track {
+  scroll-padding-inline: 0;
+}
+
+.promo-carousel__track {
   scroll-padding-inline: 0;
 }
 

@@ -53,7 +53,7 @@ export function WelcomeBanner({
 
   return (
     <section
-      className="welcome-banner relative my-2 w-full min-w-0"
+      className="welcome-banner relative my-0 w-full min-w-0 sm:my-2"
       aria-label="แบนเนอร์ต้อนรับและโปรโมชัน"
     >
       <div className="relative">

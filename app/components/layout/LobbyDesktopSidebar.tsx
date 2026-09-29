@@ -3,20 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import type { CategoryId, CategoryItem } from "@/app/types/lobby";
-import { CATEGORY_3D_ICONS } from "@/app/data/lobbyMockData";
-import {
-  CardsIcon,
-  ContactNavIcon,
-  FishIcon,
-  FootballIcon,
-  GameShowsIcon,
-  HomeNavIcon,
-  LiveCasinoIcon,
-  PromoTicketIcon,
-  SlotsIcon,
-} from "../ui/Icons";
+import { ContactNavIcon } from "../ui/Icons";
+import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import {
   MENU_DIALOG_SECTIONS,
   type MenuDialogAction,
@@ -36,42 +25,8 @@ interface LobbyDesktopSidebarProps {
   navigationMode?: "route" | "none";
 }
 
-/** ไอคอนหมวด — ใช้ชุดเดียวกับ CategoryNav */
-function getCategoryIcon(id: CategoryId, className = "h-7 w-7 shrink-0 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]") {
-  const iconSrc = CATEGORY_3D_ICONS[id];
-  if (iconSrc) {
-    return (
-      <Image
-        src={iconSrc}
-        alt=""
-        width={48}
-        height={48}
-        className={cn("object-contain shrink-0 select-none pointer-events-none", className)}
-      />
-    );
-  }
-
-  switch (id) {
-    case "home":
-      return <HomeNavIcon className={className} />;
-    case "casino":
-      return <LiveCasinoIcon className={className} />;
-    case "slots":
-      return <SlotsIcon className={className} />;
-    case "fishing":
-      return <FishIcon className={className} />;
-    case "sports":
-      return <FootballIcon className={className} />;
-    case "lottery":
-      return <PromoTicketIcon className={className} />;
-    case "games":
-      return <GameShowsIcon className={className} />;
-    case "cards":
-      return <CardsIcon className={className} />;
-    default:
-      return <LiveCasinoIcon className={className} />;
-  }
-}
+const SIDEBAR_MENU_ICON_CLASS =
+  "h-7 w-7 shrink-0 object-contain drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]";
 
 function renderMenuTile(
   tile: MenuDialogTile,
@@ -80,7 +35,7 @@ function renderMenuTile(
   const inner = (
     <>
       <span className="lobby-desktop-sidebar__link-icon-wrap flex shrink-0 items-center justify-center" aria-hidden="true">
-        <MenuItemIcon iconId={tile.iconId} className="h-5 w-5 shrink-0 text-current" />
+        <MenuItemIcon iconId={tile.iconId} variant="asset" className={SIDEBAR_MENU_ICON_CLASS} />
       </span>
       <span className="lobby-desktop-sidebar__link-label min-w-0 flex-1 truncate">{tile.label}</span>
     </>
@@ -188,7 +143,7 @@ export function LobbyDesktopSidebar({
                   title={category.label}
                 >
                   <span className="lobby-desktop-sidebar__link-icon-wrap flex shrink-0 items-center justify-center" aria-hidden="true">
-                    {getCategoryIcon(category.id)}
+                    <Menu3DIcon iconId={category.id} className={SIDEBAR_MENU_ICON_CLASS} />
                   </span>
                   <span className="lobby-desktop-sidebar__link-label min-w-0 flex-1 truncate">{category.label}</span>
                 </button>

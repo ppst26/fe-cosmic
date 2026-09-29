@@ -50,16 +50,17 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
 
   return (
     <section
-      className="relative my-3 w-full min-w-0 overflow-hidden"
+      className="promo-carousel relative my-0 w-full min-w-0 overflow-hidden sm:my-3"
       aria-label="แบนเนอร์โปรโมชันและสิทธิพิเศษ"
     >
-      <div
-        ref={scrollContainerRef}
-        onScroll={handleScroll}
-        className="flex gap-2 overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory py-1"
-        tabIndex={0}
-        aria-label="รายการโปรโมชัน"
-      >
+      <div className="relative min-w-0">
+        <div
+          ref={scrollContainerRef}
+          onScroll={handleScroll}
+          className="promo-carousel__track flex gap-2 overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory py-0"
+          tabIndex={0}
+          aria-label="รายการโปรโมชัน"
+        >
         {items.map((item) => (
           <Link
             key={item.id}
@@ -113,25 +114,29 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
             </div>
           </Link>
         ))}
-      </div>
+        </div>
 
-      <div className="mt-3 flex items-center justify-center gap-1.5" aria-hidden="true">
-        {items.slice(0, 5).map((_, idx) => {
-          const isDotActive = idx === activeIndex;
-          return (
-            <button
-              key={`dot-${idx}`}
-              type="button"
-              onClick={() => handleDotClick(idx)}
-              className={`rounded-full transition-all duration-200 ${
-                isDotActive
-                  ? "h-2 w-7 bg-[#0968f8] shadow-[0_0_8px_rgba(9,104,248,0.6)]"
-                  : "h-2 w-2 bg-[#2d294e] hover:bg-[#433e70]"
-              }`}
-              aria-label={`ไปยังสไลด์ที่ ${idx + 1}`}
-            />
-          );
-        })}
+        {items.length > 1 ? (
+          <div
+            className="promo-carousel__dots pointer-events-none absolute inset-x-0 bottom-2.5 z-20 flex justify-center sm:bottom-3"
+            aria-hidden="true"
+          >
+            <div className="welcome-banner__dots-pill pointer-events-auto">
+              {items.slice(0, 5).map((item, idx) => {
+                const isDotActive = idx === activeIndex;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleDotClick(idx)}
+                    className={`welcome-banner__dot ${isDotActive ? "is-active" : ""}`}
+                    aria-label={`ไปยังสไลด์ที่ ${idx + 1}`}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
       </div>
     </section>
   );

@@ -1,21 +1,7 @@
 /**
- * ไอคอนเมนู dialog — public/assets/icons (RightMenuDrawer · MenuItemIcon variant asset)
+ * @deprecated ใช้ menuIconAssets.ts — re-export เพื่อ import เก่า
  */
-export const MENU_DIALOG_ICON_SRC: Record<string, string> = {
-  profile: "/assets/3d/menuicon/profile.avif",
-  transactions: "/assets/3d/menuicon/transactions.avif",
-  rank: "/assets/3d/menuicon/rank.avif",
-  promotions: "/assets/3d/menuicon/promotion.avif",
-  activities: "/assets/3d/menuicon/event.avif",
-  cashback: "/assets/3d/menuicon/cashback.avif",
-  "check-in": "/assets/3d/menuicon/checkin.avif",
-  wheel: "/assets/3d/menuicon/wheel.avif",
-  gems: "/assets/3d/menuicon/diamond.avif",
-  referral: "/assets/3d/menuicon/referral.avif",
-  coupon: "/assets/3d/menuicon/coupon.avif",
-  ticket: "/assets/3d/menuicon/lottery.avif",
-};
-
-export function getMenuDialogIconSrc(iconId: string): string | undefined {
-  return MENU_DIALOG_ICON_SRC[iconId];
-}
+export {
+  MENU_ICON_SRC as MENU_DIALOG_ICON_SRC,
+  getMenuIconSrc as getMenuDialogIconSrc,
+} from "@/app/data/menuIconAssets";

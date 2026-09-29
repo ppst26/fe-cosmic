@@ -63,20 +63,8 @@ export const CATEGORIES_DATA: CategoryItem[] = [
   { id: "cards", label: "เกมไพ่", href: "/cards" },
 ];
 
-/**
- * ไอคอน 3D สำหรับหมวดหมู่เกมใน CategoryNav (mobile & PC)
- * อ้างอิง asset ใน public/assets/3d/menuicon/ (เฉพาะหมวดหมู่เกมที่มีอยู่)
- */
-export const CATEGORY_3D_ICONS: Partial<Record<CategoryId, string>> = {
-  home: "/assets/3d/menuicon/home.avif",
-  casino: "/assets/3d/menuicon/casino.avif",
-  slots: "/assets/3d/menuicon/slot.avif",
-  fishing: "/assets/3d/menuicon/fish.avif",
-  sports: "/assets/3d/menuicon/sport.avif",
-  lottery: "/assets/3d/menuicon/lottery.avif",
-  games: "/assets/3d/menuicon/games.avif",
-  cards: "/assets/3d/menuicon/card.avif",
-};
+/** ไอคอน 3D หมวดเกม — แหล่งเดียวกับเมนู (menuIconAssets) */
+export { CATEGORY_MENU_ICON_SRC as CATEGORY_3D_ICONS } from "@/app/data/menuIconAssets";
 
 /**
  * แบนเนอร์โปรโมหน้าแรก — public/HomeProBanner (เรียงตาม PROMO_CAROUSEL_DATA 4 ใบแรก)
