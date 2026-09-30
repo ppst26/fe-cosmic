@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { getLotteryCatalogEntry } from "@/app/data/lotteryCatalogMockData";
 import { fetchLotteryPlayRounds, fetchThaiLottoBoard } from "@/lib/api/lotteryContent";
 import { LotteryMarketShell } from "./LotteryMarketShell";
@@ -16,7 +16,15 @@ interface LotteryMarketRoundsViewProps {
  */
 export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewProps) {
   const entry = getLotteryCatalogEntry(marketSlug);
-  const rounds = useMemo(() => fetchLotteryPlayRounds(marketSlug), [marketSlug]);
+  /** รอบอิงเวลาจริง — สร้างหลัง mount เพื่อไม่ให้ SSR/client คนละ snapshot */
+  const [roundsReady, setRoundsReady] = useState(false);
+  useEffect(() => {
+    setRoundsReady(true);
+  }, []);
+  const rounds = useMemo(
+    () => (roundsReady ? fetchLotteryPlayRounds(marketSlug) : []),
+    [marketSlug, roundsReady],
+  );
   const thaiLastResult = fetchThaiLottoBoard().lastResult;
 
   if (!entry) {
@@ -31,7 +39,17 @@ export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewP
 
   return (
     <LotteryMarketShell activeEntry={entry} roundCount={openCount}>
-      <LotteryPlayRoundList rounds={rounds} marketSlug={marketSlug} basePath={entry.roundsHref} />
+      {!roundsReady ? (
+        <p
+          className="py-10 text-center text-sm text-[var(--text-muted)]"
+          aria-busy="true"
+          aria-live="polite"
+        >
+          กำลังโหลดรอบ…
+        </p>
+      ) : (
+        <LotteryPlayRoundList rounds={rounds} marketSlug={marketSlug} basePath={entry.roundsHref} />
+      )}
       {showThaiLastResult ? (
         <div className="lottery-market-rounds__result hidden mt-4 min-w-0 lg:block">
           <ThaiLottoResultPanel result={thaiLastResult} />
