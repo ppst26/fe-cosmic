@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { ProfileUser } from "@/app/types/auth";
 import { fetchProfile } from "@/lib/auth/client";
 import { useAuth } from "@/app/components/auth/AuthProvider";
+import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
@@ -17,7 +18,8 @@ import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
  */
 export default function ProfileAccountPage() {
   const router = useRouter();
-  const { isAuthenticated, isLoading, logout } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(() => router.replace("/"));
   const { openVipModal } = useVipModal();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
@@ -41,11 +43,6 @@ export default function ProfileAccountPage() {
       cancelled = true;
     };
   }, [isAuthenticated]);
-
-  const handleLogout = async () => {
-    await logout();
-    router.replace("/");
-  };
 
   const loadingProfile = isAuthenticated && profile === undefined;
 
@@ -75,11 +72,13 @@ export default function ProfileAccountPage() {
         {!loadingProfile && profile && (
           <ProfileSheetBody
             profile={profile}
-            onLogout={() => void handleLogout()}
+            onLogout={openLogoutConfirm}
             onOpenVip={() => openVipModal()}
           />
         )}
       </main>
+
+      <LogoutConfirmDialog />
 
       <FloatingBottomNav
         items={BOTTOM_NAV_DATA}

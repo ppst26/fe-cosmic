@@ -25,6 +25,7 @@
 
 /* ── Modals & sheets ── */
 @import "./styles/modals.css";
+@import "./styles/confirm-dialog.css";
 @import "./styles/menu-drawer.css";
 @import "./styles/cosmic-line-tabs.css";
 @import "./styles/profile-account.css";

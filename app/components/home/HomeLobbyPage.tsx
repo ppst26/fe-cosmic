@@ -227,7 +227,7 @@ export function HomeLobbyPage() {
                       <div
                         ref={categoryBarRef}
                         className={cn(
-                          "lobby-mobile-category-sticky -mx-3 px-0",
+                          "lobby-mobile-category-sticky w-full min-w-0 px-0",
                           isHomeLobby ? "py-1.5" : "py-2",
                           isCategoryNavStuck && "is-stuck",
                         )}

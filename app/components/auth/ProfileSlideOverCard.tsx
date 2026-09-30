@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
 import type { ProfileUser } from "@/app/types/auth";
 import { fetchProfile } from "@/lib/auth/client";
-import { useAuth } from "./AuthProvider";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { getIsDesktopViewport } from "../hub/useIsDesktop";
@@ -21,6 +20,7 @@ import {
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
 import { Menu3DIcon } from "../ui/Menu3DIcon";
+import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
 
 interface ProfileSlideOverCardProps {
   isOpen: boolean;
@@ -33,7 +33,7 @@ interface ProfileSlideOverCardProps {
  */
 export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardProps) {
   const router = useRouter();
-  const { logout } = useAuth();
+  const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(onClose);
   const { openVipModal } = useVipModal();
   const { openHub } = useDesktopHubModal();
   const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
@@ -58,11 +58,6 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
   };
 
   const loading = isOpen && profile === undefined;
-
-  const handleLogout = async () => {
-    await logout();
-    onClose();
-  };
 
   const handleOpenTransactions = () => {
     onClose();
@@ -97,6 +92,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
   };
 
   return (
+    <>
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className={responsiveSheetOverlayClass("z-[65]")} />
@@ -171,14 +167,14 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
                       onOpenTransactions={handleOpenTransactions}
                       onOpenLossRebate={handleOpenLossRebate}
                       onOpenVip={handleOpenVip}
-                      onLogout={() => void handleLogout()}
+                      onLogout={openLogoutConfirm}
                     />
                   </div>
 
                   <div className="hidden lg:block">
                     <ProfileSheetBody
                       profile={profile}
-                      onLogout={() => void handleLogout()}
+                      onLogout={openLogoutConfirm}
                       onOpenVip={handleOpenVip}
                     />
                   </div>
@@ -200,5 +196,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
+    <LogoutConfirmDialog />
+    </>
   );
 }

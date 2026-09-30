@@ -16,6 +16,7 @@ import {
   SupportHeadsetIcon,
 } from "../ui/Icons";
 import { COSMIC_BTN_LOGOUT, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
+import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
 
 /**
  * เนื้อหาหน้าโปรไฟล์ — โหลดจาก /api/auth/profile
@@ -23,7 +24,8 @@ import { COSMIC_BTN_LOGOUT, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses
  */
 export function ProfilePageContent() {
   const router = useRouter();
-  const { isAuthenticated, isLoading, logout } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(() => router.replace("/"));
   const [profile, setProfile] = useState<ProfileUser | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(true);
 
@@ -45,11 +47,6 @@ export function ProfilePageContent() {
       active = false;
     };
   }, [isAuthenticated, isLoading, router]);
-
-  const handleLogout = async () => {
-    await logout();
-    router.replace("/");
-  };
 
   if (isLoading || loadingProfile) {
     return (
@@ -116,13 +113,14 @@ export function ProfilePageContent() {
 
         <button
           type="button"
-          onClick={() => void handleLogout()}
+          onClick={openLogoutConfirm}
           className={COSMIC_BTN_LOGOUT}
         >
           <LogOutIcon className="h-5 w-5" />
           ออกจากระบบ
         </button>
       </div>
+      <LogoutConfirmDialog />
     </main>
   );
 }

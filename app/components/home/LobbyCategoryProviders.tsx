@@ -11,22 +11,18 @@ import { SportProviderCards } from "../sport/SportProviderCards";
 import {
   FEATURED_SLOT_PROVIDERS,
   GRID_SLOT_PROVIDERS,
-  SLOT_FILTER_TABS,
   type FeaturedSlotProviderItem,
   type GridSlotProviderItem,
 } from "../../data/slotProvidersData";
 import {
-  CASINO_FILTER_TABS,
   CASINO_ITEMS,
   type CasinoCardItem,
 } from "../../data/casinoProvidersData";
 import {
-  SPORT_FILTER_TABS,
   SPORT_ITEMS,
   type SportCardItem,
 } from "../../data/sportProvidersData";
 import {
-  FISHING_FILTER_TABS,
   FISHING_ITEMS,
   type FishingCardItem,
 } from "../../data/fishingProvidersData";
@@ -115,21 +111,21 @@ export function LobbyCategoryProviders({ categoryId }: LobbyCategoryProvidersPro
   return <LobbyCategoryProvidersContent categoryId={categoryId} />;
 }
 
+const LOBBY_PROVIDER_FILTER_ID = "all-in-one";
+
 function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersProps) {
-  const [activeFilterId, setActiveFilterId] = useState("all-in-one");
   const [searchQuery, setSearchQuery] = useState("");
   const [slotProviderId, setSlotProviderId] = useState<string | null>(null);
 
   useEffect(() => {
     setSlotProviderId(null);
-    setActiveFilterId("all-in-one");
     setSearchQuery("");
   }, [categoryId]);
 
   const slotsContent = useMemo(() => {
-    let grid = GRID_SLOT_PROVIDERS.filter((p) => matchesGridFilter(p, activeFilterId));
+    let grid = GRID_SLOT_PROVIDERS.filter((p) => matchesGridFilter(p, LOBBY_PROVIDER_FILTER_ID));
     let featured = FEATURED_SLOT_PROVIDERS.filter((p) =>
-      matchesFeaturedFilter(p, activeFilterId),
+      matchesFeaturedFilter(p, LOBBY_PROVIDER_FILTER_ID),
     );
 
     if (searchQuery.trim()) {
@@ -139,15 +135,15 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
     }
 
     const totalCount =
-      activeFilterId === "all-in-one" && !searchQuery.trim()
+      LOBBY_PROVIDER_FILTER_ID === "all-in-one" && !searchQuery.trim()
         ? 42
         : featured.length + grid.length;
 
     return { grid, featured, totalCount };
-  }, [activeFilterId, searchQuery]);
+  }, [LOBBY_PROVIDER_FILTER_ID, searchQuery]);
 
   const casinoContent = useMemo(() => {
-    let list = CASINO_ITEMS.filter((item) => matchesCasinoFilter(item, activeFilterId));
+    let list = CASINO_ITEMS.filter((item) => matchesCasinoFilter(item, LOBBY_PROVIDER_FILTER_ID));
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       list = list.filter(
@@ -156,14 +152,14 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
       );
     }
     const totalCount =
-      activeFilterId === "all-in-one" && !searchQuery.trim()
+      LOBBY_PROVIDER_FILTER_ID === "all-in-one" && !searchQuery.trim()
         ? CASINO_ITEMS.length
         : list.length;
     return { list, totalCount };
-  }, [activeFilterId, searchQuery]);
+  }, [LOBBY_PROVIDER_FILTER_ID, searchQuery]);
 
   const sportContent = useMemo(() => {
-    let list = SPORT_ITEMS.filter((item) => matchesSportFilter(item, activeFilterId));
+    let list = SPORT_ITEMS.filter((item) => matchesSportFilter(item, LOBBY_PROVIDER_FILTER_ID));
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       list = list.filter(
@@ -172,14 +168,14 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
       );
     }
     const totalCount =
-      activeFilterId === "all-in-one" && !searchQuery.trim()
+      LOBBY_PROVIDER_FILTER_ID === "all-in-one" && !searchQuery.trim()
         ? SPORT_ITEMS.length
         : list.length;
     return { list, totalCount };
-  }, [activeFilterId, searchQuery]);
+  }, [LOBBY_PROVIDER_FILTER_ID, searchQuery]);
 
   const fishingContent = useMemo(() => {
-    let list = FISHING_ITEMS.filter((item) => matchesFishingFilter(item, activeFilterId));
+    let list = FISHING_ITEMS.filter((item) => matchesFishingFilter(item, LOBBY_PROVIDER_FILTER_ID));
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       list = list.filter(
@@ -188,11 +184,11 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
       );
     }
     const totalCount =
-      activeFilterId === "all-in-one" && !searchQuery.trim()
+      LOBBY_PROVIDER_FILTER_ID === "all-in-one" && !searchQuery.trim()
         ? FISHING_ITEMS.length
         : list.length;
     return { list, totalCount };
-  }, [activeFilterId, searchQuery]);
+  }, [LOBBY_PROVIDER_FILTER_ID, searchQuery]);
 
   if (categoryId === "lottery") {
     return (
@@ -220,15 +216,6 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
       </section>
     );
   }
-
-  const filterTabs =
-    categoryId === "slots"
-      ? SLOT_FILTER_TABS
-      : categoryId === "casino"
-        ? CASINO_FILTER_TABS
-        : categoryId === "fishing"
-          ? FISHING_FILTER_TABS
-          : SPORT_FILTER_TABS;
 
   const sectionTitle =
     categoryId === "casino"
@@ -276,10 +263,6 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
       aria-label="รายการค่ายเกมตามหมวดที่เลือก"
     >
       <ProviderCategoryToolbar
-        scopeKey={categoryId}
-        tabs={filterTabs}
-        activeTabId={activeFilterId}
-        onSelectTab={setActiveFilterId}
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         searchPlaceholder={
@@ -290,15 +273,6 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
               : categoryId === "sports"
                 ? "ค้นหากีฬา | ค่าย"
                 : "ค้นหาเกม | ค่าย"
-        }
-        categoryGroupLabel={
-          categoryId === "casino"
-            ? "ประเภทโต๊ะ"
-            : categoryId === "fishing"
-              ? "ประเภทยิงปลา"
-              : categoryId === "sports"
-                ? "ประเภทกีฬา"
-                : "ฟีเจอร์"
         }
       />
 

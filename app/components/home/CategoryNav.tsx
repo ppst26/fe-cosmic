@@ -44,6 +44,25 @@ export function CategoryNav({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [thumbWidthPercent, setThumbWidthPercent] = useState(28);
 
+  /** เลื่อน pill เข้ากรอบเมื่อกดแล้วยังไม่เห็นครบ — ไม่รีเซ็ต scroll ทุกครั้งที่ active เปลี่ยน */
+  const scrollPillIntoViewIfNeeded = useCallback((pill: HTMLElement) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const trackRect = track.getBoundingClientRect();
+    const pillRect = pill.getBoundingClientRect();
+    const edgeSlack = 8;
+    if (pillRect.left >= trackRect.left + edgeSlack && pillRect.right <= trackRect.right - edgeSlack) {
+      return;
+    }
+    const targetLeft =
+      pill.offsetLeft - (track.clientWidth - pill.offsetWidth) / 2;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    track.scrollTo({
+      left: Math.max(0, Math.min(maxScroll, targetLeft)),
+      behavior: "smooth",
+    });
+  }, []);
+
   const updateScrollProgress = useCallback(() => {
     const el = trackRef.current;
     if (!el) return;
@@ -90,20 +109,6 @@ export function CategoryNav({
       ? (activeIdProp ?? pickedId)
       : (routeActiveId ?? activeIdProp ?? pickedId);
 
-  // เมื่อ activeId เปลี่ยนใน mobile ให้เลื่อนปุ่มที่ active เข้ามาในมุมมอง
-  useEffect(() => {
-    if (variant === "mobile" && trackRef.current) {
-      const activeEl = trackRef.current.querySelector<HTMLElement>('[data-active="true"]');
-      if (activeEl) {
-        activeEl.scrollIntoView({
-          behavior: "smooth",
-          inline: "nearest",
-          block: "nearest",
-        });
-      }
-    }
-  }, [activeId, variant]);
-
   const pushCategoryRoute = (href: string) => {
     const scrollY = window.scrollY;
     router.push(href, { scroll: false });
@@ -115,12 +120,8 @@ export function CategoryNav({
   const handleCategoryClick = (category: CategoryItem, e?: React.MouseEvent) => {
     setPickedId(category.id);
     onSelectCategory?.(category.id);
-    if (e?.currentTarget) {
-      (e.currentTarget as HTMLElement).scrollIntoView({
-        behavior: "smooth",
-        inline: "nearest",
-        block: "nearest",
-      });
+    if (variant === "mobile" && e?.currentTarget instanceof HTMLElement) {
+      scrollPillIntoViewIfNeeded(e.currentTarget);
     }
     if (navigationMode !== "route") return;
 
@@ -183,7 +184,7 @@ export function CategoryNav({
     >
       <div
         ref={trackRef}
-        className="category-nav__track flex flex-nowrap items-center justify-start gap-2 w-full overflow-x-auto py-1 px-0.5 no-scrollbar scroll-smooth"
+        className="category-nav__track flex flex-nowrap items-center justify-start gap-2 w-full overflow-x-auto py-1 px-0.5 no-scrollbar"
       >
         {categories.map((category) => {
           const isActive = category.id === activeId;
@@ -195,9 +196,9 @@ export function CategoryNav({
               data-active={isActive}
               onClick={(e) => handleCategoryClick(category, e)}
               className={cn(
-                "category-nav__pill flex h-11 flex-none flex-row items-center gap-2.5 px-3.5 rounded-xl text-[14px] font-medium transition-all duration-150 cursor-pointer select-none outline-none active:scale-96",
+                "category-nav__pill flex h-11 flex-none flex-row items-center gap-2.5 px-3.5 rounded-xl text-[14px] font-medium transition-[color,background-color,box-shadow] duration-150 cursor-pointer select-none outline-none active:scale-[0.98]",
                 isActive
-                  ? "is-active bg-[rgba(112,71,235,0.32)] text-white font-medium"
+                  ? "is-active"
                   : "bg-transparent text-[#bab5d6] hover:text-white hover:bg-white/5",
               )}
               aria-pressed={isActive}
@@ -205,8 +206,8 @@ export function CategoryNav({
             >
               <span
                 className={cn(
-                  "category-nav__icon flex items-center justify-center shrink-0 transition-transform duration-150",
-                  isActive ? "scale-115" : "opacity-95 group-hover:opacity-100",
+                  "category-nav__icon flex h-8 w-8 shrink-0 items-center justify-center",
+                  isActive ? "opacity-100" : "opacity-90",
                 )}
                 aria-hidden="true"
               >
@@ -228,7 +229,6 @@ export function CategoryNav({
           style={{
             width: `${thumbWidthPercent}%`,
             left: `${scrollProgress * (100 - thumbWidthPercent)}%`,
-            transition: "left 75ms linear, width 150ms ease",
           }}
         />
       </div>

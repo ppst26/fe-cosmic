@@ -11,6 +11,7 @@ import {
   maskPhone,
 } from "./profileFormat";
 import { getSignUpBankById } from "@/app/data/signupMockData";
+import { findDemoUserById, findDemoUserByPhone } from "./demoUser";
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const USERS_FILE = path.join(DATA_DIR, "users.json");
@@ -33,10 +34,14 @@ async function ensureUsersFile(): Promise<void> {
  * อ่านรายการผู้ใช้ทั้งหมดจาก JSON
  */
 export async function readAllUsers(): Promise<StoredUser[]> {
-  await ensureUsersFile();
-  const raw = await fs.readFile(USERS_FILE, "utf8");
-  const parsed = JSON.parse(raw) as UsersFileShape;
-  return Array.isArray(parsed.users) ? parsed.users : [];
+  try {
+    await ensureUsersFile();
+    const raw = await fs.readFile(USERS_FILE, "utf8");
+    const parsed = JSON.parse(raw) as UsersFileShape;
+    return Array.isArray(parsed.users) ? parsed.users : [];
+  } catch {
+    return [];
+  }
 }
 
 async function writeAllUsers(users: StoredUser[]): Promise<void> {
@@ -51,6 +56,8 @@ async function writeAllUsers(users: StoredUser[]): Promise<void> {
 export async function findUserByPhone(phone: string): Promise<StoredUser | undefined> {
   const digits = phone.replace(/\D/g, "");
   if (!digits) return undefined;
+  const demo = findDemoUserByPhone(digits);
+  if (demo) return demo;
   const users = await readAllUsers();
   return users.find((u) => u.phone.replace(/\D/g, "") === digits);
 }
@@ -60,7 +67,7 @@ export async function findUserByPhone(phone: string): Promise<StoredUser | undef
  */
 export async function findUserById(id: string): Promise<StoredUser | undefined> {
   const users = await readAllUsers();
-  return users.find((u) => u.id === id);
+  return users.find((u) => u.id === id) ?? findDemoUserById(id);
 }
 
 export interface CreateUserInput {
