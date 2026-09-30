@@ -3,10 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  WELCOME_BANNER_SLIDES,
-  PROMO_CAROUSEL_DATA,
-} from "@/app/data/lobbyMockData";
+import { fetchHomeBanners } from "@/lib/api/lobby";
 
 interface HomeDesktopHeroRowProps {
   onCtaClick?: () => void;
@@ -17,8 +14,9 @@ interface HomeDesktopHeroRowProps {
  * ถูกเรียกใช้ใน app/page.tsx (ซ่อนบนมือถือ)
  */
 export function HomeDesktopHeroRow({ onCtaClick }: HomeDesktopHeroRowProps) {
-  const primary = WELCOME_BANNER_SLIDES[0];
-  const secondary = PROMO_CAROUSEL_DATA[0] ?? WELCOME_BANNER_SLIDES[1];
+  const { welcomeSlides, promoCarousel } = fetchHomeBanners();
+  const primary = welcomeSlides[0];
+  const secondary = promoCarousel[0] ?? welcomeSlides[1];
 
   if (!primary) {
     return null;

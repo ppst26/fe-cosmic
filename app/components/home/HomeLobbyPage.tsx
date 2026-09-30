@@ -10,7 +10,6 @@ import { LobbyDesktopSidebarColumn } from "../layout/LobbyDesktopSidebarColumn";
 import { HomeDesktopPeekCarousel } from "./HomeDesktopPeekCarousel";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { PromoCarousel } from "./PromoCarousel";
-import { PopularHighlights } from "./PopularHighlights";
 import { CategoryNav } from "./CategoryNav";
 import { LobbyAnnouncementMarquee } from "./LobbyAnnouncementMarquee";
 import { LobbyDesktopQuickBanners } from "./LobbyDesktopQuickBanners";
@@ -28,22 +27,27 @@ import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { cn } from "@/lib/utils";
 import {
   CATEGORIES_DATA,
-  HOME_DESKTOP_PEEK_CAROUSEL_DATA,
-  PROMO_CAROUSEL_DATA,
-  POPULAR_HIGHLIGHTS_DATA,
-  GAME_SECTIONS_DATA,
-  HOME_LOBBY_TOURNAMENT_ITEMS,
   LOBBY_TOURNAMENTS_SECTION_ITEMS,
-  HALL_OF_FAME_DATA,
   BOTTOM_NAV_DATA,
 } from "@/app/data/lobbyMockData";
-import { LOBBY_ANNOUNCEMENT_MESSAGES } from "@/app/data/lobbyAnnouncementMockData";
+import {
+  fetchHallOfFame,
+  fetchHomeBanners,
+  fetchHomeGames,
+  fetchHomeTournaments,
+  fetchLobbyAnnouncements,
+} from "@/lib/api/lobby";
 
 /**
  * หน้า lobby หลัก — หมวดซิงก์จาก URL (/slots, /casino ฯลฯ)
  * ใช้ใน app/page.tsx และเส้นทางหมวดที่แชร์ layout เดียวกัน
  */
 export function HomeLobbyPage() {
+  const homeBanners = fetchHomeBanners();
+  const homeGames = fetchHomeGames();
+  const homeTournaments = fetchHomeTournaments();
+  const lobbyAnnouncements = fetchLobbyAnnouncements();
+
   const pathname = usePathname();
   const activeCategoryId = useMemo(
     () => resolveLobbyCategoryFromPath(pathname, CATEGORIES_DATA) ?? "home",
@@ -160,7 +164,7 @@ export function HomeLobbyPage() {
             <div className="lobby-desktop-main min-w-0 w-full lg:flex lg:flex-col lg:items-stretch lg:flex-1">
               <div className="lobby-desktop-main__peek hidden lg:block lg:w-full lg:shrink-0 lg:mb-2">
                 <HomeDesktopPeekCarousel
-                  items={HOME_DESKTOP_PEEK_CAROUSEL_DATA}
+                  items={homeBanners.peek}
                   placement="shellBand"
                 />
               </div>
@@ -177,7 +181,7 @@ export function HomeLobbyPage() {
                       <WelcomeBanner onCtaClick={openSignUp} />
                       <div className="-mx-3">
                         <LobbyAnnouncementMarquee
-                          messages={LOBBY_ANNOUNCEMENT_MESSAGES}
+                          messages={lobbyAnnouncements}
                           variant="mobile"
                         />
                       </div>
@@ -202,7 +206,7 @@ export function HomeLobbyPage() {
                         </div>
                       )}
 
-                      <PromoCarousel items={PROMO_CAROUSEL_DATA} />
+                      <PromoCarousel items={homeBanners.promoCarousel} />
                     </div>
 
                     <div
@@ -252,7 +256,7 @@ export function HomeLobbyPage() {
                         <div className="lobby-category-stack flex flex-col gap-3 lg:gap-4">
                           <div className="hidden lg:block">
                             <LobbyAnnouncementMarquee
-                              messages={LOBBY_ANNOUNCEMENT_MESSAGES}
+                              messages={lobbyAnnouncements}
                               variant="default"
                             />
                           </div>
@@ -268,7 +272,7 @@ export function HomeLobbyPage() {
                         </div>
 
                         <div className={cn(showMobileLobbySections, isHomeLobby && "lobby-mobile-home-sections")}>
-                          {GAME_SECTIONS_DATA.map((section, index) => (
+                          {homeGames.sections.map((section, index) => (
                             <GameSection
                               key={section.id}
                               section={section}
@@ -295,7 +299,7 @@ export function HomeLobbyPage() {
                             </section>
                           }
                         >
-                          <JackpotSection items={HOME_LOBBY_TOURNAMENT_ITEMS} />
+                          <JackpotSection items={homeTournaments} />
                         </AuthGate>
                       </div>
 
@@ -308,7 +312,7 @@ export function HomeLobbyPage() {
 
                     {isHomeLobby ? (
                       <>
-                        <HallOfFame datasets={HALL_OF_FAME_DATA} />
+                        <HallOfFame datasets={fetchHallOfFame()} />
                         <TournamentsSection items={LOBBY_TOURNAMENTS_SECTION_ITEMS} />
                       </>
                     ) : null}

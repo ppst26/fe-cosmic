@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import type { WelcomeBannerSlide } from "@/app/types/lobby";
-import { WELCOME_BANNER_SLIDES } from "@/app/data/lobbyMockData";
+import { fetchHomeBanners } from "@/lib/api/lobby";
 
 interface WelcomeBannerProps {
   items?: WelcomeBannerSlide[];
@@ -15,7 +15,7 @@ interface WelcomeBannerProps {
  * ถูกเรียกใช้ใน app/page.tsx
  */
 export function WelcomeBanner({
-  items = WELCOME_BANNER_SLIDES,
+  items = fetchHomeBanners().welcomeSlides,
   onCtaClick,
 }: WelcomeBannerProps) {
   const [activeIndex, setActiveIndex] = useState(0);

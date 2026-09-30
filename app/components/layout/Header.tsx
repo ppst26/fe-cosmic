@@ -9,7 +9,7 @@ import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
 import { VipRankEmblem } from "../vip/VipRankEmblem";
 import type { VipRankId } from "@/app/types/vip";
-import { DESKTOP_PLAYER_PANEL_MOCK } from "@/app/data/desktopLobbyMockData";
+import { fetchDesktopPlayerPanel } from "@/lib/api/lobby";
 import { HEADER_DESKTOP_NAV } from "@/app/data/lobbyMockData";
 import {
   formatHeaderWalletBalance,
@@ -80,7 +80,7 @@ export function Header({
   const showAuthSkeleton = !isClientReady || isLoading;
   const showWallet = isClientReady && !isLoading && isAuthenticated;
   const balanceLabel = formatHeaderWalletBalance(fetchWalletBalance().amount);
-  const rankId = DESKTOP_PLAYER_PANEL_MOCK.rankId as VipRankId;
+  const rankId = fetchDesktopPlayerPanel().rankId as VipRankId;
   const lobbySidebar = useLobbyShellSidebarOptional();
   const sidebarHidden = lobbySidebar?.sidebarHidden ?? false;
 
