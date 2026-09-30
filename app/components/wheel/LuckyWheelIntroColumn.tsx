@@ -2,11 +2,9 @@
 
 import React from "react";
 import {
-  LUCKY_WHEEL_BENEFITS,
-  LUCKY_WHEEL_INTRO_LEAD,
-  LUCKY_WHEEL_TAGLINE,
   type WheelBenefitCard,
 } from "@/app/data/luckyWheelMockData";
+import { fetchWheel } from "@/lib/api/wheel";
 
 interface LuckyWheelIntroColumnProps {
   embedded?: boolean;
@@ -17,6 +15,7 @@ interface LuckyWheelIntroColumnProps {
  * ใช้ใน LuckyWheelPageContent
  */
 export function LuckyWheelIntroColumn({ embedded = false }: LuckyWheelIntroColumnProps) {
+  const wheel = fetchWheel();
   return (
     <div className="lucky-wheel-intro flex min-h-0 flex-col gap-5 lg:self-center">
       {!embedded ? (
@@ -31,8 +30,8 @@ export function LuckyWheelIntroColumn({ embedded = false }: LuckyWheelIntroColum
             </span>
           </h1>
           <p className="lucky-wheel-intro__lead">
-            <span className="block">{LUCKY_WHEEL_INTRO_LEAD[0]}</span>
-            <span className="block">{LUCKY_WHEEL_INTRO_LEAD[1]}</span>
+            <span className="block">{wheel.introLead[0]}</span>
+            <span className="block">{wheel.introLead[1]}</span>
           </p>
         </header>
       ) : (
@@ -43,7 +42,7 @@ export function LuckyWheelIntroColumn({ embedded = false }: LuckyWheelIntroColum
       )}
 
       <ul className="lucky-wheel-benefits grid grid-cols-3 gap-2" aria-label="สิทธิประโยชน์">
-        {LUCKY_WHEEL_BENEFITS.map((card) => (
+        {wheel.benefits.map((card) => (
           <li key={card.id} className="h-full">
             <BenefitCard card={card} />
           </li>
@@ -51,7 +50,7 @@ export function LuckyWheelIntroColumn({ embedded = false }: LuckyWheelIntroColum
       </ul>
 
       <p className="lucky-wheel-intro__tagline">
-        <q>{LUCKY_WHEEL_TAGLINE}</q>
+        <q>{wheel.tagline}</q>
       </p>
     </div>
   );

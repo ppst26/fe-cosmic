@@ -1,9 +1,7 @@
 import {
-  GEMS_STORE_EXCHANGE_RATE_LABEL,
-  GEMS_STORE_REDEEM_QUOTA_MOCK,
-  GEMS_STORE_RESET_NOTICE,
   formatGemsBalance,
 } from "@/app/data/gemsStoreMockData";
+import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { HistoryIcon } from "@/app/components/ui/Icons";
 import { COSMIC_PANEL_GLASS } from "@/app/components/ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
@@ -18,7 +16,8 @@ interface GemsStoreSummaryCardProps {
  * ใช้ใน GemsStorePageContent.tsx
  */
 export function GemsStoreSummaryCard({ gemsBalance, className }: GemsStoreSummaryCardProps) {
-  const { dailyUsed, dailyLimit, weeklyUsed, weeklyLimit } = GEMS_STORE_REDEEM_QUOTA_MOCK;
+  const { quota, resetNotice, rateLabel } = fetchGemsStore();
+  const { dailyUsed, dailyLimit, weeklyUsed, weeklyLimit } = quota;
 
   return (
     <aside
@@ -65,9 +64,9 @@ export function GemsStoreSummaryCard({ gemsBalance, className }: GemsStoreSummar
       </div>
 
       <p className="cosmic-type-sheet-desc text-center">
-        {GEMS_STORE_RESET_NOTICE}
+        {resetNotice}
         <span className="mx-1 opacity-40" aria-hidden="true">·</span>
-        {GEMS_STORE_EXCHANGE_RATE_LABEL}
+        {rateLabel}
       </p>
     </aside>
   );

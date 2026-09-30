@@ -10,19 +10,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  REFERRAL_USERS_MOCK,
   REFERRAL_USERS_PAGE_SIZE,
   formatReferralCount,
   formatReferralRegisteredAt,
   type ReferralUserRow,
 } from "@/app/data/referralMockData";
+import { fetchReferralUsers } from "@/lib/api/referral";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 
 /**
  * แท็บ Referral users — ตารางเพื่อนที่แนะนำ + pagination (10 แถว/หน้า)
  * ใช้ใน ReferralPageContent
  */
-export function ReferralUsersPanel({ users = REFERRAL_USERS_MOCK }: { users?: ReferralUserRow[] }) {
+export function ReferralUsersPanel({ users = fetchReferralUsers() }: { users?: ReferralUserRow[] }) {
   const [page, setPage] = useState(1);
   const total = users.length;
   const pageSize = REFERRAL_USERS_PAGE_SIZE;

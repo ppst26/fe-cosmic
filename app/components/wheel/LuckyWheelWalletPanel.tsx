@@ -3,10 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import {
-  LUCKY_WHEEL_GEMS_PER_SPIN,
-  LUCKY_WHEEL_TICKETS_PER_SPIN,
   type WheelSpinMethod,
 } from "@/app/data/luckyWheelMockData";
+import { fetchWheel } from "@/lib/api/wheel";
 import { formatGemsBalance } from "@/app/data/gemsStoreMockData";
 
 interface LuckyWheelWalletPanelProps {
@@ -37,9 +36,10 @@ export function LuckyWheelWalletPanel({
   canSpin,
   totalCostLabel,
 }: LuckyWheelWalletPanelProps) {
+  const { gemsPerSpin, ticketsPerSpin } = fetchWheel();
   const maxByBalance =
     spinMethod === "gems"
-      ? Math.max(1, Math.floor(gemsBalance / LUCKY_WHEEL_GEMS_PER_SPIN))
+      ? Math.max(1, Math.floor(gemsBalance / gemsPerSpin))
       : Math.max(0, ticketCount);
 
   const clampQty = (next: number) => {
@@ -90,13 +90,13 @@ export function LuckyWheelWalletPanel({
             selected={spinMethod === "gems"}
             onSelect={() => onSpinMethodChange("gems")}
             title="ใช้เพชร"
-            detail={`${LUCKY_WHEEL_GEMS_PER_SPIN.toFixed(2)} / ครั้ง`}
+            detail={`${gemsPerSpin.toFixed(2)} / ครั้ง`}
           />
           <MethodOption
             selected={spinMethod === "ticket"}
             onSelect={() => onSpinMethodChange("ticket")}
             title="ใช้ตั๋ว"
-            detail={`${LUCKY_WHEEL_TICKETS_PER_SPIN} ใบ / ครั้ง`}
+            detail={`${ticketsPerSpin} ใบ / ครั้ง`}
             disabled={ticketCount <= 0}
           />
         </div>

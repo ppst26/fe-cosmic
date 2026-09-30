@@ -5,11 +5,10 @@ import Image from "next/image";
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { responsiveSheetCloseButtonClass } from "@/app/components/ui/responsiveSheetDialog";
 import {
-  DAILY_CHECKIN_INITIAL,
-  CUMULATIVE_CHECKIN_MILESTONES,
   countCheckedInDays,
   type DailyCheckInDayReward,
 } from "@/app/data/dailyCheckInMockData";
+import { fetchCheckIn } from "@/lib/api/checkIn";
 import { cn } from "@/lib/utils";
 import {
   COSMIC_BTN_CONFIRM_TEXT,
@@ -29,7 +28,8 @@ export function DailyCheckInCard({
   className,
   isStandalone = false,
 }: DailyCheckInCardProps) {
-  const [days, setDays] = useState<DailyCheckInDayReward[]>(DAILY_CHECKIN_INITIAL);
+  const checkIn = fetchCheckIn();
+  const [days, setDays] = useState<DailyCheckInDayReward[]>(checkIn.days);
   const [justClaimed, setJustClaimed] = useState<number | null>(null);
 
   const checkedInCount = countCheckedInDays(days);
@@ -344,7 +344,7 @@ export function DailyCheckInCard({
             }}
           />
 
-          {CUMULATIVE_CHECKIN_MILESTONES.map((m, idx) => {
+          {checkIn.milestones.map((m, idx) => {
             const isReached = checkedInCount >= m.milestoneDay || idx === 0;
 
             return (

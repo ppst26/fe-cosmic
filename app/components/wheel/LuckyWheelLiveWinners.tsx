@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { LUCKY_WHEEL_LIVE_WINNERS } from "@/app/data/luckyWheelMockData";
+import { fetchWheel } from "@/lib/api/wheel";
 
 /**
  * รายการผู้เล่นคนอื่นได้รับรางวัล — ดีไซน์การ์ดมนตามภาพตัวอย่าง
  */
 export function LuckyWheelLiveWinners() {
+  const liveWinners = fetchWheel().liveWinners;
   return (
     <section
       className="flex h-full min-h-0 flex-col rounded-2xl border border-white/10 bg-[#0e0b16]/90 p-4 shadow-xl"
@@ -29,7 +30,7 @@ export function LuckyWheelLiveWinners() {
 
       {/* รายการผู้เล่นแบบการ์ดแถวมน ตรงตามรูปที่ 2 */}
       <div className="flex flex-1 flex-col gap-2 min-h-0">
-        {LUCKY_WHEEL_LIVE_WINNERS.map((entry) => (
+        {liveWinners.map((entry) => (
           <div
             key={entry.id}
             className="flex items-center justify-between rounded-xl border border-white/5 bg-[#14101e] px-3.5 py-3 text-xs transition-colors hover:bg-[#181326]"

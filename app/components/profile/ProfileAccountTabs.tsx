@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import type { ProfileUser } from "@/app/types/auth";
-import { getVipRankTier, VIP_PLAYER_MOCK } from "@/app/data/vipMockData";
+import { getVipRankTier } from "@/app/data/vipMockData";
+import { fetchVipPlayer } from "@/lib/api/vip";
 import { ProfileAccountFieldRow, ProfileAccountNavRow } from "./ProfileAccountFieldRow";
 import { ProfileBankAccountCard } from "./ProfileBankAccountCard";
 import { ProfileReferralInviteCard } from "./ProfileReferralInviteCard";
@@ -26,7 +27,7 @@ interface ProfileAccountTabsProps {
   compact?: boolean;
 }
 
-const vipRankLabel = getVipRankTier(VIP_PLAYER_MOCK.currentRankId).label;
+const vipRankLabel = getVipRankTier(fetchVipPlayer().currentRankId).label;
 
 /**
  * หน้าข้อมูลบัญชี — แท็บข้อมูลส่วนตัว / บัญชีธนาคาร + ชวนเพื่อน (ProfileSheetBody)

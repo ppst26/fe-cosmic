@@ -5,14 +5,13 @@ import type { TransactionKind } from "@/app/types/transaction";
 import {
   countPromotionClaims,
   filterTransactionsByDateRange,
-  getTransactionsByKind,
   sumBetStakeTotal,
   sumBetWinLossTotal,
   sumCompletedDepositAmount,
   sumCompletedWithdrawAmount,
   TRANSACTION_BET_PAGE_SIZE,
-  TRANSACTION_KIND_TABS,
 } from "@/app/data/transactionsMockData";
+import { fetchTransactions } from "@/lib/api/transactions";
 import { getDefaultTransactionDateRange } from "@/app/lib/transactionDateUtils";
 import { TransactionKindTabs } from "./TransactionKindTabs";
 import { TransactionDateFilter } from "./TransactionDateFilter";
@@ -37,6 +36,7 @@ export function TransactionsPageContent({
   isAuthenticated,
   embedded = false,
 }: TransactionsPageContentProps) {
+  const transactionData = fetchTransactions();
   const defaultRange = useMemo(() => getDefaultTransactionDateRange(), []);
 
   const [draftFrom, setDraftFrom] = useState(defaultRange.from);
@@ -45,7 +45,22 @@ export function TransactionsPageContent({
   const [appliedTo, setAppliedTo] = useState(defaultRange.to);
   const [betPage, setBetPage] = useState(1);
 
-  const allItems = isAuthenticated ? getTransactionsByKind(activeKind) : [];
+  const allItems = isAuthenticated
+    ? (() => {
+        switch (activeKind) {
+          case "deposit":
+            return transactionData.deposit;
+          case "withdraw":
+            return transactionData.withdraw;
+          case "promotion":
+            return transactionData.promotion;
+          case "bet":
+            return transactionData.bet;
+          default:
+            return [];
+        }
+      })()
+    : [];
   const items = useMemo(
     () => filterTransactionsByDateRange(allItems, appliedFrom, appliedTo),
     [allItems, appliedFrom, appliedTo],
@@ -92,7 +107,7 @@ export function TransactionsPageContent({
     <div className="flex flex-col gap-4">
       <section className={shellClass}>
         <TransactionKindTabs
-          tabs={TRANSACTION_KIND_TABS}
+          tabs={transactionData.tabs}
           activeKind={activeKind}
           onSelect={onSelectKind}
         />

@@ -2,12 +2,9 @@
 
 import React, { useState } from "react";
 import {
-  REFERRAL_COMMISSION_TIERS,
-  REFERRAL_FEATURE_CHECKS,
-  REFERRAL_MOCK_REF_CODE,
-  REFERRAL_STATS_MOCK,
-  REFERRAL_STEPS,
+  type ReferralStatsMock,
 } from "@/app/data/referralMockData";
+import { fetchReferralOverview } from "@/lib/api/referral";
 import { UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 import { ReferralUsersPanel } from "./ReferralUsersPanel";
 import { ReferralEarningPanel } from "./ReferralEarningPanel";
@@ -51,15 +48,16 @@ function TabIcon({ tab }: { tab: ReferralTabId }) {
  * เนื้อหาหน้าแนะนำเพื่อน — ใช้ใน /referral และ DesktopHubModal
  */
 export function ReferralPageContent({
-  refCode = REFERRAL_MOCK_REF_CODE,
+  refCode = fetchReferralOverview().refCode,
   embedded = false,
 }: {
   refCode?: string;
   embedded?: boolean;
 }) {
+  const referralOverview = fetchReferralOverview();
   const [tab, setTab] = useState<ReferralTabId>("overview");
   const [copied, setCopied] = useState(false);
-  const stats = REFERRAL_STATS_MOCK;
+  const stats = referralOverview.stats;
 
   const handleCopy = async (link: string) => {
     try {
@@ -85,6 +83,7 @@ export function ReferralPageContent({
             copied={copied}
             onCopy={(link) => void handleCopy(link)}
             stats={stats}
+            overview={referralOverview}
           />
         </div>
       </>
@@ -99,6 +98,7 @@ export function ReferralPageContent({
       copied={copied}
       onCopy={(link) => void handleCopy(link)}
       stats={stats}
+      overview={referralOverview}
     />
   );
 }
@@ -110,13 +110,15 @@ function ReferralMobileTabs({
   copied,
   onCopy,
   stats,
+  overview,
 }: {
   refCode: string;
   tab: ReferralTabId;
   setTab: (tab: ReferralTabId) => void;
   copied: boolean;
   onCopy: (link: string) => void;
-  stats: typeof REFERRAL_STATS_MOCK;
+  stats: ReferralStatsMock;
+  overview: ReturnType<typeof fetchReferralOverview>;
 }) {
   return (
     <div className="referral-mobile flex flex-col gap-5 pb-4">
@@ -149,7 +151,7 @@ function ReferralMobileTabs({
               แชร์ลิงก์แล้วรับส่วนแบ่งจากยอดเทิร์นของเครือข่าย
             </p>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {REFERRAL_COMMISSION_TIERS.map((tier) => (
+              {overview.tiers.map((tier) => (
                 <div
                   key={tier.id}
                   className="glass-card--soft flex gap-3 rounded-[var(--radius-panel)] p-3"
@@ -167,7 +169,7 @@ function ReferralMobileTabs({
               ))}
             </div>
             <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2 pt-2">
-              {REFERRAL_FEATURE_CHECKS.map((line) => (
+              {overview.checks.map((line) => (
                 <li
                   key={line}
                   className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]"
@@ -184,7 +186,7 @@ function ReferralMobileTabs({
               เริ่มต้นง่าย ๆ ใน 3 ขั้นตอน
             </h2>
             <div className="grid grid-cols-3 gap-2">
-              {REFERRAL_STEPS.map((step, index) => (
+              {overview.steps.map((step, index) => (
                 <div key={step.id} className="flex flex-col items-center text-center">
                   <div className="glass-control flex h-12 w-12 items-center justify-center rounded-full text-xs font-medium text-[var(--text-primary)]">
                     {String(index + 1).padStart(2, "0")}

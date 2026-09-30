@@ -8,7 +8,7 @@ import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { ReferralPageContent } from "@/app/components/referral/ReferralPageContent";
-import { REFERRAL_MOCK_REF_CODE } from "@/app/data/referralMockData";
+import { fetchReferralOverview } from "@/lib/api/referral";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 
 /**
@@ -17,7 +17,7 @@ import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 export default function ReferralPage() {
   const { isAuthenticated, isLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [refCode, setRefCode] = useState(REFERRAL_MOCK_REF_CODE);
+  const [refCode, setRefCode] = useState(fetchReferralOverview().refCode);
 
   useEffect(() => {
     if (!isAuthenticated) return;

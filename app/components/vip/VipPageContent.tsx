@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import type { VipModalTabId } from "@/app/types/vip";
-import { VIP_PLAYER_MOCK, VIP_RANK_TIERS } from "@/app/data/vipMockData";
+import { fetchVipPlayer, fetchVipRanks } from "@/lib/api/vip";
 import { VipModalDesktopLayout } from "./VipModalDesktopLayout";
 import { VipMobileTabPanels } from "./VipMobileTabPanels";
 import { VipTabList } from "./VipTabList";
@@ -22,8 +22,9 @@ export function VipPageContent({
   onSelectTab,
   embedded = false,
 }: VipPageContentProps) {
-  const player = VIP_PLAYER_MOCK;
-  const currentRankIndex = VIP_RANK_TIERS.findIndex((t) => t.id === player.currentRankId);
+  const player = fetchVipPlayer();
+  const vipRankTiers = fetchVipRanks().tiers;
+  const currentRankIndex = vipRankTiers.findIndex((t) => t.id === player.currentRankId);
   const [rankFocusIndex, setRankFocusIndex] = useState(
     currentRankIndex >= 0 ? currentRankIndex : 0,
   );

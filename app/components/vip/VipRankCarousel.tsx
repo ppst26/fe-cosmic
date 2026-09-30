@@ -6,8 +6,8 @@ import {
   formatVipAmount,
   getVipRankViewStatus,
   getVipTurnoverTarget,
-  VIP_RANK_TIERS,
 } from "@/app/data/vipMockData";
+import { fetchVipRanks } from "@/lib/api/vip";
 import { ChevronLeftIcon, ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
 
@@ -25,8 +25,9 @@ export function VipRankCarousel({
   onFocusChange,
   playerRankId,
 }: VipRankCarouselProps) {
-  const safeIndex = Math.max(0, Math.min(focusIndex, VIP_RANK_TIERS.length - 1));
-  const focused = VIP_RANK_TIERS[safeIndex];
+  const vipRankTiers = fetchVipRanks().tiers;
+  const safeIndex = Math.max(0, Math.min(focusIndex, vipRankTiers.length - 1));
+  const focused = vipRankTiers[safeIndex];
   const focusStatus = getVipRankViewStatus(focused.id, playerRankId);
   const isLocked = focusStatus === "locked";
   const isCleared = focusStatus === "cleared";
@@ -37,7 +38,7 @@ export function VipRankCarousel({
   };
 
   const goNext = () => {
-    if (safeIndex < VIP_RANK_TIERS.length - 1) onFocusChange(safeIndex + 1);
+    if (safeIndex < vipRankTiers.length - 1) onFocusChange(safeIndex + 1);
   };
 
   const statusLabel = isActive
@@ -47,7 +48,7 @@ export function VipRankCarousel({
       : "ยังไม่ถึง";
 
   const canPrev = safeIndex > 0;
-  const canNext = safeIndex < VIP_RANK_TIERS.length - 1;
+  const canNext = safeIndex < vipRankTiers.length - 1;
 
   return (
     <div className="relative mx-auto w-full max-w-[280px] sm:max-w-xs">

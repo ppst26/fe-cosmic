@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ACTIVITIES_HUB_ITEMS, type ActivityHubItem } from "@/app/data/activitiesHubMockData";
+import { type ActivityHubItem } from "@/app/data/activitiesHubMockData";
+import { fetchActivities } from "@/lib/api/activities";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 
 function ActivityMasterRow({
@@ -47,15 +48,16 @@ function ActivityMasterRow({
  * ใช้ใน ActivitiesHubPageContent (embedded + lg+)
  */
 export function ActivitiesDesktopHubLayout() {
-  const [selectedId, setSelectedId] = useState(ACTIVITIES_HUB_ITEMS[0]?.id ?? "");
+  const activities = fetchActivities();
+  const [selectedId, setSelectedId] = useState(activities[0]?.id ?? "");
 
   useEffect(() => {
-    if (!ACTIVITIES_HUB_ITEMS.some((item) => item.id === selectedId)) {
-      setSelectedId(ACTIVITIES_HUB_ITEMS[0]?.id ?? "");
+    if (!activities.some((item) => item.id === selectedId)) {
+      setSelectedId(activities[0]?.id ?? "");
     }
-  }, [selectedId]);
+  }, [selectedId, activities]);
 
-  const selected = ACTIVITIES_HUB_ITEMS.find((item) => item.id === selectedId) ?? ACTIVITIES_HUB_ITEMS[0];
+  const selected = activities.find((item) => item.id === selectedId) ?? activities[0];
 
   return (
     <div className="activities-desktop-hub activities-desktop-hub--flat grid min-h-[min(58dvh,540px)] lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)] lg:items-stretch">
@@ -63,7 +65,7 @@ export function ActivitiesDesktopHubLayout() {
         className="activities-desktop-hub__list flex min-h-0 flex-col overflow-y-auto [scrollbar-width:thin]"
         aria-label="รายการกิจกรรม"
       >
-        {ACTIVITIES_HUB_ITEMS.map((item) => (
+        {activities.map((item) => (
           <ActivityMasterRow
             key={item.id}
             item={item}

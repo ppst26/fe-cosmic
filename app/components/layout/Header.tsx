@@ -13,8 +13,8 @@ import { DESKTOP_PLAYER_PANEL_MOCK } from "@/app/data/desktopLobbyMockData";
 import { HEADER_DESKTOP_NAV } from "@/app/data/lobbyMockData";
 import {
   formatHeaderWalletBalance,
-  MOCK_MAIN_WALLET_BALANCE,
 } from "@/app/data/walletMockData";
+import { fetchWalletBalance } from "@/lib/api/profile";
 import { useLobbyShellSidebarOptional } from "./LobbyShellSidebarContext";
 import { cn } from "@/lib/utils";
 import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
@@ -79,7 +79,7 @@ export function Header({
 
   const showAuthSkeleton = !isClientReady || isLoading;
   const showWallet = isClientReady && !isLoading && isAuthenticated;
-  const balanceLabel = formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE);
+  const balanceLabel = formatHeaderWalletBalance(fetchWalletBalance().amount);
   const rankId = DESKTOP_PLAYER_PANEL_MOCK.rankId as VipRankId;
   const lobbySidebar = useLobbyShellSidebarOptional();
   const sidebarHidden = lobbySidebar?.sidebarHidden ?? false;

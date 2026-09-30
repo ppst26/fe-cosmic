@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import {
-  REFERRAL_MOCK_REF_CODE,
   buildReferralLink,
 } from "@/app/data/referralMockData";
+import { fetchReferralOverview } from "@/lib/api/referral";
 import { ProfileAccountFieldRow } from "./ProfileAccountFieldRow";
 import {
   COSMIC_BTN_CONFIRM_TEXT,
@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
  */
 export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) {
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const referralCode = REFERRAL_MOCK_REF_CODE;
+  const referralCode = fetchReferralOverview().refCode;
   const referralLink = buildReferralLink(referralCode);
 
   const copyText = async (field: string, text: string) => {

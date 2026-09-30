@@ -3,30 +3,26 @@
 import React, { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  LUCKY_WHEEL_GEMS_PER_SPIN,
-  LUCKY_WHEEL_INITIAL_GEMS,
-  LUCKY_WHEEL_INITIAL_TICKETS,
-  LUCKY_WHEEL_SEGMENTS,
-  LUCKY_WHEEL_TERMS,
-  LUCKY_WHEEL_TICKETS_PER_SPIN,
   type WheelPrizeHistoryRow,
   type WheelSegment,
   type WheelSpinMethod,
 } from "@/app/data/luckyWheelMockData";
+import { fetchWheel } from "@/lib/api/wheel";
 import { formatGemsBalance } from "@/app/data/gemsStoreMockData";
 import { ArrowLeftIcon } from "../ui/Icons";
 import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
 import { LuckyWheelLiveWinners } from "./LuckyWheelLiveWinners";
 import { LuckyWheelPrizeHistory } from "./LuckyWheelPrizeHistory";
 
-const SEGMENT_DEG = 360 / LUCKY_WHEEL_SEGMENTS.length;
+const SEGMENT_DEG = 360 / fetchWheel().segments.length;
 
 /**
  * หน้าเล่นวงล้อพารวย — รองรับ Mobile-first layout ตรงตาม mockup
  */
 export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean }) {
-  const [gemsBalance, setGemsBalance] = useState(LUCKY_WHEEL_INITIAL_GEMS);
-  const [ticketCount, setTicketCount] = useState(LUCKY_WHEEL_INITIAL_TICKETS);
+  const wheel = fetchWheel();
+  const [gemsBalance, setGemsBalance] = useState(wheel.initialGems);
+  const [ticketCount, setTicketCount] = useState(wheel.initialTickets);
   const [spinMethod, setSpinMethod] = useState<WheelSpinMethod>("ticket");
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
@@ -34,8 +30,8 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
   const [lastWin, setLastWin] = useState<string | null>(null);
   const [recentHistoryRows, setRecentHistoryRows] = useState<WheelPrizeHistoryRow[]>([]);
 
-  const currentGemsCost = LUCKY_WHEEL_GEMS_PER_SPIN;
-  const currentTicketCost = LUCKY_WHEEL_TICKETS_PER_SPIN;
+  const currentGemsCost = wheel.gemsPerSpin;
+  const currentTicketCost = wheel.ticketsPerSpin;
 
   const canAfford =
     spinMethod === "gems"
@@ -45,8 +41,8 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
   const handleSpin = useCallback(() => {
     if (spinning || !canAfford) return;
 
-    const targetIndex = Math.floor(Math.random() * LUCKY_WHEEL_SEGMENTS.length);
-    const segment: WheelSegment = LUCKY_WHEEL_SEGMENTS[targetIndex];
+    const targetIndex = Math.floor(Math.random() * wheel.segments.length);
+    const segment: WheelSegment = wheel.segments[targetIndex];
     const extraTurns = 5 * 360;
     const targetAngle = 360 - targetIndex * SEGMENT_DEG - SEGMENT_DEG / 2;
     const currentMod = ((rotation % 360) + 360) % 360;
@@ -75,7 +71,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
       };
       setRecentHistoryRows((prev) => [row, ...prev].slice(0, 5));
     }, 4200);
-  }, [canAfford, currentGemsCost, currentTicketCost, rotation, spinMethod, spinning]);
+  }, [canAfford, currentGemsCost, currentTicketCost, rotation, spinMethod, spinning, wheel.segments]);
 
   return (
     <div className={`lucky-wheel-page ${embedded ? "lucky-wheel-page--embedded" : ""}`}>
@@ -137,7 +133,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
 
           {/* ดีไซน์วงล้อเดิม (ห้ามเปลี่ยนดีไซน์) */}
           <CosmicFortuneWheel
-            segments={LUCKY_WHEEL_SEGMENTS}
+            segments={wheel.segments}
             rotationDeg={rotation}
             spinning={spinning}
             onCenterClick={handleSpin}
@@ -168,7 +164,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
                 : "text-white/60 hover:text-white"
             }`}
           >
-            เพชร ×{LUCKY_WHEEL_GEMS_PER_SPIN.toFixed(2)}
+            เพชร ×{wheel.gemsPerSpin.toFixed(2)}
           </button>
           <button
             type="button"
@@ -181,7 +177,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
                 : "text-white/60 hover:text-white"
             }`}
           >
-            ตั๋ว ×{LUCKY_WHEEL_TICKETS_PER_SPIN}
+            ตั๋ว ×{wheel.ticketsPerSpin}
           </button>
         </div>
 
@@ -211,8 +207,8 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
             </div>
             <span className="text-xs font-medium text-purple-200">
               {spinMethod === "ticket"
-                ? `ใช้ตั๋ว ${LUCKY_WHEEL_TICKETS_PER_SPIN} ใบ`
-                : `ใช้ ${LUCKY_WHEEL_GEMS_PER_SPIN.toFixed(2)} เพชร`}
+                ? `ใช้ตั๋ว ${wheel.ticketsPerSpin} ใบ`
+                : `ใช้ ${wheel.gemsPerSpin.toFixed(2)} เพชร`}
             </span>
           </button>
 
@@ -258,7 +254,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
             </button>
           </div>
           <ul className="mt-3 space-y-2 text-xs leading-relaxed text-white/70">
-            {LUCKY_WHEEL_TERMS.map((line) => (
+            {wheel.terms.map((line) => (
               <li key={line} className="flex gap-2">
                 <span className="text-amber-400" aria-hidden="true">•</span>
                 <span>{line}</span>

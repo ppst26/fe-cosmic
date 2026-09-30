@@ -3,14 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
-  GEMS_STORE_BALANCE_MOCK,
-  GEMS_STORE_GEM_ASSET,
-  GEMS_STORE_PACKAGES,
-  GEMS_STORE_TERMS,
   formatGemsBalance,
   formatGemsCredits,
   type GemsStorePackage,
 } from "@/app/data/gemsStoreMockData";
+import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
 import { ChevronDownIcon } from "../ui/Icons";
 import {
@@ -25,13 +22,14 @@ import { cn } from "@/lib/utils";
  * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal
  */
 export function GemsStorePageContent({
-  initialBalance = GEMS_STORE_BALANCE_MOCK,
+  initialBalance,
   embedded = false,
 }: {
   initialBalance?: number;
   embedded?: boolean;
 }) {
-  const [gemsBalance, setGemsBalance] = useState(initialBalance);
+  const gemsStore = fetchGemsStore();
+  const [gemsBalance, setGemsBalance] = useState(initialBalance ?? gemsStore.balance);
   const [termsOpen, setTermsOpen] = useState(false);
 
   const handleRedeem = (pkg: GemsStorePackage) => {
@@ -57,7 +55,7 @@ export function GemsStorePageContent({
           แลกเครดิต
         </h2>
         <div className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-4 lg:gap-3">
-          {GEMS_STORE_PACKAGES.map((pkg) => {
+          {gemsStore.packages.map((pkg) => {
             const affordable = gemsBalance >= pkg.gemsCost;
             return (
               <GemsRedeemCard
@@ -97,7 +95,7 @@ export function GemsStorePageContent({
         </button>
         {termsOpen && (
           <ul className="space-y-2 border-t border-[var(--border-subtle)]/40 px-4 py-3.5 text-xs leading-relaxed text-[var(--text-secondary)]">
-            {GEMS_STORE_TERMS.map((line) => (
+            {gemsStore.terms.map((line) => (
               <li key={line} className="flex gap-2">
                 <span className="text-[var(--border-active)]" aria-hidden="true">
                   •
@@ -150,7 +148,7 @@ function GemsRedeemCard({
         </p>
         <p className="cosmic-type-sheet-desc mt-1 flex items-center justify-center gap-1 font-medium">
           <span className="relative h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5">
-            <Image src={GEMS_STORE_GEM_ASSET} alt="" fill sizes="14px" className="object-contain" />
+            <Image src={fetchGemsStore().gemAsset} alt="" fill sizes="14px" className="object-contain" />
           </span>
           <span className="tabular-nums truncate">{formatGemsBalance(pkg.gemsCost)}</span>
         </p>

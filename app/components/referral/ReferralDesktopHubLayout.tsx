@@ -2,14 +2,11 @@
 
 import React, { useMemo, useState } from "react";
 import {
-  REFERRAL_EARNING_HISTORY_MOCK,
-  REFERRAL_EARNING_SUMMARY_MOCK,
-  REFERRAL_STATS_MOCK,
   formatReferralCurrency,
   type ReferralEarningPeriodId,
-  REFERRAL_EARNING_PERIOD_OPTIONS,
   filterReferralEarningHistoryByPeriod,
 } from "@/app/data/referralMockData";
+import { fetchReferralEarnings, fetchReferralOverview } from "@/lib/api/referral";
 import {
   COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_SHEET_SUBMIT,
@@ -31,16 +28,18 @@ interface ReferralDesktopHubLayoutProps {
  * ใช้ใน ReferralPageContent (embedded + lg+)
  */
 export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutProps) {
+  const referralEarnings = fetchReferralEarnings();
+  const referralOverview = fetchReferralOverview();
   const [copied, setCopied] = useState(false);
   const [period, setPeriod] = useState<ReferralEarningPeriodId>("all");
-  const [claimable, setClaimable] = useState(REFERRAL_EARNING_SUMMARY_MOCK.bonusClaimableThb);
-  const [received, setReceived] = useState(REFERRAL_EARNING_SUMMARY_MOCK.bonusReceivedThb);
+  const [claimable, setClaimable] = useState(referralEarnings.summary.bonusClaimableThb);
+  const [received, setReceived] = useState(referralEarnings.summary.bonusReceivedThb);
 
-  const stats = REFERRAL_STATS_MOCK;
+  const stats = referralOverview.stats;
 
   const filteredHistory = useMemo(
-    () => filterReferralEarningHistoryByPeriod(REFERRAL_EARNING_HISTORY_MOCK, period),
-    [period],
+    () => filterReferralEarningHistoryByPeriod(referralEarnings.history, period),
+    [period, referralEarnings.history],
   );
 
   const periodEarningsTotal = useMemo(
@@ -103,7 +102,7 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
       <div className="flex min-h-0 min-w-0 flex-col gap-3">
         <CosmicLineTabs
           className="referral-desktop-hub__period-tabs"
-          tabs={REFERRAL_EARNING_PERIOD_OPTIONS.map((option) => ({
+          tabs={referralEarnings.periods.map((option) => ({
             id: option.id,
             label: option.label,
           }))}

@@ -17,7 +17,7 @@ import {
   SignUpPickerGridItem,
   SignUpPickerSheet,
 } from "./SignUpPickerSheet";
-import { SIGNUP_BANKS, SIGNUP_CHANNELS } from "../../data/signupMockData";
+import { fetchSignUpOptions } from "@/lib/api/profile";
 import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import {
   responsiveAuthSheetContentClass,
@@ -270,6 +270,7 @@ export function SignUpBottomDrawer({
   const [error, setError] = useState<string | null>(null);
   const [signUpPicker, setSignUpPicker] = useState<null | "bank" | "channel">(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const signUpOptions = fetchSignUpOptions();
 
   const resetForm = () => {
     setStep(1);
@@ -426,7 +427,7 @@ export function SignUpBottomDrawer({
             ariaLabel="เลือกธนาคาร"
           >
             <div className="grid grid-cols-4 gap-2 px-1">
-              {SIGNUP_BANKS.map((bank) => (
+              {signUpOptions.banks.map((bank) => (
                 <SignUpPickerGridItem
                   key={bank.id}
                   label={bank.label}
@@ -447,7 +448,7 @@ export function SignUpBottomDrawer({
             ariaLabel="เลือกช่องทาง"
           >
             <div className="grid grid-cols-4 gap-2 px-1">
-              {SIGNUP_CHANNELS.map((channel) => (
+              {signUpOptions.channels.map((channel) => (
                 <SignUpPickerGridItem
                   key={channel.id}
                   label={channel.label}

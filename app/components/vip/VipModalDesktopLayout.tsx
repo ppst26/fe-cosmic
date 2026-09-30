@@ -2,7 +2,8 @@
 
 import React from "react";
 import type { VipModalTabId, VipPlayerState, VipRankId } from "@/app/types/vip";
-import { getVipRankTier, VIP_RANK_TIERS } from "@/app/data/vipMockData";
+import { getVipRankTier } from "@/app/data/vipMockData";
+import { fetchVipRanks } from "@/lib/api/vip";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
 import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
 import { VipRankCarousel } from "./VipRankCarousel";
@@ -27,7 +28,8 @@ export function VipModalDesktopLayout({
 }: VipModalDesktopLayoutProps) {
   const currentTier = getVipRankTier(player.currentRankId);
   const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
-  const focusRankId = VIP_RANK_TIERS[rankFocusIndex]?.id ?? player.currentRankId;
+  const vipRankTiers = fetchVipRanks().tiers;
+  const focusRankId = vipRankTiers[rankFocusIndex]?.id ?? player.currentRankId;
 
   if (tab === "benefits") {
     return (

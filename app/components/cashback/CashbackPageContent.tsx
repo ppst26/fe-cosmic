@@ -2,14 +2,12 @@
 
 import React, { useMemo, useState } from "react";
 import {
-  CASHBACK_LOSS_PANEL_MOCK,
-  CASHBACK_PLAY_PANEL_MOCK,
-  CASHBACK_TABS,
   formatCashbackCurrency,
   formatCashbackPercent,
   type CashbackPanelMock,
   type CashbackTabId,
 } from "@/app/data/cashbackMockData";
+import { fetchCashbackPanels } from "@/lib/api/cashback";
 import { RefundIcon } from "../ui/Icons";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
@@ -28,9 +26,10 @@ export function CashbackPageContent({
   initialTab = "play",
   embedded = false,
 }: CashbackPageContentProps) {
+  const cashbackPanels = fetchCashbackPanels();
   const [tab, setTab] = useState<CashbackTabId>(initialTab);
-  const [playPanel, setPlayPanel] = useState(CASHBACK_PLAY_PANEL_MOCK);
-  const [lossPanel, setLossPanel] = useState(CASHBACK_LOSS_PANEL_MOCK);
+  const [playPanel, setPlayPanel] = useState(cashbackPanels.play);
+  const [lossPanel, setLossPanel] = useState(cashbackPanels.loss);
 
   const panel = tab === "play" ? playPanel : lossPanel;
 
@@ -64,7 +63,7 @@ export function CashbackPageContent({
   return (
     <div className="flex flex-col gap-5 pb-6">
       <CosmicLineTabs
-        tabs={CASHBACK_TABS}
+        tabs={cashbackPanels.tabs}
         activeId={tab}
         onSelect={setTab}
         ariaLabel="ประเภทคืนยอด"

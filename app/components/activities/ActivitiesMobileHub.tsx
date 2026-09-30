@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { ACTIVITIES_HUB_ITEMS, type ActivityHubItem } from "@/app/data/activitiesHubMockData";
+import { type ActivityHubItem } from "@/app/data/activitiesHubMockData";
+import { fetchActivities } from "@/lib/api/activities";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 import { PromoHubPillLabel, promoCardButtonClass } from "../promotions/promoHubCardPrimitives";
 import { COSMIC_BTN_GLASS_ICON, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
@@ -14,6 +15,7 @@ type MobileView = "list" | "detail";
  * ใช้ใน ActivitiesHubPageContent (ไม่ embedded หรือ embedded แต่ < lg)
  */
 export function ActivitiesMobileHub() {
+  const activities = fetchActivities();
   const [view, setView] = useState<MobileView>("list");
   const [selected, setSelected] = useState<ActivityHubItem | null>(null);
 
@@ -52,7 +54,7 @@ export function ActivitiesMobileHub() {
 
   return (
     <ul className="activities-mobile-hub flex flex-col gap-3" aria-label="รายการกิจกรรม">
-      {ACTIVITIES_HUB_ITEMS.map((item) => (
+      {activities.map((item) => (
         <li key={item.id}>
           <button
             type="button"

@@ -6,8 +6,8 @@ import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { useAuth } from "../auth/AuthProvider";
 import {
   formatHeaderWalletBalance,
-  MOCK_MAIN_WALLET_BALANCE,
 } from "@/app/data/walletMockData";
+import { fetchWalletBalance } from "@/lib/api/profile";
 import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
 
 interface LobbyDesktopTopBarProps {
@@ -24,7 +24,7 @@ export function LobbyDesktopTopBar({
   onSignUpClick,
 }: LobbyDesktopTopBarProps) {
   const { isAuthenticated, isLoading, openProfile } = useAuth();
-  const balanceLabel = formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE);
+  const balanceLabel = formatHeaderWalletBalance(fetchWalletBalance().amount);
 
   const handleProfile = () => {
     if (isAuthenticated) {

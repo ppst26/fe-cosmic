@@ -2,8 +2,9 @@
 
 import React from "react";
 import type { ProfileUser } from "@/app/types/auth";
-import { PROFILE_HUB_STATS_MOCK } from "@/app/data/profileHubMockData";
-import { getVipRankTier, VIP_PLAYER_MOCK } from "@/app/data/vipMockData";
+import { getVipRankTier } from "@/app/data/vipMockData";
+import { fetchProfileHubStats } from "@/lib/api/profile";
+import { fetchVipPlayer } from "@/lib/api/vip";
 import { ProfileHubHeader } from "./ProfileHubHeader";
 import { ProfileHubRow } from "./ProfileHubAccordion";
 import {
@@ -29,8 +30,8 @@ interface ProfileHubBodyProps {
   showHeader?: boolean;
 }
 
-const stats = PROFILE_HUB_STATS_MOCK;
-const vipRankLabel = getVipRankTier(VIP_PLAYER_MOCK.currentRankId).label;
+const stats = fetchProfileHubStats();
+const vipRankLabel = getVipRankTier(fetchVipPlayer().currentRankId).label;
 
 function formatThb(value: number): string {
   return new Intl.NumberFormat("th-TH", {

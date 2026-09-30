@@ -10,11 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  LOSS_REBATE_HISTORY_MOCK,
   LOSS_REBATE_HISTORY_PAGE_SIZE,
-  LOSS_REBATE_MONTH_OPTIONS,
-  LOSS_REBATE_SUMMARY_MOCK,
-  LOSS_REBATE_TERMS,
   formatLossRebateCurrency,
   formatLossRebateDateTime,
   formatLossRebatePercent,
@@ -22,6 +18,7 @@ import {
   type LossRebateHistoryRow,
   type LossRebateSummaryMock,
 } from "@/app/data/lossRebateMockData";
+import { fetchLossRebate } from "@/lib/api/cashback";
 import { ChevronDownIcon } from "../ui/Icons";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { CosmicSelectField } from "../ui/CosmicSelectField";
@@ -35,10 +32,11 @@ type CashbackLossRebateExtraSectionsProps = {
  * สูตรคำนวณ + ตารางประวัติ + เงื่อนไขคืนยอดเสีย — ต่อท้าย CashbackPageContent แท็บเสีย
  */
 export function CashbackLossRebateExtraSections({
-  summary = LOSS_REBATE_SUMMARY_MOCK,
-  history = LOSS_REBATE_HISTORY_MOCK,
+  summary = fetchLossRebate().summary,
+  history = fetchLossRebate().history,
 }: CashbackLossRebateExtraSectionsProps) {
-  const [monthId, setMonthId] = useState(LOSS_REBATE_MONTH_OPTIONS[0]?.id ?? "2026-09");
+  const lossRebate = fetchLossRebate();
+  const [monthId, setMonthId] = useState(lossRebate.months[0]?.id ?? "2026-09");
   const [historyPage, setHistoryPage] = useState(1);
   const [termsOpen, setTermsOpen] = useState(false);
 
@@ -85,7 +83,7 @@ export function CashbackLossRebateExtraSections({
               value={monthId}
               onValueChange={handleMonthChange}
               triggerClassName="loss-rebate-page__month-select"
-              options={LOSS_REBATE_MONTH_OPTIONS.map((option) => ({
+              options={lossRebate.months.map((option) => ({
                 value: option.id,
                 label: option.label,
               }))}
@@ -204,7 +202,7 @@ export function CashbackLossRebateExtraSections({
         </button>
         {termsOpen && (
           <ul className="space-y-2 border-t border-[var(--border-subtle)]/40 px-4 py-3.5 text-xs leading-relaxed text-[var(--text-secondary)]">
-            {LOSS_REBATE_TERMS.map((line) => (
+            {lossRebate.terms.map((line) => (
               <li key={line} className="flex gap-2">
                 <span className="text-[var(--accent-primary)]" aria-hidden="true">
                   •

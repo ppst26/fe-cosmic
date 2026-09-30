@@ -10,15 +10,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  REFERRAL_EARNING_HISTORY_MOCK,
   REFERRAL_EARNING_PAGE_SIZE,
-  REFERRAL_EARNING_SUMMARY_MOCK,
   formatReferralCurrency,
   formatReferralEarningDateTime,
   formatReferralRecordCount,
   type ReferralEarningHistoryRow,
   type ReferralEarningSummaryMock,
 } from "@/app/data/referralMockData";
+import { fetchReferralEarnings } from "@/lib/api/referral";
 import { BonusNavIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_PRIMARY,
@@ -31,8 +30,8 @@ import {
  * ใช้ใน ReferralPageContent
  */
 export function ReferralEarningPanel({
-  summary = REFERRAL_EARNING_SUMMARY_MOCK,
-  history = REFERRAL_EARNING_HISTORY_MOCK,
+  summary = fetchReferralEarnings().summary,
+  history = fetchReferralEarnings().history,
   showSummary = true,
   sectionTitle = "ประวัติรับโบนัส",
   received: receivedProp,

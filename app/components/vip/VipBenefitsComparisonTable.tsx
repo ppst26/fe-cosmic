@@ -5,9 +5,8 @@ import type { VipRankId } from "@/app/types/vip";
 import {
   getVipBenefitCellValue,
   getVipRankIndex,
-  VIP_BENEFIT_COMPARISON_ROWS,
-  VIP_RANK_TIERS,
 } from "@/app/data/vipMockData";
+import { fetchVipBenefits, fetchVipRanks } from "@/lib/api/vip";
 import { ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
 
@@ -26,6 +25,8 @@ export function VipBenefitsComparisonTable({
   currentRankId,
   variant = "default",
 }: VipBenefitsComparisonTableProps) {
+  const { rows: benefitRows } = fetchVipBenefits();
+  const vipRankTiers = fetchVipRanks().tiers;
   const isDesktopFull = variant === "desktop-full";
   const scrollRef = useRef<HTMLDivElement>(null);
   const currentColRef = useRef<HTMLTableCellElement>(null);
@@ -74,7 +75,7 @@ export function VipBenefitsComparisonTable({
                 >
                   สิทธิประโยชน์
                 </th>
-                {VIP_RANK_TIERS.map((tier) => {
+                {vipRankTiers.map((tier) => {
                   const isCurrent = tier.id === currentRankId;
                   return (
                     <th
@@ -104,7 +105,7 @@ export function VipBenefitsComparisonTable({
               </tr>
             </thead>
             <tbody>
-              {VIP_BENEFIT_COMPARISON_ROWS.map((row, rowIndex) => (
+              {benefitRows.map((row, rowIndex) => (
                 <tr
                   key={row.id}
                   className={
@@ -116,7 +117,7 @@ export function VipBenefitsComparisonTable({
                   >
                     {row.label}
                   </td>
-                  {VIP_RANK_TIERS.map((tier) => {
+                  {vipRankTiers.map((tier) => {
                     const isCurrent = tier.id === currentRankId;
                     const locked = getVipRankIndex(tier.id) > getVipRankIndex(currentRankId);
                     return (

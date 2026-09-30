@@ -3,15 +3,13 @@
 import Image from "next/image";
 import {
   formatGemsBalance,
-  GEMS_STORE_BALANCE_MOCK,
-  GEMS_STORE_GEM_ASSET,
 } from "@/app/data/gemsStoreMockData";
 import {
   formatHeaderWalletBalance,
-  MOCK_MAIN_WALLET_BALANCE,
 } from "@/app/data/walletMockData";
+import { fetchGemsStore } from "@/lib/api/gemsStore";
+import { fetchMenuTicketCount, fetchWalletBalance } from "@/lib/api/profile";
 import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
-import { MENU_DIALOG_TICKET_COUNT_MOCK } from "@/app/data/menuMockData";
 import { cn } from "@/lib/utils";
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";
 import { useAuth } from "@/app/components/auth/AuthProvider";
@@ -28,11 +26,14 @@ interface MenuDrawerWalletCardsProps {
 export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps) {
   const { isAuthenticated, isLoading } = useAuth();
   const showAmounts = isAuthenticated && !isLoading;
+  const wallet = fetchWalletBalance();
+  const gemsStore = fetchGemsStore();
+  const ticketCount = fetchMenuTicketCount();
 
-  const balanceLabel = showAmounts ? formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE) : "—";
-  const gemsLabel = showAmounts ? formatGemsBalance(GEMS_STORE_BALANCE_MOCK) : "—";
+  const balanceLabel = showAmounts ? formatHeaderWalletBalance(wallet.amount) : "—";
+  const gemsLabel = showAmounts ? formatGemsBalance(gemsStore.balance) : "—";
   const ticketLabel = showAmounts
-    ? new Intl.NumberFormat("th-TH").format(MENU_DIALOG_TICKET_COUNT_MOCK)
+    ? new Intl.NumberFormat("th-TH").format(ticketCount)
     : "—";
 
   return (
@@ -49,7 +50,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
 
       <div className="menu-drawer-balance flex flex-col items-center justify-center px-1 text-center">
         <Image
-          src={GEMS_STORE_GEM_ASSET}
+          src={gemsStore.gemAsset}
           alt=""
           width={36}
           height={36}

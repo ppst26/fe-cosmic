@@ -1,0 +1,34 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { VIP_PLAYER_MOCK } from "@/app/data/vipMockData";
+import { REFERRAL_MOCK_REF_CODE } from "@/app/data/referralMockData";
+import { CASHBACK_PLAY_PANEL_MOCK } from "@/app/data/cashbackMockData";
+import { DAILY_CHECKIN_INITIAL } from "@/app/data/dailyCheckInMockData";
+import { GEMS_STORE_BALANCE_MOCK } from "@/app/data/gemsStoreMockData";
+import { ACTIVITIES_HUB_ITEMS } from "@/app/data/activitiesHubMockData";
+import { PROFILE_HUB_STATS_MOCK } from "@/app/data/profileHubMockData";
+import { MOCK_MAIN_WALLET_BALANCE } from "@/app/data/walletMockData";
+import { MENU_DIALOG_TICKET_COUNT_MOCK } from "@/app/data/menuMockData";
+import { fetchVipPlayer } from "./vip";
+import { fetchReferralOverview } from "./referral";
+import { fetchCashbackPanels } from "./cashback";
+import { fetchCheckIn } from "./checkIn";
+import { fetchGemsStore } from "./gemsStore";
+import { fetchWheel } from "./wheel";
+import { fetchTransactions } from "./transactions";
+import { fetchActivities } from "./activities";
+import { fetchMenuTicketCount, fetchProfileHubStats, fetchWalletBalance } from "./profile";
+
+test("member readers return the current mocks", () => {
+  assert.equal(fetchVipPlayer(), VIP_PLAYER_MOCK);
+  assert.equal(fetchReferralOverview().refCode, REFERRAL_MOCK_REF_CODE);
+  assert.equal(fetchCashbackPanels().play, CASHBACK_PLAY_PANEL_MOCK);
+  assert.equal(fetchCheckIn().days, DAILY_CHECKIN_INITIAL);
+  assert.equal(fetchGemsStore().balance, GEMS_STORE_BALANCE_MOCK);
+  assert.equal(fetchActivities(), ACTIVITIES_HUB_ITEMS);
+  assert.equal(fetchProfileHubStats(), PROFILE_HUB_STATS_MOCK);
+  assert.equal(fetchWalletBalance().amount, MOCK_MAIN_WALLET_BALANCE);
+  assert.equal(fetchMenuTicketCount(), MENU_DIALOG_TICKET_COUNT_MOCK);
+  assert.ok(fetchWheel());
+  assert.ok(fetchTransactions());
+});

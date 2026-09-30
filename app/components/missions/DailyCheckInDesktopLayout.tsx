@@ -2,10 +2,10 @@
 
 import React from "react";
 import {
-  DAILY_CHECKIN_TERMS,
   formatCheckInCredits,
   type DailyCheckInDayReward,
 } from "@/app/data/dailyCheckInMockData";
+import { fetchCheckIn } from "@/lib/api/checkIn";
 import { CheckInCoinGraphic, DailyCheckInCalendarGraphic } from "./DailyCheckInGraphics";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
 
@@ -25,6 +25,7 @@ export function DailyCheckInDesktopLayout({
   claimMessage,
   onClaimDay,
 }: DailyCheckInDesktopLayoutProps) {
+  const checkInTerms = fetchCheckIn().terms;
   const todayReward = days.find((d) => d.status === "today");
 
   return (
@@ -98,7 +99,7 @@ export function DailyCheckInDesktopLayout({
         </ol>
 
         <p className="daily-check-in-desktop__terms-hint mb-0 mt-auto text-xs leading-normal text-[var(--text-secondary)]">
-          {DAILY_CHECKIN_TERMS[0]}
+          {checkInTerms[0]}
         </p>
       </aside>
 

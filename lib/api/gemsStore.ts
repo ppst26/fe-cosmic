@@ -1,0 +1,23 @@
+import {
+  GEMS_STORE_BALANCE_MOCK,
+  GEMS_STORE_COIN_ASSETS,
+  GEMS_STORE_EXCHANGE_RATE_LABEL,
+  GEMS_STORE_GEM_ASSET,
+  GEMS_STORE_PACKAGES,
+  GEMS_STORE_REDEEM_QUOTA_MOCK,
+  GEMS_STORE_RESET_NOTICE,
+  GEMS_STORE_TERMS,
+} from "@/app/data/gemsStoreMockData";
+
+export function fetchGemsStore() {
+  return {
+    balance: GEMS_STORE_BALANCE_MOCK,
+    quota: GEMS_STORE_REDEEM_QUOTA_MOCK,
+    packages: GEMS_STORE_PACKAGES,
+    terms: GEMS_STORE_TERMS,
+    gemAsset: GEMS_STORE_GEM_ASSET,
+    coinAssets: GEMS_STORE_COIN_ASSETS,
+    rateLabel: GEMS_STORE_EXCHANGE_RATE_LABEL,
+    resetNotice: GEMS_STORE_RESET_NOTICE,
+  };
+}

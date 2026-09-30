@@ -2,12 +2,10 @@
 
 import React, { useMemo, useState } from "react";
 import {
-  LUCKY_WHEEL_HISTORY_PAGE_SIZE,
-  LUCKY_WHEEL_HISTORY_TOTAL_PAGES,
-  LUCKY_WHEEL_PRIZE_HISTORY,
   type WheelPrizeHistoryRow,
   type WheelSpinMethod,
 } from "@/app/data/luckyWheelMockData";
+import { fetchWheel } from "@/lib/api/wheel";
 
 interface LuckyWheelPrizeHistoryProps {
   extraRows?: WheelPrizeHistoryRow[];
@@ -17,19 +15,20 @@ interface LuckyWheelPrizeHistoryProps {
  * ตารางประวัติการหมุนของฉัน — ดีไซน์การ์ดมนตามภาพตัวอย่าง
  */
 export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistoryProps) {
+  const wheel = fetchWheel();
   const [page, setPage] = useState(1);
 
-  const allRows = useMemo(() => [...extraRows, ...LUCKY_WHEEL_PRIZE_HISTORY], [extraRows]);
+  const allRows = useMemo(() => [...extraRows, ...wheel.prizeHistory], [extraRows, wheel.prizeHistory]);
   const totalPages = Math.max(
     1,
     Math.min(
-      LUCKY_WHEEL_HISTORY_TOTAL_PAGES,
-      Math.ceil(allRows.length / LUCKY_WHEEL_HISTORY_PAGE_SIZE),
+      wheel.historyTotalPages,
+      Math.ceil(allRows.length / wheel.historyPageSize),
     ),
   );
   const safePage = Math.min(page, totalPages);
-  const sliceStart = (safePage - 1) * LUCKY_WHEEL_HISTORY_PAGE_SIZE;
-  const pageRows = allRows.slice(sliceStart, sliceStart + LUCKY_WHEEL_HISTORY_PAGE_SIZE);
+  const sliceStart = (safePage - 1) * wheel.historyPageSize;
+  const pageRows = allRows.slice(sliceStart, sliceStart + wheel.historyPageSize);
 
   return (
     <section

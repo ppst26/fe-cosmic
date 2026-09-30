@@ -2,10 +2,8 @@
 
 import React from "react";
 import type { VipModalTabId, VipPlayerState } from "@/app/types/vip";
-import {
-  getVipRankTier,
-  VIP_RANK_TIERS,
-} from "@/app/data/vipMockData";
+import { getVipRankTier } from "@/app/data/vipMockData";
+import { fetchVipRanks } from "@/lib/api/vip";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
 import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
 import { VipRankCarousel } from "./VipRankCarousel";
@@ -75,7 +73,7 @@ export function VipMobileTabPanels({
         <div className="w-full border-t border-[var(--border-subtle)]/50 pt-4">
           <VipRankRequirementsPanel
             player={player}
-            focusRankId={VIP_RANK_TIERS[rankFocusIndex]?.id ?? player.currentRankId}
+            focusRankId={fetchVipRanks().tiers[rankFocusIndex]?.id ?? player.currentRankId}
           />
         </div>
       </div>
