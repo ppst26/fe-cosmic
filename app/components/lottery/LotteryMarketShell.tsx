@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContainedVerticalScroll } from "./useContainedVerticalScroll";
 import type { LotteryCatalogEntry } from "@/app/types/lottery";
-import { LOTTERY_CATALOG_ENTRIES } from "@/app/data/lotteryCatalogMockData";
+import { fetchLotteryCatalog } from "@/lib/api/lotteryContent";
 import { getLotteryIconSrc } from "@/app/data/lotteryIconAssets";
 import { LotteryCountdown } from "./LotteryFlagOrb";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
@@ -67,7 +67,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               "m-0 flex list-none flex-col gap-1 p-0 lg:gap-2",
             )}
           >
-            {LOTTERY_CATALOG_ENTRIES.map((entry) => (
+            {fetchLotteryCatalog().map((entry) => (
               <li key={entry.slug}>
                 <LotteryMarketSidebarLink
                   entry={entry}

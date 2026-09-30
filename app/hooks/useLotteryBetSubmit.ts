@@ -3,8 +3,7 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { submitLotteryBetSlip } from "@/lib/lottery/submitBetSlip";
-import { THAI_LOTTO_BET_TYPES } from "@/app/data/thaiLottoMockData";
-import { YIKI_SETTLEMENT_TYPES } from "@/app/data/yikiMockData";
+import { fetchThaiLottoBoard, fetchYikiBoard } from "@/lib/api/lotteryContent";
 import type { SubmitLotteryBetRequest } from "@/app/types/lotteryBetApi";
 
 export type LotteryBetDialogState = { kind: "error"; message: string };
@@ -68,7 +67,7 @@ export function useThaiGovernmentBetSubmit(roundId: string, meta: LotteryBetRoun
         drawCloseAt: meta.drawCloseAt,
         continuePlayHref: meta.continuePlayHref,
         lines: entries.map((entry) => {
-          const type = THAI_LOTTO_BET_TYPES.find((item) => item.id === entry.typeId);
+          const type = fetchThaiLottoBoard().betTypes.find((item) => item.id === entry.typeId);
           return {
             typeKey: entry.typeId,
             typeLabel: type?.label,
@@ -97,7 +96,8 @@ export function useYikiStyleBetSubmit(market: string, roundId: string, meta: Lot
         drawCloseAt: meta.drawCloseAt,
         continuePlayHref: meta.continuePlayHref,
         lines: entries.map((entry) => {
-          const settlement = YIKI_SETTLEMENT_TYPES[entry.settlementTypeId as keyof typeof YIKI_SETTLEMENT_TYPES];
+          const settlement =
+            fetchYikiBoard().settlement[entry.settlementTypeId as keyof ReturnType<typeof fetchYikiBoard>["settlement"]];
           return {
             typeKey: entry.settlementTypeId,
             typeLabel: settlement?.label,

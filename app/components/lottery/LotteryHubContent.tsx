@@ -6,11 +6,9 @@ import type {
   LotteryGridItem,
   LotteryResultRow,
 } from "@/app/types/lottery";
-import {
-  LOTTERY_FEATURED_ITEMS,
-  LOTTERY_GRID_ITEMS,
-  LOTTERY_LATEST_RESULTS,
-} from "@/app/data/lotteryHubMockData";
+import { fetchLotteryHub } from "@/lib/api/lotteryContent";
+
+const lotteryHubDefaults = fetchLotteryHub();
 import { lotteryHrefToSlug } from "@/app/data/lotteryIconAssets";
 import { LotteryHubMarketLink } from "./LotteryHubMarketLink";
 import { LotteryLatestResultsTable } from "./LotteryLatestResultsTable";
@@ -29,9 +27,9 @@ interface LotteryHubContentProps {
  */
 export function LotteryHubContent({
   showPageHeading = true,
-  featured = LOTTERY_FEATURED_ITEMS,
-  gridItems = LOTTERY_GRID_ITEMS,
-  results = LOTTERY_LATEST_RESULTS,
+  featured = lotteryHubDefaults.featured,
+  gridItems = lotteryHubDefaults.grid,
+  results = lotteryHubDefaults.latest,
 }: LotteryHubContentProps) {
   return (
     <div className="lottery-hub flex min-w-0 flex-col gap-6 sm:gap-8">

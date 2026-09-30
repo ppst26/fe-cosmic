@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { LotteryPlayPageShell } from "@/app/components/lottery/LotteryPlayPageShell";
 import { ThaiLottoBetBoard } from "@/app/components/lottery/thai/ThaiLottoBetBoard";
 import { LotteryBetResultDialog } from "@/app/components/lottery/LotteryBetResultDialog";
-import { THAI_LOTTO_BET_TYPES, THAI_LOTTO_GROUPS } from "@/app/data/thaiLottoMockData";
+import { fetchThaiLottoBoard } from "@/lib/api/lotteryContent";
 import { getThaiLottoDrawByRoundId } from "@/app/data/lotteryRoundsMockData";
 import { useThaiGovernmentBetSubmit } from "@/app/hooks/useLotteryBetSubmit";
 
@@ -13,6 +13,7 @@ import { useThaiGovernmentBetSubmit } from "@/app/hooks/useLotteryBetSubmit";
  * Step 3 — แทงหวยรัฐบาลไทยตามรอบที่เลือก
  */
 export default function ThaiGovernmentLotteryPlayPage() {
+  const thaiBoard = fetchThaiLottoBoard();
   const urlParams = useParams();
   const roundId = (urlParams?.roundId as string) || "";
   const draw = useMemo(() => getThaiLottoDrawByRoundId(roundId), [roundId]);
@@ -39,8 +40,8 @@ export default function ThaiGovernmentLotteryPlayPage() {
           <>
             <ThaiLottoBetBoard
               draw={draw}
-              groups={THAI_LOTTO_GROUPS}
-              betTypes={THAI_LOTTO_BET_TYPES}
+              groups={thaiBoard.groups}
+              betTypes={thaiBoard.betTypes}
               backHref="/lottery/thai-government"
               onStepChange={onStepChange}
               onSubmit={onSubmit}

@@ -3,11 +3,7 @@
 import React, { useMemo } from "react";
 import { YikiBetBoard } from "./yiki/YikiBetBoard";
 import { LotteryBetResultDialog } from "./LotteryBetResultDialog";
-import {
-  YIKI_BET_TYPES,
-  YIKI_GROUPS,
-  YIKI_SETTLEMENT_TYPES,
-} from "@/app/data/yikiMockData";
+import { fetchYikiBoard } from "@/lib/api/lotteryContent";
 import { lotteryPlayMarketMeta, resolveLotteryPlayRound } from "@/lib/lottery/resolvePlayRound";
 import { useYikiStyleBetSubmit } from "@/app/hooks/useLotteryBetSubmit";
 
@@ -27,6 +23,7 @@ export function LotteryYikiPlayBoard({
   backHref,
   onStepChange,
 }: LotteryYikiPlayBoardProps) {
+  const yikiBoard = fetchYikiBoard();
   const playRound = useMemo(
     () => resolveLotteryPlayRound(marketSlug, roundId),
     [marketSlug, roundId],
@@ -58,9 +55,9 @@ export function LotteryYikiPlayBoard({
     <>
       <YikiBetBoard
         round={round}
-        groups={YIKI_GROUPS}
-        betTypes={YIKI_BET_TYPES}
-        settlementTypes={YIKI_SETTLEMENT_TYPES}
+        groups={yikiBoard.groups}
+        betTypes={yikiBoard.betTypes}
+        settlementTypes={yikiBoard.settlement}
         backHref={backHref}
         marketTitle={marketMeta.title}
         flagLabel={marketMeta.flagLabel}
