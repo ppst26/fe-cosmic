@@ -59,15 +59,16 @@ export function useThaiGovernmentBetSubmit(roundId: string, meta: LotteryBetRoun
   const { submit, dialog, closeDialog, isSubmitting } = useLotteryBetSubmit(meta.continuePlayHref);
 
   const onSubmit = useCallback(
-    async (entries: { typeId: string; number: string; amount: number }[]) =>
-      submit({
+    async (entries: { typeId: string; number: string; amount: number }[]) => {
+      const board = fetchThaiLottoBoard();
+      return submit({
         market: "thai-government",
         roundId,
         drawLabel: meta.drawLabel,
         drawCloseAt: meta.drawCloseAt,
         continuePlayHref: meta.continuePlayHref,
         lines: entries.map((entry) => {
-          const type = fetchThaiLottoBoard().betTypes.find((item) => item.id === entry.typeId);
+          const type = board.betTypes.find((item) => item.id === entry.typeId);
           return {
             typeKey: entry.typeId,
             typeLabel: type?.label,
@@ -76,7 +77,8 @@ export function useThaiGovernmentBetSubmit(roundId: string, meta: LotteryBetRoun
             payoutRate: type?.payoutRate,
           };
         }),
-      }),
+      });
+    },
     [meta.continuePlayHref, meta.drawCloseAt, meta.drawLabel, roundId, submit],
   );
 
@@ -88,8 +90,9 @@ export function useYikiStyleBetSubmit(market: string, roundId: string, meta: Lot
   const { submit, dialog, closeDialog, isSubmitting } = useLotteryBetSubmit(meta.continuePlayHref);
 
   const onSubmit = useCallback(
-    async (entries: { settlementTypeId: string; number: string; amount: number | null }[]) =>
-      submit({
+    async (entries: { settlementTypeId: string; number: string; amount: number | null }[]) => {
+      const board = fetchYikiBoard();
+      return submit({
         market,
         roundId,
         drawLabel: meta.drawLabel,
@@ -97,7 +100,7 @@ export function useYikiStyleBetSubmit(market: string, roundId: string, meta: Lot
         continuePlayHref: meta.continuePlayHref,
         lines: entries.map((entry) => {
           const settlement =
-            fetchYikiBoard().settlement[entry.settlementTypeId as keyof ReturnType<typeof fetchYikiBoard>["settlement"]];
+            board.settlement[entry.settlementTypeId as keyof typeof board.settlement];
           return {
             typeKey: entry.settlementTypeId,
             typeLabel: settlement?.label,
@@ -106,7 +109,8 @@ export function useYikiStyleBetSubmit(market: string, roundId: string, meta: Lot
             payoutRate: settlement?.payoutRate,
           };
         }),
-      }),
+      });
+    },
     [market, meta.continuePlayHref, meta.drawCloseAt, meta.drawLabel, roundId, submit],
   );
 

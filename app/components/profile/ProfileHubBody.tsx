@@ -30,9 +30,6 @@ interface ProfileHubBodyProps {
   showHeader?: boolean;
 }
 
-const stats = fetchProfileHubStats();
-const vipRankLabel = getVipRankTier(fetchVipPlayer().currentRankId).label;
-
 function formatThb(value: number): string {
   return new Intl.NumberFormat("th-TH", {
     style: "currency",
@@ -57,6 +54,8 @@ export function ProfileHubBody({
   onLogout,
   showHeader = true,
 }: ProfileHubBodyProps) {
+  const stats = fetchProfileHubStats();
+  const vipRankLabel = getVipRankTier(fetchVipPlayer().currentRankId).label;
   const rowLayout = showHeader ? "default" : "sheet";
 
   return (

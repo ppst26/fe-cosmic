@@ -7,8 +7,6 @@ import type {
   LotteryResultRow,
 } from "@/app/types/lottery";
 import { fetchLotteryHub } from "@/lib/api/lotteryContent";
-
-const lotteryHubDefaults = fetchLotteryHub();
 import { lotteryHrefToSlug } from "@/app/data/lotteryIconAssets";
 import { LotteryHubMarketLink } from "./LotteryHubMarketLink";
 import { LotteryLatestResultsTable } from "./LotteryLatestResultsTable";
@@ -27,10 +25,15 @@ interface LotteryHubContentProps {
  */
 export function LotteryHubContent({
   showPageHeading = true,
-  featured = lotteryHubDefaults.featured,
-  gridItems = lotteryHubDefaults.grid,
-  results = lotteryHubDefaults.latest,
+  featured,
+  gridItems,
+  results,
 }: LotteryHubContentProps) {
+  const hub = fetchLotteryHub();
+  const resolvedFeatured = featured ?? hub.featured;
+  const resolvedGridItems = gridItems ?? hub.grid;
+  const resolvedResults = results ?? hub.latest;
+
   return (
     <div className="lottery-hub flex min-w-0 flex-col gap-6 sm:gap-8">
       {showPageHeading ? (
@@ -46,7 +49,7 @@ export function LotteryHubContent({
 
       <section className="lottery-hub__featured" aria-label="หวยแนะนำ">
         <div className="lottery-feature-grid grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {featured.map((item) => (
+          {resolvedFeatured.map((item) => (
             <LotteryHubMarketLink
               key={item.id}
               href={item.href}
@@ -63,7 +66,7 @@ export function LotteryHubContent({
 
       <section className="lottery-hub__markets min-w-0" aria-label="ประเภทหวยทั้งหมด">
         <div className="lottery-type-grid grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
-          {gridItems.map((item) => (
+          {resolvedGridItems.map((item) => (
             <LotteryHubMarketLink
               key={item.id}
               href={item.href}
@@ -79,7 +82,7 @@ export function LotteryHubContent({
         </div>
       </section>
 
-      <LotteryLatestResultsTable results={results} />
+      <LotteryLatestResultsTable results={resolvedResults} />
     </div>
   );
 }

@@ -14,13 +14,12 @@ import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
 import { LuckyWheelLiveWinners } from "./LuckyWheelLiveWinners";
 import { LuckyWheelPrizeHistory } from "./LuckyWheelPrizeHistory";
 
-const SEGMENT_DEG = 360 / fetchWheel().segments.length;
-
 /**
  * หน้าเล่นวงล้อพารวย — รองรับ Mobile-first layout ตรงตาม mockup
  */
 export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean }) {
   const wheel = fetchWheel();
+  const segmentDeg = 360 / wheel.segments.length;
   const [gemsBalance, setGemsBalance] = useState(wheel.initialGems);
   const [ticketCount, setTicketCount] = useState(wheel.initialTickets);
   const [spinMethod, setSpinMethod] = useState<WheelSpinMethod>("ticket");
@@ -44,7 +43,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
     const targetIndex = Math.floor(Math.random() * wheel.segments.length);
     const segment: WheelSegment = wheel.segments[targetIndex];
     const extraTurns = 5 * 360;
-    const targetAngle = 360 - targetIndex * SEGMENT_DEG - SEGMENT_DEG / 2;
+    const targetAngle = 360 - targetIndex * segmentDeg - segmentDeg / 2;
     const currentMod = ((rotation % 360) + 360) % 360;
     const delta = (targetAngle - currentMod + 360) % 360;
     const nextRotation = rotation + extraTurns + delta;
@@ -71,7 +70,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
       };
       setRecentHistoryRows((prev) => [row, ...prev].slice(0, 5));
     }, 4200);
-  }, [canAfford, currentGemsCost, currentTicketCost, rotation, spinMethod, spinning, wheel.segments]);
+  }, [canAfford, currentGemsCost, currentTicketCost, rotation, segmentDeg, spinMethod, spinning, wheel.segments]);
 
   return (
     <div className={`lucky-wheel-page ${embedded ? "lucky-wheel-page--embedded" : ""}`}>
