@@ -10,15 +10,13 @@ import {
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
+import { submitCoupon } from "@/lib/api/coupon";
 import { COUPON_CODE_MAX_LENGTH, sanitizeCouponCode } from "@/lib/fieldInput";
 
 interface CouponRedeemBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-/** โค้ด mock สำหรับทดสอบแลกในหน้ UI */
-const MOCK_VALID_CODES = new Set(["COSMIC100", "FREEGEMS", "WELCOME50"]);
 
 /**
  * Bottom sheet แลกคูปอง — เปิดจากเมนู "คูปอง" ใน RightMenuDrawer
@@ -43,7 +41,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
     }
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
     setSuccess(null);
@@ -55,15 +53,14 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
     }
 
     setSubmitting(true);
-    window.setTimeout(() => {
-      setSubmitting(false);
-      if (MOCK_VALID_CODES.has(normalized)) {
-        setSuccess("แลกเครดิตฟรีสำเร็จ — ยอดจะเข้ากระเป๋าในไม่กี่นาที (mock)");
-        setCode("");
-        return;
-      }
-      setError("รหัสคูปองไม่ถูกต้องหรือหมดอายุแล้ว");
-    }, 600);
+    const result = await submitCoupon(normalized);
+    setSubmitting(false);
+    if (result.ok) {
+      setSuccess(result.message);
+      setCode("");
+      return;
+    }
+    setError(result.error);
   };
 
   return (
