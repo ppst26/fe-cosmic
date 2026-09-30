@@ -5,14 +5,16 @@ import { Dialog } from "radix-ui";
 import { cn } from "@/lib/utils";
 import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
 import {
-  DEPOSIT_BANK_ACCOUNT_MOCK,
-  DEPOSIT_DEFAULT_AMOUNT,
-  DEPOSIT_METHOD_OPTIONS,
-  DEPOSIT_QUICK_AMOUNTS,
   formatDepositAmount,
   formatDepositTransferAmount,
   type DepositMethodId,
 } from "@/app/data/depositMockData";
+import {
+  fetchDepositBankAccount,
+  fetchDepositMethods,
+  fetchDepositQuickAmounts,
+  submitDeposit,
+} from "@/lib/api/deposit";
 import { ChevronRightIcon, CopyIcon } from "../ui/Icons";
 import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
 import {
@@ -42,9 +44,10 @@ interface DepositBottomSheetProps {
  * Bottom sheet ฝากเงิน — step 1 ช่องทาง · step 2 ยอด · step 3 ยืนยัน
  */
 export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBottomSheetProps) {
+  const quick = fetchDepositQuickAmounts();
   const [step, setStep] = useState<DepositSheetStep>("methods");
-  const [amount, setAmount] = useState(DEPOSIT_DEFAULT_AMOUNT);
-  const [amountInput, setAmountInput] = useState(String(DEPOSIT_DEFAULT_AMOUNT));
+  const [amount, setAmount] = useState(quick.defaultAmount);
+  const [amountInput, setAmountInput] = useState(String(quick.defaultAmount));
   const [copied, setCopied] = useState(false);
   const [slipFileName, setSlipFileName] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -53,8 +56,8 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 
   const resetFlow = () => {
     setStep("methods");
-    setAmount(DEPOSIT_DEFAULT_AMOUNT);
-    setAmountInput(String(DEPOSIT_DEFAULT_AMOUNT));
+    setAmount(quick.defaultAmount);
+    setAmountInput(String(quick.defaultAmount));
     setCopied(false);
     setSlipFileName(null);
     setSubmitting(false);
@@ -105,7 +108,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 
   const handleCopyAccount = async () => {
     try {
-      await navigator.clipboard.writeText(DEPOSIT_BANK_ACCOUNT_MOCK.accountNumberCopy);
+      await navigator.clipboard.writeText(fetchDepositBankAccount().accountNumberCopy);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -129,15 +132,14 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
     setSlipFileName(file?.name ?? null);
   };
 
-  const handleConfirmDeposit = () => {
+  const handleConfirmDeposit = async () => {
     if (amount <= 0) return;
     setSubmitting(true);
     setSubmitMessage(null);
-    window.setTimeout(() => {
-      setSubmitting(false);
-      onCompleted?.(amount);
-      onClose();
-    }, 500);
+    await submitDeposit({ amount, methodId: "bank" });
+    setSubmitting(false);
+    onCompleted?.(amount);
+    onClose();
   };
 
   const isTallStep = step === "bank" || step === "confirm";
@@ -199,6 +201,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 }
 
 function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMethodId) => void }) {
+  const methods = fetchDepositMethods();
   return (
     <>
       <ResponsiveSheetHeader
@@ -214,7 +217,7 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
       />
 
       <ul className="mt-6 flex flex-col gap-3 overflow-y-auto pb-2" aria-label="ช่องทางฝากเงิน">
-        {DEPOSIT_METHOD_OPTIONS.map((method) => (
+        {methods.map((method) => (
           <li key={method.id}>
             <button
               type="button"
@@ -255,7 +258,7 @@ function DepositBankStep({
   onEdit: () => void;
   onNext: () => void;
 }) {
-  const bank = DEPOSIT_BANK_ACCOUNT_MOCK;
+  const bank = fetchDepositBankAccount();
   const canProceed = amount > 0;
 
   return (
@@ -349,7 +352,7 @@ function DepositBankStep({
         <div className="mt-4">
           <p className="cosmic-type-sheet-label">เลือกยอดเงินด่วน</p>
           <div className="mt-2 grid grid-cols-3 gap-2">
-            {DEPOSIT_QUICK_AMOUNTS.map((value) => {
+            {fetchDepositQuickAmounts().amounts.map((value) => {
               const active = amount === value;
               return (
                 <button
@@ -408,7 +411,7 @@ function DepositConfirmStep({
   onPickSlip: () => void;
   onConfirm: () => void;
 }) {
-  const bank = DEPOSIT_BANK_ACCOUNT_MOCK;
+  const bank = fetchDepositBankAccount();
 
   return (
     <>
