@@ -4,13 +4,15 @@ import React, { useEffect, useState } from "react";
 import { Dialog } from "radix-ui";
 import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
 import {
-  WITHDRAW_AVAILABLE_BALANCE,
-  WITHDRAW_DEFAULT_AMOUNT,
-  WITHDRAW_QUICK_AMOUNTS,
-  WITHDRAW_USER_BANK_MOCK,
   formatWithdrawAmount,
   formatWithdrawMoney,
 } from "@/app/data/withdrawMockData";
+import {
+  fetchWithdrawAccount,
+  fetchWithdrawBalance,
+  fetchWithdrawQuickAmounts,
+  submitWithdraw,
+} from "@/lib/api/withdraw";
 import { ChevronRightIcon } from "../ui/Icons";
 import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
 import {
@@ -35,14 +37,18 @@ interface WithdrawBottomSheetProps {
  * Bottom sheet ถอนเงิน step 1 — เลือกบัญชี + กรอกยอด (mock)
  */
 export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBottomSheetProps) {
-  const [amount, setAmount] = useState(WITHDRAW_DEFAULT_AMOUNT);
-  const [amountInput, setAmountInput] = useState(String(WITHDRAW_DEFAULT_AMOUNT));
+  const quick = fetchWithdrawQuickAmounts();
+  const bank = fetchWithdrawAccount();
+  const available = fetchWithdrawBalance();
+
+  const [amount, setAmount] = useState(quick.defaultAmount);
+  const [amountInput, setAmountInput] = useState(String(quick.defaultAmount));
   const [submitting, setSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
 
   const resetFlow = () => {
-    setAmount(WITHDRAW_DEFAULT_AMOUNT);
-    setAmountInput(String(WITHDRAW_DEFAULT_AMOUNT));
+    setAmount(quick.defaultAmount);
+    setAmountInput(String(quick.defaultAmount));
     setSubmitting(false);
     setSubmitMessage(null);
   };
@@ -59,7 +65,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
   };
 
   const applyAmount = (value: number) => {
-    const capped = Math.min(Math.max(0, value), WITHDRAW_AVAILABLE_BALANCE);
+    const capped = Math.min(Math.max(0, value), available);
     setAmount(capped);
     setAmountInput(capped > 0 ? String(capped) : "");
   };
@@ -72,22 +78,20 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
   };
 
   const handleWithdrawAll = () => {
-    applyAmount(WITHDRAW_AVAILABLE_BALANCE);
+    applyAmount(available);
   };
 
-  const handleConfirm = () => {
-    if (amount <= 0 || amount > WITHDRAW_AVAILABLE_BALANCE) return;
+  const handleConfirm = async () => {
+    if (amount <= 0 || amount > available) return;
     setSubmitting(true);
     setSubmitMessage(null);
-    window.setTimeout(() => {
-      setSubmitting(false);
-      onCompleted?.(amount);
-      onClose();
-    }, 500);
+    await submitWithdraw({ amount });
+    setSubmitting(false);
+    onCompleted?.(amount);
+    onClose();
   };
 
-  const bank = WITHDRAW_USER_BANK_MOCK;
-  const canConfirm = amount > 0 && amount <= WITHDRAW_AVAILABLE_BALANCE;
+  const canConfirm = amount > 0 && amount <= available;
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
@@ -157,7 +161,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               </div>
               <div className="cosmic-type-sheet-desc mt-2 flex flex-wrap items-center justify-between gap-2">
                 <p>
-                  ถอนได้ ฿{formatWithdrawMoney(WITHDRAW_AVAILABLE_BALANCE)}
+                  ถอนได้ ฿{formatWithdrawMoney(available)}
                 </p>
                 <button
                   type="button"
@@ -171,7 +175,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
 
             <div className="mt-4">
               <div className="flex flex-wrap items-center justify-center gap-2 px-1 pb-1">
-                {WITHDRAW_QUICK_AMOUNTS.map((value) => {
+                {quick.amounts.map((value) => {
                   const active = amount === value;
                   return (
                     <button
