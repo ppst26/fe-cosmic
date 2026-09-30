@@ -128,11 +128,15 @@ export const VIP_BENEFIT_COMPARISON_VALUES: Record<
   },
 };
 
-export function getVipBenefitCellValue(rowId: string, rankId: VipRankId): string {
+export function getVipBenefitCellValue(
+  rowId: string,
+  rankId: VipRankId,
+  values: Record<string, Partial<Record<VipRankId, string>>>,
+): string {
   if (rowId === "turnover-condition") {
     return formatVipAmount(getVipTurnoverTarget(rankId));
   }
-  return VIP_BENEFIT_COMPARISON_VALUES[rowId]?.[rankId] ?? "—";
+  return values[rowId]?.[rankId] ?? "—";
 }
 
 export interface VipRankRequirements {

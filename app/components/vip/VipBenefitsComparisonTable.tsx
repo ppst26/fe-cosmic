@@ -25,7 +25,7 @@ export function VipBenefitsComparisonTable({
   currentRankId,
   variant = "default",
 }: VipBenefitsComparisonTableProps) {
-  const { rows: benefitRows } = fetchVipBenefits();
+  const { rows: benefitRows, values: benefitValues } = fetchVipBenefits();
   const vipRankTiers = fetchVipRanks().tiers;
   const isDesktopFull = variant === "desktop-full";
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -131,7 +131,7 @@ export function VipBenefitsComparisonTable({
                               : "text-[var(--text-secondary)]"
                         }`}
                       >
-                        {getVipBenefitCellValue(row.id, tier.id)}
+                        {getVipBenefitCellValue(row.id, tier.id, benefitValues)}
                       </td>
                     );
                   })}
