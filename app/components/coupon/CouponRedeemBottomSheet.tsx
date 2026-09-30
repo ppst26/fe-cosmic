@@ -10,6 +10,7 @@ import {
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
+import { COUPON_CODE_MAX_LENGTH, sanitizeCouponCode } from "@/lib/fieldInput";
 
 interface CouponRedeemBottomSheetProps {
   isOpen: boolean;
@@ -47,7 +48,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
     setError(null);
     setSuccess(null);
 
-    const normalized = code.trim().toUpperCase();
+    const normalized = sanitizeCouponCode(code);
     if (!normalized) {
       setError("กรุณากรอกรหัสคูปอง");
       return;
@@ -120,7 +121,8 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
                   type="text"
                   autoComplete="off"
                   value={code}
-                  onChange={(event) => setCode(event.target.value.toUpperCase())}
+                  maxLength={COUPON_CODE_MAX_LENGTH}
+                  onChange={(event) => setCode(sanitizeCouponCode(event.target.value))}
                   placeholder="กรอกโค้ดคูปอง"
                   className="min-w-0 flex-1 bg-transparent text-sm uppercase outline-none placeholder:normal-case placeholder:text-[var(--text-muted)]"
                 />

@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import type { CategoryId } from "@/app/types/lobby";
 import { BOTTOM_NAV_DATA, CATEGORIES_DATA } from "@/app/data/lobbyMockData";
-import { SignUpBottomDrawer } from "@/app/components/auth/SignUpBottomDrawer";
-import { LoginBottomDrawer } from "@/app/components/auth/LoginBottomDrawer";
 import { useCouponRedeem } from "@/app/components/coupon/CouponRedeemProvider";
 import { useVipModal } from "@/app/components/vip/VipModalProvider";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
@@ -40,8 +38,8 @@ export function LobbyDesktopPageShell({
   hideBottomNav = false,
 }: LobbyDesktopPageShellProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isOpen: isSignUpOpen, open: openSignUp, close: closeSignUp } = useOverlayLayer("signup");
-  const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useOverlayLayer("login");
+  const { open: openSignUp } = useOverlayLayer("signup");
+  const { open: openLogin } = useOverlayLayer("login");
   const { sidebarHidden: isSidebarCollapsed } = useLobbyShellSidebar();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
@@ -81,18 +79,6 @@ export function LobbyDesktopPageShell({
               <div className="lobby-desktop-workspace lg:flex lg:w-full lg:min-w-0 lg:max-w-none lg:mx-0 lg:items-start lg:gap-4 lg:pt-(--lobby-workspace-pad-top) lg:px-0 lg:pb-5">
                 <div className="lobby-desktop-center min-w-0 flex-1 lg:w-full lg:max-w-none lg:mx-0 lg:px-0">
                   <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-
-                  <SignUpBottomDrawer
-                    isOpen={isSignUpOpen}
-                    onClose={closeSignUp}
-                    onLoginClick={openLogin}
-                  />
-
-                  <LoginBottomDrawer
-                    isOpen={isLoginOpen}
-                    onClose={closeLogin}
-                    onSignUpClick={openSignUp}
-                  />
 
                   {subHeader ? (
                     <div className="lg:hidden">

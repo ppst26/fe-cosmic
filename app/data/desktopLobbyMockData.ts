@@ -54,14 +54,14 @@ export const DESKTOP_FEATURE_PROMOS = [
   },
 ] as const;
 
-/** การ์ดเมนูแถบขวา desktop — glass + รูป 3D ขวา (public/assets/3d) */
+/** การ์ดเมนู hub desktop — glass + พื้นหลัง 3D cover ขวา (public/assets/3d) */
 export const DESKTOP_RIGHT_MENU_TILES = [
   {
     id: "menu-referral",
     variant: "cell" as const,
     title: "แนะนำเพื่อน",
     subtitle: "สร้างรายได้ 2 ชั้น",
-    visualSrc: "/assets/3d/แนะนำเพื่อน.webp",
+    visualSrc: "/assets/3d/cashback.avif",
     isBg: true,
     href: "/referral",
     ariaLabel: "แนะนำเพื่อน สร้างรายได้ 2 ชั้น",
@@ -71,7 +71,7 @@ export const DESKTOP_RIGHT_MENU_TILES = [
     variant: "cell" as const,
     title: "เช็คอิน",
     subtitle: "CHECK-IN",
-    visualSrc: "/assets/3d/checkin.webp",
+    visualSrc: "/assets/3d/checkin.avif",
     isBg: true,
     href: "/missions/check-in",
     ariaLabel: "เช็คอิน CHECK-IN",
@@ -82,6 +82,7 @@ export const DESKTOP_RIGHT_MENU_TILES = [
     title: "วงล้อ",
     subtitle: "LUCKY WHEEL",
     visualSrc: "/assets/3d/wheel.avif",
+    isBg: true,
     href: "/wheel",
     ariaLabel: "วงล้อ LUCKY WHEEL",
   },
@@ -90,7 +91,8 @@ export const DESKTOP_RIGHT_MENU_TILES = [
     variant: "cell" as const,
     title: "ร้านค้าเพชร",
     subtitle: "GEMS SHOP",
-    visualSrc: "/assets/3d/gemes.avif",
+    visualSrc: "/assets/3d/diamond.avif",
+    isBg: true,
     href: "/gems-store",
     ariaLabel: "ร้านค้าเพชร GEMS SHOP",
   },
@@ -100,6 +102,7 @@ export const DESKTOP_RIGHT_MENU_TILES = [
     title: "คูปอง",
     subtitle: "COUPON",
     visualSrc: "/assets/3d/coupon.avif",
+    isBg: true,
     action: "coupon" as const,
     ariaLabel: "แลกคูปอง COUPON",
   },
@@ -108,7 +111,8 @@ export const DESKTOP_RIGHT_MENU_TILES = [
     variant: "cell" as const,
     title: "ยศ VIP",
     subtitle: "สิทธิพิเศษสมาชิก",
-    visualSrc: "/assets/3d/vip-rank.avif",
+    visualSrc: "/assets/3d/vip.avif",
+    isBg: true,
     action: "vip-rank" as const,
     ariaLabel: "ยศ VIP สิทธิพิเศษสมาชิก",
   },

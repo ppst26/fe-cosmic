@@ -119,7 +119,10 @@ export function LuckyWheelWalletPanel({
             min={1}
             max={99}
             value={spinQty}
-            onChange={(e) => onSpinQtyChange(clampQty(Number(e.target.value) || 1))}
+            onChange={(e) => {
+              const digits = e.target.value.replace(/\D/g, "").slice(0, 2);
+              onSpinQtyChange(clampQty(digits ? Number(digits) : 1));
+            }}
             className="lucky-wheel-wallet__stepper-input tabular-nums"
             aria-label="จำนวนครั้งที่หมุน"
             disabled={spinning}

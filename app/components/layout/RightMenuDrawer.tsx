@@ -13,9 +13,12 @@ import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
 import {
   MENU_DIALOG_ALL_TILES,
   MENU_DIALOG_SECTIONS,
+  menuTileRequiresAuth,
   type MenuDialogAction,
   type MenuDialogTile,
 } from "../../data/menuMockData";
+import { useAuth } from "../auth/AuthProvider";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { parseHubFromHref } from "../hub/hubModalRegistry";
 import { getIsDesktopViewport, useIsDesktop } from "../hub/useIsDesktop";
@@ -35,6 +38,21 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
   const { openHub } = useDesktopHubModal();
+  const { isAuthenticated, isLoading } = useAuth();
+  const { open: openLogin } = useOverlayLayer("login");
+
+  /** เมนูที่ต้องล็อกอิน — ปิดเมนูแล้วเปิด login sheet */
+  const runWithAuth = (tile: MenuDialogTile, action: () => void) => {
+    if (menuTileRequiresAuth(tile)) {
+      if (isLoading) return;
+      if (!isAuthenticated) {
+        onClose();
+        window.setTimeout(() => openLogin(), 0);
+        return;
+      }
+    }
+    action();
+  };
 
   const navigateAndClose = (href: string) => {
     if (getIsDesktopViewport()) {
@@ -88,7 +106,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           key={tile.id}
           type="button"
           className={tileClass}
-          onClick={() => runAction(tile.action!)}
+          onClick={() => runWithAuth(tile, () => runAction(tile.action!))}
         >
           {content}
         </button>
@@ -104,7 +122,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         onClick={(event) => {
           if (href.startsWith("/")) {
             event.preventDefault();
-            navigateAndClose(href);
+            runWithAuth(tile, () => navigateAndClose(href));
             return;
           }
           onClose();
@@ -156,7 +174,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           key={tile.id}
           type="button"
           className={rowClass}
-          onClick={() => runAction(tile.action!)}
+          onClick={() => runWithAuth(tile, () => runAction(tile.action!))}
         >
           {content}
         </button>
@@ -172,7 +190,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         onClick={(event) => {
           if (href.startsWith("/")) {
             event.preventDefault();
-            navigateAndClose(href);
+            runWithAuth(tile, () => navigateAndClose(href));
             return;
           }
           onClose();

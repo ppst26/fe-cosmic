@@ -3,6 +3,7 @@ import { findUserByPhone, toSessionUser } from "@/lib/auth/userStore";
 import { verifyPassword } from "@/lib/auth/password";
 import { attachSessionCookie } from "@/lib/auth/session";
 import type { AuthActionResponse, LoginRequestBody } from "@/app/types/auth";
+import { isThaiMobilePhone, sanitizePhone } from "@/lib/fieldInput";
 
 /**
  * POST /api/auth/login — เข้าสู่ระบบด้วยเบอร์ + รหัสผ่าน
@@ -18,12 +19,12 @@ export async function POST(request: Request) {
     );
   }
 
-  const phone = body.phone?.trim() ?? "";
+  const phone = sanitizePhone(body.phone ?? "");
   const password = body.password ?? "";
 
-  if (!phone || !password) {
+  if (!isThaiMobilePhone(phone) || !password) {
     return NextResponse.json<AuthActionResponse>(
-      { ok: false, error: "กรุณากรอกเบอร์และรหัสผ่าน" },
+      { ok: false, error: "กรุณากรอกเบอร์โทร 10 หลักและรหัสผ่าน" },
       { status: 400 },
     );
   }

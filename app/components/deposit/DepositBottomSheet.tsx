@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Dialog } from "radix-ui";
 import { cn } from "@/lib/utils";
+import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
 import {
   DEPOSIT_BANK_ACCOUNT_MOCK,
   DEPOSIT_DEFAULT_AMOUNT,
@@ -96,7 +97,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
   };
 
   const handleAmountChange = (raw: string) => {
-    const digits = raw.replace(/\D/g, "");
+    const digits = sanitizeMoneyAmount(raw);
     setAmountInput(digits);
     const parsed = digits ? Number.parseInt(digits, 10) : 0;
     setAmount(parsed);
@@ -336,6 +337,7 @@ function DepositBankStep({
               type="text"
               inputMode="numeric"
               value={amountInput}
+              maxLength={MONEY_AMOUNT_MAX_DIGITS}
               onChange={(event) => onAmountChange(event.target.value)}
               className="input-keep-size min-w-0 flex-1 bg-transparent px-3 text-2xl font-medium text-[var(--text-primary)] outline-none"
               aria-label="จำนวนเงินที่ต้องการฝาก"

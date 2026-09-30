@@ -21,6 +21,20 @@
     scrollbar-color: var(--scrollbar-thumb) transparent;
   }
 
+  /**
+   * จองร่อง scrollbar ตลอด — เปิด modal แล้วความกว้าง viewport ไม่ยุบ
+   * Radix RemoveScroll ใส่ margin-right ที่ body แต่ sidebar desktop เป็น fixed
+   * เลยขยับคนละทางกับ header/main · gutter คงที่แล้วไม่ต้องชดเชยซ้ำ
+   */
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  html body[data-scroll-locked] {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: block;

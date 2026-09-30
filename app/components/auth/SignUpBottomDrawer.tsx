@@ -26,6 +26,16 @@ import {
 } from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
 import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
+import {
+  isBankAccountNumber,
+  isPasswordLengthOk,
+  isPersonName,
+  isThaiMobilePhone,
+  PASSWORD_MAX_LENGTH,
+  PHONE_DIGIT_LENGTH,
+  sanitizePassword,
+  sanitizePhone,
+} from "@/lib/fieldInput";
 
 interface SignUpBottomDrawerProps {
   isOpen: boolean;
@@ -91,6 +101,7 @@ function SignUpField({
   trailing,
   autoComplete,
   inputMode,
+  maxLength,
 }: {
   id: string;
   label: string;
@@ -102,6 +113,7 @@ function SignUpField({
   trailing?: React.ReactNode;
   autoComplete?: string;
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  maxLength?: number;
 }) {
   return (
     <div className="space-y-1.5">
@@ -118,6 +130,7 @@ function SignUpField({
           placeholder={placeholder}
           autoComplete={autoComplete}
           inputMode={inputMode}
+          maxLength={maxLength}
           className="min-w-0 flex-1 bg-transparent text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none"
         />
         {trailing}
@@ -168,8 +181,9 @@ function SignUpStepOne({
         inputMode="tel"
         autoComplete="tel"
         value={data.phone}
-        onChange={(phone) => onChange({ phone })}
+        onChange={(phone) => onChange({ phone: sanitizePhone(phone) })}
         placeholder="กรอกเบอร์โทรศัพท์"
+        maxLength={PHONE_DIGIT_LENGTH}
         leadingIcon={<PhoneIcon className="h-5 w-5" />}
       />
 
@@ -179,8 +193,9 @@ function SignUpStepOne({
         type={showPassword ? "text" : "password"}
         autoComplete="new-password"
         value={data.password}
-        onChange={(password) => onChange({ password })}
+        onChange={(password) => onChange({ password: sanitizePassword(password) })}
         placeholder="กรอกรหัสผ่าน"
+        maxLength={PASSWORD_MAX_LENGTH}
         leadingIcon={<LockIcon className="h-5 w-5" />}
         trailing={
           <button
@@ -200,8 +215,9 @@ function SignUpStepOne({
         type={showConfirm ? "text" : "password"}
         autoComplete="new-password"
         value={data.confirmPassword}
-        onChange={(confirmPassword) => onChange({ confirmPassword })}
+        onChange={(confirmPassword) => onChange({ confirmPassword: sanitizePassword(confirmPassword) })}
         placeholder="กรอกรหัสผ่านอีกครั้ง"
+        maxLength={PASSWORD_MAX_LENGTH}
         leadingIcon={<LockIcon className="h-5 w-5" />}
         trailing={
           <button
@@ -271,13 +287,13 @@ export function SignUpBottomDrawer({
   };
 
   const handleStepOneSubmit = () => {
-    const phone = stepOne.phone.trim();
-    if (!phone) {
-      setError("กรุณากรอกเบอร์โทรศัพท์");
+    const phone = sanitizePhone(stepOne.phone);
+    if (!isThaiMobilePhone(phone)) {
+      setError("เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0");
       return;
     }
-    if (stepOne.password.length < 6) {
-      setError("รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร");
+    if (!isPasswordLengthOk(stepOne.password)) {
+      setError("รหัสผ่านต้องมี 6–32 ตัวอักษร");
       return;
     }
     if (stepOne.password !== stepOne.confirmPassword) {
@@ -289,16 +305,16 @@ export function SignUpBottomDrawer({
   };
 
   const handleStepTwoSubmit = async () => {
-    if (!stepTwo.firstName.trim()) {
-      setError("กรุณากรอกชื่อจริง");
+    if (!isPersonName(stepTwo.firstName)) {
+      setError("กรุณากรอกชื่อจริงเป็นตัวอักษร");
       return;
     }
-    if (!stepTwo.lastName.trim()) {
-      setError("กรุณากรอกนามสกุล");
+    if (!isPersonName(stepTwo.lastName)) {
+      setError("กรุณากรอกนามสกุลเป็นตัวอักษร");
       return;
     }
-    if (stepTwo.bankAccountNumber.length < 10) {
-      setError("กรุณากรอกเลขที่บัญชีให้ครบถ้วน");
+    if (!isBankAccountNumber(stepTwo.bankAccountNumber)) {
+      setError("เลขบัญชีต้องเป็นตัวเลข 10–12 หลัก");
       return;
     }
     if (!stepTwo.bankId) {
@@ -313,7 +329,7 @@ export function SignUpBottomDrawer({
     setError(null);
     setIsSubmitting(true);
     const result = await register({
-      phone: stepOne.phone.trim(),
+      phone: sanitizePhone(stepOne.phone),
       password: stepOne.password,
       firstName: stepTwo.firstName.trim(),
       lastName: stepTwo.lastName.trim(),

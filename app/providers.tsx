@@ -10,6 +10,7 @@ import { DepositProvider } from "@/app/components/deposit/DepositProvider";
 import { WithdrawProvider } from "@/app/components/withdraw/WithdrawProvider";
 import { PendingTransactionProvider } from "@/app/components/transactions/PendingTransactionProvider";
 import { LobbyShellSidebarProvider } from "@/app/components/layout/LobbyShellSidebarContext";
+import { GlobalAuthOverlays } from "@/app/components/auth/GlobalAuthOverlays";
 
 /**
  * ครอบ client providers — Auth + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
@@ -25,7 +26,10 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
                 <DesktopHubModalProvider>
                   <VipModalProvider>
                     <TransactionsProvider>
-                      <LobbyShellSidebarProvider>{children}</LobbyShellSidebarProvider>
+                      <LobbyShellSidebarProvider>
+                        {children}
+                        <GlobalAuthOverlays />
+                      </LobbyShellSidebarProvider>
                     </TransactionsProvider>
                   </VipModalProvider>
                 </DesktopHubModalProvider>

@@ -49,9 +49,10 @@ async function writeAllUsers(users: StoredUser[]): Promise<void> {
  * ค้นหาผู้ใช้จากเบอร์โทร
  */
 export async function findUserByPhone(phone: string): Promise<StoredUser | undefined> {
-  const normalized = phone.trim();
+  const digits = phone.replace(/\D/g, "");
+  if (!digits) return undefined;
   const users = await readAllUsers();
-  return users.find((u) => u.phone === normalized);
+  return users.find((u) => u.phone.replace(/\D/g, "") === digits);
 }
 
 /**

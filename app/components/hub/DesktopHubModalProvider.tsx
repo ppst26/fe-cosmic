@@ -15,6 +15,7 @@ import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
 import { HUB_REQUIRES_AUTH, isDesktopHubId } from "./hubModalRegistry";
 import { vipPageHref } from "@/lib/vipRoutes";
 import { getIsDesktopViewport } from "./useIsDesktop";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import {
   OVERLAY_HUB_KEY,
   OVERLAY_LAYER_KEY,
@@ -46,6 +47,7 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [state, setState] = useState<HubModalState | null>(null);
+  const { open: openLogin } = useOverlayLayer("login");
 
   useEffect(() => {
     const layer = readOverlayLayer(searchParams);
@@ -72,6 +74,15 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
         return;
       }
     }
+    if (!isLoading && HUB_REQUIRES_AUTH.has(hubId) && !isAuthenticated) {
+      setState(null);
+      const params = new URLSearchParams(searchParams.toString());
+      clearLayerParams(params, "hub");
+      const qs = params.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+      openLogin();
+      return;
+    }
     const vipTab = hubId === "vip" ? parseVipModalTab(searchParams.get(OVERLAY_VIP_TAB_KEY)) : null;
     const options: OpenHubOptions | undefined =
       vipTab && vipTab !== "my-level" ? { vipTab } : undefined;
@@ -80,7 +91,7 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
       if (prev?.id === hubId && !options && !prev.options?.vipTab) return prev;
       return options ? { id: hubId, options } : prev?.id === hubId ? prev : { id: hubId };
     });
-  }, [searchParams, router]);
+  }, [isAuthenticated, isLoading, openLogin, pathname, router, searchParams]);
 
   const closeHub = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
@@ -93,6 +104,7 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
   const openHub = useCallback(
     (id: DesktopHubId, options?: OpenHubOptions) => {
       if (HUB_REQUIRES_AUTH.has(id) && !isLoading && !isAuthenticated) {
+        openLogin();
         return;
       }
       if (typeof window !== "undefined" && !getIsDesktopViewport()) {
@@ -116,7 +128,7 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       setState({ id, options });
     },
-    [isAuthenticated, isLoading, pathname, router, searchParams],
+    [isAuthenticated, isLoading, openLogin, pathname, router, searchParams],
   );
 
   const value = useMemo(

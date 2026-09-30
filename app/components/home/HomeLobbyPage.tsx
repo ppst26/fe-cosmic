@@ -4,8 +4,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Header } from "../layout/Header";
 import { RightMenuDrawer } from "../layout/RightMenuDrawer";
-import { SignUpBottomDrawer } from "../auth/SignUpBottomDrawer";
-import { LoginBottomDrawer } from "../auth/LoginBottomDrawer";
 import { useAuth, AuthGate } from "../auth/AuthProvider";
 import { useLobbyShellSidebar } from "../layout/LobbyShellSidebarContext";
 import { LobbyDesktopSidebarColumn } from "../layout/LobbyDesktopSidebarColumn";
@@ -53,8 +51,8 @@ export function HomeLobbyPage() {
   );
 
   const { isOpen: isMenuOpen, open: openMenu, close: closeMenu } = useOverlayLayer("menu");
-  const { isOpen: isSignUpOpen, open: openSignUp, close: closeSignUp } = useOverlayLayer("signup");
-  const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useOverlayLayer("login");
+  const { open: openSignUp } = useOverlayLayer("signup");
+  const { open: openLogin } = useOverlayLayer("login");
   const { sidebarHidden: isSidebarCollapsed } = useLobbyShellSidebar();
   const { isAuthenticated } = useAuth();
   const { openVipModal } = useVipModal();
@@ -171,18 +169,6 @@ export function HomeLobbyPage() {
                   <RightMenuDrawer
                     isOpen={isMenuOpen}
                     onClose={closeMenu}
-                  />
-
-                  <SignUpBottomDrawer
-                    isOpen={isSignUpOpen}
-                    onClose={closeSignUp}
-                    onLoginClick={openLogin}
-                  />
-
-                  <LoginBottomDrawer
-                    isOpen={isLoginOpen}
-                    onClose={closeLogin}
-                    onSignUpClick={openSignUp}
                   />
 
                   <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 lg:mx-0 lg:max-w-none lg:px-0">

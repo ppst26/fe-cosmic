@@ -114,12 +114,20 @@ export function isDesktopHubId(value: string | null): value is DesktopHubId {
 }
 
 /** hub ที่ต้องล็อกอินก่อนเปิด modal */
+/** hub ที่ต้องล็อกอิน — สอดคล้องเมนูมือถือ (โปรโมชัน/กิจกรรม เปิดได้โดยไม่ล็อกอิน) */
 export const HUB_REQUIRES_AUTH: ReadonlySet<DesktopHubId> = new Set([
   "cashback",
   "account",
   "transactions",
   "vip",
+  "referral",
+  "check-in",
+  "gems-store",
 ]);
+
+export function hubRequiresAuth(id: DesktopHubId): boolean {
+  return HUB_REQUIRES_AUTH.has(id);
+}
 
 /** Hub ที่ใช้ responsive sheet แบบคูปอง/ฝาก-ถอน (ไม่ใช่ modal hub กลางจอแบบเดิม) */
 export const RESPONSIVE_SHEET_HUB_IDS: ReadonlySet<DesktopHubId> = new Set([

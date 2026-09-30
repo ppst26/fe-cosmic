@@ -11,6 +11,8 @@ import {
 import { vipPageHref } from "@/lib/vipRoutes";
 import { useDesktopHubModal } from "@/app/components/hub/DesktopHubModalProvider";
 import { getIsDesktopViewport } from "@/app/components/hub/useIsDesktop";
+import { useAuth } from "@/app/components/auth/AuthProvider";
+import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 
 interface VipModalContextValue {
   openVipModal: (tab?: VipModalTabId) => void;
@@ -25,6 +27,8 @@ const VipModalContext = createContext<VipModalContextValue | null>(null);
 export function VipModalProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isAuthenticated, isLoading } = useAuth();
+  const { open: openLogin } = useOverlayLayer("login");
   const { openHub } = useDesktopHubModal();
 
   useEffect(() => {
@@ -39,13 +43,17 @@ export function VipModalProvider({ children }: { children: React.ReactNode }) {
 
   const openVipModal = useCallback(
     (tab: VipModalTabId = "my-level") => {
+      if (!isLoading && !isAuthenticated) {
+        openLogin();
+        return;
+      }
       if (getIsDesktopViewport()) {
         openHub("vip", tab === "my-level" ? undefined : { vipTab: tab });
         return;
       }
       router.push(vipPageHref(tab));
     },
-    [openHub, router],
+    [isAuthenticated, isLoading, openHub, openLogin, router],
   );
 
   const closeVipModal = useCallback(() => {

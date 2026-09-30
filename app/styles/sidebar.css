@@ -454,6 +454,21 @@
     letter-spacing: -0.01em;
   }
 
+  /** พื้นหลัง 3D แบบแนะนำเพื่อน — cover ขวา + scale ให้เต็มการ์ด */
+  .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card__bg {
+    object-fit: cover;
+    object-position: 100% 50%;
+    transform: scale(0.96);
+    transform-origin: center right;
+  }
+
+  .lobby-hub-menu-card__bg {
+    object-fit: cover;
+    object-position: 100% 50%;
+    transform: scale(0.92);
+    transform-origin: center right;
+  }
+
   .lobby-hub-menu-stack {
     --lobby-hub-card-height: 3.75rem;
   }

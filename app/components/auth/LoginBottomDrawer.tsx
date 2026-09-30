@@ -11,6 +11,13 @@ import {
 } from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
 import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
+import {
+  isThaiMobilePhone,
+  PASSWORD_MAX_LENGTH,
+  PHONE_DIGIT_LENGTH,
+  sanitizePassword,
+  sanitizePhone,
+} from "@/lib/fieldInput";
 
 interface LoginBottomDrawerProps {
   isOpen: boolean;
@@ -49,9 +56,18 @@ export function LoginBottomDrawer({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const normalizedPhone = sanitizePhone(phone);
+    if (!isThaiMobilePhone(normalizedPhone)) {
+      setError("เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0");
+      return;
+    }
+    if (!password) {
+      setError("กรุณากรอกรหัสผ่าน");
+      return;
+    }
     setError(null);
     setSubmitting(true);
-    const result = await login({ phone: phone.trim(), password });
+    const result = await login({ phone: normalizedPhone, password });
     setSubmitting(false);
     if (!result.ok) {
       setError(result.error ?? "เข้าสู่ระบบไม่สำเร็จ");
@@ -110,7 +126,8 @@ export function LoginBottomDrawer({
                   inputMode="tel"
                   autoComplete="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  maxLength={PHONE_DIGIT_LENGTH}
+                  onChange={(e) => setPhone(sanitizePhone(e.target.value))}
                   placeholder="กรอกเบอร์โทรศัพท์"
                   className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
                 />
@@ -128,7 +145,8 @@ export function LoginBottomDrawer({
                   type="password"
                   autoComplete="current-password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  maxLength={PASSWORD_MAX_LENGTH}
+                  onChange={(e) => setPassword(sanitizePassword(e.target.value))}
                   placeholder="กรอกรหัสผ่าน"
                   className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
                 />

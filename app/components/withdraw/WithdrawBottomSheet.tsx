@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Dialog } from "radix-ui";
+import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
 import {
   WITHDRAW_AVAILABLE_BALANCE,
   WITHDRAW_DEFAULT_AMOUNT,
@@ -64,7 +65,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
   };
 
   const handleAmountChange = (raw: string) => {
-    const digits = raw.replace(/\D/g, "");
+    const digits = sanitizeMoneyAmount(raw);
     setAmountInput(digits);
     const parsed = digits ? Number.parseInt(digits, 10) : 0;
     applyAmount(parsed);
@@ -146,6 +147,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                     type="text"
                     inputMode="numeric"
                     value={amountInput}
+                    maxLength={MONEY_AMOUNT_MAX_DIGITS}
                     onChange={(event) => handleAmountChange(event.target.value)}
                     className="input-keep-size min-w-[2ch] max-w-[min(72vw,320px)] bg-transparent text-5xl font-medium leading-none tracking-tight text-[var(--text-primary)] outline-none sm:text-6xl"
                     style={{ width: `${Math.max(2, amountInput.length || 1)}.5ch` }}

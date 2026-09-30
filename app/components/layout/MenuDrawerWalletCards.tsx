@@ -14,6 +14,7 @@ import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { MENU_DIALOG_TICKET_COUNT_MOCK } from "@/app/data/menuMockData";
 import { cn } from "@/lib/utils";
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";
+import { useAuth } from "@/app/components/auth/AuthProvider";
 
 const MENU_TICKET_ICON_SRC = getMenuIconSrc("ticket") ?? "/assets/3d/menuicon/lottery.avif";
 
@@ -25,9 +26,14 @@ interface MenuDrawerWalletCardsProps {
  * ยอดเครดิต · เพชร · ตั๋วบนเมนูมือถือ — ไอคอน · ชื่อ · ตัวเลข (RightMenuDrawer)
  */
 export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps) {
-  const balanceLabel = formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE);
-  const gemsLabel = formatGemsBalance(GEMS_STORE_BALANCE_MOCK);
-  const ticketLabel = new Intl.NumberFormat("th-TH").format(MENU_DIALOG_TICKET_COUNT_MOCK);
+  const { isAuthenticated, isLoading } = useAuth();
+  const showAmounts = isAuthenticated && !isLoading;
+
+  const balanceLabel = showAmounts ? formatHeaderWalletBalance(MOCK_MAIN_WALLET_BALANCE) : "—";
+  const gemsLabel = showAmounts ? formatGemsBalance(GEMS_STORE_BALANCE_MOCK) : "—";
+  const ticketLabel = showAmounts
+    ? new Intl.NumberFormat("th-TH").format(MENU_DIALOG_TICKET_COUNT_MOCK)
+    : "—";
 
   return (
     <div className={cn("menu-drawer-balances grid grid-cols-3", className)}>

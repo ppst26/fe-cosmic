@@ -17,6 +17,12 @@ import {
   COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
 } from "../ui/cosmicButtonClasses";
 import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
+import {
+  BANK_ACCOUNT_MAX_DIGITS,
+  PERSON_NAME_MAX_LENGTH,
+  sanitizeBankAccount,
+  sanitizePersonName,
+} from "@/lib/fieldInput";
 
 /**
  * ช่องกรอกแบบไม่มีไอคอน — ชื่อ / เลขบัญชี
@@ -29,6 +35,7 @@ function SignUpPlainInput({
   placeholder,
   inputMode,
   autoComplete,
+  maxLength,
 }: {
   id: string;
   label: string;
@@ -37,6 +44,7 @@ function SignUpPlainInput({
   placeholder: string;
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
   autoComplete?: string;
+  maxLength?: number;
 }) {
   return (
     <div className="space-y-1.5">
@@ -52,6 +60,7 @@ function SignUpPlainInput({
           placeholder={placeholder}
           inputMode={inputMode}
           autoComplete={autoComplete}
+          maxLength={maxLength}
           className="min-w-0 flex-1 bg-transparent text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none"
         />
       </div>
@@ -158,17 +167,19 @@ export function SignUpStepTwo({
             id="signup-first-name"
             label="ชื่อจริง"
             value={data.firstName}
-            onChange={(firstName) => onChange({ firstName })}
+            onChange={(firstName) => onChange({ firstName: sanitizePersonName(firstName) })}
             placeholder="ชื่อจริง"
             autoComplete="given-name"
+            maxLength={PERSON_NAME_MAX_LENGTH}
           />
           <SignUpPlainInput
             id="signup-last-name"
             label="นามสกุล"
             value={data.lastName}
-            onChange={(lastName) => onChange({ lastName })}
+            onChange={(lastName) => onChange({ lastName: sanitizePersonName(lastName) })}
             placeholder="นามสกุล"
             autoComplete="family-name"
+            maxLength={PERSON_NAME_MAX_LENGTH}
           />
         </div>
 
@@ -177,10 +188,11 @@ export function SignUpStepTwo({
           label="เลขที่บัญชีธนาคาร"
           value={data.bankAccountNumber}
           onChange={(bankAccountNumber) =>
-            onChange({ bankAccountNumber: bankAccountNumber.replace(/\D/g, "") })
+            onChange({ bankAccountNumber: sanitizeBankAccount(bankAccountNumber) })
           }
           placeholder="เลขที่บัญชี"
           inputMode="numeric"
+          maxLength={BANK_ACCOUNT_MAX_DIGITS}
           autoComplete="off"
         />
 

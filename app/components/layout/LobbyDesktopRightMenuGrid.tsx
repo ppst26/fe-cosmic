@@ -34,7 +34,7 @@ function RightMenuGlassCardContent({
         <img
           src={visualSrc}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-right pointer-events-none"
+          className="lobby-hub-menu-card__bg absolute inset-0 h-full w-full pointer-events-none"
           loading="lazy"
           decoding="async"
         />

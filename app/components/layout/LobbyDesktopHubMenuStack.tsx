@@ -2,11 +2,20 @@
 
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { HubNavLink } from "@/app/components/hub/HubNavLink";
-import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
-import type { MenuDialogAction } from "@/app/data/menuMockData";
+import {
+  hrefToHubId,
+  hubRequiresAuth,
+} from "@/app/components/hub/hubModalRegistry";
+import {
+  menuActionRequiresAuth,
+  menuHrefRequiresAuth,
+  type MenuDialogAction,
+} from "@/app/data/menuMockData";
 import { DESKTOP_RIGHT_MENU_TILES } from "@/app/data/desktopLobbyMockData";
+import { useRequireAuthAction } from "@/app/hooks/useRequireAuthAction";
 
 interface LobbyDesktopHubMenuStackProps {
   onMenuAction?: (action: MenuDialogAction) => void;
@@ -16,7 +25,21 @@ interface LobbyDesktopHubMenuStackProps {
  * การ์ด hub แนวตั้งขนาดเล็ก — ใช้ใน LobbyDesktopSidebarColumn ใต้แผงเมนู
  */
 export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuStackProps) {
+  const router = useRouter();
+  const { runWithAuth } = useRequireAuthAction();
   const tiles = DESKTOP_RIGHT_MENU_TILES;
+
+  const tileNeedsAuth = (tile: (typeof tiles)[number]) => {
+    if ("action" in tile && tile.action) {
+      return menuActionRequiresAuth(tile.action);
+    }
+    if ("href" in tile && tile.href) {
+      const hubId = hrefToHubId(tile.href);
+      if (hubId) return hubRequiresAuth(hubId);
+      return menuHrefRequiresAuth(tile.href);
+    }
+    return false;
+  };
 
   return (
     <div className="lobby-hub-menu-stack w-full min-w-0" aria-label="เมนูด่วน">
@@ -36,7 +59,7 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
               <img
                 src={tile.visualSrc}
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover object-right pointer-events-none"
+                className="lobby-hub-menu-card__bg absolute inset-0 h-full w-full pointer-events-none"
                 loading="lazy"
                 decoding="async"
               />
@@ -69,7 +92,9 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
               type="button"
               className={className}
               aria-label={tile.ariaLabel}
-              onClick={() => onMenuAction?.(tile.action!)}
+              onClick={() =>
+                runWithAuth(tileNeedsAuth(tile), () => onMenuAction?.(tile.action!))
+              }
             >
               {body}
             </button>
@@ -85,8 +110,21 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
         }
 
         if ("href" in tile) {
+          const href = tile.href;
           return (
-            <Link key={tile.id} href={tile.href} className={className} title={tile.ariaLabel}>
+            <Link
+              key={tile.id}
+              href={href}
+              className={className}
+              title={tile.ariaLabel}
+              onClick={(event) => {
+                if (!tileNeedsAuth(tile)) return;
+                event.preventDefault();
+                runWithAuth(true, () => {
+                  router.push(href);
+                });
+              }}
+            >
               {body}
             </Link>
           );
