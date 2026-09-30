@@ -19,10 +19,12 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
 
   const getSlideStride = () => {
     const container = scrollContainerRef.current;
-    if (!container?.firstElementChild) return 0;
-    const first = container.firstElementChild as HTMLElement;
-    const gap = 8;
-    return first.offsetWidth + gap;
+    if (!container) return 0;
+    const first = container.children[0] as HTMLElement | undefined;
+    const second = container.children[1] as HTMLElement | undefined;
+    if (!first) return 0;
+    if (second) return second.offsetLeft - first.offsetLeft;
+    return first.offsetWidth;
   };
 
   const handleDotClick = (index: number) => {
@@ -41,7 +43,10 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
     if (scrollContainerRef.current) {
       const stride = getSlideStride();
       if (stride <= 0) return;
-      const newIndex = Math.round(scrollContainerRef.current.scrollLeft / stride);
+      const container = scrollContainerRef.current;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      const atEnd = maxScroll > 0 && container.scrollLeft >= maxScroll - 2;
+      const newIndex = atEnd ? items.length - 1 : Math.round(container.scrollLeft / stride);
       if (newIndex !== activeIndex && newIndex >= 0 && newIndex < items.length) {
         setActiveIndex(newIndex);
       }
@@ -57,7 +62,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="promo-carousel__track flex gap-2 overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory py-0"
+          className="promo-carousel__track flex gap-2 overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory py-0 sm:gap-3"
           tabIndex={0}
           aria-label="รายการโปรโมชัน"
         >

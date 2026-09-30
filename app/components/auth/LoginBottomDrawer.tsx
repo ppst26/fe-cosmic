@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { CloseIcon, LockIcon, PhoneIcon } from "../ui/Icons";
 import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
+import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import {
   responsiveAuthSheetContentClass,
   responsiveSheetCloseButtonClass,
@@ -153,13 +154,12 @@ export function LoginBottomDrawer({
               </div>
             </div>
 
-            <button
+            <CosmicStackedActionButton
               type="submit"
               disabled={submitting}
-              className="cosmic-sheet-submit mt-1"
-            >
-              {submitting ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
-            </button>
+              className="mt-1"
+              title={submitting ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
+            />
 
             <p className="text-center text-sm text-[var(--text-secondary)]">
               ยังไม่มีบัญชี?{" "}

@@ -603,6 +603,46 @@ a.glass-icon-btn:is(.absolute, .\!absolute) {
   display: inline-flex;
 }
 
+/** ปุ่มแอคชั่นสองบรรทัด — วงล้อ (CosmicStackedActionButton) */
+.cosmic-sheet-submit--stacked {
+  flex-direction: column;
+  gap: 0.2rem;
+  min-height: 3.5rem;
+  padding-block: 0.75rem 0.625rem;
+  border-radius: 1rem;
+}
+
+.cosmic-sheet-submit__row {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cosmic-sheet-submit__inline-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.cosmic-sheet-submit__meta {
+  position: relative;
+  z-index: 1;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: rgb(233 213 255 / 0.92);
+}
+
+.cosmic-sheet-submit--dimmed:not(:disabled) {
+  filter: brightness(0.92);
+  opacity: 0.92;
+}
+
 /* =========================================================
    Lobby mobile — เข้าสู่ระบบ / สมัครสมาชิก (HomeLobbyPage)
    ========================================================= */

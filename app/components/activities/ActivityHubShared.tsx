@@ -287,7 +287,7 @@ export function ActivityRulesSection({
 
   return (
     <section
-      className={`activity-hub-rules-card rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/35 bg-[var(--surface-mid)]/40 p-4 sm:p-5 ${className}`}
+      className={`activity-hub-rules-card rounded-[var(--radius-panel)] p-4 sm:p-5 ${className}`}
       aria-label="กติกาและเงื่อนไขกิจกรรม"
     >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)]/30 pb-3">

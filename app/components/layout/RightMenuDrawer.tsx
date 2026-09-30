@@ -7,7 +7,6 @@ import { Dialog } from "radix-ui";
 import { CloseIcon, CosmicbetLogo } from "../ui/Icons";
 import { MenuItemIcon } from "./MenuItemIcon";
 import { MenuDrawerUserAvatar } from "./MenuDrawerUserAvatar";
-import { MenuDrawerWalletCards } from "./MenuDrawerWalletCards";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
 import {
@@ -29,7 +28,7 @@ interface RightMenuDrawerProps {
 }
 
 /**
- * Menu dialog — มือถือเต็มจอ: โลโก้ · avatar · เครดิต/เพชร/ตั๋ว · grid เมนู (ต่อกัน)
+ * Menu dialog — มือถือเต็มจอ: โลโก้ · avatar · grid เมนู
  * เดสก์ท็อป: panel ลอยชิดเหนือ bottom nav · เปิดจาก FloatingBottomNav
  */
 export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
@@ -85,20 +84,20 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
 
   const renderGridTile = (tile: MenuDialogTile) => {
     const content = (
-      <div className="flex flex-col items-center justify-center gap-2 w-full text-center">
+      <div className="flex flex-col items-center justify-center gap-2 w-full min-w-0 px-1 text-center">
         <MenuItemIcon
           iconId={tile.iconId}
           variant="asset"
-          className="menu-grid-icon h-11 w-11 lg:h-9 lg:w-9 object-contain shrink-0 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] transition-transform duration-150 group-hover:scale-110"
+          className="menu-grid-icon h-10 w-10 object-contain shrink-0 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] transition-transform duration-150 group-hover:scale-110 sm:h-11 sm:w-11 lg:h-9 lg:w-9"
         />
-        <span className="menu-grid-label text-[12px] sm:text-[13px] lg:text-[11.5px] font-medium text-white truncate max-w-full leading-tight px-0.5">
+        <span className="menu-grid-label w-full text-[11px] font-medium leading-[1.25] text-white sm:text-xs lg:text-[11.5px]">
           {tile.label}
         </span>
       </div>
     );
 
     const tileClass =
-      "menu-grid-tile group flex flex-col items-center justify-center py-2.5 px-1 min-h-[84px] lg:min-h-[72px] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
+      "menu-grid-tile group flex flex-col items-center justify-center py-2.5 px-1 min-h-[5.25rem] sm:min-h-[5.5rem] lg:min-h-[72px] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
 
     if (tile.action) {
       return (
@@ -216,9 +215,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
 
       <MenuDrawerUserAvatar />
 
-      <MenuDrawerWalletCards className="w-full shrink-0" />
-
-      <div className="menu-grid menu-grid--mobile-drawer grid w-full shrink-0 grid-cols-4 pb-2">
+      <div className="menu-grid menu-grid--mobile-drawer mx-auto grid w-full max-w-[20.5rem] shrink-0 grid-cols-3 pb-2 sm:max-w-[22.5rem]">
         {MENU_DIALOG_ALL_TILES.map((tile) => renderGridTile(tile))}
       </div>
     </div>

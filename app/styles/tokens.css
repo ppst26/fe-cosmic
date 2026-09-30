@@ -30,21 +30,22 @@
     rgb(30 29 38 / 0.8),
     rgb(14 13 20 / 0.86)
   );
-  /* Shell hub/sheet (desktop) — เทาเข้มทึบพอ อ่านข้อความชัด พร้อม radial โทนม่วงอมเทาตรงกลางด้านบน */
-  --cosmic-dialog-shell-bg: radial-gradient(
-      ellipse 75% 55% at 50% 0%,
-      rgba(95, 85, 120, 0.42) 0%,
-      rgba(50, 45, 65, 0.2) 42%,
-      transparent 72%
-    ),
-    linear-gradient(
-      165deg,
-      rgb(40 39 48 / 0.94),
-      rgb(26 25 32 / 0.97)
-    );
   /**
-   * Surface modal & bottom sheet — มี radial gradient ด้านบนตรงกลางสีม่วงออกไปทางเทา
-   * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet · .cosmic-modal-shell
+   * Shell modal กลางจอ (desktop + dialog ไม่ใช่ bottom sheet) — graphite → ม่วง linear
+   * ใช้กับ .cosmic-modal-shell (เฉพาะที่ไม่ใช่ sheet) · lg+ responsive sheet
+   */
+  --cosmic-dialog-shell-bg: linear-gradient(
+    168deg,
+    #1c1b1f 0%,
+    #17161a 24%,
+    #131218 46%,
+    #0f0e13 62%,
+    #110e18 78%,
+    #120f1c 100%
+  );
+  /**
+   * Bottom sheet มือถือ — radial ด้านบน (ไม่เปลี่ยนเมื่อปรับ modal desktop)
+   * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet (มือถือ)
    */
   --cosmic-mobile-sheet-bg: radial-gradient(
       ellipse 75% 55% at 50% 0%,

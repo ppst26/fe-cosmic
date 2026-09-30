@@ -5,7 +5,6 @@ import { type ActivityHubItem } from "@/app/data/activitiesHubMockData";
 import { fetchActivities } from "@/lib/api/activities";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 import { PromoHubPillLabel, promoCardButtonClass } from "../promotions/promoHubCardPrimitives";
-import { COSMIC_BTN_GLASS_ICON, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { ArrowLeftIcon } from "../ui/Icons";
 
 type MobileView = "list" | "detail";
@@ -45,8 +44,8 @@ export function ActivitiesMobileHub() {
           </h2>
           <div className="w-10 h-10 shrink-0" aria-hidden="true" />
         </div>
-        <div className={`${COSMIC_PANEL_GLASS} px-3 py-4 sm:px-4`}>
-          <ActivityDetailBody item={selected} showTitle={false} />
+        <div className="activity-hub-detail-panel px-3 py-4 sm:px-4">
+          <ActivityDetailBody item={selected} showTitle={false} flat />
         </div>
       </div>
     );

@@ -1,14 +1,7 @@
 /* Confirm modal — gradient เทา → ม่วงเข้ม (ไม่ใช้ glass / blur) */
 
 :root {
-  --cosmic-confirm-dialog-bg: linear-gradient(
-    168deg,
-    #52505c 0%,
-    #3d3a48 22%,
-    #2a2638 48%,
-    #1a152c 72%,
-    #100c1a 100%
-  );
+  --cosmic-confirm-dialog-bg: var(--cosmic-dialog-shell-bg);
   --cosmic-confirm-dialog-summary-bg: linear-gradient(
     145deg,
     rgb(255 255 255 / 0.07) 0%,

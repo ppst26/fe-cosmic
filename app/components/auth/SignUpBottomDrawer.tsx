@@ -19,6 +19,7 @@ import {
 } from "./SignUpPickerSheet";
 import { fetchSignUpOptions } from "@/lib/api/profile";
 import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
+import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import {
   responsiveAuthSheetContentClass,
   responsiveSheetCloseButtonClass,
@@ -231,13 +232,12 @@ function SignUpStepOne({
         }
       />
 
-      <button
+      <CosmicStackedActionButton
         type="submit"
-        className="cosmic-sheet-submit mt-1"
-      >
-        ถัดไป
-        <ChevronRightIcon className="h-5 w-5" />
-      </button>
+        className="mt-1"
+        title="ถัดไป"
+        leadingIconInCircle={<ChevronRightIcon className="h-6 w-6" />}
+      />
 
       <p className="text-center text-sm text-[var(--text-secondary)]">
         มีบัญชีอยู่แล้ว?{" "}

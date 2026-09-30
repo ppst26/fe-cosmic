@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CategoryItem, CategoryId } from "../../types/lobby";
 import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { cn } from "@/lib/utils";
+
+/** จำตำแหน่งเลื่อนแนวนอนของแถบมือถือข้ามหน้า — แต่ละ route mount HomeLobbyPage ใหม่ */
+let persistedMobileTrackScrollLeft = 0;
 
 interface CategoryNavProps {
   categories: CategoryItem[];
@@ -66,6 +69,7 @@ export function CategoryNav({
   const updateScrollProgress = useCallback(() => {
     const el = trackRef.current;
     if (!el) return;
+    if (variant === "mobile") persistedMobileTrackScrollLeft = el.scrollLeft;
     const maxScroll = el.scrollWidth - el.clientWidth;
     if (maxScroll > 0) {
       setScrollProgress(Math.max(0, Math.min(1, el.scrollLeft / maxScroll)));
@@ -74,7 +78,7 @@ export function CategoryNav({
       setScrollProgress(0);
       setThumbWidthPercent(100);
     }
-  }, []);
+  }, [variant]);
 
   useEffect(() => {
     const el = trackRef.current;
@@ -108,6 +112,30 @@ export function CategoryNav({
     navigationMode === "none"
       ? (activeIdProp ?? pickedId)
       : (routeActiveId ?? activeIdProp ?? pickedId);
+
+  /**
+   * มือถือ — หลังเปลี่ยนหน้า (mount ใหม่) คืนตำแหน่งเลื่อนเดิม แล้วถ้าหมวด active ยังไม่อยู่ในกรอบ
+   * ให้เลื่อนมากลางแถบทันที (ไม่ smooth) เพื่อให้เห็นตำแหน่งที่เลือกค้างอยู่เสมอ
+   */
+  useLayoutEffect(() => {
+    if (variant !== "mobile") return;
+    const track = trackRef.current;
+    if (!track) return;
+
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    track.scrollLeft = Math.max(0, Math.min(maxScroll, persistedMobileTrackScrollLeft));
+
+    const activePill = track.querySelector<HTMLElement>('[data-active="true"]');
+    if (!activePill) return;
+    const trackRect = track.getBoundingClientRect();
+    const pillRect = activePill.getBoundingClientRect();
+    const edgeSlack = 8;
+    if (pillRect.left >= trackRect.left + edgeSlack && pillRect.right <= trackRect.right - edgeSlack) {
+      return;
+    }
+    const targetLeft = activePill.offsetLeft - (track.clientWidth - activePill.offsetWidth) / 2;
+    track.scrollLeft = Math.max(0, Math.min(maxScroll, targetLeft));
+  }, [variant, activeId]);
 
   const pushCategoryRoute = (href: string) => {
     const scrollY = window.scrollY;

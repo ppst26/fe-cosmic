@@ -49,7 +49,7 @@
 
   .lobby-mobile-category-sticky-host {
     position: relative;
-    width: 100%;
+    width: auto;
   }
 
   .lobby-mobile-category-sticky {

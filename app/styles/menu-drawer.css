@@ -676,8 +676,17 @@
 }
 
 @media (max-width: 1023px) {
+  .menu-grid--mobile-drawer .menu-grid-label {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    word-break: break-word;
+  }
+
   .menu-grid-tile {
-    min-height: 84px;
+    min-height: 5.25rem;
+    border-radius: 1rem;
   }
 
   .menu-shell {

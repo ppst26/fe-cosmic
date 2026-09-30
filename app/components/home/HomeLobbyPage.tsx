@@ -175,7 +175,7 @@ export function HomeLobbyPage() {
                     onClose={closeMenu}
                   />
 
-                  <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 lg:mx-0 lg:max-w-none lg:px-0">
+                  <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 pt-3 lg:mx-0 lg:max-w-none lg:px-0 lg:pt-0">
                     {/* มือถือ: hero → ประกาศ → โปร — ระยะแนบให้คอนเทนต์ต่อเนื่อง (หน้าแรก) */}
                     <div className="flex flex-col gap-2.5 lg:hidden">
                       <WelcomeBanner onCtaClick={openSignUp} />
@@ -217,7 +217,7 @@ export function HomeLobbyPage() {
 
                     {/* มือถือ: host คงความสูงใน flow · แถบ fixed ตอนประกบ header จนสุดหน้า */}
                     <div
-                      className="lobby-mobile-category-sticky-host lg:hidden"
+                      className="lobby-mobile-category-sticky-host -mx-3 mt-1 lg:hidden"
                       style={
                         isCategoryNavStuck && categoryBarHeight > 0
                           ? { height: `${categoryBarHeight}px` }
@@ -227,7 +227,7 @@ export function HomeLobbyPage() {
                       <div
                         ref={categoryBarRef}
                         className={cn(
-                          "lobby-mobile-category-sticky w-full min-w-0 px-0",
+                          "lobby-mobile-category-sticky w-full min-w-0 px-3",
                           isHomeLobby ? "py-1.5" : "py-2",
                           isCategoryNavStuck && "is-stuck",
                         )}

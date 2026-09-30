@@ -13,6 +13,7 @@ import { ArrowLeftIcon } from "../ui/Icons";
 import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
 import { LuckyWheelLiveWinners } from "./LuckyWheelLiveWinners";
 import { LuckyWheelPrizeHistory } from "./LuckyWheelPrizeHistory";
+import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 
 /**
  * หน้าเล่นวงล้อพารวย — รองรับ Mobile-first layout ตรงตาม mockup
@@ -182,9 +183,20 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
 
         {/* 4. ปุ่มหมุนใหญ่ — สีตรงธีม Cosmicbet (ม่วงนีออน Action Gradient) */}
         <div className="flex w-full max-w-[340px] flex-col items-center">
-          <button
+          <CosmicStackedActionButton
             type="button"
             disabled={spinning}
+            dimmed={!canAfford}
+            className="w-full"
+            title={spinning ? "กำลังหมุน…" : "หมุนเลย"}
+            subtitle={
+              spinMethod === "ticket"
+                ? `ใช้ตั๋ว ${wheel.ticketsPerSpin} ใบ`
+                : `ใช้ ${wheel.gemsPerSpin.toFixed(2)} เพชร`
+            }
+            leadingIcon={
+              <SpinArrowIcon className={`h-5 w-5 ${spinning ? "animate-spin" : ""}`} />
+            }
             onClick={() => {
               if (!canAfford) {
                 if (spinMethod === "ticket") setSpinMethod("gems");
@@ -192,24 +204,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
               }
               handleSpin();
             }}
-            className={`group relative flex w-full flex-col items-center justify-center rounded-2xl py-3.5 px-6 transition-all cursor-pointer ${
-              canAfford
-                ? "bg-gradient-to-r from-[#7747e5] via-[#8b5cf6] to-[#6d28d9] text-white shadow-[0_0_24px_rgba(124,58,237,0.5),inset_0_1px_0_rgba(255,255,255,0.25)] hover:brightness-110 active:scale-[0.98]"
-                : "bg-gradient-to-r from-[#4c2896] via-[#5b32b3] to-[#432085] text-white/80 shadow-[0_0_16px_rgba(124,58,237,0.25)] hover:brightness-105"
-            }`}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <SpinArrowIcon className={`h-5 w-5 shrink-0 text-white ${spinning ? "animate-spin" : ""}`} />
-              <span className="text-lg font-medium tracking-wide text-white">
-                {spinning ? "กำลังหมุน…" : "หมุนเลย"}
-              </span>
-            </div>
-            <span className="text-xs font-medium text-purple-200">
-              {spinMethod === "ticket"
-                ? `ใช้ตั๋ว ${wheel.ticketsPerSpin} ใบ`
-                : `ใช้ ${wheel.gemsPerSpin.toFixed(2)} เพชร`}
-            </span>
-          </button>
+          />
 
           {/* ข้อความช่วยเหลือใต้ปุ่ม — ธีม Cosmicbet */}
           {spinMethod === "ticket" && ticketCount <= 0 ? (
