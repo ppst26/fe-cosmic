@@ -7,7 +7,7 @@ import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { cn } from "@/lib/utils";
 
-/** จำตำแหน่งเลื่อนแนวนอนของแถบมือถือข้ามหน้า — แต่ละ route mount HomeLobbyPage ใหม่ */
+/** จำตำแหน่งเลื่อนแนวนอนของแถบมือถือ — สำรองกรณี remount (เช่น กลับจากหน้านอกกลุ่ม (lobby)) */
 let persistedMobileTrackScrollLeft = 0;
 
 interface CategoryNavProps {
@@ -42,7 +42,9 @@ export function CategoryNav({
     () => resolveLobbyCategoryFromPath(pathname, categories),
     [pathname, categories],
   );
-  const [pickedId, setPickedId] = useState<CategoryId>(defaultActiveId);
+  const [pickedId, setPickedId] = useState<CategoryId>(
+    routeActiveId ?? activeIdProp ?? defaultActiveId,
+  );
   const trackRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [thumbWidthPercent, setThumbWidthPercent] = useState(28);
@@ -108,10 +110,16 @@ export function CategoryNav({
     }
   }, [activeIdProp]);
 
+  /** route mode — sync จาก URL เมื่อ path เปลี่ยน (เช่น back/forward) */
+  useEffect(() => {
+    if (navigationMode === "route" && routeActiveId) {
+      setPickedId(routeActiveId);
+    }
+  }, [navigationMode, routeActiveId]);
+
+  /** แตะแล้ว highlight ทันที (optimistic) ไม่รอ route เสร็จ */
   const activeId =
-    navigationMode === "none"
-      ? (activeIdProp ?? pickedId)
-      : (routeActiveId ?? activeIdProp ?? pickedId);
+    navigationMode === "none" ? (activeIdProp ?? pickedId) : pickedId;
 
   /**
    * มือถือ — หลังเปลี่ยนหน้า (mount ใหม่) คืนตำแหน่งเลื่อนเดิม แล้วถ้าหมวด active ยังไม่อยู่ในกรอบ

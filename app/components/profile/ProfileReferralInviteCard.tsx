@@ -6,14 +6,10 @@ import {
 } from "@/app/data/referralMockData";
 import { fetchReferralOverview } from "@/lib/api/referral";
 import { ProfileAccountFieldRow } from "./ProfileAccountFieldRow";
-import {
-  COSMIC_BTN_CONFIRM_TEXT,
-  COSMIC_SHEET_SUBMIT,
-} from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 
 /**
- * บล็อกชวนเพื่อน — รหัส/ลิงก์ + ปุ่มแชร์ (ProfileAccountTabs)
+ * บล็อกชวนเพื่อน — ลิงก์คัดลอก (ProfileAccountTabs)
  */
 export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) {
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -28,22 +24,6 @@ export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) 
     } catch {
       /* clipboard ไม่พร้อม */
     }
-  };
-
-  const handleShare = async () => {
-    try {
-      if (typeof navigator !== "undefined" && navigator.share) {
-        await navigator.share({
-          title: "ชวนเพื่อน Cosmicbet",
-          text: "สมัครผ่านลิงก์ของฉัน",
-          url: referralLink,
-        });
-        return;
-      }
-    } catch {
-      /* ผู้ใช้ยกเลิก share */
-    }
-    await copyText("share", referralLink);
   };
 
   return (
@@ -66,24 +46,12 @@ export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) 
         <p className="text-center text-xs text-[var(--success)]" role="status">คัดลอกแล้ว</p>
       ) : null}
 
-      <div className="flex flex-col gap-2">
-        <ProfileAccountFieldRow
-          label="รหัสชวนเพื่อน"
-          value={referralCode}
-          onCopy={() => void copyText("code", referralCode)}
-          copyLabel="คัดลอกรหัสชวนเพื่อน"
-        />
-        <ProfileAccountFieldRow
-          label="ลิงก์ชวนเพื่อน"
-          value={referralLink}
-          onCopy={() => void copyText("link", referralLink)}
-          copyLabel="คัดลอกลิงก์ชวนเพื่อน"
-        />
-      </div>
-
-      <button type="button" onClick={() => void handleShare()} className={COSMIC_SHEET_SUBMIT}>
-        <span className={COSMIC_BTN_CONFIRM_TEXT}>แชร์รับรายได้</span>
-      </button>
+      <ProfileAccountFieldRow
+        label="ลิงก์ชวนเพื่อน"
+        value={referralLink}
+        onCopy={() => void copyText("link", referralLink)}
+        copyLabel="คัดลอกลิงก์ชวนเพื่อน"
+      />
     </section>
   );
 }

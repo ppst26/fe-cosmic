@@ -19,8 +19,8 @@ function ActivityMasterRow({
       type="button"
       onClick={onSelect}
       aria-current={selected ? "true" : undefined}
-      className={`activity-hub-master-row w-full p-2 text-left transition-colors ${
-        selected ? "activity-hub-master-row--selected" : "hover:bg-[var(--surface-hover)]/25"
+      className={`activity-hub-master-row w-full rounded-[var(--radius-panel)] p-2.5 text-left transition-[border-color,box-shadow,background] duration-200 ${
+        selected ? "activity-hub-master-row--selected" : ""
       }`}
     >
       <div className="flex gap-3">
@@ -60,9 +60,9 @@ export function ActivitiesDesktopHubLayout() {
   const selected = activities.find((item) => item.id === selectedId) ?? activities[0];
 
   return (
-    <div className="activities-desktop-hub activities-desktop-hub--flat grid min-h-[min(58dvh,540px)] lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)] lg:items-stretch">
+    <div className="activities-desktop-hub activities-desktop-hub--flat grid min-h-[min(58dvh,560px)] lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:items-stretch lg:gap-5">
       <nav
-        className="activities-desktop-hub__list flex min-h-0 flex-col overflow-y-auto [scrollbar-width:thin]"
+        className="activities-desktop-hub__list flex min-h-0 flex-col gap-2 overflow-y-auto [scrollbar-width:thin]"
         aria-label="รายการกิจกรรม"
       >
         {activities.map((item) => (

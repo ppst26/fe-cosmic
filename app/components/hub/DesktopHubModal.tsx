@@ -114,6 +114,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                   "cosmic-mobile-sheet--hub vip-modal",
                   hubId === "check-in" && "vip-modal--daily-check-in !p-0 overflow-hidden",
                   hubId === "account" && "vip-modal--account",
+                  hubId === "activities" && "vip-modal--activities",
                 ),
                 { variant: sheetVariant },
               )}

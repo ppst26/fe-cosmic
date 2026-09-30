@@ -137,8 +137,10 @@ export function ActivityTurnProgressCard({
 
   return (
     <section
-      className={`activity-hub-progress px-0 py-3 sm:py-4 ${
-        flat ? "activity-hub-progress--flat border-b border-[var(--border-subtle)]/45" : "glass-card--soft rounded-[var(--radius-panel)] px-4 sm:px-5"
+      className={`activity-hub-progress py-3 sm:py-4 ${
+        flat
+          ? "activity-hub-progress--flat activity-hub-detail-panel px-4 sm:px-5"
+          : "glass-card--soft rounded-[var(--radius-panel)] px-4 sm:px-5"
       }`}
     >
       <h3 className="text-center text-sm font-medium text-[var(--text-primary)] sm:text-base">
@@ -355,22 +357,10 @@ export function ActivityDetailBody({
       : [];
 
   return (
-    <div className="flex min-h-0 flex-col gap-4">
-      {/* ภาพปกกิจกรรมขนาดใหญ่ (ถ้ามี imageUrl) */}
-      {item.imageUrl ? (
-        <div className="relative w-full overflow-hidden rounded-[var(--radius-control)] border border-white/10 aspect-[21/8] max-h-44 sm:max-h-52 bg-black/40 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
-          <img
-            src={item.imageUrl}
-            alt={item.title}
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0d091a] via-transparent to-transparent opacity-80" />
-        </div>
-      ) : null}
-
+    <div className="flex min-h-0 flex-col gap-4 lg:gap-5">
       <div className="flex flex-col gap-3">
         {showTitle ? (
-          <h2 className="text-base font-medium leading-snug text-[var(--text-primary)] sm:text-lg">
+          <h2 className="text-lg font-medium leading-snug text-[var(--text-primary)] lg:text-xl">
             {item.title}
           </h2>
         ) : null}
