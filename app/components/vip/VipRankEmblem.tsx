@@ -4,6 +4,37 @@ import React, { useEffect, useRef, useState } from "react";
 import type { VipRankId } from "@/app/types/vip";
 import { getVipRankTier, getVipRankVideoSrc } from "@/app/data/vipMockData";
 import { LockIcon } from "../ui/Icons";
+import { cn } from "@/lib/utils";
+
+/**
+ * มือถือหลายตัวไม่ใช้ alpha ของ WebM — มุมเฟรมกลายเป็นดำทึบ
+ * ถ้ามุมโปร่งอยู่แล้ว แปลว่าเบราว์เซอร์เก็บบางไว้ ไม่ต้อง blend
+ */
+function videoFrameLostAlpha(video: HTMLVideoElement): boolean | null {
+  if (video.videoWidth === 0) return null;
+  const size = 12;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return null;
+  ctx.drawImage(video, 0, 0, size, size);
+  const data = ctx.getImageData(0, 0, size, size).data;
+  let transparent = 0;
+  let opaqueBlack = 0;
+  let subject = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    const alpha = data[i + 3] ?? 0;
+    const luma = (data[i] ?? 0) + (data[i + 1] ?? 0) + (data[i + 2] ?? 0);
+    if (alpha < 20) transparent += 1;
+    else if (luma < 28) opaqueBlack += 1;
+    else subject += 1;
+  }
+  const total = size * size;
+  if (transparent > total * 0.12) return false;
+  if (opaqueBlack > total * 0.15 && subject > 0) return true;
+  return null;
+}
 
 /**
  * ตราแรงค์ VIP — วิดีโอ webm จาก public/rank (fallback เป็น hex SVG)
@@ -24,7 +55,10 @@ export function VipRankEmblem({
   const tier = getVipRankTier(rankId);
   const videoSrc = getVipRankVideoSrc(rankId);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const alphaSettledRef = useRef(false);
   const [preferStatic, setPreferStatic] = useState(false);
+  /** true เมื่อมือถือทิ้ง alpha แล้วโชว์พื้นดำ — ใช้ screen blend เจาะดำ */
+  const [knockOutBlack, setKnockOutBlack] = useState(false);
 
   const dim =
     size === "xl"
@@ -54,6 +88,11 @@ export function VipRankEmblem({
   }, []);
 
   useEffect(() => {
+    alphaSettledRef.current = false;
+    setKnockOutBlack(false);
+  }, [videoSrc]);
+
+  useEffect(() => {
     const el = videoRef.current;
     if (!el || preferStatic || !videoSrc) return;
     const shouldPlay = playing && !inactive;
@@ -63,6 +102,16 @@ export function VipRankEmblem({
       el.pause();
     }
   }, [playing, inactive, preferStatic, videoSrc]);
+
+  const inspectAlpha = () => {
+    if (alphaSettledRef.current) return;
+    const el = videoRef.current;
+    if (!el) return;
+    const lost = videoFrameLostAlpha(el);
+    if (lost === null) return;
+    alphaSettledRef.current = true;
+    if (lost) setKnockOutBlack(true);
+  };
 
   if (videoSrc && !preferStatic) {
     return (
@@ -78,8 +127,13 @@ export function VipRankEmblem({
           loop
           muted
           playsInline
-          preload="metadata"
-          className="h-full w-full object-contain"
+          preload="auto"
+          onLoadedData={inspectAlpha}
+          onTimeUpdate={inspectAlpha}
+          className={cn(
+            "h-full w-full bg-transparent object-contain",
+            knockOutBlack && "mix-blend-screen",
+          )}
         />
         {inactive && lockLg && (
           <span className="absolute inset-0 flex items-center justify-center">

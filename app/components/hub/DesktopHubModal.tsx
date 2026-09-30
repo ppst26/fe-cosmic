@@ -7,7 +7,7 @@ import { PromotionsHubPageContent } from "@/app/components/promotions/Promotions
 import { CashbackPageContent } from "@/app/components/cashback/CashbackPageContent";
 import { GemsStorePageContent } from "@/app/components/gems-store/GemsStorePageContent";
 import { ReferralPageContent } from "@/app/components/referral/ReferralPageContent";
-import { CloseIcon } from "@/app/components/ui/Icons";
+import { cn } from "@/lib/utils";
 import { ResponsiveSheetHeader } from "@/app/components/ui/ResponsiveSheetHeader";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
@@ -16,6 +16,7 @@ import {
 } from "@/app/components/ui/responsiveSheetDialog";
 import { DesktopHubAccountBody } from "./DesktopHubAccountBody";
 import { DesktopHubTransactionsBody } from "./DesktopHubTransactionsBody";
+import { VipPageContent } from "@/app/components/vip/VipPageContent";
 import { DailyCheckInPageContent } from "@/app/components/missions/DailyCheckInPageContent";
 import { DailyCheckInCard } from "@/app/components/missions/DailyCheckInCard";
 import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
@@ -23,7 +24,6 @@ import {
   HUB_MODAL_ICON_IDS,
   HUB_MODAL_TITLES,
   getHubSheetSize,
-  isResponsiveSheetHub,
 } from "./hubModalRegistry";
 
 interface DesktopHubModalProps {
@@ -54,7 +54,11 @@ function HubModalBody({
         />
       ) : null}
       {hubId === "gems-store" ? <GemsStorePageContent embedded /> : null}
-      {hubId === "account" ? <DesktopHubAccountBody /> : null}
+      {hubId === "account" ? (
+        <div className="profile-account-hub-body w-full min-w-0">
+          <DesktopHubAccountBody />
+        </div>
+      ) : null}
       {hubId === "referral" ? <ReferralPageContent embedded /> : null}
       {hubId === "transactions" ? (
         <DesktopHubTransactionsBody
@@ -63,6 +67,14 @@ function HubModalBody({
         />
       ) : null}
       {hubId === "check-in" ? <DailyCheckInPageContent embedded /> : null}
+      {hubId === "vip" ? (
+        <VipPageContent
+          key={`vip-${options?.vipTab ?? "my-level"}`}
+          embedded
+          activeTab={options?.vipTab ?? "my-level"}
+          onSelectTab={() => undefined}
+        />
+      ) : null}
     </>
   );
 }
@@ -78,13 +90,16 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
     if (!open) onClose();
   };
 
-  const sheetVariant = hubId
-    ? getHubSheetSize(hubId) === "wide"
-      ? "hubWide"
-      : getHubSheetSize(hubId) === "hubCompact"
-        ? "hubCompact"
-        : "hub"
-    : "default";
+  const hubSheetSize = hubId ? getHubSheetSize(hubId) : null;
+  const sheetVariant = hubSheetSize === "wide"
+    ? "hubWide"
+    : hubSheetSize === "hubCompact"
+      ? "hubCompact"
+      : hubSheetSize === "hubNarrow"
+        ? "hubNarrow"
+        : hubSheetSize
+          ? "hub"
+          : "default";
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
@@ -95,7 +110,11 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
             <Dialog.Content
               aria-describedby={undefined}
               className={responsiveSheetContentClass(
-                `vip-modal${hubId === "check-in" ? " vip-modal--daily-check-in !p-0 overflow-hidden" : ""}`,
+                cn(
+                  "cosmic-mobile-sheet--hub vip-modal",
+                  hubId === "check-in" && "vip-modal--daily-check-in !p-0 overflow-hidden",
+                  hubId === "account" && "vip-modal--account",
+                ),
                 { variant: sheetVariant },
               )}
             >

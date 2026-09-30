@@ -1,5 +1,6 @@
 import type { CashbackTabId } from "@/app/data/cashbackMockData";
 import type { TransactionKind } from "@/app/types/transaction";
+import type { VipModalTabId } from "@/app/types/vip";
 
 /** หมวด hub ที่เปิดเป็น modal บน desktop (lg+) */
 export type DesktopHubId =
@@ -10,11 +11,13 @@ export type DesktopHubId =
   | "account"
   | "referral"
   | "transactions"
-  | "check-in";
+  | "check-in"
+  | "vip";
 
 export interface OpenHubOptions {
   cashbackTab?: CashbackTabId;
   transactionKind?: TransactionKind;
+  vipTab?: VipModalTabId;
 }
 
 export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
@@ -26,6 +29,7 @@ export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
   referral: "ชวนเพื่อน",
   transactions: "ธุรกรรม",
   "check-in": "เช็คอินรายวัน",
+  vip: "VIP",
 };
 
 /** ไอคอน 3D นำหน้าหัวข้อ hub modal บน desktop — อ้าง menuIconAssets */
@@ -38,6 +42,7 @@ export const HUB_MODAL_ICON_IDS: Record<DesktopHubId, string> = {
   referral: "referral",
   transactions: "transactions",
   "check-in": "check-in",
+  vip: "rank",
 };
 
 const PATH_TO_HUB: Record<string, DesktopHubId> = {
@@ -49,6 +54,7 @@ const PATH_TO_HUB: Record<string, DesktopHubId> = {
   "/referral": "referral",
   "/transactions": "transactions",
   "/missions/check-in": "check-in",
+  "/vip": "vip",
 };
 
 /**
@@ -88,6 +94,12 @@ export function parseHubFromHref(href: string): {
       const kind = params.get("kind");
       if (kind === "withdraw") options.transactionKind = "withdraw";
     }
+    if (id === "vip") {
+      const tab = params.get("tab") ?? params.get("vipTab");
+      if (tab === "rank" || tab === "benefits" || tab === "my-level") {
+        options.vipTab = tab;
+      }
+    }
   }
 
   return { id, options: Object.keys(options).length ? options : undefined };
@@ -106,6 +118,7 @@ export const HUB_REQUIRES_AUTH: ReadonlySet<DesktopHubId> = new Set([
   "cashback",
   "account",
   "transactions",
+  "vip",
 ]);
 
 /** Hub ที่ใช้ responsive sheet แบบคูปอง/ฝาก-ถอน (ไม่ใช่ modal hub กลางจอแบบเดิม) */
@@ -118,6 +131,7 @@ export const RESPONSIVE_SHEET_HUB_IDS: ReadonlySet<DesktopHubId> = new Set([
   "check-in",
   "account",
   "transactions",
+  "vip",
 ]);
 
 export function isResponsiveSheetHub(id: DesktopHubId): boolean {
@@ -125,16 +139,21 @@ export function isResponsiveSheetHub(id: DesktopHubId): boolean {
 }
 
 /** ความกว้าง sheet บน desktop — wide สำหรับ master–detail · hubCompact สำหรับเช็คอิน */
-export function getHubSheetSize(id: DesktopHubId): "compact" | "wide" | "hubCompact" {
+export function getHubSheetSize(
+  id: DesktopHubId,
+): "compact" | "wide" | "hubCompact" | "hubNarrow" {
   if (id === "check-in") {
     return "hubCompact";
+  }
+  if (id === "account") {
+    return "hubNarrow";
   }
   if (
     id === "referral" ||
     id === "promotions" ||
     id === "activities" ||
     id === "transactions" ||
-    id === "account"
+    id === "vip"
   ) {
     return "wide";
   }

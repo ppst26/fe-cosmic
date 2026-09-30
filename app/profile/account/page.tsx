@@ -12,7 +12,6 @@ import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader"
 import { ProfileSheetBody } from "@/app/components/profile/ProfileSheetBody";
 import { useVipModal } from "@/app/components/vip/VipModalProvider";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
-
 /**
  * หน้าข้อมูลบัญชี — เปิดจาก popover โปรไฟล์ (ไม่แสดงใน popover)
  */

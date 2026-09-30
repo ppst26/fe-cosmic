@@ -33,27 +33,27 @@ export function ProfileBankAccountCard({
   return (
     <article
       className={cn(
-        "flex flex-col gap-3",
-        embedded ? "pt-1" : cn(COSMIC_PANEL_GLASS, "px-3.5 py-3.5 sm:px-4 sm:py-4"),
+        "flex items-start gap-3",
+        embedded
+          ? "rounded-[var(--radius-panel)] bg-[var(--surface-solid-inner)] px-3 py-3 sm:px-3.5 sm:py-3.5"
+          : cn(COSMIC_PANEL_GLASS, "flex-col gap-3 px-3.5 py-3.5 sm:px-4 sm:py-4"),
       )}
     >
-      <div className="flex items-start gap-3">
-        <span
-          className={cn(
-            "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xs font-medium uppercase text-white",
-            bankToneClass,
-          )}
-          aria-hidden="true"
-        >
-          {bankMarkLabel}
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium leading-snug text-[var(--text-primary)]">{profile.bankLabel}</p>
-          <p className="mt-1.5 text-base font-medium tabular-nums tracking-tight text-[var(--accent-highlight)]">
-            {accountFormatted}
-          </p>
-          <p className="mt-1 truncate text-xs text-[var(--text-secondary)]">{profile.displayName}</p>
-        </div>
+      <span
+        className={cn(
+          "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xs font-medium uppercase text-white",
+          bankToneClass,
+        )}
+        aria-hidden="true"
+      >
+        {bankMarkLabel}
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium leading-snug text-[var(--text-primary)]">{profile.bankLabel}</p>
+        <p className="mt-1.5 text-base font-medium tabular-nums tracking-tight text-[var(--accent-highlight)]">
+          {accountFormatted}
+        </p>
+        <p className="mt-1 truncate text-xs text-[var(--text-secondary)]">{profile.displayName}</p>
       </div>
     </article>
   );

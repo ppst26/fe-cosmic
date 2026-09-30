@@ -13,7 +13,12 @@ import {
   formatActivityNumber,
 } from "@/app/data/activitiesHubMockData";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
-import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM, COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
+import {
+  COSMIC_BTN_CONFIRM_COMPACT,
+  COSMIC_BTN_CONFIRM_TEXT,
+  COSMIC_BTN_GLASS_PILL_SM,
+  COSMIC_BTN_PRIMARY,
+} from "../ui/cosmicButtonClasses";
 
 /**
  * รูปย่อกิจกรรม — รูปภาพจริง (ถ้ามี) หรือ gradient mock (ใช้ใน list ซ้าย / การ์ดมือถือ)
@@ -101,48 +106,20 @@ export function ActivityCategoryTabs({
   activeId,
   onSelect,
   tabs = ACTIVITY_HUB_CATEGORY_TABS,
-  flat = false,
 }: {
   activeId: ActivityHubCategoryTab;
   onSelect: (id: ActivityHubCategoryTab) => void;
   tabs?: { id: ActivityHubCategoryTab; label: string }[];
-  flat?: boolean;
 }) {
-  if (!flat) {
-    return (
-      <CosmicLineTabs
-        tabs={tabs}
-        activeId={activeId}
-        onSelect={onSelect}
-        ariaLabel="หมวดกิจกรรม"
-        scrollable
-        className="activities-hub-cat-tabs"
-      />
-    );
-  }
-
   return (
-    <div
-      className="promo-hub-category-tabs activities-hub-cat-tabs flex flex-wrap gap-2"
-      role="tablist"
-      aria-label="หมวดกิจกรรม"
-    >
-      {tabs.map((tab) => {
-        const selected = tab.id === activeId;
-        return (
-          <button
-            key={tab.id}
-            type="button"
-            role="tab"
-            aria-selected={selected}
-            onClick={() => onSelect(tab.id)}
-            className={`${COSMIC_BTN_GLASS_PILL} !px-3 !py-1.5 !text-xs sm:!text-sm ${selected ? "is-active" : ""}`}
-          >
-            {tab.label}
-          </button>
-        );
-      })}
-    </div>
+    <CosmicLineTabs
+      tabs={tabs}
+      activeId={activeId}
+      onSelect={onSelect}
+      ariaLabel="หมวดกิจกรรม"
+      scrollable
+      className="activities-hub-cat-tabs"
+    />
   );
 }
 
@@ -251,11 +228,11 @@ function ActivityClaimButton({
         type="button"
         className={
           flat
-            ? `${COSMIC_BTN_GLASS_PILL_SM} ${base} !w-full is-active`
+            ? `${COSMIC_BTN_CONFIRM_COMPACT} activity-hub-claim-btn--glow !min-w-[5.5rem]`
             : `${base} rounded-[var(--radius-control)] ${COSMIC_BTN_PRIMARY}`
         }
       >
-        รับรางวัล
+        {flat ? <span className={COSMIC_BTN_CONFIRM_TEXT}>รับรางวัล</span> : "รับรางวัล"}
       </button>
     );
   }
@@ -401,7 +378,6 @@ export function ActivityDetailBody({
           <ActivityCategoryTabs
             activeId={category}
             onSelect={setCategory}
-            flat={flat}
             tabs={ACTIVITY_HUB_CATEGORY_TABS.filter((t) => item.categoryTabs?.includes(t.id))}
           />
         ) : null}

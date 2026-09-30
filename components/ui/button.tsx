@@ -29,7 +29,7 @@ const buttonVariants = cva(
         ctaMuted:
           "rounded-[14px] border border-white/10 bg-white/[0.06] font-medium text-[var(--text-primary)] hover:bg-white/10 hover:border-white/[0.12]",
         ctaPrimary:
-          "cosmic-cta-primary !inline-flex !h-auto !min-h-0 !w-auto shrink-0 !rounded-full !border-0 !font-medium !text-white !shadow-none hover:!brightness-105 focus-visible:!ring-2 focus-visible:!ring-white/45 focus-visible:!ring-offset-0 active:!translate-y-0 active:!scale-[0.98]",
+          "btn-primary btn-primary--sm !inline-flex shrink-0 !border-0 !font-bold !text-white focus-visible:!ring-2 focus-visible:!ring-white/45 focus-visible:!ring-offset-0",
       },
       size: {
         default:

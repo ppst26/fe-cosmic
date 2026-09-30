@@ -28,15 +28,30 @@ export const COSMIC_BTN_NAV = "cosmic-btn-nav";
 
 
 
-/** ชั้น 3 — gradient CTA: สมัคร, ส่งฟอร์ม, รับโบนัส */
+/** ชั้น 3 — main action (gradient neon) — สมัคร, ส่งฟอร์ม, ค้นหา, รับโบนัส */
 
-export const COSMIC_BTN_PRIMARY = "cosmic-cta-primary";
+export const COSMIC_BTN_PRIMARY = "btn-primary";
+
+/** วงไอคอนซ้ายในปุ่ม main action */
+
+export const COSMIC_BTN_PRIMARY_ICON = "btn-primary__icon";
 
 
 
-/** ชั้น 3 — ยืนยันใน mobile bottom sheet (ฝาก/ถอน/คูปอง/login) */
+/** ชั้น 3 — ยืนยันใน bottom sheet (pill glow) */
 
-export const COSMIC_SHEET_SUBMIT = "cosmic-sheet-submit";
+export const COSMIC_SHEET_SUBMIT = "btn-confirm-glow btn-confirm-glow--centered";
+
+/** วงไอคอน + ข้อความในปุ่ม sheet glow */
+
+export const COSMIC_BTN_CONFIRM_ICON = "btn-confirm-glow__icon";
+
+export const COSMIC_BTN_CONFIRM_TEXT = "btn-confirm-glow__text";
+
+export const COSMIC_BTN_CONFIRM_COMPACT =
+  "btn-confirm-glow btn-confirm-glow--compact btn-confirm-glow--centered";
+
+export const COSMIC_BTN_CONFIRM_INLINE = "btn-confirm-glow btn-confirm-glow--inline";
 
 
 

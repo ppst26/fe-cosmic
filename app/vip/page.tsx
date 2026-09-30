@@ -11,6 +11,8 @@ import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader"
 import { VipPageContent } from "@/app/components/vip/VipPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 import { parseVipPageTab, vipPageHref, VIP_PAGE_TAB_QUERY_KEY } from "@/lib/vipRoutes";
+import { getIsDesktopViewport } from "@/app/components/hub/useIsDesktop";
+import { OVERLAY_HUB_KEY, OVERLAY_LAYER_KEY, OVERLAY_VIP_TAB_KEY } from "@/lib/overlayUrl";
 
 /**
  * หน้า VIP / แร็งค์ — แทน bottom sheet
@@ -29,6 +31,17 @@ function VipPageInner() {
       router.replace("/");
     }
   }, [isAuthenticated, isLoading, router]);
+
+  /** Desktop — เปิด hub modal บน lobby แทนหน้าเต็ม */
+  useEffect(() => {
+    if (isLoading || !isAuthenticated) return;
+    if (!getIsDesktopViewport()) return;
+    const params = new URLSearchParams();
+    params.set(OVERLAY_LAYER_KEY, "hub");
+    params.set(OVERLAY_HUB_KEY, "vip");
+    if (activeTab !== "my-level") params.set(OVERLAY_VIP_TAB_KEY, activeTab);
+    router.replace(`/?${params.toString()}`, { scroll: false });
+  }, [activeTab, isAuthenticated, isLoading, router]);
 
   const handleSelectTab = (tab: VipModalTabId) => {
     router.replace(vipPageHref(tab), { scroll: false });

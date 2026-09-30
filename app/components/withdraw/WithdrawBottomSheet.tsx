@@ -20,6 +20,7 @@ import {
 import {
   COSMIC_CHOICE_BTN,
   COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
+  COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_SHEET_SUBMIT,
 } from "../ui/cosmicButtonClasses";
 
@@ -202,8 +203,9 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               onClick={handleConfirm}
               className={COSMIC_SHEET_SUBMIT}
             >
-              <WithdrawConfirmIcon className="h-5 w-5" />
-              {submitting ? "กำลังส่ง..." : "ยืนยันถอนเงิน"}
+              <span className={COSMIC_BTN_CONFIRM_TEXT}>
+                {submitting ? "กำลังส่ง..." : "ยืนยันถอนเงิน"}
+              </span>
             </button>
           </div>
         </Dialog.Content>
@@ -218,21 +220,6 @@ function KbankLogoGraphic({ className }: { className?: string }) {
       <circle cx="24" cy="24" r="22" fill="#fff" />
       <path d="M24 8c-6 4-10 10-10 16 0 8 6 14 10 16 4-2 10-8 10-16 0-6-4-12-10-16Z" fill="#138f4a" />
       <path d="M24 12c-4 3-7 8-7 12 0 5 4 9 7 11 3-2 7-6 7-11 0-4-3-9-7-12Z" fill="#e11d48" opacity="0.85" />
-    </svg>
-  );
-}
-
-function WithdrawConfirmIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <path
-        d="M7 17 17 7M17 7h-6M17 7v6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
     </svg>
   );
 }

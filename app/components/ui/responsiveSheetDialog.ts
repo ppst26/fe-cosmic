@@ -8,7 +8,8 @@ type ResponsiveSheetVariant =
   | "profile"
   | "hub"
   | "hubWide"
-  | "hubCompact";
+  | "hubCompact"
+  | "hubNarrow";
 
 /**
  * Overlay — มือถือ sheet · desktop modal (lg+)
@@ -37,7 +38,9 @@ export function responsiveSheetContentClass(
         ? "lg:w-[min(92vw,720px)]"
         : variant === "hubCompact"
           ? "lg:w-[min(94vw,640px)]"
-          : variant === "wide"
+          : variant === "hubNarrow"
+            ? "lg:w-[min(92vw,480px)]"
+            : variant === "wide"
             ? "lg:w-[min(92vw,520px)]"
             : variant === "signup"
               ? "lg:w-[min(92vw,480px)]"
@@ -52,7 +55,11 @@ export function responsiveSheetContentClass(
         ? "lg:max-h-[min(90dvh,800px)]"
         : "lg:max-h-[min(90dvh,680px)]";
 
-  const isHubSheet = variant === "hub" || variant === "hubWide" || variant === "hubCompact";
+  const isHubSheet =
+    variant === "hub" ||
+    variant === "hubWide" ||
+    variant === "hubCompact" ||
+    variant === "hubNarrow";
   const isProfileSheet = variant === "profile";
   const isSignupSheet = variant === "signup";
 

@@ -9,6 +9,8 @@ import {
   readOverlayLayer,
 } from "@/lib/overlayUrl";
 import { vipPageHref } from "@/lib/vipRoutes";
+import { useDesktopHubModal } from "@/app/components/hub/DesktopHubModalProvider";
+import { getIsDesktopViewport } from "@/app/components/hub/useIsDesktop";
 
 interface VipModalContextValue {
   openVipModal: (tab?: VipModalTabId) => void;
@@ -23,18 +25,27 @@ const VipModalContext = createContext<VipModalContextValue | null>(null);
 export function VipModalProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { openHub } = useDesktopHubModal();
 
   useEffect(() => {
     if (readOverlayLayer(searchParams) !== "vip") return;
     const tab = parseVipModalTab(searchParams.get(OVERLAY_VIP_TAB_KEY)) ?? "my-level";
+    if (getIsDesktopViewport()) {
+      openHub("vip", tab === "my-level" ? undefined : { vipTab: tab });
+      return;
+    }
     router.replace(vipPageHref(tab));
-  }, [router, searchParams]);
+  }, [openHub, router, searchParams]);
 
   const openVipModal = useCallback(
     (tab: VipModalTabId = "my-level") => {
+      if (getIsDesktopViewport()) {
+        openHub("vip", tab === "my-level" ? undefined : { vipTab: tab });
+        return;
+      }
       router.push(vipPageHref(tab));
     },
-    [router],
+    [openHub, router],
   );
 
   const closeVipModal = useCallback(() => {

@@ -22,13 +22,13 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           <PendingTransactionProvider>
             <DepositProvider>
               <WithdrawProvider>
-                <VipModalProvider>
-                  <DesktopHubModalProvider>
+                <DesktopHubModalProvider>
+                  <VipModalProvider>
                     <TransactionsProvider>
                       <LobbyShellSidebarProvider>{children}</LobbyShellSidebarProvider>
                     </TransactionsProvider>
-                  </DesktopHubModalProvider>
-                </VipModalProvider>
+                  </VipModalProvider>
+                </DesktopHubModalProvider>
               </WithdrawProvider>
             </DepositProvider>
           </PendingTransactionProvider>

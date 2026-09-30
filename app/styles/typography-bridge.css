@@ -835,8 +835,13 @@
 
   /** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient) แทน .cosmic-action-btn ม่วงทึบ */
 
-  .cosmic-sheet-submit {
-    @apply text-base font-medium;
+  .btn-primary {
+    @apply text-base font-bold;
+  }
+
+  .cosmic-sheet-submit,
+  .btn-confirm-glow {
+    @apply text-base font-bold;
   }
 
   .provider-category-toolbar__search-input {

@@ -2,6 +2,7 @@
 
 import React, { type ReactNode } from "react";
 import { CloseIcon, SearchIcon } from "@/app/components/ui/Icons";
+import { CosmicLineTabs } from "@/app/components/ui/CosmicLineTabs";
 
 export type HubLobbySegmentId = "casino" | "sports";
 
@@ -67,27 +68,14 @@ export function HubLobbyModalLayout({
 
       <div className="hub-lobby-modal__toolbar flex shrink-0 flex-wrap items-center gap-x-3 gap-y-[0.65rem] px-4 pt-3 pb-[0.65rem]">
         {showSegment && onSegmentChange ? (
-          <div
-            className="hub-lobby-modal__segment inline-flex shrink-0 p-[3px] rounded-[var(--radius-pill)]"
-            role="tablist"
-            aria-label="โหมด lobby"
-          >
-            {segmentButtons.map((item) => {
-              const selected = segment === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={selected}
-                  className={`hub-lobby-modal__segment-btn min-h-9 px-4 rounded-[var(--radius-pill)]${selected ? " is-active" : ""}`}
-                  onClick={() => onSegmentChange(item.id)}
-                >
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
+          <CosmicLineTabs
+            className="hub-lobby-modal__segment-tabs shrink-0 min-w-[min(100%,14rem)]"
+            tabs={segmentButtons.map((item) => ({ id: item.id, label: item.label }))}
+            activeId={segment}
+            onSelect={onSegmentChange}
+            ariaLabel="โหมด lobby"
+            columns={2}
+          />
         ) : null}
 
         <label className="hub-lobby-modal__search-wrap flex min-w-[min(100%,12rem)] flex-[1_1_12rem] items-center gap-2 h-[42px] px-[0.85rem] rounded-[10px]">

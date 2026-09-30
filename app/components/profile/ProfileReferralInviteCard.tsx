@@ -6,12 +6,16 @@ import {
   buildReferralLink,
 } from "@/app/data/referralMockData";
 import { ProfileAccountFieldRow } from "./ProfileAccountFieldRow";
-import { COSMIC_BTN_PRIMARY, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
+import {
+  COSMIC_BTN_CONFIRM_TEXT,
+  COSMIC_SHEET_SUBMIT,
+} from "../ui/cosmicButtonClasses";
+import { cn } from "@/lib/utils";
 
 /**
  * บล็อกชวนเพื่อน — รหัส/ลิงก์ + ปุ่มแชร์ (ProfileAccountTabs)
  */
-export function ProfileReferralInviteCard() {
+export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) {
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const referralCode = REFERRAL_MOCK_REF_CODE;
   const referralLink = buildReferralLink(referralCode);
@@ -43,7 +47,12 @@ export function ProfileReferralInviteCard() {
   };
 
   return (
-    <section className={`${COSMIC_PANEL_GLASS} flex flex-col gap-3 px-3.5 py-4 sm:px-4`}>
+    <section
+      className={cn(
+        "flex flex-col gap-3",
+        flat && "border-t border-[var(--border-subtle)]/45 pt-4",
+      )}
+    >
       <div className="text-center">
         <h2 className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
           ชวนเพื่อนรับโบนัส
@@ -72,24 +81,8 @@ export function ProfileReferralInviteCard() {
         />
       </div>
 
-      <button
-        type="button"
-        onClick={() => void handleShare()}
-        className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm flex h-11 w-full items-center justify-center gap-1.5 text-sm font-medium sm:h-12 sm:text-base`}
-      >
-        แชร์รับรายได้
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-4 w-4"
-          aria-hidden="true"
-        >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
+      <button type="button" onClick={() => void handleShare()} className={COSMIC_SHEET_SUBMIT}>
+        <span className={COSMIC_BTN_CONFIRM_TEXT}>แชร์รับรายได้</span>
       </button>
     </section>
   );

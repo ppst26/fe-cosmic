@@ -146,6 +146,18 @@
   --accent-primary: #7c6cf0;
   --accent-highlight: var(--focus-ring);
   --accent-muted: var(--border-active);
+  /** line tabs — track + neon indicator (CategoryNav mobile · CosmicLineTabs) */
+  --line-tab-track: rgb(255 255 255 / 0.1);
+  --line-tab-neon-gradient: linear-gradient(
+    90deg,
+    #6366f1 0%,
+    #7047eb 48%,
+    #a855f7 100%
+  );
+  --line-tab-neon-glow:
+    0 0 8px rgb(112 71 235 / 0.82),
+    0 0 16px rgb(99 102 241 / 0.45),
+    0 0 22px rgb(168 85 247 / 0.28);
   --vip-progress-gradient: linear-gradient(
     90deg,
     #9b87ff 0%,

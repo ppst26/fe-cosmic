@@ -9,6 +9,8 @@ import {
 } from "@/app/data/referralMockData";
 import { CopyIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 import {
+  COSMIC_BTN_CONFIRM_INLINE,
+  COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_BTN_NAV,
   COSMIC_PANEL_GLASS,
   COSMIC_PANEL_GLASS_ICON,
@@ -130,14 +132,22 @@ export function ReferralLinkSection({
         <button
           type="button"
           onClick={() => onCopy(referralLink)}
-          className={`${COSMIC_BTN_NAV} flex shrink-0 items-center gap-1.5 ${
+          className={
             isHub
-              ? "min-h-11 px-4 py-2.5 text-sm"
-              : "cosmic-btn-nav--sm px-3.5 py-2.5 text-xs sm:text-sm"
-          }`}
+              ? `${COSMIC_BTN_CONFIRM_INLINE} shrink-0 gap-2 px-4 text-sm`
+              : `${COSMIC_BTN_NAV} cosmic-btn-nav--sm flex shrink-0 items-center gap-1.5 px-3.5 py-2.5 text-xs sm:text-sm`
+          }
         >
-          <CopyIcon className="h-4 w-4" />
-          {copied ? "คัดลอกแล้ว" : "Copy"}
+          {isHub ? (
+            <span className={COSMIC_BTN_CONFIRM_TEXT}>
+              {copied ? "คัดลอกแล้ว" : "Copy"}
+            </span>
+          ) : (
+            <>
+              <CopyIcon className="h-4 w-4" />
+              {copied ? "คัดลอกแล้ว" : "Copy"}
+            </>
+          )}
         </button>
       </div>
     </section>

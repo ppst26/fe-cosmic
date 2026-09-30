@@ -144,7 +144,7 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
         </Link>
         <Link
           href={playHref}
-          className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--lg lottery-slip-summary__continue grid min-h-11 place-items-center px-3 text-center no-underline`}
+          className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--lg lottery-slip-summary__continue px-3 text-center no-underline`}
         >
           แทงต่อ
         </Link>

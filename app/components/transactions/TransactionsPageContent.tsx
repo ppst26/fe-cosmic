@@ -35,6 +35,7 @@ export function TransactionsPageContent({
   activeKind,
   onSelectKind,
   isAuthenticated,
+  embedded = false,
 }: TransactionsPageContentProps) {
   const defaultRange = useMemo(() => getDefaultTransactionDateRange(), []);
 
@@ -82,9 +83,14 @@ export function TransactionsPageContent({
       maximumFractionDigits: 2,
     }).format(value);
 
+  const shellClass = cn(
+    "flex flex-col gap-4",
+    embedded && `${COSMIC_PANEL_GLASS} px-3.5 py-4 sm:px-4`,
+  );
+
   return (
     <div className="flex flex-col gap-4">
-      <section className={`${COSMIC_PANEL_GLASS} flex flex-col gap-4 px-3.5 py-4 sm:px-4`}>
+      <section className={shellClass}>
         <TransactionKindTabs
           tabs={TRANSACTION_KIND_TABS}
           activeKind={activeKind}

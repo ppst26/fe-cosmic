@@ -1,3 +1,19 @@
 /**
- * แท็บข้อมูลบัญชี — ใช้ cosmic-line-tabs (ProfileAccountTabs)
+ * ข้อมูลบัญชี — เนื้อหาใน hub modal บน desktop (layout เดียวกับ mobile-standalone-main)
  */
+
+@media (min-width: 1024px) {
+  .vip-modal--account .profile-account-hub-body {
+    width: 100%;
+    max-width: min(28rem, 100%);
+    margin-inline: auto;
+  }
+
+  .vip-modal--account .profile-account-tabs {
+    gap: 1rem;
+  }
+}
+
+.cosmic-modal-shell--hub .profile-account-hub-body .cosmic-line-tablist {
+  width: 100%;
+}

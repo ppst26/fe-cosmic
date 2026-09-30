@@ -253,25 +253,25 @@
     backdrop-filter: blur(20px) saturate(1.15);
   }
 
-.cosmic-modal-shell--hub .referral-desktop-hub .cosmic-segment-track {
-    width: 100%;
-  }
-
-/* ชวนเพื่อน — แท็บช่วงเวลาใหญ่ อ่านชัดใน hub sheet */
-.cosmic-modal-shell--hub .referral-desktop-hub__period-tabs,
-.cosmic-mobile-sheet .referral-desktop-hub__period-tabs {
-  padding: 6px;
+/* ชวนเพื่อน — line tabs ช่วงรายได้ */
+.cosmic-modal-shell--hub .referral-desktop-hub__period-tabs.cosmic-line-tablist,
+.cosmic-mobile-sheet .referral-desktop-hub__period-tabs.cosmic-line-tablist {
+  width: 100%;
 }
 
-.cosmic-modal-shell--hub .referral-desktop-hub__period-tabs .cosmic-segment-btn,
-.cosmic-mobile-sheet .referral-desktop-hub__period-tabs .cosmic-segment-btn {
-  color: var(--text-secondary);
+.cosmic-modal-shell--hub .referral-desktop-hub__period-tabs .cosmic-line-tab,
+.cosmic-mobile-sheet .referral-desktop-hub__period-tabs .cosmic-line-tab {
+  padding-inline: 0.35rem;
+  font-size: 0.8125rem;
   text-align: center;
+  white-space: normal;
+  line-height: 1.25;
 }
 
-.cosmic-modal-shell--hub .referral-desktop-hub__period-tabs .cosmic-segment-btn.is-active,
-.cosmic-mobile-sheet .referral-desktop-hub__period-tabs .cosmic-segment-btn.is-active {
-  color: var(--cta-white-fg);
+@media (min-width: 1024px) {
+  .cosmic-modal-shell--hub .referral-desktop-hub__period-tabs .cosmic-line-tab {
+    font-size: 0.875rem;
+  }
 }
 
 .cosmic-modal-shell--hub .referral-mobile .cosmic-segment-track {
@@ -324,25 +324,6 @@
 
 .cosmic-mobile-sheet .referral-promo-banner--flat .referral-promo-banner__glow {
   display: none;
-}
-
-/* แท็บช่วงรายได้ + ปุ่มรับโบนัส — glass / ธีม (ชนะ segment hub เข้ม) */
-.cosmic-mobile-sheet .referral-desktop-hub__period-tabs.cosmic-segment-track--glass-white {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  background: var(--glass-fill-subtle);
-  -webkit-backdrop-filter: blur(12px) saturate(1.12);
-  backdrop-filter: blur(12px) saturate(1.12);
-}
-
-.cosmic-mobile-sheet .referral-desktop-hub__period-tabs .cosmic-segment-btn.is-active {
-  background: var(--cta-white-bg);
-  color: var(--cta-white-fg);
-  box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
-}
-
-.cosmic-mobile-sheet .referral-desktop-hub__claim-btn.is-active {
-  border-color: rgb(155 124 240 / 0.42);
-  color: var(--text-primary);
 }
 
 .cosmic-mobile-sheet .referral-desktop-hub--flat .referral-earning-table {

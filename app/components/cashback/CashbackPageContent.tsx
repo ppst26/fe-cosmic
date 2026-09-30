@@ -124,9 +124,9 @@ export function CashbackPageContent({
         type="button"
         disabled={!panel.canClaim || panel.claimableThb <= 0}
         onClick={handleClaim}
-        className={`flex h-12 w-full items-center justify-center text-sm sm:text-base ${
+        className={`w-full text-sm sm:text-base ${
           panel.canClaim && panel.claimableThb > 0
-            ? "cosmic-action-btn"
+            ? "btn-primary"
             : "rounded-[var(--radius-panel)] bg-[color-mix(in_srgb,var(--icon-active)_28%,var(--surface-mid))] font-medium text-[color-mix(in_srgb,var(--icon-active)_75%,var(--text-muted))] disabled:cursor-not-allowed"
         } disabled:opacity-45`}
       >

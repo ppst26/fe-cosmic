@@ -13,10 +13,14 @@ import { useAuth } from "@/app/components/auth/AuthProvider";
 import { DesktopHubModal } from "./DesktopHubModal";
 import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
 import { HUB_REQUIRES_AUTH, isDesktopHubId } from "./hubModalRegistry";
+import { vipPageHref } from "@/lib/vipRoutes";
+import { getIsDesktopViewport } from "./useIsDesktop";
 import {
   OVERLAY_HUB_KEY,
   OVERLAY_LAYER_KEY,
+  OVERLAY_VIP_TAB_KEY,
   clearLayerParams,
+  parseVipModalTab,
   readOverlayLayer,
 } from "@/lib/overlayUrl";
 
@@ -54,10 +58,29 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
       setState(null);
       return;
     }
-    setState((prev) =>
-      prev?.id === hubId ? prev : { id: hubId, options: undefined },
-    );
-  }, [searchParams]);
+    /** ข้อมูลบัญชี / VIP — modal เฉพาะ desktop · มือถือใช้หน้า stand-alone */
+    if (typeof window !== "undefined" && !getIsDesktopViewport()) {
+      if (hubId === "account") {
+        setState(null);
+        router.replace("/profile/account", { scroll: false });
+        return;
+      }
+      if (hubId === "vip") {
+        setState(null);
+        const tab = parseVipModalTab(searchParams.get(OVERLAY_VIP_TAB_KEY)) ?? "my-level";
+        router.replace(vipPageHref(tab), { scroll: false });
+        return;
+      }
+    }
+    const vipTab = hubId === "vip" ? parseVipModalTab(searchParams.get(OVERLAY_VIP_TAB_KEY)) : null;
+    const options: OpenHubOptions | undefined =
+      vipTab && vipTab !== "my-level" ? { vipTab } : undefined;
+    setState((prev) => {
+      if (prev?.id === hubId && prev.options?.vipTab === options?.vipTab) return prev;
+      if (prev?.id === hubId && !options && !prev.options?.vipTab) return prev;
+      return options ? { id: hubId, options } : prev?.id === hubId ? prev : { id: hubId };
+    });
+  }, [searchParams, router]);
 
   const closeHub = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
@@ -72,9 +95,24 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
       if (HUB_REQUIRES_AUTH.has(id) && !isLoading && !isAuthenticated) {
         return;
       }
+      if (typeof window !== "undefined" && !getIsDesktopViewport()) {
+        if (id === "account") {
+          router.push("/profile/account");
+          return;
+        }
+        if (id === "vip") {
+          router.push(vipPageHref(options?.vipTab ?? "my-level"));
+          return;
+        }
+      }
       const params = new URLSearchParams(searchParams.toString());
       params.set(OVERLAY_LAYER_KEY, "hub");
       params.set(OVERLAY_HUB_KEY, id);
+      if (id === "vip" && options?.vipTab && options.vipTab !== "my-level") {
+        params.set(OVERLAY_VIP_TAB_KEY, options.vipTab);
+      } else {
+        params.delete(OVERLAY_VIP_TAB_KEY);
+      }
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       setState({ id, options });
     },

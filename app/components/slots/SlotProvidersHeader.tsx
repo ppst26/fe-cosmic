@@ -10,6 +10,8 @@ export interface PageSubHeaderProps {
   /** คำอธิบายใต้ชื่อหน้า — จัดกึ่งกลาง (หน้า standalone) */
   subtitle?: string;
   backHref?: string;
+  /** modal hub — ปิดแทน history.back */
+  onBackClick?: () => void;
   className?: string;
 }
 
@@ -23,11 +25,17 @@ export function StandaloneSubHeader({
   title = "สล็อต",
   subtitle,
   backHref = "/",
+  onBackClick,
   className = "",
 }: PageSubHeaderProps) {
   const router = useRouter();
 
   const handleBack = (e: React.MouseEvent) => {
+    if (onBackClick) {
+      e.preventDefault();
+      onBackClick();
+      return;
+    }
     if (typeof window !== "undefined" && window.history.length > 1) {
       e.preventDefault();
       router.back();

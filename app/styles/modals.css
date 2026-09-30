@@ -367,6 +367,19 @@ button.cosmic-sheet-soft-glass--interactive:active {
   }
 }
 
+/** การ์ดเบอร์ + ธนาคารใน sheet โปรไฟล์ */
+.profile-hub-sheet__user-card {
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: var(--radius-panel);
+  background: var(--glass-fill-subtle);
+  padding: 0.875rem 1rem;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+.profile-hub-sheet__user-card .profile-hub-header--sheet {
+  padding: 0;
+}
+
 /** @deprecated popover มุมขวาบน — เก็บชื่อ class ถ้ามี reference เก่า */
 .profile-slideover-card {
   position: relative;
@@ -664,43 +677,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
 
 .cosmic-mobile-sheet .cosmic-choice-btn:hover:not(.is-active) {
   background: var(--sheet-soft-fill-hover);
-}/** ปุ่มยืนยัน/ส่งใน bottom sheet — ชั้น 3 (gradient ม่วงเข้ม) */ .cosmic-sheet-submit {
-  display: flex;
-  width: 100%;
-  min-height: 3rem;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border: 0;
-  border-radius: var(--radius-panel);
-  padding: 0.65rem 1.25rem;
-  line-height: 1.2;
-  color: var(--cta-primary-fg);
-  background: var(--cta-primary-gradient);
-  box-shadow: none;
-  cursor: pointer;
-  transition:
-    filter var(--motion-fast) ease,
-    transform var(--motion-fast) ease;
 }
 
-.cosmic-sheet-submit:hover:not(:disabled) {
-  filter: brightness(1.12);
-  box-shadow: none;
-}
-
-.cosmic-sheet-submit:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
-.cosmic-sheet-submit:disabled {
-  cursor: not-allowed;
-  opacity: 0.45;
-  filter: none;
-}
-
-.cosmic-sheet-submit:focus-visible {
-  outline: 2px solid rgb(255 255 255 / 0.45);
-  outline-offset: 2px;
-}
+/* .cosmic-sheet-submit — ดู .btn-confirm-glow ใน buttons.css */
 

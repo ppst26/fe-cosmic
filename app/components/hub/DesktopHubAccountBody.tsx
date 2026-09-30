@@ -5,6 +5,7 @@ import type { ProfileUser } from "@/app/types/auth";
 import { fetchProfile } from "@/lib/auth/client";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { ProfileSheetBody } from "@/app/components/profile/ProfileSheetBody";
+import { useDesktopHubModal } from "./DesktopHubModalProvider";
 import { useVipModal } from "@/app/components/vip/VipModalProvider";
 
 /**
@@ -12,6 +13,7 @@ import { useVipModal } from "@/app/components/vip/VipModalProvider";
  */
 export function DesktopHubAccountBody() {
   const { logout } = useAuth();
+  const { closeHub } = useDesktopHubModal();
   const { openVipModal } = useVipModal();
   const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
   const fetchGenRef = useRef(0);
@@ -39,11 +41,19 @@ export function DesktopHubAccountBody() {
     );
   }
 
+  const handleLogout = async () => {
+    await logout();
+    closeHub();
+  };
+
   return (
     <ProfileSheetBody
       profile={profile}
-      onLogout={() => void logout()}
-      onOpenVip={() => openVipModal()}
+      onLogout={() => void handleLogout()}
+      onOpenVip={() => {
+        closeHub();
+        openVipModal();
+      }}
     />
   );
 }

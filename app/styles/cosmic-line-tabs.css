@@ -1,8 +1,23 @@
 /**
- * Line tabs — underline active (หน้า standalone · hub sheet)
+ * Line tabs — neon underline แบบ mobile category nav (CosmicLineTabs)
  */
 .cosmic-line-tablist {
-  border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 90%, transparent);
+  position: relative;
+  border-bottom: 0;
+  padding-bottom: 0.125rem;
+}
+
+.cosmic-line-tablist::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  height: 2.5px;
+  border-radius: 999px;
+  background: var(--line-tab-track);
+  content: "";
+  pointer-events: none;
 }
 
 .cosmic-line-tablist--cols-2 {
@@ -24,7 +39,7 @@
   display: flex;
   gap: 0;
   overflow-x: auto;
-  padding-bottom: 0;
+  padding-bottom: 0.125rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -35,6 +50,7 @@
 
 .cosmic-line-tab {
   position: relative;
+  z-index: 1;
   margin: 0;
   padding: 0.125rem 0.25rem 0.875rem;
   border: 0;
@@ -45,7 +61,9 @@
   line-height: 1.35;
   color: var(--text-muted);
   cursor: pointer;
-  transition: color var(--motion-fast) ease;
+  transition:
+    color var(--motion-fast) ease,
+    text-shadow var(--motion-fast) ease;
 }
 
 .cosmic-line-tablist--scroll .cosmic-line-tab {
@@ -80,17 +98,19 @@
 }
 
 .cosmic-line-tab.is-active {
-  color: var(--accent-highlight);
+  color: var(--text-primary);
+  text-shadow: 0 0 18px rgb(112 71 235 / 0.35);
 }
 
 .cosmic-line-tab.is-active::after {
   position: absolute;
   right: 0;
-  bottom: -1px;
+  bottom: 0;
   left: 0;
-  height: 3px;
+  z-index: 2;
+  height: 2.5px;
   border-radius: 999px;
-  background: var(--accent-highlight);
-  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-highlight) 38%, transparent);
+  background: var(--line-tab-neon-gradient);
+  box-shadow: var(--line-tab-neon-glow);
   content: "";
 }

@@ -520,7 +520,7 @@
 }
 
 /*
- * ปุ่ม CTA / quick amount / segment — สีทึบ + มุม --radius-panel เดียวกัน
+ * ปุ่ม CTA บนแบนเนอร์ / quick — ไม่ใช่ main sheet CTA (ดู .btn-primary)
  */
 .cosmic-action-btn {
   border-radius: var(--radius-panel);

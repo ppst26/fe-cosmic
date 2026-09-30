@@ -48,5 +48,8 @@ export function clearLayerParams(params: URLSearchParams, layer: OverlayLayer): 
   if (params.get(OVERLAY_LAYER_KEY) !== layer) return;
   params.delete(OVERLAY_LAYER_KEY);
   if (layer === "vip") params.delete(OVERLAY_VIP_TAB_KEY);
-  if (layer === "hub") params.delete(OVERLAY_HUB_KEY);
+  if (layer === "hub") {
+    params.delete(OVERLAY_HUB_KEY);
+    params.delete(OVERLAY_VIP_TAB_KEY);
+  }
 }

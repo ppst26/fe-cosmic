@@ -10,7 +10,11 @@ import {
   REFERRAL_EARNING_PERIOD_OPTIONS,
   filterReferralEarningHistoryByPeriod,
 } from "@/app/data/referralMockData";
-import { COSMIC_BTN_GLASS_PILL, COSMIC_SEGMENT_GLASS_WHITE } from "../ui/cosmicButtonClasses";
+import {
+  COSMIC_BTN_CONFIRM_TEXT,
+  COSMIC_SHEET_SUBMIT,
+} from "../ui/cosmicButtonClasses";
+import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { ReferralEarningPanel } from "./ReferralEarningPanel";
 import {
   ReferralLinkSection,
@@ -86,11 +90,9 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
             type="button"
             disabled={claimable <= 0}
             onClick={handleClaim}
-            className={`${COSMIC_BTN_GLASS_PILL} referral-desktop-hub__claim-btn !min-h-12 w-full !text-base font-medium ${
-              claimable > 0 ? "is-active" : ""
-            }`}
+            className={COSMIC_SHEET_SUBMIT}
           >
-            รับโบนัส
+            <span className={COSMIC_BTN_CONFIRM_TEXT}>รับโบนัส</span>
           </button>
           <p className="text-sm text-[var(--text-secondary)]">
             รับสะสมแล้ว {formatReferralCurrency(received)}
@@ -99,27 +101,17 @@ export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutPr
       </div>
 
       <div className="flex min-h-0 min-w-0 flex-col gap-3">
-        <div
-          role="tablist"
-          aria-label="ช่วงเวลารายได้"
-          className={`${COSMIC_SEGMENT_GLASS_WHITE} referral-desktop-hub__period-tabs grid grid-cols-2 gap-2 lg:grid-cols-4`}
-        >
-          {REFERRAL_EARNING_PERIOD_OPTIONS.map((option) => {
-            const active = period === option.id;
-            return (
-              <button
-                key={option.id}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                onClick={() => setPeriod(option.id)}
-                className={`cosmic-segment-btn min-h-11 px-2 py-2.5 text-sm font-medium leading-snug ${active ? "is-active" : ""}`}
-              >
-                {option.label}
-              </button>
-            );
-          })}
-        </div>
+        <CosmicLineTabs
+          className="referral-desktop-hub__period-tabs"
+          tabs={REFERRAL_EARNING_PERIOD_OPTIONS.map((option) => ({
+            id: option.id,
+            label: option.label,
+          }))}
+          activeId={period}
+          onSelect={setPeriod}
+          ariaLabel="ช่วงเวลารายได้"
+          columns={4}
+        />
 
         <section className="referral-hub-block py-4" aria-label="สรุปรายได้ช่วงที่เลือก">
           <p className="text-sm text-[var(--text-secondary)]">รายได้จากเครือข่าย (ช่วงที่เลือก)</p>

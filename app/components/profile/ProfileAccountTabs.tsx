@@ -8,7 +8,7 @@ import { ProfileBankAccountCard } from "./ProfileBankAccountCard";
 import { ProfileReferralInviteCard } from "./ProfileReferralInviteCard";
 import { ProfileMenuRow } from "./ProfileMenuCard";
 import { LogOutIcon, SupportHeadsetIcon } from "../ui/Icons";
-import { COSMIC_BTN_LOGOUT, COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_LOGOUT } from "../ui/cosmicButtonClasses";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { cn } from "@/lib/utils";
 
@@ -51,15 +51,19 @@ export function ProfileAccountTabs({
   };
 
   return (
-    <div className={cn("flex flex-col", compact ? "gap-3" : "gap-4 pb-2")}>
-      <section className={`${COSMIC_PANEL_GLASS} flex flex-col gap-3 px-3.5 py-4 sm:px-4`}>
+    <div
+      className={cn(
+        "profile-account-tabs flex w-full flex-col",
+        compact ? "gap-3" : "gap-4 pb-2",
+      )}
+    >
+      <div className="flex flex-col gap-3">
         <CosmicLineTabs
           tabs={PROFILE_ACCOUNT_TABS}
           activeId={activeTab}
           onSelect={setActiveTab}
           ariaLabel="ข้อมูลบัญชี"
           columns={2}
-          className="-mx-0.5"
         />
 
         {copiedField ? (
@@ -90,15 +94,15 @@ export function ProfileAccountTabs({
             )}
           </div>
         ) : (
-          <div role="tabpanel">
+          <div role="tabpanel" className="flex flex-col gap-2">
             <ProfileBankAccountCard profile={profile} embedded />
           </div>
         )}
-      </section>
+      </div>
 
-      <ProfileReferralInviteCard />
+      {activeTab === "personal" ? <ProfileReferralInviteCard flat /> : null}
 
-      <section className={`${COSMIC_PANEL_GLASS} px-4 py-1`}>
+      <section className="border-t border-[var(--border-subtle)]/45 pt-1">
         <ProfileMenuRow
           icon={<SupportHeadsetIcon className="h-5 w-5" />}
           title="ติดต่อฝ่ายบริการ"

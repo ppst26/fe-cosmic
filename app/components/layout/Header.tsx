@@ -250,11 +250,10 @@ export function Header({
                   </span>
                 </div>
 
-                {/* `!` จำเป็น — .cosmic-cta-primary--sm อยู่นอก @layer จึงชนะ utility ปกติ */}
                 <button
                   type="button"
                   onClick={openDeposit}
-                  className="cosmic-cta-primary cosmic-cta-primary--sm min-h-(--header-control-height)! rounded-(--header-chip-radius)! px-3! py-0! text-sm font-medium tracking-[0.04em]!"
+                  className="btn-primary btn-primary--sm !h-(--header-control-height) !min-h-(--header-control-height) !w-auto !px-3 !py-0 text-sm tracking-[0.04em]"
                   aria-label="ฝากเงิน"
                   aria-haspopup="dialog"
                 >

@@ -11,6 +11,12 @@ import {
   type DailyCheckInDayReward,
 } from "@/app/data/dailyCheckInMockData";
 import { cn } from "@/lib/utils";
+import {
+  COSMIC_BTN_CONFIRM_TEXT,
+  COSMIC_SHEET_SUBMIT,
+} from "@/app/components/ui/cosmicButtonClasses";
+import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
+import { MODAL_TITLE_LEADING_ICON_CLASS } from "@/app/components/ui/ModalTitleLeadingIcon";
 
 interface DailyCheckInCardProps {
   onClose?: () => void;
@@ -92,28 +98,14 @@ export function DailyCheckInCard({
         <div className="min-w-0 flex-1 pt-0.5">
           {/* Icon & Title */}
           <div className="flex items-center gap-2 sm:gap-2.5">
-            <div
+            <Menu3DIcon
+              iconId="check-in"
+              size={isHubSurface ? 48 : 40}
               className={cn(
-                "flex shrink-0 items-center justify-center rounded-xl border border-[#7747e5]/35 bg-[#7747e5]/15 text-[#7747e5] shadow-[0_0_14px_rgba(119,71,229,0.25)]",
-                isHubSurface ? "h-11 w-11 sm:h-12 sm:w-12" : "h-9 w-9 sm:h-10 sm:w-10",
+                MODAL_TITLE_LEADING_ICON_CLASS,
+                isHubSurface ? "!h-11 !w-11 sm:!h-12 sm:!w-12" : "!h-9 !w-9 sm:!h-10 sm:!w-10",
               )}
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5 sm:h-5.5 sm:w-5.5"
-              >
-                <rect x="3" y="4" width="18" height="18" rx="3" ry="3" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-                <path d="m9 16 2 2 4-4" />
-              </svg>
-            </div>
+            />
             <h2
               className={cn(
                 "font-medium tracking-tight text-[var(--text-primary)]",
@@ -432,25 +424,15 @@ export function DailyCheckInCard({
         disabled={isTodayClaimed}
         onClick={() => todayReward && handleClaim(todayReward.day)}
         className={cn(
-          "relative flex w-full items-center justify-center gap-2 rounded-2xl font-medium transition-all duration-200",
-          isHubSurface ? "h-12 sm:h-14 text-lg sm:text-xl" : "h-11 sm:h-12.5 text-base sm:text-lg",
-          isTodayClaimed
-            ? "border border-white/8 bg-[var(--surface-elevated)] text-[var(--text-muted)] shadow-none cursor-default opacity-60 font-medium"
-            : "bg-gradient-to-r from-[#7747e5] via-[#8253ea] to-[#5b8cff] text-white shadow-[0_0_24px_rgba(119,71,229,0.45),inset_0_1px_0_rgba(255,255,255,0.3)] hover:brightness-110 active:scale-[0.99] cursor-pointer",
+          COSMIC_SHEET_SUBMIT,
+          isHubSurface ? "text-base sm:text-lg" : "text-sm sm:text-base",
+          isTodayClaimed &&
+            "!border-white/8 !bg-[var(--surface-elevated)] !text-[var(--text-muted)] !shadow-none",
         )}
       >
-        <span>{isTodayClaimed ? "เช็คอินแล้ววันนี้" : "กดรับรางวัลวันนี้"}</span>
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-4.5 w-4.5"
-        >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
+        <span className={COSMIC_BTN_CONFIRM_TEXT}>
+          {isTodayClaimed ? "เช็คอินแล้ววันนี้" : "กดรับรางวัลวันนี้"}
+        </span>
       </button>
     </div>
   );

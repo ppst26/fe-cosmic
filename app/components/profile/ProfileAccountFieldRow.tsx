@@ -36,7 +36,7 @@ export function ProfileAccountFieldRow({
       <span className="w-[5.5rem] shrink-0 text-xs text-[var(--text-secondary)] sm:w-24 sm:text-[13px]">
         {label}
       </span>
-      <span className="min-w-0 flex-1 truncate text-center text-sm font-medium text-[var(--text-primary)] tabular-nums">
+      <span className="min-w-0 flex-1 truncate text-end text-sm font-medium text-[var(--text-primary)] tabular-nums">
         {value}
       </span>
       <div className="flex w-9 shrink-0 justify-end">
@@ -92,7 +92,7 @@ export function ProfileAccountNavRow({
       <span className="w-[5.5rem] shrink-0 text-xs text-[var(--text-secondary)] sm:w-24 sm:text-[13px]">
         {label}
       </span>
-      <span className="min-w-0 flex-1 truncate text-center text-sm font-medium text-[var(--text-primary)]">
+      <span className="min-w-0 flex-1 truncate text-end text-sm font-medium text-[var(--text-primary)]">
         {value ?? ""}
       </span>
       <span className="flex w-9 shrink-0 justify-end text-[var(--icon-default)]">

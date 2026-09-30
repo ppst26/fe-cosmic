@@ -6,7 +6,7 @@ import type {
   PromoHubMobileCategoryFilterId,
   PromotionsCategoryTab,
 } from "@/app/types/promotions";
-import { COSMIC_BTN_GLASS_PILL } from "../ui/cosmicButtonClasses";
+import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 
 /**
  * แถบฟิลเตอร์หมวดโปรโมชั่น — ใช้ในหน้า /promotions และ PromotionsDesktopHubLayout
@@ -76,11 +76,25 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
   const isFlat = variant === "flat";
   const tabs = hubCategoryTabs;
 
+  if (isFlat) {
+    return (
+      <CosmicLineTabs
+        className={["promotions-desktop-hub__category-track promo-hub-category-tabs--flat", className]
+          .filter(Boolean)
+          .join(" ")}
+        tabs={tabs.map((tab) => ({ id: tab.id, label: tab.label }))}
+        activeId={activeId}
+        onSelect={onSelect}
+        ariaLabel="กรองโปรโมชั่นตามหมวด"
+        scrollable
+      />
+    );
+  }
+
   return (
     <div
       className={[
         "promo-hub-category-tabs flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
-        isFlat ? "promotions-desktop-hub__category-track promo-hub-category-tabs--flat flex-wrap gap-2 p-0" : "",
         className ?? "",
       ]
         .filter(Boolean)
@@ -97,18 +111,12 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
             role="tab"
             aria-selected={selected}
             onClick={() => onSelect(tab.id)}
-            className={
-              isFlat
-                ? `${COSMIC_BTN_GLASS_PILL} shrink-0 whitespace-nowrap !px-4 !py-2.5 !text-sm font-medium sm:!px-5 sm:!text-base ${
-                    selected ? "is-active" : ""
-                  }`
-                : [
-                    "glass-card--soft shrink-0 whitespace-nowrap rounded-[var(--radius-pill)] px-4 py-2 text-sm font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:px-5 sm:py-2.5",
-                    selected
-                      ? "is-active text-[var(--text-primary)]"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
-                  ].join(" ")
-            }
+            className={[
+              "glass-card--soft shrink-0 whitespace-nowrap rounded-[var(--radius-pill)] px-4 py-2 text-sm font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:px-5 sm:py-2.5",
+              selected
+                ? "is-active text-[var(--text-primary)]"
+                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
+            ].join(" ")}
           >
             {tab.label}
           </button>

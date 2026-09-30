@@ -25,6 +25,7 @@ import {
   COSMIC_SHEET_FIELD_ROW,
   COSMIC_SHEET_SOFT_GLASS,
   COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
+  COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_SHEET_SUBMIT,
 } from "../ui/cosmicButtonClasses";
 
@@ -371,10 +372,9 @@ function DepositBankStep({
           type="button"
           disabled={!canProceed}
           onClick={onNext}
-          className={`${COSMIC_SHEET_SUBMIT} w-full flex items-center justify-center gap-1.5`}
+          className={COSMIC_SHEET_SUBMIT}
         >
-          <span>ถัดไป</span>
-          <ChevronRightIcon className="h-4 w-4" />
+          <span className={COSMIC_BTN_CONFIRM_TEXT}>ถัดไป</span>
         </button>
       </div>
     </>
@@ -513,7 +513,9 @@ function DepositConfirmStep({
           onClick={onConfirm}
           className={COSMIC_SHEET_SUBMIT}
         >
-          {submitting ? "กำลังส่ง..." : "ยืนยันการฝากเงิน"}
+          <span className={COSMIC_BTN_CONFIRM_TEXT}>
+            {submitting ? "กำลังส่ง..." : "ยืนยันการฝากเงิน"}
+          </span>
         </button>
       </div>
     </>
