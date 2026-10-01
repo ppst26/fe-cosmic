@@ -1,5 +1,5 @@
 .nav {
-  --nav-bg: var(--cosmic-chrome-surface-bg);
+  --nav-bg: var(--bottom-nav-bg);
   --nav-accent: #e8eaef;
   --nav-muted: #9e9ea7;
   --nav-height: 68px;

@@ -78,6 +78,7 @@ export function Carousel({
   return (
     <section className={`w-full min-w-0 max-w-full ${className}`} aria-label={title}>
       <SectionHeader
+        className="lobby-section-header-band"
         icon={icon}
         title={title}
         actionContent={

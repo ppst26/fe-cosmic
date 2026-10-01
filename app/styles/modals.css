@@ -259,10 +259,26 @@ button.cosmic-sheet-soft-glass--interactive:active {
   border-radius: var(--radius-card);
 }
 
-/** การ์ดย่อยใน modal / sheet / drawer */
-.cosmic-inset-card {
+/** การ์ดย่อยใน modal / sheet / drawer / hub — พื้นเดียวกับแถว sheet */
+.cosmic-inner-card,
+.cosmic-inset-card,
+.profile-account-inner-card {
   border: 0;
   border-radius: var(--radius-panel);
+  background: var(--inner-card-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+button.cosmic-inner-card--interactive,
+button.profile-account-inner-card--interactive {
+  transition: background 160ms ease;
+}
+
+button.cosmic-inner-card--interactive:hover,
+button.cosmic-inner-card--interactive:focus-visible,
+button.profile-account-inner-card--interactive:hover,
+button.profile-account-inner-card--interactive:focus-visible {
+  background: var(--inner-card-fill-hover);
 }
 
 /** โปรไฟล์ย่อ — bottom sheet glass (ProfileSlideOverCard.tsx) */

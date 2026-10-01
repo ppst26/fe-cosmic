@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
-import { CloseIcon, CosmicbetLogo } from "../ui/Icons";
+import { CloseIcon, CosmicbetLogo, LogOutIcon } from "../ui/Icons";
+import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
 import { MenuItemIcon } from "./MenuItemIcon";
 import { MenuDrawerUserAvatar } from "./MenuDrawerUserAvatar";
 import { useVipModal } from "../vip/VipModalProvider";
@@ -39,6 +40,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const { openHub } = useDesktopHubModal();
   const { isAuthenticated, isLoading } = useAuth();
   const { open: openLogin } = useOverlayLayer("login");
+  const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(onClose);
 
   /** เมนูที่ต้องล็อกอิน — ปิดเมนูแล้วเปิด login sheet */
   const runWithAuth = (tile: MenuDialogTile, action: () => void) => {
@@ -221,9 +223,26 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
 
       <MenuDrawerUserAvatar />
 
-      <div className="menu-grid menu-grid--mobile-drawer mx-auto grid w-full max-w-[20.5rem] shrink-0 grid-cols-3 pb-2 sm:max-w-[22.5rem]">
+      <div className="menu-grid menu-grid--mobile-drawer mx-auto grid w-full max-w-[20.5rem] shrink-0 grid-cols-3 sm:max-w-[22.5rem]">
         {MENU_DIALOG_ALL_TILES.map((tile, index) => renderGridTile(tile, index))}
       </div>
+
+      {isAuthenticated ? (
+        <button
+          type="button"
+          className="menu-drawer-logout menu-enter-item mx-auto mt-1 flex shrink-0 items-center justify-center gap-2 px-2 py-3"
+          style={{ "--menu-enter-i": MENU_DIALOG_ALL_TILES.length } as React.CSSProperties}
+          onClick={() => {
+            onClose();
+            window.setTimeout(() => openLogoutConfirm(), 0);
+          }}
+        >
+          <LogOutIcon className="h-5 w-5 shrink-0 text-destructive" aria-hidden="true" />
+          <span className="menu-drawer-logout__label text-sm font-medium text-destructive">
+            ออกจากระบบ
+          </span>
+        </button>
+      ) : null}
     </div>
   );
 
@@ -252,10 +271,27 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           )}
         </section>
       ))}
+
+      {isAuthenticated ? (
+        <button
+          type="button"
+          className="menu-drawer-logout mt-2 flex w-full items-center justify-center gap-2 px-2 py-2.5"
+          onClick={() => {
+            onClose();
+            window.setTimeout(() => openLogoutConfirm(), 0);
+          }}
+        >
+          <LogOutIcon className="h-5 w-5 shrink-0 text-destructive" aria-hidden="true" />
+          <span className="menu-drawer-logout__label text-sm font-medium text-destructive">
+            ออกจากระบบ
+          </span>
+        </button>
+      ) : null}
     </div>
   );
 
   return (
+    <>
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
         <Dialog.Overlay className="menu-dialog-overlay" />
@@ -282,5 +318,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
+    <LogoutConfirmDialog />
+    </>
   );
 }

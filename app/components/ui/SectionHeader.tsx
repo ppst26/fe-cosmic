@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
   icon?: React.ReactNode;
@@ -20,7 +21,7 @@ export function SectionHeader({
   actionContent,
 }: SectionHeaderProps) {
   return (
-    <div className={`flex items-center justify-between gap-3 mb-3 ${className}`}>
+    <div className={cn("mb-3 flex items-center justify-between gap-3", className)}>
       <div className="flex items-center gap-2">
         {icon && <span className="inline-flex items-center shrink-0">{icon}</span>}
         <h2

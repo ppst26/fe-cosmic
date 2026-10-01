@@ -47,25 +47,17 @@
 .gems-store-redeem-card__inner.hub-modal-card {
   border: 0;
   border-radius: 14px;
-  background: linear-gradient(
-    180deg,
-    var(--hub-modal-base, #111016) 0%,
-    color-mix(in srgb, var(--hub-modal-base, #111016) 72%, var(--hub-modal-lift, #1f1e28)) 45%,
-    color-mix(in srgb, var(--hub-modal-lift, #1f1e28) 68%, var(--hub-modal-base, #111016)) 100%
-  );
-  box-shadow: none;
+  background: var(--inner-card-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
 .hub-modal-shell .gems-store-redeem-card__inner.hub-modal-card.is-active,
 .gems-store-redeem-card__inner.hub-modal-card.is-active {
   border: 0;
-  background: linear-gradient(
-    180deg,
-    var(--hub-modal-base, #111016) 0%,
-    color-mix(in srgb, var(--hub-modal-lift, #1f1e28) 55%, var(--hub-modal-base, #111016)) 40%,
-    color-mix(in srgb, var(--hub-modal-lift, #1f1e28) 82%, rgb(108 104 122) 18%) 100%
-  );
-  box-shadow: none;
+  background: color-mix(in srgb, var(--accent-primary) 12%, var(--inner-card-fill));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 0 0 1px color-mix(in srgb, var(--accent-primary) 28%, transparent);
 }
 
 .gems-store-redeem-card__title {

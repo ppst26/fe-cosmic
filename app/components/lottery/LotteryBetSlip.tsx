@@ -64,6 +64,14 @@ export function LotteryBetSlip({
         <h2 id={titleId} className="lottery-bet-slip__head-count">
           {entries.length} รายการ
         </h2>
+        <div className="lottery-slip-toolbar--head hidden lg:block">
+          <LotterySlipToolbar
+            visible={entries.length > 0}
+            canUndo={canUndo}
+            onUndo={() => onUndo?.()}
+            onClearAll={onClearAll}
+          />
+        </div>
       </div>
 
       <div className="lottery-bet-slip__body min-h-0 flex-1 overflow-y-auto overscroll-y-contain">
@@ -114,7 +122,7 @@ export function LotteryBetSlip({
       )}
       </div>
 
-      <div className="lottery-bet-slip__dock shrink-0 pt-1.5">
+      <div className="lottery-bet-slip__dock lottery-bet-slip__dock--mobile-only shrink-0 pt-1.5 lg:hidden">
         <LotterySlipToolbar
           visible={entries.length > 0}
           canUndo={canUndo}

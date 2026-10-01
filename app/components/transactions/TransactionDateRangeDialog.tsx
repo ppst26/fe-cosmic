@@ -96,7 +96,7 @@ export function TransactionDateRangeDialog({
 
           <div className="mb-3 flex gap-2">
             <select
-              className="min-w-0 flex-1 rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/60 bg-[var(--surface-solid-inner)] px-2 py-2 text-sm text-[var(--text-primary)]"
+              className="min-w-0 flex-1 rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/60 bg-[var(--inner-card-fill)] px-2 py-2 text-sm text-[var(--text-primary)]"
               value={viewMonth.getMonth()}
               onChange={(event) => {
                 const month = Number(event.target.value);
@@ -108,7 +108,7 @@ export function TransactionDateRangeDialog({
               ))}
             </select>
             <select
-              className="w-24 rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/60 bg-[var(--surface-solid-inner)] px-2 py-2 text-sm text-[var(--text-primary)]"
+              className="w-24 rounded-[var(--radius-panel)] border border-[var(--border-subtle)]/60 bg-[var(--inner-card-fill)] px-2 py-2 text-sm text-[var(--text-primary)]"
               value={viewMonth.getFullYear()}
               onChange={(event) => {
                 const year = Number(event.target.value);

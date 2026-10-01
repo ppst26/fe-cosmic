@@ -54,7 +54,7 @@ export function LobbyDesktopPageShell({
       <div
         className={`lobby-desktop-shell text-[var(--text-primary)] lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-center${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
       >
-        <div className="lobby-desktop-shell__header-band lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:pt-[env(safe-area-inset-top,0px)]">
+        <div className="lobby-desktop-shell__header-band cosmic-mobile-chrome-surface lobby-mobile-header-band sticky top-0 z-50 w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:pt-[env(safe-area-inset-top,0px)]">
           <Header
             onSignUpClick={openSignUp}
             onLoginClick={openLogin}

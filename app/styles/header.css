@@ -38,6 +38,16 @@
   box-shadow: none;
 }
 
+/** Desktop lobby header — พื้นเข้มกว่ามือถือ (token --header-desktop-chrome-*) */
+@media (min-width: 1024px) {
+  .lobby-desktop-shell__header-band.cosmic-mobile-chrome-surface {
+    background-color: var(--header-desktop-chrome-bg);
+    background-image: var(--header-desktop-chrome-radial);
+    background-repeat: no-repeat;
+    background-size: 100% calc(var(--header-desktop-bar-height) + env(safe-area-inset-top, 0px));
+  }
+}
+
 /** ชิปในแถบมือถือ — glass-card--soft ไม่ซ้อนเงาบนพื้นกระจกของแถบ */
 .cosmic-nav.glass-mobile-nav .glass-card--soft {
   box-shadow: none;
