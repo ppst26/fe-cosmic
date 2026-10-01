@@ -19,10 +19,10 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
   const tier = getVipRankTier(activeRankId);
 
   return (
-    <section className="vip-maintain-rank-panel vip-maintain-rank-panel--flat w-full border-t border-[var(--border-subtle)]/45 pt-4">
+    <section className="vip-panel-card vip-maintain-rank-panel vip-maintain-rank-panel--flat vip-maintain-rank-panel--desktop-stretch">
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-[var(--text-primary)]">รักษาระดับ VIP</h3>
-        <span className="shrink-0 text-xs font-medium tabular-nums text-[var(--accent-highlight)]">
+        <span className="vip-maintain-rank-panel__days shrink-0 text-xs font-medium tabular-nums">
           {maintain.daysRemaining} วันคงเหลือ
         </span>
       </div>
@@ -30,14 +30,14 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
         ทำครบทั้งสองเงื่อนไขเพื่อรักษาระดับ {tier.label.charAt(0) + tier.label.slice(1).toLowerCase()}
       </p>
 
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        <MaintainMetricCard
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4">
+        <MaintainMetric
           label="ฝาก"
           iconKind="deposit"
           progress={maintain.depositProgress}
           target={maintain.depositTarget}
         />
-        <MaintainMetricCard
+        <MaintainMetric
           label="เทิร์น"
           iconKind="turnover"
           progress={maintain.turnoverProgress}
@@ -50,7 +50,7 @@ export function VipMaintainRankPanel({ activeRankId }: VipMaintainRankPanelProps
   );
 }
 
-function MaintainMetricCard({
+function MaintainMetric({
   label,
   iconKind,
   progress,
@@ -66,32 +66,30 @@ function MaintainMetricCard({
   const remaining = Math.max(0, target - progress);
 
   return (
-    <div className="vip-maintain-metric cosmic-inset-card p-2.5">
-      <div className="mb-1.5 flex items-center gap-1.5">
+    <div className="vip-maintain-metric min-w-0">
+      <div className="mb-2 flex items-center gap-1.5">
         {iconKind === "deposit" ? (
-          <WalletMiniIcon className="h-4 w-4 text-[var(--icon-default)]" />
+          <WalletMiniIcon className="h-4 w-4 shrink-0 text-[var(--icon-default)]" />
         ) : (
-          <TurnoverMiniIcon className="h-4 w-4 text-[var(--icon-default)]" />
+          <TurnoverMiniIcon className="h-4 w-4 shrink-0 text-[var(--icon-default)]" />
         )}
-        <span className="text-xs font-medium text-[var(--text-secondary)]">{label}</span>
+        <span className="text-sm font-medium text-[var(--text-secondary)]">{label}</span>
       </div>
       <p className="text-xs font-medium tabular-nums text-[var(--text-primary)] sm:text-sm">
         {formatVipAmount(progress)} / {formatVipAmount(target)}
       </p>
-      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--surface-hover)]">
+      <div className="vip-progress-track mt-2">
         <div
-          className={`h-full rounded-full transition-[width] duration-500 ${
-            complete ? "bg-[var(--success)]" : "bg-[var(--accent-highlight)]"
-          }`}
+          className={`vip-progress-fill vip-progress-fill--maintain ${complete ? "is-complete" : ""}`}
           style={{ width: `${pct}%` }}
         />
       </div>
       <p
-        className={`mt-1.5 text-xs font-medium ${
+        className={`mt-2 text-xs leading-snug ${
           complete ? "text-[var(--success)]" : "text-[var(--text-secondary)]"
         }`}
       >
-        {complete ? "✓ ครบแล้ว" : `ขาดอีก ${formatVipAmount(remaining)}`}
+        {complete ? "ครบแล้ว" : `ขาดอีก ${formatVipAmount(remaining)}`}
       </p>
     </div>
   );

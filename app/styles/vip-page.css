@@ -1,6 +1,153 @@
 /**
  * หน้า VIP standalone — เลย์เอาต์ (แท็บใช้ cosmic-line-tabs)
  */
+
+/** การ์ดครอบร่วม — เลื่อนระดับ · สิทธิประโยชน์ · รักษาระดับ */
+.vip-panel-card {
+  width: 100%;
+  border: 1px solid var(--vip-panel-border);
+  border-radius: var(--radius-panel);
+  background: var(--vip-panel-bg);
+  padding: 1rem;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/** chip / แถวย่อยในการ์ด */
+.vip-panel-card__inner {
+  border-radius: var(--radius-control);
+  background: var(--vip-panel-inner-bg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+/** เลื่อนระดับ — เส้น accent ด้านบน */
+.vip-panel-card--level-up {
+  position: relative;
+  overflow: hidden;
+}
+
+.vip-panel-card--level-up::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--line-tab-neon-gradient);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.vip-level-up-card__percent {
+  color: var(--vip-level-up-percent);
+  text-shadow: none;
+}
+
+.vip-level-up-card__label {
+  color: var(--vip-level-up-label);
+}
+
+.vip-level-up-card__icon {
+  color: var(--icon-default);
+}
+
+/** แถบ progress ในการ์ด VIP */
+.vip-progress-track {
+  overflow: hidden;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--vip-progress-track-bg);
+}
+
+@media (min-width: 640px) {
+  .vip-progress-track {
+    height: 0.625rem;
+  }
+}
+
+.vip-progress-track--locked {
+  background: color-mix(in srgb, var(--surface-hover) 50%, transparent);
+}
+
+.vip-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 500ms ease;
+}
+
+.vip-progress-fill--level-up {
+  background: var(--vip-level-up-bar);
+}
+
+.vip-progress-fill--level-up.is-complete {
+  background: var(--success);
+}
+
+.vip-progress-fill--maintain {
+  background: var(--vip-maintain-bar);
+}
+
+.vip-progress-fill--maintain.is-complete {
+  background: var(--success);
+}
+
+/** สิทธิประโยชน์ — การ์ดกลุ่มเดียว (หัวข้อ + กริด) */
+.vip-panel-card.vip-my-level-benefits__group {
+  padding: 0.75rem 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .vip-panel-card.vip-my-level-benefits__group {
+    padding: 0.875rem 1rem;
+  }
+}
+
+.vip-my-level-benefits__cell {
+  min-height: 2.75rem;
+  border-radius: var(--radius-control);
+  padding: 0.5rem 0.625rem;
+}
+
+.vip-my-level-benefits__cell--a {
+  background: var(--vip-benefit-cell-a);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.vip-my-level-benefits__cell--b {
+  background: var(--vip-benefit-cell-b);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+.vip-my-level-benefits__value {
+  color: var(--vip-benefit-value);
+  text-shadow: none;
+}
+
+.vip-my-level-benefits__value--muted {
+  color: var(--vip-benefit-value-muted);
+}
+
+.vip-my-level-benefits__value--success {
+  color: var(--vip-benefit-value-success);
+  text-shadow: none;
+}
+
+/** VIP — แท็บ/ตัวเลข accent ไม่ glow */
+.vip-modal .cosmic-line-tab.is-active {
+  text-shadow: none;
+}
+
+.vip-modal .cosmic-line-tab.is-active::after {
+  box-shadow: none;
+}
+
+.vip-modal .vip-maintain-rank-panel .vip-maintain-rank-panel__days {
+  color: var(--text-secondary);
+  text-shadow: none;
+}
+
 /* เลย์เอาต์ desktop บนหน้า — ไม่จำกัดความสูงแบบ sheet */
 @media (min-width: 1024px) {
   .vip-page .vip-modal-desktop {
@@ -9,5 +156,60 @@
 
   .vip-page .vip-modal__body {
     overflow: visible;
+  }
+}
+
+/** VIP hub modal desktop — การ์ดเต็มคอลัมน์ split */
+@media (min-width: 1024px) {
+  .cosmic-mobile-sheet.vip-modal .cosmic-modal-shell--hub {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-modal__body {
+    overflow: hidden;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-modal-desktop--flat .vip-modal-desktop__split {
+    height: 100%;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-modal-desktop__panel--fill {
+    min-height: 0;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-panel-card--desktop-fill {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-modal-desktop__level-progress {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-modal-desktop__level-progress .vip-panel-card--desktop-fill {
+    justify-content: flex-start;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-modal-desktop__missions .vip-my-level-benefits {
+    flex-shrink: 0;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-modal-desktop__missions .vip-maintain-rank-panel--desktop-stretch {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .cosmic-mobile-sheet.vip-modal .vip-modal-desktop__missions .vip-maintain-rank-panel--desktop-stretch > p:last-child {
+    margin-top: auto;
   }
 }

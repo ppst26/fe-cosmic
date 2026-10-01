@@ -57,11 +57,7 @@ function VipPageInner() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader
-        title="VIP"
-        subtitle="ระดับ แร็งค์ และสิทธิประโยชน์"
-        backHref="/"
-      />
+      <SlotProvidersHeader title="VIP" backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <VipPageContent activeTab={activeTab} onSelectTab={handleSelectTab} />

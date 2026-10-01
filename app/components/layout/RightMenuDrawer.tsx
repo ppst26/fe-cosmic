@@ -82,13 +82,13 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     }
   };
 
-  const renderGridTile = (tile: MenuDialogTile) => {
+  const renderGridTile = (tile: MenuDialogTile, index: number) => {
     const content = (
       <div className="flex flex-col items-center justify-center gap-2 w-full min-w-0 px-1 text-center">
         <MenuItemIcon
           iconId={tile.iconId}
           variant="asset"
-          className="menu-grid-icon h-10 w-10 object-contain shrink-0 drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] transition-transform duration-150 group-hover:scale-110 sm:h-11 sm:w-11 lg:h-9 lg:w-9"
+          className="menu-grid-icon h-10 w-10 object-contain shrink-0 sm:h-11 sm:w-11 lg:h-9 lg:w-9"
         />
         <span className="menu-grid-label w-full text-[11px] font-medium leading-[1.25] text-white sm:text-xs lg:text-[11.5px]">
           {tile.label}
@@ -97,7 +97,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
 
     const tileClass =
-      "menu-grid-tile group flex flex-col items-center justify-center py-2.5 px-1 min-h-[5.25rem] sm:min-h-[5.5rem] lg:min-h-[72px] active:scale-95 transition-all duration-150 cursor-pointer select-none outline-none";
+      "menu-grid-tile menu-enter-item group flex flex-col items-center justify-center py-2.5 px-1 min-h-[5.25rem] sm:min-h-[5.5rem] lg:min-h-[72px] cursor-pointer select-none outline-none";
+    const enterStyle = { "--menu-enter-i": index } as React.CSSProperties;
 
     if (tile.action) {
       return (
@@ -105,6 +106,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           key={tile.id}
           type="button"
           className={tileClass}
+          style={enterStyle}
           onClick={() => runWithAuth(tile, () => runAction(tile.action!))}
         >
           {content}
@@ -118,6 +120,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         key={tile.id}
         href={href}
         className={tileClass}
+        style={enterStyle}
         onClick={(event) => {
           if (href.startsWith("/")) {
             event.preventDefault();
@@ -132,21 +135,21 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
   };
 
-  const renderRow = (tile: MenuDialogTile) => {
+  const renderRow = (tile: MenuDialogTile, index: number) => {
     const content = (
       <>
         <div className="flex items-center gap-3.5 min-w-0">
           <MenuItemIcon
             iconId={tile.iconId}
             variant="asset"
-            className="menu-list-icon h-9 w-9 lg:h-7 lg:w-7 object-contain shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] transition-transform duration-150 group-hover:scale-105"
+            className="menu-list-icon h-9 w-9 lg:h-7 lg:w-7 object-contain shrink-0"
           />
           <span className="menu-list-label text-[15px] lg:text-[13.5px] font-medium text-white truncate leading-none">
             {tile.label}
           </span>
         </div>
         <span
-          className="menu-list-chevron flex h-6 w-6 lg:h-5 lg:w-5 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/70 group-hover:bg-white/[0.14] group-hover:text-white transition-colors"
+          className="menu-list-chevron flex h-6 w-6 lg:h-5 lg:w-5 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/70"
           aria-hidden="true"
         >
           <svg
@@ -165,7 +168,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
 
     const rowClass =
-      "menu-list-row group flex w-full items-center justify-between px-4 py-3.5 lg:px-3.5 lg:py-2.5 text-left transition-colors duration-150 hover:bg-white/[0.04] active:bg-white/[0.08] cursor-pointer select-none outline-none";
+      "menu-list-row menu-enter-item group flex w-full items-center justify-between px-4 py-3.5 lg:px-3.5 lg:py-2.5 text-left cursor-pointer select-none outline-none";
+    const enterStyle = { "--menu-enter-i": index } as React.CSSProperties;
 
     if (tile.action) {
       return (
@@ -173,6 +177,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           key={tile.id}
           type="button"
           className={rowClass}
+          style={enterStyle}
           onClick={() => runWithAuth(tile, () => runAction(tile.action!))}
         >
           {content}
@@ -186,6 +191,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         key={tile.id}
         href={href}
         className={rowClass}
+        style={enterStyle}
         onClick={(event) => {
           if (href.startsWith("/")) {
             event.preventDefault();
@@ -206,7 +212,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     >
       <Link
         href="/"
-        className="menu-drawer-header-logo inline-flex w-full shrink-0 justify-center py-1"
+        className="menu-drawer-header-logo menu-enter-logo inline-flex w-full shrink-0 justify-center py-1"
         aria-label="cosmicbet หน้าหลัก"
         onClick={() => onClose()}
       >
@@ -216,7 +222,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       <MenuDrawerUserAvatar />
 
       <div className="menu-grid menu-grid--mobile-drawer mx-auto grid w-full max-w-[20.5rem] shrink-0 grid-cols-3 pb-2 sm:max-w-[22.5rem]">
-        {MENU_DIALOG_ALL_TILES.map((tile) => renderGridTile(tile))}
+        {MENU_DIALOG_ALL_TILES.map((tile, index) => renderGridTile(tile, index))}
       </div>
     </div>
   );
@@ -237,11 +243,11 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           </h3>
           {section.layout === "vertical" ? (
             <div className="menu-card-group rounded-xl bg-[#0f0c22] shadow-[0_4px_16px_rgba(0,0,0,0.4)] overflow-hidden divide-y divide-white/[0.04] flex flex-col">
-              {section.items.map((tile) => renderRow(tile))}
+              {section.items.map((tile, index) => renderRow(tile, index))}
             </div>
           ) : (
             <div className="menu-grid grid grid-cols-4 gap-1.5 w-full">
-              {section.items.map((tile) => renderGridTile(tile))}
+              {section.items.map((tile, index) => renderGridTile(tile, index))}
             </div>
           )}
         </section>

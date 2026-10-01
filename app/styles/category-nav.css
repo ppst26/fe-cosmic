@@ -175,10 +175,10 @@
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  gap: 9px;
-  height: 44px;
-  padding-inline: 14px;
-  border-radius: 12px;
+  gap: 8px;
+  height: 40px;
+  padding-inline: 10px;
+  border-radius: 10px;
   border: 0;
   background: transparent;
   color: #bab5d6;
@@ -198,9 +198,10 @@
 }
 
 .category-nav--mobile .category-nav__pill:active {
-  transform: scale(0.96);
+  opacity: 0.92;
 }
 
+/* active = สี/พื้นเท่านั้น — ขนาดเดียวกับ inactive เพื่อไม่ให้แถบกระตุกตอนกด */
 .category-nav--mobile .category-nav__pill.is-active {
   background: var(--surface-hover);
   color: var(--nav-active);
@@ -212,10 +213,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   color: inherit;
   flex-shrink: 0;
+}
+
+.category-nav--mobile .category-nav__pill .category-nav__icon img {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .category-nav--mobile .category-nav__progress-track {

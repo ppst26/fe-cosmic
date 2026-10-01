@@ -7,6 +7,7 @@
 /* ── Cosmic Design System ── */
 @import "./styles/tokens.css";
 @import "./styles/base.css";
+@import "./styles/motion.css";
 @import "./styles/scrollbars.css";
 
 /* ── Shared primitives ── */
@@ -32,6 +33,7 @@
 @import "./styles/transactions.css";
 @import "./styles/vip-page.css";
 @import "./styles/hub-modals.css";
+@import "./styles/gems-store.css";
 @import "./styles/providers-filter.css";
 
 /* ── Feature sections ── */

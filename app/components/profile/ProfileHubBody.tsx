@@ -18,6 +18,8 @@ import {
   UsersGroupIcon,
   LogOutIcon,
 } from "../ui/Icons";
+import { COSMIC_BTN_LOGOUT } from "../ui/cosmicButtonClasses";
+import { cn } from "@/lib/utils";
 
 interface ProfileHubBodyProps {
   profile: ProfileUser;
@@ -134,7 +136,7 @@ export function ProfileHubBody({
       <button
         type="button"
         onClick={onLogout}
-        className="profile-hub-logout mt-3 flex w-full items-center gap-3.5 rounded-[var(--radius-control)] px-1.5 py-3 text-left text-[0.9375rem] font-medium transition-colors"
+        className={cn(COSMIC_BTN_LOGOUT, "profile-hub-logout mt-3")}
       >
         <LogOutIcon className="h-5 w-5 shrink-0" />
         ออกจากระบบ

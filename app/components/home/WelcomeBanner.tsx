@@ -7,7 +7,6 @@ import { fetchHomeBanners } from "@/lib/api/lobby";
 
 interface WelcomeBannerProps {
   items?: WelcomeBannerSlide[];
-  onCtaClick?: () => void;
 }
 
 /**
@@ -16,7 +15,6 @@ interface WelcomeBannerProps {
  */
 export function WelcomeBanner({
   items = fetchHomeBanners().welcomeSlides,
-  onCtaClick,
 }: WelcomeBannerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -75,46 +73,27 @@ export function WelcomeBanner({
             <article
               key={slide.id}
               className="welcome-banner__slide lobby-carousel-bleed__slide relative flex aspect-[16/10] w-full shrink-0 snap-start items-center justify-center overflow-hidden rounded-none max-lg:rounded-none lg:rounded-[var(--radius-panel)]"
-              aria-label={`${slide.title} — ${slide.subtitle}`}
+              aria-label={slide.title}
             >
               <Image
                 src={slide.bannerSrc}
                 alt=""
                 fill
-                priority={index === 0}
+                preload={index === 0}
                 sizes="(max-width: 1200px) 100vw, 1200px"
                 className="object-cover object-center"
               />
               <div
-                className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#090b18]/20 via-transparent to-[#090b18]/55"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#090b18]/45 to-transparent"
                 aria-hidden="true"
               />
-
-              <div className="relative z-10 flex w-full max-w-sm flex-col items-center justify-center px-4 pb-8 text-center sm:pb-9">
-                <h2 className="mb-1 text-xl font-medium tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-2xl">
-                  {slide.title}
-                </h2>
-                <p className="mb-3 text-xs font-medium text-[var(--text-secondary)] drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)] sm:mb-4 sm:text-sm">
-                  {slide.subtitle}
-                </p>
-
-                {slide.ctaText ? (
-                  <button
-                    type="button"
-                    onClick={onCtaClick}
-                    className="cosmic-action-btn cursor-pointer px-9 py-2 text-sm tracking-wide sm:px-11 sm:py-2.5 sm:text-base"
-                  >
-                    {slide.ctaText}
-                  </button>
-                ) : null}
-              </div>
             </article>
           ))}
         </div>
 
         {items.length > 1 ? (
           <div
-            className="welcome-banner__dots pointer-events-none absolute inset-x-0 bottom-3.5 z-20 flex justify-center sm:bottom-4"
+            className="welcome-banner__dots pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center sm:bottom-2.5"
             role="tablist"
             aria-label="เลือกสไลด์แบนเนอร์"
           >

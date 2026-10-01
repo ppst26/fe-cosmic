@@ -40,7 +40,7 @@ export function MenuDrawerPromoBanner({ className, onPromoNavigate }: MenuDrawer
           fill
           sizes="(max-width: 1023px) 100vw, 360px"
           className="object-cover"
-          priority
+          loading="eager"
         />
       </Link>
 

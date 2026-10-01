@@ -87,7 +87,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
                   fill
                   sizes="(max-width: 640px) 85vw, 420px"
                   className="object-cover object-center"
-                  priority={item.id === "promo-loyalty-v2"}
+                  preload={item.id === "promo-loyalty-v2"}
                 />
                 {/* ไล่ทับซ้ายให้อ่าน title/subtitle ชัด */}
                 <div

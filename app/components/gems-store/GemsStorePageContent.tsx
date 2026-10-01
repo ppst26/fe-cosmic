@@ -9,6 +9,7 @@ import {
 } from "@/app/data/gemsStoreMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
+import { GemsRedeemConfirmDialog } from "./GemsRedeemConfirmDialog";
 import { ChevronDownIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_CONFIRM_COMPACT,
@@ -31,10 +32,23 @@ export function GemsStorePageContent({
   const gemsStore = fetchGemsStore();
   const [gemsBalance, setGemsBalance] = useState(initialBalance ?? gemsStore.balance);
   const [termsOpen, setTermsOpen] = useState(false);
+  const [confirmPkg, setConfirmPkg] = useState<GemsStorePackage | null>(null);
+  const [redeemLoading, setRedeemLoading] = useState(false);
 
-  const handleRedeem = (pkg: GemsStorePackage) => {
+  const openRedeemConfirm = (pkg: GemsStorePackage) => {
     if (gemsBalance < pkg.gemsCost) return;
-    setGemsBalance((prev) => prev - pkg.gemsCost);
+    setConfirmPkg(pkg);
+  };
+
+  const handleConfirmRedeem = async () => {
+    if (!confirmPkg || gemsBalance < confirmPkg.gemsCost) return;
+    setRedeemLoading(true);
+    try {
+      setGemsBalance((prev) => prev - confirmPkg.gemsCost);
+      setConfirmPkg(null);
+    } finally {
+      setRedeemLoading(false);
+    }
   };
 
   const flatHub = embedded;
@@ -63,7 +77,7 @@ export function GemsStorePageContent({
                 pkg={pkg}
                 affordable={affordable}
                 flat={flatHub}
-                onRedeem={() => handleRedeem(pkg)}
+                onRedeem={() => openRedeemConfirm(pkg)}
               />
             );
           })}
@@ -106,6 +120,17 @@ export function GemsStorePageContent({
           </ul>
         )}
       </section>
+
+      <GemsRedeemConfirmDialog
+        open={confirmPkg != null}
+        onOpenChange={(next) => {
+          if (!next && !redeemLoading) setConfirmPkg(null);
+        }}
+        pkg={confirmPkg}
+        gemsBalance={gemsBalance}
+        loading={redeemLoading}
+        onConfirm={handleConfirmRedeem}
+      />
     </div>
   );
 }
@@ -123,18 +148,26 @@ function GemsRedeemCard({
 }) {
   const redeemLabel = affordable ? "แลก" : "ไม่พอ";
   const redeemAria = affordable ? `แลกรางวัล ${formatGemsCredits(pkg.credits)}` : "Gems ไม่เพียงพอ";
+  const gemAsset = fetchGemsStore().gemAsset;
 
   return (
     <article
       className={cn(
-        "gems-store-redeem-card flex min-h-0 flex-col p-2 sm:p-2.5",
-        flat ? "gems-store-redeem-card--flat hub-modal-card" : COSMIC_PANEL_GLASS,
+        "gems-store-redeem-card flex min-h-0 flex-col gap-2 p-2 sm:p-2.5",
+        flat && "gems-store-redeem-card--flat",
         affordable && "is-active",
         !affordable && "opacity-85",
       )}
     >
-      <div className="flex flex-1 flex-col items-center text-center">
-        <div className="relative mb-1.5 h-11 w-full max-w-[4.5rem] sm:mb-2 sm:h-14 sm:max-w-[5.5rem]">
+      <div
+        className={cn(
+          "gems-store-redeem-card__inner flex min-h-0 flex-1 flex-col",
+          flat && "hub-modal-card",
+          affordable && flat && "is-active",
+        )}
+      >
+        <p className="gems-store-redeem-card__title">{formatGemsCredits(pkg.credits)}</p>
+        <div className="gems-store-redeem-card__art mt-1.5 sm:mt-2">
           <Image
             src={pkg.coinSrc}
             alt=""
@@ -143,14 +176,11 @@ function GemsRedeemCard({
             className="object-contain object-center"
           />
         </div>
-        <p className="w-full text-xs font-medium leading-tight text-[var(--text-primary)] sm:text-sm">
-          {formatGemsCredits(pkg.credits)}
-        </p>
-        <p className="cosmic-type-sheet-desc mt-1 flex items-center justify-center gap-1 font-medium">
-          <span className="relative h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5">
-            <Image src={fetchGemsStore().gemAsset} alt="" fill sizes="14px" className="object-contain" />
+        <p className="gems-store-redeem-card__cost cosmic-type-sheet-desc mt-1.5 flex items-center justify-center gap-1 font-medium sm:mt-2">
+          <span className="gems-store-redeem-card__cost-icon" aria-hidden="true">
+            <Image src={gemAsset} alt="" fill sizes="14px" className="object-contain" />
           </span>
-          <span className="tabular-nums truncate">{formatGemsBalance(pkg.gemsCost)}</span>
+          <span className="gems-store-redeem-card__cost-value tabular-nums">{formatGemsBalance(pkg.gemsCost)}</span>
         </p>
       </div>
       <button
@@ -160,8 +190,8 @@ function GemsRedeemCard({
         aria-label={redeemAria}
         className={
           affordable
-            ? `${COSMIC_BTN_CONFIRM_COMPACT} mt-2 sm:mt-2.5`
-            : `${COSMIC_BTN_GLASS_PILL_SM} mt-2 flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-xs text-[var(--text-secondary)] sm:mt-2.5`
+            ? COSMIC_BTN_CONFIRM_COMPACT
+            : `${COSMIC_BTN_GLASS_PILL_SM} flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-xs text-[var(--text-secondary)]`
         }
       >
         <span className={COSMIC_BTN_CONFIRM_TEXT}>

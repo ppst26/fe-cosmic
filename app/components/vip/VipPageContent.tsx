@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import type { VipModalTabId } from "@/app/types/vip";
 import { fetchVipPlayer, fetchVipRanks } from "@/lib/api/vip";
+import { cn } from "@/lib/utils";
 import { VipModalDesktopLayout } from "./VipModalDesktopLayout";
 import { VipMobileTabPanels } from "./VipMobileTabPanels";
 import { VipTabList } from "./VipTabList";
@@ -33,11 +34,11 @@ export function VipPageContent({
   const selectTab = embedded ? setEmbeddedTab : onSelectTab;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className={cn("flex min-h-0 flex-col gap-4", embedded && "lg:min-h-0 lg:flex-1")}>
       <VipTabList activeTab={tab} onSelect={selectTab} />
 
-      <div className="vip-page vip-modal vip-modal-typography min-h-0">
-        <div className="vip-modal__body hidden min-h-0 lg:flex lg:flex-col">
+      <div className="vip-page vip-modal vip-modal-typography flex min-h-0 flex-col lg:min-h-0 lg:flex-1">
+        <div className="vip-modal__body hidden min-h-0 flex-1 lg:flex lg:flex-col">
           <VipModalDesktopLayout
             tab={tab}
             player={player}

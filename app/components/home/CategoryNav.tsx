@@ -232,7 +232,7 @@ export function CategoryNav({
               data-active={isActive}
               onClick={(e) => handleCategoryClick(category, e)}
               className={cn(
-                "category-nav__pill flex h-11 flex-none flex-row items-center gap-2.5 px-3.5 rounded-xl text-[14px] font-medium transition-[color,background-color,box-shadow] duration-150 cursor-pointer select-none outline-none active:scale-[0.98]",
+                "category-nav__pill flex flex-none flex-row items-center text-[14px] font-medium transition-[color,background-color,box-shadow,opacity] duration-150 cursor-pointer select-none outline-none active:opacity-90",
                 isActive
                   ? "is-active"
                   : "bg-transparent text-[#bab5d6] hover:text-white hover:bg-white/5",
@@ -242,14 +242,15 @@ export function CategoryNav({
             >
               <span
                 className={cn(
-                  "category-nav__icon flex h-8 w-8 shrink-0 items-center justify-center",
+                  "category-nav__icon flex shrink-0 items-center justify-center",
                   isActive ? "opacity-100" : "opacity-90",
                 )}
                 aria-hidden="true"
               >
                 <Menu3DIcon
                   iconId={category.id}
-                  className="h-8 w-8 drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]"
+                  className="h-full w-full drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]"
+                  size={30}
                 />
               </span>
               <span className="category-nav__label whitespace-nowrap tracking-tight">{category.label}</span>

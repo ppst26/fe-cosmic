@@ -59,7 +59,6 @@ export const CATEGORIES_DATA: CategoryItem[] = [
   { id: "fishing", label: "ยิงปลา", href: "/fishing" },
   { id: "sports", label: "กีฬา", href: "/sport" },
   { id: "lottery", label: "หวย", href: "/lottery" },
-  { id: "games", label: "เกมส์", href: "#games" },
   { id: "cards", label: "เกมไพ่", href: "/cards" },
 ];
 

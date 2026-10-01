@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useUrlSearchParams } from "@/app/hooks/useUrlSearchParams";
 import {
   OVERLAY_LAYER_KEY,
   clearLayerParams,
@@ -15,7 +16,7 @@ import {
 export function useOverlayLayer(layer: OverlayLayer) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useUrlSearchParams();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

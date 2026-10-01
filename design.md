@@ -250,7 +250,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 
 **Accessibility:** hit area ≥ 44px บนมือถือ (ใช้ `min-height` / padding ของแต่ละ class); `focus-visible` ตาม globals.css
 
-**Mobile bottom sheet** (ฝาก / ถอน / คูปอง / login / signup): ปุ่มยืนยัน **`cosmic-sheet-submit`** — **ห้าม** `cosmic-action-btn` ม่วงทึบ · ข้อมูล / input / quick select ใช้ **soft glass** (`cosmic-sheet-soft-glass`, `cosmic-sheet-field`, `cosmic-choice-btn` ใน `.cosmic-mobile-sheet`) · ปิด/คัดลอก `glass-control` + `glass-icon-btn` · พื้น `.cosmic-mobile-sheet` · หัว `ResponsiveSheetHeader` — กลับซ้าย · ปิดขวา · constants ใน `cosmicButtonClasses.ts`
+**Mobile bottom sheet** (ฝาก / ถอน / คูปอง / login / signup): ปุ่มยืนยัน **`cosmic-sheet-submit`** — **ห้าม** `cosmic-action-btn` ม่วงทึบ · inner card / input / quick select ใช้ **พื้นทึบอ่อนกว่า shell** (`--sheet-row-fill`, `--sheet-field-fill` ผ่าน `cosmic-sheet-soft-glass`, `cosmic-sheet-field`, `cosmic-choice-btn` ใน `.cosmic-mobile-sheet` — ไม่ gradient/blur) · ปิด/คัดลอก `glass-control` + `glass-icon-btn` · พื้น `.cosmic-mobile-sheet` · หัว `ResponsiveSheetHeader` — กลับซ้าย · ปิดขวา · constants ใน `cosmicButtonClasses.ts`
 
 ### Searchbar
 - สูง **44–48px**; radius `--radius-pill`; พื้น `--surface-elevated`

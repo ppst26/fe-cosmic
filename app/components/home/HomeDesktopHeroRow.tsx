@@ -32,7 +32,7 @@ export function HomeDesktopHeroRow({ onCtaClick }: HomeDesktopHeroRowProps) {
           src={primary.bannerSrc}
           alt=""
           fill
-          priority
+          preload
           sizes="(min-width: 1280px) 50vw, 40vw"
           className="object-cover object-center"
         />

@@ -14,7 +14,7 @@ export function MenuDrawerUserAvatar() {
   const src = menuMockAvatarImageUrl(seed);
 
   return (
-    <div className="menu-drawer-avatar">
+    <div className="menu-drawer-avatar menu-enter-avatar">
       <div className="menu-drawer-avatar__ring">
         <img
           src={src}

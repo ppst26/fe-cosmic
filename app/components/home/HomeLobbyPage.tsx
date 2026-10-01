@@ -178,7 +178,7 @@ export function HomeLobbyPage() {
                   <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 pt-3 lg:mx-0 lg:max-w-none lg:px-0 lg:pt-0">
                     {/* มือถือ: hero → ประกาศ → โปร — ระยะแนบให้คอนเทนต์ต่อเนื่อง (หน้าแรก) */}
                     <div className="flex flex-col gap-2.5 lg:hidden">
-                      <WelcomeBanner onCtaClick={openSignUp} />
+                      <WelcomeBanner />
                       <div className="-mx-3">
                         <LobbyAnnouncementMarquee
                           messages={lobbyAnnouncements}
@@ -228,7 +228,7 @@ export function HomeLobbyPage() {
                         ref={categoryBarRef}
                         className={cn(
                           "lobby-mobile-category-sticky w-full min-w-0 px-3",
-                          isHomeLobby ? "py-1.5" : "py-2",
+                          "py-1.5",
                           isCategoryNavStuck && "is-stuck",
                         )}
                       >

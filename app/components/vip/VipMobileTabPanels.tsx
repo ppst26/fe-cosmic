@@ -2,13 +2,11 @@
 
 import React from "react";
 import type { VipModalTabId, VipPlayerState } from "@/app/types/vip";
-import { getVipRankTier } from "@/app/data/vipMockData";
 import { fetchVipRanks } from "@/lib/api/vip";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
-import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
+import { VipMyLevelPanel } from "./VipMyLevelPanel";
 import { VipRankCarousel } from "./VipRankCarousel";
-import { VipRankEmblem } from "./VipRankEmblem";
-import { VipRankRequirementsPanel } from "./VipRankRequirementsPanel";
+import { VipRankLevelUpCard } from "./VipRankLevelUpCard";
 
 interface VipMobileTabPanelsProps {
   tab: VipModalTabId;
@@ -26,39 +24,8 @@ export function VipMobileTabPanels({
   rankFocusIndex,
   onRankFocusChange,
 }: VipMobileTabPanelsProps) {
-  const currentTier = getVipRankTier(player.currentRankId);
-  const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
-
   if (tab === "my-level") {
-    return (
-      <div className="flex flex-col items-center gap-4">
-        <p className="text-sm font-medium text-[var(--text-secondary)]">ระดับปัจจุบัน</p>
-        <VipRankEmblem rankId={player.currentRankId} size="lg" />
-        <p
-          className="text-2xl font-medium tracking-[0.2em]"
-          style={{ color: currentTier.accent }}
-        >
-          {currentTier.label}
-        </p>
-        {nextTier && (
-          <p className="text-sm text-[var(--text-secondary)]">
-            ระดับถัดไป{" "}
-            <span className="font-medium text-[var(--text-primary)]">{nextTier.label}</span>
-          </p>
-        )}
-
-        <div className="w-full pt-2">
-          <VipRankRequirementsPanel
-            player={player}
-            focusRankId={player.currentRankId}
-            sectionTitle="ภารกิจเลื่อนระดับ"
-            sectionSubtitle="ทำภารกิจให้ครบตามเป้าหมาย"
-          />
-        </div>
-
-        <VipMaintainRankPanel activeRankId={player.currentRankId} />
-      </div>
-    );
+    return <VipMyLevelPanel player={player} />;
   }
 
   if (tab === "rank") {
@@ -70,12 +37,10 @@ export function VipMobileTabPanels({
           playerRankId={player.currentRankId}
         />
 
-        <div className="w-full border-t border-[var(--border-subtle)]/50 pt-4">
-          <VipRankRequirementsPanel
-            player={player}
-            focusRankId={fetchVipRanks().tiers[rankFocusIndex]?.id ?? player.currentRankId}
-          />
-        </div>
+        <VipRankLevelUpCard
+          player={player}
+          focusRankId={fetchVipRanks().tiers[rankFocusIndex]?.id ?? player.currentRankId}
+        />
       </div>
     );
   }

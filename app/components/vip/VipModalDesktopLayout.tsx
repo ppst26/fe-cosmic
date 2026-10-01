@@ -2,13 +2,14 @@
 
 import React from "react";
 import type { VipModalTabId, VipPlayerState, VipRankId } from "@/app/types/vip";
-import { getVipRankTier } from "@/app/data/vipMockData";
 import { fetchVipRanks } from "@/lib/api/vip";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
+import { getVipRankTier } from "@/app/data/vipMockData";
 import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
+import { VipMyLevelBenefitsCard } from "./VipMyLevelBenefitsCard";
 import { VipRankCarousel } from "./VipRankCarousel";
 import { VipRankEmblem } from "./VipRankEmblem";
-import { VipRankRequirementsPanel } from "./VipRankRequirementsPanel";
+import { VipRankLevelUpCard } from "./VipRankLevelUpCard";
 
 interface VipModalDesktopLayoutProps {
   tab: VipModalTabId;
@@ -41,17 +42,21 @@ export function VipModalDesktopLayout({
 
   if (tab === "rank") {
     return (
-      <div className="vip-modal-desktop vip-modal-desktop--flat w-full min-w-0">
-        <div className="vip-modal-desktop__split grid grid-cols-1 gap-4">
-          <section className="vip-modal-desktop__panel vip-modal-desktop__rank-carousel min-w-0 flex flex-col items-center justify-center gap-3 overflow-visible py-4 lg:pr-4">
+      <div className="vip-modal-desktop vip-modal-desktop--flat w-full min-w-0 min-h-0 flex-1">
+        <div className="vip-modal-desktop__split grid min-h-0 grid-cols-1 gap-4 lg:min-h-0 lg:flex-1 lg:gap-0">
+          <section className="vip-modal-desktop__panel vip-modal-desktop__rank-carousel min-w-0 flex flex-col items-center justify-center gap-3 overflow-visible py-4 lg:min-h-0 lg:py-0 lg:pr-5">
             <VipRankCarousel
               focusIndex={rankFocusIndex}
               onFocusChange={onRankFocusChange}
               playerRankId={player.currentRankId}
             />
           </section>
-          <section className="vip-modal-desktop__panel min-w-0 py-4 lg:pl-4">
-            <VipRankRequirementsPanel player={player} focusRankId={focusRankId} />
+          <section className="vip-modal-desktop__panel vip-modal-desktop__panel--fill min-w-0 flex min-h-0 flex-col py-4 lg:py-0 lg:pl-5">
+            <VipRankLevelUpCard
+              player={player}
+              focusRankId={focusRankId}
+              layout="desktop-fill"
+            />
           </section>
         </div>
       </div>
@@ -59,10 +64,10 @@ export function VipModalDesktopLayout({
   }
 
   return (
-    <div className="vip-modal-desktop vip-modal-desktop--flat w-full min-w-0">
-      <div className="vip-modal-desktop__split grid grid-cols-1 gap-4">
+    <div className="vip-modal-desktop vip-modal-desktop--flat w-full min-w-0 min-h-0 flex-1">
+      <div className="vip-modal-desktop__split grid min-h-0 grid-cols-1 gap-4 lg:min-h-0 lg:flex-1 lg:gap-0">
         <section
-          className="vip-modal-desktop__panel vip-modal-desktop__level min-w-0 flex flex-col items-stretch justify-start py-4 text-center lg:min-h-0 lg:flex-1 lg:pr-4"
+          className="vip-modal-desktop__panel vip-modal-desktop__level min-w-0 flex flex-col items-stretch justify-start py-4 text-center lg:min-h-0 lg:flex-1 lg:py-0 lg:pr-5"
           aria-label="ระดับ VIP ปัจจุบัน"
         >
           <div className="flex flex-col items-center">
@@ -85,26 +90,20 @@ export function VipModalDesktopLayout({
           </div>
 
           <div className="vip-modal-desktop__level-progress mt-auto w-full pt-6 text-left lg:pt-8">
-            <VipRankRequirementsPanel
+            <VipRankLevelUpCard
               player={player}
               focusRankId={player.currentRankId}
-              sections="turnover"
-              turnoverBarProminent
+              mode="current"
+              layout="desktop-fill"
             />
           </div>
         </section>
 
         <section
-          className="vip-modal-desktop__panel vip-modal-desktop__missions min-w-0 flex flex-col gap-4 py-4 lg:pl-4"
-          aria-label="ความคืบหน้าภารกิจ"
+          className="vip-modal-desktop__panel vip-modal-desktop__missions min-w-0 flex min-h-0 flex-col gap-3 py-4 lg:min-h-0 lg:flex-1 lg:py-0 lg:pl-5"
+          aria-label="สิทธิประโยชน์และรักษาระดับ"
         >
-          <VipRankRequirementsPanel
-            player={player}
-            focusRankId={player.currentRankId}
-            sections="missions"
-            sectionTitle="ภารกิจเพื่อเลื่อนระดับ"
-            sectionSubtitle="ทำภารกิจให้ครบตามเป้าหมาย"
-          />
+          <VipMyLevelBenefitsCard player={player} />
           <VipMaintainRankPanel activeRankId={player.currentRankId} />
         </section>
       </div>

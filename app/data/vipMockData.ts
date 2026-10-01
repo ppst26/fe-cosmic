@@ -7,29 +7,70 @@ import type {
   VipRankTier,
 } from "@/app/types/vip";
 
-/** ลำดับแรงค์ VIP */
+/**
+ * ลำดับแรงค์ VIP (ต่ำ → สูง)
+ * เงื่อนไขเลื่อนระดับ: ฝากสะสม + เทิร์นสะสมครบเป้า (AND) ภายในรอบ 30 วัน
+ * ดูเป้าเลื่อนแต่ละขั้นใน VIP_RANK_LEVEL_UP_TARGETS
+ */
 export const VIP_RANK_TIERS: VipRankTier[] = [
-  { id: "silver", label: "SILVER", expRequired: 0, accent: "#b8c0cc" },
-  { id: "gold", label: "GOLD", expRequired: 10_000, accent: "#f5c542" },
-  { id: "platinum", label: "PLATINUM", expRequired: 25_000, accent: "#9fd4ff" },
-  { id: "emerald", label: "EMERALD", expRequired: 50_000, accent: "#5ee4a0" },
-  { id: "diamond", label: "DIAMOND", expRequired: 100_000, accent: "#b794ff" },
+  { id: "base", label: "BASE", expRequired: 0, accent: "#9aa3b2" },
+  { id: "bronze", label: "BRONZE", expRequired: 500, accent: "#c98a55" },
+  { id: "silver", label: "SILVER", expRequired: 3_000, accent: "#b8c0cc" },
+  { id: "gold", label: "GOLD", expRequired: 15_000, accent: "#f5c542" },
+  { id: "platinum", label: "PLATINUM", expRequired: 75_000, accent: "#9fd4ff" },
+  { id: "emerald", label: "EMERALD", expRequired: 250_000, accent: "#5ee4a0" },
+  { id: "diamond", label: "DIAMOND", expRequired: 1_000_000, accent: "#b794ff" },
+  { id: "obsidian", label: "OBSIDIAN", expRequired: 5_000_000, accent: "#8b7fa8" },
 ];
 
 /** วิดีโอตราแรงค์ VIP — ไฟล์ใน public/rank */
 export const VIP_RANK_VIDEO: Record<VipRankId, string> = {
+  base: "/rank/base-tier_dark.q65PET5L.webm",
+  bronze: "/rank/bronze-tier.DttGN2ww.webm",
   silver: "/rank/silver-tier.C7ZBg7E2.webm",
   gold: "/rank/gold-tier.CiYu19wS.webm",
   platinum: "/rank/platinum-tier.X7LpQ2-P.webm",
   emerald: "/rank/emerald-tier.B5fMjduG.webm",
   diamond: "/rank/diamond-tier.CTp40fMd.webm",
+  obsidian: "/rank/obsidian-tier.BxvJWsnt.webm",
+};
+
+/**
+ * เป้าเลื่อนขึ้นสู่แรงค์นี้ (ฝาก + เทิร์น ต้องครบทั้งคู่) — mock สำหรับ UI
+ * BASE = ระดับเริ่มต้นหลังสมัคร (ไม่มีเป้าเลื่อนที่ตัวเอง)
+ */
+export const VIP_RANK_LEVEL_UP_TARGETS: Record<
+  VipRankId,
+  { depositTarget: number; turnoverTarget: number }
+> = {
+  base: { depositTarget: 0, turnoverTarget: 0 },
+  bronze: { depositTarget: 500, turnoverTarget: 2_000 },
+  silver: { depositTarget: 5_000, turnoverTarget: 25_000 },
+  gold: { depositTarget: 50_000, turnoverTarget: 250_000 },
+  platinum: { depositTarget: 3_000_000, turnoverTarget: 30_000_000 },
+  emerald: { depositTarget: 10_000_000, turnoverTarget: 100_000_000 },
+  diamond: { depositTarget: 30_000_000, turnoverTarget: 300_000_000 },
+  obsidian: { depositTarget: 100_000_000, turnoverTarget: 1_000_000_000 },
+};
+
+/** รักษาระดับ (รอบ 30 วัน) — เป้ารายเดือนต่อแรงค์ (mock) */
+export const VIP_RANK_MAINTAIN_TARGETS: Partial<
+  Record<VipRankId, { depositTarget: number; turnoverTarget: number }>
+> = {
+  bronze: { depositTarget: 300, turnoverTarget: 1_500 },
+  silver: { depositTarget: 2_000, turnoverTarget: 12_000 },
+  gold: { depositTarget: 10_000, turnoverTarget: 80_000 },
+  platinum: { depositTarget: 50_000, turnoverTarget: 400_000 },
+  emerald: { depositTarget: 200_000, turnoverTarget: 1_500_000 },
+  diamond: { depositTarget: 800_000, turnoverTarget: 6_000_000 },
+  obsidian: { depositTarget: 2_000_000, turnoverTarget: 15_000_000 },
 };
 
 export function getVipRankVideoSrc(rankId: VipRankId): string | null {
   return VIP_RANK_VIDEO[rankId] ?? null;
 }
 
-/** เป้าฐาน — ทวีคูณ 2^ลำดับแรงค์ */
+/** เป้าเทิร์นอ้างอิงตาราง (fallback) */
 export const VIP_TURNOVER_BASE = 500;
 
 export const VIP_MISSION_BASE = {
@@ -41,7 +82,8 @@ export const VIP_MISSION_BASE = {
 export const VIP_PLAYER_MOCK: VipPlayerState = {
   currentRankId: "gold",
   nextRankId: "platinum",
-  turnoverProgress: 0,
+  depositProgress: 24_500_000,
+  turnoverProgress: 21_800_000,
   missions: [
     { id: "login", label: "ล็อกอิน", progress: 5, target: 28, unit: "วัน", icon: "login" },
     { id: "deposit", label: "ฝากเงิน", progress: 3, target: 20, unit: "ครั้ง", icon: "deposit" },
@@ -78,53 +120,74 @@ export const VIP_BENEFIT_COMPARISON_VALUES: Record<
   Partial<Record<VipRankId, string>>
 > = {
   cashback: {
+    base: "0.1%",
+    bronze: "0.2%",
     silver: "0.3%",
     gold: "0.5%",
     platinum: "0.8%",
     emerald: "1.0%",
     diamond: "1.2%",
+    obsidian: "1.5%",
   },
   rolling: {
+    base: "—",
+    bronze: "—",
     silver: "—",
     gold: "0.2%",
     platinum: "0.35%",
     emerald: "0.5%",
     diamond: "0.65%",
+    obsidian: "0.8%",
   },
   "diamond-deposit": {
+    base: "—",
+    bronze: "—",
     silver: "—",
     gold: "+5%",
     platinum: "+8%",
     emerald: "+12%",
     diamond: "+15%",
+    obsidian: "+20%",
   },
   "fast-withdraw": {
+    base: "—",
+    bronze: "—",
     silver: "—",
     gold: "✓",
     platinum: "✓",
     emerald: "✓ เร็วขึ้น",
     diamond: "✓ สูงสุด",
+    obsidian: "✓ สูงสุด",
   },
   "vip-manager": {
+    base: "—",
+    bronze: "—",
     silver: "—",
     gold: "—",
     platinum: "✓",
     emerald: "✓",
     diamond: "✓",
+    obsidian: "✓",
   },
   "upgrade-bonus": {
-    silver: "—",
+    base: "—",
+    bronze: "25",
+    silver: "50",
     gold: "100",
     platinum: "250",
     emerald: "500",
     diamond: "1,000",
+    obsidian: "2,500",
   },
   "deposit-condition": {
-    silver: "ไม่กำหนด",
-    gold: "500+",
-    platinum: "1,000+",
-    emerald: "2,500+",
-    diamond: "5,000+",
+    base: "ไม่กำหนด",
+    bronze: "300+",
+    silver: "500+",
+    gold: "1,000+",
+    platinum: "2,500+",
+    emerald: "5,000+",
+    diamond: "10,000+",
+    obsidian: "25,000+",
   },
 };
 
@@ -151,9 +214,14 @@ export function getVipRankIndex(rankId: VipRankId): number {
   return index >= 0 ? index : 0;
 }
 
-/** ตัวคูณสะสมต่อแรงค์ (Silver ×1, Gold ×2, …) */
+/** ระดับความยากภารกิจ (1 = Base, 8 = Obsidian) */
 export function getVipRankMultiplier(rankId: VipRankId): number {
-  return 2 ** getVipRankIndex(rankId);
+  return getVipRankIndex(rankId) + 1;
+}
+
+export function getVipNextRankId(rankId: VipRankId): VipRankId | null {
+  const next = VIP_RANK_TIERS[getVipRankIndex(rankId) + 1];
+  return next?.id ?? null;
 }
 
 export function getVipRankTier(id: VipRankId): VipRankTier {
@@ -164,10 +232,47 @@ export function formatVipAmount(value: number): string {
   return new Intl.NumberFormat("th-TH").format(value);
 }
 
+/** ยอดใหญ่ในการ์ดเลื่อนระดับ — แสดงหน่วยล้านเมื่อ ≥ 1M */
+export function formatVipCompactAmount(value: number): string {
+  if (value >= 1_000_000) {
+    const millions = value / 1_000_000;
+    const text =
+      millions >= 10
+        ? new Intl.NumberFormat("th-TH", { maximumFractionDigits: 0 }).format(millions)
+        : new Intl.NumberFormat("th-TH", { maximumFractionDigits: 1 }).format(millions);
+    return `${text} ล้าน`;
+  }
+  return formatVipAmount(value);
+}
+
+/** เป้าฝากและเทิร์นเพื่อถึงแรงค์ที่ระบุ */
+export function getVipRankLevelUpAmounts(rankId: VipRankId): {
+  depositTarget: number;
+  turnoverTarget: number;
+} {
+  return VIP_RANK_LEVEL_UP_TARGETS[rankId] ?? { depositTarget: 0, turnoverTarget: 0 };
+}
+
+/** ความคืบหน้าเลื่อนระดับ — ต้องครบทั้งฝากและเทิร์น (AND) */
+export function getVipLevelUpOverallPercent(
+  depositProgress: number,
+  turnoverProgress: number,
+  depositTarget: number,
+  turnoverTarget: number,
+): number {
+  const depositPct =
+    depositTarget > 0 ? Math.min(100, (depositProgress / depositTarget) * 100) : 0;
+  const turnoverPct =
+    turnoverTarget > 0 ? Math.min(100, (turnoverProgress / turnoverTarget) * 100) : 0;
+  return Math.min(depositPct, turnoverPct);
+}
+
 export const formatVipExp = formatVipAmount;
 
 /** เป้าเทิร์นตามแรงค์ */
 export function getVipTurnoverTarget(rankId: VipRankId): number {
+  const fromLevelUp = VIP_RANK_LEVEL_UP_TARGETS[rankId]?.turnoverTarget;
+  if (fromLevelUp && fromLevelUp > 0) return fromLevelUp;
   return VIP_TURNOVER_BASE * getVipRankMultiplier(rankId);
 }
 

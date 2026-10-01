@@ -1,5 +1,13 @@
-/** ชื่อแรงค์ VIP ตามสเปก */
-export type VipRankId = "silver" | "gold" | "platinum" | "emerald" | "diamond";
+/** ชื่อแรงค์ VIP — ลำดับจากต่ำไปสูง (วิดีโอใน public/rank) */
+export type VipRankId =
+  | "base"
+  | "bronze"
+  | "silver"
+  | "gold"
+  | "platinum"
+  | "emerald"
+  | "diamond"
+  | "obsidian";
 
 export type VipModalTabId = "my-level" | "rank" | "benefits";
 
@@ -39,6 +47,8 @@ export interface VipBenefitRow {
 export interface VipPlayerState {
   currentRankId: VipRankId;
   nextRankId: VipRankId | null;
+  /** ยอดฝากสะสมเลื่อนระดับ (mock) */
+  depositProgress: number;
   /** ยอดเทิร์นโอเวอร์สะสม — ใช้กับแถบ progress หลัก */
   turnoverProgress: number;
   missions: VipMission[];

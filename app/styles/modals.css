@@ -5,7 +5,7 @@
   backdrop-filter: none;
 }
 
-/** โครง modal / bottom sheet — แยกพื้น: sheet = radial · modal = graphite→ม่วง linear */
+/** โครง modal / bottom sheet — พื้น shell ใช้ --cosmic-dialog-shell-bg (sheet alias ที่ token) */
 .cosmic-modal-shell,
 .cosmic-mobile-sheet,
 .bottom-sheet,
@@ -37,7 +37,7 @@
   }
 }
 
-/** มือถือ — bottom sheet คง radial · เงาขึ้นด้านบน */
+/** มือถือ — bottom sheet พื้นเดียวกับ modal · เงาขึ้นด้านบน */
 @media (max-width: 1023px) {
   :is(.cosmic-mobile-sheet, .bottom-sheet, .cosmic-bottom-sheet, .sign-up-picker-sheet) {
     background: var(--cosmic-mobile-sheet-bg);
@@ -64,7 +64,7 @@
   }
 }
 
-/** ปุ่ม/คอนโทรลใน modal/sheet — soft glass สีเข้ม เบลอน้อยทั้งบน mobile และ desktop */
+/** ปุ่ม/คอนโทรลใน modal/sheet — พื้น solid ชั้น inner */
 .cosmic-mobile-sheet .glass-control {
   border: 0;
   border-color: transparent;
@@ -90,7 +90,7 @@
 }
 
 /**
- * Bottom sheet — panel / input / quick select (soft glass)
+ * Bottom sheet — panel / input / quick select (solid inner จาก --sheet-*)
  * cosmicButtonClasses.ts · Deposit / Withdraw / Coupon / Login / SignUp
  */
 /**
@@ -105,7 +105,7 @@
   box-shadow: none;
 }
 
-/** ช่อง input / chip ใน sheet — inherit --sheet-soft-* จาก tokens (ทึบ ไม่ blur) */
+/** ช่อง input / chip ใน sheet — --sheet-* ทึบ ไม่ blur */
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) {
   color-scheme: dark;
 }
@@ -113,29 +113,23 @@
 .cosmic-sheet-soft-glass {
   border: 0;
   border-radius: var(--radius-panel);
-  background: var(
-    --sheet-soft-fill,
-    linear-gradient(145deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.05))
-  );
+  background: var(--sheet-soft-fill);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow: 0 6px 18px rgb(0 0 0 / 0.22);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
 button.cosmic-sheet-soft-glass--interactive:hover,
 a.cosmic-sheet-soft-glass--interactive:hover {
-  background: var(
-    --sheet-soft-fill-hover,
-    linear-gradient(145deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.07))
-  );
+  background: var(--sheet-soft-fill-hover);
 }
 
-/** แถว / panel soft glass ใน bottom sheet — อ่อนกว่า shell เล็กน้อย */
+/** แถว / panel ใน bottom sheet — อ่อนกว่า shell (solid) */
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) .cosmic-sheet-soft-glass {
   background: var(--sheet-row-fill);
   border: 0;
   border-color: transparent;
-  box-shadow: 0 4px 14px rgb(0 0 0 / 0.18);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet)
@@ -156,27 +150,22 @@ button.cosmic-sheet-soft-glass--interactive:active {
   transform: scale(0.995);
 }
 
-/** แถว input ใน sheet — ใช้ --sheet-field-* (สว่างกว่าพื้น shell) */
+/** แถว input ใน sheet — --sheet-field-* ทึบ */
 .cosmic-sheet-field {
   border: 0;
   border-radius: var(--radius-panel);
-  background: var(
-    --sheet-field-fill,
-    linear-gradient(145deg, rgb(30 28 36 / 0.88), rgb(22 20 28 / 0.9))
-  );
+  background: var(--sheet-field-fill);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
-  transition:
-    background var(--motion-fast) ease,
-    box-shadow var(--motion-fast) ease;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  transition: background var(--motion-fast) ease;
 }
 
 .cosmic-sheet-field:focus-within {
   border: 0;
   border-color: transparent;
   background: var(--sheet-field-fill-focus);
-  box-shadow: 0 4px 14px rgb(0 0 0 / 0.22);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
 }
 
 .cosmic-sheet-field--amount {
@@ -188,7 +177,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
   align-items: center;
   align-self: stretch;
   border-right: 0;
-  background: var(--sheet-field-addon-bg, rgb(255 255 255 / 0.08));
+  background: var(--sheet-field-addon-bg);
 }
 
 /**
@@ -200,7 +189,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
   border: 0;
   border-color: transparent;
   background: var(--sheet-field-fill);
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet)
@@ -216,7 +205,7 @@ button.cosmic-sheet-soft-glass--interactive:active {
   background: var(--sheet-field-fill);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
 .cosmic-mobile-sheet .hub-lobby-modal__search-wrap:focus-within {
@@ -226,14 +215,22 @@ button.cosmic-sheet-soft-glass--interactive:active {
 }
 
 /**
- * Bottom sheet มือถือ — ไม่ใช้ focus ring/outline (responsiveSheetDialog + SignUpPickerSheet)
+ * Bottom sheet — ปุ่มปิด/ไอคอนไม่ใช้ focus ring (responsiveSheetDialog + hub modal desktop)
  */
+:is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(button.glass-icon-btn, a.glass-icon-btn):focus-visible {
+  outline: none;
+  outline-offset: 0;
+  box-shadow: none;
+}
+
 @media (max-width: 1023px) {
   :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(a, button, [tabindex]):focus-visible {
     outline: none;
     outline-offset: 0;
     box-shadow: none;
-  }:is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(input, textarea, select):is(:focus, :focus-visible) {
+  }
+
+  :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) :where(input, textarea, select):is(:focus, :focus-visible) {
   }
 }
 
@@ -350,18 +347,8 @@ button.cosmic-sheet-soft-glass--interactive:active {
   font-weight: 500;
 }
 
-.profile-hub-sheet .profile-hub-logout {
-  gap: 0.875rem;
-  padding-block: 0.75rem;
-  padding-inline: 0.35rem;
-  color: var(--destructive);
+.profile-hub-sheet .profile-hub-logout.cosmic-btn-logout {
   font-size: 0.9375rem;
-}
-
-.profile-hub-sheet .profile-hub-logout:hover,
-.profile-hub-sheet .profile-hub-logout:focus-visible {
-  background: color-mix(in srgb, var(--destructive) 12%, transparent);
-  color: var(--destructive);
 }
 
 .profile-hub-sheet .profile-hub-sheet__footer {
@@ -610,21 +597,17 @@ button.cosmic-sheet-soft-glass--interactive:active {
   width: 1.75rem;
 }
 
-.profile-slideover-card .profile-hub-logout {
+.profile-slideover-card .profile-hub-logout.cosmic-btn-logout {
   margin-top: 0.5rem;
-  padding: 0.5rem 0.35rem;
-  color: #f87171;
+  min-height: 2.5rem;
+  height: auto;
+  padding-block: 0.5rem;
+  font-size: 0.8125rem;
 }
 
-.profile-slideover-card .profile-hub-logout:hover {
-  color: #fca5a5;
-  opacity: 1;
-}
-
-.profile-slideover-card .profile-hub-logout svg {
+.profile-slideover-card .profile-hub-logout.cosmic-btn-logout svg {
   height: 1.05rem;
   width: 1.05rem;
-  color: inherit;
 }
 
 
@@ -646,18 +629,18 @@ button.cosmic-sheet-soft-glass--interactive:active {
   background: var(--cta-white-bg);
   color: var(--cta-white-fg);
   box-shadow: 0 2px 12px rgb(0 0 0 / 0.16);
-}/** chip เลือกยอด / ตัวเลือกด่วน — มุม panel (คู่ cosmic-inset-card ใน sheet) */ .cosmic-choice-btn {
+}
+
+/** chip เลือกยอด / ตัวเลือกด่วน — นอก sheet ใช้ surface; ใน sheet ใช้ --sheet-row-* */
+.cosmic-choice-btn {
   border: 0;
   border-radius: var(--radius-panel);
   background: color-mix(in srgb, var(--surface-hover) 38%, transparent);
   color: var(--text-secondary);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 4px 14px rgb(0 0 0 / 0.16);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
   transition:
     background var(--motion-fast) ease,
     color var(--motion-fast) ease,
-    box-shadow var(--motion-fast) ease,
     transform var(--motion-fast) ease;
 }
 
@@ -674,16 +657,16 @@ button.cosmic-sheet-soft-glass--interactive:active {
     inset 0 1px 0 rgb(255 255 255 / 0.35);
 }
 
-.cosmic-mobile-sheet .cosmic-choice-btn:not(.is-active) {
+:is(.cosmic-mobile-sheet, .sign-up-picker-sheet) .cosmic-choice-btn:not(.is-active) {
   border: 0;
-  background: var(--sheet-soft-fill);
+  background: var(--sheet-row-fill);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  box-shadow: 0 4px 14px rgb(0 0 0 / 0.16);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
-.cosmic-mobile-sheet .cosmic-choice-btn:hover:not(.is-active) {
-  background: var(--sheet-soft-fill-hover);
+:is(.cosmic-mobile-sheet, .sign-up-picker-sheet) .cosmic-choice-btn:hover:not(.is-active) {
+  background: var(--sheet-row-fill-hover);
 }
 
 /* .cosmic-sheet-submit — ดู .btn-confirm-glow ใน buttons.css */

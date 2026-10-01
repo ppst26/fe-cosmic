@@ -58,7 +58,7 @@ export function ProfileAccountTabs({
         compact ? "gap-3" : "gap-4 pb-2",
       )}
     >
-      <div className="flex flex-col gap-3">
+      <div className="profile-account-tabs__main flex flex-col gap-3">
         <CosmicLineTabs
           tabs={PROFILE_ACCOUNT_TABS}
           activeId={activeTab}
@@ -99,17 +99,17 @@ export function ProfileAccountTabs({
             <ProfileBankAccountCard profile={profile} embedded />
           </div>
         )}
+
+        {activeTab === "personal" ? <ProfileReferralInviteCard flat /> : null}
+
+        <section className="border-t border-[var(--border-subtle)]/45 pt-1">
+          <ProfileMenuRow
+            icon={<SupportHeadsetIcon className="h-5 w-5" />}
+            title="ติดต่อฝ่ายบริการ"
+            href="mailto:support@cosmicbet.example"
+          />
+        </section>
       </div>
-
-      {activeTab === "personal" ? <ProfileReferralInviteCard flat /> : null}
-
-      <section className="border-t border-[var(--border-subtle)]/45 pt-1">
-        <ProfileMenuRow
-          icon={<SupportHeadsetIcon className="h-5 w-5" />}
-          title="ติดต่อฝ่ายบริการ"
-          href="mailto:support@cosmicbet.example"
-        />
-      </section>
 
       <button
         type="button"
@@ -117,7 +117,7 @@ export function ProfileAccountTabs({
         className={
           compact
             ? "flex w-fit items-center gap-1.5 py-1 text-xs font-medium text-[var(--destructive)] hover:opacity-85"
-            : COSMIC_BTN_LOGOUT
+            : cn(COSMIC_BTN_LOGOUT, "mt-2")
         }
       >
         <LogOutIcon className={compact ? "h-3.5 w-3.5" : "h-5 w-5"} />

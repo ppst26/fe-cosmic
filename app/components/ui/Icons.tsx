@@ -18,7 +18,7 @@ export function CosmicbetLogo({ className }: { className?: string }) {
       alt="Cosmicbet"
       width={180}
       height={52}
-      priority
+      preload
       className={cn("h-[22px] w-auto max-w-[100px] object-contain sm:h-6 sm:max-w-[118px]", className)}
     />
   );

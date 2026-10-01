@@ -8,7 +8,8 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useUrlSearchParams } from "@/app/hooks/useUrlSearchParams";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { DesktopHubModal } from "./DesktopHubModal";
 import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
@@ -45,7 +46,7 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useUrlSearchParams();
   const [state, setState] = useState<HubModalState | null>(null);
   const { open: openLogin } = useOverlayLayer("login");
 
