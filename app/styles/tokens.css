@@ -212,6 +212,10 @@
   --nav-safe-fill: var(--surface-end);
   --nav-top-line: color-mix(in srgb, var(--border-active) 32%, var(--border-subtle));
   --motion-fast: 160ms;
+  --motion-dialog: 240ms;
+  --motion-dialog-exit: 180ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.4, 0, 0.2, 1);
 
   /** Scrollbar มินิมอล — scrollbars.css */
   --scrollbar-size: 3px;
