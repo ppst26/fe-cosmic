@@ -1,7 +1,8 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useUrlSearchParams } from "@/app/hooks/useUrlSearchParams";
 import type { VipModalTabId } from "@/app/types/vip";
 import {
   OVERLAY_VIP_TAB_KEY,
@@ -26,7 +27,7 @@ const VipModalContext = createContext<VipModalContextValue | null>(null);
  */
 export function VipModalProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useUrlSearchParams();
   const { isAuthenticated, isLoading } = useAuth();
   const { open: openLogin } = useOverlayLayer("login");
   const { openHub } = useDesktopHubModal();

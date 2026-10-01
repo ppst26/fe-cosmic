@@ -55,7 +55,7 @@ export const COSMIC_BTN_CONFIRM_INLINE = "btn-confirm-glow btn-confirm-glow--inl
 
 
 
-/** panel ข้อมูลใน bottom sheet — soft glass */
+/** panel ข้อมูลใน bottom sheet — พื้น solid inner (--sheet-row-fill ใน .cosmic-mobile-sheet) */
 
 export const COSMIC_SHEET_SOFT_GLASS = "cosmic-sheet-soft-glass";
 
@@ -81,10 +81,10 @@ export const COSMIC_PANEL_GLASS_ICON =
 
 
 
-/** ปุ่มออกจากระบบ — glass outline โทน destructive */
+/** ปุ่มออกจากระบบ — กึ่งกลาง ไม่มีพื้น / การ์ด */
 
 export const COSMIC_BTN_LOGOUT =
-  "glass-control flex h-12 w-full items-center justify-center gap-2 rounded-[var(--radius-panel)] border border-[color-mix(in_srgb,var(--destructive)_55%,transparent)] text-sm font-medium text-[var(--destructive)] transition-[background,color,box-shadow] duration-[var(--motion-fast)] hover:bg-[color-mix(in_srgb,var(--destructive)_14%,transparent)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]";
+  "cosmic-btn-logout mx-auto flex h-auto w-fit items-center justify-center gap-2 py-3 text-sm font-medium text-[var(--destructive)] transition-opacity duration-[var(--motion-fast)] hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] [&_svg]:shrink-0 [&_svg]:text-[var(--destructive)]";
 
 
 

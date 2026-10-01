@@ -127,7 +127,7 @@ export function VipRankEmblem({
           loop
           muted
           playsInline
-          preload="auto"
+          preload={playing && !inactive ? "auto" : "metadata"}
           onLoadedData={inspectAlpha}
           onTimeUpdate={inspectAlpha}
           className={cn(

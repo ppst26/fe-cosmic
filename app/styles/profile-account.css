@@ -17,3 +17,17 @@
 .cosmic-modal-shell--hub .profile-account-hub-body .cosmic-line-tablist {
   width: 100%;
 }
+
+/** ปุ่มออกจากระบบ — โปร่ง จัดกึ่งกลาง (class ใน cosmicButtonClasses) */
+.cosmic-btn-logout {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.cosmic-btn-logout:hover,
+.cosmic-btn-logout:focus-visible {
+  background: transparent;
+}

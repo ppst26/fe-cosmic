@@ -1481,6 +1481,9 @@
 
 .cosmic-mobile-sheet .gems-store-hub--flat .gems-store-redeem-card--flat {
   border-radius: 18px;
+  border: 1px solid rgb(255 255 255 / 0.07);
+  background: var(--hub-modal-base, #111016);
+  box-shadow: 0 8px 22px rgb(0 0 0 / 0.18);
 }
 
 .cosmic-mobile-sheet .gems-store-hub--flat .gems-store-terms {
@@ -1524,25 +1527,8 @@
   }
 }
 
-.cosmic-mobile-sheet.vip-modal .vip-maintain-rank-panel--flat {
-  border-color: rgb(255 255 255 / 0.1);
-  background: transparent;
-}
-
-.cosmic-mobile-sheet.vip-modal .vip-maintain-rank-panel--flat .vip-maintain-metric {
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-}
-
-.cosmic-mobile-sheet.vip-modal .vip-maintain-rank-panel--flat .grid {
-  gap: 0;
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: var(--radius-control);
-  overflow: hidden;
-}
-
-.cosmic-mobile-sheet.vip-modal .vip-maintain-rank-panel--flat .vip-maintain-metric:first-child {
-  border-right: 1px solid rgb(255 255 255 / 0.08);
+.cosmic-mobile-sheet.vip-modal .vip-maintain-rank-panel--flat.vip-panel-card {
+  border-color: var(--vip-panel-border);
+  background: var(--vip-panel-bg);
 }
 

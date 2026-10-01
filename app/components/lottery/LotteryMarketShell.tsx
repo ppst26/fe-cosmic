@@ -106,7 +106,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
                 fill
                 sizes="(max-width: 1023px) 10rem, 0"
                 className="lottery-market-banner__bg-img"
-                priority
+                preload
               />
             </span>
           ) : null}
@@ -203,7 +203,7 @@ function LotteryMarketSidebarLink({
             fill
             sizes="(max-width: 1023px) 7rem, 11rem"
             className="lottery-market-sidebar__bg-img"
-            priority={isActive}
+            preload={isActive}
           />
         </span>
       ) : (

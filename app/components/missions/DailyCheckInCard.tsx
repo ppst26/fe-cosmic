@@ -149,7 +149,7 @@ export function DailyCheckInCard({
             alt="Diamonds"
             fill
             sizes="120px"
-            priority
+            preload
             className="object-contain drop-shadow-[0_4px_16px_rgba(119,71,229,0.35)]"
           />
         </div>

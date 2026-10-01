@@ -1,0 +1,223 @@
+/**
+ * ร้านค้าเพชร — การ์ดแลกรางวัล (GemsStorePageContent.tsx)
+ */
+
+.gems-store-redeem-card {
+  border: 1px solid rgb(255 255 255 / 0.07);
+  border-radius: var(--radius-panel);
+  background: #120f1c;
+  box-shadow: 0 8px 22px rgb(0 0 0 / 0.22);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.gems-store-redeem-card__inner {
+  min-height: 0;
+  border: 0;
+  border-radius: calc(var(--radius-panel) - 6px);
+  padding: 0.625rem 0.5rem 0.5rem;
+  box-shadow: none;
+}
+
+.gems-store-redeem-card__inner:not(.hub-modal-card) {
+  background: linear-gradient(
+    180deg,
+    rgb(12 10 18 / 1) 0%,
+    rgb(20 17 28 / 1) 38%,
+    rgb(34 30 46 / 0.98) 72%,
+    rgb(44 40 58 / 0.96) 100%
+  );
+}
+
+@media (min-width: 640px) {
+  .gems-store-redeem-card__inner {
+    padding: 0.75rem 0.625rem 0.625rem;
+  }
+}
+
+.gems-store-redeem-card.is-active {
+  border-color: color-mix(in srgb, var(--accent-primary) 42%, rgb(255 255 255 / 0.12));
+  box-shadow:
+    0 8px 22px rgb(0 0 0 / 0.22),
+    0 0 0 1px color-mix(in srgb, var(--accent-primary) 28%, transparent);
+}
+
+/* inner ใน hub — gradient เข้มบน · ไม่มี border / เงานอก */
+.hub-modal-shell .gems-store-redeem-card__inner.hub-modal-card,
+.gems-store-redeem-card__inner.hub-modal-card {
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    var(--hub-modal-base, #111016) 0%,
+    color-mix(in srgb, var(--hub-modal-base, #111016) 72%, var(--hub-modal-lift, #1f1e28)) 45%,
+    color-mix(in srgb, var(--hub-modal-lift, #1f1e28) 68%, var(--hub-modal-base, #111016)) 100%
+  );
+  box-shadow: none;
+}
+
+.hub-modal-shell .gems-store-redeem-card__inner.hub-modal-card.is-active,
+.gems-store-redeem-card__inner.hub-modal-card.is-active {
+  border: 0;
+  background: linear-gradient(
+    180deg,
+    var(--hub-modal-base, #111016) 0%,
+    color-mix(in srgb, var(--hub-modal-lift, #1f1e28) 55%, var(--hub-modal-base, #111016)) 40%,
+    color-mix(in srgb, var(--hub-modal-lift, #1f1e28) 82%, rgb(108 104 122) 18%) 100%
+  );
+  box-shadow: none;
+}
+
+.gems-store-redeem-card__title {
+  margin: 0;
+  width: 100%;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .gems-store-redeem-card__title {
+    font-size: 0.8125rem;
+  }
+}
+
+.gems-store-redeem-card__art {
+  position: relative;
+  width: 100%;
+  max-width: 5.5rem;
+  margin-inline: auto;
+  aspect-ratio: 1 / 0.85;
+}
+
+.gems-store-redeem-card__cost {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.gems-store-redeem-card__cost-icon {
+  position: relative;
+  display: inline-block;
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .gems-store-redeem-card__cost-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+/* ── ยืนยันแลกเพชร (GemsRedeemConfirmDialog) ── */
+
+.gems-redeem-confirm-dialog__body {
+  padding: 1.25rem 1.25rem 1rem;
+}
+
+@media (min-width: 480px) {
+  .gems-redeem-confirm-dialog__body {
+    padding: 1.375rem 1.5rem 1.125rem;
+  }
+}
+
+.gems-redeem-confirm-dialog__panel {
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: var(--radius-panel);
+  background: linear-gradient(
+    165deg,
+    rgb(32 30 42 / 0.98) 0%,
+    rgb(22 20 30 / 1) 55%,
+    rgb(14 12 20 / 1) 100%
+  );
+  padding: 1rem 1rem 0.875rem;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+.gems-redeem-confirm-dialog__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.gems-redeem-confirm-dialog__title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.gems-redeem-confirm-dialog__subtitle {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.gems-redeem-confirm-dialog__reward-amount {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--accent-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.gems-redeem-confirm-dialog__reward-label {
+  margin: 0.15rem 0 0;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-secondary);
+}
+
+.gems-redeem-confirm-dialog__divider {
+  height: 1px;
+  margin: 0.875rem 0 0.65rem;
+  background: rgb(255 255 255 / 0.08);
+}
+
+.gems-redeem-confirm-dialog__rows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.gems-redeem-confirm-dialog__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.gems-redeem-confirm-dialog__row-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.gems-redeem-confirm-dialog__row-value {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.gems-redeem-confirm-dialog__gem-icon {
+  position: relative;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}

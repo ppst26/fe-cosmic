@@ -44,20 +44,11 @@
     #120f1c 100%
   );
   /**
-   * Bottom sheet มือถือ — radial ด้านบน (ไม่เปลี่ยนเมื่อปรับ modal desktop)
-   * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet (มือถือ)
+   * Bottom sheet มือถือ — พื้นเดียวกับ modal desktop (graphite → ม่วง linear)
+   * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet · ฝาก/ถอน ฯลฯ
+   * hub-modal-shell ยัง override พื้นเองใน hub-modals.css
    */
-  --cosmic-mobile-sheet-bg: radial-gradient(
-      ellipse 75% 55% at 50% 0%,
-      rgba(98, 88, 124, 0.45) 0%,
-      rgba(52, 46, 68, 0.22) 42%,
-      transparent 72%
-    ),
-    linear-gradient(
-      180deg,
-      #15131c 0%,
-      #0c0b11 100%
-    );
+  --cosmic-mobile-sheet-bg: var(--cosmic-dialog-shell-bg);
   /**
    * Header / bottom nav — graphite กลาง (R≈G, ไม่ปนม่วง)
    * ม่วง brand คงที่ chip หมวด active · CTA · progress เท่านั้น
@@ -69,46 +60,24 @@
   --cosmic-mobile-sheet-border: transparent;
   --cosmic-mobile-sheet-shadow: 0 -24px 56px rgb(0 0 0 / 0.58);
   --cosmic-mobile-sheet-handle: rgb(255 255 255 / 0.18);
-  /** chip / panel รองใน sheet — เข้มกว่าช่องกรอกเล็กน้อย */
-  --sheet-soft-fill: linear-gradient(
-    145deg,
-    rgb(28 26 34 / 0.62),
-    rgb(18 16 24 / 0.7)
-  );
-  --sheet-soft-fill-hover: linear-gradient(
-    145deg,
-    rgb(36 34 42 / 0.68),
-    rgb(22 20 28 / 0.74)
-  );
+  /**
+   * Inner card ใน bottom sheet — ทึบ อ่อนกว่า shell (--cosmic-dialog-shell-bg ~#131218)
+   * ไม่ใช้ gradient/alpha/blur (ลดกระตุก GPU) · class: cosmic-sheet-soft-glass, cosmic-sheet-field, cosmic-choice-btn
+   */
+  --sheet-row-fill: #1f1f23;
+  --sheet-row-fill-hover: #27272b;
+  --sheet-soft-fill: var(--sheet-row-fill);
+  --sheet-soft-fill-hover: var(--sheet-row-fill-hover);
   --sheet-soft-border: transparent;
-  --sheet-soft-blur: 0px;   /* solid — ปิด blur ใน chip/panel ย่อยใน sheet */
-  /** แถวเลือก / panel ใน sheet — อ่อนกว่า shell เล็กน้อย (ฝาก-ถอน ช่องทาง ฯลฯ) */
-  --sheet-row-fill: linear-gradient(
-    145deg,
-    rgb(28 26 34 / 0.86),
-    rgb(20 18 26 / 0.9)
-  );
-  --sheet-row-fill-hover: linear-gradient(
-    145deg,
-    rgb(34 32 40 / 0.88),
-    rgb(24 22 30 / 0.92)
-  );
-  --sheet-icon-well-fill: rgb(255 255 255 / 0.08);
+  --sheet-soft-blur: 0px;
+  --sheet-icon-well-fill: #323038;
   --sheet-icon-well-border: transparent;
-  /** ช่องกรอกใน bottom sheet — ใกล้โทน shell แต่ขอบ/เงาช่วยแยกชั้น */
-  --sheet-field-fill: linear-gradient(
-    145deg,
-    rgb(30 28 36 / 0.88),
-    rgb(22 20 28 / 0.9)
-  );
-  --sheet-field-fill-focus: linear-gradient(
-    145deg,
-    rgb(34 32 40 / 0.9),
-    rgb(26 24 32 / 0.92)
-  );
+  /** ช่องกรอก — สว่างกว่าแถวเลือกเล็กน้อย */
+  --sheet-field-fill: #28262e;
+  --sheet-field-fill-focus: #302e37;
   --sheet-field-border: transparent;
   --sheet-field-border-focus: transparent;
-  --sheet-field-addon-bg: rgb(255 255 255 / 0.05);
+  --sheet-field-addon-bg: #1f1d24;
   --glass-blur: 20px;          /* ลดจาก 32px — ลด GPU overdraw มือถือ */
   --glass-blur-overlay: 18px;  /* ลดจาก 28px */
   /* Scrim dialog — ไม่ blur (ประหยัด GPU มือถือ) */
@@ -165,6 +134,25 @@
     var(--focus-ring) 45%,
     #f5c542 100%
   );
+  /**
+   * VIP panel — graphite กลาง (R≈G) ไม่ปนม่วง · อ่อนกว่า --standalone-page-bg
+   * ม่วง brand ใช้แค่ progress / % / เส้น accent ไม่ทับพื้นการ์ด
+   */
+  --vip-panel-bg: #1e1e21;
+  --vip-panel-border: rgb(255 255 255 / 0.08);
+  --vip-panel-inner-bg: #28282c;
+  --vip-progress-track-bg: #323236;
+  /** แถบ/ตัวเลขเลื่อนระดับ — โทน brand (ไม่ใช้ทอง rank) */
+  --vip-level-up-bar: var(--accent-primary);
+  --vip-level-up-percent: var(--text-primary);
+  --vip-level-up-label: var(--text-secondary);
+  --vip-maintain-bar: var(--accent-primary);
+  --vip-benefit-value: var(--accent-primary);
+  --vip-benefit-value-muted: var(--text-muted);
+  --vip-benefit-value-success: var(--success);
+  /** chip สิทธิประโยชน์ — สลับสองโทนในกริด (เห็นสัดส่วนคอลัมน์) */
+  --vip-benefit-cell-a: var(--vip-panel-inner-bg);
+  --vip-benefit-cell-b: #303035;
 
   /* CTA / แท็บ active — สีทึบ (gradient เก็บไว้สำหรับ legacy ที่ยังไม่ migrate) */
   --action-solid: #4930df;

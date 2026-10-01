@@ -121,7 +121,6 @@ export function TournamentsSection({
               fill
               sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 88vw"
               className="tournament-feature-card__image object-cover object-center"
-              priority={item.id === items[0]?.id}
             />
           );
 

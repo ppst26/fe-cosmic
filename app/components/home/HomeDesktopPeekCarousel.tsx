@@ -298,7 +298,7 @@ export function HomeDesktopPeekCarousel({
                     height={bannerIntrinsic.height}
                     sizes="(min-width: 1536px) 52rem, (min-width: 1280px) 90vw, 86vw"
                     className="block h-auto w-full max-w-full object-contain transition duration-200 group-hover:brightness-[1.04]"
-                    priority={!entry.isClone && logicalIndex === 0}
+                    preload={!entry.isClone && logicalIndex === 0}
                   />
                 ) : (
                   <Image
@@ -307,7 +307,7 @@ export function HomeDesktopPeekCarousel({
                     fill
                     sizes="(min-width: 1280px) 72vw, 68vw"
                     className="object-cover object-center transition duration-200 group-hover:brightness-[1.04]"
-                    priority={!entry.isClone && logicalIndex === 0}
+                    preload={!entry.isClone && logicalIndex === 0}
                   />
                 )}
               </Link>

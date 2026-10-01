@@ -31,15 +31,12 @@ export function StandaloneSubHeader({
   const router = useRouter();
 
   const handleBack = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (onBackClick) {
-      e.preventDefault();
       onBackClick();
       return;
     }
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      e.preventDefault();
-      router.back();
-    }
+    router.push(backHref);
   };
 
   return (
@@ -49,14 +46,14 @@ export function StandaloneSubHeader({
         <Link
           href={backHref}
           onClick={handleBack}
-          className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
+          className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
           aria-label="ย้อนกลับ"
         >
           <ArrowLeftIcon className="h-6 w-6 text-white" />
         </Link>
 
         {/* ชื่อหน้า กึ่งกลาง */}
-        <h1 className="absolute left-1/2 -translate-x-1/2 text-base font-medium tracking-tight text-white sm:text-lg select-none pointer-events-none truncate max-w-[70%] text-center leading-none">
+        <h1 className="absolute left-1/2 -translate-x-1/2 text-lg font-semibold tracking-tight text-white sm:text-xl select-none pointer-events-none truncate max-w-[70%] text-center leading-none">
           {title}
         </h1>
 

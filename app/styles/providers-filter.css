@@ -165,29 +165,37 @@
 .welcome-banner__dots-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   padding: 0;
   border-radius: 0;
   background: transparent;
 }
 
 .welcome-banner__dot {
-  width: 28px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   flex-shrink: 0;
+  padding: 0;
   border: 0;
-  border-radius: var(--radius-pill);
-  background: rgb(255 255 255 / 0.22);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.32);
   cursor: pointer;
-  transition: background 200ms ease, opacity 200ms ease;
+  opacity: 0.85;
+  transition:
+    background 200ms ease,
+    opacity 200ms ease,
+    transform 200ms ease;
 }
 
 .welcome-banner__dot:hover:not(.is-active) {
-  background: rgb(255 255 255 / 0.34);
+  background: rgb(255 255 255 / 0.5);
+  opacity: 1;
 }
 
 .welcome-banner__dot.is-active {
-  background: rgb(255 255 255 / 100%);
+  background: rgb(255 255 255 / 0.95);
+  opacity: 1;
+  transform: scale(1.05);
   box-shadow: none;
 }
 

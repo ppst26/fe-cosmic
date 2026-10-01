@@ -1,6 +1,7 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
+import { UrlSearchParamsProvider } from "@/app/hooks/useUrlSearchParams";
 import { AuthProvider } from "@/app/components/auth/AuthProvider";
 import { TransactionsProvider } from "@/app/components/transactions/TransactionsProvider";
 import { VipModalProvider } from "@/app/components/vip/VipModalProvider";
@@ -13,11 +14,11 @@ import { LobbyShellSidebarProvider } from "@/app/components/layout/LobbyShellSid
 import { GlobalAuthOverlays } from "@/app/components/auth/GlobalAuthOverlays";
 
 /**
- * ครอบ client providers — Auth + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
+ * ครอบ client providers — query string (ไม่ bailout SSR) + Auth + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
  */
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={null}>
+    <UrlSearchParamsProvider>
       <AuthProvider>
         <CouponRedeemProvider>
           <PendingTransactionProvider>
@@ -38,6 +39,6 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           </PendingTransactionProvider>
         </CouponRedeemProvider>
       </AuthProvider>
-    </Suspense>
+    </UrlSearchParamsProvider>
   );
 }

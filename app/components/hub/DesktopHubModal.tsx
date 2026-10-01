@@ -1,12 +1,8 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import { Dialog } from "radix-ui";
-import { ActivitiesHubPageContent } from "@/app/components/activities/ActivitiesHubPageContent";
-import { PromotionsHubPageContent } from "@/app/components/promotions/PromotionsHubPageContent";
-import { CashbackPageContent } from "@/app/components/cashback/CashbackPageContent";
-import { GemsStorePageContent } from "@/app/components/gems-store/GemsStorePageContent";
-import { ReferralPageContent } from "@/app/components/referral/ReferralPageContent";
 import { cn } from "@/lib/utils";
 import { ResponsiveSheetHeader } from "@/app/components/ui/ResponsiveSheetHeader";
 import {
@@ -14,17 +10,44 @@ import {
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "@/app/components/ui/responsiveSheetDialog";
-import { DesktopHubAccountBody } from "./DesktopHubAccountBody";
-import { DesktopHubTransactionsBody } from "./DesktopHubTransactionsBody";
-import { VipPageContent } from "@/app/components/vip/VipPageContent";
-import { DailyCheckInPageContent } from "@/app/components/missions/DailyCheckInPageContent";
-import { DailyCheckInCard } from "@/app/components/missions/DailyCheckInCard";
 import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
 import {
   HUB_MODAL_ICON_IDS,
   HUB_MODAL_TITLES,
   getHubSheetSize,
 } from "./hubModalRegistry";
+
+/** เนื้อหา hub โหลดแยก chunk ตอนเปิด — ไม่ลากทุกหน้า hub เข้า bundle หลักของทุก route */
+const ActivitiesHubPageContent = dynamic(() =>
+  import("@/app/components/activities/ActivitiesHubPageContent").then((m) => m.ActivitiesHubPageContent),
+);
+const PromotionsHubPageContent = dynamic(() =>
+  import("@/app/components/promotions/PromotionsHubPageContent").then((m) => m.PromotionsHubPageContent),
+);
+const CashbackPageContent = dynamic(() =>
+  import("@/app/components/cashback/CashbackPageContent").then((m) => m.CashbackPageContent),
+);
+const GemsStorePageContent = dynamic(() =>
+  import("@/app/components/gems-store/GemsStorePageContent").then((m) => m.GemsStorePageContent),
+);
+const ReferralPageContent = dynamic(() =>
+  import("@/app/components/referral/ReferralPageContent").then((m) => m.ReferralPageContent),
+);
+const DesktopHubAccountBody = dynamic(() =>
+  import("./DesktopHubAccountBody").then((m) => m.DesktopHubAccountBody),
+);
+const DesktopHubTransactionsBody = dynamic(() =>
+  import("./DesktopHubTransactionsBody").then((m) => m.DesktopHubTransactionsBody),
+);
+const VipPageContent = dynamic(() =>
+  import("@/app/components/vip/VipPageContent").then((m) => m.VipPageContent),
+);
+const DailyCheckInPageContent = dynamic(() =>
+  import("@/app/components/missions/DailyCheckInPageContent").then((m) => m.DailyCheckInPageContent),
+);
+const DailyCheckInCard = dynamic(() =>
+  import("@/app/components/missions/DailyCheckInCard").then((m) => m.DailyCheckInCard),
+);
 
 interface DesktopHubModalProps {
   hubId: DesktopHubId | null;

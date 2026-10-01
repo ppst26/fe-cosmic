@@ -12,7 +12,7 @@ export const MENU_ICON_SRC: Record<string, string> = {
   slots: `${MENU_ICON_BASE}/slot.avif`,
   fishing: `${MENU_ICON_BASE}/fish.avif`,
   sports: `${MENU_ICON_BASE}/sport.avif`,
-  lottery: `${MENU_ICON_BASE}/lottery.avif`,
+  lottery: `${MENU_ICON_BASE}/lotto.avif`,
   games: `${MENU_ICON_BASE}/games.avif`,
   cards: `${MENU_ICON_BASE}/card.avif`,
   profile: `${MENU_ICON_BASE}/profile.avif`,
@@ -37,7 +37,6 @@ export const CATEGORY_MENU_ICON_SRC: Record<CategoryId, string> = {
   fishing: MENU_ICON_SRC.fishing,
   sports: MENU_ICON_SRC.sports,
   lottery: MENU_ICON_SRC.lottery,
-  games: MENU_ICON_SRC.games,
   cards: MENU_ICON_SRC.cards,
 };
 

@@ -1,0 +1,43 @@
+/**
+ * Motion เบา — เปิด/ปิด dialog และกดปุ่ม
+ * ใช้กับ .cosmic-dialog-overlay · .cosmic-modal-shell · .glass-control
+ */
+
+.cosmic-dialog-overlay[data-state="open"],
+.cosmic-modal-shell[data-state="open"],
+.cosmic-mobile-sheet[data-state="open"],
+.cosmic-confirm-dialog[data-state="open"] {
+  animation-duration: var(--motion-dialog);
+  animation-timing-function: var(--ease-out);
+}
+
+.cosmic-dialog-overlay[data-state="closed"],
+.cosmic-modal-shell[data-state="closed"],
+.cosmic-mobile-sheet[data-state="closed"],
+.cosmic-confirm-dialog[data-state="closed"] {
+  animation-duration: var(--motion-dialog-exit);
+  animation-timing-function: var(--ease-in);
+}
+
+.glass-control:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-dialog-overlay[data-state="open"],
+  .cosmic-dialog-overlay[data-state="closed"],
+  .cosmic-modal-shell[data-state="open"],
+  .cosmic-modal-shell[data-state="closed"],
+  .cosmic-mobile-sheet[data-state="open"],
+  .cosmic-mobile-sheet[data-state="closed"],
+  .cosmic-confirm-dialog[data-state="open"],
+  .cosmic-confirm-dialog[data-state="closed"] {
+    animation-duration: 1ms;
+  }
+
+  .glass-control:active:not(:disabled),
+  .glass-card--soft:is(a, button):hover {
+    transform: none;
+    filter: none;
+  }
+}

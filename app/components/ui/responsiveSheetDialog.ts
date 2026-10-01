@@ -94,7 +94,7 @@ export const RESPONSIVE_SHEET_HANDLE_CLASS =
 export function responsiveSheetCloseButtonClass(extra?: string) {
   return cn(
     "glass-control glass-icon-btn !h-9 !w-9 shrink-0 text-[var(--icon-default)]",
-    "outline-none focus-visible:outline-none",
+    "outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:shadow-none",
     extra,
   );
 }
@@ -103,7 +103,7 @@ export function responsiveSheetCloseButtonClass(extra?: string) {
 export function responsiveSheetBackButtonClass(extra?: string) {
   return cn(
     "glass-control glass-icon-btn !h-9 !w-9 shrink-0 text-[var(--icon-default)]",
-    "outline-none focus-visible:outline-none",
+    "outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:shadow-none",
     extra,
   );
 }
