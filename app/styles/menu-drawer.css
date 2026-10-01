@@ -660,6 +660,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .menu-grid-tile:is(:hover, :focus-visible) {
+    position: relative;
+    z-index: 1;
     transform: translateY(-8px) scale(1.03);
     background: linear-gradient(
       168deg,
@@ -764,8 +766,11 @@
   .menu-grid-tile .menu-grid-label,
   .menu-list-row,
   .menu-list-row .menu-list-icon,
+  .menu-list-row .menu-list-label,
   .menu-list-row .menu-list-chevron {
-    transition: none;
+    transition-property: background, background-color, box-shadow, color, filter;
+    transition-duration: var(--motion-fast);
+    transition-timing-function: ease;
   }
 
   .menu-grid-tile:hover,
