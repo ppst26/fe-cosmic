@@ -32,3 +32,31 @@ test("entrance keyframes do not set transform", () => {
     /\.menu-enter-item\s*\{[^}]*animation-delay:\s*calc\(120ms \+ var\(--menu-enter-i, 0\) \* 42ms\)/,
   );
 });
+
+test("fine pointer hover lifts the grid card", () => {
+  assert.match(css, /@media \(hover: hover\) and \(pointer: fine\)/);
+  assert.match(css, /translateY\(-8px\) scale\(1\.03\)/);
+  assert.match(css, /translateY\(-4px\) scale\(1\.12\)/);
+  assert.match(css, /translateX\(2px\) scale\(1\.07\)/);
+  assert.match(css, /translateX\(3px\)/);
+  assert.match(css, /0 0 0 4px color-mix\(in srgb, var\(--accent-primary\) 55%/);
+  assert.equal(css.includes("pointer: coarse"), false);
+});
+
+test("press scale is stronger on touch than on a mouse", () => {
+  assert.match(css, /\.menu-grid-tile:active\s*\{[^}]*scale\(0\.96\)/);
+  assert.match(css, /\.menu-grid-tile:active \.menu-grid-icon\s*\{[^}]*scale\(0\.94\)/);
+  assert.match(css, /translateY\(0\) scale\(0\.97\)/);
+  assert.match(css, /\.menu-grid-tile:active \.menu-grid-icon\s*\{[^}]*scale\(1\.04\)/);
+  assert.match(css, /\.menu-list-row:active\s*\{[^}]*scale\(0\.995\)/);
+});
+
+test("reduced motion clears transform after the hover rules", () => {
+  const hoverAt = css.indexOf("translateY(-8px)");
+  const reducedAt = css.lastIndexOf("prefers-reduced-motion: reduce");
+  assert.ok(hoverAt > -1);
+  assert.ok(reducedAt > hoverAt);
+  const tail = css.slice(reducedAt);
+  assert.match(tail, /\.menu-grid-tile:active[\s\S]*?transform:\s*none/);
+  assert.match(tail, /\.menu-list-row:active[\s\S]*?transform:\s*none/);
+});
