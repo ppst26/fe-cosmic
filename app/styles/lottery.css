@@ -9,8 +9,8 @@
   filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.22));
 }
 :is(.lottery-market-shell, .thai-lotto-layout, .yiki-layout, .yiki-page-main) {
-  --lottery-glass-fill: var(--surface-solid-inner);
-  --lottery-glass-fill-hover: color-mix(in srgb, var(--surface-solid-inner) 88%, rgb(255 255 255 / 0.07));
+  --lottery-glass-fill: var(--inner-card-fill);
+  --lottery-glass-fill-hover: var(--inner-card-fill-hover);
   /* borderless — แยกชั้นด้วยสีพื้น + gap (shell/การ์ดรอบ) */
   --lottery-glass-border: transparent;
   /* ขอบปุ่มแป้นกด + ชุดประเภท/แผงเลข */
@@ -471,7 +471,7 @@
 /*
  * --- Thai government lottery (/lottery/thai-government) — mobile-first ---
  * มือถือ/แท็บเล็ต: โพยคอลัมน์ซ้าย (แคบ) + เลือกเลขคอลัมน์ขวา วางคู่กันตลอด ไม่ซ้อนแนวตั้ง
- * จอใหญ่ (≥1024px): โพยย้ายเป็นคอลัมน์ขวา กว้างขึ้น · ผลหวยอยู่หน้ารายการรอบเท่านั้น
+ * จอใหญ่ (≥1024px): แบนเนอร์งวดเต็มความกว้าง · โพยซ้าย (กว้าง) · แผงกรอกเลขขวา
  */
 .thai-lotto-layout {
   display: grid;
@@ -506,13 +506,35 @@
 }
 
 @media (min-width: 1024px) {
+  .lottery-page-main .thai-lotto-layout,
+  .lottery-page-main .yiki-layout {
+    min-height: min(44rem, calc(100dvh - var(--lobby-sidebar-sticky-top, 5rem) - 7rem));
+    padding: var(--space-4);
+  }
+
   .thai-lotto-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
     grid-template-areas:
-      "draw slip"
-      "input slip";
-    grid-template-rows: auto 1fr;
-    gap: var(--space-4) var(--space-6);
+      "draw draw"
+      "slip input";
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: stretch;
+  }
+
+  .thai-lotto-layout__draw {
+    grid-column: 1 / -1;
+  }
+
+  .thai-lotto-layout__slip,
+  .thai-lotto-layout__input {
+    min-height: 0;
+    max-height: none;
+    overflow: hidden;
+  }
+
+  .thai-lotto-draw {
+    padding: var(--space-4) var(--space-5);
   }
 }
 
@@ -708,7 +730,8 @@
 :is(.thai-lotto-panel, .lottery-panel) {
   border: 0;
   border-radius: var(--radius-panel);
-  background: var(--surface-solid-inner);
+  background: var(--inner-card-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
 .thai-lotto-panel__title {
@@ -723,7 +746,8 @@
 .thai-lotto-draw {
   border: 0;
   border-radius: var(--radius-panel);
-  background: var(--surface-solid-inner);
+  background: var(--inner-card-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
 .thai-lotto-draw__meta {
@@ -1087,8 +1111,39 @@
 @media (min-width: 1024px) {
   .lottery-bet-slip__list,
   :is(.yiki-layout__slip, .thai-lotto-layout__slip) .lottery-bet-slip__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    align-content: start;
     flex: 1 1 0;
     max-height: none;
+  }
+
+  .lottery-bet-slip__group {
+    min-width: 0;
+    padding: var(--space-2);
+    border-radius: var(--radius-panel);
+    background: color-mix(in srgb, var(--inner-card-fill-hover) 42%, var(--inner-card-fill));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  }
+
+  .lottery-bet-slip__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .lottery-bet-slip__dock--mobile-only {
+    display: none;
+  }
+
+  .lottery-slip-toolbar--head {
+    width: auto;
+    min-width: 10rem;
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--inner-card-fill-hover) 55%, var(--inner-card-fill));
   }
 }
 
@@ -1111,7 +1166,7 @@
 .lottery-bet-slip__row {
   border: 0;
   border-radius: calc(var(--radius-panel) - 14px);
-  background: color-mix(in srgb, var(--surface-solid-outer) 68%, var(--surface-solid-inner));
+  background: color-mix(in srgb, var(--inner-card-fill-hover) 38%, var(--inner-card-fill));
 }
 
 .lottery-bet-slip__number {

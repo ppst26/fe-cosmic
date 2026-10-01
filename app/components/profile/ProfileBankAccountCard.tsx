@@ -35,7 +35,7 @@ export function ProfileBankAccountCard({
       className={cn(
         "flex items-start gap-3",
         embedded
-          ? "rounded-[var(--radius-panel)] bg-[var(--surface-solid-inner)] px-3 py-3 sm:px-3.5 sm:py-3.5"
+          ? "profile-account-inner-card px-3 py-3 sm:px-3.5 sm:py-3.5"
           : cn(COSMIC_PANEL_GLASS, "flex-col gap-3 px-3.5 py-3.5 sm:px-4 sm:py-4"),
       )}
     >

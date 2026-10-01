@@ -10,8 +10,8 @@ interface PromoCarouselProps {
 }
 
 /**
- * PromoCarousel — รูป HomeProBanner เป็น background การ์ด + ข้อความทับด้านซ้าย
- * ถูกเรียกใช้ใน app/page.tsx
+ * PromoCarousel — รูป HomeProBanner เต็มการ์ด (ไม่มี overlay/ข้อความทับ)
+ * ถูกเรียกใช้ใน HomeLobbyPage.tsx
  */
 export function PromoCarousel({ items }: PromoCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -70,6 +70,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
           <Link
             key={item.id}
             href={item.href}
+            aria-label={[item.title, item.subtitle].filter(Boolean).join(" — ")}
             className="group relative aspect-[2.35/1] w-[85%] max-w-[420px] shrink-0 snap-start overflow-hidden rounded-[var(--radius-panel)] transition-all duration-150 hover:brightness-110 sm:w-[78%]"
             style={
               item.bannerSrc
@@ -79,44 +80,33 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
                   }
             }
           >
-            {item.bannerSrc && (
+            {item.bannerSrc ? (
+              <Image
+                src={item.bannerSrc}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 85vw, 420px"
+                className="object-cover object-center"
+                preload={item.id === "promo-loyalty-v2"}
+              />
+            ) : (
               <>
-                <Image
-                  src={item.bannerSrc}
-                  alt=""
-                  fill
-                  sizes="(max-width: 640px) 85vw, 420px"
-                  className="object-cover object-center"
-                  preload={item.id === "promo-loyalty-v2"}
-                />
-                {/* ไล่ทับซ้ายให้อ่าน title/subtitle ชัด */}
-                <div
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0a0c22]/92 via-[#0a0c22]/55 to-transparent"
-                  aria-hidden="true"
-                />
+                <div className="pointer-events-none absolute -top-10 -right-10 h-36 w-36 rounded-full bg-indigo-600/20 blur-2xl" />
+                <div className="relative z-10 flex h-full min-h-[100px] items-center p-4.5 sm:p-5">
+                  <div className="max-w-[58%] min-w-0 sm:max-w-[55%]">
+                    <h3 className="mb-1 text-lg font-medium tracking-tight text-white sm:text-xl">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs font-medium leading-relaxed text-[var(--text-secondary)] sm:text-sm">
+                      {item.subtitle}
+                    </p>
+                  </div>
+                  <div className="ml-auto flex h-14 w-20 shrink-0 rotate-6 items-center justify-center rounded-[var(--radius-control)] bg-gradient-to-tr from-purple-700 to-indigo-500 text-xs font-medium text-white shadow-lg">
+                    PROMO
+                  </div>
+                </div>
               </>
             )}
-
-            {!item.bannerSrc && (
-              <div className="pointer-events-none absolute -top-10 -right-10 h-36 w-36 rounded-full bg-indigo-600/20 blur-2xl" />
-            )}
-
-            <div className="relative z-10 flex h-full min-h-[100px] items-center p-4.5 sm:p-5">
-              <div className="max-w-[58%] min-w-0 sm:max-w-[55%]">
-                <h3 className="mb-1 text-lg font-medium tracking-tight text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)] transition-colors group-hover:text-blue-100 sm:text-xl">
-                  {item.title}
-                </h3>
-                <p className="text-xs font-medium leading-relaxed text-[var(--text-secondary)] drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] sm:text-sm">
-                  {item.subtitle}
-                </p>
-              </div>
-
-              {!item.bannerSrc && (
-                <div className="ml-auto flex h-14 w-20 shrink-0 rotate-6 items-center justify-center rounded-[var(--radius-control)] bg-gradient-to-tr from-purple-700 to-indigo-500 text-xs font-medium text-white shadow-lg">
-                  PROMO
-                </div>
-              )}
-            </div>
           </Link>
         ))}
         </div>

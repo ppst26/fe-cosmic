@@ -181,10 +181,10 @@
 
 /** กิจกรรมมือถือ — panel รายละเอียด (ActivitiesMobileHub) พื้นเทากราไฟทึบ */
 .activity-hub-detail-panel {
-  border: 1px solid rgb(255 255 255 / 0.06);
+  border: 0;
   border-radius: var(--radius-panel);
-  background: var(--surface-solid-inner);
-  box-shadow: none;
+  background: var(--inner-card-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
@@ -368,13 +368,30 @@
   .lobby-desktop-shell {
     --lobby-desktop-main-max: 76rem;
     --lobby-desktop-cluster-gutter: var(--page-gutter);
-    --lobby-sidebar-card-width: 220px;
-    --lobby-sidebar-card-width-collapsed: 84px;
     --lobby-desktop-frame-max: 1680px;
     --lobby-desktop-center-width: min(
       var(--lobby-desktop-main-max),
       calc(100% - 2 * var(--lobby-desktop-cluster-gutter))
     );
+    /** ช่องว่างขอบขวา sidebar กับ main */
+    --lobby-sidebar-main-gap: 1.25rem;
+    /** ลดจากสูตรชิด main — แคบลงเล็กน้อย (รวม ~2.5rem จากเวอร์ชันเกือบชิด) */
+    --lobby-sidebar-width-trim: 1.75rem;
+    --lobby-sidebar-card-width-min: 220px;
+    /**
+     * ขยายตาม viewport — อิงขอบซ้ายของกรอบ main ที่จัดกลาง
+     * (sidebar-outside · LobbyDesktopSidebarColumn)
+     */
+    --lobby-sidebar-card-width: max(
+      var(--lobby-sidebar-card-width-min),
+      calc(
+        (100vw - var(--lobby-desktop-center-width)) / 2
+        - var(--lobby-desktop-cluster-gutter)
+        - var(--lobby-sidebar-main-gap)
+        - var(--lobby-sidebar-width-trim)
+      )
+    );
+    --lobby-sidebar-card-width-collapsed: 84px;
     --lobby-bottom-nav-inset-left: calc(var(--lobby-sidebar-card-width) + 1rem);
     --lobby-desktop-side-rail-offset: 0px;
     --lobby-sidebar-sticky-top: calc(
@@ -389,19 +406,7 @@
     background: transparent;
   }
 
-  /** แถบ header เต็ม viewport — inner กว้างเต็มจอ (main ยังอยู่กรอบกลาง) */
-  .lobby-desktop-shell__header-band {
-    background: transparent !important;
-    background-image: none !important;
-  }
-
-  .lobby-desktop-shell__header-band::before {
-    display: none;
-  }
-
-  .lobby-desktop-shell__header-band .header-desktop-bar::before {
-    display: none;
-  }
+  /** แถบ header เต็ม viewport — พื้นใช้ .cosmic-mobile-chrome-surface เหมือนมือถือ (header.css) */
 
   /** Sidebar นอก container กลาง — ชิดซ้าย viewport — transition ของแผงยุบ/ขยาย */
   .lobby-desktop-shell__sidebar-outside {

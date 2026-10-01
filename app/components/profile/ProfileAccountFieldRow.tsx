@@ -29,7 +29,7 @@ export function ProfileAccountFieldRow({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 rounded-[var(--radius-panel)] bg-[var(--surface-solid-inner)] px-3 py-3 sm:px-3.5 sm:py-3.5",
+        "profile-account-inner-card flex items-center gap-2 px-3 py-3 sm:px-3.5 sm:py-3.5",
         className,
       )}
     >
@@ -85,7 +85,7 @@ export function ProfileAccountNavRow({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex w-full items-center gap-2 rounded-[var(--radius-panel)] bg-[var(--surface-solid-inner)] px-3 py-3 text-left transition-colors hover:bg-[color-mix(in_srgb,var(--text-primary)_5%,var(--surface-solid-inner))] sm:px-3.5 sm:py-3.5",
+        "profile-account-inner-card profile-account-inner-card--interactive flex w-full items-center gap-2 px-3 py-3 text-left sm:px-3.5 sm:py-3.5",
         className,
       )}
     >

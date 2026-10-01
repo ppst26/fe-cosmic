@@ -181,37 +181,28 @@
     inset 0 1px 0 rgb(255 255 255 / 4%);
 }
 
-/** Panel เมนูมือถือ — พื้น cosmic-bg · ช่องเมนูยังเป็น glass-menu-tile */
+/** Panel เมนู — พื้น bg-medudrawer.avif · ช่องเมนูยังเป็น glass-menu-tile */
 .menu-panel.glass-menu-panel {
   --menu-top: var(--cosmic-page-base);
   overflow: hidden;
   background-color: var(--cosmic-page-base);
-  background-image:
-    radial-gradient(
-      ellipse 55% 38% at 42% 0%,
-      rgba(65, 19, 100, 0.28),
-      transparent 75%
-    ),
-    radial-gradient(
-      ellipse 42% 32% at 75% 0%,
-      rgba(83, 14, 53, 0.22),
-      transparent 78%
-    ),
-    radial-gradient(
-      ellipse 30% 32% at 29% 55%,
-      rgba(26, 49, 80, 0.38),
-      transparent 78%
-    ),
-    radial-gradient(
-      ellipse 32% 34% at 65% 54%,
-      rgba(48, 22, 79, 0.32),
-      transparent 80%
-    );
+  background-image: var(--menu-drawer-bg-image);
   background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   border: 0;
   box-shadow: 0 24px 64px rgb(0 0 0 / 0.48);
+}
+
+.menu-panel.glass-menu-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--menu-drawer-scrim);
 }
 
 .menu-panel.glass-menu-panel::before {
@@ -868,6 +859,36 @@
 
 .menu-grid--mobile-drawer {
   gap: 0.625rem;
+  padding-bottom: 0.5rem;
+}
+
+/** ออกจากระบบ — โปร่ง ไม่มีการ์ด (RightMenuDrawer) */
+.menu-drawer-logout {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity var(--motion-fast) ease;
+}
+
+.menu-drawer-logout__label {
+  line-height: 1.25;
+}
+
+.menu-drawer-logout:active {
+  opacity: 0.82;
+}
+
+.menu-drawer-logout:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--destructive) 55%, transparent);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-drawer-logout:is(:hover, :focus-visible) {
+    opacity: 0.88;
+  }
 }
 
 @media (min-width: 380px) {
@@ -892,34 +913,30 @@
 
   .menu-shell {
     background-color: var(--cosmic-page-base);
-    background-image:
-      radial-gradient(
-        ellipse 55% 38% at 42% 0%,
-        rgba(65, 19, 100, 0.28),
-        transparent 75%
-      ),
-      radial-gradient(
-        ellipse 42% 32% at 75% 0%,
-        rgba(83, 14, 53, 0.22),
-        transparent 78%
-      ),
-      radial-gradient(
-        ellipse 30% 32% at 29% 55%,
-        rgba(26, 49, 80, 0.38),
-        transparent 78%
-      ),
-      radial-gradient(
-        ellipse 32% 34% at 65% 54%,
-        rgba(48, 22, 79, 0.32),
-        transparent 80%
-      );
+    background-image: var(--menu-drawer-bg-image);
     background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+  }
+
+  .menu-shell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: var(--menu-drawer-scrim);
   }
 
   .menu-panel.glass-menu-panel {
-    background: transparent;
+    z-index: 2;
+    background-color: transparent;
     background-image: none;
     box-shadow: none;
+  }
+
+  .menu-panel.glass-menu-panel::after {
+    content: none;
   }
 
   .menu-panel.glass-menu-panel::before {
@@ -964,32 +981,22 @@
 
   .menu-panel.glass-menu-panel {
     background-color: var(--cosmic-page-base);
-    background-image:
-      radial-gradient(
-        ellipse 55% 38% at 42% 0%,
-        rgba(65, 19, 100, 0.28),
-        transparent 75%
-      ),
-      radial-gradient(
-        ellipse 42% 32% at 75% 0%,
-        rgba(83, 14, 53, 0.22),
-        transparent 78%
-      ),
-      radial-gradient(
-        ellipse 30% 32% at 29% 55%,
-        rgba(26, 49, 80, 0.38),
-        transparent 78%
-      ),
-      radial-gradient(
-        ellipse 32% 34% at 65% 54%,
-        rgba(48, 22, 79, 0.32),
-        transparent 80%
-      );
+    background-image: var(--menu-drawer-bg-image);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
     box-shadow: 0 24px 64px rgb(0 0 0 / 0.48);
+  }
+
+  .menu-panel.glass-menu-panel::after {
+    content: "";
+    border-radius: inherit;
+    background: var(--menu-drawer-scrim);
   }
 
   .menu-panel.glass-menu-panel::before {
     content: "";
+    z-index: 1;
   }
 
   .menu-panel.glass-menu-panel .menu-content {

@@ -120,6 +120,13 @@ export const WELCOME_BANNER_SLIDES: WelcomeBannerSlide[] = [
   },
 ];
 
+/** รูป PromoCarousel มือถือ (ใต้ประกาศ) — public/HomeProBanner ProBan11–33 */
+export const HOME_PROMO_CAROUSEL_BANNER_SRCS = [
+  "/HomeProBanner/ProBan11.avif",
+  "/HomeProBanner/ProBan22.avif",
+  "/HomeProBanner/ProBan33.avif",
+] as const;
+
 /**
  * ข้อมูลจำลองสำหรับ Promotional Carousel แบนเนอร์โปรโมชัน
  * ถูกเรียกใช้โดย PromoCarousel.tsx
@@ -130,34 +137,21 @@ export const PROMO_CAROUSEL_DATA: PromoItem[] = [
     title: "Loyalty v2.0",
     subtitle: "Easy start & more rewards",
     href: "/promotions/loyalty-v2",
-    bannerSrc: HOME_PRO_BANNER_ASSETS[0],
+    bannerSrc: HOME_PROMO_CAROUSEL_BANNER_SRCS[0],
   },
   {
     id: "promo-gift-cards",
     title: "Play with ...",
     subtitle: "Buy Gift Cards",
     href: "/promotions/gift-cards",
-    bannerSrc: HOME_PRO_BANNER_ASSETS[1],
+    bannerSrc: HOME_PROMO_CAROUSEL_BANNER_SRCS[1],
   },
   {
     id: "promo-vip-cashback",
     title: "VIP Cashback",
     subtitle: "Up to 25% weekly rebate",
     href: "/promotions/cashback",
-    bannerSrc: HOME_PRO_BANNER_ASSETS[2],
-  },
-  {
-    id: "promo-weekly-race",
-    title: "Weekly Race",
-    subtitle: "Prize pool 100,000 USDT",
-    href: "/promotions/weekly-race",
-    bannerSrc: HOME_PRO_BANNER_ASSETS[3],
-  },
-  {
-    id: "promo-daily-drops",
-    title: "Daily Drops",
-    subtitle: "Win instant random cash prizes",
-    href: "/promotions/daily-drops",
+    bannerSrc: HOME_PROMO_CAROUSEL_BANNER_SRCS[2],
   },
 ];
 

@@ -66,6 +66,9 @@
    */
   --sheet-row-fill: #1f1f23;
   --sheet-row-fill-hover: #27272b;
+  /** inner card ใน sheet / hub / โปรไฟล์ — alias ของแถว sheet */
+  --inner-card-fill: var(--sheet-row-fill);
+  --inner-card-fill-hover: var(--sheet-row-fill-hover);
   --sheet-soft-fill: var(--sheet-row-fill);
   --sheet-soft-fill-hover: var(--sheet-row-fill-hover);
   --sheet-soft-border: transparent;
@@ -140,7 +143,7 @@
    */
   --vip-panel-bg: #1e1e21;
   --vip-panel-border: rgb(255 255 255 / 0.08);
-  --vip-panel-inner-bg: #28282c;
+  --vip-panel-inner-bg: var(--inner-card-fill);
   --vip-progress-track-bg: #323236;
   /** แถบ/ตัวเลขเลื่อนระดับ — โทน brand (ไม่ใช้ทอง rank) */
   --vip-level-up-bar: var(--accent-primary);
@@ -152,7 +155,7 @@
   --vip-benefit-value-success: var(--success);
   /** chip สิทธิประโยชน์ — สลับสองโทนในกริด (เห็นสัดส่วนคอลัมน์) */
   --vip-benefit-cell-a: var(--vip-panel-inner-bg);
-  --vip-benefit-cell-b: #303035;
+  --vip-benefit-cell-b: var(--inner-card-fill-hover);
 
   /* CTA / แท็บ active — สีทึบ (gradient เก็บไว้สำหรับ legacy ที่ยังไม่ migrate) */
   --action-solid: #4930df;
@@ -189,6 +192,9 @@
   /** gutter แนวนอนมาตรฐาน — หน้าแรก (.page-shell) และ standalone ใช้ค่าเดียวกัน */
   --layout-inline-gutter: var(--page-gutter);
   --content-max: 1200px;
+  /** แถบหัวข้อ carousel lobby — อ้างอิงโทน (ใช้ใน carousel.css) */
+  --lobby-section-title-band-start: rgb(22 10 42 / 0.98);
+  --lobby-section-title-band-mid: rgb(34 18 58 / 0.82);
   --nav-height: 68px;
   --nav-float-offset: 0px;
   --nav-safe: env(safe-area-inset-bottom, 0px);
@@ -196,7 +202,9 @@
   --nav-text: #8b919c;
   --nav-hover: #c8ccd6;
   --nav-active: #f2f3f7;
-  --nav-capsule-bg: var(--cosmic-chrome-surface-bg);
+  /** FloatingBottomNav — โทนม่วงเข้มกว่า chrome หลัก */
+  --bottom-nav-bg: #0f0b1a;
+  --nav-capsule-bg: var(--bottom-nav-bg);
   --nav-safe-fill: var(--surface-end);
   --nav-top-line: color-mix(in srgb, var(--border-active) 32%, var(--border-subtle));
   --motion-fast: 160ms;
@@ -227,12 +235,32 @@
   --profile-menu-row-bg: color-mix(in srgb, var(--surface-solid-outer) 88%, var(--bg-page));
   --profile-menu-row-bg-hover: color-mix(in srgb, var(--surface-solid-inner) 38%, var(--surface-solid-outer));
   --header-desktop-bar-height: 72px;
+  /**
+   * Desktop lobby header band — radial เข้มกว่า .cosmic-mobile-chrome-surface (มือถือ)
+   * ใช้ใน header.css กับ .lobby-desktop-shell__header-band เท่านั้น
+   */
+  --header-desktop-chrome-bg: #0e0e10;
+  --header-desktop-chrome-radial: radial-gradient(
+    ellipse 118% 108% at 50% 0%,
+    rgb(28 22 42 / 0.98) 0%,
+    rgb(18 14 28 / 0.88) 36%,
+    rgb(12 10 18 / 0.52) 58%,
+    transparent 82%
+  );
   --header-top-line: color-mix(in srgb, var(--border-active) 38%, var(--border-subtle));
 
   /* Menu dialog (RightMenuDrawer) — มือถือเต็มจอ · เดสก์ท็อป panel ชิดเหนือ bottom nav */
   /* พื้น panel เมนู — โทนเดียวกับ .cosmic-bg */
   --menu-top: var(--cosmic-page-base);
   --menu-panel-bg: var(--cosmic-page-base);
+  /** พื้นหลังเมนู — public/bg-medudrawer.avif (RightMenuDrawer) */
+  --menu-drawer-bg-image: url("/bg-medudrawer.avif");
+  --menu-drawer-scrim: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 0.5) 0%,
+    rgb(0 0 0 / 0.62) 42%,
+    rgb(0 0 0 / 0.78) 100%
+  );
   --menu-bottom: #0d0c20;
   --menu-border: #a483ee;
   --menu-text: #f5f2ff;
