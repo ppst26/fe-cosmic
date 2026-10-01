@@ -11,7 +11,7 @@ interface WelcomeBannerProps {
 
 /**
  * WelcomeBanner — carousel แบนเนอร์ hero เต็มความกว้าง + dots ด้านใน
- * ถูกเรียกใช้ใน app/page.tsx
+ * ถูกเรียกใช้ใน HomeLobbyPage.tsx (มือถือ — carousel บนสุด)
  */
 export function WelcomeBanner({
   items = fetchHomeBanners().welcomeSlides,

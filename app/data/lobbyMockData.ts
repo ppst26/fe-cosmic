@@ -78,45 +78,28 @@ export const HOME_PRO_BANNER_ASSETS = [
 /** แบนเนอร์ Welcome Pack หน้าแรก */
 export const MAIN_HOME_BANNER_SRC = "/HomeProBanner/MainHomeBannner.webp";
 
+/** แบนเนอร์ carousel บนสุดมือถือ — WelcomeBanner (public/HomeProBanner) */
+export const WELCOME_BANNER_MOBILE_ASSETS = [
+  "/HomeProBanner/welcome1.avif",
+  "/HomeProBanner/welcome2.avif",
+] as const;
+
 /**
- * สไลด์ Welcome Hero — WelcomeBanner carousel
- * ถูกเรียกใช้ใน WelcomeBanner.tsx และ app/page.tsx
+ * สไลด์ Welcome Hero — WelcomeBanner carousel มือถือ (HomeLobbyPage lg:hidden)
+ * ถูกเรียกใช้ใน WelcomeBanner.tsx · fetchHomeBanners().welcomeSlides
  */
 export const WELCOME_BANNER_SLIDES: WelcomeBannerSlide[] = [
   {
-    id: "welcome-pack",
-    bannerSrc: MAIN_HOME_BANNER_SRC,
-    title: "Welcome Pack",
-    subtitle: "Rakeback Up to 100%",
-    ctaText: "Sign Up",
+    id: "welcome-mobile-1",
+    bannerSrc: WELCOME_BANNER_MOBILE_ASSETS[0],
+    title: "แบนเนอร์ต้อนรับ",
+    subtitle: "",
   },
   {
-    id: "welcome-loyalty",
-    bannerSrc: HOME_PRO_BANNER_ASSETS[0],
-    title: "Loyalty v2.0",
-    subtitle: "Easy start & more rewards",
-    ctaText: "Sign Up",
-  },
-  {
-    id: "welcome-gift-cards",
-    bannerSrc: HOME_PRO_BANNER_ASSETS[1],
-    title: "Play with Gift Cards",
-    subtitle: "Buy & redeem instantly",
-    ctaText: "Sign Up",
-  },
-  {
-    id: "welcome-vip",
-    bannerSrc: HOME_PRO_BANNER_ASSETS[2],
-    title: "VIP Cashback",
-    subtitle: "Up to 25% weekly rebate",
-    ctaText: "Sign Up",
-  },
-  {
-    id: "welcome-race",
-    bannerSrc: HOME_PRO_BANNER_ASSETS[3],
-    title: "Weekly Race",
-    subtitle: "Prize pool 100,000 USDT",
-    ctaText: "Sign Up",
+    id: "welcome-mobile-2",
+    bannerSrc: WELCOME_BANNER_MOBILE_ASSETS[1],
+    title: "แบนเนอร์โปรโมชัน",
+    subtitle: "",
   },
 ];
 
