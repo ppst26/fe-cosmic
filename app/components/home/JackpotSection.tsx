@@ -7,10 +7,12 @@ import { HomeLobbyTournamentItem } from "../../types/lobby";
 import { MenuItemIcon } from "../layout/MenuItemIcon";
 import { SectionHeader } from "../ui/SectionHeader";
 import { CarouselControls } from "../ui/CarouselControls";
+import { cn } from "@/lib/utils";
 
 interface JackpotSectionProps {
   title?: string;
   items: HomeLobbyTournamentItem[];
+  className?: string;
 }
 
 /**
@@ -20,6 +22,7 @@ interface JackpotSectionProps {
 export function JackpotSection({
   title = "กิจกรรม",
   items,
+  className,
 }: JackpotSectionProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -87,7 +90,10 @@ export function JackpotSection({
   }
 
   return (
-    <section className="mt-10 w-full min-w-0 sm:mt-12" aria-labelledby="lobby-activities-section-title">
+    <section
+      className={cn("mt-10 w-full min-w-0 sm:mt-12", className)}
+      aria-labelledby="lobby-activities-section-title"
+    >
       <SectionHeader
         icon={
           <MenuItemIcon

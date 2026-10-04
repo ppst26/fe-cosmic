@@ -23,7 +23,7 @@ export function GameSection({ section, className = "mt-6 sm:mt-8" }: GameSection
   return (
     <Carousel
       title={title}
-      icon={<SectionIcon id={icon} className="h-6 w-6 text-[var(--icon-default)]" />}
+      icon={<SectionIcon id={icon} className="h-5 w-5 text-[var(--icon-default)]" />}
       viewAllHref={viewAllHref}
       trackClassName="carousel-games"
       className={className}

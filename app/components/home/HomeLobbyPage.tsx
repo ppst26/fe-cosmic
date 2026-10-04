@@ -285,25 +285,27 @@ export function HomeLobbyPage() {
                             />
                           ))}
                           <ProvidersSection />
+                          {isHomeLobby ? (
+                            <AuthGate
+                              fallback={
+                                <section className="mt-5 w-full sm:mt-6 lg:hidden">
+                                  <p className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-6 text-center text-sm text-[var(--text-secondary)]">
+                                    เข้าสู่ระบบหรือสมัครสมาชิกเพื่อดูกิจกรรม
+                                  </p>
+                                </section>
+                              }
+                            >
+                              <JackpotSection
+                                items={homeTournaments}
+                                className="mt-5 sm:mt-6 lg:hidden"
+                              />
+                            </AuthGate>
+                          ) : null}
                         </div>
                       </div>
                     </div>
 
                     <div className="lg:hidden">
-                      <div className={showMobileLobbySections}>
-                        <AuthGate
-                          fallback={
-                            <section className="mt-8 w-full sm:mt-10">
-                              <p className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-6 text-center text-sm text-[var(--text-secondary)]">
-                                เข้าสู่ระบบหรือสมัครสมาชิกเพื่อดูกิจกรรม
-                              </p>
-                            </section>
-                          }
-                        >
-                          <JackpotSection items={homeTournaments} />
-                        </AuthGate>
-                      </div>
-
                       <FloatingBottomNav
                         items={BOTTOM_NAV_DATA}
                         isMenuOpen={isMenuOpen}
@@ -314,7 +316,9 @@ export function HomeLobbyPage() {
                     {isHomeLobby ? (
                       <>
                         <HallOfFame datasets={fetchHallOfFame()} />
-                        <TournamentsSection items={LOBBY_TOURNAMENTS_SECTION_ITEMS} />
+                        <div className="hidden lg:block">
+                          <TournamentsSection items={LOBBY_TOURNAMENTS_SECTION_ITEMS} />
+                        </div>
                         <HomeScreenShortcutPromo className="mt-8 sm:mt-10" />
                       </>
                     ) : null}
