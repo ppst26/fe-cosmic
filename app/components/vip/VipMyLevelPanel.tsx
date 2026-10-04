@@ -16,33 +16,40 @@ export function VipMyLevelPanel({ player }: { player: VipPlayerState }) {
   const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <p className="text-sm font-medium text-[var(--text-secondary)]">ระดับปัจจุบัน</p>
-      <VipRankEmblem rankId={player.currentRankId} size="lg" />
-      <p
-        className="text-2xl font-medium tracking-[0.2em]"
-        style={{ color: currentTier.accent }}
-      >
-        {currentTier.label}
-      </p>
-      {nextTier ? (
-        <p className="text-sm text-[var(--text-secondary)]">
-          ระดับถัดไป{" "}
-          <span className="font-medium text-[var(--text-primary)]">{nextTier.label}</span>
+    <div className="flex w-full flex-col items-center gap-4">
+      <div className="flex flex-col items-center text-center">
+        <p className="text-sm font-medium text-[var(--text-secondary)]">ระดับของฉัน</p>
+        <div className="my-2">
+          <VipRankEmblem rankId={player.currentRankId} size="lg" />
+        </div>
+        <p
+          className="text-2xl font-medium tracking-[0.2em]"
+          style={{ color: currentTier.accent }}
+        >
+          {currentTier.label}
         </p>
-      ) : null}
-
-      <div className="w-full pt-2">
-        <VipMyLevelBenefitsCard player={player} />
+        {nextTier ? (
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">
+            ระดับถัดไป{" "}
+            <span className="font-medium text-[var(--text-primary)]">{nextTier.label}</span>
+          </p>
+        ) : null}
       </div>
 
-      <VipRankLevelUpCard
-        player={player}
-        focusRankId={player.currentRankId}
-        mode="current"
-      />
+      <div className="vip-rank-stack w-full">
+        <section className="vip-panel-card vip-rank-surface-card">
+          <VipMyLevelBenefitsCard player={player} variant="in-rank-card" />
+        </section>
 
-      <VipMaintainRankPanel activeRankId={player.currentRankId} />
+        <VipRankLevelUpCard
+          player={player}
+          focusRankId={player.currentRankId}
+          mode="current"
+          rankSurface
+        />
+
+        <VipMaintainRankPanel activeRankId={player.currentRankId} rankSurface />
+      </div>
     </div>
   );
 }

@@ -26,6 +26,7 @@ import {
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
+import { useToast } from "@/context/ToastContext";
 import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 import {
   isBankAccountNumber,
@@ -264,10 +265,10 @@ export function SignUpBottomDrawer({
 }: SignUpBottomDrawerProps) {
   const formId = useId();
   const { register } = useAuth();
+  const { showToast } = useToast();
   const [step, setStep] = useState<SignUpStep>(1);
   const [stepOne, setStepOne] = useState<SignUpStepOneData>(EMPTY_STEP_ONE);
   const [stepTwo, setStepTwo] = useState<SignUpStepTwoData>(EMPTY_STEP_TWO);
-  const [error, setError] = useState<string | null>(null);
   const [signUpPicker, setSignUpPicker] = useState<null | "bank" | "channel">(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const signUpOptions = fetchSignUpOptions();
@@ -277,7 +278,6 @@ export function SignUpBottomDrawer({
     setStepOne(EMPTY_STEP_ONE);
     setStepTwo(EMPTY_STEP_TWO);
     setSignUpPicker(null);
-    setError(null);
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -290,44 +290,42 @@ export function SignUpBottomDrawer({
   const handleStepOneSubmit = () => {
     const phone = sanitizePhone(stepOne.phone);
     if (!isThaiMobilePhone(phone)) {
-      setError("เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0");
+      showToast("เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0", "error");
       return;
     }
     if (!isPasswordLengthOk(stepOne.password)) {
-      setError("รหัสผ่านต้องมี 6–32 ตัวอักษร");
+      showToast("รหัสผ่านต้องมี 6–32 ตัวอักษร", "error");
       return;
     }
     if (stepOne.password !== stepOne.confirmPassword) {
-      setError("รหัสผ่านไม่ตรงกัน");
+      showToast("รหัสผ่านไม่ตรงกัน", "error");
       return;
     }
-    setError(null);
     setStep(2);
   };
 
   const handleStepTwoSubmit = async () => {
     if (!isPersonName(stepTwo.firstName)) {
-      setError("กรุณากรอกชื่อจริงเป็นตัวอักษร");
+      showToast("กรุณากรอกชื่อจริงเป็นตัวอักษร", "error");
       return;
     }
     if (!isPersonName(stepTwo.lastName)) {
-      setError("กรุณากรอกนามสกุลเป็นตัวอักษร");
+      showToast("กรุณากรอกนามสกุลเป็นตัวอักษร", "error");
       return;
     }
     if (!isBankAccountNumber(stepTwo.bankAccountNumber)) {
-      setError("เลขบัญชีต้องเป็นตัวเลข 10–12 หลัก");
+      showToast("เลขบัญชีต้องเป็นตัวเลข 10–12 หลัก", "error");
       return;
     }
     if (!stepTwo.bankId) {
-      setError("กรุณาเลือกธนาคาร");
+      showToast("กรุณาเลือกธนาคาร", "error");
       return;
     }
     if (!stepTwo.channelId) {
-      setError("กรุณาเลือกช่องทาง");
+      showToast("กรุณาเลือกช่องทาง", "error");
       return;
     }
 
-    setError(null);
     setIsSubmitting(true);
     const result = await register({
       phone: sanitizePhone(stepOne.phone),
@@ -341,16 +339,16 @@ export function SignUpBottomDrawer({
     setIsSubmitting(false);
 
     if (!result.ok) {
-      setError(result.error ?? "สมัครไม่สำเร็จ");
+      showToast(result.error ?? "สมัครไม่สำเร็จ", "error");
       return;
     }
 
+    showToast("สมัครสมาชิกสำเร็จ ยินดีต้อนรับ!", "success");
     resetForm();
     onClose();
   };
 
   const handleBackToStepOne = () => {
-    setError(null);
     setSignUpPicker(null);
     setStep(1);
   };
@@ -391,14 +389,6 @@ export function SignUpBottomDrawer({
               step === 1 ? "pt-4" : "pt-14"
             }`}
           >
-            {error && (
-              <p
-                className="mb-3 rounded-[var(--radius-control)] bg-[var(--surface-selected)] px-3 py-2 text-sm text-[var(--destructive)]"
-                role="alert"
-              >
-                {error}
-              </p>
-            )}
             {step === 1 ? (
               <SignUpStepOne
                 formId={formId}

@@ -15,7 +15,8 @@ description: >-
 - [ ] Feature ทั้งสามใช้ไอคอนเรียบถูกความหมาย; ฝาก/ถอนแยกทิศลูกศรชัด
 - [ ] หมวดเกมและ Providers มี View All (เกม) / marquee (providers); **กิจกรรม lobby** มี carousel + dots + arrows **ไม่มี** View All
 - [ ] กิจกรรม lobby ใช้รูป `public/tournament/` ไม่ใช่การ์ด jackpot ยอดเงิน
-- [ ] Providers: marquee โลโก้ ไม่ glass card; ช่องว่างด้านบน 48–56px
+- [ ] Providers: marquee โลโก้ ไม่ห่อการ์ด; ช่องว่างด้านบน 48–56px
+- [ ] ชั้น UI ใหม่เป็น **solid** (`--inner-card-fill` ฯลฯ) — ไม่เพิ่ม backdrop-blur / frosted glass
 - [ ] Promo carousel pagination แยกจากกิจกรรม (dots กลางสำหรับทัวร์นาเมนต์)
 - [ ] ข้อความไทยไม่ขาดสระ; ยอดเงินไม่ถูกตัด; โลโก้/ปกเกมไม่เสียสัดส่วนผิดวิธี
 - [ ] Floating nav ไม่บังแถวท้าย; มี safe area; focus ใช้ได้

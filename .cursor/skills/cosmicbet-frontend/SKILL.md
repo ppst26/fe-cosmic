@@ -26,9 +26,9 @@ description: >-
 | ทำใน TSX (Tailwind) | ทำใน `app/styles/*.css` |
 | --- | --- |
 | Layout shells, flex/grid, gap, spacing, size, position, overflow, responsive | Tokens (`tokens.css`), สี, gradient |
-| Layout components compose ด้วย `cn()` | Glass / blur / shadow / glow / แสง |
+| Layout components compose ด้วย `cn()` | Solid fills, gradient จำกัด, shadow / glow / แสง (ไม่ blur เป็นหลัก) |
 | Typography ตาม `typography.mdc` | Keyframes, scrollbar theme, pseudo ซับซ้อน |
-| shadcn + semantic utilities | Class โทน visual (`glass-card`, modal shell) |
+| shadcn + semantic utilities | Class โทน visual (inner card solid, modal shell) — ไม่เพิ่ม pattern glass ใหม่ |
 
 - งานใหม่: **ไม่** เพิ่มกฎ margin/padding/flex/grid ใน feature CSS ถ้า Tailwind ทำได้
 - CSS เก่า: ไม่ย้ายทั้งไฟล์เว้นผู้ใช้สั่ง — แตะแล้วค่อยดึง layout ไป Tailwind

@@ -20,6 +20,7 @@ import {
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
+import { CosmicConfirmDialog } from "../ui/CosmicConfirmDialog";
 import {
   COSMIC_CHOICE_BTN,
   COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
@@ -45,12 +46,14 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
   const [amountInput, setAmountInput] = useState(String(quick.defaultAmount));
   const [submitting, setSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const resetFlow = () => {
     setAmount(quick.defaultAmount);
     setAmountInput(String(quick.defaultAmount));
     setSubmitting(false);
     setSubmitMessage(null);
+    setConfirmOpen(false);
   };
 
   useEffect(() => {
@@ -81,17 +84,23 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
     applyAmount(available);
   };
 
+  const canConfirm = amount > 0 && amount <= available;
+
   const handleConfirm = async () => {
     if (amount <= 0 || amount > available) return;
     setSubmitting(true);
     setSubmitMessage(null);
     await submitWithdraw({ amount });
     setSubmitting(false);
+    setConfirmOpen(false);
     onCompleted?.(amount);
     onClose();
   };
 
-  const canConfirm = amount > 0 && amount <= available;
+  const handleRequestConfirm = () => {
+    if (!canConfirm) return;
+    setConfirmOpen(true);
+  };
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
@@ -206,7 +215,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
             <button
               type="button"
               disabled={!canConfirm || submitting}
-              onClick={handleConfirm}
+              onClick={handleRequestConfirm}
               className={COSMIC_SHEET_SUBMIT}
             >
               <span className={COSMIC_BTN_CONFIRM_TEXT}>
@@ -216,6 +225,23 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
           </div>
         </Dialog.Content>
       </Dialog.Portal>
+
+      <CosmicConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        variant="warning"
+        title="ยืนยันส่งคำขอถอนเงิน?"
+        description={`โอนเข้า ${bank.bankShortName} ${bank.accountNumberDisplay}`}
+        confirmLabel="ยืนยันถอน"
+        loading={submitting}
+        summary={
+          <p className="text-center text-sm font-medium text-[var(--text-primary)]">
+            ยอดถอน{" "}
+            <span className="text-[var(--accent-muted)]">฿ {formatWithdrawAmount(amount)}</span>
+          </p>
+        }
+        onConfirm={handleConfirm}
+      />
     </Dialog.Root>
   );
 }

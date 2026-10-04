@@ -12,6 +12,7 @@ import { WithdrawProvider } from "@/app/components/withdraw/WithdrawProvider";
 import { PendingTransactionProvider } from "@/app/components/transactions/PendingTransactionProvider";
 import { LobbyShellSidebarProvider } from "@/app/components/layout/LobbyShellSidebarContext";
 import { GlobalAuthOverlays } from "@/app/components/auth/GlobalAuthOverlays";
+import { ToastProvider } from "@/context/ToastContext";
 
 /**
  * ครอบ client providers — query string (ไม่ bailout SSR) + Auth + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
@@ -19,6 +20,7 @@ import { GlobalAuthOverlays } from "@/app/components/auth/GlobalAuthOverlays";
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <UrlSearchParamsProvider>
+      <ToastProvider>
       <AuthProvider>
         <CouponRedeemProvider>
           <PendingTransactionProvider>
@@ -39,6 +41,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           </PendingTransactionProvider>
         </CouponRedeemProvider>
       </AuthProvider>
+      </ToastProvider>
     </UrlSearchParamsProvider>
   );
 }

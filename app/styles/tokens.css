@@ -150,12 +150,40 @@
   --vip-level-up-percent: var(--text-primary);
   --vip-level-up-label: var(--text-secondary);
   --vip-maintain-bar: var(--accent-primary);
+  /** การ์ด rank stack — accent แถบ/ไอคอน (ไม่ใช้ hex นอกธีม) */
+  --vip-rank-card-accent: var(--accent-primary);
+  --vip-rank-metric-complete: var(--success);
   --vip-benefit-value: var(--accent-primary);
   --vip-benefit-value-muted: var(--text-muted);
   --vip-benefit-value-success: var(--success);
   /** chip สิทธิประโยชน์ — สลับสองโทนในกริด (เห็นสัดส่วนคอลัมน์) */
   --vip-benefit-cell-a: var(--vip-panel-inner-bg);
   --vip-benefit-cell-b: var(--inner-card-fill-hover);
+  /**
+   * การ์ดแรงค์ VIP — gradient หน้าการ์ด (ใช้เฉพาะ .vip-rank-stack ใน vip-page.css)
+   */
+  --vip-rank-card-radius-top: var(--radius-panel);
+  --vip-rank-card-radius-bottom: var(--radius-card);
+  /** พื้นการ์ดใน .vip-rank-stack — เทาเข้มเกือบดำ */
+  --vip-rank-card-bg: color-mix(in srgb, var(--surface-end) 82%, var(--vip-panel-bg) 18%);
+  /** radial บนการ์ด — โทนเข้ม ไม่จ้า */
+  --vip-rank-card-top-radial: radial-gradient(
+    ellipse 100% 68% at 50% -10%,
+    color-mix(in srgb, var(--vip-rank-card-bg) 88%, var(--accent-primary) 12%) 0%,
+    transparent 52%
+  );
+  --vip-rank-card-face-gradient: var(--vip-rank-card-bg);
+  /** chip สิทธิใน .vip-rank-stack — ดำเข้มกว่าหน้าการ์ด */
+  --vip-rank-benefit-cell-a: color-mix(in srgb, var(--surface-end) 94%, var(--vip-rank-card-bg) 6%);
+  --vip-rank-benefit-cell-b: color-mix(in srgb, var(--surface-end) 90%, var(--vip-rank-card-bg) 10%);
+
+  /** toast ลอย — CosmicToast */
+  --toast-bg: color-mix(in srgb, var(--vip-panel-bg) 88%, var(--surface-end) 12%);
+  --toast-border: var(--vip-panel-border);
+  --toast-text: var(--text-primary);
+  --toast-icon-success: var(--success);
+  --toast-icon-error: var(--destructive);
+  --toast-icon-info: var(--accent-primary);
 
   /* CTA / แท็บ active — สีทึบ (gradient เก็บไว้สำหรับ legacy ที่ยังไม่ migrate) */
   --action-solid: #4930df;

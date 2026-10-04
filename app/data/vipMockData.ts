@@ -47,7 +47,7 @@ export const VIP_RANK_LEVEL_UP_TARGETS: Record<
   bronze: { depositTarget: 500, turnoverTarget: 2_000 },
   silver: { depositTarget: 5_000, turnoverTarget: 25_000 },
   gold: { depositTarget: 50_000, turnoverTarget: 250_000 },
-  platinum: { depositTarget: 3_000_000, turnoverTarget: 30_000_000 },
+  platinum: { depositTarget: 30_000_000, turnoverTarget: 30_000_000 },
   emerald: { depositTarget: 10_000_000, turnoverTarget: 100_000_000 },
   diamond: { depositTarget: 30_000_000, turnoverTarget: 300_000_000 },
   obsidian: { depositTarget: 100_000_000, turnoverTarget: 1_000_000_000 },
@@ -94,10 +94,10 @@ export const VIP_PLAYER_MOCK: VipPlayerState = {
 /** mock รักษาระดับ — แสดงเฉพาะแรงค์ที่ผู้เล่นถืออยู่ */
 export const VIP_MAINTAIN_BY_RANK: Partial<Record<VipRankId, VipMaintainState>> = {
   gold: {
-    daysRemaining: 7,
-    depositProgress: 6_400,
+    daysRemaining: 0,
+    depositProgress: 7_000,
     depositTarget: 10_000,
-    turnoverProgress: 12_898,
+    turnoverProgress: 14_647,
     turnoverTarget: 10_000,
   },
 };
@@ -222,6 +222,17 @@ export function getVipRankMultiplier(rankId: VipRankId): number {
 export function getVipNextRankId(rankId: VipRankId): VipRankId | null {
   const next = VIP_RANK_TIERS[getVipRankIndex(rankId) + 1];
   return next?.id ?? null;
+}
+
+export function getVipPreviousRankId(rankId: VipRankId): VipRankId | null {
+  const index = getVipRankIndex(rankId);
+  if (index <= 0) return null;
+  return VIP_RANK_TIERS[index - 1]?.id ?? null;
+}
+
+/** เลข VIP ใน UI (BASE=6 … PLATINUM=10 … OBSIDIAN=13) — mock ให้ตรง reference */
+export function getVipRankDisplayNumber(rankId: VipRankId): number {
+  return getVipRankIndex(rankId) + 6;
 }
 
 export function getVipRankTier(id: VipRankId): VipRankTier {

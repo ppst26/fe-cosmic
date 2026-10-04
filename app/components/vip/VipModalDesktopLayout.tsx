@@ -51,12 +51,15 @@ export function VipModalDesktopLayout({
               playerRankId={player.currentRankId}
             />
           </section>
-          <section className="vip-modal-desktop__panel vip-modal-desktop__panel--fill min-w-0 flex min-h-0 flex-col py-4 lg:py-0 lg:pl-5">
-            <VipRankLevelUpCard
-              player={player}
-              focusRankId={focusRankId}
-              layout="desktop-fill"
-            />
+          <section className="vip-modal-desktop__panel vip-modal-desktop__panel--fill min-w-0 flex min-h-0 flex-col py-4 lg:min-h-0 lg:py-0 lg:pl-5">
+            <div className="vip-rank-stack min-h-0 flex-1">
+              <VipRankLevelUpCard
+                player={player}
+                focusRankId={focusRankId}
+                layout="desktop-fill"
+                rankSurface
+              />
+            </div>
           </section>
         </div>
       </div>
@@ -90,12 +93,15 @@ export function VipModalDesktopLayout({
           </div>
 
           <div className="vip-modal-desktop__level-progress mt-auto w-full pt-6 text-left lg:pt-8">
-            <VipRankLevelUpCard
-              player={player}
-              focusRankId={player.currentRankId}
-              mode="current"
-              layout="desktop-fill"
-            />
+            <div className="vip-rank-stack">
+              <VipRankLevelUpCard
+                player={player}
+                focusRankId={player.currentRankId}
+                mode="current"
+                layout="desktop-fill"
+                rankSurface
+              />
+            </div>
           </div>
         </section>
 
@@ -103,8 +109,10 @@ export function VipModalDesktopLayout({
           className="vip-modal-desktop__panel vip-modal-desktop__missions min-w-0 flex min-h-0 flex-col gap-3 py-4 lg:min-h-0 lg:flex-1 lg:py-0 lg:pl-5"
           aria-label="สิทธิประโยชน์และรักษาระดับ"
         >
-          <VipMyLevelBenefitsCard player={player} />
-          <VipMaintainRankPanel activeRankId={player.currentRankId} />
+          <div className="vip-rank-stack min-h-0 flex-1">
+            <VipMyLevelBenefitsCard player={player} rankSurface />
+            <VipMaintainRankPanel activeRankId={player.currentRankId} rankSurface />
+          </div>
         </section>
       </div>
     </div>

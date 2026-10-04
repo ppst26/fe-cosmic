@@ -98,7 +98,9 @@ export function VipRankRequirementsPanel({
             เทิร์น {formatVipAmount(turnoverProgress)} / {formatVipAmount(req.turnoverTarget)}
           </span>
           {!isLocked && (
-            <span className={`font-medium ${isCleared ? "text-[var(--success)]" : "text-[#f5c542]"}`}>
+            <span
+              className={`font-medium ${isCleared ? "text-[var(--success)]" : "text-[var(--accent-primary)]"}`}
+            >
               {isCleared ? "ครบ" : `${Math.round(turnoverPct)}%`}
             </span>
           )}

@@ -11,6 +11,7 @@ import {
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
+import { useToast } from "@/context/ToastContext";
 import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 import {
   isThaiMobilePhone,
@@ -36,15 +37,14 @@ export function LoginBottomDrawer({
   onSignUpClick,
 }: LoginBottomDrawerProps) {
   const { login } = useAuth();
+  const { showToast } = useToast();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const reset = () => {
     setPhone("");
     setPassword("");
-    setError(null);
     setSubmitting(false);
   };
 
@@ -59,21 +59,21 @@ export function LoginBottomDrawer({
     e.preventDefault();
     const normalizedPhone = sanitizePhone(phone);
     if (!isThaiMobilePhone(normalizedPhone)) {
-      setError("เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0");
+      showToast("เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0", "error");
       return;
     }
     if (!password) {
-      setError("กรุณากรอกรหัสผ่าน");
+      showToast("กรุณากรอกรหัสผ่าน", "error");
       return;
     }
-    setError(null);
     setSubmitting(true);
     const result = await login({ phone: normalizedPhone, password });
     setSubmitting(false);
     if (!result.ok) {
-      setError(result.error ?? "เข้าสู่ระบบไม่สำเร็จ");
+      showToast(result.error ?? "เข้าสู่ระบบไม่สำเร็จ", "error");
       return;
     }
+    showToast("เข้าสู่ระบบสำเร็จ", "success");
     reset();
     onClose();
   };
@@ -106,15 +106,6 @@ export function LoginBottomDrawer({
           />
 
           <form className="mt-5 flex flex-col gap-4" onSubmit={handleSubmit}>
-            {error && (
-              <p
-                className="rounded-[var(--radius-control)] bg-[var(--surface-selected)] px-3 py-2 text-sm text-[var(--destructive)]"
-                role="alert"
-              >
-                {error}
-              </p>
-            )}
-
             <div className="space-y-1.5">
               <label htmlFor="login-phone" className="text-sm font-medium text-[var(--text-secondary)]">
                 เบอร์โทรศัพท์

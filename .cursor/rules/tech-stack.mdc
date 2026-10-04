@@ -18,7 +18,7 @@ alwaysApply: true
 ## Styling — Tailwind เป็นหลัก
 
 - **Component และ layout:** ใช้ **Tailwind ใน TSX** เป็นค่าเริ่มต้น — จัด `flex` / `grid` / `gap` / spacing / sizing / position / responsive breakpoints / `min-h-0` chain ฯลฯ ด้วย utility และ `cn()`; layout components (shell, column, section wrapper) ทำใน className ไม่ใช่ feature CSS
-- **ไฟล์ CSS** (`app/styles/*.css`, import ผ่าน `globals.css`): เก็บ **design tokens**, **สี**, **แสงและผิว** (gradient, glass, blur, shadow, glow), keyframes/animation พิเศษ, scrollbar theme, pseudo-element ซับซ้อน — **ไม่** เพิ่ม layout routine (margin, padding, flex, grid, width, height ที่ utility ครอบคลุม) ใน feature CSS
+- **ไฟล์ CSS** (`app/styles/*.css`, import ผ่าน `globals.css`): เก็บ **design tokens**, **สี**, **แสงและผิว** (gradient, solid fill, shadow, glow — **ไม่**ใช้ blur/glass เป็นภาษาหลักของ UI ใหม่), keyframes/animation พิเศษ, scrollbar theme, pseudo-element ซับซ้อน — **ไม่** เพิ่ม layout routine (margin, padding, flex, grid, width, height ที่ utility ครอบคลุม) ใน feature CSS
 - **Typography:** ตาม `.cursor/rules/typography.mdc` — ขนาด/น้ำหนักใน TSX หรือ `cosmic-type-*` / bridge ไม่ใช่ feature CSS
 - **โค้ด CSS เก่า:** ไม่ refactor ทั้งไฟล์โดยไม่ได้รับคำสั่ง; งานใหม่และบริเวณที่แก้ ให้ขยับไป Tailwind ตามกฎนี้
 - สี semantic: อ้าง `var(--…)` จาก `tokens.css` / `design.md` หรือ Tailwind ที่ map แล้ว — ห้ามกระจาย hex ซ้ำใน component

@@ -28,7 +28,7 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
 }
 
 function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolean }) {
-  const { catalog, loading, error } = usePromotionsCatalog();
+  const { catalog, loading, error: loadError } = usePromotionsCatalog();
   const [detailId, setDetailId] = useState<PromotionDetailId | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
 
@@ -57,8 +57,10 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
       {loading ? (
         <p className="py-8 text-center text-sm text-[var(--text-secondary)]">กำลังโหลดโปรโมชั่น…</p>
       ) : null}
-      {error ? (
-        <p className="py-8 text-center text-sm text-[var(--destructive)]">{error}</p>
+      {!loading && loadError && !catalog ? (
+        <p className="py-8 text-center text-sm text-[var(--text-secondary)]">
+          ไม่สามารถแสดงโปรโมชั่นได้ในขณะนี้
+        </p>
       ) : null}
 
       {catalog && showDesktopHub ? (

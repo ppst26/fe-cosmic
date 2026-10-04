@@ -2,6 +2,135 @@
  * หน้า VIP standalone — เลย์เอาต์ (แท็บใช้ cosmic-line-tabs)
  */
 
+/**
+ * สแตกการ์ดแรงค์ — เฉพาะ .vip-page / .vip-modal (ไม่ใช้ที่อื่น)
+ */
+.vip-page .vip-rank-stack,
+.vip-modal .vip-rank-stack {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.vip-page .vip-rank-stack .vip-rank-surface-card,
+.vip-modal .vip-rank-stack .vip-rank-surface-card {
+  border: 1px solid var(--vip-panel-border);
+  border-radius: var(--vip-rank-card-radius-top) var(--vip-rank-card-radius-top)
+    var(--vip-rank-card-radius-bottom) var(--vip-rank-card-radius-bottom);
+  background: var(--vip-rank-card-top-radial), var(--vip-rank-card-face-gradient);
+  padding: 1.25rem;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 4%, transparent);
+}
+
+.vip-page .vip-rank-stack .vip-panel-card--level-up.vip-rank-surface-card::before,
+.vip-modal .vip-rank-stack .vip-panel-card--level-up.vip-rank-surface-card::before {
+  display: none;
+}
+
+.vip-page .vip-rank-stack .vip-panel-card--level-up.vip-rank-surface-card::after,
+.vip-modal .vip-rank-stack .vip-panel-card--level-up.vip-rank-surface-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--vip-rank-card-accent) 18%, transparent) 28%,
+    color-mix(in srgb, var(--vip-rank-card-accent) 42%, var(--vip-rank-card-bg) 58%) 50%,
+    color-mix(in srgb, var(--vip-rank-card-accent) 18%, transparent) 72%,
+    transparent 100%
+  );
+  box-shadow: 0 0 10px color-mix(in srgb, var(--vip-rank-card-accent) 22%, transparent);
+  pointer-events: none;
+}
+
+.vip-page .vip-rank-stack .vip-rank-metric__icon,
+.vip-modal .vip-rank-stack .vip-rank-metric__icon {
+  color: var(--vip-rank-card-accent);
+}
+
+.vip-page .vip-rank-stack .vip-rank-metric__label,
+.vip-modal .vip-rank-stack .vip-rank-metric__label {
+  color: var(--text-secondary);
+}
+
+.vip-page .vip-rank-stack .vip-rank-metric__track,
+.vip-modal .vip-rank-stack .vip-rank-metric__track {
+  height: 0.4375rem;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-rank-metric__track,
+  .vip-modal .vip-rank-stack .vip-rank-metric__track {
+    height: 0.5rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-progress-fill--rank-card,
+.vip-modal .vip-rank-stack .vip-progress-fill--rank-card {
+  background: var(--vip-rank-card-accent);
+}
+
+.vip-page .vip-rank-stack .vip-progress-fill--rank-card.is-complete,
+.vip-modal .vip-rank-stack .vip-progress-fill--rank-card.is-complete {
+  background: var(--vip-rank-card-accent);
+}
+
+.vip-page .vip-rank-stack .vip-rank-metric__complete,
+.vip-modal .vip-rank-stack .vip-rank-metric__complete {
+  color: var(--vip-rank-metric-complete);
+}
+
+.vip-page .vip-rank-stack .vip-maintain-rank-panel__days,
+.vip-modal .vip-rank-stack .vip-maintain-rank-panel__days {
+  color: var(--vip-level-up-percent);
+}
+
+.vip-page .vip-rank-hero,
+.vip-modal .vip-rank-hero {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 0.875rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--vip-panel-border) 85%, transparent);
+}
+
+.vip-page .vip-rank-hero__meta,
+.vip-modal .vip-rank-hero__meta {
+  min-width: 0;
+  text-align: left;
+}
+
+.vip-page .vip-rank-hero__label,
+.vip-modal .vip-rank-hero__label {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+.vip-page .vip-rank-hero__rank,
+.vip-modal .vip-rank-hero__rank {
+  margin-top: 0.15rem;
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+}
+
+.vip-page .vip-rank-hero__next,
+.vip-modal .vip-rank-hero__next {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
 /** การ์ดครอบร่วม — เลื่อนระดับ · สิทธิประโยชน์ · รักษาระดับ */
 .vip-panel-card {
   width: 100%;
@@ -77,6 +206,10 @@
   transition: width 500ms ease;
 }
 
+.vip-progress-fill--rank-card {
+  background: var(--vip-level-up-bar);
+}
+
 .vip-progress-fill--level-up {
   background: var(--vip-level-up-bar);
 }
@@ -108,6 +241,31 @@
   min-height: 2.75rem;
   border-radius: var(--radius-control);
   padding: 0.5rem 0.625rem;
+}
+
+.vip-page .vip-rank-stack .vip-my-level-benefits__cell--compact,
+.vip-modal .vip-rank-stack .vip-my-level-benefits__cell--compact {
+  min-height: 2rem;
+  padding: 0.25rem 0.4375rem;
+}
+
+.vip-page .vip-rank-stack .vip-my-level-benefits__cell--compact.vip-my-level-benefits__cell--a,
+.vip-modal .vip-rank-stack .vip-my-level-benefits__cell--compact.vip-my-level-benefits__cell--a {
+  background: var(--vip-rank-benefit-cell-a);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.03);
+}
+
+.vip-page .vip-rank-stack .vip-my-level-benefits__cell--compact.vip-my-level-benefits__cell--b,
+.vip-modal .vip-rank-stack .vip-my-level-benefits__cell--compact.vip-my-level-benefits__cell--b {
+  background: var(--vip-rank-benefit-cell-b);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.035);
+}
+
+.vip-page .vip-rank-stack > .vip-panel-card.vip-rank-surface-card:has(.vip-my-level-benefits),
+.vip-modal .vip-rank-stack > .vip-panel-card.vip-rank-surface-card:has(.vip-my-level-benefits),
+.vip-page .vip-rank-stack .vip-my-level-benefits__group.vip-rank-surface-card,
+.vip-modal .vip-rank-stack .vip-my-level-benefits__group.vip-rank-surface-card {
+  padding: 0.625rem 0.75rem;
 }
 
 .vip-my-level-benefits__cell--a {
@@ -144,7 +302,7 @@
 }
 
 .vip-modal .vip-maintain-rank-panel .vip-maintain-rank-panel__days {
-  color: var(--text-secondary);
+  color: var(--vip-level-up-percent);
   text-shadow: none;
 }
 
@@ -209,7 +367,4 @@
     flex-direction: column;
   }
 
-  .cosmic-mobile-sheet.vip-modal .vip-modal-desktop__missions .vip-maintain-rank-panel--desktop-stretch > p:last-child {
-    margin-top: auto;
-  }
 }

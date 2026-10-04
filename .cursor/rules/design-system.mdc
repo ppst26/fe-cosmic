@@ -7,18 +7,19 @@ alwaysApply: false
 # Design System (summary)
 
 ต้นฉบับเต็ม: `design.md` ที่ root — อ่านก่อนลงมือทำ UI ที่เกี่ยวกับ layout / visual  
-**อ้างอิงภาพรวม:** [Dexsport.io](https://dexsport.io/) · สีแบรนด์อ้างอิง: `#0C0713`, `#7747E5`, `#FFFFFF` ([brand resources](https://dexsport.io/brand-resources/))
+**ต้นฉบับดีไซน์:** Cosmicbet — **ไม่** follow [Dexsport.io](https://dexsport.io/) หรือเว็บอ้างอิงภายนอก  
+**ภาษาหลัก:** **Solid** (พื้นทึบจาก tokens) — ไม่ใช้ frosted glass / backdrop-blur เป็นแนวหลัก; ชื่อ class `glass-*` ในโค้ด = legacy ให้ทำเป็นชิป solid
 
-- พื้นหลัง graphite `#0C0713`; การ์ด/ชั้นยก `--surface-elevated`; ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex ซ้ำ
+- พื้นหลัง graphite; การ์ด/ชั้นยก `--inner-card-fill`, `--sheet-row-fill`, `--surface-elevated`; ใช้ CSS variables ส่วนกลาง ห้ามกระจาย hex ซ้ำ
 - Primary action / tab active: `#7747E5` (gradient ม่วง→ฟ้าได้เฉพาะ CTA/badge โปรโมชัน)
-- **ปุ่ม 3 ชั้น:** (1) `glass-control`+pill/icon — View All, carousel, tab (2) **`cosmic-btn-nav`** — ลิงก์หน้าอื่น/external (3) `cosmic-cta-primary` — สมัคร/ส่ง/รับโบนัส — ดู `design.md` § ปุ่มหลัก
-- **Component หลัก lobby:** borderless หรือ border จางมาก — แยกชั้นด้วย radius + elevation; หลีกเลี่ยง nebula/cosmic หนา
-- **Modal / sheet / grid cards:** มุม `var(--radius-panel)`; class ใน `app/styles/` สำหรับ **โทนสี/แก้ว/เงา** (เช่น `cosmic-modal-shell`, `glass-card--soft`) — โครง layout ของหน้าใช้ Tailwind ใน component
-- **Search bar:** pill พื้น elevated; ห้าม ring/outline ตอน focus/hover — มือถือ guest ไม่มี search ใน header
-- **Category row:** การ์ดมุมโค้งแบบ Dexsport + chip soft glass; nav/HoF/กิจกรรม ใช้ icon เรียบ
+- **ปุ่ม 3 ชั้น:** (1) chip solid (`glass-control`+pill/icon — ชื่อเก่า) (2) **`cosmic-btn-nav`** (3) `cosmic-cta-primary` — ดู `design.md` § ปุ่มหลัก
+- **Component หลัก lobby:** borderless หรือ border จางมาก — แยกชั้นด้วย radius + solid fill; หลีกเลี่ยง nebula/cosmic หนา
+- **Modal / sheet / grid cards:** มุม `var(--radius-panel)`; class ใน `app/styles/` สำหรับ **โทนสี/เงา/gradient** — โครง layout ใช้ Tailwind ใน component
+- **Search bar:** pill พื้น solid elevated; ห้าม ring/outline หนัก — มือถือ guest ไม่มี search ใน header
+- **Category row:** การ์ดมุมโค้ง solid; nav/HoF/กิจกรรม ใช้ icon เรียบ
 - **กิจกรรม lobby (มือถือ):** carousel รูป `public/tournament/` — dots กลาง + prev/next ไม่มี View All (`JackpotSection.tsx`)
-- **Providers:** marquee โลโก้ ไม่ glass card; ช่องว่างบน ~48px
-- **Hall of Fame:** แถวแยกการ์ด + gap แนวตั้งชัด; แท็บ soft glass
+- **Providers:** marquee โลโก้ ไม่ห่อการ์ด; ช่องว่างบน ~48px
+- **Hall of Fame:** แถวแยกการ์ด + gap แนวตั้งชัด; แท็บ solid
 - **Typography:** Noto Sans Thai; น้ำหนักสูงสุด **500** · ขนาดผ่าน Tailwind / `cosmic-type-*` — **ห้าม** `font-size` ใน feature CSS · ดู `design.md` §4 และ rule `typography.mdc`
 - Mobile-first; `max-width` 1200px; gutter จาก `design.md`
 - ลำดับ section หมวด 6 + แผนไฟล์หมวด 10 ใน `design.md`

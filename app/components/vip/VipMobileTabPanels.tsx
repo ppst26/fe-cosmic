@@ -30,16 +30,19 @@ export function VipMobileTabPanels({
 
   if (tab === "rank") {
     return (
-      <div className="flex flex-col items-center gap-4">
-        <VipRankCarousel
-          focusIndex={rankFocusIndex}
-          onFocusChange={onRankFocusChange}
-          playerRankId={player.currentRankId}
-        />
+      <div className="vip-rank-stack">
+        <div className="flex w-full flex-col items-center gap-3">
+          <VipRankCarousel
+            focusIndex={rankFocusIndex}
+            onFocusChange={onRankFocusChange}
+            playerRankId={player.currentRankId}
+          />
+        </div>
 
         <VipRankLevelUpCard
           player={player}
           focusRankId={fetchVipRanks().tiers[rankFocusIndex]?.id ?? player.currentRankId}
+          rankSurface
         />
       </div>
     );

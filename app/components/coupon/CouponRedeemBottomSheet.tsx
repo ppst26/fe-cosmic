@@ -12,6 +12,7 @@ import {
 } from "../ui/responsiveSheetDialog";
 import { submitCoupon } from "@/lib/api/coupon";
 import { COUPON_CODE_MAX_LENGTH, sanitizeCouponCode } from "@/lib/fieldInput";
+import { useToast } from "@/context/ToastContext";
 
 interface CouponRedeemBottomSheetProps {
   isOpen: boolean;
@@ -22,15 +23,12 @@ interface CouponRedeemBottomSheetProps {
  * Bottom sheet แลกคูปอง — เปิดจากเมนู "คูปอง" ใน RightMenuDrawer
  */
 export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomSheetProps) {
+  const { showToast } = useToast();
   const [code, setCode] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const reset = () => {
     setCode("");
-    setError(null);
-    setSuccess(null);
     setSubmitting(false);
   };
 
@@ -43,12 +41,9 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setError(null);
-    setSuccess(null);
-
     const normalized = sanitizeCouponCode(code);
     if (!normalized) {
-      setError("กรุณากรอกรหัสคูปอง");
+      showToast("กรุณากรอกรหัสคูปอง", "error");
       return;
     }
 
@@ -56,11 +51,11 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
     const result = await submitCoupon(normalized);
     setSubmitting(false);
     if (result.ok) {
-      setSuccess(result.message);
+      showToast(result.message, "success");
       setCode("");
       return;
     }
-    setError(result.error);
+    showToast(result.error, "error");
   };
 
   return (
@@ -90,23 +85,6 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
           </div>
 
           <form className="mt-6 flex flex-col gap-4" onSubmit={handleSubmit}>
-            {error && (
-              <p
-                className="rounded-[var(--radius-control)] bg-[var(--surface-selected)] px-3 py-2 text-sm text-[var(--destructive)]"
-                role="alert"
-              >
-                {error}
-              </p>
-            )}
-            {success && (
-              <p
-                className="rounded-[var(--radius-control)] bg-[#0f3d2e]/80 px-3 py-2 text-sm text-[var(--success)]"
-                role="status"
-              >
-                {success}
-              </p>
-            )}
-
             <div className="space-y-1.5">
               <label htmlFor="coupon-code" className="cosmic-type-sheet-label">
                 รหัสคูปอง

@@ -1,40 +1,45 @@
 # Cosmicbet — Front-end Design Guide
 
 เอกสารสำหรับ agent ออกแบบและพัฒนา Front-end  
-**สถานะ:** แนวทางล่าสุด ณ 19 กันยายน 2026  
-**อ้างอิงภาพรวม UI:** [Dexsport.io](https://dexsport.io/) (Web3 sportsbook + casino)  
-**อ้างอิงสี/แบรนด์ Dexsport (อ่านเพื่อโทน ไม่ใช่คัดลอกโลโก้):** [Brand resources](https://dexsport.io/brand-resources/)
+**สถานะ:** แนวทางล่าสุด ณ 2 ตุลาคม 2026  
+**ต้นฉบับดีไซน์:** Cosmicbet เท่านั้น — **ไม่** follow UI/UX จาก [Dexsport.io](https://dexsport.io/) หรือเว็บอ้างอิงภายนอกอีกต่อไป (ลิงก์เก่าในเอกสารรุ่นก่อนใช้เพื่ออธิบายประวัติเท่านั้น)
 
-Cosmicbet ยังใช้โลโก้และ copy ของแบรนด์ตัวเอง — เอกสารนี้กำหนด **ภาษาดีไซน์** ให้ใกล้ Dexsport: พื้นกราไฟต์เข้ม, ม่วง product `#7747E5`, พื้นผิวยกชั้นมุมโค้ง, carousel โปรโมชัน, แถวรายการแยกการ์ด, navigation กระชับแบบ Web3
+Cosmicbet ใช้โลโก้และ copy ของแบรนด์ตัวเอง — เอกสารนี้กำหนด **ภาษาดีไซน์ Solid:** พื้น graphite เข้ม, ม่วง product `#7747E5`, **ชั้นยกทึบ (solid fill)** มุมโค้ง, carousel โปรโมชัน, แถวรายการแยกการ์ด, navigation กระชับ
+
+### หลัก Solid (ไม่ใช่ Glass)
+
+- **พื้นผิวหลัก:** สีทึบจาก tokens (`--inner-card-fill`, `--sheet-row-fill`, `--cosmic-chrome-surface-bg`, `--surface-solid-*`) — **ไม่**ใช้ backdrop-blur / frosted glass / แก้วโปร่งเป็นภาษาหลักของ UI ใหม่
+- **แสง:** เงาและ gradient จำกัด (header radial, แถบหัว section, CTA) — ไม่ซ้อน blur หลายชั้น
+- **ชื่อ class เก่า:** บางไฟล์ยังมี prefix `glass-*` / `glass-card--soft` ในโค้ด — งานใหม่ให้ **มองเป็นชิป/การ์ด solid** ตาม token ด้านบน; refactor เป็นทีเมื่อแก้ไฟล์นั้น ไม่เพิ่ม pattern glass ใหม่
 
 ---
 
 ## 1. เป้าหมายและลำดับความสำคัญ
 
-- UI เรียบ มืออาชีพ อ่านง่าย — เน้นเข้าถึงเกม/กีฬา/กระเป๋าเงินในไม่กี่คลิก (แนว Dexsport)
+- UI เรียบ มืออาชีพ อ่านง่าย — เน้นเข้าถึงเกม/กีฬา/กระเป๋าเงินในไม่กี่คลิก
 - **Mobile-first เสมอ** — วาง spacing, ตัวอักษร และการ์ดจากจอมือถือก่อน แล้วขยายไป desktop (sidebar + content กว้าง)
-- คำสั่งผู้ใช้ล่าสุด > เอกสารนี้ > mockup เก่าที่ขัดกับ Dexsport reference
-- **พื้นหลังหลัก:** graphite black `#0C0713` (ตาม Dexsport) — ไม่ใช้ม่วงน้ำเงินสดหรือ nebula หนาเต็มจอ
-- **สีเน้น (action):** `#7747E5` สำหรับปุ่มหลัก, tab active, ลิงก์สำคัญ — อนุญาต gradient ม่วง→ฟ้าอ่อนเฉพาะ badge/CTA โปรโมชัน (เทียบป้าย “WEB3 BETTING” บน Dexsport)
-- แยก **พื้นผิวยก** (`--surface-elevated`) จากพื้นหน้า — การ์ดหมวด, แถว HoF, search, wallet pill อยู่บนชั้นที่สว่างขึ้นเล็กน้อย ไม่พึ่ง border หนา
+- คำสั่งผู้ใช้ล่าสุด > เอกสารนี้ > mockup เก่าที่ขัดกับแนว Solid ด้านบน
+- **พื้นหลังหลัก:** graphite / cosmic base (`--bg-page`, `--cosmic-page-base`) — nebula เป็นชั้นพื้นหลังเบา ๆ ได้ แต่ **การ์ดและ chrome ทึบ**
+- **สีเน้น (action):** `#7747E5` สำหรับปุ่มหลัก, tab active, ลิงก์สำคัญ — gradient ม่วง→ฟ้าได้เฉพาะ badge/CTA โปรโมชัน
+- แยก **พื้นผิวยก (solid)** จากพื้นหน้า — การ์ดหมวด, แถว HoF, search, wallet pill ใช้ fill ทึบ ไม่พึ่ง border หนา
 - ภาพแยกส่วนเป็นส่วนต่อเนื่องของหน้าเดียวกัน ไม่สร้าง Header/Navigation ซ้ำ
 - Mockup เป็นแนวทางภาพรวม ไม่ใช่ขนาด CSS จริง
 - ค่าระยะ/breakpoint ด้านล่างเป็นข้อเสนอ implementation ไม่ใช่ pixel-perfect จากภาพ
 
 ---
 
-## 2. สิ่งที่ดึงจาก Dexsport (สรุปสำหรับ agent)
+## 2. ภาษาดีไซน์ Cosmicbet (สรุปสำหรับ agent)
 
-| พื้นที่ | ลักษณะที่ต้องเลียนแบบ |
+| พื้นที่ | ลักษณะที่ต้องทำ |
 | :--- | :--- |
-| **Header** | โลโก้ซ้าย; ค้นหาในปุ่ม/ช่องมุมโค้ง; กระเป๋า/ยอดแบบ pill มืด; **Sign up** ม่วงเต็ม; ไอคอนช่วยเหลือ/ภาษา |
-| **Hero** | Carousel การ์ดโปรโมชันมุมโค้งใหญ่; pagination เป็น **เส้นแนวนอน** (ไม่ใช่จุดกลมใหญ่) |
-| **หมวดเกม (Casino)** | การ์ดแนวนอนมุมโค้ง มี label + ภาพประกอบ (Dexsport ใช้ 3D icon — ใช้ได้เฉพาะแถวหมวด ไม่ใช่ทั้งแอป) |
-| **Search** | แถบ pill กว้างเต็ม content, พื้นเข้มกว่าหน้าเล็กน้อย, placeholder สั้น (“Search” / “Game \| Provider”) |
-| **รายการเกม** | แถว section + “See all”; การ์ดปกเกมมุมโค้ง; เลื่อนแนวนอน |
-| **ตาราง/ลีดเดอร์** | แถว **แยกการ์ด** มี `gap` แนวตั้งชัด (ไม่ติดกันเป็นตาราง monolith) |
-| **Desktop** | Sidebar ซ้ายรายการเมนู; เนื้อหากลางกว้าง |
-| **Mobile bottom nav** | 5 ช่อง icon + label; พื้นเข้ม; active เน้นสี product |
+| **Header / chrome** | แถบ graphite ทึบ (`cosmic-mobile-chrome-surface` / desktop band); chip ยอด/ค้นหา solid |
+| **Hero** | Carousel แบนเนอร์มุมโค้ง; pagination จุดหรือเส้น — พื้นการ์ดทึบหรือรูปเต็มการ์ด |
+| **หมวดเกม (CategoryNav)** | การ์ดมุมโค้ง solid; อนุญาต 3D icon แถวหมวดเท่านั้น |
+| **Search** | pill กว้าง พื้น `--inner-card-fill` / elevated solid |
+| **รายการเกม** | หัว section แถบ gradient ม่วงจาง (`.lobby-section-header-band`); การ์ดปกเกม; carousel แนวนอน |
+| **ตาราง/ลีดเดอร์** | แถว **แยกการ์ด** มี `gap` แนวตั้งชัด |
+| **Desktop** | Sidebar ~220px solid; เนื้อหากลางกว้าง |
+| **Mobile bottom nav** | 5 ช่อง; พื้น `--bottom-nav-bg` ทึบ |
 
 ---
 
@@ -46,7 +51,7 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 :root {
   color-scheme: dark;
 
-  /* พื้นหลัง — อิง Dexsport Black */
+  /* พื้นหลัง — graphite Cosmicbet */
   --bg-page: #0c0713;
   --surface-start: #16121f;
   --surface-mid: #121018;
@@ -110,7 +115,7 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 
 ## 4. Typography
 
-**อิง Dexsport:** Adieu (display/heading), Object Sans (body) — ในโปรเจกต์ใช้ **Noto Sans Thai** (+ fallback system sans) ให้รองรับไทยครบ · ตัวเลข/โค้ด: **Geist Mono** (`--font-mono`)
+ในโปรเจกต์ใช้ **Noto Sans Thai** (+ fallback system sans) ให้รองรับไทยครบ · ตัวเลข/โค้ด: **Geist Mono** (`--font-mono`)
 
 **โหลดฟอนต์ (implementation):** `app/layout.tsx` (`next/font/google`) → CSS variable `--font-noto-sans-thai` บน `<html>` · map ใน `app/globals.css` (`@theme` → `--font-sans`, `--font-heading`) · `body { font-family: … }`
 
@@ -126,7 +131,7 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 | **Micro / Meta / Badge** *(Min)* | 12px | 12–13px | 500 / 1.4 | **ขั้นต่ำสุดของระบบ** สำหรับวันที่/เวลา/ป้าย |
 | **Table Header** | 11.5–12px | 12px | 500 / 1.3 | เฉพาะหัวตารางภาษาอังกฤษ (`uppercase tracking-wider`) |
 
-- ยอดเงิน: `tabular-nums`; payout เน้นใช้ gold (`--gold-gradient` หรือ `#ffe66d`) แบบ Dexsport leaderboard
+- ยอดเงิน: `tabular-nums`; payout เน้นใช้ gold (`--gold-gradient` หรือ `#ffe66d`)
 - ไทย: ไม่ uppercase / letter-spacing กว้าง; ไม่ตัดสระด้วย line-height ต่ำ
 
 **Implementation (Tailwind):**
@@ -142,7 +147,7 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 - Content กึ่งกลาง `max-width: var(--content-max)`; gutter `--page-gutter` เดียวกัน
 - ระหว่าง section: **24–32px**; ก่อน Providers **40–48px**
 - ระหว่าง heading กับรายการ: **12–16px**; ระหว่างการ์ดใน carousel: **8–12px** มือถือ / **12–16px** desktop
-- **Category row (Dexsport-style):** การ์ดมุมโค้ง ~12–16px สูงประมาณ 72–88px มือถือ; gap แนวนอน 8–12px; เลื่อนแนวนอนเมื่อเกินจอ
+- **Category row:** การ์ดมุมโค้ง solid ~12–16px สูงประมาณ 72–88px มือถือ; gap แนวนอน 8–12px; เลื่อนแนวนอนเมื่อเกินจอ
 - Game grid/carousel: ~550px แสดง 3 ใบ; แคบกว่า 480px min-width การ์ด ~140px เห็นใบถัดไปบางส่วน
 - **Carousel presets** (`app/globals.css` + `Carousel.tsx`): กำหนดด้วย class บน `.carousel-track`
   | Class | ใช้กับ | มือถือ (โดยประมาณ) |
@@ -152,25 +157,25 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
   | `.carousel-providers` | (สำรอง — lobby ใช้ marquee แทน) | 3 คอลัมน์ |
   | `.carousel-tournaments` | **กิจกรรม / ทัวร์นาเมนต์** (`JackpotSection.tsx`) | ~2.2 คอลัมน์ การ์ดแนวตั้ง 3:4 + peek |
 - ตั้งแต่ 1024px: sidebar lobby (ถ้ามี) ~240–280px; เนื้อหาหลักไม่เกิน `--content-max`
-- Hall of Fame / ตารางแถวแยก: **gap แนวตั้ง 8–10px** มือถือ, **10–12px** sm+ ระหว่างแถว glass/elevated
+- Hall of Fame / ตารางแถวแยก: **gap แนวตั้ง 8–10px** มือถือ, **10–12px** sm+ ระหว่างแถวการ์ด solid
 - ห้าม horizontal overflow นอก carousel ที่ตั้งใจ
 
 ---
 
 ## 6. ลำดับหน้า (Cosmicbet lobby)
 
-ลำดับเดิมของโปรเจกต์ — จัดวางและสไตล์ให้ **รู้สึกใกล้ Dexsport casino home** (hero → หมวด → search → รายการเกม)
+ลำดับเดิมของโปรเจกต์ — hero → หมวด → search → รายการเกม (โทน Cosmicbet solid)
 
 1. **Header** — โลโก้ Cosmicbet, Log in, Sign up (ม่วง), ไอคอนขวา / wallet (เมื่อมี)
 2. **Welcome / Promotional carousel** — มุมโค้งใหญ่; pagination แบบเส้น
 3. **Cosmic intro** (ถ้ายังใช้) — กระชับ ไม่แย่ง hero
 4. **ยอดนิยม** — Swipe Bet / DEXY RACE
-5. **หมวดเกม** — Lobby, Originals, Slots, Live Casino, … (สไตล์การ์ดหมวด Dexsport)
+5. **หมวดเกม** — Lobby, Originals, Slots, Live Casino, … (การ์ดหมวด solid)
 6. **Searchbar** — pill กว้าง
 7. **เกมยอดฮิต → Slots → คาสิโน → ยิงปลา → กีฬา** (บนมือถือแสดงเมื่ออยู่หมวด home / เส้นทางที่ `HomeLobbyPage` เปิดชุดนี้ — ดู `showMobileLobbySections`)
 8. **Providers** — marquee โลโก้ (ไม่ใช่การ์ด glass รายค่าย); View All ไป `/providers`
 9. **กิจกรรม (ทัวร์นาเมนต์ carousel)** — **มือถือเท่านั้น** (`lg:hidden`); อยู่เหนือ HoF; ต้องล็อกอิน (`AuthGate`) หรือแสดงข้อความชวนเข้าสู่ระบบ
-10. **Hall of Fame (Top Performance)** — แท็บ soft glass; ไม่ glow ม่วงหนักบน active
+10. **Hall of Fame (Top Performance)** — แท็บ solid; ไม่ glow ม่วงหนักบน active
 11. **Floating Bottom Nav** — fixed มือถือ; Cosmicbet: ถอน / ฝาก / เมนู / คืนยอด / ติดต่อ
 
 **ไม่แสดงบน lobby:** การ์ด Feature สามใบ (ร้านค้าเพชร / ภารกิจ / วงล้อ) — เข้าผ่านเมนู / hub (`/event`, `/wheel` ฯลฯ) แทน; component `FeatureActionCards` เก็บไว้ reuse ได้แต่ไม่ mount ใน `HomeLobbyPage`
@@ -186,7 +191,7 @@ Cosmicbet ยังใช้โลโก้และ copy ของแบรน�
 | โซน | แนวทาง |
 | :--- | :--- |
 | **Nav, header, bottom bar** | SVG เรียว น้ำหนักเดียว `currentColor` |
-| **แถวหมวดเกม (CategoryNav)** | อนุญาตภาพประกอบ/3D ค่ายหรือ asset หมวด (เหมือน Dexsport); chip **soft glass** (`glass-card--soft`) — ไม่ยัด 3D ลงกิจกรรม/HoF |
+| **แถวหมวดเกม (CategoryNav)** | อนุญาตภาพประกอบ/3D ค่ายหรือ asset หมวด; chip **solid** (`glass-card--soft` = fill ทึบ `--inner-card-fill` ในโค้ด) — ไม่ยัด 3D ลงกิจกรรม/HoF |
 | **ปกเกม / โปรโมชัน / provider** | สีจริงได้ |
 | **Hall of Fame** | ดาวทองเล็ก ๆ ที่หัวข้อ; payout สีทอง |
 
@@ -202,7 +207,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - **Log in:** ghost / พื้น `--surface-elevated`
 - **Desktop:** ค้นหา + wallet card ตาม layout เดิม
 - **Mobile ไม่ล็อกอิน:** แสดงเฉพาะโลโก้ + Log in / Sign up — **ซ่อน** search และโปรไฟล์
-- **Mobile ล็อกอิน:** ไอคอนกระเป๋า + ยอดเครดิต + ปุ่มโปรไฟล์ใน **กลุ่ม `glass-card--soft` เดียว** (ไม่ซ้อน glass หลายชั้น); **ไม่**แสดง search / wallet card แบบ desktop
+- **Mobile ล็อกอิน:** ไอคอนกระเป๋า + ยอดเครดิต (chip solid); **ไม่**แสดง search / wallet card แบบ desktop
 - โลโก้: `CosmicbetLogo` / `public/cm-logo.png`
 
 ### Promotional carousel
@@ -210,7 +215,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - Pagination: **เส้นบาง** ความกว้างเท่ากัน active สีขาว/ม่วง inactive จาง
 - ไม่ autoplay default
 
-### CategoryNav (Dexsport-style tiles)
+### CategoryNav (solid tiles)
 - การ์ดแต่ละหมวด: พื้น `--surface-elevated`, radius `--radius-card`, padding 12–16px
 - Label มุมซ้ายบน; ภาพประกอบขวาล่าง (crop ไม่บังข้อความ)
 - Active: border หรือพื้น `--category-active-gradient`
@@ -218,25 +223,25 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 ### SectionHeader + carousel
 - ซ้าย: icon + heading (`SectionHeader`, optional `titleId` สำหรับ `aria-labelledby`)
 - ขวา — **แบบมาตรฐาน (เกม / ยอดนิยม):** View All (pill `glass-control glass-pill`) + prev/next (`CarouselControls`, `showViewAll` default `true`)
-- ขวา — **กิจกรรมทัวร์นาเมนต์:** prev/next **เท่านั้น** (`showViewAll={false}`) — อ้างอิง carousel แนว Dexsport/Tournaments
+- ขวา — **กิจกรรมทัวร์นาเมนต์:** prev/next **เท่านั้น** (`showViewAll={false}`)
 - Track: native scroll + `scroll-snap`; ซ่อน scrollbar (`.carousel-track`)
 - ปุ่มเลื่อน: `glass-control glass-icon-btn`; hit area ≥ 44px (`::after` ใน CSS)
 - **Pagination แยกตาม section:**
   | Section | รูปแบบ |
   | :--- | :--- |
   | Promo (`PromoCarousel`) | จุด/แถบด้านล่าง (active เน้นสี product) |
-  | Welcome hero | เส้นแนวนอน (ตาม Dexsport) |
+  | Welcome hero | จุด (dots) หรือเส้นแนวนอน |
   | **กิจกรรมทัวร์นาเมนต์** | **จุดกลมกลางแถว** — active `--text-primary`, inactive `--surface-hover` |
 
 ### ปุ่มหลัก (3 ชั้น)
 
-ใช้ **ชั้นเดียวต่อปุ่ม** — ห้ามผสม gradient CTA กับ glass ในปุ่มเดียวกัน  
+ใช้ **ชั้นเดียวต่อปุ่ม** — ห้ามผสม gradient CTA กับชิป solid ในปุ่มเดียวกัน  
 ค่าคงที่ class: `app/components/ui/cosmicButtonClasses.ts` · shadcn `Button` variant ตามตาราง
 
 | ชั้น | ชื่อ | Class / variant | ใช้เมื่อ |
 | :--- | :--- | :--- | :--- |
-| **1 — Outline glass** | Glass control | `glass-control` + `glass-pill` หรือ `glass-icon-btn` · `Button` (เพิ่มภายหลัง: `glassPill` / `glassIcon`) | แท็บรอง, View All, ปุ่มเลื่อน carousel, ตัวกรองเล็ก ๆ |
-| | Log in (header) | `glass-card--soft` บน `.cosmic-nav__auth-login` | เข้าสู่ระบบ — โทน glass ไม่ใช่ CTA |
+| **1 — Secondary chip (solid)** | Control / chip | `glass-control` + `glass-pill` หรือ `glass-icon-btn` (ชื่อ class เก่า — พื้นทึบ) · `Button` | แท็บรอง, View All, ปุ่มเลื่อน carousel, ตัวกรองเล็ก ๆ |
+| | Log in (header) | `glass-card--soft` บน `.cosmic-nav__auth-login` | เข้าสู่ระบบ — chip solid ไม่ใช่ CTA |
 | **2 — White solid** | Nav / link | **`cosmic-btn-nav`** (+ `--sm` / `--lg`) · `Button variant="navSolid"` | ไปหน้าอื่นในแอป (`Link` / `router.push`) · **external** (`<a target="_blank" rel="noopener noreferrer">`) |
 | **3 — Primary CTA** | Action | `cosmic-cta-primary` (+ `--sm` / `--lg`) · `Button variant="ctaPrimary"` | สมัคร, ส่งฟอร์ม, รับโบนัส, ฝาก — action สำคัญที่ไม่ใช่แค่เปลี่ยนหน้า |
 
@@ -246,7 +251,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 **อื่น ๆ (ไม่ใช่ปุ่มหลัก 3 ชั้น):**
 
 - `cosmic-cta-white` + `--sm` — ปุ่มขาวมุมโค้งใน **การ์ด feature** (คู่ `cosmic-cta-muted`)
-- `cosmic-cta-muted` — ปุ่มรองโปร่งบน glass card (outline อ่อน) **ไม่**แทน `cosmic-btn-nav`
+- `cosmic-cta-muted` — ปุ่มรองบนการ์ด solid (outline อ่อน) **ไม่**แทน `cosmic-btn-nav`
 
 **Accessibility:** hit area ≥ 44px บนมือถือ (ใช้ `min-height` / padding ของแต่ละ class); `focus-visible` ตาม globals.css
 
@@ -254,7 +259,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 
 ### Searchbar
 - สูง **44–48px**; radius `--radius-pill`; พื้น `--surface-elevated`
-- **ไม่ใช้ ring/outline ตอน focus/hover** (เรียบแบบ Dexsport)
+- **ไม่ใช้ ring/outline หนัก** ตอน focus/hover (เรียบ)
 - Placeholder: “Game \| Provider” หรือ “Search”
 
 ### GameCard / Providers (lobby)
@@ -262,7 +267,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - **ProvidersSection:** `ProviderLogoMarquee` — โลโก้จาก `public/provider logo/` (หรือ data ใน `homeProviderLogosData.ts`); **ไม่**ห่อแต่ละโลโก้ด้วย glass card; default grayscale, hover สว่างขึ้น; ช่องว่างด้านบน section **48–56px** (`mt-12` / `sm:mt-14`)
 
 ### FeatureActionCard (ไม่ใช้บนหน้า lobby หลัก)
-- การ์ดยกชั้น glass + CTA ขาว/รอง — ร้านค้าเพชร / ภารกิจ / วงล้อ
+- การ์ดยกชั้น solid + CTA ขาว/รอง — ร้านค้าเพชร / ภารกิจ / วงล้อ
 - **ห้าม**ใส่กลับใต้ Hall of Fame บน `HomeLobbyPage` เว้นแต่ผู้ใช้สั่งชัด
 
 ### LobbyActivitiesSection (ชื่อในโค้ด: `JackpotSection`)
@@ -278,7 +283,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - หัวข้อแยกจากตาราง; แท็บ pill: **Latest Winner** / **Top Win Multiple** (หรือชุด tab ตาม product)
 - Active tab: พื้น `--surface-selected` หรือ `--category-active-gradient`; ตัวอักษรขาว
 - คอลัมน์: **Game | Player | Time | Payout/Multiple** (ตาม implementation)
-- แต่ละแถว: **การ์ดแยก** (glass/elevated), `gap` แนวตั้งชัด — **ห้ามแถวติดกัน**
+- แต่ละแถว: **การ์ดแยก** (solid elevated), `gap` แนวตั้งชัด — **ห้ามแถวติดกัน**
 - Payout: สีทอง; multiple: pill พื้นเข้ม
 
 ### FloatingBottomNav
@@ -287,7 +292,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - fixed + safe area; กว้างสูงสุด ~640px กลางจอบนมือถือ
 - z-index ต่ำกว่า modal/sheet
 
-### Dialog & Modal — ระบบ (อิง Dexsport game lobby)
+### Dialog & Modal — ระบบ (solid shell + inner card)
 
 ใช้ Radix `Dialog` + class `cosmic-modal-shell` ใน `globals.css`  
 มือถือ: sheet เต็มจอ (`cosmic-sheet-shell`) · Desktop: modal กลางจอ
@@ -394,10 +399,10 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 
 ## 10. แนวทางโครงสร้างโค้ดสำหรับ agent
 
-- อ่าน `app/globals.css` และ component ที่มี — migrate token เก่า (`#19183B`, indigo CTA) ไป palette Dexsport ตามเอกสารนี้เมื่อแก้ UI
+- อ่าน `app/globals.css` และ component ที่มี — migrate token เก่า (`#19183B`, indigo CTA) ไป palette Cosmicbet ตามเอกสารนี้เมื่อแก้ UI
 - shadcn semantic colors ต้อง bridge กับ tokens ด้านบน
 - แยก mock data จาก API; ห้ามแสดงยอด/ผู้ชนะ mock เป็นข้อมูล live
-- เมื่ออ้างอิง Dexsport ให้เปิด [dexsport.io/casino](https://dexsport.io/casino/) สำหรับ lobby และ [dexsport.io](https://dexsport.io/) สำหรับ sportsbook
+- **ไม่**เปิดเว็บภายนอกเป็น reference ดีไซน์ — อ้าง `design.md` + `tokens.css` + component ที่มีใน repo
 
 ### แผนไฟล์ lobby (อัปเดตล่าสุด — อ้างอิงก่อนแก้ UI)
 
@@ -413,7 +418,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 | เมนูขวา | `RightMenuDrawer.tsx` — ไทล์ `menu-item--solid` (ไม่ glass), grid 3/4/4 |
 | Sidebar desktop พับ | `LobbyDesktopSidebar.tsx` — พับแล้ว icon อย่างเดียว |
 | กิจกรรมเต็มหน้า | `/event` → `ActivitiesHubPageContent` (แยกจากโปร `/promotions`) |
-| วงล้อ | `app/components/wheel/*` — hero `wheel-bg.avif`, glass ชั้นนอก / soft glass แถวใน |
+| วงล้อ | `app/components/wheel/*` — hero `wheel-bg.avif`, shell/แถว inner solid |
 
 ก่อนเพิ่ม section ใหม่บน lobby — เทียบลำดับหมวด 6 และตารางด้านบน; ถ้าผู้ใช้ขอเฉพาะส่วนใดส่วนหนึ่ง ห้ามรื้อ section อื่นโดยไม่จำเป็น
 
@@ -422,9 +427,9 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 ## 11. เกณฑ์ตรวจงานก่อนส่ง
 
 - [ ] พื้นหลัก `--bg-page` / `#0C0713`; action หลัก `#7747E5` — ไม่มีม่วงสด/neon นอก palette
-- [ ] Hero carousel + pagination แบบเส้น; หมวดเกมเป็นการ์ดมุมโค้งแบบ Dexsport
-- [ ] Search pill พื้น elevated (desktop); มือถือ guest ไม่มี search
-- [ ] Hall of Fame แถวแยกการ์ด มี gap แนวตั้งชัด; แท็บ soft glass
+- [ ] Hero carousel; หมวดเกมเป็นการ์ดมุมโค้ง solid
+- [ ] Search pill พื้น solid elevated (desktop); มือถือ guest ไม่มี search
+- [ ] Hall of Fame แถวแยกการ์ด มี gap แนวตั้งชัด; แท็บ solid
 - [ ] **กิจกรรม:** carousel รูปทัวร์นาเมนต์ + dots + prev/next (ไม่มี View All); ไม่ใช่การ์ด jackpot ยอดเงิน
 - [ ] Providers: marquee โลโก้ ไม่ glass card; ช่องว่างบน ~48px
 - [ ] ลำดับ section ตามหมวด 6; ไม่ซ้ำ header/nav

@@ -22,6 +22,7 @@ import {
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
+import { CosmicConfirmDialog } from "../ui/CosmicConfirmDialog";
 import {
   COSMIC_CHOICE_BTN,
   COSMIC_SHEET_FIELD_AMOUNT,
@@ -52,6 +53,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
   const [slipFileName, setSlipFileName] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
+  const [finalConfirmOpen, setFinalConfirmOpen] = useState(false);
   const slipInputRef = useRef<HTMLInputElement>(null);
 
   const resetFlow = () => {
@@ -62,6 +64,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
     setSlipFileName(null);
     setSubmitting(false);
     setSubmitMessage(null);
+    setFinalConfirmOpen(false);
   };
 
   useEffect(() => {
@@ -138,6 +141,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
     setSubmitMessage(null);
     await submitDeposit({ amount, methodId: "bank" });
     setSubmitting(false);
+    setFinalConfirmOpen(false);
     onCompleted?.(amount);
     onClose();
   };
@@ -190,12 +194,29 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
               onCopyAccount={handleCopyAccount}
               onSlipChange={handleSlipChange}
               onPickSlip={() => slipInputRef.current?.click()}
-              onConfirm={handleConfirmDeposit}
+              onConfirm={() => setFinalConfirmOpen(true)}
             />
           )}
 
         </Dialog.Content>
       </Dialog.Portal>
+
+      <CosmicConfirmDialog
+        open={finalConfirmOpen}
+        onOpenChange={setFinalConfirmOpen}
+        variant="neutral"
+        title="ยืนยันส่งคำขอฝากเงิน?"
+        description="ตรวจสอบยอดและสลิปก่อนส่งคำขอให้ระบบตรวจสอบ"
+        confirmLabel="ส่งคำขอฝาก"
+        loading={submitting}
+        summary={
+          <p className="text-center text-sm font-medium text-[var(--text-primary)]">
+            ยอดฝาก{" "}
+            <span className="text-[var(--accent-muted)]">฿ {formatDepositTransferAmount(amount)}</span>
+          </p>
+        }
+        onConfirm={handleConfirmDeposit}
+      />
     </Dialog.Root>
   );
 }
