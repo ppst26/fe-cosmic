@@ -3,7 +3,6 @@
 import React, { useId, useState } from "react";
 import { Dialog } from "radix-ui";
 import {
-  ChevronRightIcon,
   CloseIcon,
   CosmicbetLogo,
   EyeIcon,
@@ -233,12 +232,7 @@ function SignUpStepOne({
         }
       />
 
-      <CosmicStackedActionButton
-        type="submit"
-        className="mt-1"
-        title="ถัดไป"
-        leadingIconInCircle={<ChevronRightIcon className="h-6 w-6" />}
-      />
+      <CosmicStackedActionButton type="submit" className="mt-1" title="ถัดไป" />
 
       <p className="text-center text-sm text-[var(--text-secondary)]">
         มีบัญชีอยู่แล้ว?{" "}

@@ -189,9 +189,12 @@
   --action-solid: #4930df;
   --action-solid-hover: #5d45eb;
   /* CTA ปุ่มขาว (primary บน glass card / โปรโมชัน) */
-  --cta-white-bg: #ffffff;
-  --cta-white-fg: #0a0a0f;
-  --cta-white-hover: #f4f2ff;
+  --cta-white-bg: #f2f0fa;
+  --cta-white-bg-top: #ffffff;
+  --cta-white-bg-bottom: #e6e3f2;
+  --cta-white-fg: #14121f;
+  --cta-white-hover-top: #ffffff;
+  --cta-white-hover-bottom: #efecfa;
   --action-gradient: linear-gradient(90deg, #4930df, #0968f8);
   /* CTA หลักแบบ Deposit / Bottom sheet — โทนม่วงเฉดเข้ม */
   --cta-primary-gradient: linear-gradient(90deg, #4a148c 0%, #6d28d9 100%);

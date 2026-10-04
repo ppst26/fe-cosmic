@@ -1,77 +1,502 @@
 .nav {
+
   --nav-bg: var(--bottom-nav-bg);
-  --nav-accent: #e8eaef;
-  --nav-muted: #9e9ea7;
-  --nav-height: 68px;
+
+  --nav-fg-muted: var(--text-muted);
+
+  --nav-fg-active: var(--text-primary);
+
+  --nav-active-bg: color-mix(in srgb, var(--bottom-nav-bg) 58%, var(--surface-elevated) 42%);
+
+  --nav-active-edge: var(--action-solid);
+
+  --nav-height: 80px;
+
+  --nav-crest-size: 58px;
+
+  --nav-notch-depth: 30px;
+
+  /* ระยะจากขอบล่างช่องกลาง — ให้วงกลมนั่งในรอยบาก ไม่ลอยเหนือแถบและไม่ทับ「เมนู」 */
+  --nav-crest-bottom: 28px;
+
+
+
   position: fixed;
+
   z-index: 50;
+
   inset: auto 0 0;
+
+  width: 100%;
+
+  max-width: 640px;
+
+  margin-inline: auto;
+
   height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
-  color: var(--nav-muted);
+
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  color: var(--nav-fg-muted);
+
   isolation: isolate;
+
+  pointer-events: none;
+
 }
 
-.nav, .nav * { box-sizing: border-box; }
+
+
+.nav,
+
+.nav * {
+
+  box-sizing: border-box;
+
+}
+
+
 
 .surface {
+
   position: absolute;
+
   inset: 0;
-  z-index: -1;
-  background-color: var(--nav-bg);
-  background-image: none;
-  border-radius: 20px 20px 0 0;
-  border-top: 1px solid var(--cosmic-chrome-border);
-  box-shadow: 0 -4px 24px rgb(0 0 0 / 0.45);
+
+  z-index: 0;
+
+  overflow: visible;
+
+  pointer-events: none;
+
+  filter: drop-shadow(0 -4px 20px rgb(0 0 0 / 0.42));
+
 }
+
+
+
+.surfaceSvg {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+}
+
+
+
+.surfacePath {
+
+  fill: var(--nav-bg);
+
+  stroke: var(--cosmic-chrome-border, rgb(255 255 255 / 0.08));
+
+  stroke-width: 1px;
+
+  vector-effect: non-scaling-stroke;
+
+}
+
+
 
 .items {
+
+  position: relative;
+
+  z-index: 1;
+
   display: grid;
+
   grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  align-items: stretch;
+
   height: var(--nav-height);
-  padding-inline: max(6px, env(safe-area-inset-left, 0px)) max(6px, env(safe-area-inset-right, 0px));
+
+  padding-inline: max(4px, env(safe-area-inset-left, 0px)) max(4px, env(safe-area-inset-right, 0px));
+
+  pointer-events: auto;
+
 }
+
+
 
 .item {
-  position: relative;
+
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
+
   min-width: 0;
+
   min-height: 44px;
-  padding: 8px 2px;
+
+  align-items: flex-end;
+
+  justify-content: center;
+
+  padding: 6px 2px 8px;
+
   border: 0;
-  border-radius: 12px;
+
   background: transparent;
+
   color: inherit;
+
   font: inherit;
+
   cursor: pointer;
+
   -webkit-tap-highlight-color: transparent;
+
   touch-action: manipulation;
-  transition: color 150ms ease, transform 150ms ease;
+
 }
 
-.icon { display: grid; place-items: center; width: 26px; height: 26px; flex-shrink: 0; }
-.icon svg { display: block; width: 24px; height: 24px; }
-.label { white-space: nowrap; }
-.dot { position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: var(--nav-accent); opacity: 0; }
-.item[data-active="true"] { color: #fff; }
-.item[data-active="true"] .dot { opacity: 1; }
 
-.item:focus-visible { outline: 2px solid #c8baff; outline-offset: -3px; }
-.item:active { transform: scale(0.95); }
 
-/* Keep the last page content clear of the dock */
-.spacer { height: calc(var(--nav-height) + 16px + env(safe-area-inset-bottom, 0px)); }
+.itemInner {
+
+  display: flex;
+
+  width: 100%;
+
+  max-width: 4.75rem;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 4px;
+
+  padding: 6px 4px 5px;
+
+  border: 1px solid transparent;
+
+  border-radius: 12px;
+
+  transition:
+
+    color 150ms ease,
+
+    background 150ms ease,
+
+    border-color 150ms ease,
+
+    transform 120ms ease;
+
+}
+
+
+
+.item[data-active="true"] {
+
+  color: var(--nav-fg-active);
+
+}
+
+
+
+.item[data-active="true"] .itemInner {
+
+  background: var(--nav-active-bg);
+
+  border-color: transparent;
+
+  border-bottom: 2px solid var(--nav-active-edge);
+
+  border-right: 2px solid var(--nav-active-edge);
+
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+
+}
+
+
+
+.item[data-active="true"] .icon {
+
+  color: var(--accent-primary);
+
+}
+
+
+
+.icon {
+
+  display: grid;
+
+  width: 24px;
+
+  height: 24px;
+
+  flex-shrink: 0;
+
+  place-items: center;
+
+  color: var(--nav-fg-muted);
+
+  transition: color 150ms ease;
+
+}
+
+
+
+.icon svg {
+
+  display: block;
+
+  width: 22px;
+
+  height: 22px;
+
+}
+
+
+
+.label {
+
+  max-width: 100%;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+}
+
+
+
+.centerSlot {
+
+  position: relative;
+
+  display: flex;
+
+  min-width: 0;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  height: 100%;
+
+  padding-bottom: 6px;
+
+}
+
+
+
+.crest {
+
+  position: absolute;
+
+  bottom: var(--nav-crest-bottom);
+
+  left: 50%;
+
+  z-index: 2;
+
+  display: grid;
+
+  width: var(--nav-crest-size);
+
+  height: var(--nav-crest-size);
+
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  transform: translateX(-50%);
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+
+  touch-action: manipulation;
+
+  transition: transform 120ms ease;
+
+}
+
+
+
+.crestRing {
+
+  position: absolute;
+
+  inset: 2px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+
+    circle at 35% 28%,
+
+    color-mix(in srgb, var(--accent-primary) 35%, white 8%) 0%,
+
+    color-mix(in srgb, var(--action-solid) 88%, black 12%) 55%,
+
+    color-mix(in srgb, var(--bottom-nav-bg) 40%, black 60%) 100%
+
+  );
+
+  box-shadow:
+
+    inset 0 2px 4px rgb(255 255 255 / 0.22),
+
+    inset 0 -3px 6px rgb(0 0 0 / 0.35),
+
+    0 6px 16px rgb(0 0 0 / 0.45);
+
+}
+
+
+
+.crestImg {
+
+  position: relative;
+
+  z-index: 1;
+
+  width: 46px;
+
+  height: 46px;
+
+  object-fit: contain;
+
+}
+
+
+
+.crest[data-active="true"] .crestRing {
+
+  box-shadow:
+
+    inset 0 2px 4px rgb(255 255 255 / 0.28),
+
+    inset 0 -3px 6px rgb(0 0 0 / 0.35),
+
+    0 0 0 2px color-mix(in srgb, var(--accent-primary) 55%, transparent),
+
+    0 8px 18px rgb(0 0 0 / 0.5);
+
+}
+
+
+
+.centerLabel {
+
+  margin-top: 2px;
+
+  color: var(--nav-fg-muted);
+
+  white-space: nowrap;
+
+}
+
+
+
+.crest[data-active="true"] + .centerLabel,
+
+.centerSlot:has(.crest[data-active="true"]) .centerLabel {
+
+  color: var(--nav-fg-active);
+
+}
+
+
+
+.item:focus-visible .itemInner,
+
+.crest:focus-visible {
+
+  outline: 2px solid var(--focus-ring);
+
+  outline-offset: 2px;
+
+}
+
+
+
+.item:active .itemInner,
+
+.crest:active {
+
+  transform: scale(0.96);
+
+}
+
+
+
+.crest:active {
+
+  transform: translateX(-50%) scale(0.96);
+
+}
+
+
+
+.spacer {
+
+  height: calc(var(--nav-height) + 20px + env(safe-area-inset-bottom, 0px));
+
+}
+
+
 
 @media (hover: hover) {
-  .item:hover { color: #fff; }
+
+  .item:hover {
+
+    color: var(--nav-fg-active);
+
+  }
+
+
+
+  .item:hover .icon {
+
+    color: var(--text-secondary);
+
+  }
+
 }
+
+
+
 @media (prefers-reduced-motion: reduce) {
-  .item { transition: none; }
+
+  .itemInner,
+
+  .crest {
+
+    transition: none;
+
+  }
+
 }
-/* Remove this query if you also want the dock on desktop. */
+
+
+
 @media (min-width: 1024px) {
-  .nav, .spacer { display: none; }
+
+  .nav,
+
+  .spacer {
+
+    display: none;
+
+  }
+
 }
+
+

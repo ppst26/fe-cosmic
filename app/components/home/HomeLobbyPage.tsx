@@ -10,6 +10,7 @@ import { LobbyDesktopSidebarColumn } from "../layout/LobbyDesktopSidebarColumn";
 import { HomeDesktopPeekCarousel } from "./HomeDesktopPeekCarousel";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { PromoCarousel } from "./PromoCarousel";
+import { HomeScreenShortcutPromo } from "./HomeScreenShortcutPromo";
 import { CategoryNav } from "./CategoryNav";
 import { LobbyAnnouncementMarquee } from "./LobbyAnnouncementMarquee";
 import { LobbyDesktopQuickBanners } from "./LobbyDesktopQuickBanners";
@@ -314,6 +315,7 @@ export function HomeLobbyPage() {
                       <>
                         <HallOfFame datasets={fetchHallOfFame()} />
                         <TournamentsSection items={LOBBY_TOURNAMENTS_SECTION_ITEMS} />
+                        <HomeScreenShortcutPromo className="mt-8 sm:mt-10" />
                       </>
                     ) : null}
                   </main>

@@ -1,0 +1,268 @@
+/**
+ * การ์ดโปรโมต「เพิ่มปุ่มลัดหน้าโฮม」 — พื้นผิวอ้างอิง reference (ไล่เทา→ดำแดง) + วงแหวน glow
+ * ใช้โดย HomeScreenShortcutPromo.tsx
+ */
+
+.home-a2hs-promo {
+  --home-a2hs-radius: 14px;
+  --home-a2hs-glow: color-mix(in srgb, var(--accent-primary) 42%, #e63a4a 58%);
+  --home-a2hs-surface: linear-gradient(
+    102deg,
+    #52525c 0%,
+    #3a3438 32%,
+    #241820 62%,
+    #140c10 100%
+  );
+  --home-a2hs-border: color-mix(in srgb, #ffffff 10%, transparent);
+}
+
+.home-a2hs-card {
+  position: relative;
+  display: flex;
+  min-height: 7.75rem;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: var(--home-a2hs-radius);
+  border: 1px solid var(--home-a2hs-border);
+  background: var(--home-a2hs-surface);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 10px 28px rgb(0 0 0 / 0.38);
+}
+
+.home-a2hs-card__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.875rem 0.75rem 0.875rem 0.875rem;
+  max-width: calc(100% - 5.5rem);
+}
+
+.home-a2hs-card__lead {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 0.625rem;
+}
+
+.home-a2hs-card__chip {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.35);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+.home-a2hs-card__chip-img {
+  width: 1.375rem;
+  height: auto;
+  max-height: 1.375rem;
+  object-fit: contain;
+}
+
+.home-a2hs-card__title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.home-a2hs-card__subtitle {
+  margin: 0.2rem 0 0;
+  color: color-mix(in srgb, var(--text-secondary) 88%, white 12%);
+  font-size: 0.6875rem;
+  line-height: 1.35;
+}
+
+.home-a2hs-card__platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.home-a2hs-platform-btn {
+  display: inline-flex;
+  min-height: 1.75rem;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: rgb(0 0 0 / 0.28);
+  padding: 0.25rem 0.625rem;
+  color: var(--text-primary);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
+}
+
+.home-a2hs-platform-btn svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+}
+
+.home-a2hs-platform-btn[data-active="true"] {
+  border-color: color-mix(in srgb, var(--home-a2hs-glow) 75%, white 8%);
+  background: rgb(0 0 0 / 0.42);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--home-a2hs-glow) 35%, transparent),
+    0 0 14px color-mix(in srgb, var(--home-a2hs-glow) 28%, transparent);
+}
+
+.home-a2hs-card__hero {
+  position: absolute;
+  top: 50%;
+  right: -1.25rem;
+  z-index: 0;
+  width: 7.5rem;
+  height: 7.5rem;
+  transform: translateY(-52%);
+  pointer-events: none;
+}
+
+.home-a2hs-card__hero-ring {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 42% 32%,
+    color-mix(in srgb, var(--home-a2hs-glow) 55%, #ffffff 8%) 0%,
+    color-mix(in srgb, var(--home-a2hs-glow) 88%, #000000 12%) 48%,
+    #1a0a12 100%
+  );
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--home-a2hs-glow) 55%, transparent),
+    0 0 28px color-mix(in srgb, var(--home-a2hs-glow) 42%, transparent),
+    inset 0 2px 6px rgb(255 255 255 / 0.18),
+    inset 0 -4px 10px rgb(0 0 0 / 0.45);
+}
+
+.home-a2hs-card__hero-ring::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 38%, rgb(255 255 255 / 0.12) 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.home-a2hs-card__hero-img {
+  position: relative;
+  z-index: 1;
+  width: 4.25rem;
+  height: auto;
+  max-height: 2.75rem;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.35));
+}
+
+.home-a2hs-accordion {
+  margin-top: 0.5rem;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgb(255 255 255 / 0.06);
+  background: rgb(0 0 0 / 0.22);
+}
+
+.home-a2hs-accordion__trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border: 0;
+  background: transparent;
+  padding: 0.625rem 0.75rem;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-a2hs-accordion__trigger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.home-a2hs-accordion__panel {
+  border-top: 1px solid rgb(255 255 255 / 0.05);
+  padding: 0.5rem 0.75rem 0.75rem;
+}
+
+.home-a2hs-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-a2hs-steps-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.home-a2hs-steps-list__num {
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-primary) 22%, rgb(0 0 0 / 0.35));
+  color: var(--text-primary);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.home-a2hs-steps-list__text {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-secondary);
+  font-size: 0.6875rem;
+  line-height: 1.45;
+}
+
+@media (min-width: 640px) {
+  .home-a2hs-card {
+    min-height: 8.25rem;
+  }
+
+  .home-a2hs-card__body {
+    max-width: calc(100% - 6.5rem);
+    padding: 1rem 1rem 1rem 1.125rem;
+  }
+
+  .home-a2hs-card__hero {
+    right: -0.75rem;
+    width: 8.25rem;
+    height: 8.25rem;
+  }
+
+  .home-a2hs-card__hero-img {
+    width: 4.75rem;
+    max-height: 3rem;
+  }
+}
