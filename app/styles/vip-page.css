@@ -16,20 +16,19 @@
 .vip-page .vip-rank-stack .vip-rank-surface-card,
 .vip-modal .vip-rank-stack .vip-rank-surface-card {
   border: 1px solid var(--vip-panel-border);
-  border-radius: var(--vip-rank-card-radius-top) var(--vip-rank-card-radius-top)
-    var(--vip-rank-card-radius-bottom) var(--vip-rank-card-radius-bottom);
+  border-radius: var(--vip-rank-card-radius);
   background: var(--vip-rank-card-top-radial), var(--vip-rank-card-face-gradient);
   padding: 1.25rem;
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 4%, transparent);
 }
 
-.vip-page .vip-rank-stack .vip-panel-card--level-up.vip-rank-surface-card::before,
-.vip-modal .vip-rank-stack .vip-panel-card--level-up.vip-rank-surface-card::before {
+.vip-page .vip-rank-stack .vip-rank-surface-card::before,
+.vip-modal .vip-rank-stack .vip-rank-surface-card::before {
   display: none;
 }
 
-.vip-page .vip-rank-stack .vip-panel-card--level-up.vip-rank-surface-card::after,
-.vip-modal .vip-rank-stack .vip-panel-card--level-up.vip-rank-surface-card::after {
+.vip-page .vip-rank-stack .vip-rank-surface-card::after,
+.vip-modal .vip-rank-stack .vip-rank-surface-card::after {
   content: "";
   position: absolute;
   top: 0;
@@ -37,16 +36,15 @@
   right: 12%;
   height: 2px;
   border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    color-mix(in srgb, var(--vip-rank-card-accent) 18%, transparent) 28%,
-    color-mix(in srgb, var(--vip-rank-card-accent) 42%, var(--vip-rank-card-bg) 58%) 50%,
-    color-mix(in srgb, var(--vip-rank-card-accent) 18%, transparent) 72%,
-    transparent 100%
-  );
-  box-shadow: 0 0 10px color-mix(in srgb, var(--vip-rank-card-accent) 22%, transparent);
+  background: var(--vip-rank-accent-line);
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.35);
   pointer-events: none;
+}
+
+.vip-page .vip-rank-stack .vip-rank-surface-card,
+.vip-modal .vip-rank-stack .vip-rank-surface-card {
+  position: relative;
+  overflow: hidden;
 }
 
 .vip-page .vip-rank-stack .vip-rank-metric__icon,
@@ -164,8 +162,8 @@
   right: 10%;
   height: 2px;
   border-radius: 999px;
-  background: var(--line-tab-neon-gradient);
-  opacity: 0.85;
+  background: var(--vip-rank-accent-line);
+  opacity: 0.9;
   pointer-events: none;
 }
 
@@ -298,7 +296,13 @@
 }
 
 .vip-modal .cosmic-line-tab.is-active::after {
-  box-shadow: none;
+  background: var(--vip-rank-accent-line);
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.35);
+}
+
+.vip-page .cosmic-line-tab.is-active::after {
+  background: var(--vip-rank-accent-line);
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.35);
 }
 
 .vip-modal .vip-maintain-rank-panel .vip-maintain-rank-panel__days {

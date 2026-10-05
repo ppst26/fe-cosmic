@@ -128,3 +128,37 @@
     transform: none;
   }
 }
+
+/* เส้น neon เลื่อนไปหาแท็บที่เลือก (CosmicLineTabs วัดตำแหน่งแล้วตั้ง data-indicator) */
+.cosmic-line-tab-indicator {
+  position: absolute;
+  bottom: 0.125rem;
+  left: 0;
+  z-index: 2;
+  height: 2.5px;
+  border-radius: 999px;
+  background: var(--line-tab-neon-gradient);
+  box-shadow: var(--line-tab-neon-glow);
+  pointer-events: none;
+}
+
+.cosmic-line-tablist[data-indicator="animated"] .cosmic-line-tab-indicator {
+  transition:
+    transform var(--motion-slow) var(--ease-out),
+    width var(--motion-slow) var(--ease-out);
+}
+
+/* มีเส้นเลื่อนแล้ว — ปิดเส้นของแท็บเอง */
+.cosmic-line-tablist[data-indicator] .cosmic-line-tab.is-active::after {
+  display: none;
+}
+
+.cosmic-line-tab:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-line-tab:active {
+    transform: none;
+  }
+}

@@ -68,7 +68,7 @@ export function GemsStorePageContent({
         >
           แลกเครดิต
         </h2>
-        <div className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-4 lg:gap-3">
+        <div className="gems-store-redeem-grid grid grid-cols-4 gap-1.5 sm:gap-2 lg:gap-3">
           {gemsStore.packages.map((pkg) => {
             const affordable = gemsBalance >= pkg.gemsCost;
             return (
@@ -153,7 +153,7 @@ function GemsRedeemCard({
   return (
     <article
       className={cn(
-        "gems-store-redeem-card flex min-h-0 flex-col gap-2 p-2 sm:p-2.5",
+        "gems-store-redeem-card flex min-h-0 flex-col gap-1.5 p-1.5 sm:gap-2 sm:p-2.5",
         flat && "gems-store-redeem-card--flat",
         affordable && "is-active",
         !affordable && "opacity-85",

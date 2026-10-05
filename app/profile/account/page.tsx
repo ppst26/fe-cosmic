@@ -74,6 +74,7 @@ export default function ProfileAccountPage() {
             profile={profile}
             onLogout={openLogoutConfirm}
             onOpenVip={() => openVipModal()}
+            onProfileUpdated={setProfile}
           />
         )}
       </main>

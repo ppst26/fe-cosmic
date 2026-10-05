@@ -400,6 +400,8 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - **Tokens** (`tokens.css`): `--motion-instant` 100ms (press) · `--motion-fast` 160ms (hover, tab) · `--motion-base` 240ms (card, accordion, toast) · `--motion-slow` 400ms (drawer, hero) · `--ease-out` (enter) · `--ease-in` (exit) · `--ease-spring` (reward/badge เท่านั้น) · `--stagger` 40ms (สูงสุด 6 ตัว)
 - **Utilities** (`motion.css`): `.motion-press` · `.motion-lift` (hover:hover เท่านั้น) · `.motion-reveal` + `<MotionReveal index>` · `.motion-pop` · `.motion-skeleton`
 - **Reduced motion:** `motion.css` ตั้ง token ทั้งหมดเป็น 1ms และ `--stagger: 0` — component ใหม่ใช้ token ไม่ hardcode ms
+- **Sheet / modal 2 step** (`motion.css`, tokens `--motion-sheet-*`): เปิด = กล่องเข้า ~560ms → เนื้อหาไล่ขึ้นทีละส่วน (delay 240ms, stagger) · ปิด = เนื้อหาจาง ~190ms (กล่องค้าง) → กล่องออก + scrim จาง รวม ~520ms · มือถือเลื่อนจากล่าง, lg+ ขยายจากกลาง · ครอบ `.cosmic-mobile-sheet`, `.cosmic-modal-shell`, `.cosmic-confirm-dialog`, `.cosmic-dialog-overlay` (ยกเว้น `.profile-slideover-card`)
+- **Tabs:** line tabs (`CosmicLineTabs`) = เส้น neon เป็นองค์ประกอบเดียวเลื่อน/ยืดไปหาแท็บ · pill/segment = color/background/shadow ผ่าน `--motion-base` + press scale · เนื้อหาเปลี่ยนตามแท็บห่อด้วย `<TabPanelTransition tabKey order>` (fade + เลื่อนตามทิศทางแท็บ, ไม่ remount)
 - **ห้าม:** parallax, glow pulse, bounce ซ้ำ, stagger เกิน 6 รายการ
 - loading / empty / error ทุกรายการที่ดึงข้อมูล
 

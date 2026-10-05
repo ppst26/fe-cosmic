@@ -7,6 +7,7 @@ import { ArrowLeftIcon } from "../ui/Icons";
 interface ProviderBreadcrumbProps {
   providerName: string;
   backHref?: string;
+  categoryLabel?: string;
 }
 
 /**
@@ -16,6 +17,7 @@ interface ProviderBreadcrumbProps {
 export function ProviderBreadcrumb({
   providerName,
   backHref = "/slots",
+  categoryLabel = "สล็อต",
 }: ProviderBreadcrumbProps) {
   return (
     <nav
@@ -27,7 +29,7 @@ export function ProviderBreadcrumb({
         <Link
           href={backHref}
           className="flex h-8 w-8 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform shrink-0 cursor-pointer"
-          aria-label="ย้อนกลับไปหน้ารวมสล็อต"
+          aria-label={`ย้อนกลับไปหน้ารวม${categoryLabel}`}
         >
           <ArrowLeftIcon className="h-5.5 w-5.5 text-white" />
         </Link>
@@ -39,7 +41,7 @@ export function ProviderBreadcrumb({
               href={backHref}
               className="font-medium text-white transition-colors hover:text-white/80 hover:underline"
             >
-              สล็อต
+              {categoryLabel}
             </Link>
           </li>
           <li className="text-[var(--text-muted)] font-light select-none" aria-hidden="true">

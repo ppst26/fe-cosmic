@@ -27,6 +27,11 @@ export const MENU_ICON_SRC: Record<string, string> = {
   referral: `${MENU_ICON_BASE}/referral.avif`,
   coupon: `${MENU_ICON_BASE}/coupon.avif`,
   ticket: `${MENU_ICON_BASE}/ticket.avif`,
+  "reward-hub": `${MENU_ICON_BASE}/event.avif`,
+  "lucky-box": "/assets/3d/card-1-mobile.avif",
+  "random-card": `${MENU_ICON_BASE}/card.avif`,
+  "exchange-money": "/assets/3d/diamon3.avif",
+  freespins: `${MENU_ICON_BASE}/slot.avif`,
 };
 
 /** หมวดเกม lobby — map CategoryId → asset */

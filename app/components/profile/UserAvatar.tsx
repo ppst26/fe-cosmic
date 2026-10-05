@@ -5,9 +5,10 @@ import { avatarPresetImageUrl, resolveAvatarPresetId } from "@/app/data/avatarPr
 import { ProfileAvatarIcon } from "../ui/Icons";
 import { cn } from "@/lib/utils";
 
-type UserAvatarSize = "sm" | "md" | "lg" | "xl";
+type UserAvatarSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 const SIZE_PX: Record<UserAvatarSize, number> = {
+  xs: 32,
   sm: 40,
   md: 44,
   lg: 56,
@@ -15,6 +16,7 @@ const SIZE_PX: Record<UserAvatarSize, number> = {
 };
 
 const SIZE_CLASS: Record<UserAvatarSize, string> = {
+  xs: "h-8 w-8 rounded-full",
   sm: "h-10 w-10 rounded-full",
   md: "h-11 w-11 rounded-full",
   lg: "h-14 w-14 rounded-xl",
@@ -39,7 +41,7 @@ export function UserAvatar({
 }: UserAvatarProps) {
   const px = SIZE_PX[size];
   const presetId = resolveAvatarPresetId(profile.avatarPresetId, profile.id);
-  const src = profile.avatarUrl || avatarPresetImageUrl(presetId, px * 2);
+  const src = avatarPresetImageUrl(presetId, px * 2);
 
   return (
     <span
@@ -72,7 +74,15 @@ export function UserAvatarPlaceholder({
   className?: string;
 }) {
   const iconClass =
-    size === "xl" ? "h-10 w-10" : size === "lg" ? "h-8 w-8" : size === "sm" ? "h-5 w-5" : "h-6 w-6";
+    size === "xl"
+      ? "h-10 w-10"
+      : size === "lg"
+        ? "h-8 w-8"
+        : size === "sm"
+          ? "h-5 w-5"
+          : size === "xs"
+            ? "h-4 w-4"
+            : "h-6 w-6";
 
   return (
     <span

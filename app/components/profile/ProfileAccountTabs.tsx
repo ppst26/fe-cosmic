@@ -7,9 +7,10 @@ import { fetchVipPlayer } from "@/lib/api/vip";
 import { ProfileAccountFieldRow, ProfileAccountNavRow } from "./ProfileAccountFieldRow";
 import { ProfileBankAccountCard } from "./ProfileBankAccountCard";
 import { ProfileReferralInviteCard } from "./ProfileReferralInviteCard";
-import { ProfileMenuRow } from "./ProfileMenuCard";
-import { LogOutIcon, SupportHeadsetIcon } from "../ui/Icons";
+import { ProfileAccountAvatarSection } from "./ProfileAccountAvatarSection";
+import { LogOutIcon } from "../ui/Icons";
 import { COSMIC_BTN_LOGOUT } from "../ui/cosmicButtonClasses";
+import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { cn } from "@/lib/utils";
 
@@ -24,6 +25,7 @@ interface ProfileAccountTabsProps {
   profile: ProfileUser;
   onLogout: () => void;
   onOpenVip?: () => void;
+  onProfileUpdated?: (profile: ProfileUser) => void;
   compact?: boolean;
 }
 
@@ -36,6 +38,7 @@ export function ProfileAccountTabs({
   profile,
   onLogout,
   onOpenVip,
+  onProfileUpdated,
   compact = false,
 }: ProfileAccountTabsProps) {
   const [activeTab, setActiveTab] = useState<ProfileAccountTab>("personal");
@@ -58,6 +61,13 @@ export function ProfileAccountTabs({
         compact ? "gap-3" : "gap-4 pb-2",
       )}
     >
+      {!compact ? (
+        <ProfileAccountAvatarSection
+          profile={profile}
+          onProfileUpdated={onProfileUpdated}
+        />
+      ) : null}
+
       <div className="profile-account-tabs__main flex flex-col gap-3">
         <CosmicLineTabs
           tabs={PROFILE_ACCOUNT_TABS}
@@ -71,6 +81,11 @@ export function ProfileAccountTabs({
           <p className="text-center text-xs text-[var(--success)]" role="status">คัดลอกแล้ว</p>
         ) : null}
 
+        <TabPanelTransition
+          tabKey={activeTab}
+          order={PROFILE_ACCOUNT_TABS.map((t) => t.id)}
+          className="flex flex-col gap-3"
+        >
         {activeTab === "personal" ? (
           <div role="tabpanel" className="flex flex-col gap-2">
             <ProfileAccountFieldRow
@@ -101,14 +116,7 @@ export function ProfileAccountTabs({
         )}
 
         {activeTab === "personal" ? <ProfileReferralInviteCard flat /> : null}
-
-        <section className="border-t border-[var(--border-subtle)]/45 pt-1">
-          <ProfileMenuRow
-            icon={<SupportHeadsetIcon className="h-5 w-5" />}
-            title="ติดต่อฝ่ายบริการ"
-            href="mailto:support@cosmicbet.example"
-          />
-        </section>
+        </TabPanelTransition>
       </div>
 
       <button

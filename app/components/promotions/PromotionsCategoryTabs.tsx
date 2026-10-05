@@ -114,7 +114,7 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
             aria-selected={selected}
             onClick={() => onSelect(tab.id)}
             className={[
-              "glass-card--soft shrink-0 whitespace-nowrap rounded-[var(--radius-pill)] px-4 py-2 text-sm font-medium transition-[background,color,box-shadow] duration-[var(--motion-fast)] sm:px-5 sm:py-2.5",
+              "glass-card--soft shrink-0 whitespace-nowrap rounded-[var(--radius-pill)] px-4 py-2 text-sm font-medium transition-[background,color,box-shadow,transform] duration-[var(--motion-base)] ease-[var(--ease-out)] active:scale-[0.97] sm:px-5 sm:py-2.5",
               selected
                 ? "is-active text-[var(--text-primary)]"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",

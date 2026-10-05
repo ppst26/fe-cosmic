@@ -14,6 +14,7 @@ import {
   ReferralPromoBanner,
   ReferralStatsSection,
 } from "./ReferralOverviewSections";
+import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { COSMIC_PANEL_GLASS, COSMIC_PANEL_GLASS_ICON } from "../ui/cosmicButtonClasses";
 type ReferralTabId = "overview" | "users" | "earning";
@@ -139,6 +140,7 @@ function ReferralMobileTabs({
         withIcons
       />
 
+      <TabPanelTransition tabKey={tab} order={TABS.map((item) => item.id)}>
       {tab === "overview" && (
         <div className="flex flex-col gap-5">
           <ReferralPromoBanner />
@@ -202,6 +204,7 @@ function ReferralMobileTabs({
       {tab === "users" && <ReferralUsersPanel />}
 
       {tab === "earning" && <ReferralEarningPanel />}
+      </TabPanelTransition>
     </div>
   );
 }

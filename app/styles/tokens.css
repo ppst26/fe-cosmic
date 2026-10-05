@@ -133,27 +133,38 @@
     0 0 22px rgb(168 85 247 / 0.28);
   --vip-progress-gradient: linear-gradient(
     90deg,
-    #9b87ff 0%,
-    var(--focus-ring) 45%,
-    #f5c542 100%
+    #3f3f46 0%,
+    #71717a 48%,
+    #e4e4e7 100%
   );
   /**
-   * VIP panel — graphite กลาง (R≈G) ไม่ปนม่วง · อ่อนกว่า --standalone-page-bg
-   * ม่วง brand ใช้แค่ progress / % / เส้น accent ไม่ทับพื้นการ์ด
+   * VIP panel — graphite · accent เทา–ดำไล่สี (ไม่ใช้ม่วง brand)
    */
   --vip-panel-bg: #1e1e21;
   --vip-panel-border: rgb(255 255 255 / 0.08);
   --vip-panel-inner-bg: var(--inner-card-fill);
   --vip-progress-track-bg: #323236;
-  /** แถบ/ตัวเลขเลื่อนระดับ — โทน brand (ไม่ใช้ทอง rank) */
-  --vip-level-up-bar: var(--accent-primary);
+  --vip-bar-gradient: linear-gradient(
+    90deg,
+    #27272a 0%,
+    #52525b 42%,
+    #d4d4d8 100%
+  );
+  --vip-rank-accent-line: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(161 161 170 / 0.35) 28%,
+    rgb(228 228 231 / 0.55) 50%,
+    rgb(161 161 170 / 0.35) 72%,
+    transparent 100%
+  );
+  --vip-level-up-bar: var(--vip-bar-gradient);
   --vip-level-up-percent: var(--text-primary);
   --vip-level-up-label: var(--text-secondary);
-  --vip-maintain-bar: var(--accent-primary);
-  /** การ์ด rank stack — accent แถบ/ไอคอน (ไม่ใช้ hex นอกธีม) */
-  --vip-rank-card-accent: var(--accent-primary);
+  --vip-maintain-bar: var(--vip-bar-gradient);
+  --vip-rank-card-accent: #a1a1aa;
   --vip-rank-metric-complete: var(--success);
-  --vip-benefit-value: var(--accent-primary);
+  --vip-benefit-value: #e4e4e7;
   --vip-benefit-value-muted: var(--text-muted);
   --vip-benefit-value-success: var(--success);
   /** chip สิทธิประโยชน์ — สลับสองโทนในกริด (เห็นสัดส่วนคอลัมน์) */
@@ -162,17 +173,19 @@
   /**
    * การ์ดแรงค์ VIP — gradient หน้าการ์ด (ใช้เฉพาะ .vip-rank-stack ใน vip-page.css)
    */
-  --vip-rank-card-radius-top: var(--radius-panel);
-  --vip-rank-card-radius-bottom: var(--radius-card);
-  /** พื้นการ์ดใน .vip-rank-stack — เทาเข้มเกือบดำ */
-  --vip-rank-card-bg: color-mix(in srgb, var(--surface-end) 82%, var(--vip-panel-bg) 18%);
-  /** radial บนการ์ด — โทนเข้ม ไม่จ้า */
+  --vip-rank-card-radius: var(--radius-panel);
+  --vip-rank-card-bg: #161618;
   --vip-rank-card-top-radial: radial-gradient(
-    ellipse 100% 68% at 50% -10%,
-    color-mix(in srgb, var(--vip-rank-card-bg) 88%, var(--accent-primary) 12%) 0%,
-    transparent 52%
+    ellipse 100% 72% at 50% -8%,
+    rgb(255 255 255 / 0.07) 0%,
+    transparent 54%
   );
-  --vip-rank-card-face-gradient: var(--vip-rank-card-bg);
+  --vip-rank-card-face-gradient: linear-gradient(
+    165deg,
+    #2a2a2e 0%,
+    #1c1c1f 46%,
+    #101012 100%
+  );
   /** chip สิทธิใน .vip-rank-stack — ดำเข้มกว่าหน้าการ์ด */
   --vip-rank-benefit-cell-a: color-mix(in srgb, var(--surface-end) 94%, var(--vip-rank-card-bg) 6%);
   --vip-rank-benefit-cell-b: color-mix(in srgb, var(--surface-end) 90%, var(--vip-rank-card-bg) 10%);
@@ -223,9 +236,11 @@
   /** gutter แนวนอนมาตรฐาน — หน้าแรก (.page-shell) และ standalone ใช้ค่าเดียวกัน */
   --layout-inline-gutter: var(--page-gutter);
   --content-max: 1200px;
-  /** แถบหัวข้อ carousel lobby — อ้างอิงโทน (ใช้ใน carousel.css) */
-  --lobby-section-title-band-start: rgb(22 10 42 / 0.98);
-  --lobby-section-title-band-mid: rgb(34 18 58 / 0.82);
+  /** แถบหัวข้อ carousel lobby — เทาเข้มไล่ซ้าย→โปร่งขวา (carousel.css) */
+  --lobby-section-title-band-start: rgb(36 34 42 / 0.96);
+  --lobby-section-title-band-mid: rgb(30 28 36 / 0.78);
+  --lobby-section-title-band-fade: rgb(24 22 30 / 0.38);
+  --lobby-section-title-band-tail: rgb(18 16 24 / 0.1);
   --nav-height: 68px;
   --nav-float-offset: 0px;
   --nav-safe: env(safe-area-inset-bottom, 0px);
@@ -243,6 +258,13 @@
   --motion-base: 240ms;
   --motion-slow: 400ms;
   --stagger: 40ms;
+  /* sheet / modal 2 step (motion.css) */
+  --motion-sheet-in: 560ms;
+  --motion-sheet-out: 520ms;
+  --motion-overlay-in: 420ms;
+  --motion-sheet-content: 380ms;
+  --motion-sheet-content-out: 190ms;
+  --motion-sheet-content-delay: 240ms;
   --motion-dialog: 240ms;
   --motion-dialog-exit: 180ms;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);

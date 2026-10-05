@@ -1,9 +1,14 @@
 "use client";
 
-import React, { useId, useState } from "react";
+import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
 import { SectionIcon } from "../ui/SectionIcon";
+import {
+  HALL_OF_FAME_ROW_LIMIT,
+  HALL_OF_FAME_TICK_MS,
+  createHallOfFameRow,
+} from "../../data/hallOfFameGenerator";
 
 const TAB_LABELS: { id: HallOfFameTabId; label: string }[] = [
   { id: "latest-winner", label: "Latest Winner" },
@@ -50,17 +55,120 @@ function HallOfFameGameThumb({ row }: { row: HallOfFameRow }) {
   );
 }
 
+/** เวลาให้แถวเก่าเลื่อนลงและแถวล่างสุดออกก่อนตัดทิ้ง (ms) */
+const ROW_SETTLE_MS = 700;
+
+const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
+
 /**
  * HallOfFame (Top Performance) — 2 แท็บ · ตารางเต็มความกว้าง · ธีม Cosmicbet
  * ถูกเรียกใช้ใน app/page.tsx (โฮม lobby มือถือ + desktop)
  */
 export function HallOfFame({ datasets }: HallOfFameProps) {
   const [activeTab, setActiveTab] = useState<HallOfFameTabId>("latest-winner");
-  const rowLimit = 10;
   const panelId = useId();
   const isLatestWinner = activeTab === "latest-winner";
   const valueColumnLabel = isLatestWinner ? "Payout" : "Multiple";
-  const rows = (datasets[activeTab] ?? []).slice(0, rowLimit);
+
+  /** แถวของแต่ละแท็บ — เริ่มจาก datasets (เหมือนกันทั้ง SSR/client) แล้วสุ่มเพิ่มบนสุดทุก 5 วินาที */
+  const [rowsByTab, setRowsByTab] = useState<Record<HallOfFameTabId, HallOfFameRow[]>>(() => ({
+    "latest-winner": (datasets["latest-winner"] ?? []).slice(0, HALL_OF_FAME_ROW_LIMIT),
+    "top-win-multiple": (datasets["top-win-multiple"] ?? []).slice(0, HALL_OF_FAME_ROW_LIMIT),
+  }));
+  const rows = rowsByTab[activeTab];
+
+  const bodyRef = useRef<HTMLTableSectionElement>(null);
+  const rowEls = useRef(new Map<string, HTMLTableRowElement>());
+  const prevTops = useRef(new Map<string, number>());
+  const prevTab = useRef(activeTab);
+  const reducedMotion = useRef(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotion.current = mq.matches;
+    const onChange = () => {
+      reducedMotion.current = mq.matches;
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // ทุก 5 วินาที: สุ่มแถวใหม่ใส่บนสุดของทั้งสองแท็บ (หยุดเมื่อแท็บเบราว์เซอร์ซ่อน)
+  useEffect(() => {
+    let settle: ReturnType<typeof setTimeout> | undefined;
+    const tick = () => {
+      if (document.hidden) return;
+      setRowsByTab((prev) => ({
+        "latest-winner": [
+          createHallOfFameRow("latest-winner", prev["latest-winner"][0]),
+          ...prev["latest-winner"],
+        ],
+        "top-win-multiple": [
+          createHallOfFameRow("top-win-multiple", prev["top-win-multiple"][0]),
+          ...prev["top-win-multiple"],
+        ],
+      }));
+      // ตัดแถวที่เกินหลังเลื่อนเสร็จ
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        setRowsByTab((prev) => ({
+          "latest-winner": prev["latest-winner"].slice(0, HALL_OF_FAME_ROW_LIMIT),
+          "top-win-multiple": prev["top-win-multiple"].slice(0, HALL_OF_FAME_ROW_LIMIT),
+        }));
+      }, ROW_SETTLE_MS);
+    };
+    const id = setInterval(tick, HALL_OF_FAME_TICK_MS);
+    return () => {
+      clearInterval(id);
+      clearTimeout(settle);
+    };
+  }, []);
+
+  /** ตรึงความสูง tbody = ความสูงของ 8 แถวแรก — แถวที่ 9 (กำลังออก) ถูกตัดซ่อน ไม่ดัน layout ด้านล่าง */
+  const syncBodyHeight = useCallback(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+    const list = body.querySelectorAll<HTMLTableRowElement>("tr[data-hof-row]");
+    const last = list[Math.min(HALL_OF_FAME_ROW_LIMIT, list.length) - 1];
+    if (!last) return;
+    body.style.height = `${last.offsetTop + last.offsetHeight}px`;
+  }, []);
+
+  // FLIP: แถวเดิมเลื่อนลงนุ่ม ๆ · แถวใหม่ fade + ลอยลงจากด้านบน
+  useLayoutEffect(() => {
+    const tabChanged = prevTab.current !== activeTab;
+    prevTab.current = activeTab;
+    const animate = !tabChanged && !reducedMotion.current && prevTops.current.size > 0;
+
+    const next = new Map<string, number>();
+    rowEls.current.forEach((el, id) => {
+      const top = el.offsetTop;
+      next.set(id, top);
+      if (!animate) return;
+      const before = prevTops.current.get(id);
+      if (before === undefined) {
+        el.animate(
+          [
+            { opacity: 0, transform: "translate3d(0,-28px,0) scale(0.97)" },
+            { opacity: 1, transform: "none" },
+          ],
+          { duration: 600, easing: EASE_OUT, delay: 120, fill: "backwards" },
+        );
+      } else if (before !== top) {
+        el.animate(
+          [{ transform: `translate3d(0,${before - top}px,0)` }, { transform: "none" }],
+          { duration: 600, easing: EASE_OUT },
+        );
+      }
+    });
+    prevTops.current = next;
+    syncBodyHeight();
+  }, [rows, activeTab, syncBodyHeight]);
+
+  useEffect(() => {
+    window.addEventListener("resize", syncBodyHeight);
+    return () => window.removeEventListener("resize", syncBodyHeight);
+  }, [syncBodyHeight]);
 
   return (
     <section
@@ -138,7 +246,10 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                 </th>
               </tr>
             </thead>
-            <tbody className="hall-of-fame-table__body flex flex-col gap-2 mt-2">
+            <tbody
+              ref={bodyRef}
+              className="hall-of-fame-table__body hall-of-fame-table__body--live relative mt-2 flex flex-col gap-2"
+            >
               {rows.length === 0 ? (
                 <tr className="hall-of-fame-table__row hall-of-fame-table__row--empty">
                   <td
@@ -152,6 +263,11 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                 rows.map((row) => (
                   <tr
                     key={row.id}
+                    data-hof-row
+                    ref={(node) => {
+                      if (node) rowEls.current.set(row.id, node);
+                      else rowEls.current.delete(row.id);
+                    }}
                     className="hall-of-fame-table__row glass-card glass-card--hof-row grid items-center gap-x-[0.65rem]"
                   >
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--game py-[0.2rem] px-0">

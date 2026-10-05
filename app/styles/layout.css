@@ -456,10 +456,10 @@
   line-height: 1.25;
 
   transition:
-    color 160ms ease,
-    background 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
+    color var(--motion-base) var(--ease-out),
+    background var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
 }
 
 .category-nav__chip {
@@ -538,9 +538,14 @@
 .cosmic-segment-btn {
   border-radius: calc(var(--radius-panel) - 4px);
   transition:
-    color var(--motion-fast) ease,
-    background var(--motion-fast) ease,
-    box-shadow var(--motion-fast) ease;
+    color var(--motion-base) var(--ease-out),
+    background var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+}
+
+.cosmic-segment-btn:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .cosmic-segment-btn.is-active {

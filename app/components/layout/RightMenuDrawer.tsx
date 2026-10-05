@@ -22,6 +22,7 @@ import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { parseHubFromHref } from "../hub/hubModalRegistry";
 import { getIsDesktopViewport, useIsDesktop } from "../hub/useIsDesktop";
+import { cn } from "@/lib/utils";
 
 interface RightMenuDrawerProps {
   isOpen: boolean;
@@ -29,7 +30,7 @@ interface RightMenuDrawerProps {
 }
 
 /**
- * Menu dialog — มือถือเต็มจอ: โลโก้ · avatar · grid เมนู
+ * Menu dialog — มือถือเต็มจอ: avatar · โลโก้ · grid เมนู
  * เดสก์ท็อป: panel ลอยชิดเหนือ bottom nav · เปิดจาก FloatingBottomNav
  */
 export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
@@ -85,22 +86,55 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   };
 
   const renderGridTile = (tile: MenuDialogTile, index: number) => {
+    const comingSoon = tile.comingSoon === true;
+
     const content = (
-      <div className="flex flex-col items-center justify-center gap-2 w-full min-w-0 px-1 text-center">
+      <div className="flex flex-col items-center justify-center gap-1.5 w-full min-w-0 px-1 text-center">
         <MenuItemIcon
           iconId={tile.iconId}
           variant="asset"
-          className="menu-grid-icon h-10 w-10 object-contain shrink-0 sm:h-11 sm:w-11 lg:h-9 lg:w-9"
+          className={cn(
+            "menu-grid-icon h-10 w-10 object-contain shrink-0 sm:h-11 sm:w-11 lg:h-9 lg:w-9",
+            comingSoon && "opacity-45 grayscale-[0.35]",
+          )}
         />
-        <span className="menu-grid-label w-full text-[11px] font-medium leading-[1.25] text-white sm:text-xs lg:text-[11.5px]">
+        <span
+          className={cn(
+            "menu-grid-label w-full text-[11px] font-medium leading-[1.25] sm:text-xs lg:text-[11.5px]",
+            comingSoon ? "text-[var(--text-muted)]" : "text-white",
+          )}
+        >
           {tile.label}
         </span>
+        {comingSoon ? (
+          <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--accent-muted)]">
+            Coming soon
+          </span>
+        ) : null}
       </div>
     );
 
-    const tileClass =
-      "menu-grid-tile menu-enter-item group flex flex-col items-center justify-center py-2.5 px-1 min-h-[5.25rem] sm:min-h-[5.5rem] lg:min-h-[72px] cursor-pointer select-none outline-none";
+    const tileClass = cn(
+      "menu-grid-tile menu-enter-item group flex flex-col items-center justify-center py-2.5 px-1 min-h-[5.25rem] sm:min-h-[5.5rem] lg:min-h-[72px] select-none outline-none",
+      comingSoon
+        ? "cursor-not-allowed opacity-70 pointer-events-none"
+        : "cursor-pointer",
+    );
     const enterStyle = { "--menu-enter-i": index } as React.CSSProperties;
+
+    if (comingSoon) {
+      return (
+        <div
+          key={tile.id}
+          className={tileClass}
+          style={enterStyle}
+          aria-disabled="true"
+          title="Coming soon"
+        >
+          {content}
+        </div>
+      );
+    }
 
     if (tile.action) {
       return (
@@ -212,6 +246,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     <div
       className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-[max(20px,env(safe-area-inset-bottom,0px))] pt-[max(52px,calc(env(safe-area-inset-top,0px)+44px))]"
     >
+      <MenuDrawerUserAvatar isMenuOpen={isOpen} />
+
       <Link
         href="/"
         className="menu-drawer-header-logo menu-enter-logo inline-flex w-full shrink-0 justify-center py-1"
@@ -221,9 +257,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         <CosmicbetLogo className="h-9 max-w-[168px] sm:h-10 sm:max-w-[188px]" />
       </Link>
 
-      <MenuDrawerUserAvatar isMenuOpen={isOpen} />
-
-      <div className="menu-grid menu-grid--mobile-drawer mx-auto grid w-full max-w-[20.5rem] shrink-0 grid-cols-3 sm:max-w-[22.5rem]">
+      <div className="menu-grid menu-grid--mobile-drawer menu-grid--four mx-auto grid w-full max-w-[24rem] shrink-0 grid-cols-4 sm:max-w-[26rem]">
         {MENU_DIALOG_ALL_TILES.map((tile, index) => renderGridTile(tile, index))}
       </div>
 

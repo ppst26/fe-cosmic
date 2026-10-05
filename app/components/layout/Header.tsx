@@ -4,12 +4,10 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CosmicbetLogo, SearchIcon, HamburgerMenuIcon } from "../ui/Icons";
-import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
+import { HeaderWalletChip } from "./HeaderWalletChip";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
-import { VipRankEmblem } from "../vip/VipRankEmblem";
-import type { VipRankId } from "@/app/types/vip";
-import { fetchDesktopPlayerPanel } from "@/lib/api/lobby";
+import { HeaderUserAvatar } from "./HeaderUserAvatar";
 import { HEADER_DESKTOP_NAV } from "@/app/data/lobbyMockData";
 import {
   formatHeaderWalletBalance,
@@ -18,6 +16,9 @@ import { fetchWalletBalance } from "@/lib/api/profile";
 import { useLobbyShellSidebarOptional } from "./LobbyShellSidebarContext";
 import { cn } from "@/lib/utils";
 import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
+import { NotificationDesktopPopover } from "../notifications/NotificationDesktopPopover";
+import { NotificationBellButton } from "../notifications/NotificationBellButton";
+import { useNotifications } from "../notifications/NotificationProvider";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { parseHubFromHref } from "../hub/hubModalRegistry";
 
@@ -88,9 +89,11 @@ export function Header({
   const showAuthSkeleton = !isClientReady || isLoading;
   const showWallet = isClientReady && !isLoading && isAuthenticated;
   const balanceLabel = formatHeaderWalletBalance(fetchWalletBalance().amount);
-  const rankId = fetchDesktopPlayerPanel().rankId as VipRankId;
+  const isProfileRoute =
+    pathname === "/profile/account" || pathname.startsWith("/profile/account/");
   const lobbySidebar = useLobbyShellSidebarOptional();
   const sidebarHidden = lobbySidebar?.sidebarHidden ?? false;
+  const { openNotifications } = useNotifications();
 
   return (
     <>
@@ -106,14 +109,32 @@ export function Header({
           <div className="relative mx-auto flex h-11 w-full max-w-(--content-max) items-center justify-between">
             {/* ซ้าย: ไอคอนเมนู (หลังล็อกอิน) — ไม่มี card ครอบ */}
             {showWallet ? (
-              <button
-                type="button"
-                onClick={handleMenuClick}
-                className="relative z-10 flex h-9.5 w-9.5 shrink-0 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
-                aria-label="เปิดเมนู"
-              >
-                <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
-              </button>
+              <div className="relative z-10 flex shrink-0 items-center gap-0.5">
+                <button
+                  type="button"
+                  onClick={handleMenuClick}
+                  className="flex h-9.5 w-9.5 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
+                  aria-label="เปิดเมนู"
+                >
+                  <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
+                </button>
+                <Link
+                  href="/profile/account"
+                  className={cn(
+                    "cosmic-nav__profile-in-cluster flex h-8 w-8 shrink-0 items-center justify-center rounded-full p-0",
+                    isProfileRoute && "is-active",
+                  )}
+                  aria-label="โปรไฟล์"
+                  aria-current={isProfileRoute ? "page" : undefined}
+                >
+                  <HeaderUserAvatar
+                    size="xs"
+                    isProfileOpen={isProfileOpen}
+                    refreshWhenProfileCloses
+                    className="ring-0"
+                  />
+                </Link>
+              </div>
             ) : (
               <div className="w-0 shrink-0" aria-hidden="true" />
             )}
@@ -141,9 +162,15 @@ export function Header({
 
             {/* ขวา: ยอดเครดิต พร้อมไอคอนวอลเลท (หลังล็อกอิน) — ไอคอนเส้นขาว ตัวอักษรเล็กบาง ไม่มี arrow down */}
             {showWallet ? (
-              <div className="relative z-10 flex min-w-0 shrink-0 items-center">
-                <button
-                  type="button"
+              <div className="relative z-10 flex min-w-0 shrink-0 items-center gap-1.5 overflow-visible">
+                <NotificationBellButton
+                  onClick={openNotifications}
+                  className="!h-8 !w-8 rounded-md bg-[#222228] text-white/90 hover:bg-[#2c2c34]"
+                  ariaHaspopup="dialog"
+                />
+                <HeaderWalletChip
+                  balanceLabel={balanceLabel}
+                  variant="mobile"
                   onClick={() => {
                     if (isAuthenticated) {
                       openDeposit();
@@ -151,14 +178,7 @@ export function Header({
                       onLoginClick?.();
                     }
                   }}
-                  className="inline-flex h-8 items-center gap-1.5 rounded-md bg-[#222228] px-3 text-white transition-all hover:bg-[#2c2c34] active:scale-97 cursor-pointer"
-                  aria-label="ฝากเงินและดูยอดเครดิต"
-                >
-                  <HeaderWalletAssetIcon className="h-4 w-4" />
-                  <span className="text-xs font-normal tracking-tight text-white tabular-nums">
-                    {balanceLabel}
-                  </span>
-                </button>
+                />
               </div>
             ) : (
               <div className="w-0 shrink-0" aria-hidden="true" />
@@ -249,15 +269,10 @@ export function Header({
               />
             ) : showWallet ? (
               <div className="inline-flex max-w-full flex-nowrap items-center justify-end gap-[0.45rem]">
-                <div
-                  className="glass-card--soft inline-flex min-h-(--header-control-height) max-w-[min(100%,10.5rem)] items-center gap-[0.45rem] rounded-(--header-chip-radius) px-[0.9rem] py-0"
-                  aria-live="polite"
-                >
-                  <HeaderWalletAssetIcon className="h-[18px] w-[18px]" />
-                  <span className="max-w-[min(100%,7.5rem)] truncate text-sm font-medium tracking-[-0.01em] tabular-nums">
-                    {balanceLabel}
-                  </span>
-                </div>
+                <HeaderWalletChip
+                  balanceLabel={balanceLabel}
+                  variant="desktop"
+                />
 
                 <button
                   type="button"
@@ -269,17 +284,7 @@ export function Header({
                   ฝาก
                 </button>
 
-                <button
-                  type="button"
-                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn relative inline-flex h-(--header-control-height)! w-(--header-control-height)! shrink-0 items-center justify-center rounded-(--header-chip-radius) border-0 no-underline"
-                  aria-label="การแจ้งเตือน"
-                >
-                  <HeaderBellIcon />
-                  <span
-                    className="header-desktop-bar__badge absolute top-1.5 right-1.75 h-1.75 w-1.75 rounded-full"
-                    aria-hidden
-                  />
-                </button>
+                <NotificationDesktopPopover />
 
                 <button
                   type="button"
@@ -288,11 +293,16 @@ export function Header({
                     "header-desktop-bar__rank-btn glass-card--soft inline-grid min-h-(--header-control-height) min-w-(--header-control-height) place-items-center rounded-(--header-chip-radius) border-0 p-[0.2rem]",
                     isProfileOpen && "is-active",
                   )}
-                  aria-label="ยศ VIP และโปรไฟล์"
+                  aria-label="โปรไฟล์"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
                 >
-                  <VipRankEmblem rankId={rankId} size="xs" playing={false} />
+                  <HeaderUserAvatar
+                    size="sm"
+                    isProfileOpen={isProfileOpen}
+                    refreshWhenProfileCloses
+                    className="h-[calc(var(--header-control-height)-0.35rem)] w-[calc(var(--header-control-height)-0.35rem)] max-h-full max-w-full rounded-full"
+                  />
                 </button>
               </div>
             ) : (
@@ -335,21 +345,3 @@ function HeaderSidebarToggleIcon({ hidden }: { hidden: boolean }) {
   );
 }
 
-function HeaderBellIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
-      <path
-        d="M12 3a4.5 4.5 0 0 0-4.5 4.5v2.1c0 .5-.2 1-.55 1.35L5.8 13.2A1.2 1.2 0 0 0 6.75 15h10.5a1.2 1.2 0 0 0 .95-1.8l-1.15-2.25a2 2 0 0 1-.55-1.35V7.5A4.5 4.5 0 0 0 12 3Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 17a2 2 0 0 0 4 0"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}

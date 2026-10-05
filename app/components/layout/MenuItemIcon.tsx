@@ -47,6 +47,12 @@ function MenuItemIconSvg({ iconId, className }: { iconId: string; className: str
       return <GiftVoucherIcon className={className} />;
     case "ticket":
       return <PromoTicketIcon className={className} />;
+    case "reward-hub":
+    case "lucky-box":
+    case "random-card":
+    case "exchange-money":
+    case "freespins":
+      return <GiftVoucherIcon className={className} />;
     default:
       return (
         <svg

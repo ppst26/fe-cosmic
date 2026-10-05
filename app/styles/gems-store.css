@@ -2,6 +2,41 @@
  * ร้านค้าเพชร — การ์ดแลกรางวัล (GemsStorePageContent.tsx)
  */
 
+.gems-store-redeem-grid .gems-store-redeem-card__inner {
+  padding: 0.5rem 0.375rem 0.375rem;
+}
+
+.gems-store-redeem-grid .gems-store-redeem-card__title {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+}
+
+.gems-store-redeem-grid .gems-store-redeem-card__art {
+  max-width: 4.25rem;
+}
+
+.gems-store-redeem-grid .gems-store-redeem-card__cost {
+  font-size: 0.6875rem;
+}
+
+@media (min-width: 640px) {
+  .gems-store-redeem-grid .gems-store-redeem-card__inner {
+    padding: 0.75rem 0.625rem 0.625rem;
+  }
+
+  .gems-store-redeem-grid .gems-store-redeem-card__title {
+    font-size: 0.8125rem;
+  }
+
+  .gems-store-redeem-grid .gems-store-redeem-card__art {
+    max-width: 5.5rem;
+  }
+
+  .gems-store-redeem-grid .gems-store-redeem-card__cost {
+    font-size: inherit;
+  }
+}
+
 .gems-store-redeem-card {
   border: 1px solid rgb(255 255 255 / 0.07);
   border-radius: var(--radius-panel);

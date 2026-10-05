@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import { AppProviders } from "./providers";
-import { CosmicFooter } from "./components/layout/CosmicFooter";
+import { CosmicFooterGate } from "./components/layout/CosmicFooterGate";
 import "./globals.css";
 
 /** ฟอนต์หลักไทย/ลatin — โหลด self-host ผ่าน next/font จาก Google Fonts */
@@ -39,7 +39,7 @@ export default function RootLayout({
         <AppProviders>
           <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
             <div className="flex min-h-0 min-w-0 flex-1 flex-col">{children}</div>
-            <CosmicFooter />
+            <CosmicFooterGate />
           </div>
         </AppProviders>
       </body>

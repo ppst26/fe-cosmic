@@ -98,7 +98,7 @@
   }
 
   .page-shell--lobby .lobby-mobile-home-sections .carousel-track {
-    padding-block: var(--space-2);
+    padding-block: var(--space-1);
   }
 
   .page-shell--lobby .lobby-mobile-home-sections .carousel-games,
@@ -190,15 +190,17 @@
   cursor: pointer;
   outline: none;
   transition:
-    color 160ms ease,
-    background-color 160ms ease,
-    box-shadow 160ms ease;
+    color var(--motion-base) var(--ease-out),
+    background-color var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
 .category-nav--mobile .category-nav__pill:active {
   opacity: 0.92;
+  transform: scale(0.97);
 }
 
 /* active = สี/พื้นเท่านั้น — ขนาดเดียวกับ inactive เพื่อไม่ให้แถบกระตุกตอนกด */
@@ -241,7 +243,9 @@
   border-radius: 999px;
   background: linear-gradient(90deg, #6366f1, #7047eb, #a855f7);
   box-shadow: 0 0 8px rgba(112, 71, 235, 0.8);
-  transition: left 120ms linear, width 120ms ease;
+  transition:
+    left var(--motion-base) var(--ease-out),
+    width var(--motion-base) var(--ease-out);
 }
 
 @media (min-width: 1024px) {

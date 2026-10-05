@@ -1,17 +1,17 @@
-/** แถบครอบหัวข้อแถวเกม — ม่วงเข้มซ้าย จางไปขวา (Carousel.tsx) */
+/** แถบครอบหัวข้อแถวเกม — เทาเข้มไล่สีซ้าย จางไปขวา (Carousel.tsx) */
 section > .lobby-section-header-band {
   box-sizing: border-box;
   width: 100%;
   min-height: 0;
-  margin-bottom: 0.625rem;
-  padding: 0.5rem 0.7rem 0.55rem 0.75rem;
+  margin-bottom: 0.35rem;
+  padding: 0.35rem 0.65rem 0.38rem 0.7rem;
   border-radius: var(--radius-card);
   background: linear-gradient(
     90deg,
-    rgb(22 10 42 / 0.98) 0%,
-    rgb(34 18 58 / 0.82) 22%,
-    rgb(28 16 48 / 0.45) 46%,
-    rgb(16 10 28 / 0.14) 66%,
+    var(--lobby-section-title-band-start) 0%,
+    var(--lobby-section-title-band-mid) 26%,
+    var(--lobby-section-title-band-fade) 50%,
+    var(--lobby-section-title-band-tail) 70%,
     transparent 88%
   );
 }
@@ -47,9 +47,9 @@ section > .lobby-section-header-band .glass-icon-btn svg {
 
 @media (min-width: 640px) {
   section > .lobby-section-header-band {
-    margin-bottom: 0.75rem;
-    padding-block: 0.55rem;
-    padding-inline: 0.85rem 0.95rem;
+    margin-bottom: 0.4rem;
+    padding-block: 0.42rem;
+    padding-inline: 0.8rem 0.9rem;
   }
 
   section > .lobby-section-header-band .cosmic-type-section-title {

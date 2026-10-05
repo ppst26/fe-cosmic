@@ -30,6 +30,11 @@
   border: 0;
   background: transparent;
   color: var(--text-muted);
+  transition:
+    color var(--motion-base) var(--ease-out),
+    background var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
 }
 
 .cosmic-modal-shell--hub .hub-modal-segment-btn.is-active,
@@ -1522,7 +1527,7 @@
   }
 }
 
-.cosmic-mobile-sheet.vip-modal .vip-maintain-rank-panel--flat.vip-panel-card {
+.cosmic-mobile-sheet.vip-modal .vip-maintain-rank-panel--flat.vip-panel-card:not(.vip-rank-surface-card) {
   border-color: var(--vip-panel-border);
   background: var(--vip-panel-bg);
 }

@@ -98,12 +98,7 @@ export default function ProviderGamesPage() {
         </div>
 
         {/* 5. กริดรายการเกม 4 คอลัมน์บนมือถือ */}
-        <ProviderGameGrid
-          games={filteredGames}
-          onPlayGame={(game) => {
-            console.log("Play game:", game.title);
-          }}
-        />
+        <ProviderGameGrid games={filteredGames} />
       </main>
 
       {/* 6. Floating Bottom Navigation ล่างสุด */}

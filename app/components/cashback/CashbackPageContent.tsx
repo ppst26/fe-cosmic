@@ -9,6 +9,7 @@ import {
 } from "@/app/data/cashbackMockData";
 import { fetchCashbackPanels } from "@/lib/api/cashback";
 import { RefundIcon } from "../ui/Icons";
+import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
 
@@ -70,6 +71,11 @@ export function CashbackPageContent({
         columns={2}
       />
 
+      <TabPanelTransition
+        tabKey={tab}
+        order={cashbackPanels.tabs.map((t) => t.id)}
+        className="flex flex-col gap-5"
+      >
       <section className="flex flex-col items-center px-2 pt-2 text-center" aria-live="polite">
         <div className="relative flex h-[88px] w-[88px] items-center justify-center">
           <span
@@ -133,6 +139,7 @@ export function CashbackPageContent({
       </button>
 
       {tab === "loss" ? <CashbackLossRebateExtraSections /> : null}
+      </TabPanelTransition>
     </div>
   );
 }

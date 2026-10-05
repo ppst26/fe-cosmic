@@ -12,6 +12,7 @@ import { WithdrawProvider } from "@/app/components/withdraw/WithdrawProvider";
 import { PendingTransactionProvider } from "@/app/components/transactions/PendingTransactionProvider";
 import { LobbyShellSidebarProvider } from "@/app/components/layout/LobbyShellSidebarContext";
 import { GlobalAuthOverlays } from "@/app/components/auth/GlobalAuthOverlays";
+import { NotificationProvider } from "@/app/components/notifications/NotificationProvider";
 import { ToastProvider } from "@/context/ToastContext";
 
 /**
@@ -28,12 +29,14 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
               <WithdrawProvider>
                 <DesktopHubModalProvider>
                   <VipModalProvider>
-                    <TransactionsProvider>
-                      <LobbyShellSidebarProvider>
-                        {children}
-                        <GlobalAuthOverlays />
-                      </LobbyShellSidebarProvider>
-                    </TransactionsProvider>
+                    <NotificationProvider>
+                      <TransactionsProvider>
+                        <LobbyShellSidebarProvider>
+                          {children}
+                          <GlobalAuthOverlays />
+                        </LobbyShellSidebarProvider>
+                      </TransactionsProvider>
+                    </NotificationProvider>
                   </VipModalProvider>
                 </DesktopHubModalProvider>
               </WithdrawProvider>

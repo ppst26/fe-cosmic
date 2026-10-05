@@ -2,13 +2,15 @@
 
 import React from "react";
 import { SearchIcon, ProfileNavIcon } from "../ui/Icons";
-import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
+import { HeaderUserAvatar } from "./HeaderUserAvatar";
+import { HeaderWalletChip } from "./HeaderWalletChip";
 import { useAuth } from "../auth/AuthProvider";
 import {
   formatHeaderWalletBalance,
 } from "@/app/data/walletMockData";
 import { fetchWalletBalance } from "@/lib/api/profile";
 import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
+import { NotificationDesktopPopover } from "../notifications/NotificationDesktopPopover";
 
 interface LobbyDesktopTopBarProps {
   onLoginClick?: () => void;
@@ -55,10 +57,7 @@ export function LobbyDesktopTopBar({
         {isLoading ? (
           <div className="h-10 w-32 animate-pulse rounded-[var(--radius-pill)] bg-[var(--surface-hover)]" />
         ) : isAuthenticated ? (
-          <div className="lobby-desktop-topbar__wallet">
-            <HeaderWalletAssetIcon className="h-[18px] w-[18px]" />
-            <span className="tabular-nums font-medium">{balanceLabel}</span>
-          </div>
+          <HeaderWalletChip balanceLabel={balanceLabel} variant="desktop" />
         ) : (
           <HeaderGuestAuthButtons
             onLoginClick={onLoginClick}
@@ -68,14 +67,7 @@ export function LobbyDesktopTopBar({
           />
         )}
 
-        <button
-          type="button"
-          className="lobby-desktop-topbar__icon-btn"
-          aria-label="การแจ้งเตือน"
-        >
-          <BellIcon />
-          <span className="lobby-desktop-topbar__badge" aria-hidden />
-        </button>
+        <NotificationDesktopPopover />
 
         <button
           type="button"
@@ -83,28 +75,13 @@ export function LobbyDesktopTopBar({
           className="lobby-desktop-topbar__avatar"
           aria-label="โปรไฟล์"
         >
-          <ProfileNavIcon className="h-5 w-5" />
+          {isAuthenticated ? (
+            <HeaderUserAvatar size="sm" className="h-9 w-9 rounded-full" />
+          ) : (
+            <ProfileNavIcon className="h-5 w-5" />
+          )}
         </button>
       </div>
     </header>
-  );
-}
-
-function BellIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
-      <path
-        d="M12 3a4.5 4.5 0 0 0-4.5 4.5v2.1c0 .5-.2 1-.55 1.35L5.8 13.2A1.2 1.2 0 0 0 6.75 15h10.5a1.2 1.2 0 0 0 .95-1.8l-1.15-2.25a2 2 0 0 1-.55-1.35V7.5A4.5 4.5 0 0 0 12 3Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 17a2 2 0 0 0 4 0"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }

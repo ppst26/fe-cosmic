@@ -74,7 +74,7 @@ export function ProfileAvatarPicker({
           </div>
 
           <p className="text-xs text-[var(--text-secondary)]">
-            เลือกตัวละครจากชุด Cosmic — บันทึกทันทีเมื่อแตะ
+            เลือกรูปจากชุดตัวละคร — บันทึกทันทีเมื่อแตะ
           </p>
 
           {error ? (

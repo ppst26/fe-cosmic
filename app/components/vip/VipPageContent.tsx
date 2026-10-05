@@ -6,7 +6,9 @@ import { fetchVipPlayer, fetchVipRanks } from "@/lib/api/vip";
 import { cn } from "@/lib/utils";
 import { VipModalDesktopLayout } from "./VipModalDesktopLayout";
 import { VipMobileTabPanels } from "./VipMobileTabPanels";
+import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { VipTabList } from "./VipTabList";
+import { VIP_PAGE_TABS } from "./vipTabConfig";
 
 interface VipPageContentProps {
   activeTab: VipModalTabId;
@@ -37,7 +39,11 @@ export function VipPageContent({
     <div className={cn("flex min-h-0 flex-col gap-4", embedded && "lg:min-h-0 lg:flex-1")}>
       <VipTabList activeTab={tab} onSelect={selectTab} />
 
-      <div className="vip-page vip-modal vip-modal-typography flex min-h-0 flex-col lg:min-h-0 lg:flex-1">
+      <TabPanelTransition
+        tabKey={tab}
+        order={VIP_PAGE_TABS.map((t) => t.id)}
+        className="vip-page vip-modal vip-modal-typography flex min-h-0 flex-col lg:min-h-0 lg:flex-1"
+      >
         <div className="vip-modal__body hidden min-h-0 flex-1 lg:flex lg:flex-col">
           <VipModalDesktopLayout
             tab={tab}
@@ -55,7 +61,7 @@ export function VipPageContent({
             onRankFocusChange={setRankFocusIndex}
           />
         </div>
-      </div>
+      </TabPanelTransition>
     </div>
   );
 }

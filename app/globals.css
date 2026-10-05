@@ -35,6 +35,9 @@
 @import "./styles/vip-page.css";
 @import "./styles/hub-modals.css";
 @import "./styles/gems-store.css";
+@import "./styles/reward-hub.css";
+@import "./styles/game-play.css";
+@import "./styles/notifications.css";
 @import "./styles/providers-filter.css";
 
 /* ── Feature sections ── */

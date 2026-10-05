@@ -97,6 +97,95 @@
   color: var(--text-primary);
 }
 
+/** ชิปกระเป๋า+ยอด — การ์ดยอด · ไอคอนลอยล้นขวา (HeaderWalletChip) */
+.header-wallet-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: visible;
+  max-width: min(100%, 11rem);
+  padding: 0.05rem 0;
+  border: 0;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button.header-wallet-chip {
+  cursor: pointer;
+  transition: transform var(--motion-instant) var(--ease-out);
+}
+
+button.header-wallet-chip:active {
+  transform: scale(0.97);
+}
+
+.header-wallet-chip__float {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: -0.7rem;
+  filter: drop-shadow(0 5px 10px rgb(0 0 0 / 0.38));
+  pointer-events: none;
+}
+
+.header-wallet-chip__float-icon {
+  width: 2.35rem;
+  height: 2.35rem;
+}
+
+.header-wallet-chip__amount {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.625rem;
+  padding: 0.2rem 1.35rem 0.2rem 0.65rem;
+  border: 1px solid var(--vip-panel-border);
+  border-radius: var(--radius-pill);
+  background: var(--inner-card-fill);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 4px 12px rgb(0 0 0 / 0.22);
+  transition: background var(--motion-fast) ease;
+}
+
+.header-wallet-chip--desktop {
+  max-width: min(100%, 12.5rem);
+}
+
+.header-wallet-chip--desktop .header-wallet-chip__float {
+  width: 2.85rem;
+  height: 2.85rem;
+  margin-left: -0.85rem;
+}
+
+.header-wallet-chip--desktop .header-wallet-chip__float-icon {
+  width: 2.65rem;
+  height: 2.65rem;
+}
+
+.header-wallet-chip--desktop .header-wallet-chip__amount {
+  min-height: 2.125rem;
+  padding: 0.28rem 1.55rem 0.28rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+@media (hover: hover) {
+  button.header-wallet-chip:hover .header-wallet-chip__amount {
+    background: var(--inner-card-fill-hover);
+  }
+}
+
 /** ปุ่มเข้าสู่ระบบของผู้เยี่ยมชม — มือถือ (HeaderGuestAuthButtons) */
 .cosmic-nav__auth-login {
   color: var(--text-primary);

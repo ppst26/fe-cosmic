@@ -26,6 +26,7 @@ import {
   FISHING_ITEMS,
   type FishingCardItem,
 } from "../../data/fishingProvidersData";
+import { CARDS_ITEMS, type CardsCardItem } from "../../data/cardsProvidersData";
 import { LotteryHubContent } from "../lottery/LotteryHubContent";
 
 interface LobbyCategoryProvidersProps {
@@ -95,6 +96,12 @@ function matchesSportFilter(item: SportCardItem, filterId: string): boolean {
 }
 
 function matchesFishingFilter(item: FishingCardItem, filterId: string): boolean {
+  if (filterId === "all-in-one" || filterId === "all-providers") return true;
+  if (item.tags && item.tags.includes(filterId)) return true;
+  return false;
+}
+
+function matchesCardsFilter(item: CardsCardItem, filterId: string): boolean {
   if (filterId === "all-in-one" || filterId === "all-providers") return true;
   if (item.tags && item.tags.includes(filterId)) return true;
   return false;
@@ -190,6 +197,22 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
     return { list, totalCount };
   }, [LOBBY_PROVIDER_FILTER_ID, searchQuery]);
 
+  const cardsContent = useMemo(() => {
+    let list = CARDS_ITEMS.filter((item) => matchesCardsFilter(item, LOBBY_PROVIDER_FILTER_ID));
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      list = list.filter(
+        (item) =>
+          item.title.toLowerCase().includes(q) || item.provider.toLowerCase().includes(q),
+      );
+    }
+    const totalCount =
+      LOBBY_PROVIDER_FILTER_ID === "all-in-one" && !searchQuery.trim()
+        ? CARDS_ITEMS.length
+        : list.length;
+    return { list, totalCount };
+  }, [LOBBY_PROVIDER_FILTER_ID, searchQuery]);
+
   if (categoryId === "lottery") {
     return (
       <section className="lobby-category-providers mt-1 min-w-0" aria-label="หวย">
@@ -204,7 +227,8 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
     categoryId === "casino" ||
     categoryId === "slots" ||
     categoryId === "sports" ||
-    categoryId === "fishing";
+    categoryId === "fishing" ||
+    categoryId === "cards";
 
   if (!hasProviderGrid) {
     return (
@@ -224,9 +248,11 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
         ? "สล็อต"
         : categoryId === "fishing"
           ? "ยิงปลา"
-          : categoryId === "sports"
-            ? "กีฬา"
-            : "ค่ายเกม";
+          : categoryId === "cards"
+            ? "เกมไพ่"
+            : categoryId === "sports"
+              ? "กีฬา"
+              : "ค่ายเกม";
 
   const providerTotal =
     categoryId === "slots"
@@ -235,9 +261,11 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
         ? casinoContent.totalCount
         : categoryId === "fishing"
           ? fishingContent.totalCount
-          : categoryId === "sports"
-            ? sportContent.totalCount
-            : 0;
+          : categoryId === "cards"
+            ? cardsContent.totalCount
+            : categoryId === "sports"
+              ? sportContent.totalCount
+              : 0;
 
   const handleSlotProviderSelect = (provider: SlotProviderPick) => {
     setSlotProviderId(provider.id);
@@ -270,9 +298,11 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
             ? "ค้นหาคาสิโนสด | ค่าย"
             : categoryId === "fishing"
               ? "ค้นหายิงปลา | ค่าย"
-              : categoryId === "sports"
-                ? "ค้นหากีฬา | ค่าย"
-                : "ค้นหาเกม | ค่าย"
+              : categoryId === "cards"
+                ? "ค้นหาเกมไพ่ | ค่าย"
+                : categoryId === "sports"
+                  ? "ค้นหากีฬา | ค่าย"
+                  : "ค้นหาเกม | ค่าย"
         }
       />
 
@@ -325,6 +355,15 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
             totalCount={fishingContent.totalCount}
             hideTitleRow
             sectionTitle="ยิงปลา"
+          />
+        ) : null}
+
+        {categoryId === "cards" ? (
+          <CasinoProviderCards
+            items={cardsContent.list}
+            totalCount={cardsContent.totalCount}
+            hideTitleRow
+            sectionTitle="เกมไพ่"
           />
         ) : null}
       </div>

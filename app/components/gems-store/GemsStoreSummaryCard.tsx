@@ -27,7 +27,7 @@ export function GemsStoreSummaryCard({ gemsBalance, className }: GemsStoreSummar
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1 pr-1">
           <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">เพชรคงเหลือ</p>
-          <p className="mt-0.5 text-xs leading-snug text-[var(--text-secondary)] sm:text-[13px]">
+          <p className="mt-0.5 text-[11px] leading-snug text-[var(--text-secondary)] sm:text-xs">
             แลกเพชรเป็นเครดิตและรางวัล
           </p>
         </div>
@@ -63,9 +63,9 @@ export function GemsStoreSummaryCard({ gemsBalance, className }: GemsStoreSummar
         </p>
       </div>
 
-      <p className="cosmic-type-sheet-desc text-center">
+      <p className="text-center text-[10px] leading-snug text-[var(--text-muted)] sm:text-[11px]">
         {resetNotice}
-        <span className="mx-1 opacity-40" aria-hidden="true">·</span>
+        <span className="mx-0.5 opacity-40" aria-hidden="true">·</span>
         {rateLabel}
       </p>
     </aside>

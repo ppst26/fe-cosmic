@@ -3,6 +3,9 @@
  * แสดงผลเป็น 3 คอลัมน์แนวตั้ง — การ์ดรูปจาก public/casino
  */
 
+import { casinoProviderHrefFromFile } from "@/lib/categoryProviderPaths";
+import { buildCasinoProviderPlayHref } from "@/lib/gamePlayPaths";
+
 export interface CasinoFilterTabItem {
   id: string;
   label: string;
@@ -63,30 +66,35 @@ const CASINO_COVER_META: {
     file: "evo",
     title: "Evolution",
     provider: "Evolution",
-    href: "#evolution",
+    href: "/casino/evolution",
     tags: ["all-in-one", "all-providers", "roulette", "game-shows"],
   },
-  { file: "dream", title: "Dream Gaming", provider: "Dream Gaming", href: "#dream-gaming" },
-  { file: "ae", title: "AE Sexy", provider: "AE Sexy", href: "#ae-sexy" },
-  { file: "allbet", title: "Allbet", provider: "Allbet", href: "#allbet" },
+  { file: "dream", title: "Dream Gaming", provider: "Dream Gaming", href: "/casino/dream-gaming" },
+  { file: "ae", title: "AE Sexy", provider: "AE Sexy", href: "/casino/ae-sexy" },
+  { file: "allbet", title: "Allbet", provider: "Allbet", href: "/casino/allbet" },
   {
     file: "betgames",
     title: "BetGames",
     provider: "BetGames",
-    href: "#betgames",
+    href: "/casino/betgames",
     tags: ["all-in-one", "all-providers", "game-shows"],
   },
-  { file: "mg", title: "Microgaming Live", provider: "Microgaming", href: "#microgaming" },
-  { file: "mt", title: "MT Live", provider: "MT Live", href: "#mt-live" },
-  { file: "vivo", title: "Vivo Gaming", provider: "Vivo Gaming", href: "#vivo-gaming" },
-  { file: "winfinity", title: "Winfinity", provider: "Winfinity", href: "#winfinity" },
-  { file: "wm", title: "WM Casino", provider: "WM Casino", href: "#wm-casino" },
-  { file: "yb", title: "YB Live", provider: "YB Live", href: "#yb-live" },
+  { file: "mg", title: "Microgaming Live", provider: "Microgaming", href: "/casino/microgaming" },
+  { file: "mt", title: "MT Live", provider: "MT Live", href: "/casino/mt-live" },
+  { file: "vivo", title: "Vivo Gaming", provider: "Vivo Gaming", href: "/casino/vivo-gaming" },
+  { file: "winfinity", title: "Winfinity", provider: "Winfinity", href: "/casino/winfinity" },
+  { file: "wm", title: "WM Casino", provider: "WM Casino", href: "/casino/wm-casino" },
+  { file: "yb", title: "YB Live", provider: "YB Live", href: "/casino/yb-live" },
 ];
 
 const CASINO_DEFAULT_TAGS = ["all-in-one", "all-providers", "baccarat"] as const;
 
 function buildCasinoCoverItem(meta: (typeof CASINO_COVER_META)[number]): CasinoCardItem {
+  const catalogPath = meta.href.startsWith("/casino/")
+    ? meta.href
+    : casinoProviderHrefFromFile(meta.file);
+  const slug = catalogPath.replace(/^\/casino\//, "");
+
   return {
     id: `provider-${meta.file}`,
     title: meta.title,
@@ -94,7 +102,11 @@ function buildCasinoCoverItem(meta: (typeof CASINO_COVER_META)[number]): CasinoC
     badges: meta.badges ?? ["LIVE"],
     coverSrc: `/casino/${meta.file}.webp`,
     tags: meta.tags ?? [...CASINO_DEFAULT_TAGS],
-    href: meta.href,
+    href: buildCasinoProviderPlayHref({
+      slug,
+      title: meta.title,
+      provider: meta.provider,
+    }),
   };
 }
 

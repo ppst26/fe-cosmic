@@ -280,7 +280,7 @@ export function HomeLobbyPage() {
                               className={
                                 index === 0
                                   ? "mt-1 sm:mt-2"
-                                  : "mt-5 sm:mt-6"
+                                  : "mt-4 sm:mt-5"
                               }
                             />
                           ))}

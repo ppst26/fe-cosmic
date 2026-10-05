@@ -13,6 +13,7 @@ import {
 } from "@/app/data/transactionsMockData";
 import { fetchTransactions } from "@/lib/api/transactions";
 import { getDefaultTransactionDateRange } from "@/app/lib/transactionDateUtils";
+import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { TransactionKindTabs } from "./TransactionKindTabs";
 import { TransactionDateFilter } from "./TransactionDateFilter";
 import { TransactionHistoryTable } from "./TransactionHistoryTable";
@@ -128,7 +129,10 @@ export function TransactionsPageContent({
             กรุณาเข้าสู่ระบบเพื่อดูรายการธุรกรรม
           </p>
         ) : (
-          <>
+          <TabPanelTransition
+            tabKey={activeKind}
+            className="flex flex-col gap-4"
+          >
             <TransactionHistoryTable kind={activeKind} items={tableItems} />
 
             {activeKind === "bet" ? (
@@ -189,7 +193,7 @@ export function TransactionsPageContent({
                 </div>
               </div>
             ) : null}
-          </>
+          </TabPanelTransition>
         )}
       </section>
     </div>

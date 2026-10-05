@@ -19,9 +19,14 @@
   color: var(--text-muted);
   cursor: pointer;
   transition:
-    color var(--motion-fast) ease,
-    background var(--motion-fast) ease,
-    box-shadow var(--motion-fast) ease;
+    color var(--motion-base) var(--ease-out),
+    background var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+}
+
+.hall-of-fame__tab-btn:active {
+  transform: scale(0.97);
 }
 
 .hall-of-fame__tab-btn:hover:not(.is-active) {
@@ -174,4 +179,14 @@
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   box-shadow: var(--glass-shadow);
+}
+
+/* Live feed — tbody ตรึงความสูง 8 แถว (ตั้งจาก HallOfFame.tsx) ซ่อนแถวที่ 9 ที่กำลังเลื่อนออก */
+.hall-of-fame-table__body--live {
+  overflow: hidden;
+  transition: height var(--motion-slow) var(--ease-out);
+}
+
+.hall-of-fame-table__row {
+  will-change: transform;
 }

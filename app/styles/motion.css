@@ -3,20 +3,179 @@
  * ใช้กับ .cosmic-dialog-overlay · .cosmic-modal-shell · .glass-control
  */
 
-.cosmic-dialog-overlay[data-state="open"],
-.cosmic-modal-shell[data-state="open"],
-.cosmic-mobile-sheet[data-state="open"],
-.cosmic-confirm-dialog[data-state="open"] {
-  animation-duration: var(--motion-dialog);
-  animation-timing-function: var(--ease-out);
+/**
+ * Dialog / sheet / modal — 2 step
+ * เปิด:  step 1 กล่องเลื่อน/ขยายเข้า → step 2 เนื้อหาไล่ขึ้นทีละส่วน
+ * ปิด:   step 1 เนื้อหาจางลง (กล่องค้างไว้) → step 2 กล่องเลื่อน/ย่อออก + scrim จาง
+ * ตัวกล่องเป็นตัวเดียวที่ Radix Presence รอ animationend — เนื้อหาต้องจบก่อนเสมอ
+ * (มือถือ = bottom sheet · lg+ = modal กลางจอ — ตำแหน่งกลางจอใช้ property translate จึงไม่ชนกับ transform ตรงนี้)
+ */
+
+.cosmic-dialog-overlay[data-state="open"] {
+  animation: motion-overlay-in var(--motion-overlay-in) var(--ease-out) both;
 }
 
-.cosmic-dialog-overlay[data-state="closed"],
-.cosmic-modal-shell[data-state="closed"],
-.cosmic-mobile-sheet[data-state="closed"],
+.cosmic-dialog-overlay[data-state="closed"] {
+  animation: motion-overlay-out var(--motion-sheet-out) linear both;
+}
+
+.cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="open"] {
+  animation: motion-sheet-in var(--motion-sheet-in) var(--ease-out) both;
+}
+
+.cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="closed"] {
+  animation: motion-sheet-out var(--motion-sheet-out) linear both;
+}
+
+.cosmic-confirm-dialog[data-state="open"] {
+  animation: motion-modal-in var(--motion-sheet-in) var(--ease-out) both;
+}
+
 .cosmic-confirm-dialog[data-state="closed"] {
-  animation-duration: var(--motion-dialog-exit);
-  animation-timing-function: var(--ease-in);
+  animation: motion-modal-out var(--motion-sheet-out) linear both;
+}
+
+/* modal กลางจอที่ไม่ใช่ sheet (ผลหวย / รายละเอียดโปร / ธุรกรรมค้าง) */
+.cosmic-modal-shell:not(.cosmic-mobile-sheet)[data-state="open"] {
+  animation: motion-modal-in var(--motion-sheet-in) var(--ease-out) both;
+}
+
+.cosmic-modal-shell:not(.cosmic-mobile-sheet)[data-state="closed"] {
+  animation: motion-modal-out var(--motion-sheet-out) linear both;
+}
+
+.cosmic-modal-shell:not(.cosmic-mobile-sheet)[data-state="open"] > * {
+  animation: motion-sheet-content-in var(--motion-sheet-content) var(--ease-out) backwards;
+  animation-delay: var(--motion-sheet-content-delay);
+}
+
+.cosmic-modal-shell:not(.cosmic-mobile-sheet)[data-state="closed"] > * {
+  animation: motion-sheet-content-out var(--motion-sheet-content-out) var(--ease-in) both;
+}
+
+@media (min-width: 1024px) {
+  .cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="open"] {
+    animation-name: motion-modal-in;
+  }
+
+  .cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="closed"] {
+    animation-name: motion-modal-out;
+  }
+}
+
+/* step เนื้อหา — เข้าไล่ทีละส่วนหลังกล่องมาถึง · ออกจางก่อนกล่องขยับ */
+.cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="open"] > *,
+.cosmic-confirm-dialog[data-state="open"] > * {
+  animation: motion-sheet-content-in var(--motion-sheet-content) var(--ease-out) backwards;
+  animation-delay: calc(var(--motion-sheet-content-delay) + var(--stagger-i, 0) * var(--stagger));
+}
+
+.cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="open"] > :nth-child(2),
+.cosmic-confirm-dialog[data-state="open"] > :nth-child(2) {
+  --stagger-i: 1;
+}
+
+.cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="open"] > :nth-child(3),
+.cosmic-confirm-dialog[data-state="open"] > :nth-child(3) {
+  --stagger-i: 2;
+}
+
+.cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="open"] > :nth-child(n + 4),
+.cosmic-confirm-dialog[data-state="open"] > :nth-child(n + 4) {
+  --stagger-i: 3;
+}
+
+.cosmic-mobile-sheet:not(.profile-slideover-card)[data-state="closed"] > *,
+.cosmic-confirm-dialog[data-state="closed"] > * {
+  animation: motion-sheet-content-out var(--motion-sheet-content-out) var(--ease-in) both;
+}
+
+@keyframes motion-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ค้างที่ 1 ตลอด step 1 แล้วจางตาม step 2 */
+@keyframes motion-overlay-out {
+  0%,
+  36% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes motion-sheet-in {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes motion-sheet-out {
+  0%,
+  36% {
+    transform: none;
+    animation-timing-function: var(--ease-in);
+  }
+  100% {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes motion-modal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes motion-modal-out {
+  0%,
+  36% {
+    opacity: 1;
+    transform: none;
+    animation-timing-function: var(--ease-in);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale(0.96);
+  }
+}
+
+@keyframes motion-sheet-content-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes motion-sheet-content-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
 }
 
 .glass-control:active:not(:disabled) {
@@ -24,15 +183,18 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cosmic-dialog-overlay[data-state="open"],
-  .cosmic-dialog-overlay[data-state="closed"],
-  .cosmic-modal-shell[data-state="open"],
-  .cosmic-modal-shell[data-state="closed"],
-  .cosmic-mobile-sheet[data-state="open"],
-  .cosmic-mobile-sheet[data-state="closed"],
-  .cosmic-confirm-dialog[data-state="open"],
-  .cosmic-confirm-dialog[data-state="closed"] {
-    animation-duration: 1ms;
+  .cosmic-dialog-overlay[data-state],
+  .cosmic-mobile-sheet[data-state],
+  .cosmic-confirm-dialog[data-state],
+  .cosmic-modal-shell[data-state] {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  .cosmic-mobile-sheet[data-state] > *,
+  .cosmic-confirm-dialog[data-state] > *,
+  .cosmic-modal-shell[data-state] > * {
+    animation: none !important;
   }
 
   .glass-control:active:not(:disabled),
@@ -157,4 +319,49 @@
 .motion-collapse__inner {
   min-height: 0;
   overflow: hidden;
+}
+
+/* Tab panel — เนื้อหาเปลี่ยนตามแท็บ (TabPanelTransition) · a/b สลับชื่อเพื่อเล่นซ้ำโดยไม่ remount */
+.motion-tab-panel[data-flip="1"] {
+  animation: motion-tab-in-a var(--motion-slow) var(--ease-out) backwards;
+}
+
+.motion-tab-panel[data-flip="2"] {
+  animation: motion-tab-in-b var(--motion-slow) var(--ease-out) backwards;
+}
+
+@keyframes motion-tab-in-a {
+  from {
+    opacity: 0;
+    transform: translate3d(calc(var(--tab-dir, 0) * 18px), 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes motion-tab-in-b {
+  from {
+    opacity: 0;
+    transform: translate3d(calc(var(--tab-dir, 0) * 18px), 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.motion-tab-panel[data-dir="1"] {
+  --tab-dir: 1;
+}
+
+.motion-tab-panel[data-dir="-1"] {
+  --tab-dir: -1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-tab-panel[data-flip] {
+    animation: none;
+  }
 }

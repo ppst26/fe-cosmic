@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { buildGamePlayHref } from "@/lib/gamePlayPaths";
 import { ProviderGameItem } from "../../data/providerGamesData";
 
 interface ProviderGameGridProps {
@@ -404,6 +406,22 @@ export function ProviderGameGrid({
   games,
   onPlayGame,
 }: ProviderGameGridProps) {
+  const router = useRouter();
+
+  const handlePlay = (game: ProviderGameItem) => {
+    if (onPlayGame) {
+      onPlayGame(game);
+      return;
+    }
+    router.push(
+      buildGamePlayHref({
+        id: game.id,
+        title: game.title,
+        provider: game.providerId,
+      }),
+    );
+  };
+
   // ติดตามสถานะ favorite ของแต่ละเกม
   const [favorites, setFavorites] = useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
@@ -447,7 +465,7 @@ export function ProviderGameGrid({
             <div
               key={game.id}
               className="group flex flex-col cursor-pointer select-none transition-transform duration-150 active:scale-95"
-              onClick={() => onPlayGame?.(game)}
+              onClick={() => handlePlay(game)}
             >
               {/* 1. Thumbnail Card (สี่เหลี่ยมจัตุรัสขอบมน borderless) */}
               <div className="relative aspect-square w-full overflow-hidden rounded-[var(--radius-panel)] bg-[#121127] shadow-[0_2px_8px_rgba(0,0,0,0.35)] transition-all duration-200 group-hover:brightness-110 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
