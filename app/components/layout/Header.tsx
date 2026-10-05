@@ -49,8 +49,16 @@ export function Header({
   const { openHub } = useDesktopHubModal();
   const [isClientReady, setIsClientReady] = useState(false);
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
     setIsClientReady(true);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 4);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleProfileClick = () => {
@@ -87,6 +95,7 @@ export function Header({
   return (
     <>
       <header
+        data-scrolled={mobileSticky && isScrolled ? "true" : undefined}
         className={cn(
           "w-full min-w-0 border-0 px-3.5 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2 sm:px-4 lg:hidden",
           mobileSticky

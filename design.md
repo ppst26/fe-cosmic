@@ -392,7 +392,15 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid` �
 - keyboard, focus-visible, touch targets ≥ 44px
 - Hall of Fame: tablist + keyboard; live feed ไม่กระโตก layout
 - Contrast: ข้อความบนพื้นเข้ม ≥ 4.5:1
-- `prefers-reduced-motion`: ไม่ pulse/กระพริบต่อเนื่อง
+- `prefers-reduced-motion`: ไม่ pulse/กระพริบต่อเนื่อง · motion ทั้งหมดดู **§ Motion** ด้านล่าง
+
+### Motion
+
+- **หลักการ:** CSS-first (ไม่เพิ่ม framer-motion) · animate เฉพาะ `transform`/`opacity` (accordion ใช้ `grid-template-rows`) · ต้องมีความหมาย (สถานะ/นำสายตา/feedback) · ไม่ block การโต้ตอบเกิน 400ms · ไม่มี loop นอกจาก marquee/ticker/skeleton
+- **Tokens** (`tokens.css`): `--motion-instant` 100ms (press) · `--motion-fast` 160ms (hover, tab) · `--motion-base` 240ms (card, accordion, toast) · `--motion-slow` 400ms (drawer, hero) · `--ease-out` (enter) · `--ease-in` (exit) · `--ease-spring` (reward/badge เท่านั้น) · `--stagger` 40ms (สูงสุด 6 ตัว)
+- **Utilities** (`motion.css`): `.motion-press` · `.motion-lift` (hover:hover เท่านั้น) · `.motion-reveal` + `<MotionReveal index>` · `.motion-pop` · `.motion-skeleton`
+- **Reduced motion:** `motion.css` ตั้ง token ทั้งหมดเป็น 1ms และ `--stagger: 0` — component ใหม่ใช้ token ไม่ hardcode ms
+- **ห้าม:** parallax, glow pulse, bounce ซ้ำ, stagger เกิน 6 รายการ
 - loading / empty / error ทุกรายการที่ดึงข้อมูล
 
 ---

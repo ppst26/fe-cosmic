@@ -70,6 +70,12 @@ export function getVipRankVideoSrc(rankId: VipRankId): string | null {
   return VIP_RANK_VIDEO[rankId] ?? null;
 }
 
+/** MP4 แบบ stacked-alpha (สี+mask) สำหรับ Safari/iOS — ชื่อไฟล์ = webm ตัด hash เป็น .stacked.mp4 */
+export function getVipRankStackedSrc(rankId: VipRankId): string | null {
+  const webm = VIP_RANK_VIDEO[rankId];
+  return webm ? webm.replace(/.[A-Za-z0-9_-]{8}.webm$/, ".stacked.mp4") : null;
+}
+
 /** เป้าเทิร์นอ้างอิงตาราง (fallback) */
 export const VIP_TURNOVER_BASE = 500;
 

@@ -70,3 +70,49 @@
 .cosmic-toast__close:hover {
   opacity: 1;
 }
+
+/* Motion: slide-in จากบน + แถบเวลา auto-dismiss */
+.cosmic-toast {
+  position: relative;
+  overflow: hidden;
+  animation: cosmic-toast-in var(--motion-base) var(--ease-out) both;
+}
+
+.cosmic-toast::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: currentcolor;
+  opacity: 0.35;
+  transform-origin: left;
+  animation: cosmic-toast-progress var(--toast-duration, 4000ms) linear forwards;
+  content: "";
+}
+
+@keyframes cosmic-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes cosmic-toast-progress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-toast::after {
+    display: none;
+  }
+}

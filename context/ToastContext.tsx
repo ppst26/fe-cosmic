@@ -18,6 +18,7 @@ export interface ToastItem {
   id: string;
   message: string;
   variant: ToastVariant;
+  durationMs: number;
 }
 
 interface ToastContextValue {
@@ -41,7 +42,8 @@ function ToastHost({ items, onDismiss }: { items: ToastItem[]; onDismiss: (id: s
         <div
           key={toast.id}
           role="alert"
-          className={cn("cosmic-toast animate-fade-in", `cosmic-toast--${toast.variant}`)}
+          className={cn("cosmic-toast", `cosmic-toast--${toast.variant}`)}
+          style={{ "--toast-duration": `${toast.durationMs}ms` } as React.CSSProperties}
         >
           {VARIANT_ICONS[toast.variant]}
           <p className="cosmic-toast__message cosmic-type-sheet-desc">{toast.message}</p>
@@ -73,7 +75,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const showToast = useCallback(
     (message: string, variant: ToastVariant = "info", durationMs = 4000) => {
       const id = `toast-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-      setItems((prev) => [...prev.slice(-2), { id, message, variant }]);
+      setItems((prev) => [...prev.slice(-2), { id, message, variant, durationMs }]);
       const timer = setTimeout(() => dismiss(id), durationMs);
       timersRef.current.set(id, timer);
     },

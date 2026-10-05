@@ -134,7 +134,7 @@ export function JackpotSection({
                 key={item.id}
                 href={item.href}
                 aria-label={item.title}
-                className="carousel-tournament-card transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.99]"
+                className="carousel-tournament-card motion-press transition-[filter,transform] duration-[var(--motion-fast)] hover:brightness-110"
               >
                 {image}
               </Link>
