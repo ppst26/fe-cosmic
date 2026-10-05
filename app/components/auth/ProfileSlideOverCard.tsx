@@ -158,7 +158,11 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
                 <>
                   <div className="lg:hidden">
                     <div className="profile-hub-sheet__user-card mb-3">
-                      <ProfileHubHeader profile={profile} variant="sheet" />
+                      <ProfileHubHeader
+                        profile={profile}
+                        variant="sheet"
+                        onProfileUpdated={setProfile}
+                      />
                     </div>
                     <ProfileHubBody
                       profile={profile}

@@ -21,7 +21,7 @@ export function SectionHeader({
   actionContent,
 }: SectionHeaderProps) {
   return (
-    <div className={cn("mb-3 flex items-center justify-between gap-3", className)}>
+    <div className={cn("mb-3.5 flex items-center justify-between gap-3 sm:mb-4", className)}>
       <div className="flex items-center gap-2">
         {icon && <span className="inline-flex items-center shrink-0">{icon}</span>}
         <h2

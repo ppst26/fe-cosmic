@@ -221,7 +221,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         <CosmicbetLogo className="h-9 max-w-[168px] sm:h-10 sm:max-w-[188px]" />
       </Link>
 
-      <MenuDrawerUserAvatar />
+      <MenuDrawerUserAvatar isMenuOpen={isOpen} />
 
       <div className="menu-grid menu-grid--mobile-drawer mx-auto grid w-full max-w-[20.5rem] shrink-0 grid-cols-3 sm:max-w-[22.5rem]">
         {MENU_DIALOG_ALL_TILES.map((tile, index) => renderGridTile(tile, index))}

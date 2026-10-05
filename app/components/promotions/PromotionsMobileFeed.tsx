@@ -103,7 +103,7 @@ function PromotionsMobileListCard({
             หมดเขต {item.expiresLabel}
           </span>
           <span
-            className="shrink-0 text-xs font-medium text-[var(--destructive)] sm:text-sm"
+            className="shrink-0 text-xs font-medium text-[var(--accent-primary)] sm:text-sm"
             aria-hidden="true"
           >
             อ่านเงื่อนไข

@@ -30,6 +30,7 @@ interface ProfileHubBodyProps {
   onLogout: () => void;
   /** false เมื่อหัวอยู่ในแถบม่วงของ bottom sheet */
   showHeader?: boolean;
+  onProfileUpdated?: (profile: ProfileUser) => void;
 }
 
 function formatThb(value: number): string {
@@ -55,6 +56,7 @@ export function ProfileHubBody({
   onOpenVip,
   onLogout,
   showHeader = true,
+  onProfileUpdated,
 }: ProfileHubBodyProps) {
   const stats = fetchProfileHubStats();
   const vipRankLabel = getVipRankTier(fetchVipPlayer().currentRankId).label;
@@ -62,7 +64,9 @@ export function ProfileHubBody({
 
   return (
     <div className="profile-hub-body flex flex-col pb-1">
-      {showHeader ? <ProfileHubHeader profile={profile} /> : null}
+      {showHeader ? (
+        <ProfileHubHeader profile={profile} onProfileUpdated={onProfileUpdated} />
+      ) : null}
 
       <nav className="profile-hub-nav flex flex-col gap-0.5" aria-label="เมนูโปรไฟล์">
         <ProfileHubRow

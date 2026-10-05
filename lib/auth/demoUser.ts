@@ -17,7 +17,15 @@ export const DEMO_USER: StoredUser = {
   passwordHash:
     "73c43eb2b9122e30a7a50a39bcdf8a7a:83a4d0c3c940a32fb8c8a6b1784e73b2f7a4a981301696af8f9669b9880c9519a06c37155a69d1be4ea77586a1326abf1eb74faa7630bbebfdea8f4bc1815045",
   createdAt: "2026-10-01T00:00:00.000Z",
+  avatarPresetId: "cosmic-nova",
 };
+
+/**
+ * อัปเดต preset avatar บัญชีเดโม (in-memory — ใช้ตอน dev / ไม่มี .data)
+ */
+export function setDemoUserAvatarPreset(avatarPresetId: string): void {
+  DEMO_USER.avatarPresetId = avatarPresetId;
+}
 
 /**
  * คืนบัญชีเดโมเมื่อเบอร์ตรงชุดที่ฝังไว้

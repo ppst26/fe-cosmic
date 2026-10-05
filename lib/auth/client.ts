@@ -3,8 +3,10 @@ import type {
   AuthSessionResponse,
   LoginRequestBody,
   ProfileResponse,
+  ProfileUser,
   RegisterRequestBody,
   SessionUser,
+  UpdateProfileAvatarResponse,
 } from "@/app/types/auth";
 
 const jsonHeaders = { "Content-Type": "application/json" };
@@ -44,6 +46,21 @@ export async function fetchProfile() {
   if (res.status === 401) return null;
   if (!res.ok) return null;
   const data = (await res.json()) as ProfileResponse;
+  return data.profile;
+}
+
+/** บันทึก preset avatar — คืนโปรไฟล์ล่าสุดเมื่อสำเร็จ */
+export async function updateProfileAvatarPreset(
+  avatarPresetId: string,
+): Promise<ProfileUser | null> {
+  const res = await fetch("/api/auth/profile", {
+    method: "PATCH",
+    credentials: "include",
+    headers: jsonHeaders,
+    body: JSON.stringify({ avatarPresetId }),
+  });
+  const data = (await res.json()) as UpdateProfileAvatarResponse;
+  if (!res.ok || !data.ok || !data.profile) return null;
   return data.profile;
 }
 

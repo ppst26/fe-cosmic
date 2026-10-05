@@ -2,11 +2,8 @@
 
 import React, { useState } from "react";
 import type { ProfileUser } from "@/app/types/auth";
-import {
-  CopyIcon,
-  ProfileAvatarIcon,
-  VerifiedCheckIcon,
-} from "../ui/Icons";
+import { CopyIcon, VerifiedCheckIcon } from "../ui/Icons";
+import { UserAvatar } from "./UserAvatar";
 import {
   COSMIC_BTN_GLASS_ICON,
   COSMIC_PANEL_GLASS,
@@ -30,11 +27,7 @@ export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
 
   return (
     <section className={`${COSMIC_PANEL_GLASS} flex gap-4 px-4 py-4`}>
-      <div
-        className={`${COSMIC_BTN_GLASS_ICON} !h-16 !w-16 shrink-0 text-[var(--icon-default)]`}
-      >
-        <ProfileAvatarIcon className="h-9 w-9" />
-      </div>
+      <UserAvatar profile={profile} size="lg" className="!h-16 !w-16 !rounded-[var(--radius-panel)]" />
 
       <div className="min-w-0 flex-1 space-y-1.5">
         <p className="truncate text-lg font-medium text-[var(--text-primary)]">

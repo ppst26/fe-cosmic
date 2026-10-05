@@ -9,6 +9,8 @@ export interface StoredUser {
   channelId: string;
   passwordHash: string;
   createdAt: string;
+  /** preset avatar ที่ user เลือก — อ้างอิง app/data/avatarPresets.ts */
+  avatarPresetId?: string;
 }
 
 /** ข้อมูลที่ส่งให้ client หลัง login/register */
@@ -61,8 +63,20 @@ export interface ProfileUser {
   bankAccountMasked: string;
   createdAt: string;
   joinedLabel: string;
+  avatarPresetId: string;
+  avatarUrl: string;
 }
 
 export interface ProfileResponse {
   profile: ProfileUser | null;
+}
+
+export interface UpdateProfileAvatarRequest {
+  avatarPresetId: string;
+}
+
+export interface UpdateProfileAvatarResponse {
+  ok: boolean;
+  profile?: ProfileUser;
+  error?: string;
 }

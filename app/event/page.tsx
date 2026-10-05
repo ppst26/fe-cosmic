@@ -20,11 +20,7 @@ export default function EventPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader
-        title="กิจกรรม"
-        subtitle="เลือกกิจกรรมเพื่อดูเงื่อนไขและรับรางวัล"
-        backHref="/"
-      />
+      <SlotProvidersHeader title="กิจกรรม" backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <ActivitiesHubPageContent />

@@ -305,14 +305,6 @@ export function HomeLobbyPage() {
                       </div>
                     </div>
 
-                    <div className="lg:hidden">
-                      <FloatingBottomNav
-                        items={BOTTOM_NAV_DATA}
-                        isMenuOpen={isMenuOpen}
-                        onMenuClick={() => (isMenuOpen ? closeMenu() : openMenu())}
-                      />
-                    </div>
-
                     {isHomeLobby ? (
                       <>
                         <HallOfFame datasets={fetchHallOfFame()} />
@@ -329,6 +321,14 @@ export function HomeLobbyPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="lg:hidden">
+        <FloatingBottomNav
+          items={BOTTOM_NAV_DATA}
+          isMenuOpen={isMenuOpen}
+          onMenuClick={() => (isMenuOpen ? closeMenu() : openMenu())}
+        />
       </div>
     </>
   );

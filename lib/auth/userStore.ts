@@ -10,8 +10,14 @@ import {
   maskBankAccount,
   maskPhone,
 } from "./profileFormat";
+import {
+  avatarPresetImageUrl,
+  defaultAvatarPresetIdForUser,
+  isAvatarPresetId,
+  resolveAvatarPresetId,
+} from "@/app/data/avatarPresets";
 import { getSignUpBankById } from "@/app/data/signupMockData";
-import { findDemoUserById, findDemoUserByPhone } from "./demoUser";
+import { findDemoUserById, findDemoUserByPhone, setDemoUserAvatarPreset } from "./demoUser";
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const USERS_FILE = path.join(DATA_DIR, "users.json");
@@ -90,8 +96,9 @@ export async function createUser(input: CreateUserInput): Promise<StoredUser> {
     throw new Error("PHONE_TAKEN");
   }
 
+  const id = randomUUID();
   const user: StoredUser = {
-    id: randomUUID(),
+    id,
     phone,
     firstName: input.firstName.trim(),
     lastName: input.lastName.trim(),
@@ -100,6 +107,7 @@ export async function createUser(input: CreateUserInput): Promise<StoredUser> {
     channelId: input.channelId,
     passwordHash: hashPassword(input.password),
     createdAt: new Date().toISOString(),
+    avatarPresetId: defaultAvatarPresetIdForUser(id),
   };
 
   const users = await readAllUsers();
@@ -125,6 +133,7 @@ export function toSessionUser(user: StoredUser) {
  */
 export function toProfileUser(user: StoredUser): ProfileUser {
   const bank = getSignUpBankById(user.bankId);
+  const avatarPresetId = resolveAvatarPresetId(user.avatarPresetId, user.id);
   return {
     id: user.id,
     memberId: formatMemberId(user.id),
@@ -139,5 +148,35 @@ export function toProfileUser(user: StoredUser): ProfileUser {
     bankAccountMasked: maskBankAccount(user.bankAccountNumber),
     createdAt: user.createdAt,
     joinedLabel: formatJoinedDate(user.createdAt),
+    avatarPresetId,
+    avatarUrl: avatarPresetImageUrl(avatarPresetId, 160),
   };
+}
+
+/**
+ * บันทึก preset avatar — throw INVALID_PRESET / USER_NOT_FOUND
+ */
+export async function updateUserAvatarPreset(
+  userId: string,
+  avatarPresetId: string,
+): Promise<StoredUser> {
+  if (!isAvatarPresetId(avatarPresetId)) {
+    throw new Error("INVALID_PRESET");
+  }
+
+  const demo = findDemoUserById(userId);
+  if (demo) {
+    setDemoUserAvatarPreset(avatarPresetId);
+    return { ...demo, avatarPresetId };
+  }
+
+  const users = await readAllUsers();
+  const index = users.findIndex((u) => u.id === userId);
+  if (index < 0) {
+    throw new Error("USER_NOT_FOUND");
+  }
+
+  users[index] = { ...users[index], avatarPresetId };
+  await writeAllUsers(users);
+  return users[index];
 }
