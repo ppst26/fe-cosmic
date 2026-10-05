@@ -100,10 +100,10 @@ export function Header({
       <header
         data-scrolled={mobileSticky && isScrolled ? "true" : undefined}
         className={cn(
-          "w-full min-w-0 border-0 px-3.5 pt-[calc(env(safe-area-inset-top,0px)+8px)] pb-2 sm:px-4 lg:hidden",
+          "w-full min-w-0 border-0 px-3.5 pb-2 sm:px-4 lg:hidden",
           mobileSticky
-            ? "cosmic-mobile-chrome-surface sticky top-0 z-50"
-            : "relative bg-transparent",
+            ? "cosmic-mobile-chrome-surface sticky top-0 z-50 pt-[calc(env(safe-area-inset-top,0px)+8px)]"
+            : "relative bg-transparent pt-2",
         )}
       >
           <div className="relative mx-auto flex h-11 w-full max-w-(--content-max) items-center justify-between">

@@ -35,7 +35,10 @@
   inset: 0;
   z-index: 0;
   border-radius: var(--nav-top-radius) var(--nav-top-radius) 0 0;
-  background: var(--nav-bg);
+  background-color: var(--nav-bg);
+  background-image: var(--bottom-nav-radial);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   border-top: 1px solid var(--cosmic-chrome-border, rgb(255 255 255 / 0.08));
   box-shadow: 0 -4px 24px rgb(0 0 0 / 0.45);
   pointer-events: none;

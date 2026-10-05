@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useLobbyMobileHeaderHeight } from "@/app/hooks/useLobbyMobileHeaderHeight";
 import { usePathname } from "next/navigation";
 import { Header } from "../layout/Header";
 import { RightMenuDrawer } from "../layout/RightMenuDrawer";
@@ -72,26 +73,11 @@ export function HomeLobbyPage() {
   /** ยอดนิยม + carousel หมวดอื่น + Providers — มือถือเฉพาะหมวด home (design.md §6) */
   const showMobileLobbySections = isHomeLobby ? "" : "hidden";
 
-  const headerMeasureRef = useRef<HTMLDivElement>(null);
+  const { headerMeasureRef, headerHeight, shellStyle } = useLobbyMobileHeaderHeight();
   const categoryStickySentinelRef = useRef<HTMLDivElement>(null);
   const categoryBarRef = useRef<HTMLDivElement>(null);
-  const [headerHeight, setHeaderHeight] = useState<number>(0);
   const [categoryBarHeight, setCategoryBarHeight] = useState<number>(0);
   const [isCategoryNavStuck, setIsCategoryNavStuck] = useState(false);
-
-  // วัดความสูง Header — ตั้ง --lobby-mobile-header-h ให้ CategoryNav sticky (CSS เท่านั้น ไม่สลับ DOM ตอน scroll)
-  useEffect(() => {
-    const el = headerMeasureRef.current;
-    if (!el) return;
-    const updateHeight = () => {
-      const h = el.getBoundingClientRect().height;
-      if (h > 0) setHeaderHeight(Math.ceil(h));
-    };
-    updateHeight();
-    const ro = new ResizeObserver(updateHeight);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
 
   // CategoryNav ติด header — สลับพื้น solid → glass (IntersectionObserver ไม่ย้าย DOM)
   useEffect(() => {
@@ -131,24 +117,20 @@ export function HomeLobbyPage() {
     <>
       <div
         className={`lobby-desktop-shell lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-center${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
-        style={
-          headerHeight > 0
-            ? ({ "--lobby-mobile-header-h": `${headerHeight}px` } as React.CSSProperties)
-            : undefined
-        }
+        style={shellStyle}
       >
         <div
-          className="lobby-desktop-shell__header-band cosmic-mobile-chrome-surface lobby-mobile-header-band sticky top-0 z-50 w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:pt-[env(safe-area-inset-top,0px)]"
+          ref={headerMeasureRef}
+          className="lobby-desktop-shell__header-band cosmic-mobile-chrome-surface lobby-mobile-header-band w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:pt-[env(safe-area-inset-top,0px)] lg:relative"
         >
-          <div ref={headerMeasureRef} className="min-w-0">
-            <Header
-              onSignUpClick={openSignUp}
-              onLoginClick={openLogin}
-              onMenuClick={() => openMenu()}
-              mobileSticky={false}
-            />
-          </div>
+          <Header
+            onSignUpClick={openSignUp}
+            onLoginClick={openLogin}
+            onMenuClick={() => openMenu()}
+            mobileSticky={false}
+          />
         </div>
+        <div className="lobby-mobile-header-band__spacer lg:hidden" aria-hidden="true" />
 
         <div className="lobby-desktop-shell__desk-body lg:relative lg:w-full lg:min-w-0 lg:flex-1">
           <div className="lobby-desktop-shell__sidebar-outside hidden shrink-0 lg:fixed lg:left-(--lobby-desktop-cluster-gutter) lg:top-(--lobby-sidebar-sticky-top) lg:z-[6] lg:flex lg:w-(--lobby-sidebar-card-width) lg:flex-col lg:items-stretch lg:gap-2 lg:max-h-[calc(100dvh-var(--lobby-sidebar-sticky-top)-var(--space-6))] lg:overflow-visible">
@@ -176,7 +158,7 @@ export function HomeLobbyPage() {
                     onClose={closeMenu}
                   />
 
-                  <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 pt-3 lg:mx-0 lg:max-w-none lg:px-0 lg:pt-0">
+                  <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 pt-0 lg:mx-0 lg:max-w-none lg:px-0 lg:pt-0">
                     {/* มือถือ: hero → ประกาศ → โปร — ระยะแนบให้คอนเทนต์ต่อเนื่อง (หน้าแรก) */}
                     <div className="flex flex-col gap-2.5 lg:hidden">
                       <WelcomeBanner />

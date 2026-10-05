@@ -38,6 +38,13 @@
   box-shadow: none;
 }
 
+/** แถบ lobby fixed — safe-area อยู่ที่ band แล้ว ไม่ซ้อนใน Header */
+@media (max-width: 1023px) {
+  .lobby-mobile-header-band > header {
+    padding-top: 0.5rem;
+  }
+}
+
 /** Desktop lobby header — พื้นเข้มกว่ามือถือ (token --header-desktop-chrome-*) */
 @media (min-width: 1024px) {
   .lobby-desktop-shell__header-band.cosmic-mobile-chrome-surface {

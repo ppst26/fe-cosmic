@@ -8,6 +8,7 @@ import { useVipModal } from "@/app/components/vip/VipModalProvider";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { cn } from "@/lib/utils";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
+import { useLobbyMobileHeaderHeight } from "@/app/hooks/useLobbyMobileHeaderHeight";
 import { FloatingBottomNav } from "./FloatingBottomNav";
 import { Header } from "./Header";
 import { useLobbyShellSidebar } from "./LobbyShellSidebarContext";
@@ -49,18 +50,26 @@ export function LobbyDesktopPageShell({
     if (action === "coupon") openCouponRedeem();
   };
 
+  const { headerMeasureRef, shellStyle } = useLobbyMobileHeaderHeight();
+
   return (
     <>
       <div
         className={`lobby-desktop-shell text-[var(--text-primary)] lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-center${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
+        style={shellStyle}
       >
-        <div className="lobby-desktop-shell__header-band cosmic-mobile-chrome-surface lobby-mobile-header-band sticky top-0 z-50 w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:pt-[env(safe-area-inset-top,0px)]">
+        <div
+          ref={headerMeasureRef}
+          className="lobby-desktop-shell__header-band cosmic-mobile-chrome-surface lobby-mobile-header-band w-full shrink-0 lg:sticky lg:top-0 lg:z-50 lg:isolate lg:w-full lg:shrink-0 lg:pt-[env(safe-area-inset-top,0px)] lg:relative"
+        >
           <Header
             onSignUpClick={openSignUp}
             onLoginClick={openLogin}
             onMenuClick={() => setIsMenuOpen(true)}
+            mobileSticky={false}
           />
         </div>
+        <div className="lobby-mobile-header-band__spacer lg:hidden" aria-hidden="true" />
 
         <div className="lobby-desktop-shell__desk-body lg:relative lg:w-full lg:min-w-0 lg:flex-1">
           <div className="lobby-desktop-shell__sidebar-outside hidden shrink-0 lg:fixed lg:left-(--lobby-desktop-cluster-gutter) lg:top-(--lobby-sidebar-sticky-top) lg:z-[6] lg:flex lg:w-(--lobby-sidebar-card-width) lg:flex-col lg:items-stretch lg:gap-2 lg:max-h-[calc(100dvh-var(--lobby-sidebar-sticky-top)-var(--space-6))] lg:overflow-visible">

@@ -65,6 +65,10 @@ export const COSMIC_SHEET_SOFT_GLASS = "cosmic-sheet-soft-glass";
 
 export const COSMIC_PANEL_GLASS = "glass-card--soft rounded-[var(--radius-panel)]";
 
+/** การ์ดทึบ — ตาราง / หน้า standalone (data-table.css .cosmic-panel-solid) */
+
+export const COSMIC_PANEL_SOLID = "cosmic-panel-solid rounded-[var(--radius-panel)]";
+
 
 
 /** แท็บ 2 ช่อง — track glass · active white solid */

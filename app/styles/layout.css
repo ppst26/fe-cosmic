@@ -36,6 +36,11 @@
 }
 
 @media (max-width: 1023px) {
+  /**
+   * Header lobby มือถือ — fixed จนสุด viewport (footer อยู่นอก shell; sticky หลุดตอน scroll ท้ายหน้า)
+   */
+  /** fixed + spacer — ดู category-nav.css (.lobby-mobile-header-band / __spacer) */
+
   /** หวย / feature — กรอบกลางเต็มความกว้างจอ (ไม่จำกัดแบบ desktop cluster) */
   .lobby-desktop-shell__desk-body,
   .lobby-desktop-shell__center-container,

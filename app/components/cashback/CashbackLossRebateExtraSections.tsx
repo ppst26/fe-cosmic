@@ -20,8 +20,13 @@ import {
 } from "@/app/data/lossRebateMockData";
 import { fetchLossRebate } from "@/lib/api/cashback";
 import { ChevronDownIcon } from "../ui/Icons";
-import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
+import { COSMIC_PANEL_SOLID } from "../ui/cosmicButtonClasses";
 import { CosmicSelectField } from "../ui/CosmicSelectField";
+import {
+  CosmicFormulaCell,
+  CosmicFormulaOperator,
+  CosmicFormulaRow,
+} from "../ui/CosmicFormulaRow";
 
 type CashbackLossRebateExtraSectionsProps = {
   summary?: LossRebateSummaryMock;
@@ -82,6 +87,7 @@ export function CashbackLossRebateExtraSections({
               aria-label="เลือกเดือน"
               value={monthId}
               onValueChange={handleMonthChange}
+              variant="solid"
               triggerClassName="loss-rebate-page__month-select"
               options={lossRebate.months.map((option) => ({
                 value: option.id,
@@ -91,27 +97,27 @@ export function CashbackLossRebateExtraSections({
           </div>
         </div>
 
-        <div className={`${COSMIC_PANEL_GLASS} overflow-hidden`}>
-          <Table className="text-sm">
+        <div className="cosmic-data-table-shell">
+          <Table className="cosmic-data-table text-sm">
             <TableHeader>
-              <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
-                <TableHead className="h-11 px-3 text-xs font-medium text-[var(--border-active)] sm:px-4">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="h-11 px-3 text-xs font-medium text-[var(--text-secondary)] sm:px-4">
                   รอบคำนวณ
                 </TableHead>
-                <TableHead className="h-11 px-3 text-right text-xs font-medium text-[var(--border-active)] sm:px-4">
+                <TableHead className="h-11 px-3 text-right text-xs font-medium text-[var(--text-secondary)] sm:px-4">
                   ยอดเสียสุทธิ
                 </TableHead>
-                <TableHead className="h-11 px-3 text-right text-xs font-medium text-[var(--border-active)] sm:px-4">
+                <TableHead className="h-11 px-3 text-right text-xs font-medium text-[var(--text-secondary)] sm:px-4">
                   โบนัสที่ได้รับ
                 </TableHead>
-                <TableHead className="hidden h-11 px-3 text-right text-xs font-medium text-[var(--border-active)] sm:table-cell sm:px-4">
+                <TableHead className="hidden h-11 px-3 text-right text-xs font-medium text-[var(--text-secondary)] sm:table-cell sm:px-4">
                   วันที่รับ
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {pageRows.length === 0 ? (
-                <TableRow className="border-[var(--border-subtle)]/30 hover:bg-transparent">
+                <TableRow className="hover:bg-transparent">
                   <TableCell
                     colSpan={4}
                     className="px-4 py-10 text-center text-xs text-[var(--text-muted)]"
@@ -123,11 +129,11 @@ export function CashbackLossRebateExtraSections({
                 pageRows.map((row, index) => (
                   <TableRow
                     key={row.id}
-                    className={`border-[var(--border-subtle)]/30 hover:bg-[color-mix(in_srgb,var(--surface-hover)_35%,transparent)] ${
+                    className={
                       index % 2 === 1
-                        ? "bg-[color-mix(in_srgb,var(--surface-solid-inner)_40%,transparent)]"
-                        : "bg-transparent"
-                    }`}
+                        ? "cosmic-data-table__row--alt border-0 hover:bg-[var(--inner-card-fill-hover)]"
+                        : "border-0 hover:bg-[var(--inner-card-fill-hover)]"
+                    }
                   >
                     <TableCell className="px-3 py-3 text-xs font-medium text-[var(--text-primary)] sm:px-4">
                       {row.periodLabel}
@@ -148,7 +154,7 @@ export function CashbackLossRebateExtraSections({
           </Table>
 
           {totalHistory > 0 && (
-            <div className="flex flex-col gap-3 border-t border-[var(--border-subtle)]/40 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="cosmic-data-table__footer flex flex-col gap-3 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-xs text-[var(--text-muted)]">
                 แสดง {rangeStart}–{rangeEnd} จาก {formatLossRebateRecordCount(totalHistory)}
               </p>
@@ -183,14 +189,14 @@ export function CashbackLossRebateExtraSections({
         </div>
       </section>
 
-      <section className={`${COSMIC_PANEL_GLASS} overflow-hidden`}>
+      <section className={`${COSMIC_PANEL_SOLID} overflow-hidden`}>
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}
-          className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[color-mix(in_srgb,var(--surface-hover)_40%,transparent)]"
+          className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[var(--inner-card-fill-hover)]"
           aria-expanded={termsOpen}
         >
-          <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium text-[var(--text-muted)]">
+          <span className="loss-rebate-page__info-well flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium text-[var(--text-muted)]">
             i
           </span>
           <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการคืนยอดเสีย</span>
@@ -201,7 +207,7 @@ export function CashbackLossRebateExtraSections({
           />
         </button>
         {termsOpen && (
-          <ul className="space-y-2 border-t border-[var(--border-subtle)]/40 px-4 py-3.5 text-xs leading-relaxed text-[var(--text-secondary)]">
+          <ul className="space-y-2 border-t border-[color-mix(in_srgb,var(--border-subtle)_50%,transparent)] px-4 py-3.5 text-xs leading-relaxed text-[var(--text-secondary)]">
             {lossRebate.terms.map((line) => (
               <li key={line} className="flex gap-2">
                 <span className="text-[var(--accent-primary)]" aria-hidden="true">
@@ -219,55 +225,26 @@ export function CashbackLossRebateExtraSections({
 
 function LossRebateFormulaSection({ summary }: { summary: LossRebateSummaryMock }) {
   return (
-    <section className={`${COSMIC_PANEL_GLASS} px-4 py-4 sm:px-5`}>
+    <section className={`${COSMIC_PANEL_SOLID} px-4 py-4 sm:px-5`}>
       <h2 className="text-sm font-medium text-[var(--text-primary)]">รายละเอียดการคำนวณ</h2>
-      <div className="mt-4 flex flex-row items-center gap-1.5 sm:gap-2">
-        <FormulaBlock
+      <CosmicFormulaRow className="mt-4">
+        <CosmicFormulaCell
           label="ยอดเสียสุทธิที่เข้าเงื่อนไข"
           value={formatLossRebateCurrency(summary.eligibleNetLossThb)}
         />
-        <FormulaOperator symbol="×" />
-        <FormulaBlock
+        <CosmicFormulaOperator symbol="×" />
+        <CosmicFormulaCell
           label="อัตราคืนยอดเสีย"
           value={formatLossRebatePercent(summary.rebateRatePercent)}
         />
-        <FormulaOperator symbol="=" />
-        <FormulaBlock
+        <CosmicFormulaOperator symbol="=" />
+        <CosmicFormulaCell
           label="โบนัสคืนยอดเสีย"
           value={formatLossRebateCurrency(summary.rebateBonusThb)}
-          valueClassName="text-[var(--text-primary)]"
         />
-      </div>
+      </CosmicFormulaRow>
       <p className="mt-3 text-xs text-[var(--text-secondary)]">ข้อมูลและอัตราในภาพเป็นตัวอย่าง</p>
     </section>
-  );
-}
-
-function FormulaBlock({
-  label,
-  value,
-  valueClassName = "text-[var(--text-primary)]",
-}: {
-  label: string;
-  value: string;
-  valueClassName?: string;
-}) {
-  return (
-    <div className="glass-card--soft min-w-0 flex-1 rounded-[var(--radius-control)] px-2 py-2 sm:px-3 sm:py-2.5">
-      <p className="line-clamp-2 text-xs leading-normal text-[var(--text-secondary)] sm:text-[13px]">{label}</p>
-      <p className={`mt-0.5 text-xs font-medium tabular-nums sm:text-base ${valueClassName}`}>{value}</p>
-    </div>
-  );
-}
-
-function FormulaOperator({ symbol }: { symbol: string }) {
-  return (
-    <span
-      className="flex h-7 w-7 shrink-0 items-center justify-center text-base font-medium text-[var(--text-muted)] sm:h-8 sm:w-8 sm:text-lg"
-      aria-hidden="true"
-    >
-      {symbol}
-    </span>
   );
 }
 
@@ -291,7 +268,7 @@ function PaginationButton({
       aria-current={active ? "page" : undefined}
       disabled={disabled}
       onClick={onClick}
-      className={`cosmic-choice-btn flex h-9 min-w-9 items-center justify-center px-2 text-xs disabled:cursor-not-allowed disabled:opacity-40 ${
+      className={`cosmic-pagination-btn flex h-9 min-w-9 items-center justify-center px-2 text-xs disabled:cursor-not-allowed disabled:opacity-40 ${
         active ? "is-active" : ""
       }`}
     >

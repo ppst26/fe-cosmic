@@ -199,18 +199,13 @@
   box-shadow: none;
 }
 
-/** หน้าคืนยอดเสีย (/loss-rebate) — LossRebatePageContent.tsx */
-.loss-rebate-page__month-select {
-  cursor: pointer;
-}
-
-/** Select แบบ Radix — CosmicSelectField.tsx · แทน native <select> */
-.cosmic-select__content {
+/** Select แบบ Radix — CosmicSelectField.tsx · แทน native <select> (solid → data-table.css) */
+.cosmic-select__content:not(.cosmic-select__content--solid) {
   -webkit-backdrop-filter: blur(16px) saturate(1.12);
   backdrop-filter: blur(16px) saturate(1.12);
 }
 
-.cosmic-select__item[data-highlighted] {
+.cosmic-select__content:not(.cosmic-select__content--solid) .cosmic-select__item[data-highlighted] {
   background: linear-gradient(
     135deg,
     rgb(119 71 229 / 0.28),
@@ -221,11 +216,6 @@
 
 .cosmic-select__item svg {
   color: var(--icon-active);
-}
-
-.mobile-standalone-page .loss-rebate-page .cosmic-choice-btn.is-active {
-  background: var(--cta-white-bg);
-  color: var(--cta-white-fg);
 }
 
 /* Dialog ตัวกรองค่ายเกม (FILTER) — ProviderFilterDialog.tsx · solid dark sheet */

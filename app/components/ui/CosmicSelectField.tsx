@@ -25,6 +25,8 @@ type CosmicSelectFieldProps = {
   triggerClassName?: string;
   size?: "sm" | "default";
   disabled?: boolean;
+  /** glass = ค่าเดิม · solid = ทึบไม่ blur (ตาราง / standalone) */
+  variant?: "glass" | "solid";
 };
 
 /**
@@ -41,7 +43,10 @@ export function CosmicSelectField({
   triggerClassName,
   size = "sm",
   disabled,
+  variant = "glass",
 }: CosmicSelectFieldProps) {
+  const isSolid = variant === "solid";
+
   return (
     <Select value={value} onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger
@@ -49,7 +54,10 @@ export function CosmicSelectField({
         size={size}
         aria-label={ariaLabel}
         className={cn(
-          "cosmic-select__trigger glass-card--soft !h-auto min-w-[8.5rem] gap-2 rounded-[var(--radius-control)] border-0 px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] shadow-none focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-0 data-[size=sm]:h-auto",
+          "cosmic-select__trigger !h-auto min-w-[8.5rem] gap-2 rounded-[var(--radius-control)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] shadow-none focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-0 data-[size=sm]:h-auto",
+          isSolid
+            ? "cosmic-select__trigger--solid border"
+            : "glass-card--soft border-0",
           triggerClassName,
           className,
         )}
@@ -57,7 +65,12 @@ export function CosmicSelectField({
         <SelectValue />
       </SelectTrigger>
       <SelectContent
-        className="cosmic-select__content z-[var(--z-overlay,80)] min-w-[var(--radix-select-trigger-width)] rounded-[var(--radius-panel)] border border-[var(--glass-border)] bg-[var(--glass-fill-modal)] text-[var(--text-primary)] shadow-[0_16px_40px_rgb(0_0_0_/_0.45)] ring-0"
+        className={cn(
+          "cosmic-select__content z-[var(--z-overlay,80)] min-w-[var(--radix-select-trigger-width)] rounded-[var(--radius-panel)] text-[var(--text-primary)] ring-0",
+          isSolid
+            ? "cosmic-select__content--solid"
+            : "border border-[var(--glass-border)] bg-[var(--glass-fill-modal)] shadow-[0_16px_40px_rgb(0_0_0_/_0.45)]",
+        )}
         position="popper"
         align="end"
         sideOffset={6}

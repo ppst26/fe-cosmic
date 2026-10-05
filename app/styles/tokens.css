@@ -9,6 +9,16 @@
   /** พื้นทึบสองชั้น — กลุ่มข้อมูล / อัตราต่อรอง / ช่องข้อความ (.surface-solid-*) */
   --surface-solid-outer: #131216;
   --surface-solid-inner: #1d1a22;
+  /**
+   * ชั้นซ้อนในการ์ดทึบ — อ่อนกว่าเดิม ใกล้ --inner-card-fill แต่ยังแยกชั้น
+   * CosmicFormulaRow · cosmic-data-table thead/zebra · pagination
+   */
+  --cosmic-nested-surface: color-mix(in srgb, var(--inner-card-fill) 78%, #141418);
+  --cosmic-formula-cell-bg: var(--cosmic-nested-surface);
+  --cosmic-pagination-bg: color-mix(in srgb, var(--inner-card-fill) 92%, #18181c);
+  --cosmic-pagination-bg-hover: var(--inner-card-fill-hover);
+  --cosmic-pagination-active-bg: color-mix(in srgb, var(--inner-card-fill-hover) 42%, #e4e4ea);
+  --cosmic-pagination-active-fg: #1c1c22;
   /** พื้นหน้า standalone มือถือ — flat neutral (ไม่ทับ nebula .cosmic-bg) */
   --standalone-page-bg: #141416;
   --surface-gradient: linear-gradient(
@@ -248,8 +258,16 @@
   --nav-text: #8b919c;
   --nav-hover: #c8ccd6;
   --nav-active: #f2f3f7;
-  /** FloatingBottomNav — โทนม่วงเข้มกว่า chrome หลัก */
-  --bottom-nav-bg: #0f0b1a;
+  /** FloatingBottomNav — พื้น #161321 · radial ม่วงเข้มเกือบดำจากกลางล่าง */
+  --bottom-nav-bg: #161321;
+  /** พื้นแถบล่าง — radial จากกลางล่าง (BottomNav.module.css .surface) */
+  --bottom-nav-radial: radial-gradient(
+    ellipse 92% 150% at 50% 100%,
+    color-mix(in srgb, var(--action-solid) 14%, #161321) 0%,
+    color-mix(in srgb, var(--action-solid) 6%, #161321) 30%,
+    #161321 56%,
+    #0b0a10 100%
+  );
   --nav-capsule-bg: var(--bottom-nav-bg);
   --nav-safe-fill: var(--surface-end);
   --nav-top-line: color-mix(in srgb, var(--border-active) 32%, var(--border-subtle));
