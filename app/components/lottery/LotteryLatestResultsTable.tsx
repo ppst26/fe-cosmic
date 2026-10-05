@@ -26,7 +26,7 @@ interface LotteryLatestResultsTableProps {
 }
 
 /**
- * ตารางผลหวยล่าสุด — แถว glass soft · ลำดับคอลัมน์ตาม mock ตัวอย่าง
+ * ตารางผลหวยล่าสุด — แถว solid · ลำดับคอลัมน์ตาม mock ตัวอย่าง
  * ใช้ใน LotteryHubContent
  */
 export function LotteryLatestResultsTable({

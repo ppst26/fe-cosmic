@@ -8,7 +8,15 @@
   object-fit: contain;
   filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.22));
 }
-:is(.lottery-market-shell, .thai-lotto-layout, .yiki-layout, .yiki-page-main) {
+:is(
+  .lottery-page-main,
+  .lottery-market-shell,
+  .lottery-hub,
+  .thai-lotto-layout,
+  .yiki-layout,
+  .yiki-page-main,
+  main.lottery-slips-page
+) {
   --lottery-glass-fill: var(--inner-card-fill);
   --lottery-glass-fill-hover: var(--inner-card-fill-hover);
   /* borderless — แยกชั้นด้วยสีพื้น + gap (shell/การ์ดรอบ) */
@@ -17,6 +25,117 @@
   --lottery-control-border: color-mix(in srgb, var(--border-subtle) 62%, rgb(255 255 255 / 0.05));
   /* แผงเลข 00–99 / แถวร้อย — มุมน้อย ให้ดูเป็นสี่เหลี่ยม */
   --lottery-grid-cell-radius: var(--radius-card);
+}
+
+/*
+ * โซนหวยทั้งหมด — บังคับ solid ไม่ใช้ soft glass / backdrop (ลดกระตุก)
+ */
+:is(
+  .lottery-page-main,
+  .lottery-market-shell,
+  .lottery-hub,
+  .thai-lotto-layout,
+  .yiki-layout,
+  .yiki-page-main,
+  main.lottery-slips-page
+)
+  :is(
+    .glass-card--soft,
+    .lottery-slips-list__card.glass-card--soft,
+    .lottery-market-sidebar__item,
+    .lottery-hub-market-card,
+    .lottery-results-board__row
+  ) {
+  border: 0;
+  background: var(--lottery-glass-fill);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  filter: none;
+  transition: background var(--motion-fast) ease;
+}
+
+:is(
+  .lottery-page-main,
+  .lottery-market-shell,
+  .lottery-hub,
+  .thai-lotto-layout,
+  .yiki-layout,
+  .yiki-page-main,
+  main.lottery-slips-page
+)
+  :is(
+    .glass-card--soft,
+    .lottery-slips-list__card.glass-card--soft,
+    .lottery-market-sidebar__item,
+    .lottery-hub-market-card,
+    .lottery-results-board__row
+  ):hover {
+  background: var(--lottery-glass-fill-hover);
+  box-shadow: none;
+  filter: none;
+}
+
+:is(
+  .lottery-page-main,
+  .lottery-market-shell,
+  .lottery-hub,
+  .thai-lotto-layout,
+  .yiki-layout,
+  .yiki-page-main,
+  main.lottery-slips-page
+)
+  .lottery-market-sidebar__item.glass-card--soft.is-active {
+  background: color-mix(in srgb, var(--action-solid) 18%, var(--lottery-glass-fill));
+}
+
+:is(
+  .lottery-page-main,
+  .lottery-market-shell,
+  .lottery-hub,
+  .thai-lotto-layout,
+  .yiki-layout,
+  .yiki-page-main,
+  main.lottery-slips-page
+)
+  .glass-control {
+  border: 1px solid var(--lottery-control-border);
+  background: var(--lottery-glass-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+:is(
+  .lottery-page-main,
+  .lottery-market-shell,
+  .lottery-hub,
+  .thai-lotto-layout,
+  .yiki-layout,
+  .yiki-page-main,
+  main.lottery-slips-page
+)
+  .glass-control:hover:not(:disabled):not(.is-active):not(.glass-control--active) {
+  border-color: color-mix(in srgb, var(--lottery-control-border) 90%, rgb(255 255 255 / 0.1));
+  background: var(--lottery-glass-fill-hover);
+  color: var(--text-primary);
+  filter: none;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+:is(
+  .lottery-page-main,
+  .lottery-market-shell,
+  .lottery-hub,
+  .thai-lotto-layout,
+  .yiki-layout,
+  .yiki-page-main,
+  main.lottery-slips-page
+)
+  :is(.glass-control.is-active, .glass-control--active) {
+  border-color: color-mix(in srgb, var(--action-solid) 32%, var(--lottery-control-border));
+  background: color-mix(in srgb, var(--action-solid) 14%, var(--lottery-glass-fill));
+  box-shadow: none;
 }
 
 .thai-lotto-layout,
@@ -141,13 +260,6 @@
   overscroll-behavior: contain;
 }
 
-.lottery-market-sidebar__item.glass-card--soft {
-  border: 0;
-  box-shadow: none;
-  -webkit-backdrop-filter: blur(12px) saturate(1.12);
-  backdrop-filter: blur(12px) saturate(1.12);
-}
-
 /* รูปประเภทหวย — พื้นหลังซ้ายขยายล้น · ข้อความอยู่ขวา (LotteryMarketSidebarLink) */
 .lottery-market-sidebar__item--has-art::before {
   content: "";
@@ -157,10 +269,10 @@
   pointer-events: none;
   background: linear-gradient(
     95deg,
-    rgb(0 0 0 / 0.08) 0%,
-    color-mix(in srgb, var(--surface-solid-inner) 35%, transparent) 38%,
-    color-mix(in srgb, var(--glass-fill) 92%, transparent) 58%,
-    var(--glass-fill) 100%
+    rgb(0 0 0 / 0.14) 0%,
+    var(--surface-solid-inner) 40%,
+    var(--lottery-glass-fill) 68%,
+    var(--lottery-glass-fill) 100%
   );
 }
 
@@ -207,10 +319,10 @@
   pointer-events: none;
   background: linear-gradient(
     95deg,
-    rgb(0 0 0 / 0.08) 0%,
-    color-mix(in srgb, var(--surface-solid-inner) 32%, transparent) 40%,
-    color-mix(in srgb, var(--glass-fill) 90%, transparent) 58%,
-    var(--glass-fill) 100%
+    rgb(0 0 0 / 0.12) 0%,
+    var(--surface-solid-inner) 42%,
+    var(--lottery-glass-fill) 70%,
+    var(--lottery-glass-fill) 100%
   );
 }
 
@@ -329,23 +441,6 @@
   text-align: left;
 }
 
-@media (max-width: 1023px) {
-  .lottery-market-sidebar__item.glass-card--soft.is-active {
-    background: color-mix(in srgb, var(--action-solid) 22%, var(--glass-fill));
-    box-shadow: var(--glass-shadow);
-  }
-}
-
-.lottery-market-sidebar__item.glass-card--soft:hover:not(.is-active) {
-  background: var(--glass-fill-subtle);
-  box-shadow: none;
-}
-
-.lottery-market-sidebar__item.glass-card--soft.is-active {
-  background: var(--glass-fill);
-  box-shadow: var(--glass-shadow);
-}
-
 .lottery-market-sidebar__item.is-closed .lottery-market-sidebar__meta {
   color: var(--text-muted);
 }
@@ -461,7 +556,17 @@
 }
 
 .lottery-play-rounds__expand {
+  border: 1px solid var(--lottery-control-border);
+  background: var(--lottery-glass-fill);
   color: var(--text-primary);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition: background var(--motion-fast) ease;
+}
+
+.lottery-play-rounds__expand:hover {
+  background: var(--lottery-glass-fill-hover);
 }
 
 .lottery-play-rounds__expand-chevron {

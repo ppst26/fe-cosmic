@@ -97,91 +97,78 @@
   color: var(--text-primary);
 }
 
-/** ชิปกระเป๋า+ยอด — การ์ดยอด · ไอคอนลอยล้นขวา (HeaderWalletChip) */
+/** ชิปกระเป๋า+ยอด — pill เดียว · ตัวเลขแล้วไอคอนด้านหลัง (HeaderWalletChip) */
 .header-wallet-chip {
-  position: relative;
   display: inline-flex;
-  align-items: center;
-  overflow: visible;
   max-width: min(100%, 11rem);
-  padding: 0.05rem 0;
-  border: 0;
-  background: transparent;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 1.625rem;
+  padding: 0.2rem 0.45rem 0.2rem 0.65rem;
+  border: 1px solid var(--vip-panel-border);
+  border-radius: var(--radius-pill);
+  background: var(--inner-card-fill);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 4px 12px rgb(0 0 0 / 0.22);
   -webkit-tap-highlight-color: transparent;
+  transition: background var(--motion-fast) ease;
 }
 
 button.header-wallet-chip {
   cursor: pointer;
-  transition: transform var(--motion-instant) var(--ease-out);
+  transition:
+    background var(--motion-fast) ease,
+    transform var(--motion-instant) var(--ease-out);
 }
 
 button.header-wallet-chip:active {
   transform: scale(0.97);
 }
 
-.header-wallet-chip__float {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-left: -0.7rem;
-  filter: drop-shadow(0 5px 10px rgb(0 0 0 / 0.38));
-  pointer-events: none;
-}
-
-.header-wallet-chip__float-icon {
-  width: 2.35rem;
-  height: 2.35rem;
-}
-
 .header-wallet-chip__amount {
-  position: relative;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.625rem;
-  padding: 0.2rem 1.35rem 0.2rem 0.65rem;
-  border: 1px solid var(--vip-panel-border);
-  border-radius: var(--radius-pill);
-  background: var(--inner-card-fill);
+  min-width: 0;
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 4px 12px rgb(0 0 0 / 0.22);
-  transition: background var(--motion-fast) ease;
+}
+
+.header-wallet-chip__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.header-wallet-chip__icon-img {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
 }
 
 .header-wallet-chip--desktop {
   max-width: min(100%, 12.5rem);
-}
-
-.header-wallet-chip--desktop .header-wallet-chip__float {
-  width: 2.85rem;
-  height: 2.85rem;
-  margin-left: -0.85rem;
-}
-
-.header-wallet-chip--desktop .header-wallet-chip__float-icon {
-  width: 2.65rem;
-  height: 2.65rem;
+  gap: 0.35rem;
+  min-height: 2.125rem;
+  padding: 0.28rem 0.55rem 0.28rem 0.85rem;
 }
 
 .header-wallet-chip--desktop .header-wallet-chip__amount {
-  min-height: 2.125rem;
-  padding: 0.28rem 1.55rem 0.28rem 0.85rem;
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
 
+.header-wallet-chip--desktop .header-wallet-chip__icon,
+.header-wallet-chip--desktop .header-wallet-chip__icon-img {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
 @media (hover: hover) {
-  button.header-wallet-chip:hover .header-wallet-chip__amount {
+  button.header-wallet-chip:hover {
     background: var(--inner-card-fill-hover);
   }
 }

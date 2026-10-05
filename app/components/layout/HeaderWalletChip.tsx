@@ -10,7 +10,7 @@ type HeaderWalletChipProps = {
 };
 
 /**
- * ชิปยอดเครดิต — การ์ดตัวเลข · ไอคอนกระเป๋าลอยล้นด้านหลังขวา (Header · LobbyDesktopTopBar)
+ * ชิปยอดเครดิต — การ์ดเดียว · ตัวเลขแล้วไอคอนกระเป๋าด้านหลัง (Header · LobbyDesktopTopBar)
  */
 export function HeaderWalletChip({
   balanceLabel,
@@ -34,8 +34,8 @@ export function HeaderWalletChip({
       >
         {balanceLabel}
       </span>
-      <span className="header-wallet-chip__float" aria-hidden>
-        <HeaderWalletAssetIcon className="header-wallet-chip__float-icon" />
+      <span className="header-wallet-chip__icon" aria-hidden>
+        <HeaderWalletAssetIcon className="header-wallet-chip__icon-img" />
       </span>
     </>
   );
