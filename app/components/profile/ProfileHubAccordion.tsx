@@ -100,14 +100,16 @@ export function ProfileHubAccordion({
           {title}
         </span>
         <ChevronDownIcon
-          className={`h-3.5 w-3.5 shrink-0 text-[var(--icon-default)] transition-transform ${
+          className={`h-3.5 w-3.5 shrink-0 text-[var(--icon-default)] transition-transform duration-[var(--motion-fast)] ${
             expanded ? "rotate-180" : ""
           }`}
         />
       </button>
-      {expanded ? (
-        <div className="profile-hub-accordion__panel">{children}</div>
-      ) : null}
+      <div className="motion-collapse" data-open={expanded} inert={!expanded}>
+        <div className="motion-collapse__inner">
+          <div className="profile-hub-accordion__panel">{children}</div>
+        </div>
+      </div>
     </section>
   );
 }

@@ -2,7 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import type { VipRankId } from "@/app/types/vip";
-import { getVipRankTier, getVipRankVideoSrc } from "@/app/data/vipMockData";
+import { getVipRankStackedSrc, getVipRankTier, getVipRankVideoSrc } from "@/app/data/vipMockData";
+import { StackedAlphaVideo, needsStackedAlpha } from "./StackedAlphaVideo";
 import { LockIcon } from "../ui/Icons";
 import { cn } from "@/lib/utils";
 
@@ -59,6 +60,8 @@ export function VipRankEmblem({
   const [preferStatic, setPreferStatic] = useState(false);
   /** true เมื่อมือถือทิ้ง alpha แล้วโชว์พื้นดำ — ใช้ screen blend เจาะดำ */
   const [knockOutBlack, setKnockOutBlack] = useState(false);
+  /** Safari/iOS — ใช้ MP4 stacked-alpha + canvas แทน WebM */
+  const [useStacked, setUseStacked] = useState(false);
 
   const dim =
     size === "xl"
@@ -88,6 +91,12 @@ export function VipRankEmblem({
   }, []);
 
   useEffect(() => {
+    // ตรวจ UA ได้เฉพาะฝั่ง client
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setUseStacked(needsStackedAlpha());
+  }, []);
+
+  useEffect(() => {
     alphaSettledRef.current = false;
     setKnockOutBlack(false);
   }, [videoSrc]);
@@ -112,6 +121,32 @@ export function VipRankEmblem({
     alphaSettledRef.current = true;
     if (lost) setKnockOutBlack(true);
   };
+
+  const stackedSrc = getVipRankStackedSrc(rankId);
+
+  if (videoSrc && !preferStatic && useStacked && stackedSrc) {
+    return (
+      <div
+        className={`relative flex ${dim} items-center justify-center ${
+          inactive ? "opacity-45 grayscale-[0.85]" : ""
+        } ${playing && !inactive ? "drop-shadow-[0_4px_16px_rgba(245,197,66,0.25)]" : ""}`}
+        aria-hidden="true"
+      >
+        <StackedAlphaVideo
+          src={stackedSrc}
+          playing={playing && !inactive}
+          className="h-full w-full object-contain"
+        />
+        {inactive && lockLg && (
+          <span className="absolute inset-0 flex items-center justify-center">
+            <LockIcon
+              className={`text-[var(--text-muted)]/90 ${size === "xl" ? "h-7 w-7" : "h-5 w-5"}`}
+            />
+          </span>
+        )}
+      </div>
+    );
+  }
 
   if (videoSrc && !preferStatic) {
     return (

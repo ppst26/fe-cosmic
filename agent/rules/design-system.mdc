@@ -24,3 +24,4 @@ alwaysApply: false
 - Mobile-first; `max-width` 1200px; gutter จาก `design.md`
 - ลำดับ section หมวด 6 + แผนไฟล์หมวด 10 ใน `design.md`
 - เกณฑ์ตรวจ: หมวด 11 ใน `design.md` หรือ skill `ui-qa-checklist`
+- **Motion:** CSS-first (ไม่ใช้ framer-motion) · animate เฉพาะ `transform`/`opacity` · ใช้ tokens `--motion-instant/fast/base/slow`, `--ease-out/in/spring`, `--stagger` และ utilities `.motion-press/lift/reveal/pop/skeleton` (`app/styles/motion.css`) · `prefers-reduced-motion` ปรับที่ token กลาง · ดู `design.md` § Motion

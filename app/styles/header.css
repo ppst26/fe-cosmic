@@ -214,3 +214,12 @@
 .header-desktop-bar__badge {
   background: var(--destructive);
 }
+
+/* Motion: เงาใต้ header มือถือเมื่อ scroll ลง */
+.cosmic-mobile-chrome-surface[data-scrolled="true"] {
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.35);
+}
+
+header.cosmic-mobile-chrome-surface {
+  transition: box-shadow var(--motion-base) var(--ease-out);
+}

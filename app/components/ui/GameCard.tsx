@@ -19,7 +19,7 @@ export function GameCard({ game }: GameCardProps) {
     <Link
       href={href}
       aria-label={`${title} — ${provider}`}
-      className="group relative block aspect-[3/4] w-full min-w-0 overflow-hidden rounded-[var(--radius-panel)] bg-[var(--surface-mid)] transition-opacity duration-[var(--motion-fast)] hover:opacity-90"
+      className="group relative block aspect-[3/4] w-full min-w-0 overflow-hidden rounded-[var(--radius-panel)] bg-[var(--surface-mid)] motion-press motion-lift"
       style={{ willChange: "transform" }}
     >
       {coverSrc ? (

@@ -4,6 +4,7 @@ import { HOME_LOBBY_GAME_CAROUSEL_MAX } from "../../data/lobbyMockData";
 import { Carousel } from "../ui/Carousel";
 import { GameCard } from "../ui/GameCard";
 import { SectionIcon } from "../ui/SectionIcon";
+import MotionReveal from "../ui/MotionReveal";
 
 interface GameSectionProps {
   section: GameSectionData;
@@ -21,9 +22,10 @@ export function GameSection({ section, className = "mt-6 sm:mt-8" }: GameSection
   const carouselGames = games.slice(0, limit);
 
   return (
+    <MotionReveal>
     <Carousel
       title={title}
-      icon={<SectionIcon id={icon} className="h-5 w-5 text-[var(--icon-default)]" />}
+      icon={<SectionIcon id={icon} className="h-[1.35rem] w-[1.35rem] text-[var(--icon-default)] sm:h-6 sm:w-6" />}
       viewAllHref={viewAllHref}
       trackClassName="carousel-games"
       className={className}
@@ -34,5 +36,6 @@ export function GameSection({ section, className = "mt-6 sm:mt-8" }: GameSection
         <GameCard key={`${id}-${game.id}`} game={game} />
       ))}
     </Carousel>
+    </MotionReveal>
   );
 }

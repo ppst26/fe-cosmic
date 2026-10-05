@@ -71,7 +71,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
             key={item.id}
             href={item.href}
             aria-label={[item.title, item.subtitle].filter(Boolean).join(" — ")}
-            className="group relative aspect-[2.35/1] w-[85%] max-w-[420px] shrink-0 snap-start overflow-hidden rounded-[var(--radius-panel)] transition-all duration-150 hover:brightness-110 sm:w-[78%]"
+            className="group relative aspect-[2.35/1] w-[85%] max-w-[420px] shrink-0 snap-start overflow-hidden rounded-[var(--radius-panel)] motion-press transition-[filter,transform] duration-150 hover:brightness-110 sm:w-[78%]"
             style={
               item.bannerSrc
                 ? undefined
