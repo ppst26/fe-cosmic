@@ -46,7 +46,7 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
         <div
           className={cn(
             COSMIC_SEGMENT_PROMO_CTA,
-            "promo-hub-category-tabs promo-hub-category-tabs--mobile inline-flex max-w-full gap-1 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
+            "promo-hub-category-tabs promo-hub-category-tabs--mobile inline-flex w-fit max-w-full gap-0.5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
           )}
           role="tablist"
           aria-label="กรองโปรโมชั่นตามหมวด"
@@ -61,7 +61,7 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
                 aria-selected={selected}
                 onClick={() => onMobileSelect(tab.id)}
                 className={cn(
-                  "cosmic-segment-btn shrink-0 whitespace-nowrap px-3 py-2 text-sm font-medium sm:px-4",
+                  "cosmic-segment-btn shrink-0 whitespace-nowrap px-2.5 py-1.5 text-xs font-medium sm:px-3 sm:py-1.5 sm:text-sm",
                   selected && "is-active",
                 )}
               >

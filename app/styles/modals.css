@@ -259,6 +259,18 @@ button.cosmic-sheet-soft-glass--interactive:active {
   border-radius: var(--radius-card);
 }
 
+/** เส้นแบ่งเทา solid — modal · promo detail · panel (token --border-subtle) */
+.cosmic-divider-subtle {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/** กรอบเทา solid — คู่กับ .surface-solid-* */
+.cosmic-outline-subtle {
+  border: 1px solid var(--border-subtle);
+}
+
 /** การ์ดย่อยใน modal / sheet / drawer / hub — พื้นเดียวกับแถว sheet */
 .cosmic-inner-card,
 .cosmic-inset-card,

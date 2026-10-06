@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import type {
   PromotionDetailBlock,
   PromotionDetailBlockIcon,
@@ -20,20 +21,21 @@ interface PromotionDetailPanelProps {
 export function PromotionDetailPanel({ content, variant = "modal" }: PromotionDetailPanelProps) {
   const isHub = variant === "hub";
 
+  if (isHub) {
+    return (
+      <div className="promotion-detail-panel promotion-detail-panel--hub">
+        <PromotionDetailBanner content={content} isHub />
+        <PromotionDetailBodyExpanded body={content} isHub />
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={
-        isHub
-          ? "promotion-detail-panel promotion-detail-panel--hub"
-          : "promotion-detail-panel promotion-detail-panel--modal"
-      }
-    >
-      <PromotionDetailBanner content={content} isHub={isHub} />
-      {isHub ? (
-        <PromotionDetailBodyExpanded body={content} isHub={isHub} />
-      ) : (
+    <div className="promotion-detail-panel promotion-detail-panel--modal">
+      <article className="promotion-detail-panel__unified-card cosmic-outline-subtle">
+        <PromotionDetailBanner content={content} isHub={false} />
         <PromotionDetailDetailsSection body={content} />
-      )}
+      </article>
     </div>
   );
 }
@@ -45,45 +47,79 @@ function PromotionDetailBanner({
   content: PromotionDetailContent;
   isHub: boolean;
 }) {
+  const hasBannerImage = Boolean(content.bannerSrc);
+
   return (
     <section
       className={
         isHub
-          ? "promotion-detail-panel__banner relative overflow-hidden px-4 py-4"
-          : "promotion-detail-panel__banner promotion-detail-panel__banner--modal relative overflow-hidden px-3.5 py-3.5 sm:px-4 sm:py-4"
+          ? `promotion-detail-panel__banner relative overflow-hidden ${
+              hasBannerImage ? "promotion-detail-panel__banner--with-media p-0" : "px-4 py-4"
+            }`
+          : `promotion-detail-panel__banner promotion-detail-panel__banner--modal relative overflow-hidden ${
+              hasBannerImage ? "promotion-detail-panel__banner--with-media p-0" : "px-3.5 py-3.5 sm:px-4 sm:py-4"
+            }`
       }
       aria-label={content.bannerTitle}
     >
-      {!isHub ? <div className="promotion-detail-panel__banner-glow" aria-hidden="true" /> : null}
-      <div className="relative z-[1] flex items-center gap-3">
-        <PromotionDetailBannerArt
-          art={content.bannerArt}
-          className={
-            isHub
-              ? "h-16 w-16 shrink-0 sm:h-[4.5rem] sm:w-[4.5rem]"
-              : "h-14 w-14 shrink-0 sm:h-16 sm:w-16"
-          }
-          isHub={isHub}
-        />
+      {hasBannerImage ? (
+        <div className="promotion-detail-panel__banner-media relative aspect-[2.35/1] w-full overflow-hidden bg-[var(--surface-hover)]">
+          <Image
+            src={content.bannerSrc!}
+            alt=""
+            fill
+            sizes={isHub ? "(min-width: 1024px) 42vw, 100vw" : "(max-width: 640px) 100vw, 360px"}
+            className="object-cover object-center"
+            priority={isHub}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/55 to-transparent"
+            aria-hidden="true"
+          />
+        </div>
+      ) : null}
+
+      {!isHub && !hasBannerImage ? (
+        <div className="promotion-detail-panel__banner-glow" aria-hidden="true" />
+      ) : null}
+
+      <div
+        className={`promotion-detail-panel__banner-caption relative z-[1] flex items-center gap-3 ${
+          hasBannerImage ? "px-3.5 py-3 sm:px-4 sm:py-3" : ""
+        }`}
+      >
+        {!hasBannerImage ? (
+          <PromotionDetailBannerArt
+            art={content.bannerArt}
+            className={
+              isHub
+                ? "h-16 w-16 shrink-0 sm:h-[4.5rem] sm:w-[4.5rem]"
+                : "h-14 w-14 shrink-0 sm:h-16 sm:w-16"
+            }
+            isHub={isHub}
+          />
+        ) : null}
         <div className="min-w-0 flex-1">
           <h2
             className={
-              isHub
-                ? "text-xl font-medium leading-snug text-[var(--text-primary)] sm:text-2xl"
+              isHub || hasBannerImage
+                ? "text-lg font-medium leading-snug text-[var(--text-primary)] sm:text-xl"
                 : "promotion-detail-panel__banner-title text-lg sm:text-xl"
             }
           >
             {content.bannerTitle}
           </h2>
-          <p
-            className={
-              isHub
-                ? "mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base"
-                : "mt-1 text-xs text-[var(--text-secondary)] sm:text-sm"
-            }
-          >
-            {content.bannerSubtitle}
-          </p>
+          {isHub ? (
+            <p
+              className={
+                hasBannerImage
+                  ? "mt-1 text-sm leading-relaxed text-[var(--text-secondary)]"
+                  : "mt-1 text-xs text-[var(--text-secondary)] sm:text-sm"
+              }
+            >
+              {content.bannerSubtitle}
+            </p>
+          ) : null}
         </div>
       </div>
     </section>
@@ -98,7 +134,9 @@ function PromotionDetailDetailsSection({ body }: { body: PromotionDetailContent 
       aria-label="รายละเอียดโปรโมชั่น"
     >
       <h3 className="promotion-detail-panel__details-heading">รายละเอียด</h3>
-      <hr className="promotion-detail-panel__divider promotion-detail-panel__details-heading-divider" />
+      <hr
+        className="cosmic-divider-subtle promotion-detail-panel__divider promotion-detail-panel__details-heading-divider"
+      />
       <div className="promotion-detail-panel__details-scroll">
         <PromotionDetailBodyExpanded body={body} isHub={false} />
       </div>
@@ -144,7 +182,7 @@ function PromotionDetailBlockRow({
 }) {
   return (
     <>
-      {block.showDividerBefore && <hr className="promotion-detail-panel__divider" />}
+      {block.showDividerBefore && <hr className="cosmic-divider-subtle promotion-detail-panel__divider" />}
       <div className="flex gap-3">
         <PromotionDetailBlockIcon icon={block.icon} className="mt-0.5 h-9 w-9 shrink-0" isHub={isHub} />
         <div className="min-w-0 flex-1">

@@ -417,6 +417,14 @@
   box-shadow: none;
 }
 
+.cosmic-mobile-sheet .promotions-desktop-hub--flat .promotion-detail-panel--hub .promotion-detail-panel__banner--with-media {
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-control);
+  border-bottom: 0;
+  background: var(--inner-card-fill);
+}
+
 .cosmic-mobile-sheet .promotions-desktop-hub--flat .promotion-detail-panel--hub .promotion-detail-panel__body {
   margin-top: 0;
   padding-top: 0.25rem;
@@ -436,6 +444,12 @@
   .cosmic-modal-shell--hub .promotion-detail-panel--hub .promotion-detail-panel__banner {
     border-radius: var(--radius-control);
     background: color-mix(in srgb, var(--surface-hover) 40%, var(--hub-dialog-card-bg));
+  }
+
+  .cosmic-modal-shell--hub .promotion-detail-panel--hub .promotion-detail-panel__banner--with-media {
+    padding: 0;
+    overflow: hidden;
+    background: var(--inner-card-fill);
   }
 }
 

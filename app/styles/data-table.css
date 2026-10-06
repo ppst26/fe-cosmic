@@ -5,8 +5,8 @@
 
 .cosmic-panel-solid {
   background: var(--inner-card-fill);
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
 .cosmic-data-table-shell {

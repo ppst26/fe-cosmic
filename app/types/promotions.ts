@@ -29,6 +29,8 @@ export interface PromotionDetailContent {
   id: PromotionDetailId;
   bannerTitle: string;
   bannerSubtitle: string;
+  /** รูปแบนเนอร์ mock — public/promotions/mock-pro*.avif */
+  bannerSrc?: string;
   bannerArt: PromotionDetailBlockIcon;
   blocks: PromotionDetailBlock[];
   footerNote: string;

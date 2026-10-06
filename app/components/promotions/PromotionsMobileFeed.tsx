@@ -43,7 +43,6 @@ export function PromotionsMobileFeed({ onOpenDetail }: PromotionsMobileFeedProps
         mobileActiveId={categoryFilter}
         onMobileSelect={setCategoryFilter}
         mobileCategoryTabs={mobileTabs}
-        className="-mx-[var(--layout-inline-gutter)] px-[var(--layout-inline-gutter)]"
       />
 
       {items.length === 0 ? (
