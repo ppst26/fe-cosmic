@@ -13,12 +13,13 @@ import {
   submitDeposit,
 } from "./deposit";
 
-test("deposit reads return the current mock", () => {
-  assert.deepEqual(fetchDepositMethods(), DEPOSIT_METHOD_OPTIONS);
-  assert.deepEqual(fetchDepositBankAccount(), DEPOSIT_BANK_ACCOUNT_MOCK);
-  assert.deepEqual(fetchDepositQuickAmounts(), {
-    amounts: DEPOSIT_QUICK_AMOUNTS,
-    defaultAmount: DEPOSIT_DEFAULT_AMOUNT,
+test("deposit reads return the current mock as ApiResult", async () => {
+  assert.deepEqual(await fetchDepositMethods(), { ok: true, status: 200, data: DEPOSIT_METHOD_OPTIONS });
+  assert.deepEqual(await fetchDepositBankAccount(), { ok: true, status: 200, data: DEPOSIT_BANK_ACCOUNT_MOCK });
+  assert.deepEqual(await fetchDepositQuickAmounts(), {
+    ok: true,
+    status: 200,
+    data: { amounts: DEPOSIT_QUICK_AMOUNTS, defaultAmount: DEPOSIT_DEFAULT_AMOUNT },
   });
 });
 

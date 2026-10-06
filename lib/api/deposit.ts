@@ -4,24 +4,29 @@ import {
   DEPOSIT_METHOD_OPTIONS,
   DEPOSIT_QUICK_AMOUNTS,
 } from "@/app/data/depositMockData";
-import type { DepositMethodId } from "@/app/types/wallet";
+import type { DepositBankAccountMock, DepositMethodId, DepositMethodOption } from "@/app/types/wallet";
+import type { ApiResult } from "./http";
+import { mockResult } from "./mock";
 
-/** ช่องทางฝาก — คืนรายการ mock ทันที */
-export function fetchDepositMethods() {
-  return DEPOSIT_METHOD_OPTIONS;
+/** ยอดด่วน + ยอดเริ่มต้นของแผงฝาก/ถอน — สัญญา GET .../quick-amounts */
+export interface QuickAmounts {
+  amounts: number[];
+  defaultAmount: number;
 }
 
-/** บัญชีรับโอน — คืนการ์ดบัญชี mock ทันที */
-export function fetchDepositBankAccount() {
-  return DEPOSIT_BANK_ACCOUNT_MOCK;
+/** ช่องทางฝาก — GET /api/deposit/methods */
+export function fetchDepositMethods(): Promise<ApiResult<DepositMethodOption[]>> {
+  return mockResult(DEPOSIT_METHOD_OPTIONS);
 }
 
-/** ยอดด่วนและยอดเริ่มต้นของแผงฝาก */
-export function fetchDepositQuickAmounts() {
-  return {
-    amounts: DEPOSIT_QUICK_AMOUNTS,
-    defaultAmount: DEPOSIT_DEFAULT_AMOUNT,
-  };
+/** บัญชีรับโอน — GET /api/deposit/bank-account */
+export function fetchDepositBankAccount(): Promise<ApiResult<DepositBankAccountMock>> {
+  return mockResult(DEPOSIT_BANK_ACCOUNT_MOCK);
+}
+
+/** ยอดด่วนและยอดเริ่มต้นของแผงฝาก — GET /api/deposit/quick-amounts */
+export function fetchDepositQuickAmounts(): Promise<ApiResult<QuickAmounts>> {
+  return mockResult({ amounts: [...DEPOSIT_QUICK_AMOUNTS], defaultAmount: DEPOSIT_DEFAULT_AMOUNT });
 }
 
 /** ผลส่งรายการฝาก/ถอน — ok:false พร้อมข้อความพร้อมแสดงผู้ใช้ */

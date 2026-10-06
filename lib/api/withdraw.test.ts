@@ -13,12 +13,13 @@ import {
   submitWithdraw,
 } from "./withdraw";
 
-test("withdraw reads return the current mock", () => {
-  assert.deepEqual(fetchWithdrawAccount(), WITHDRAW_USER_BANK_MOCK);
-  assert.equal(fetchWithdrawBalance(), WITHDRAW_AVAILABLE_BALANCE);
-  assert.deepEqual(fetchWithdrawQuickAmounts(), {
-    amounts: WITHDRAW_QUICK_AMOUNTS,
-    defaultAmount: WITHDRAW_DEFAULT_AMOUNT,
+test("withdraw reads return the current mock as ApiResult", async () => {
+  assert.deepEqual(await fetchWithdrawAccount(), { ok: true, status: 200, data: WITHDRAW_USER_BANK_MOCK });
+  assert.deepEqual(await fetchWithdrawBalance(), { ok: true, status: 200, data: WITHDRAW_AVAILABLE_BALANCE });
+  assert.deepEqual(await fetchWithdrawQuickAmounts(), {
+    ok: true,
+    status: 200,
+    data: { amounts: WITHDRAW_QUICK_AMOUNTS, defaultAmount: WITHDRAW_DEFAULT_AMOUNT },
   });
 });
 

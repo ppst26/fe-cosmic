@@ -4,12 +4,14 @@ import React, { useRef, useState } from "react";
 import { Dialog } from "radix-ui";
 import { cn } from "@/lib/utils";
 import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
+import { submitDeposit } from "@/lib/api/deposit";
 import {
-  fetchDepositBankAccount,
-  fetchDepositMethods,
-  fetchDepositQuickAmounts,
-  submitDeposit,
-} from "@/lib/api/deposit";
+  useDepositBankAccount,
+  useDepositMethods,
+  useDepositQuickAmounts,
+} from "@/app/hooks/api/money";
+import { ResourceGate } from "../ui/ResourceGate";
+import type { DepositBankAccountMock } from "@/app/types/wallet";
 import { ChevronRightIcon, CopyIcon } from "../ui/Icons";
 import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
 import {
@@ -43,11 +45,22 @@ interface DepositBottomSheetProps {
  * Bottom sheet ฝากเงิน — step 1 ช่องทาง · step 2 ยอด · step 3 ยืนยัน
  */
 export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBottomSheetProps) {
-  const quick = fetchDepositQuickAmounts();
+  /** โหลดตั้งแต่ mount (sheet ถูก mount ไว้ใน DepositProvider) — ถึง step บัญชีข้อมูลพร้อมแล้ว */
+  const quick = useDepositQuickAmounts();
+  const bankAccount = useDepositBankAccount();
   const wallet = useWallet();
+  const defaultAmount = quick.data?.defaultAmount ?? 0;
   const [step, setStep] = useState<DepositSheetStep>("methods");
-  const [amount, setAmount] = useState(quick.defaultAmount);
-  const [amountInput, setAmountInput] = useState(String(quick.defaultAmount));
+  const [amount, setAmount] = useState(defaultAmount);
+  const [amountInput, setAmountInput] = useState(defaultAmount ? String(defaultAmount) : "");
+
+  /** ยอดเริ่มต้นมาถึงหลัง mount — ตั้งค่าฟอร์มครั้งเดียวต่อค่า (ปรับระหว่าง render) */
+  const [seededDefault, setSeededDefault] = useState(defaultAmount);
+  if (seededDefault !== defaultAmount) {
+    setSeededDefault(defaultAmount);
+    setAmount(defaultAmount);
+    setAmountInput(String(defaultAmount));
+  }
   const [copied, setCopied] = useState(false);
   const [slipFileName, setSlipFileName] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -57,8 +70,8 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 
   const resetFlow = () => {
     setStep("methods");
-    setAmount(quick.defaultAmount);
-    setAmountInput(String(quick.defaultAmount));
+    setAmount(defaultAmount);
+    setAmountInput(defaultAmount ? String(defaultAmount) : "");
     setCopied(false);
     setSlipFileName(null);
     setSubmitting(false);
@@ -113,7 +126,8 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 
   const handleCopyAccount = async () => {
     try {
-      await navigator.clipboard.writeText(fetchDepositBankAccount().accountNumberCopy);
+      if (!bankAccount.data) return;
+      await navigator.clipboard.writeText(bankAccount.data.accountNumberCopy);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -178,7 +192,11 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 
           {step === "methods" && <DepositMethodsStep onSelectMethod={handleSelectMethod} />}
           {step === "bank" && (
+            <ResourceGate resource={bankAccount} loadingLabel="กำลังโหลดบัญชีรับโอน…" errorTitle="โหลดบัญชีรับโอนไม่สำเร็จ">
+              {(bank) => (
             <DepositBankStep
+              bank={bank}
+              quickAmounts={quick.data?.amounts ?? []}
               amount={amount}
               amountInput={amountInput}
               copied={copied}
@@ -189,9 +207,14 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
               onEdit={handleEdit}
               onNext={handleNext}
             />
+              )}
+            </ResourceGate>
           )}
           {step === "confirm" && (
+            <ResourceGate resource={bankAccount} loadingLabel="กำลังโหลดบัญชีรับโอน…" errorTitle="โหลดบัญชีรับโอนไม่สำเร็จ">
+              {(bank) => (
             <DepositConfirmStep
+              bank={bank}
               amount={amount}
               copied={copied}
               slipFileName={slipFileName}
@@ -204,6 +227,8 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
               onPickSlip={() => slipInputRef.current?.click()}
               onConfirm={() => setFinalConfirmOpen(true)}
             />
+              )}
+            </ResourceGate>
           )}
 
         </Dialog.Content>
@@ -230,7 +255,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 }
 
 function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMethodId) => void }) {
-  const methods = fetchDepositMethods();
+  const methods = useDepositMethods();
   return (
     <>
       <ResponsiveSheetHeader
@@ -245,8 +270,10 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
         }
       />
 
+      <ResourceGate resource={methods} loadingLabel="กำลังโหลดช่องทางฝาก…" errorTitle="โหลดช่องทางฝากไม่สำเร็จ">
+        {(methodList) => (
       <ul className="mt-6 flex flex-col gap-3 overflow-y-auto pb-2" aria-label="ช่องทางฝากเงิน">
-        {methods.map((method) => (
+        {methodList.map((method) => (
           <li key={method.id}>
             <button
               type="button"
@@ -262,11 +289,15 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
           </li>
         ))}
       </ul>
+        )}
+      </ResourceGate>
     </>
   );
 }
 
 function DepositBankStep({
+  bank,
+  quickAmounts,
   amount,
   amountInput,
   copied,
@@ -277,6 +308,8 @@ function DepositBankStep({
   onEdit,
   onNext,
 }: {
+  bank: DepositBankAccountMock;
+  quickAmounts: number[];
   amount: number;
   amountInput: string;
   copied: boolean;
@@ -287,7 +320,6 @@ function DepositBankStep({
   onEdit: () => void;
   onNext: () => void;
 }) {
-  const bank = fetchDepositBankAccount();
   const canProceed = amount > 0;
 
   return (
@@ -381,7 +413,7 @@ function DepositBankStep({
         <div className="mt-4">
           <p className="cosmic-type-sheet-label">เลือกยอดเงินด่วน</p>
           <div className="mt-2 grid grid-cols-3 gap-2">
-            {fetchDepositQuickAmounts().amounts.map((value) => {
+            {quickAmounts.map((value) => {
               const active = amount === value;
               return (
                 <button
@@ -416,6 +448,7 @@ function DepositBankStep({
 }
 
 function DepositConfirmStep({
+  bank,
   amount,
   copied,
   slipFileName,
@@ -428,6 +461,7 @@ function DepositConfirmStep({
   onPickSlip,
   onConfirm,
 }: {
+  bank: DepositBankAccountMock;
   amount: number;
   copied: boolean;
   slipFileName: string | null;
@@ -440,8 +474,6 @@ function DepositConfirmStep({
   onPickSlip: () => void;
   onConfirm: () => void;
 }) {
-  const bank = fetchDepositBankAccount();
-
   return (
     <>
       <ResponsiveSheetHeader
@@ -532,8 +564,8 @@ function DepositConfirmStep({
 
         {submitMessage && (
           <p
-            className="mt-3 rounded-[var(--radius-control)] bg-[#0f3d2e]/80 px-3 py-2 text-xs text-[var(--success)] sm:text-sm"
-            role="status"
+            className="mt-3 rounded-[var(--radius-control)] bg-[color-mix(in_srgb,var(--destructive)_14%,transparent)] px-3 py-2 text-xs text-[var(--destructive)] sm:text-sm"
+            role="alert"
           >
             {submitMessage}
           </p>

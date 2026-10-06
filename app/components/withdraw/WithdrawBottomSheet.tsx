@@ -3,12 +3,13 @@
 import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
+import { submitWithdraw } from "@/lib/api/withdraw";
 import {
-  fetchWithdrawAccount,
-  fetchWithdrawBalance,
-  fetchWithdrawQuickAmounts,
-  submitWithdraw,
-} from "@/lib/api/withdraw";
+  useWithdrawAccount,
+  useWithdrawBalance,
+  useWithdrawQuickAmounts,
+} from "@/app/hooks/api/money";
+import { ResourceGate } from "../ui/ResourceGate";
 import { ChevronRightIcon } from "../ui/Icons";
 import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
 import {
@@ -36,20 +37,32 @@ interface WithdrawBottomSheetProps {
  * Bottom sheet ถอนเงิน step 1 — เลือกบัญชี + กรอกยอด (mock)
  */
 export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBottomSheetProps) {
-  const quick = fetchWithdrawQuickAmounts();
-  const bank = fetchWithdrawAccount();
-  const available = fetchWithdrawBalance();
+  /** โหลดตั้งแต่ mount (sheet ถูก mount ไว้ใน WithdrawProvider) */
+  const quick = useWithdrawQuickAmounts();
+  const account = useWithdrawAccount();
+  const balance = useWithdrawBalance();
   const wallet = useWallet();
+  /** ยังโหลดยอดถอนได้ไม่เสร็จ = 0 → ปุ่มยืนยันกดไม่ได้ */
+  const available = balance.data ?? 0;
+  const defaultAmount = quick.data?.defaultAmount ?? 0;
 
-  const [amount, setAmount] = useState(quick.defaultAmount);
-  const [amountInput, setAmountInput] = useState(String(quick.defaultAmount));
+  const [amount, setAmount] = useState(defaultAmount);
+  const [amountInput, setAmountInput] = useState(defaultAmount ? String(defaultAmount) : "");
+
+  /** ยอดเริ่มต้นมาถึงหลัง mount — ตั้งค่าฟอร์มครั้งเดียวต่อค่า (ปรับระหว่าง render) */
+  const [seededDefault, setSeededDefault] = useState(defaultAmount);
+  if (seededDefault !== defaultAmount) {
+    setSeededDefault(defaultAmount);
+    setAmount(defaultAmount);
+    setAmountInput(String(defaultAmount));
+  }
   const [submitting, setSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const resetFlow = () => {
-    setAmount(quick.defaultAmount);
-    setAmountInput(String(quick.defaultAmount));
+    setAmount(defaultAmount);
+    setAmountInput(defaultAmount ? String(defaultAmount) : "");
     setSubmitting(false);
     setSubmitMessage(null);
     setConfirmOpen(false);
@@ -100,6 +113,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
       return;
     }
     wallet.refresh();
+    balance.refresh();
     onCompleted?.(amount);
     onClose();
   };
@@ -132,6 +146,8 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
             id="withdraw-sheet-desc"
             className="min-h-0 flex-1 overflow-y-auto pb-3"
           >
+            <ResourceGate resource={account} loadingLabel="กำลังโหลดบัญชีรับเงิน…" errorTitle="โหลดบัญชีรับเงินไม่สำเร็จ">
+              {(bank) => (
             <button
               type="button"
               className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex w-full items-center gap-3 px-3 py-3.5 sm:px-4 sm:py-4`}
@@ -152,6 +168,8 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                 <ChevronRightIcon className="h-4 w-4" />
               </span>
             </button>
+              )}
+            </ResourceGate>
 
             <div className="mt-5">
               <p className="cosmic-type-sheet-label text-center">จำนวนเงินที่ต้องการถอน</p>
@@ -191,7 +209,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
 
             <div className="mt-4">
               <div className="flex flex-wrap items-center justify-center gap-2 px-1 pb-1">
-                {quick.amounts.map((value) => {
+                {(quick.data?.amounts ?? []).map((value) => {
                   const active = amount === value;
                   return (
                     <button
@@ -210,8 +228,8 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
 
             {submitMessage && (
               <p
-                className="mt-4 rounded-[var(--radius-control)] bg-[#0f3d2e]/80 px-3 py-2 text-xs text-[var(--success)] sm:text-sm"
-                role="status"
+                className="mt-4 rounded-[var(--radius-control)] bg-[color-mix(in_srgb,var(--destructive)_14%,transparent)] px-3 py-2 text-xs text-[var(--destructive)] sm:text-sm"
+                role="alert"
               >
                 {submitMessage}
               </p>
@@ -238,7 +256,11 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
         onOpenChange={setConfirmOpen}
         variant="warning"
         title="ยืนยันส่งคำขอถอนเงิน?"
-        description={`โอนเข้า ${bank.bankShortName} ${bank.accountNumberDisplay}`}
+        description={
+          account.data
+            ? `โอนเข้า ${account.data.bankShortName} ${account.data.accountNumberDisplay}`
+            : undefined
+        }
         confirmLabel="ยืนยันถอน"
         loading={submitting}
         summary={
