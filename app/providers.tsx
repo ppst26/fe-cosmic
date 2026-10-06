@@ -3,6 +3,8 @@
 import React from "react";
 import { UrlSearchParamsProvider } from "@/app/hooks/useUrlSearchParams";
 import { AuthProvider } from "@/app/components/auth/AuthProvider";
+import { ProfileProvider } from "@/app/components/auth/ProfileProvider";
+import { WalletProvider } from "@/app/components/wallet/WalletProvider";
 import { TransactionsProvider } from "@/app/components/transactions/TransactionsProvider";
 import { VipModalProvider } from "@/app/components/vip/VipModalProvider";
 import { DesktopHubModalProvider } from "@/app/components/hub/DesktopHubModalProvider";
@@ -16,13 +18,15 @@ import { NotificationProvider } from "@/app/components/notifications/Notificatio
 import { ToastProvider } from "@/context/ToastContext";
 
 /**
- * ครอบ client providers — query string (ไม่ bailout SSR) + Auth + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
+ * ครอบ client providers — query string (ไม่ bailout SSR) + Auth + โปรไฟล์ + ยอดเครดิต + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
  */
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <UrlSearchParamsProvider>
       <ToastProvider>
       <AuthProvider>
+      <ProfileProvider>
+      <WalletProvider>
         <CouponRedeemProvider>
           <PendingTransactionProvider>
             <DepositProvider>
@@ -43,6 +47,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
             </DepositProvider>
           </PendingTransactionProvider>
         </CouponRedeemProvider>
+      </WalletProvider>
+      </ProfileProvider>
       </AuthProvider>
       </ToastProvider>
     </UrlSearchParamsProvider>

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { fetchWalletBalance } from "@/lib/api/profile";
+import { useWallet } from "@/app/components/wallet/WalletProvider";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { HeaderWalletAssetIcon } from "@/app/components/layout/HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
@@ -18,7 +18,7 @@ export function RewardHubSummaryCard({
   pointsBalance: number;
   className?: string;
 }) {
-  const wallet = fetchWalletBalance();
+  const wallet = useWallet();
   const gems = fetchGemsStore();
 
   return (
@@ -31,7 +31,7 @@ export function RewardHubSummaryCard({
           <p className="text-xs text-[var(--text-secondary)]">เครดิตทั้งหมด</p>
           <p className="mt-0.5 flex items-center gap-1.5 text-xl font-medium tabular-nums text-white sm:text-2xl">
             <HeaderWalletAssetIcon className="h-6 w-6 shrink-0 object-contain" />
-            {formatHeaderWalletBalance(wallet.amount)}
+            {wallet.data ? formatHeaderWalletBalance(wallet.data.amount) : "—"}
             <span className="text-sm font-normal text-[var(--text-secondary)]">฿</span>
           </p>
         </div>

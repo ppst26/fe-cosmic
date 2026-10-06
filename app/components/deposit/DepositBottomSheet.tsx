@@ -29,6 +29,7 @@ import {
 } from "../ui/cosmicButtonClasses";
 import { formatDepositAmount, formatDepositTransferAmount } from "@/lib/format";
 import type { DepositMethodId } from "@/app/types/wallet";
+import { useWallet } from "../wallet/WalletProvider";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 
@@ -43,6 +44,7 @@ interface DepositBottomSheetProps {
  */
 export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBottomSheetProps) {
   const quick = fetchDepositQuickAmounts();
+  const wallet = useWallet();
   const [step, setStep] = useState<DepositSheetStep>("methods");
   const [amount, setAmount] = useState(quick.defaultAmount);
   const [amountInput, setAmountInput] = useState(String(quick.defaultAmount));
@@ -139,9 +141,15 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
     if (amount <= 0) return;
     setSubmitting(true);
     setSubmitMessage(null);
-    await submitDeposit({ amount, methodId: "bank" });
+    const result = await submitDeposit({ amount, methodId: "bank" });
     setSubmitting(false);
+    if (!result.ok) {
+      setFinalConfirmOpen(false);
+      setSubmitMessage(result.error);
+      return;
+    }
     setFinalConfirmOpen(false);
+    wallet.refresh();
     onCompleted?.(amount);
     onClose();
   };

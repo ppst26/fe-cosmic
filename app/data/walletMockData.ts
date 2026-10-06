@@ -1,6 +1,3 @@
 /** ยอดกระเป๋าหลัก mock — ใช้ใน Header notch จนกว่าจะมี API จริง */
 export const MOCK_MAIN_WALLET_BALANCE = 12_450;
 
-/** ไอคอนกระเป๋าใน Header / เมนู */
-export const HEADER_WALLET_ICON_SRC = "/assets/deposit/Wallet2.avif";
-

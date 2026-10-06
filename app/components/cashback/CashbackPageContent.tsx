@@ -11,6 +11,7 @@ import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
 import { formatCashbackCurrency, formatCashbackPercent } from "@/lib/format";
 import type { CashbackPanelMock, CashbackTabId } from "@/app/types/cashback";
+import { useWallet } from "../wallet/WalletProvider";
 
 interface CashbackPageContentProps {
   initialTab?: CashbackTabId;
@@ -27,6 +28,7 @@ export function CashbackPageContent({
   embedded = false,
 }: CashbackPageContentProps) {
   const cashbackPanels = fetchCashbackPanels();
+  const wallet = useWallet();
   const [tab, setTab] = useState<CashbackTabId>(initialTab);
   const [playPanel, setPlayPanel] = useState(cashbackPanels.play);
   const [lossPanel, setLossPanel] = useState(cashbackPanels.loss);
@@ -58,6 +60,8 @@ export function CashbackPageContent({
     });
     if (tab === "play") setPlayPanel(reset);
     else setLossPanel(reset);
+    // TODO(api): POST claim cashback แล้วใช้ panels จาก response · ยอดที่รับเข้ากระเป๋าหลัก
+    wallet.refresh();
   };
 
   return (

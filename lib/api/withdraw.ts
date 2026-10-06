@@ -4,6 +4,7 @@ import {
   WITHDRAW_QUICK_AMOUNTS,
   WITHDRAW_USER_BANK_MOCK,
 } from "@/app/data/withdrawMockData";
+import type { MoneySubmitResult } from "./deposit";
 
 /** บัญชีรับเงินถอน */
 export function fetchWithdrawAccount() {
@@ -23,9 +24,12 @@ export function fetchWithdrawQuickAmounts() {
   };
 }
 
-/** ยืนยันถอน — หน่วง 500ms เท่าแผงเดิม */
+/**
+ * ยืนยันถอน — mock หน่วง 500ms แล้วสำเร็จเสมอ
+ * ต่อ backend: apiFetch POST /api/withdraw แล้ว map เป็น MoneySubmitResult
+ */
 export function submitWithdraw(_input: { amount: number }) {
-  return new Promise<{ ok: true }>((resolve) => {
+  return new Promise<MoneySubmitResult>((resolve) => {
     setTimeout(() => resolve({ ok: true }), 500);
   });
 }

@@ -10,7 +10,7 @@ import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
 import { HeaderUserAvatar } from "./HeaderUserAvatar";
 import { HEADER_DESKTOP_NAV } from "@/app/data/lobbyMockData";
-import { fetchWalletBalance } from "@/lib/api/profile";
+import { useWallet } from "../wallet/WalletProvider";
 import { useLobbyShellSidebarOptional } from "./LobbyShellSidebarContext";
 import { cn } from "@/lib/utils";
 import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
@@ -83,7 +83,8 @@ export function Header({
 
   const showAuthSkeleton = !isClientReady || isLoading;
   const showWallet = isClientReady && !isLoading && isAuthenticated;
-  const balanceLabel = formatHeaderWalletBalance(fetchWalletBalance().amount);
+  const wallet = useWallet();
+  const balanceLabel = wallet.data ? formatHeaderWalletBalance(wallet.data.amount) : "—";
   const isProfileRoute =
     pathname === "/profile/account" || pathname.startsWith("/profile/account/");
   const lobbySidebar = useLobbyShellSidebarOptional();

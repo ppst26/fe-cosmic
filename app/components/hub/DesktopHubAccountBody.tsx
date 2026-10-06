@@ -1,55 +1,33 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import type { ProfileUser } from "@/app/types/auth";
-import { fetchProfile } from "@/lib/auth/client";
+import React from "react";
 import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
 import { ProfileSheetBody } from "@/app/components/profile/ProfileSheetBody";
+import { useProfile } from "@/app/components/auth/ProfileProvider";
 import { useDesktopHubModal } from "./DesktopHubModalProvider";
 import { useVipModal } from "@/app/components/vip/VipModalProvider";
 import { ErrorState, LoadingState } from "@/app/components/ui/StatusState";
 
 /**
- * เนื้อหา hub ข้อมูลบัญชี — โหลดโปรไฟล์เมื่อ mount ใน DesktopHubModal
+ * เนื้อหา hub ข้อมูลบัญชี — โปรไฟล์จาก ProfileProvider ใน DesktopHubModal
  */
 export function DesktopHubAccountBody() {
   const { closeHub, openHub } = useDesktopHubModal();
   const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(closeHub);
   const { openVipModal } = useVipModal();
-  const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
-  const fetchGenRef = useRef(0);
-  /** เพิ่มค่าเพื่อโหลดโปรไฟล์ใหม่ (ปุ่มลองใหม่) */
-  const [reloadKey, setReloadKey] = useState(0);
+  const { data: profile, status, refresh, setData: setProfile } = useProfile();
 
-  useEffect(() => {
-    const gen = ++fetchGenRef.current;
-    void fetchProfile().then((data) => {
-      if (gen !== fetchGenRef.current) return;
-      setProfile(data);
-    });
-    return () => {
-      fetchGenRef.current += 1;
-    };
-  }, [reloadKey]);
-
-  if (profile === undefined) {
+  if (!profile) {
+    if (status === "error") {
+      return (
+        <ErrorState
+          title="โหลดข้อมูลบัญชีไม่สำเร็จ"
+          description="ลองใหม่อีกครั้ง หากยังไม่ได้ ให้ออกจากระบบแล้วเข้าสู่ระบบใหม่"
+          primaryAction={{ label: "ลองใหม่", onClick: refresh }}
+        />
+      );
+    }
     return <LoadingState label="กำลังโหลดข้อมูลบัญชี…" />;
-  }
-
-  if (profile === null) {
-    return (
-      <ErrorState
-        title="โหลดข้อมูลบัญชีไม่สำเร็จ"
-        description="ลองใหม่อีกครั้ง หากยังไม่ได้ ให้ออกจากระบบแล้วเข้าสู่ระบบใหม่"
-        primaryAction={{
-          label: "ลองใหม่",
-          onClick: () => {
-            setProfile(undefined);
-            setReloadKey((key) => key + 1);
-          },
-        }}
-      />
-    );
   }
 
   return (
@@ -57,6 +35,7 @@ export function DesktopHubAccountBody() {
       <ProfileSheetBody
         profile={profile}
         onLogout={openLogoutConfirm}
+        onProfileUpdated={setProfile}
         onOpenTransactions={() => openHub("transactions")}
         onOpenVip={() => {
           closeHub();

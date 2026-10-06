@@ -90,6 +90,13 @@ exports/lottery-kit ชุดย้ายระบบหวยไปโปรเ
 | `.cursor/`, `agent/` | rules + skills ของ agent (เนื้อหาเหมือนกัน) |
 | `docs/superpowers/` | spec และ plan ของแต่ละฟีเจอร์ |
 
+## โปรไฟล์และยอดเครดิต (state กลาง)
+
+- `useProfile()` (`app/components/auth/ProfileProvider.tsx`) — โปรไฟล์เต็ม โหลดครั้งเดียวหลัง login แชร์ทั้งแอป · `setData(profile)` หลังบันทึก (เช่น avatar) แล้วทุกจุดอัปเดตพร้อมกัน
+- `useWallet()` (`app/components/wallet/WalletProvider.tsx`) — ยอดเครดิตหลักแหล่งเดียว (Header · เมนู · reward hub) · **เรียก `refresh()` หลัง mutation ที่กระทบยอด** (ฝาก · ถอน · คูปอง · รับ cashback ทำแล้ว)
+- ทั้งสองใช้ `useScopedResource` (`app/hooks/`) — ผูกกับ user id: logout ล้างข้อมูล, login คนใหม่โหลดใหม่, ระหว่าง refresh ยังแสดงค่าเดิม · เปลี่ยนไปใช้ SWR / React Query ภายหลังได้โดยคง interface `{ data, status, refresh, setData }`
+- ห้ามเรียก `fetchProfile()` / `fetchWalletBalance()` ตรงจาก component
+
 ## สถานะโหลด / ว่าง / ผิดพลาด
 
 - ระดับ route: `app/loading.tsx` · `app/error.tsx` (ปุ่มลองใหม่ = `retry()` ของ Next 16) · `app/not-found.tsx` · `app/global-error.tsx` (root layout พัง)

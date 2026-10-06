@@ -24,6 +24,7 @@ import {
   COSMIC_SHEET_SUBMIT,
 } from "../ui/cosmicButtonClasses";
 import { formatWithdrawAmount, formatWithdrawMoney } from "@/lib/format";
+import { useWallet } from "../wallet/WalletProvider";
 
 interface WithdrawBottomSheetProps {
   isOpen: boolean;
@@ -38,6 +39,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
   const quick = fetchWithdrawQuickAmounts();
   const bank = fetchWithdrawAccount();
   const available = fetchWithdrawBalance();
+  const wallet = useWallet();
 
   const [amount, setAmount] = useState(quick.defaultAmount);
   const [amountInput, setAmountInput] = useState(String(quick.defaultAmount));
@@ -90,9 +92,14 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
     if (amount <= 0 || amount > available) return;
     setSubmitting(true);
     setSubmitMessage(null);
-    await submitWithdraw({ amount });
+    const result = await submitWithdraw({ amount });
     setSubmitting(false);
     setConfirmOpen(false);
+    if (!result.ok) {
+      setSubmitMessage(result.error);
+      return;
+    }
+    wallet.refresh();
     onCompleted?.(amount);
     onClose();
   };

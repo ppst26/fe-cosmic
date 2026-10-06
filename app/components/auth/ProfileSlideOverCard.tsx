@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
-import type { ProfileUser } from "@/app/types/auth";
-import { fetchProfile } from "@/lib/auth/client";
+import { useProfile } from "./ProfileProvider";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { getIsDesktopViewport } from "../hub/useIsDesktop";
@@ -37,28 +36,16 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
   const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(onClose);
   const { openVipModal } = useVipModal();
   const { openHub } = useDesktopHubModal();
-  const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
-  const fetchGenRef = React.useRef(0);
-
-  React.useEffect(() => {
-    if (!isOpen) return;
-
-    const gen = ++fetchGenRef.current;
-    void fetchProfile().then((data) => {
-      if (gen !== fetchGenRef.current) return;
-      setProfile(data);
-    });
-  }, [isOpen]);
+  /** โปรไฟล์จาก ProfileProvider — โหลดไว้ตั้งแต่ login เปิด sheet แล้วแสดงทันที */
+  const { data: profile, status: profileStatus, refresh: refreshProfile, setData: setProfile } =
+    useProfile();
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) {
-      fetchGenRef.current += 1;
-      setProfile(undefined);
-      onClose();
-    }
+    if (!open) onClose();
   };
 
-  const loading = isOpen && profile === undefined;
+  const loading = profileStatus === "loading";
+  const profileFailed = profileStatus === "error" && !profile;
 
   const handleOpenTransactions = () => {
     onClose();
@@ -149,14 +136,15 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
             <div className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4 lg:px-5 lg:pb-4 lg:pt-1">
               {loading ? <LoadingState label="กำลังโหลดโปรไฟล์…" /> : null}
 
-              {!loading && profile === null ? (
+              {profileFailed ? (
                 <ErrorState
                   title="โหลดโปรไฟล์ไม่สำเร็จ"
-                  description="ปิดแล้วเปิดใหม่อีกครั้ง หากยังไม่ได้ ให้เข้าสู่ระบบใหม่"
+                  description="ลองใหม่อีกครั้ง หากยังไม่ได้ ให้ออกจากระบบแล้วเข้าสู่ระบบใหม่"
+                  primaryAction={{ label: "ลองใหม่", onClick: refreshProfile }}
                 />
               ) : null}
 
-              {!loading && profile ? (
+              {profile ? (
                 <>
                   <div className="lg:hidden">
                     <div className="profile-hub-sheet__user-card mb-3">

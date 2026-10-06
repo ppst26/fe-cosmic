@@ -8,7 +8,7 @@ import type {
   SessionUser,
   UpdateProfileAvatarResponse,
 } from "@/app/types/auth";
-import { apiFetch } from "@/lib/api/http";
+import { apiFetch, type ApiResult } from "@/lib/api/http";
 
 /**
  * เรียก API auth ฝั่ง client ผ่าน apiFetch (ส่ง cookie อัตโนมัติ · ไม่ throw)
@@ -31,10 +31,14 @@ export async function loginUser(body: LoginRequestBody): Promise<AuthActionRespo
   return res.ok ? res.data : { ok: false, error: res.error.message };
 }
 
-/** โปรไฟล์เต็ม — null เมื่อยังไม่ login หรือโหลดไม่ได้ */
-export async function fetchProfile(): Promise<ProfileUser | null> {
+/** โปรไฟล์เต็ม — อ่านผ่าน ProfileProvider (useProfile) · ok:false เมื่อยังไม่ login / โหลดไม่ได้ / ไม่พบ */
+export async function fetchProfile(): Promise<ApiResult<ProfileUser>> {
   const res = await apiFetch<ProfileResponse>("/api/auth/profile");
-  return res.ok ? (res.data?.profile ?? null) : null;
+  if (!res.ok) return res;
+  if (!res.data?.profile) {
+    return { ok: false, error: { code: "HTTP", status: 404, message: "ไม่พบข้อมูลบัญชี" } };
+  }
+  return { ok: true, status: res.status, data: res.data.profile };
 }
 
 /** บันทึก preset avatar — คืนโปรไฟล์ล่าสุดเมื่อสำเร็จ */

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { ProfileUser } from "@/app/types/auth";
-import { fetchProfile } from "@/lib/auth/client";
 import { useAuth } from "@/app/components/auth/AuthProvider";
+import { useProfile } from "@/app/components/auth/ProfileProvider";
+import { ErrorState, LoadingState } from "@/app/components/ui/StatusState";
 import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
@@ -22,7 +22,7 @@ export default function ProfileAccountPage() {
   const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(() => router.replace("/"));
   const { openVipModal } = useVipModal();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
+  const { data: profile, status: profileStatus, refresh, setData: setProfile } = useProfile();
 
   useEffect(() => {
     if (isLoading) return;
@@ -31,20 +31,6 @@ export default function ProfileAccountPage() {
     }
   }, [isAuthenticated, isLoading, router]);
 
-  useEffect(() => {
-    if (!isAuthenticated) return;
-
-    let cancelled = false;
-    void fetchProfile().then((data) => {
-      if (!cancelled) setProfile(data);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [isAuthenticated]);
-
-  const loadingProfile = isAuthenticated && profile === undefined;
 
   if (isLoading || !isAuthenticated) {
     return null;
@@ -59,17 +45,18 @@ export default function ProfileAccountPage() {
       <SlotProvidersHeader title="ข้อมูลบัญชี" backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
-        {loadingProfile && (
-          <p className="py-12 text-center text-sm text-[var(--text-muted)]">กำลังโหลด...</p>
+        {!profile && profileStatus === "loading" && <LoadingState label="กำลังโหลดข้อมูลบัญชี…" />}
+
+        {!profile && profileStatus === "error" && (
+          <ErrorState
+            variant="card"
+            title="โหลดข้อมูลบัญชีไม่สำเร็จ"
+            description="ลองใหม่อีกครั้ง หากยังไม่ได้ ให้ออกจากระบบแล้วเข้าสู่ระบบใหม่"
+            primaryAction={{ label: "ลองใหม่", onClick: refresh }}
+          />
         )}
 
-        {!loadingProfile && profile === null && (
-          <p className="py-12 text-center text-sm text-[var(--text-muted)]">
-            ไม่พบข้อมูลบัญชี
-          </p>
-        )}
-
-        {!loadingProfile && profile && (
+        {profile && (
           <ProfileSheetBody
             profile={profile}
             onLogout={openLogoutConfirm}

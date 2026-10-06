@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
-import { fetchMenuTicketCount, fetchWalletBalance } from "@/lib/api/profile";
+import { fetchMenuTicketCount } from "@/lib/api/profile";
+import { useWallet } from "../wallet/WalletProvider";
 import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";
@@ -21,11 +22,12 @@ interface MenuDrawerWalletCardsProps {
 export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps) {
   const { isAuthenticated, isLoading } = useAuth();
   const showAmounts = isAuthenticated && !isLoading;
-  const wallet = fetchWalletBalance();
+  const wallet = useWallet();
   const gemsStore = fetchGemsStore();
   const ticketCount = fetchMenuTicketCount();
 
-  const balanceLabel = showAmounts ? formatHeaderWalletBalance(wallet.amount) : "—";
+  const balanceLabel =
+    showAmounts && wallet.data ? formatHeaderWalletBalance(wallet.data.amount) : "—";
   const gemsLabel = showAmounts ? formatGemsBalance(gemsStore.balance) : "—";
   const ticketLabel = showAmounts
     ? new Intl.NumberFormat("th-TH").format(ticketCount)

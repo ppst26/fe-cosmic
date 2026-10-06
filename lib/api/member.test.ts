@@ -19,7 +19,7 @@ import { fetchTransactions } from "./transactions";
 import { fetchActivities } from "./activities";
 import { fetchMenuTicketCount, fetchProfileHubStats, fetchWalletBalance } from "./profile";
 
-test("member readers return the current mocks", () => {
+test("member readers return the current mocks", async () => {
   assert.equal(fetchVipPlayer(), VIP_PLAYER_MOCK);
   assert.equal(fetchReferralOverview().refCode, REFERRAL_MOCK_REF_CODE);
   assert.equal(fetchCashbackPanels().play, CASHBACK_PLAY_PANEL_MOCK);
@@ -27,7 +27,7 @@ test("member readers return the current mocks", () => {
   assert.equal(fetchGemsStore().balance, GEMS_STORE_BALANCE_MOCK);
   assert.equal(fetchActivities(), ACTIVITIES_HUB_ITEMS);
   assert.equal(fetchProfileHubStats(), PROFILE_HUB_STATS_MOCK);
-  assert.equal(fetchWalletBalance().amount, MOCK_MAIN_WALLET_BALANCE);
+  assert.deepEqual(await fetchWalletBalance(), { ok: true, status: 200, data: { amount: MOCK_MAIN_WALLET_BALANCE } });
   assert.equal(fetchMenuTicketCount(), MENU_DIALOG_TICKET_COUNT_MOCK);
   assert.ok(fetchWheel());
   assert.ok(fetchTransactions());

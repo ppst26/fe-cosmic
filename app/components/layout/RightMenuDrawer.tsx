@@ -291,7 +291,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     >
       <div className="menu-drawer-mobile-scroll">
         {isAuthenticated ? (
-          <MenuDrawerUserAvatar isMenuOpen={isOpen} />
+          <MenuDrawerUserAvatar />
         ) : (
           <div className="menu-drawer-guest-brand menu-enter-logo flex shrink-0 justify-center pb-0.5 pt-0.5">
             <CosmicbetLogo className="h-7 w-auto max-w-[min(72vw,168px)] object-contain" />

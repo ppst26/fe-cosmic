@@ -24,9 +24,15 @@ export function fetchDepositQuickAmounts() {
   };
 }
 
-/** ยืนยันฝาก — หน่วง 500ms เท่าแผงเดิม ชื่อสลิปไม่เข้าฟังก์ชันนี้ */
+/** ผลส่งรายการฝาก/ถอน — ok:false พร้อมข้อความพร้อมแสดงผู้ใช้ */
+export type MoneySubmitResult = { ok: true } | { ok: false; error: string };
+
+/**
+ * ยืนยันฝาก — mock หน่วง 500ms แล้วสำเร็จเสมอ · ชื่อสลิปยังไม่เข้าฟังก์ชันนี้
+ * ต่อ backend: apiFetch POST /api/deposit (FormData พร้อมไฟล์สลิป) แล้ว map เป็น MoneySubmitResult
+ */
 export function submitDeposit(_input: { amount: number; methodId: DepositMethodId }) {
-  return new Promise<{ ok: true }>((resolve) => {
+  return new Promise<MoneySubmitResult>((resolve) => {
     setTimeout(() => resolve({ ok: true }), 500);
   });
 }

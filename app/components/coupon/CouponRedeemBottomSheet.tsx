@@ -13,6 +13,7 @@ import {
 import { submitCoupon } from "@/lib/api/coupon";
 import { COUPON_CODE_MAX_LENGTH, sanitizeCouponCode } from "@/lib/fieldInput";
 import { useToast } from "@/context/ToastContext";
+import { useWallet } from "../wallet/WalletProvider";
 
 interface CouponRedeemBottomSheetProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
   const { showToast } = useToast();
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const wallet = useWallet();
 
   const reset = () => {
     setCode("");
@@ -51,6 +53,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
     const result = await submitCoupon(normalized);
     setSubmitting(false);
     if (result.ok) {
+      wallet.refresh();
       showToast(result.message, "success");
       setCode("");
       return;

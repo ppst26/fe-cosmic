@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { fetchProfile } from "@/lib/auth/client";
+import React, { useState } from "react";
 import { useAuth } from "@/app/components/auth/AuthProvider";
+import { useProfile } from "@/app/components/auth/ProfileProvider";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
@@ -17,19 +17,10 @@ import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 export default function ReferralPage() {
   const { isAuthenticated, isLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [refCode, setRefCode] = useState(fetchReferralOverview().refCode);
-
-  useEffect(() => {
-    if (!isAuthenticated) return;
-    let cancelled = false;
-    void fetchProfile().then((profile) => {
-      if (cancelled || !profile?.memberId) return;
-      setRefCode(profile.memberId);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [isAuthenticated]);
+  const { data: profile } = useProfile();
+  /** รหัสชวนเพื่อน = memberId ของผู้ใช้ที่ login · ยังไม่ login ใช้ค่าจาก referral overview */
+  const refCode =
+    (isAuthenticated ? profile?.memberId : undefined) ?? fetchReferralOverview().refCode;
 
   if (isLoading) {
     return null;
