@@ -15,7 +15,6 @@ import { fetchCashbackPanels } from "./cashback";
 import { fetchCheckIn } from "./checkIn";
 import { fetchGemsStore } from "./gemsStore";
 import { fetchWheel } from "./wheel";
-import { fetchTransactions } from "./transactions";
 import { fetchActivities } from "./activities";
 import { fetchMenuTicketCount, fetchProfileHubStats, fetchWalletBalance } from "./profile";
 
@@ -30,5 +29,4 @@ test("member readers return the current mocks", async () => {
   assert.deepEqual(await fetchWalletBalance(), { ok: true, status: 200, data: { amount: MOCK_MAIN_WALLET_BALANCE } });
   assert.equal(fetchMenuTicketCount(), MENU_DIALOG_TICKET_COUNT_MOCK);
   assert.ok(fetchWheel());
-  assert.ok(fetchTransactions());
 });

@@ -34,7 +34,6 @@ export const ENDPOINTS = {
   fetchGemsStore: { method: "GET", path: "/api/gems-store", auth: true, client: "fetchGemsStore" },
   fetchWheel: { method: "GET", path: "/api/wheel", auth: true, client: "fetchWheel" },
   fetchTransactions: { method: "GET", path: "/api/transactions", auth: true, client: "fetchTransactions" },
-  fetchPendingTransaction: { method: "GET", path: "/api/transactions/pending", auth: true, client: "fetchPendingTransaction" },
   fetchActivities: { method: "GET", path: "/api/activities", auth: false, client: "fetchActivities" },
   fetchProfileHubStats: { method: "GET", path: "/api/profile/hub-stats", auth: true, client: "fetchProfileHubStats" },
   fetchWalletBalance: { method: "GET", path: "/api/wallet/balance", auth: true, client: "fetchWalletBalance" },

@@ -2,7 +2,9 @@
 
 import React, { useMemo, useState } from "react";
 import type { TransactionKind } from "@/app/types/transaction";
-import { fetchTransactions } from "@/lib/api/transactions";
+import { TRANSACTION_KIND_TABS } from "@/app/data/transactionsMockData";
+import { useTransactions } from "@/app/hooks/api/transactions";
+import { ErrorState, LoadingState } from "../ui/StatusState";
 import { getDefaultTransactionDateRange } from "@/app/lib/transactionDateUtils";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { TransactionKindTabs } from "./TransactionKindTabs";
@@ -13,7 +15,6 @@ import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 import {
   countPromotionClaims,
-  filterTransactionsByDateRange,
   sumBetStakeTotal,
   sumBetWinLossTotal,
   sumCompletedDepositAmount,
@@ -37,7 +38,6 @@ export function TransactionsPageContent({
   isAuthenticated,
   embedded = false,
 }: TransactionsPageContentProps) {
-  const transactionData = fetchTransactions();
   const defaultRange = useMemo(() => getDefaultTransactionDateRange(), []);
 
   const [draftFrom, setDraftFrom] = useState(defaultRange.from);
@@ -46,26 +46,9 @@ export function TransactionsPageContent({
   const [appliedTo, setAppliedTo] = useState(defaultRange.to);
   const [betPage, setBetPage] = useState(1);
 
-  const allItems = isAuthenticated
-    ? (() => {
-        switch (activeKind) {
-          case "deposit":
-            return transactionData.deposit;
-          case "withdraw":
-            return transactionData.withdraw;
-          case "promotion":
-            return transactionData.promotion;
-          case "bet":
-            return transactionData.bet;
-          default:
-            return [];
-        }
-      })()
-    : [];
-  const items = useMemo(
-    () => filterTransactionsByDateRange(allItems, appliedFrom, appliedTo),
-    [allItems, appliedFrom, appliedTo],
-  );
+  /** server กรองตามประเภท + ช่วงวันที่ (mock กรองใน lib/api) */
+  const transactions = useTransactions(activeKind, appliedFrom, appliedTo);
+  const items = useMemo(() => transactions.data ?? [], [transactions.data]);
 
   /** เปลี่ยนแท็บหรือช่วงวันที่ → กลับหน้า 1 (ปรับ state ระหว่าง render แทน effect) */
   const pageResetKey = `${activeKind}|${appliedFrom.getTime()}|${appliedTo.getTime()}`;
@@ -112,7 +95,7 @@ export function TransactionsPageContent({
     <div className="flex flex-col gap-4">
       <section className={shellClass}>
         <TransactionKindTabs
-          tabs={transactionData.tabs}
+          tabs={TRANSACTION_KIND_TABS}
           activeKind={activeKind}
           onSelect={onSelectKind}
         />
@@ -132,6 +115,14 @@ export function TransactionsPageContent({
           <p className="py-10 text-center text-sm text-[var(--text-muted)]">
             กรุณาเข้าสู่ระบบเพื่อดูรายการธุรกรรม
           </p>
+        ) : transactions.status === "error" && !transactions.data ? (
+          <ErrorState
+            title="โหลดรายการธุรกรรมไม่สำเร็จ"
+            description={transactions.error?.message}
+            primaryAction={{ label: "ลองใหม่", onClick: transactions.refresh }}
+          />
+        ) : !transactions.data ? (
+          <LoadingState label="กำลังโหลดรายการ…" />
         ) : (
           <TabPanelTransition
             tabKey={activeKind}

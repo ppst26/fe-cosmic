@@ -7,7 +7,10 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { fetchPendingTransaction } from "@/lib/api/transactions";
+import {
+  buildPendingDepositPayload,
+  buildPendingWithdrawPayload,
+} from "@/app/data/pendingTransactionMockData";
 import { PendingTransactionDialog } from "./PendingTransactionDialog";
 import type { PendingTransactionPayload } from "@/app/types/transaction";
 
@@ -20,18 +23,18 @@ const PendingTransactionContext = createContext<PendingTransactionContextValue |
 
 /**
  * เปิด dialog รายการรอดำเนินการ — เรียกจาก flow ฝาก/ถอน
+ * TODO(api): ใช้เลขอ้างอิง / เวลา / บัญชีจาก response ของ submitDeposit / submitWithdraw แทน builder mock
  */
 export function PendingTransactionProvider({ children }: { children: React.ReactNode }) {
-  const { buildPendingDepositPayload, buildPendingWithdrawPayload } = fetchPendingTransaction();
   const [payload, setPayload] = useState<PendingTransactionPayload | null>(null);
 
   const showPendingDeposit = useCallback((amount: number) => {
     setPayload(buildPendingDepositPayload(amount));
-  }, [buildPendingDepositPayload]);
+  }, []);
 
   const showPendingWithdraw = useCallback((amount: number) => {
     setPayload(buildPendingWithdrawPayload(amount));
-  }, [buildPendingWithdrawPayload]);
+  }, []);
 
   const closePending = useCallback(() => setPayload(null), []);
 
