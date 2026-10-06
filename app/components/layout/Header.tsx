@@ -10,7 +10,7 @@ import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
 import { HeaderUserAvatar } from "./HeaderUserAvatar";
 import { HEADER_DESKTOP_NAV } from "@/app/data/lobbyMockData";
-import { useWallet } from "../wallet/WalletProvider";
+import { useWallet } from "@/app/hooks/api/account";
 import { useLobbyShellSidebarOptional } from "./LobbyShellSidebarContext";
 import { cn } from "@/lib/utils";
 import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";

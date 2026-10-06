@@ -3,7 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
-import { useProfile } from "./ProfileProvider";
+import { useProfile } from "@/app/hooks/api/account";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { getIsDesktopViewport } from "../hub/useIsDesktop";
@@ -36,7 +36,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
   const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(onClose);
   const { openVipModal } = useVipModal();
   const { openHub } = useDesktopHubModal();
-  /** โปรไฟล์จาก ProfileProvider — โหลดไว้ตั้งแต่ login เปิด sheet แล้วแสดงทันที */
+  /** โปรไฟล์จาก useProfile (SWR cache) — โหลดไว้ตั้งแต่ login เปิด sheet แล้วแสดงทันที */
   const { data: profile, status: profileStatus, refresh: refreshProfile, setData: setProfile } =
     useProfile();
 

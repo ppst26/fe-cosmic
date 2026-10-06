@@ -29,7 +29,7 @@ import {
 } from "../ui/cosmicButtonClasses";
 import { formatDepositAmount, formatDepositTransferAmount } from "@/lib/format";
 import type { DepositMethodId } from "@/app/types/wallet";
-import { useWallet } from "../wallet/WalletProvider";
+import { useWallet } from "@/app/hooks/api/account";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 

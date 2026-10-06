@@ -5,7 +5,7 @@ import { SearchIcon, ProfileNavIcon } from "../ui/Icons";
 import { HeaderUserAvatar } from "./HeaderUserAvatar";
 import { HeaderWalletChip } from "./HeaderWalletChip";
 import { useAuth } from "../auth/AuthProvider";
-import { useWallet } from "../wallet/WalletProvider";
+import { useWallet } from "@/app/hooks/api/account";
 import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
 import { NotificationDesktopPopover } from "../notifications/NotificationDesktopPopover";
 import { formatHeaderWalletBalance } from "@/lib/format";

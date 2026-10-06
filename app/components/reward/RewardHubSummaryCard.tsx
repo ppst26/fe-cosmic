@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { useWallet } from "@/app/components/wallet/WalletProvider";
+import { useWallet } from "@/app/hooks/api/account";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { HeaderWalletAssetIcon } from "@/app/components/layout/HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/app/components/auth/AuthProvider";
-import { useProfile } from "@/app/components/auth/ProfileProvider";
+import { useProfile } from "@/app/hooks/api/account";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";

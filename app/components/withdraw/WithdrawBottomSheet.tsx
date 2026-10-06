@@ -24,7 +24,7 @@ import {
   COSMIC_SHEET_SUBMIT,
 } from "../ui/cosmicButtonClasses";
 import { formatWithdrawAmount, formatWithdrawMoney } from "@/lib/format";
-import { useWallet } from "../wallet/WalletProvider";
+import { useWallet } from "@/app/hooks/api/account";
 
 interface WithdrawBottomSheetProps {
   isOpen: boolean;

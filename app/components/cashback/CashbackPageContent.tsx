@@ -11,7 +11,7 @@ import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
 import { formatCashbackCurrency, formatCashbackPercent } from "@/lib/format";
 import type { CashbackPanelMock, CashbackTabId } from "@/app/types/cashback";
-import { useWallet } from "../wallet/WalletProvider";
+import { useWallet } from "@/app/hooks/api/account";
 
 interface CashbackPageContentProps {
   initialTab?: CashbackTabId;

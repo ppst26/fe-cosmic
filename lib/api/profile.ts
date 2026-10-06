@@ -14,7 +14,7 @@ export function fetchProfileHubStats() {
 }
 
 /**
- * ยอดเครดิตหลัก — อ่านผ่าน WalletProvider (useWallet) เท่านั้น
+ * ยอดเครดิตหลัก — อ่านผ่าน useWallet() (app/hooks/api/account.ts) เท่านั้น
  * ต่อ backend: return apiFetch<WalletBalance>("/api/wallet/balance")
  */
 export async function fetchWalletBalance(): Promise<ApiResult<WalletBalance>> {

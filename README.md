@@ -90,12 +90,14 @@ exports/lottery-kit ชุดย้ายระบบหวยไปโปรเ
 | `.cursor/`, `agent/` | rules + skills ของ agent (เนื้อหาเหมือนกัน) |
 | `docs/superpowers/` | spec และ plan ของแต่ละฟีเจอร์ |
 
-## โปรไฟล์และยอดเครดิต (state กลาง)
+## ดึงข้อมูลฝั่ง client (SWR)
 
-- `useProfile()` (`app/components/auth/ProfileProvider.tsx`) — โปรไฟล์เต็ม โหลดครั้งเดียวหลัง login แชร์ทั้งแอป · `setData(profile)` หลังบันทึก (เช่น avatar) แล้วทุกจุดอัปเดตพร้อมกัน
-- `useWallet()` (`app/components/wallet/WalletProvider.tsx`) — ยอดเครดิตหลักแหล่งเดียว (Header · เมนู · reward hub) · **เรียก `refresh()` หลัง mutation ที่กระทบยอด** (ฝาก · ถอน · คูปอง · รับ cashback ทำแล้ว)
-- ทั้งสองใช้ `useScopedResource` (`app/hooks/`) — ผูกกับ user id: logout ล้างข้อมูล, login คนใหม่โหลดใหม่, ระหว่าง refresh ยังแสดงค่าเดิม · เปลี่ยนไปใช้ SWR / React Query ภายหลังได้โดยคง interface `{ data, status, refresh, setData }`
-- ห้ามเรียก `fetchProfile()` / `fetchWalletBalance()` ตรงจาก component
+- `useApi(key, fetcher, { auth })` (`app/hooks/useApi.ts`) ห่อ SWR — dedupe/cache ข้าม component ตาม key · คืน `{ data, status, error, refresh, setData }`
+- `auth: true` = ต้อง login: ยังไม่ login ไม่ยิง (status `idle`) และ cache แยกตาม user id (logout/login คนใหม่ไม่เห็นข้อมูลคนก่อน)
+- hook รายโดเมนอยู่ใน `app/hooks/api/*` เช่น `useProfile()` · `useWallet()` — component เรียก hook เหล่านี้ ห้ามเรียก `fetch*()` ตรง
+- หลัง mutation: `refresh()` เพื่อดึงใหม่ หรือ `setData(ผลจาก server)` เพื่ออัปเดต cache ทันที (เช่น `wallet.refresh()` หลังฝาก/ถอน/คูปอง/รับ cashback)
+- ค่าเริ่มต้น SWR อยู่ใน `app/providers.tsx`: ไม่ดึงใหม่ตอนสลับแท็บ · 4xx ไม่ retry · network/5xx retry สูงสุด 3 ครั้ง
+- ฟังก์ชันใน `lib/api` คืน `Promise<ApiResult<T>>` · ระหว่างยังไม่มี backend ใช้ `mockResult(data)` (`lib/api/mock.ts`)
 
 ## สถานะโหลด / ว่าง / ผิดพลาด
 

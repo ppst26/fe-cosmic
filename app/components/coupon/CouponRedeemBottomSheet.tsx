@@ -13,7 +13,7 @@ import {
 import { submitCoupon } from "@/lib/api/coupon";
 import { COUPON_CODE_MAX_LENGTH, sanitizeCouponCode } from "@/lib/fieldInput";
 import { useToast } from "@/context/ToastContext";
-import { useWallet } from "../wallet/WalletProvider";
+import { useWallet } from "@/app/hooks/api/account";
 
 interface CouponRedeemBottomSheetProps {
   isOpen: boolean;

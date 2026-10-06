@@ -31,7 +31,7 @@ export async function loginUser(body: LoginRequestBody): Promise<AuthActionRespo
   return res.ok ? res.data : { ok: false, error: res.error.message };
 }
 
-/** โปรไฟล์เต็ม — อ่านผ่าน ProfileProvider (useProfile) · ok:false เมื่อยังไม่ login / โหลดไม่ได้ / ไม่พบ */
+/** โปรไฟล์เต็ม — อ่านผ่าน useProfile() (app/hooks/api/account.ts) · ok:false เมื่อยังไม่ login / โหลดไม่ได้ / ไม่พบ */
 export async function fetchProfile(): Promise<ApiResult<ProfileUser>> {
   const res = await apiFetch<ProfileResponse>("/api/auth/profile");
   if (!res.ok) return res;

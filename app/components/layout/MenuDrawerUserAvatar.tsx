@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { useProfile } from "../auth/ProfileProvider";
+import { useProfile } from "@/app/hooks/api/account";
 import { UserAvatar, UserAvatarPlaceholder } from "../profile/UserAvatar";
 
 /**
  * Avatar วงกลมบนเมนูมือถือ — จาก preset ที่ user เลือก (RightMenuDrawer)
- * โปรไฟล์ + รูปโหลดล่วงหน้าตั้งแต่ login (ProfileProvider) · ring ขนาดคงที่จาก CSS → placeholder ไม่ทำให้ layout ขยับ
+ * โปรไฟล์ + รูปโหลดล่วงหน้าตั้งแต่ login (ProfileAvatarPrefetch) · ring ขนาดคงที่จาก CSS → placeholder ไม่ทำให้ layout ขยับ
  */
 export function MenuDrawerUserAvatar() {
   const { data: profile } = useProfile();

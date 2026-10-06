@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { fetchMenuTicketCount } from "@/lib/api/profile";
-import { useWallet } from "../wallet/WalletProvider";
+import { useWallet } from "@/app/hooks/api/account";
 import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";

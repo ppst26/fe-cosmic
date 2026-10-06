@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/components/auth/AuthProvider";
-import { useProfile } from "@/app/components/auth/ProfileProvider";
+import { useProfile } from "@/app/hooks/api/account";
 import { ErrorState, LoadingState } from "@/app/components/ui/StatusState";
 import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
 import { Header } from "@/app/components/layout/Header";
