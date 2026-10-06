@@ -32,7 +32,7 @@ export function PromotionDetailPanel({ content, variant = "modal" }: PromotionDe
 
   return (
     <div className="promotion-detail-panel promotion-detail-panel--modal">
-      <article className="promotion-detail-panel__unified-card cosmic-outline-subtle">
+      <article className="promotion-detail-panel__unified-card">
         <PromotionDetailBanner content={content} isHub={false} />
         <PromotionDetailDetailsSection body={content} />
       </article>
@@ -63,20 +63,34 @@ function PromotionDetailBanner({
       aria-label={content.bannerTitle}
     >
       {hasBannerImage ? (
-        <div className="promotion-detail-panel__banner-media relative aspect-[2.35/1] w-full overflow-hidden bg-[var(--surface-hover)]">
-          <Image
-            src={content.bannerSrc!}
-            alt=""
-            fill
-            sizes={isHub ? "(min-width: 1024px) 42vw, 100vw" : "(max-width: 640px) 100vw, 360px"}
-            className="object-cover object-center"
-            priority={isHub}
-          />
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/55 to-transparent"
-            aria-hidden="true"
-          />
-        </div>
+        isHub ? (
+          <div className="promotion-detail-panel__banner-media relative aspect-[2.35/1] w-full overflow-hidden bg-[var(--surface-hover)]">
+            <Image
+              src={content.bannerSrc!}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 42vw, 100vw"
+              className="object-cover object-center"
+              priority
+            />
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/55 to-transparent"
+              aria-hidden="true"
+            />
+          </div>
+        ) : (
+          <div className="promotion-detail-panel__banner-media promotion-detail-panel__banner-media--natural w-full bg-[var(--surface-hover)]">
+            <Image
+              src={content.bannerSrc!}
+              alt=""
+              width={1600}
+              height={900}
+              className="block h-auto w-full max-w-full"
+              sizes="(max-width: 640px) 100vw, 440px"
+              priority
+            />
+          </div>
+        )
       ) : null}
 
       {!isHub && !hasBannerImage ? (
