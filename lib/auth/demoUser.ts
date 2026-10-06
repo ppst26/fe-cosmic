@@ -3,8 +3,15 @@ import type { StoredUser } from "@/app/types/auth";
 const DEMO_PHONE = "0999999999";
 
 /**
- * บัญชีเดโมที่มากับโค้ด — ล็อกอินบน production ได้แม้ไม่มีไฟล์ .data/users.json
- * ใช้จาก findUserByPhone / findUserById ใน lib/auth/userStore.ts
+ * เปิดบัญชีเดโมไหม — dev เปิดเสมอ · production ต้องตั้ง AUTH_ENABLE_DEMO_USER=1 เอง (ค่าเริ่มต้นปิด)
+ */
+export function isDemoUserEnabled(): boolean {
+  return process.env.NODE_ENV !== "production" || process.env.AUTH_ENABLE_DEMO_USER === "1";
+}
+
+/**
+ * บัญชีเดโมที่มากับโค้ด (เบอร์ 0999999999) — ใช้ทดสอบตอน dev แม้ไม่มีไฟล์ .data/users.json
+ * production ปิดไว้ (ดู isDemoUserEnabled) · ใช้จาก findUserByPhone / findUserById ใน lib/auth/userStore.ts
  */
 export const DEMO_USER: StoredUser = {
   id: "demo-user-0999999999",
@@ -31,6 +38,7 @@ export function setDemoUserAvatarPreset(avatarPresetId: string): void {
  * คืนบัญชีเดโมเมื่อเบอร์ตรงชุดที่ฝังไว้
  */
 export function findDemoUserByPhone(phone: string): StoredUser | undefined {
+  if (!isDemoUserEnabled()) return undefined;
   const digits = phone.replace(/\D/g, "");
   if (digits !== DEMO_PHONE) return undefined;
   return DEMO_USER;
@@ -40,6 +48,6 @@ export function findDemoUserByPhone(phone: string): StoredUser | undefined {
  * คืนบัญชีเดโมเมื่อ session ชี้มาที่ id คงที่
  */
 export function findDemoUserById(id: string): StoredUser | undefined {
-  if (id !== DEMO_USER.id) return undefined;
+  if (!isDemoUserEnabled() || id !== DEMO_USER.id) return undefined;
   return DEMO_USER;
 }

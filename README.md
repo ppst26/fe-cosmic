@@ -34,7 +34,8 @@ pnpm dev          # http://localhost:3000
 | `NEXT_PUBLIC_API_BASE_URL` | `lib/api/http.ts` | base URL ของ backend · ว่าง = เรียก mock route ใน `app/api` · คนละ origin ต้องเปิด CORS + credentials |
 | `NEXT_PUBLIC_SITE_URL` | `lib/domain/referral.ts` | URL เว็บจริง สำหรับลิงก์ชวนเพื่อนตอน SSR |
 | `NEXT_PUBLIC_IMAGE_HOSTS` | `next.config.ts` | origin รูปจาก CDN สำหรับ `next/image` (คั่นด้วย comma) · origin ของ API ถูกเพิ่มให้อัตโนมัติ |
-| `AUTH_SESSION_SECRET` | `lib/auth/session.ts` | secret เซ็น cookie ของ mock auth · **ต้องตั้งใน production** (ถ้าไม่ตั้งจะใช้ค่า dev ที่ฝังในโค้ด) |
+| `AUTH_SESSION_SECRET` | `lib/auth/session.ts` | secret เซ็น cookie ของ mock auth · **production ต้องตั้ง ≥ 32 ตัวอักษร ไม่งั้น login error** (dev ใช้ค่า fallback) |
+| `AUTH_ENABLE_DEMO_USER` | `lib/auth/demoUser.ts` | `1` = เปิดบัญชีเดโมบน production (ค่าเริ่มต้นปิด · dev เปิดเสมอ) |
 
 ## ข้อมูลตอนนี้เป็น mock — ต่อ API จริงตรงไหน
 
@@ -56,6 +57,20 @@ pnpm dev          # http://localhost:3000
 | `app/api/promotions/*` | catalog + รายละเอียดโปรโมชัน | อ่านจาก `public/promotions/*.json` |
 
 **ห้าม deploy mock server เหล่านี้ขึ้น production** — ต้องแทนด้วย backend จริง
+
+### ความปลอดภัยที่ทำไว้แล้ว (และสิ่งที่ backend ต้องทำต่อ)
+
+| ส่วน | ทำแล้วใน repo นี้ | backend จริงต้องทำ |
+|------|-------------------|--------------------|
+| session | HMAC cookie · httpOnly · หมดอายุ 30 วัน (ตรวจทั้ง cookie และ timestamp) · production ไม่มี secret = error | เพิกถอน token ตอน logout / เปลี่ยนรหัส (ต้องมี session store) |
+| หน้า member | `proxy.ts` กัน /transactions · /cashback · /profile/account · /vip · /lottery/slips → `/?layer=login` | ตรวจสิทธิ์ทุก endpoint อีกชั้น (proxy เป็นแค่ด่านแรก) |
+| input | ทุก route อ่าน body ผ่าน `lib/server/request.ts` (ชนิด · ความยาว · ขนาด body ≤ 16KB) · ธนาคาร/ช่องทางต้องอยู่ในตัวเลือก | validate ด้วย schema เดียวกับ API spec |
+| brute force | rate limit login 10 ครั้ง/5 นาที ต่อ IP และต่อเบอร์ · register 5 ครั้ง/10 นาที (in-memory) | rate limit ที่ gateway / Redis (หลาย instance) |
+| หวย | ต้อง login · อัตราจ่าย/ป้ายประเภทคิดฝั่ง server · ตรวจเลขตามจำนวนหลัก · ยอด 1–100,000 · ≤ 100 รายการ · โพยเห็นเฉพาะเจ้าของ | ตัดเงิน + เช็กรอบเปิดรับใน transaction เดียว · min/max ตามตลาด |
+| redirect | `?continue=` และ `continuePlayHref` รับเฉพาะ path ภายใน | — |
+| headers | X-Frame-Options · CSP (frame-ancestors/base-uri/form-action/object-src) · nosniff · Referrer-Policy · Permissions-Policy · HSTS (production) | CSP `script-src` แบบ nonce เมื่อรู้โดเมนจริง |
+| บัญชีเดโม | ปิดบน production (เปิดด้วย `AUTH_ENABLE_DEMO_USER=1`) | ลบออกเมื่อมีระบบสมาชิกจริง |
+
 
 ## โครงสร้างโฟลเดอร์
 

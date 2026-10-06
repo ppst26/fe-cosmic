@@ -3,7 +3,6 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { submitLotteryBetSlip } from "@/lib/lottery/submitBetSlip";
-import { fetchThaiLottoBoard, fetchYikiBoard } from "@/lib/api/lotteryContent";
 import type { SubmitLotteryBetRequest } from "@/app/types/lotteryBetApi";
 
 export type LotteryBetDialogState = { kind: "error"; message: string };
@@ -60,24 +59,18 @@ export function useThaiGovernmentBetSubmit(roundId: string, meta: LotteryBetRoun
 
   const onSubmit = useCallback(
     async (entries: { typeId: string; number: string; amount: number }[]) => {
-      const boardRes = await fetchThaiLottoBoard();
-      const board = boardRes.ok ? boardRes.data : { betTypes: [] as { id: string; label?: string; payoutRate?: number }[] };
       return submit({
         market: "thai-government",
         roundId,
         drawLabel: meta.drawLabel,
         drawCloseAt: meta.drawCloseAt,
         continuePlayHref: meta.continuePlayHref,
-        lines: entries.map((entry) => {
-          const type = board.betTypes.find((item) => item.id === entry.typeId);
-          return {
-            typeKey: entry.typeId,
-            typeLabel: type?.label,
-            number: entry.number,
-            amount: entry.amount,
-            payoutRate: type?.payoutRate,
-          };
-        }),
+        /** ส่งแค่ประเภท · เลข · ยอด — ป้ายชื่อและอัตราจ่าย server เป็นคนกำหนด */
+        lines: entries.map((entry) => ({
+          typeKey: entry.typeId,
+          number: entry.number,
+          amount: entry.amount,
+        })),
       });
     },
     [meta.continuePlayHref, meta.drawCloseAt, meta.drawLabel, roundId, submit],
@@ -92,26 +85,17 @@ export function useYikiStyleBetSubmit(market: string, roundId: string, meta: Lot
 
   const onSubmit = useCallback(
     async (entries: { settlementTypeId: string; number: string; amount: number | null }[]) => {
-      const boardRes = await fetchYikiBoard();
-      const settlementMap: Record<string, { label?: string; payoutRate?: number } | undefined> = boardRes.ok
-        ? boardRes.data.settlement
-        : {};
       return submit({
         market,
         roundId,
         drawLabel: meta.drawLabel,
         drawCloseAt: meta.drawCloseAt,
         continuePlayHref: meta.continuePlayHref,
-        lines: entries.map((entry) => {
-          const settlement = settlementMap[entry.settlementTypeId];
-          return {
-            typeKey: entry.settlementTypeId,
-            typeLabel: settlement?.label,
-            number: entry.number,
-            amount: entry.amount ?? 0,
-            payoutRate: settlement?.payoutRate,
-          };
-        }),
+        lines: entries.map((entry) => ({
+          typeKey: entry.settlementTypeId,
+          number: entry.number,
+          amount: entry.amount ?? 0,
+        })),
       });
     },
     [market, meta.continuePlayHref, meta.drawCloseAt, meta.drawLabel, roundId, submit],

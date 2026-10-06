@@ -8,9 +8,11 @@ export type LotteryBetMarketId =
 
 export interface LotteryBetLineInput {
   typeKey: string;
+  /** @deprecated server ไม่ใช้ — ป้ายชื่อมาจากกติกาฝั่ง server */
   typeLabel?: string;
   number: string;
   amount: number;
+  /** @deprecated server ไม่ใช้ — อัตราจ่ายมาจากกติกาฝั่ง server */
   payoutRate?: number;
 }
 

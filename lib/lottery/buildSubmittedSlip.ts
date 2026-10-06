@@ -1,43 +1,84 @@
-import type { SubmitLotteryBetRequest } from "@/app/types/lotteryBetApi";
+import type { LotteryBetMarketId } from "@/app/types/lotteryBetApi";
 import type { LotterySubmittedSlip, LotterySlipLine } from "@/app/types/lotterySlip";
+import { THAI_LOTTO_BET_TYPES } from "@/app/data/thaiLottoMockData";
+import { YIKI_SETTLEMENT_TYPES } from "@/app/data/yikiMockData";
+
+/** ประเภทแทงที่ server รู้จัก — ป้ายชื่อและอัตราจ่ายมาจากที่นี่เท่านั้น (ไม่เชื่อค่าจาก client) */
+export interface BetTypeRule {
+  label: string;
+  payoutRate: number;
+  /** จำนวนหลักที่ต้องแทง */
+  digits: number;
+}
+
+/** จำนวนหลักตามรหัสประเภทยี่กี (three_* = 3 · two_* = 2 · run_* = 1) */
+function digitsFromTypeKey(typeKey: string): number {
+  if (typeKey.startsWith("three")) return 3;
+  if (typeKey.startsWith("two")) return 2;
+  return 1;
+}
 
 /**
- * สร้าง record โพยจาก payload ส่งแทง — ใช้ใน POST /api/lottery/bets
+ * กติกาประเภทแทงตามตลาด — หวยรัฐบาลใช้ THAI_LOTTO_BET_TYPES · ตลาดอื่นใช้ YIKI_SETTLEMENT_TYPES
+ * ต่อ backend: ดึงจากตาราง config ของตลาด/รอบ
+ */
+export function resolveBetTypeRule(market: LotteryBetMarketId, typeKey: string): BetTypeRule | null {
+  if (market === "thai-government") {
+    const type = THAI_LOTTO_BET_TYPES.find((item) => item.id === typeKey);
+    return type ? { label: type.label, payoutRate: type.payoutRate, digits: type.digits } : null;
+  }
+  const settlement = YIKI_SETTLEMENT_TYPES[typeKey as keyof typeof YIKI_SETTLEMENT_TYPES];
+  return settlement
+    ? { label: settlement.label, payoutRate: settlement.payoutRate, digits: digitsFromTypeKey(typeKey) }
+    : null;
+}
+
+/** รายการแทงที่ผ่านการตรวจแล้ว (route เป็นคนตรวจ) */
+export interface ValidatedBetLine {
+  typeKey: string;
+  number: string;
+  amount: number;
+  rule: BetTypeRule;
+}
+
+/**
+ * สร้าง record โพยจากรายการที่ตรวจแล้ว — ใช้ใน POST /api/lottery/bets
  */
 export function buildSubmittedSlip(
-  body: SubmitLotteryBetRequest,
+  input: {
+    market: LotteryBetMarketId;
+    roundId: string;
+    drawLabel: string | null;
+    drawCloseAt: string | null;
+    note: string | null;
+    continuePlayHref: string | null;
+    lines: ValidatedBetLine[];
+  },
   ids: { slipId: string; reference: string; purchasedAt: string },
 ): LotterySubmittedSlip {
-  const lines: LotterySlipLine[] = body.lines.map((line) => {
-    const payoutRate = Number(line.payoutRate) > 0 ? Number(line.payoutRate) : 1;
-    const amount = Number(line.amount);
-    return {
-      typeKey: line.typeKey,
-      typeLabel: line.typeLabel?.trim() || line.typeKey,
-      number: line.number,
-      amount,
-      payoutRate,
-      potentialWin: Math.round(amount * payoutRate),
-    };
-  });
-
-  const totalStake = lines.reduce((sum, line) => sum + line.amount, 0);
-  const drawAt = body.drawCloseAt?.trim() || ids.purchasedAt;
+  const lines: LotterySlipLine[] = input.lines.map((line) => ({
+    typeKey: line.typeKey,
+    typeLabel: line.rule.label,
+    number: line.number,
+    amount: line.amount,
+    payoutRate: line.rule.payoutRate,
+    potentialWin: Math.round(line.amount * line.rule.payoutRate),
+  }));
 
   return {
     id: ids.slipId,
     shortId: ids.slipId.slice(0, 8).toLowerCase(),
     reference: ids.reference,
-    market: body.market,
-    roundId: body.roundId,
-    drawLabel: body.drawLabel?.trim() || "งวดปัจจุบัน",
-    drawAt,
+    market: input.market,
+    roundId: input.roundId,
+    drawLabel: input.drawLabel || "งวดปัจจุบัน",
+    drawAt: input.drawCloseAt || ids.purchasedAt,
     purchasedAt: ids.purchasedAt,
     status: "submitted",
-    note: body.note ?? null,
+    note: input.note,
     lines,
-    totalStake,
+    totalStake: lines.reduce((sum, line) => sum + line.amount, 0),
     winLoss: null,
-    continuePlayHref: body.continuePlayHref?.trim() || "/lottery",
+    continuePlayHref: input.continuePlayHref || "/lottery",
   };
 }
