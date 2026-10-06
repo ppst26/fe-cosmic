@@ -258,14 +258,16 @@ function ActivityClaimButton({
 }
 
 export function ActivityInfoDetail({ item }: { item: ActivityHubItem }) {
+  const hasSummary = Boolean(item.infoSummary);
+  const hasBullets = Boolean(item.infoBullets && item.infoBullets.length > 0);
+  if (!hasSummary && !hasBullets) return null;
+
   return (
-    <div className="flex flex-col gap-4">
-      {item.infoSummary ? (
-        <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{item.infoSummary}</p>
-      ) : null}
-      {item.infoBullets && item.infoBullets.length > 0 ? (
-        <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-          {item.infoBullets.map((line) => (
+    <div className="activity-hub-description-panel flex flex-col gap-3 text-sm leading-relaxed">
+      {hasSummary ? <p>{item.infoSummary}</p> : null}
+      {hasBullets ? (
+        <ul className="space-y-2">
+          {item.infoBullets!.map((line) => (
             <li key={line} className="flex gap-2">
               <span className="text-[var(--accent-primary)]" aria-hidden="true">•</span>
               <span>{line}</span>
@@ -324,10 +326,10 @@ export function ActivityRulesSection({
         ) : null}
       </div>
 
-      <ol className="mt-3.5 space-y-2.5 text-xs text-[var(--text-secondary)] sm:text-[13px] leading-relaxed">
+      <ol className="mt-3.5 space-y-2.5 text-xs sm:text-[13px] leading-relaxed">
         {rules.map((rule, idx) => (
           <li key={idx} className="flex items-start gap-2.5">
-            <span className="flex h-5 w-5 shrink-0 select-none items-center justify-center rounded-full bg-white/6 text-xs font-medium text-[var(--accent-primary)] tabular-nums border border-white/6">
+            <span className="flex h-5 w-5 shrink-0 select-none items-center justify-center rounded-full bg-black/35 text-xs font-medium text-[var(--accent-primary)] tabular-nums border border-white/12">
               {idx + 1}
             </span>
             <span className="flex-1 pt-0.5">{rule}</span>

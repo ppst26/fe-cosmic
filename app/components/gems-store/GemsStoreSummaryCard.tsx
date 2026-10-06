@@ -1,6 +1,5 @@
-import {
-  formatGemsBalance,
-} from "@/app/data/gemsStoreMockData";
+import Image from "next/image";
+import { formatGemsBalance } from "@/app/data/gemsStoreMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { HistoryIcon } from "@/app/components/ui/Icons";
 import { COSMIC_PANEL_GLASS } from "@/app/components/ui/cosmicButtonClasses";

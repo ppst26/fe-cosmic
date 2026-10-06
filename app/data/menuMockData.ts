@@ -106,7 +106,42 @@ export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
   },
 ];
 
-/** รายการเมนูรวมทุกกลุ่ม — grid เต็มจอมือถือ (RightMenuDrawer) */
+/** รายการเมนูรวมทุกกลุ่ม — desktop hub / legacy */
 export const MENU_DIALOG_ALL_TILES: MenuDialogTile[] = MENU_DIALOG_SECTIONS.flatMap(
   (section) => section.items,
 );
+
+/**
+ * เมนูมือถือเต็มจอ — แถวรายการ (RightMenuDrawer mobile)
+ */
+export const MENU_DIALOG_MOBILE_LIST_ITEMS: MenuDialogTile[] = [
+  { id: "rank", label: "ระดับสมาชิก VIP", action: "vip-rank", iconId: "rank", requiresAuth: true },
+  {
+    id: "referral-earnings",
+    label: "รายได้คอมมิชชั่น",
+    href: "/referral",
+    iconId: "referral",
+    requiresAuth: true,
+  },
+  { id: "referral", label: "แนะนำเพื่อน", href: "/referral", iconId: "referral", requiresAuth: true },
+  { id: "coupon", label: "คูปอง", action: "coupon", iconId: "coupon", requiresAuth: true },
+  {
+    id: "reward-hub",
+    label: "โบนัสพิเศษ",
+    href: "/reward",
+    iconId: "reward-hub",
+    requiresAuth: true,
+  },
+];
+
+/** เมนูมือถือ — กริด 3 คอลัมน์ใต้รายการหลัก */
+export const MENU_DIALOG_MOBILE_GRID_ITEMS: MenuDialogTile[] = [
+  { id: "promotions", label: "โปรโมชั่น", href: "/promotions", iconId: "promotions" },
+  { id: "activities", label: "กิจกรรม", href: "/event", iconId: "activities" },
+  { id: "transactions", label: "ประวัติ", href: "/transactions", iconId: "transactions", requiresAuth: true },
+  { id: "profile", label: "โปรไฟล์", href: "/profile/account", iconId: "profile", requiresAuth: true },
+  { id: "cashback", label: "คืนยอด", href: "/cashback", iconId: "cashback", requiresAuth: true },
+  { id: "check-in", label: "เช็คอิน", href: "/missions/check-in", iconId: "check-in", requiresAuth: true },
+  { id: "gems-shop", label: "ร้านค้า Gems", href: "/gems-store", iconId: "gems", requiresAuth: true },
+  { id: "wheel", label: "วงล้อ", href: "/wheel", iconId: "wheel", requiresAuth: true },
+];

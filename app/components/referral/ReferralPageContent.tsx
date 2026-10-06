@@ -16,7 +16,7 @@ import {
 } from "./ReferralOverviewSections";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
-import { COSMIC_PANEL_GLASS, COSMIC_PANEL_GLASS_ICON } from "../ui/cosmicButtonClasses";
+import { COSMIC_PANEL_GLASS_ICON, COSMIC_PANEL_SOLID } from "../ui/cosmicButtonClasses";
 type ReferralTabId = "overview" | "users" | "earning";
 
 const TABS: { id: ReferralTabId; label: string }[] = [
@@ -147,7 +147,7 @@ function ReferralMobileTabs({
           <ReferralLinkSection refCode={refCode} copied={copied} onCopy={onCopy} />
           <ReferralStatsSection stats={stats} />
 
-          <section className={`${COSMIC_PANEL_GLASS} px-4 py-4`}>
+          <section className={`${COSMIC_PANEL_SOLID} px-4 py-4`}>
             <h2 className="text-sm font-medium text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
             <p className="mt-0.5 text-xs text-[var(--text-secondary)]">
               แชร์ลิงก์แล้วรับส่วนแบ่งจากยอดเทิร์นของเครือข่าย
@@ -156,7 +156,7 @@ function ReferralMobileTabs({
               {overview.tiers.map((tier) => (
                 <div
                   key={tier.id}
-                  className="glass-card--soft flex gap-3 rounded-[var(--radius-panel)] p-3"
+                  className="cosmic-inset-card flex gap-3 p-3"
                 >
                   <div className={COSMIC_PANEL_GLASS_ICON}>
                     <UsersGroupIcon className="h-5 w-5 text-[var(--icon-default)]" />

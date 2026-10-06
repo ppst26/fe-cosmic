@@ -76,7 +76,9 @@ export const COSMIC_PANEL_SOLID = "cosmic-panel-solid rounded-[var(--radius-pane
 export const COSMIC_SEGMENT_GLASS_WHITE =
   "cosmic-segment-track cosmic-segment-track--glass-white";
 
-
+/** แถบฟิลเตอร์โปรโมชัน — track solid เข้ม · active gradient ม่วง */
+export const COSMIC_SEGMENT_PROMO_CTA =
+  "cosmic-segment-track cosmic-segment-track--promo-cta";
 
 /** วงไอคอนในแถวเมนู / รายการ — ขนาด 40px */
 

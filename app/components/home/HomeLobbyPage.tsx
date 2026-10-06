@@ -116,7 +116,7 @@ export function HomeLobbyPage() {
   return (
     <>
       <div
-        className={`lobby-desktop-shell lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-center${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
+        className={`lobby-desktop-shell lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-stretch${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
         style={shellStyle}
       >
         <div

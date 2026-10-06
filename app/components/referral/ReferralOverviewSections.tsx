@@ -11,9 +11,8 @@ import { CopyIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_CONFIRM_INLINE,
   COSMIC_BTN_CONFIRM_TEXT,
-  COSMIC_BTN_NAV,
-  COSMIC_PANEL_GLASS,
   COSMIC_PANEL_GLASS_ICON,
+  COSMIC_PANEL_SOLID,
   COSMIC_SHEET_FIELD_ROW,
 } from "../ui/cosmicButtonClasses";
 
@@ -132,22 +131,14 @@ export function ReferralLinkSection({
         <button
           type="button"
           onClick={() => onCopy(referralLink)}
-          className={
-            isHub
-              ? `${COSMIC_BTN_CONFIRM_INLINE} shrink-0 gap-2 px-4 text-sm`
-              : `${COSMIC_BTN_NAV} cosmic-btn-nav--sm flex shrink-0 items-center gap-1.5 px-3.5 py-2.5 text-xs sm:text-sm`
-          }
+          className={`${COSMIC_BTN_CONFIRM_INLINE} shrink-0 items-center gap-1.5 px-3.5 py-2.5 ${
+            isHub ? "text-sm" : "text-xs sm:text-sm"
+          }`}
         >
-          {isHub ? (
-            <span className={COSMIC_BTN_CONFIRM_TEXT}>
-              {copied ? "คัดลอกแล้ว" : "Copy"}
-            </span>
-          ) : (
-            <>
-              <CopyIcon className="h-4 w-4" />
-              {copied ? "คัดลอกแล้ว" : "Copy"}
-            </>
-          )}
+          <CopyIcon className="h-4 w-4 shrink-0" aria-hidden />
+          <span className={COSMIC_BTN_CONFIRM_TEXT}>
+            {copied ? "คัดลอกแล้ว" : "Copy"}
+          </span>
         </button>
       </div>
     </section>
@@ -236,7 +227,7 @@ function StatCard({
   return (
     <div
       className={`flex items-center gap-3 ${emphasized ? "py-3.5" : "py-3"} ${
-        flat ? "referral-stat-row border-b border-[var(--border-subtle)]/45 px-0 last:border-b-0" : `${COSMIC_PANEL_GLASS} px-3`
+        flat ? "referral-stat-row border-b border-[var(--border-subtle)]/45 px-0 last:border-b-0" : `${COSMIC_PANEL_SOLID} px-3`
       }`}
     >
       <div className={emphasized ? `${COSMIC_PANEL_GLASS_ICON} !h-11 !w-11` : COSMIC_PANEL_GLASS_ICON}>

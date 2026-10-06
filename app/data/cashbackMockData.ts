@@ -1,5 +1,7 @@
 /** ข้อมูล mock หน้าคืนยอด (/cashback) */
 
+import { getMenuIconSrc } from "@/app/data/menuIconAssets";
+
 export type CashbackTabId = "play" | "loss";
 
 export interface CashbackPanelMock {
@@ -19,6 +21,10 @@ export const CASHBACK_TABS: { id: CashbackTabId; label: string }[] = [
   { id: "play", label: "คืนยอดเล่น" },
   { id: "loss", label: "คืนยอดเสีย" },
 ];
+
+/** ไอคอน hero ยอดคืนที่รับได้ — public/assets/3d/menuicon/cashback.avif */
+export const CASHBACK_PAGE_ICON_SRC =
+  getMenuIconSrc("cashback") ?? "/assets/3d/menuicon/cashback.avif";
 
 /** แท็บคืนยอดเล่น — สถานะว่างตาม mock */
 export const CASHBACK_PLAY_PANEL_MOCK: CashbackPanelMock = {

@@ -11,12 +11,14 @@ import { MenuDrawerUserAvatar } from "./MenuDrawerUserAvatar";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
 import {
-  MENU_DIALOG_ALL_TILES,
+  MENU_DIALOG_MOBILE_GRID_ITEMS,
+  MENU_DIALOG_MOBILE_LIST_ITEMS,
   MENU_DIALOG_SECTIONS,
   menuTileRequiresAuth,
   type MenuDialogAction,
   type MenuDialogTile,
 } from "../../data/menuMockData";
+import { MenuDrawerMobileToolbar } from "./MenuDrawerMobileToolbar";
 import { useAuth } from "../auth/AuthProvider";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
@@ -171,7 +173,11 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
   };
 
-  const renderRow = (tile: MenuDialogTile, index: number) => {
+  const renderRow = (
+    tile: MenuDialogTile,
+    index: number,
+    density: "default" | "compact" = "default",
+  ) => {
     const content = (
       <>
         <div className="flex items-center gap-3.5 min-w-0">
@@ -185,7 +191,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           </span>
         </div>
         <span
-          className="menu-list-chevron flex h-6 w-6 lg:h-5 lg:w-5 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/70"
+          className="menu-list-chevron flex h-6 w-6 lg:h-5 lg:w-5 shrink-0 items-center justify-center rounded-full"
           aria-hidden="true"
         >
           <svg
@@ -203,8 +209,12 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       </>
     );
 
-    const rowClass =
-      "menu-list-row menu-enter-item group flex w-full items-center justify-between px-4 py-3.5 lg:px-3.5 lg:py-2.5 text-left cursor-pointer select-none outline-none";
+    const rowClass = cn(
+      "menu-list-row menu-enter-item group flex w-full items-center justify-between text-left cursor-pointer select-none outline-none",
+      density === "compact"
+        ? "px-3.5 py-2"
+        : "px-4 py-3.5 lg:px-3.5 lg:py-2.5",
+    );
     const enterStyle = { "--menu-enter-i": index } as React.CSSProperties;
 
     if (tile.action) {
@@ -248,24 +258,42 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     >
       <MenuDrawerUserAvatar isMenuOpen={isOpen} />
 
-      <Link
-        href="/"
-        className="menu-drawer-header-logo menu-enter-logo inline-flex w-full shrink-0 justify-center py-1"
-        aria-label="cosmicbet หน้าหลัก"
-        onClick={() => onClose()}
-      >
-        <CosmicbetLogo className="h-9 max-w-[168px] sm:h-10 sm:max-w-[188px]" />
-      </Link>
+      <MenuDrawerMobileToolbar
+        onClose={onClose}
+        onRequireLogin={() => openLogin()}
+      />
 
-      <div className="menu-grid menu-grid--mobile-drawer menu-grid--four mx-auto grid w-full max-w-[24rem] shrink-0 grid-cols-4 sm:max-w-[26rem]">
-        {MENU_DIALOG_ALL_TILES.map((tile, index) => renderGridTile(tile, index))}
+      <div className="menu-card-group menu-drawer-list-card menu-enter-item flex flex-col overflow-hidden rounded-[var(--radius-panel)]">
+        {MENU_DIALOG_MOBILE_LIST_ITEMS.map((tile, index) =>
+          renderRow(tile, index + 5, "compact"),
+        )}
+      </div>
+
+      <div
+        className="menu-drawer-grid-card menu-enter-item w-full shrink-0 overflow-hidden rounded-[var(--radius-panel)]"
+        style={
+          {
+            "--menu-enter-i": 5 + MENU_DIALOG_MOBILE_LIST_ITEMS.length,
+          } as React.CSSProperties
+        }
+      >
+        <div className="menu-grid menu-grid--mobile-drawer menu-grid--three grid w-full">
+          {MENU_DIALOG_MOBILE_GRID_ITEMS.map((tile, index) =>
+            renderGridTile(tile, index + 6 + MENU_DIALOG_MOBILE_LIST_ITEMS.length),
+          )}
+        </div>
       </div>
 
       {isAuthenticated ? (
         <button
           type="button"
-          className="menu-drawer-logout menu-enter-item mx-auto mt-1 flex shrink-0 items-center justify-center gap-2 px-2 py-3"
-          style={{ "--menu-enter-i": MENU_DIALOG_ALL_TILES.length } as React.CSSProperties}
+          className="menu-drawer-logout menu-drawer-logout--mobile menu-enter-item mt-1 flex w-full shrink-0 items-center justify-center gap-2 px-3 py-3"
+          style={
+            {
+              "--menu-enter-i":
+                5 + MENU_DIALOG_MOBILE_LIST_ITEMS.length + MENU_DIALOG_MOBILE_GRID_ITEMS.length,
+            } as React.CSSProperties
+          }
           onClick={() => {
             onClose();
             window.setTimeout(() => openLogoutConfirm(), 0);

@@ -327,17 +327,10 @@
   display: none;
 }
 
-.cosmic-mobile-sheet .referral-desktop-hub--flat .referral-earning-table {
+.cosmic-mobile-sheet .referral-desktop-hub--flat .referral-earning-table.cosmic-data-table-shell {
+  border: 0;
   background: transparent;
   box-shadow: none;
-}
-
-.cosmic-mobile-sheet .referral-desktop-hub--flat .referral-earning-table tbody tr:nth-child(odd) {
-  background: transparent;
-}
-
-.cosmic-mobile-sheet .referral-desktop-hub--flat .referral-earning-table tbody tr:nth-child(even) {
-  background: rgb(255 255 255 / 0.03);
 }
 
 @media (min-width: 1024px) {
@@ -459,10 +452,18 @@
   background: color-mix(in srgb, var(--inner-card-fill-hover) 38%, transparent);
 }
 
-.activity-hub-rules-card {
-  border: 0;
-  background: var(--inner-card-fill);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+/** การ์ดกติกา / รายละเอียดกิจกรรม — solid ดำเข้ม (ไม่ไล่สี) */
+.activity-hub-rules-card,
+.activity-hub-description-panel {
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+  background: #0a0a0c;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  color: var(--text-secondary);
+}
+
+.activity-hub-description-panel {
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--radius-control);
 }
 
 /* --- Lottery hub (/lottery + หมวดหวยโฮม) --- */

@@ -11,3 +11,13 @@ export const NOTIFICATION_TABS: { id: NotificationTabId; label: string }[] = [
 ];
 
 export const NOTIFICATION_EMPTY_MESSAGE = "ไม่มีข้อความใหม่";
+
+/** ไอคอนล่าง popover desktop — ช่องทางติดต่อ */
+export const NOTIFICATION_POPOVER_SOCIAL: {
+  label: string;
+  href: string;
+  icon: "line" | "telegram";
+}[] = [
+  { label: "LINE", href: "/support", icon: "line" },
+  { label: "Telegram", href: "/support", icon: "telegram" },
+];

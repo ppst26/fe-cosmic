@@ -21,9 +21,12 @@ import { fetchReferralEarnings } from "@/lib/api/referral";
 import { BonusNavIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_PRIMARY,
-  COSMIC_PANEL_GLASS,
+  COSMIC_PANEL_SOLID,
   COSMIC_PANEL_GLASS_ICON,
 } from "../ui/cosmicButtonClasses";
+import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
+import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
+import { cn } from "@/lib/utils";
 
 /**
  * แท็บ Earning — สรุปโบนัส + ประวัติรับโบนัส (10 แถว/หน้า)
@@ -72,10 +75,6 @@ export function ReferralEarningPanel({
 
   const rangeStart = total === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const rangeEnd = Math.min(currentPage * pageSize, total);
-
-  const pageNumbers = useMemo(() => {
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
-  }, [totalPages]);
 
   const handleClaimBonus = () => {
     if (claimable <= 0) return;
@@ -130,24 +129,25 @@ export function ReferralEarningPanel({
       )}
 
       <section
-        className={
+        className={cn(
+          "referral-earning-table min-h-0 overflow-hidden",
           flat
-            ? "referral-earning-table min-h-0 overflow-hidden border-t border-[var(--border-subtle)]/50 pt-1"
-            : `${COSMIC_PANEL_GLASS} min-h-0 overflow-hidden`
-        }
+            ? "border-t border-[var(--border-subtle)]/50 pt-1"
+            : "cosmic-data-table-shell",
+        )}
       >
-        <Table className={flat ? "text-base" : "text-sm"}>
+        <Table className={cn("cosmic-data-table", flat ? "text-base" : "text-sm")}>
           <TableHeader>
-            <TableRow className="border-[var(--border-subtle)]/40 hover:bg-transparent">
+            <TableRow className="hover:bg-transparent">
               <TableHead
-                className={`px-4 font-medium text-[var(--text-muted)] sm:px-5 ${
+                className={`px-4 font-medium text-[var(--text-secondary)] sm:px-5 ${
                   flat ? "h-12 text-sm" : "h-11 text-xs"
                 }`}
               >
                 จำนวนโบนัส
               </TableHead>
               <TableHead
-                className={`px-4 text-right font-medium text-[var(--text-muted)] sm:px-5 ${
+                className={`px-4 text-right font-medium text-[var(--text-secondary)] sm:px-5 ${
                   flat ? "h-12 text-sm" : "h-11 text-xs"
                 }`}
               >
@@ -157,7 +157,7 @@ export function ReferralEarningPanel({
           </TableHeader>
           <TableBody>
             {pageRows.length === 0 ? (
-              <TableRow className="border-[var(--border-subtle)]/30 hover:bg-transparent">
+              <TableRow className="hover:bg-transparent">
                 <TableCell
                   colSpan={2}
                   className="px-4 py-10 text-center text-xs text-[var(--text-muted)] sm:px-5"
@@ -167,12 +167,7 @@ export function ReferralEarningPanel({
               </TableRow>
             ) : (
               pageRows.map((row, index) => (
-                <TableRow
-                  key={row.id}
-                  className={`border-[var(--border-subtle)]/30 hover:bg-[var(--surface-hover)]/40 ${
-                    index % 2 === 1 ? "bg-[var(--surface-mid)]/45" : "bg-transparent"
-                  }`}
-                >
+                <TableRow key={row.id} className={cosmicDataTableRowClass(index)}>
                   <TableCell
                     className={`px-4 font-medium tabular-nums text-[var(--text-primary)] sm:px-5 ${
                       flat ? "py-4 text-base" : "py-3.5 text-sm"
@@ -195,39 +190,20 @@ export function ReferralEarningPanel({
 
         {total > 0 && (
           <div
-            className={`flex flex-col gap-3 border-t border-[var(--border-subtle)]/40 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-5 ${
-              flat ? "py-4" : "py-3.5"
-            }`}
+            className={cn(
+              "cosmic-data-table__footer flex flex-col gap-3 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-5",
+              flat ? "py-4" : "py-3.5",
+            )}
           >
             <p className={`text-[var(--text-muted)] ${flat ? "text-sm" : "text-xs"}`}>
               แสดง {rangeStart}–{rangeEnd} จาก {formatReferralRecordCount(total)}
             </p>
-            <nav className="flex items-center gap-1.5" aria-label="เปลี่ยนหน้าประวัติโบนัส">
-              <PaginationButton
-                label="หน้าก่อน"
-                disabled={currentPage <= 1}
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-              >
-                ‹
-              </PaginationButton>
-              {pageNumbers.map((num) => (
-                <PaginationButton
-                  key={num}
-                  label={`หน้า ${num}`}
-                  active={num === currentPage}
-                  onClick={() => setPage(num)}
-                >
-                  {num}
-                </PaginationButton>
-              ))}
-              <PaginationButton
-                label="หน้าถัดไป"
-                disabled={currentPage >= totalPages}
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              >
-                ›
-              </PaginationButton>
-            </nav>
+            <CosmicDataTablePagination
+              page={currentPage}
+              totalPages={totalPages}
+              onPageChange={setPage}
+              aria-label="เปลี่ยนหน้าประวัติโบนัส"
+            />
           </div>
         )}
       </section>
@@ -251,7 +227,7 @@ function EarningSummaryCard({
   trailing?: React.ReactNode;
 }) {
   return (
-    <div className={`${COSMIC_PANEL_GLASS} flex items-center gap-3 px-4 py-3.5 sm:gap-4`}>
+    <div className={`${COSMIC_PANEL_SOLID} flex items-center gap-3 px-4 py-3.5 sm:gap-4`}>
       <div className={`${COSMIC_PANEL_GLASS_ICON} !h-12 !w-12`}>{icon}</div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
@@ -307,31 +283,3 @@ function WalletCheckIcon({ className }: { className?: string }) {
   );
 }
 
-function PaginationButton({
-  children,
-  label,
-  active = false,
-  disabled = false,
-  onClick,
-}: {
-  children: React.ReactNode;
-  label: string;
-  active?: boolean;
-  disabled?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      aria-current={active ? "page" : undefined}
-      disabled={disabled}
-      onClick={onClick}
-      className={`cosmic-choice-btn flex h-9 min-w-9 items-center justify-center px-2 text-xs disabled:cursor-not-allowed disabled:opacity-40 ${
-        active ? "is-active" : ""
-      }`}
-    >
-      {children}
-    </button>
-  );
-}

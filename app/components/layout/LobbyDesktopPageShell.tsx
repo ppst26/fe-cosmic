@@ -55,7 +55,7 @@ export function LobbyDesktopPageShell({
   return (
     <>
       <div
-        className={`lobby-desktop-shell text-[var(--text-primary)] lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-center${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
+        className={`lobby-desktop-shell text-[var(--text-primary)] lg:flex lg:min-h-screen lg:w-full lg:flex-col lg:items-stretch${isSidebarCollapsed ? " is-sidebar-collapsed" : ""}`}
         style={shellStyle}
       >
         <div

@@ -166,7 +166,7 @@ export function Header({
                 <NotificationBellButton
                   onClick={openNotifications}
                   className="!h-8 !w-8 rounded-md bg-[#222228] text-white/90 hover:bg-[#2c2c34]"
-                  ariaHaspopup="dialog"
+                  aria-haspopup="dialog"
                 />
                 <HeaderWalletChip
                   balanceLabel={balanceLabel}

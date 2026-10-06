@@ -146,19 +146,38 @@
   }
 }
 
-/** แถบหมวดโปรโมชัน — glass chip (PromotionsCategoryTabs) */
-.promo-hub-category-tabs .glass-card--soft {
-  border-radius: var(--radius-pill);
-  box-shadow: none;
+/** แถบหมวดโปรโมชัน — solid เข้ม + ปุ่ม active gradient (PromotionsCategoryTabs) */
+.cosmic-segment-track--promo-cta {
+  border: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+  border-radius: var(--radius-panel);
+  background: #0a0a0c;
+  padding: 0.25rem;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
-.promo-hub-category-tabs .glass-card--soft.is-active {
-  background: linear-gradient(
-    135deg,
-    rgb(119 71 229 / 0.28),
-    rgb(90 70 130 / 0.18)
-  );
+.cosmic-segment-track--promo-cta .cosmic-segment-btn {
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+.cosmic-segment-track--promo-cta .cosmic-segment-btn:hover:not(.is-active) {
   color: var(--text-primary);
+  background: color-mix(in srgb, var(--action-solid) 12%, transparent);
+  border-color: color-mix(in srgb, var(--action-solid) 20%, transparent);
+}
+
+.cosmic-segment-track--promo-cta .cosmic-segment-btn.is-active {
+  border-color: rgb(120 200 255 / 0.48);
+  background: linear-gradient(90deg, #9d3cfe 0%, #6a3aff 42%, #4eadff 100%);
+  color: #fff;
+  font-weight: 600;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    0 4px 14px rgb(124 54 255 / 0.3);
 }
 
 /** รายการโปรมือถือ — แยกการ์ดชัด (PromotionsMobileFeed) */
@@ -383,7 +402,12 @@
     background: transparent;
   }
 
-  /** แถบ header เต็ม viewport — พื้นใช้ .cosmic-mobile-chrome-surface เหมือนมือถือ (header.css) */
+  /** แถบ header เต็ม viewport — ไม่ถูกบีบจาก .lobby-desktop-shell { align-items: center } */
+  .lobby-desktop-shell__header-band {
+    align-self: stretch;
+    width: 100%;
+    max-width: none;
+  }
 
   /** Sidebar นอก container กลาง — ชิดซ้าย viewport — transition ของแผงยุบ/ขยาย */
   .lobby-desktop-shell__sidebar-outside {

@@ -27,6 +27,8 @@ import {
   CosmicFormulaOperator,
   CosmicFormulaRow,
 } from "../ui/CosmicFormulaRow";
+import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
+import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
 
 type CashbackLossRebateExtraSectionsProps = {
   summary?: LossRebateSummaryMock;
@@ -62,11 +64,6 @@ export function CashbackLossRebateExtraSections({
 
   const rangeStart = totalHistory === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const rangeEnd = Math.min(currentPage * pageSize, totalHistory);
-
-  const pageNumbers = useMemo(
-    () => Array.from({ length: totalPages }, (_, i) => i + 1),
-    [totalPages],
-  );
 
   const handleMonthChange = (nextMonthId: string) => {
     setMonthId(nextMonthId);
@@ -127,14 +124,7 @@ export function CashbackLossRebateExtraSections({
                 </TableRow>
               ) : (
                 pageRows.map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    className={
-                      index % 2 === 1
-                        ? "cosmic-data-table__row--alt border-0 hover:bg-[var(--inner-card-fill-hover)]"
-                        : "border-0 hover:bg-[var(--inner-card-fill-hover)]"
-                    }
-                  >
+                  <TableRow key={row.id} className={cosmicDataTableRowClass(index)}>
                     <TableCell className="px-3 py-3 text-xs font-medium text-[var(--text-primary)] sm:px-4">
                       {row.periodLabel}
                     </TableCell>
@@ -158,32 +148,12 @@ export function CashbackLossRebateExtraSections({
               <p className="text-xs text-[var(--text-muted)]">
                 แสดง {rangeStart}–{rangeEnd} จาก {formatLossRebateRecordCount(totalHistory)}
               </p>
-              <nav className="flex items-center gap-1.5" aria-label="เปลี่ยนหน้าประวัติคืนยอดเสีย">
-                <PaginationButton
-                  label="หน้าก่อน"
-                  disabled={currentPage <= 1}
-                  onClick={() => setHistoryPage((p) => Math.max(1, p - 1))}
-                >
-                  ‹
-                </PaginationButton>
-                {pageNumbers.map((num) => (
-                  <PaginationButton
-                    key={num}
-                    label={`หน้า ${num}`}
-                    active={num === currentPage}
-                    onClick={() => setHistoryPage(num)}
-                  >
-                    {num}
-                  </PaginationButton>
-                ))}
-                <PaginationButton
-                  label="หน้าถัดไป"
-                  disabled={currentPage >= totalPages}
-                  onClick={() => setHistoryPage((p) => Math.min(totalPages, p + 1))}
-                >
-                  ›
-                </PaginationButton>
-              </nav>
+              <CosmicDataTablePagination
+                page={currentPage}
+                totalPages={totalPages}
+                onPageChange={setHistoryPage}
+                aria-label="เปลี่ยนหน้าประวัติคืนยอดเสีย"
+              />
             </div>
           )}
         </div>
@@ -248,31 +218,3 @@ function LossRebateFormulaSection({ summary }: { summary: LossRebateSummaryMock 
   );
 }
 
-function PaginationButton({
-  children,
-  label,
-  active = false,
-  disabled = false,
-  onClick,
-}: {
-  children: React.ReactNode;
-  label: string;
-  active?: boolean;
-  disabled?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      aria-current={active ? "page" : undefined}
-      disabled={disabled}
-      onClick={onClick}
-      className={`cosmic-pagination-btn flex h-9 min-w-9 items-center justify-center px-2 text-xs disabled:cursor-not-allowed disabled:opacity-40 ${
-        active ? "is-active" : ""
-      }`}
-    >
-      {children}
-    </button>
-  );
-}

@@ -47,6 +47,7 @@
 
 .cosmic-data-table__footer {
   border-top: 1px solid color-mix(in srgb, var(--border-subtle) 50%, transparent);
+  background: var(--cosmic-pagination-track-bg);
 }
 
 /** แถบสูตร × = — CosmicFormulaRow.tsx */
@@ -141,24 +142,36 @@
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
-/** Pagination — โทนใกล้การ์ดตาราง (ไม่ขาวจัด) */
+/** Pagination — พื้นเข้มกว่าการ์ดตาราง · หน้า active สว่าง (CosmicDataTablePagination) */
 .cosmic-pagination-btn {
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 35%, transparent);
+  border: 1px solid var(--cosmic-pagination-border);
   border-radius: var(--radius-panel);
   background: var(--cosmic-pagination-bg);
-  color: var(--text-secondary);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 2px 6px rgb(0 0 0 / 0.28);
   transition:
     background var(--motion-fast) ease,
     color var(--motion-fast) ease,
     border-color var(--motion-fast) ease,
-    transform var(--motion-fast) ease;
+    transform var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
 }
 
 .cosmic-pagination-btn:hover:not(:disabled):not(.is-active) {
-  border-color: color-mix(in srgb, var(--border-subtle) 55%, transparent);
+  border-color: color-mix(in srgb, var(--cosmic-pagination-border) 85%, var(--border-active));
   background: var(--cosmic-pagination-bg-hover);
   color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 3px 8px rgb(0 0 0 / 0.32);
+}
+
+.cosmic-pagination-btn:disabled {
+  border-color: color-mix(in srgb, var(--cosmic-pagination-border) 55%, transparent);
+  color: var(--text-muted);
+  opacity: 0.72;
 }
 
 .cosmic-pagination-btn.is-active {

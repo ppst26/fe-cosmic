@@ -15,8 +15,11 @@
    */
   --cosmic-nested-surface: color-mix(in srgb, var(--inner-card-fill) 78%, #141418);
   --cosmic-formula-cell-bg: var(--cosmic-nested-surface);
-  --cosmic-pagination-bg: color-mix(in srgb, var(--inner-card-fill) 92%, #18181c);
-  --cosmic-pagination-bg-hover: var(--inner-card-fill-hover);
+  /** ปุ่มเลขหน้า — เข้มกว่า --inner-card-fill ให้ไม่กลืน footer ตาราง */
+  --cosmic-pagination-track-bg: color-mix(in srgb, var(--inner-card-fill) 58%, #0a0a0f);
+  --cosmic-pagination-bg: color-mix(in srgb, #0c0c11 62%, var(--inner-card-fill) 38%);
+  --cosmic-pagination-bg-hover: color-mix(in srgb, #16161e 55%, var(--inner-card-fill-hover) 45%);
+  --cosmic-pagination-border: color-mix(in srgb, var(--border-subtle) 72%, #4a4458);
   --cosmic-pagination-active-bg: color-mix(in srgb, var(--inner-card-fill-hover) 42%, #e4e4ea);
   --cosmic-pagination-active-fg: #1c1c22;
   /** พื้นหน้า standalone มือถือ — flat neutral (ไม่ทับ nebula .cosmic-bg) */
@@ -317,11 +320,10 @@
    */
   --header-desktop-chrome-bg: #0e0e10;
   --header-desktop-chrome-radial: radial-gradient(
-    ellipse 118% 108% at 50% 0%,
-    rgb(28 22 42 / 0.98) 0%,
-    rgb(18 14 28 / 0.88) 36%,
-    rgb(12 10 18 / 0.52) 58%,
-    transparent 82%
+    ellipse 130% 100% at 50% 0%,
+    rgb(34 28 50 / 1) 0%,
+    rgb(20 18 28 / 1) 42%,
+    var(--header-desktop-chrome-bg) 100%
   );
   --header-top-line: color-mix(in srgb, var(--border-active) 38%, var(--border-subtle));
 

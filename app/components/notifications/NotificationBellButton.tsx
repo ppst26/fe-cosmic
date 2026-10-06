@@ -3,36 +3,31 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-interface NotificationBellButtonProps {
-  onClick?: () => void;
-  className?: string;
-  /** desktop popover ใช้ Trigger — ไม่ส่ง onClick */
+interface NotificationBellButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   showBadge?: boolean;
-  ariaExpanded?: boolean;
-  ariaHaspopup?: "dialog" | "true";
 }
 
 /**
- * ปุ่มกระดิ่งแจ้งเตือน — Header desktop / mobile
+ * ปุ่มกระดิ่งแจ้งเตือน — Header desktop (Radix Trigger ต้องได้ ref) / mobile onClick
  */
-export function NotificationBellButton({
-  onClick,
-  className,
-  showBadge = true,
-  ariaExpanded,
-  ariaHaspopup,
-}: NotificationBellButtonProps) {
+export const NotificationBellButton = React.forwardRef<
+  HTMLButtonElement,
+  NotificationBellButtonProps
+>(function NotificationBellButton(
+  { className, showBadge = true, type = "button", ...props },
+  ref,
+) {
   return (
     <button
-      type="button"
-      onClick={onClick}
+      ref={ref}
+      type={type}
       className={cn(
         "header-desktop-bar__icon-btn glass-card--soft glass-icon-btn relative inline-flex shrink-0 items-center justify-center rounded-(--header-chip-radius) border-0",
         className,
       )}
-      aria-label="การแจ้งเตือน"
-      aria-expanded={ariaExpanded}
-      aria-haspopup={ariaHaspopup}
+      aria-label={props["aria-label"] ?? "การแจ้งเตือน"}
+      {...props}
     >
       <NotificationBellIcon />
       {showBadge ? (
@@ -43,7 +38,7 @@ export function NotificationBellButton({
       ) : null}
     </button>
   );
-}
+});
 
 function NotificationBellIcon() {
   return (

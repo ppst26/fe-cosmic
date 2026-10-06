@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import Image from "next/image";
 import {
+  CASHBACK_PAGE_ICON_SRC,
   formatCashbackCurrency,
   formatCashbackPercent,
   type CashbackPanelMock,
   type CashbackTabId,
 } from "@/app/data/cashbackMockData";
 import { fetchCashbackPanels } from "@/lib/api/cashback";
-import { RefundIcon } from "../ui/Icons";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
@@ -77,16 +78,15 @@ export function CashbackPageContent({
         className="flex flex-col gap-5"
       >
       <section className="flex flex-col items-center px-2 pt-2 text-center" aria-live="polite">
-        <div className="relative flex h-[88px] w-[88px] items-center justify-center">
-          <span
-            className="pointer-events-none absolute inset-0 rounded-full border-2 border-[var(--icon-active)]/45"
-            aria-hidden="true"
-          />
-          <RefundIcon className="h-11 w-11 text-[var(--icon-active)]" />
-          <span className="absolute text-xl font-medium text-[var(--icon-active)]" aria-hidden="true">
-            ฿
-          </span>
-        </div>
+        <Image
+          src={CASHBACK_PAGE_ICON_SRC}
+          alt=""
+          width={96}
+          height={96}
+          className="h-[88px] w-[88px] shrink-0 object-contain"
+          draggable={false}
+          priority
+        />
         <p className="mt-3 text-xs font-medium text-[var(--text-secondary)]">ยอดคืนที่รับได้</p>
         <p className="mt-1 text-3xl font-medium tabular-nums text-[var(--icon-active)] sm:text-4xl">
           {formatCashbackCurrency(panel.claimableThb)}

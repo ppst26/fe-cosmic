@@ -14,7 +14,7 @@ export function NotificationDesktopPopover() {
       <Popover.Trigger asChild>
         <NotificationBellButton
           className="h-(--header-control-height)! w-(--header-control-height)!"
-          ariaHaspopup="dialog"
+          aria-haspopup="dialog"
         />
       </Popover.Trigger>
       <Popover.Portal>
@@ -25,7 +25,9 @@ export function NotificationDesktopPopover() {
           sideOffset={10}
           collisionPadding={12}
         >
-          <NotificationCenterPanel variant="popover" />
+          <div className="notification-popover__motion">
+            <NotificationCenterPanel variant="popover" />
+          </div>
           <Popover.Arrow className="notification-popover__arrow" width={14} height={8} />
         </Popover.Content>
       </Popover.Portal>

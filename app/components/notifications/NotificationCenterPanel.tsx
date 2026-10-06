@@ -7,6 +7,7 @@ import {
   type NotificationTabId,
 } from "@/app/data/notificationsMockData";
 import { NotificationEmptyState } from "./NotificationEmptyState";
+import { NotificationPopoverFooter } from "./NotificationPopoverFooter";
 import { cn } from "@/lib/utils";
 
 interface NotificationCenterPanelProps {
@@ -28,7 +29,7 @@ export function NotificationCenterPanel({ variant = "popover" }: NotificationCen
       )}
     >
       <div
-        className="notification-center__segment cosmic-segment-track grid grid-cols-3 gap-1"
+        className="notification-center__segment notification-center__segment--tabs cosmic-segment-track grid grid-cols-3 gap-1"
         role="tablist"
         aria-label="ประเภทการแจ้งเตือน"
       >

@@ -839,12 +839,73 @@
 
 /** เมนูมือถือ — avatar · โลโก้ · grid ต่อกันในสกอลล์เดียว */
 .menu-content--mobile-stack {
-  gap: 1.375rem;
+  gap: 0.875rem;
+  /* linear gradient ซ้าย → ขวา · เทาเข้มเกือบดำ */
+  --menu-drawer-grad-a: linear-gradient(
+    90deg,
+    #24242a 0%,
+    #1a1a1e 32%,
+    #131316 68%,
+    #0c0c0f 100%
+  );
+  --menu-drawer-grad-b: linear-gradient(
+    90deg,
+    #232028 0%,
+    #19181e 34%,
+    #121014 70%,
+    #0b0a0e 100%
+  );
+  --menu-drawer-grad-c: linear-gradient(
+    90deg,
+    #201e26 0%,
+    #16151a 36%,
+    #0f0e12 72%,
+    #09080c 100%
+  );
+  --menu-drawer-grad-accent: linear-gradient(90deg, #2e2838 0%, #221e2c 42%, #181420 100%);
+  --menu-drawer-grad-press: linear-gradient(90deg, #26262c 0%, #16161a 100%);
+  --menu-drawer-row-a: linear-gradient(90deg, #1e1e22 0%, #151518 48%, #0e0e11 100%);
+  --menu-drawer-row-b: linear-gradient(90deg, #1b1a1f 0%, #121114 50%, #0b0b0e 100%);
+  --menu-drawer-shell: linear-gradient(90deg, #1c1c20 0%, #141418 45%, #0e0e11 100%);
+  --menu-drawer-stroke: #25252c;
+  --menu-drawer-btn-deposit: linear-gradient(90deg, #9d3cfe 0%, #6a3aff 42%, #4eadff 100%);
+  --menu-drawer-btn-deposit-border: rgb(120 200 255 / 0.52);
+  --menu-drawer-btn-deposit-glow: rgb(124 54 255 / 0.32);
+  --menu-drawer-btn-withdraw: linear-gradient(90deg, #9a3412 0%, #d97706 38%, #fbbf24 100%);
+  --menu-drawer-btn-withdraw-border: rgb(255 200 120 / 0.5);
+  --menu-drawer-btn-withdraw-glow: rgb(251 191 36 / 0.28);
+  /* โบนัส · ลิงก์แนะนำ — ม่วงเทาเข้มเกือบดำ ไล่บน→ล่าง→ดำ */
+  --menu-drawer-grad-purple-play: linear-gradient(
+    to bottom,
+    #2f2d38 0%,
+    #25242c 26%,
+    #1a191f 56%,
+    #0a0a0a 100%
+  );
+  --menu-drawer-grad-purple-loss: linear-gradient(
+    to bottom,
+    #312e36 0%,
+    #262428 28%,
+    #1b1a1e 58%,
+    #080808 100%
+  );
+  --menu-drawer-grad-purple-referral: linear-gradient(
+    to bottom,
+    #2c2a32 0%,
+    #222024 30%,
+    #17161a 62%,
+    #050505 100%
+  );
+  --menu-drawer-stroke-purple: rgb(62 60 68 / 0.78);
+  --menu-drawer-purple-glow: rgb(0 0 0 / 0.32);
+  /** วง chevron / ปุ่มคัดลอก — border ขาวมาตรฐานเดียวกับรายการเมนู */
+  --menu-drawer-chip-border: rgb(255 255 255 / 0.28);
+  --menu-drawer-chip-border-hover: rgb(255 255 255 / 0.4);
 }
 
 @media (min-width: 380px) {
   .menu-content--mobile-stack {
-    gap: 1.75rem;
+    gap: 1rem;
   }
 }
 
@@ -864,6 +925,338 @@
 
 .menu-grid--mobile-drawer.menu-grid--four {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.menu-grid--mobile-drawer.menu-grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/** เมนูมือถือ — ฝาก/ถอน · รายได้ · ลิงก์แนะนำ (MenuDrawerMobileToolbar) */
+.menu-drawer-quick-actions__btn {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.85rem;
+  padding: 0.5rem 0.65rem;
+  overflow: hidden;
+  border: 1px solid var(--menu-drawer-stroke);
+  border-radius: var(--radius-panel);
+  color: var(--text-primary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: none;
+  transition:
+    filter var(--motion-fast) ease,
+    transform var(--motion-instant) var(--ease-out),
+    box-shadow var(--motion-fast) ease;
+}
+
+.menu-drawer-quick-actions__btn--deposit {
+  border-color: var(--menu-drawer-btn-deposit-border);
+  background:
+    radial-gradient(95% 130% at 92% 0%, rgb(78 173 255 / 0.35) 0%, transparent 55%),
+    var(--menu-drawer-btn-deposit);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    0 0 0 1px rgb(126 85 255 / 0.12),
+    0 4px 14px var(--menu-drawer-btn-deposit-glow);
+  color: #fff;
+}
+
+.menu-drawer-quick-actions__btn--withdraw {
+  border-color: var(--menu-drawer-btn-withdraw-border);
+  background:
+    radial-gradient(95% 130% at 8% 0%, rgb(255 230 109 / 0.28) 0%, transparent 55%),
+    var(--menu-drawer-btn-withdraw);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.2),
+    0 0 0 1px rgb(251 191 36 / 0.1),
+    0 4px 14px var(--menu-drawer-btn-withdraw-glow);
+  color: #fff;
+}
+
+.menu-drawer-quick-actions__icon {
+  width: 1.375rem;
+  height: 1.375rem;
+  flex-shrink: 0;
+}
+
+.menu-drawer-quick-actions__label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.28);
+}
+
+.menu-drawer-quick-actions__btn--deposit .menu-drawer-quick-actions__icon,
+.menu-drawer-quick-actions__btn--withdraw .menu-drawer-quick-actions__icon {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.35));
+}
+
+.menu-drawer-quick-actions__btn:active {
+  transform: scale(0.98);
+}
+
+.menu-drawer-quick-actions__btn--deposit:active,
+.menu-drawer-quick-actions__btn--withdraw:active {
+  filter: brightness(1.08);
+}
+
+.menu-drawer-income-duo {
+  gap: 0.5rem;
+}
+
+.menu-drawer-income-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-height: 0;
+  padding: 0.45rem 1.55rem 0.45rem 0.6rem;
+  border: 1px solid var(--menu-drawer-stroke-purple);
+  border-radius: var(--radius-control);
+  color: inherit;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 2px 10px var(--menu-drawer-purple-glow);
+  transition: filter var(--motion-fast) ease;
+}
+
+.menu-drawer-income-duo .menu-drawer-income-card:first-child {
+  background:
+    radial-gradient(120% 85% at 50% 0%, rgb(130 125 150 / 0.09) 0%, transparent 50%),
+    var(--menu-drawer-grad-purple-play);
+}
+
+.menu-drawer-income-duo .menu-drawer-income-card:last-child {
+  background:
+    radial-gradient(120% 85% at 50% 0%, rgb(125 120 145 / 0.08) 0%, transparent 50%),
+    var(--menu-drawer-grad-purple-loss);
+}
+
+.menu-drawer-income-card__label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-secondary);
+}
+
+.menu-drawer-income-card__value {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.menu-drawer-income-card__chevron {
+  position: absolute;
+  top: 0.42rem;
+  right: 0.4rem;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--menu-drawer-chip-border);
+  background: var(--menu-drawer-grad-press);
+  color: var(--text-secondary);
+  box-shadow: none;
+  transition:
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.menu-drawer-income-card__chevron svg {
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
+.menu-drawer-referral-bar {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--menu-drawer-stroke-purple);
+  border-radius: var(--radius-control);
+  background:
+    radial-gradient(110% 80% at 50% 0%, rgb(120 115 135 / 0.08) 0%, transparent 48%),
+    var(--menu-drawer-grad-purple-referral);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.04),
+    0 2px 10px var(--menu-drawer-purple-glow);
+}
+
+.menu-drawer-referral-bar__copy {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--menu-drawer-chip-border);
+  border-radius: var(--radius-control);
+  background: var(--menu-drawer-grad-press);
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: none;
+  transition:
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.menu-drawer-list-card {
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--menu-drawer-stroke) !important;
+  border-radius: var(--radius-panel);
+  background: var(--menu-drawer-shell);
+  box-shadow: none;
+}
+
+.menu-drawer-list-card .menu-list-row {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.menu-drawer-list-card .menu-list-row:nth-child(odd) {
+  background: var(--menu-drawer-row-a);
+}
+
+.menu-drawer-list-card .menu-list-row:nth-child(even) {
+  background: var(--menu-drawer-row-b);
+}
+
+.menu-drawer-list-card .menu-list-row + .menu-list-row {
+  border-top: 1px solid var(--menu-drawer-stroke);
+}
+
+/** กริดเมนูมือถือ — กล่องเดียว (คู่กับ menu-drawer-list-card) */
+.menu-drawer-grid-card {
+  border: 1px solid var(--menu-drawer-stroke);
+  background: var(--menu-drawer-shell);
+  box-shadow: none;
+}
+
+.menu-drawer-grid-card .menu-grid--mobile-drawer {
+  gap: 0;
+}
+
+.menu-drawer-grid-card .menu-grid-tile {
+  min-height: 4.25rem;
+  padding-block: 0.35rem;
+  border: 0;
+  border-radius: 0;
+  border-right: 1px solid var(--menu-drawer-stroke);
+  border-bottom: 1px solid var(--menu-drawer-stroke);
+  box-shadow: none;
+}
+
+.menu-drawer-grid-card .menu-grid-tile:nth-child(3n) {
+  border-right-width: 0;
+}
+
+.menu-drawer-grid-card .menu-grid-tile:nth-last-child(-n + 2) {
+  border-bottom-width: 0;
+}
+
+.menu-drawer-grid-card .menu-grid-tile:nth-child(odd) {
+  background: var(--menu-drawer-row-a);
+}
+
+.menu-drawer-grid-card .menu-grid-tile:nth-child(even) {
+  background: var(--menu-drawer-row-b);
+}
+
+.menu-drawer-grid-card .menu-grid--mobile-drawer .menu-grid-tile {
+  border-radius: 0;
+}
+
+@media (min-width: 380px) {
+  .menu-drawer-grid-card .menu-grid--mobile-drawer {
+    gap: 0;
+  }
+
+  .menu-drawer-grid-card .menu-grid--mobile-drawer .menu-grid-tile {
+    min-height: 4.25rem;
+    border-radius: 0;
+  }
+}
+
+.menu-drawer-logout--mobile {
+  border: 1px solid #2a2228;
+  border-radius: var(--radius-panel);
+  background: linear-gradient(90deg, #1e181c 0%, #141016 45%, #0c0a0e 100%);
+  box-shadow: none;
+}
+
+/** เมนูมือถือ — chevron / chip มาตรฐาน border ขาว */
+.menu-content--mobile-stack .menu-list-chevron,
+.menu-content--mobile-stack .menu-drawer-income-card__chevron,
+.menu-content--mobile-stack .menu-drawer-referral-bar__copy {
+  border: 1px solid var(--menu-drawer-chip-border);
+  background: var(--menu-drawer-grad-press);
+  color: var(--text-secondary);
+  box-shadow: none;
+}
+
+.menu-content--mobile-stack .menu-drawer-income-card:is(:hover, :focus-visible) .menu-drawer-income-card__chevron,
+.menu-content--mobile-stack .menu-drawer-referral-bar__copy:is(:hover, :focus-visible) {
+  border-color: var(--menu-drawer-chip-border-hover);
+  background: var(--menu-drawer-grad-accent);
+  color: var(--text-primary);
+}
+
+.menu-content--mobile-stack .menu-drawer-list-card .menu-list-row:is(:hover, :focus-visible) {
+  background: var(--menu-drawer-grad-accent);
+  filter: brightness(1.06);
+}
+
+.menu-content--mobile-stack
+  .menu-drawer-list-card
+  .menu-list-row:is(:hover, :focus-visible)
+  .menu-list-chevron {
+  border-color: var(--menu-drawer-chip-border-hover);
+  background: var(--menu-drawer-grad-accent);
+  color: var(--text-primary);
+}
+
+.menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) {
+  z-index: 1;
+  transform: none;
+  background: var(--menu-drawer-grad-accent) !important;
+  box-shadow: none;
+  filter: brightness(1.04);
+}
+
+.menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) .menu-grid-icon {
+  transform: translateY(-2px) scale(1.06);
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.35));
+}
+
+.menu-content--mobile-stack .menu-drawer-income-card:active {
+  filter: brightness(1.06);
+}
+
+@media (max-width: 1023px) {
+  .menu-dialog-root .menu-close-btn {
+    border: 1px solid var(--menu-drawer-stroke, #25252c);
+    background: linear-gradient(90deg, #222228 0%, #141418 55%, #0c0c0f 100%);
+    color: var(--text-secondary);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 /** ออกจากระบบ — โปร่ง ไม่มีการ์ด (RightMenuDrawer) */
