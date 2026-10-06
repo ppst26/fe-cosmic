@@ -147,7 +147,7 @@
   min-height: 0;
   max-height: 10.5rem;
   overflow: hidden;
-  border-radius: var(--radius-panel);
+  border-radius: var(--radius-thumb);
   scroll-snap-align: start;
   text-decoration: none;
   background: var(--surface-mid);

@@ -318,7 +318,7 @@ function providerRouteId(item: { id: string; href?: string }) {
 }
 
 /**
- * คอมโพเนนต์แสดงแบนเนอร์ใหญ่ 2 ค่าย และกริดค่ายเกม 3 คอลัมน์
+ * คอมโพเนนต์แสดงแบนเนอร์ feature 2 ใบ (JILI / Pragmatic) และกริดค่าย 3 คอลัมน์บนมือถือ
  */
 export function SlotProviderCards({
   featuredProviders,
@@ -342,14 +342,19 @@ export function SlotProviderCards({
         </div>
       ) : null}
 
-      {/* 1. แบนเนอร์ feature 2 คอลัมน์ (JILI & PRAGMATIC PLAY) */}
-      {!hideFeatured ? (
-      <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
-        {featuredProviders.map((feat) => {
+      {/* 1. แบนเนอร์ feature 2 ใบเต็มความกว้าง (JILI แล้ว PRAGMATIC PLAY) — design.md slot providers */}
+      {!hideFeatured && featuredProviders.length > 0 ? (
+      <div className="slot-provider-featured flex flex-col gap-2 sm:gap-2.5">
+        {featuredProviders.slice(0, 2).map((feat, index) => {
           const isJili = feat.id === "jili";
+          const isPrimaryFeatured = index === 0;
           const hasCover = Boolean(feat.coverSrc);
 
-          const featClasses = `${cardSurfaceClass} flex min-h-[6.75rem] flex-col justify-end overflow-hidden rounded-[var(--radius-panel)] p-2.5 sm:min-h-[7.5rem] sm:p-3 ${
+          const featSizeClass = isPrimaryFeatured
+            ? "aspect-[1.92/1] sm:aspect-[2.05/1] p-3 sm:p-3.5"
+            : "aspect-[2.85/1] sm:aspect-[3/1] p-2.5 sm:p-3";
+
+          const featClasses = `${cardSurfaceClass} relative flex w-full min-h-0 flex-col justify-end overflow-hidden rounded-[var(--radius-panel)] ${featSizeClass} ${
                 hasCover
                   ? "bg-[var(--surface-mid)]"
                   : `bg-gradient-to-br ${feat.bgGradient}`
@@ -363,36 +368,58 @@ export function SlotProviderCards({
                     src={feat.coverSrc}
                     alt=""
                     fill
-                    sizes="(min-width: 640px) 50vw, 45vw"
-                    className="object-cover"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover object-[center_20%]"
                   />
                   <div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/25"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/85 via-black/35 to-black/10"
                     aria-hidden="true"
                   />
                 </>
               )}
 
               {/* ข้อมูลแบรนด์และสโลแกนฝั่งซ้าย */}
-              <div className="relative z-10 flex flex-col justify-end pr-[38%] sm:pr-[42%]">
+              <div
+                className={`relative z-10 flex flex-col justify-end ${
+                  isPrimaryFeatured ? "max-w-[58%] sm:max-w-[52%]" : "max-w-[54%] sm:max-w-[48%]"
+                }`}
+              >
                 {isJili ? (
                   <div>
-                    <h3 className="bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-xl font-medium leading-none tracking-tight text-transparent drop-shadow sm:text-2xl">
+                    <h3
+                      className={`bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text font-medium leading-none tracking-tight text-transparent drop-shadow ${
+                        isPrimaryFeatured ? "text-2xl sm:text-[1.65rem]" : "text-xl sm:text-2xl"
+                      }`}
+                    >
                       JILI
                     </h3>
-                    <p className="mt-0.5 line-clamp-2 text-[9px] font-medium uppercase leading-tight tracking-wide text-amber-200/90 sm:mt-1 sm:text-[10px]">
+                    <p
+                      className={`mt-1 line-clamp-2 font-medium uppercase leading-tight tracking-wide text-amber-200/90 ${
+                        isPrimaryFeatured ? "text-[10px] sm:text-[11px]" : "text-[9px] sm:text-[10px]"
+                      }`}
+                    >
                       {feat.slogan}
                     </p>
                   </div>
                 ) : (
                   <div>
                     <div className="flex items-center gap-0.5 text-[#fde047]">
-                      <span className="text-[10px] sm:text-xs">👑</span>
+                      <span className={`${isPrimaryFeatured ? "text-[10px] sm:text-xs" : "text-[9px] sm:text-[10px]"}`}>
+                        👑
+                      </span>
                     </div>
-                    <h3 className="text-sm font-medium leading-tight tracking-tight text-white drop-shadow sm:text-base">
+                    <h3
+                      className={`font-medium leading-tight tracking-tight text-white drop-shadow ${
+                        isPrimaryFeatured ? "text-base sm:text-lg" : "text-sm sm:text-base"
+                      }`}
+                    >
                       PRAGMATIC PLAY<span className="text-[8px] font-normal sm:text-[9px]">™</span>
                     </h3>
-                    <p className="mt-0.5 line-clamp-2 text-[8px] font-medium uppercase leading-tight tracking-wide text-sky-200/90 sm:text-[9px]">
+                    <p
+                      className={`mt-0.5 line-clamp-2 font-medium uppercase leading-tight tracking-wide text-sky-200/90 ${
+                        isPrimaryFeatured ? "text-[9px] sm:text-[10px]" : "text-[8px] sm:text-[9px]"
+                      }`}
+                    >
                       {feat.slogan}
                     </p>
                   </div>
@@ -441,13 +468,13 @@ export function SlotProviderCards({
       </div>
       ) : null}
 
-      {/* 2. มือถือ: carousel ค่ายสล็อต | lg+: 8 คอลัมน์ (carousel.css) */}
-      <div className="slot-provider-grid lobby-category-slot-track carousel-track carousel-lobby-slots">
+      {/* 2. กริดค่ายเกม — มือถือ 3 คอลัมน์ */}
+      <div className="slot-provider-grid grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-8">
         {gridProviders.map((item) => {
           const hasCover = Boolean(item.coverSrc);
 
           const href = item.href || `/slots/${item.id}`;
-          const gridClasses = `${cardSurfaceClass} relative flex aspect-square w-full min-w-0 flex-col overflow-hidden rounded-[var(--radius-card)] border border-white/[0.08] active:scale-[0.98] ${
+          const gridClasses = `${cardSurfaceClass} flex aspect-square flex-col overflow-hidden rounded-[var(--radius-thumb)] active:scale-[0.98] ${
               hasCover
                 ? "bg-[var(--surface-mid)]"
                 : `bg-gradient-to-b ${item.bgGradient}`
@@ -460,7 +487,7 @@ export function SlotProviderCards({
                 src={item.coverSrc}
                 alt=""
                 fill
-                sizes="(min-width: 1024px) 10vw, 38vw"
+                sizes="(min-width: 768px) 20vw, 33vw"
                 className="object-cover"
               />
             )}

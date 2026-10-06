@@ -160,7 +160,7 @@ export function HomeLobbyPage() {
 
                   <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col max-lg:px-2 pb-8 pt-0 sm:max-lg:px-2.5 lg:mx-0 lg:max-w-none lg:px-0 lg:pt-0">
                     {/* มือถือ: hero → ประกาศ → โปร — ระยะแนบให้คอนเทนต์ต่อเนื่อง (หน้าแรก) */}
-                    <div className="flex flex-col gap-2.5 lg:hidden">
+                    <div className="flex flex-col gap-3 lg:hidden">
                       {/* hero carousel — ซ่อนไว้ก่อน (เปิดเมื่อมี asset พร้อม) */}
                       <div className="hidden" aria-hidden="true">
                         <WelcomeBanner />
@@ -170,7 +170,7 @@ export function HomeLobbyPage() {
                         <PromoCarousel items={homeBanners.promoCarousel} />
                       </div>
 
-                      <div className="-mx-2 mt-2.5 sm:-mx-2.5">
+                      <div className="-mx-2 sm:-mx-2.5">
                         <LobbyAnnouncementMarquee
                           messages={lobbyAnnouncements}
                           variant="mobile"
@@ -206,7 +206,7 @@ export function HomeLobbyPage() {
 
                     {/* มือถือ: host คงความสูงใน flow · แถบ fixed ตอนประกบ header จนสุดหน้า */}
                     <div
-                      className="lobby-mobile-category-sticky-host -mx-2 mt-1 sm:-mx-2.5 lg:hidden"
+                      className="lobby-mobile-category-sticky-host -mx-2 mt-0.5 sm:-mx-2.5 lg:hidden"
                       style={
                         isCategoryNavStuck && categoryBarHeight > 0
                           ? { height: `${categoryBarHeight}px` }
@@ -217,7 +217,7 @@ export function HomeLobbyPage() {
                         ref={categoryBarRef}
                         className={cn(
                           "lobby-mobile-category-sticky w-full min-w-0 px-2 sm:px-2.5",
-                          "py-1.5",
+                          "py-1",
                           isCategoryNavStuck && "is-stuck",
                         )}
                       >
@@ -233,16 +233,16 @@ export function HomeLobbyPage() {
                     <div
                       className={cn(
                         "relative flex min-w-0 flex-col rounded-none pb-6 max-lg:overflow-x-visible lg:gap-3 lg:overflow-hidden lg:overflow-x-clip lg:pb-0 lg:pt-0",
-                        isHomeLobby ? "gap-2.5 pt-1 lg:gap-3" : "gap-4 pt-1 lg:gap-3",
+                        isHomeLobby ? "gap-1 pt-0 max-lg:gap-0 lg:gap-3 lg:pt-0" : "gap-4 pt-1 lg:gap-3",
                       )}
                     >
                       <div
                         className={cn(
                           "relative flex min-w-0 flex-col max-lg:overflow-x-visible lg:gap-3",
-                          isHomeLobby ? "gap-2.5" : "gap-4",
+                          isHomeLobby ? "gap-1 max-lg:gap-0" : "gap-4",
                         )}
                       >
-                        <div className="lobby-category-stack flex flex-col gap-3 lg:gap-4">
+                        <div className="lobby-category-stack flex flex-col gap-2 max-lg:gap-0 lg:gap-4">
                           <div className="hidden lg:block">
                             <LobbyAnnouncementMarquee
                               messages={lobbyAnnouncements}
@@ -267,7 +267,7 @@ export function HomeLobbyPage() {
                               section={section}
                               className={
                                 index === 0
-                                  ? "mt-1 sm:mt-2"
+                                  ? "mt-0 lg:mt-2"
                                   : "mt-4 sm:mt-5"
                               }
                             />

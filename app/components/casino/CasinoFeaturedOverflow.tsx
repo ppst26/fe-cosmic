@@ -24,7 +24,7 @@ export function CasinoFeaturedOverflow({ items }: CasinoFeaturedOverflowProps) {
             key={item.id}
             href={item.href}
             aria-label={`${item.title} — ${item.provider}`}
-            className="group relative aspect-[3/4] w-[32%] max-w-[148px] shrink-0 snap-start overflow-hidden rounded-[var(--radius-card)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 sm:w-[28%] sm:max-w-[160px]"
+            className="group relative aspect-[3/4] w-[32%] max-w-[148px] shrink-0 snap-start overflow-hidden rounded-[var(--radius-thumb)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 sm:w-[28%] sm:max-w-[160px]"
           >
             {item.coverSrc ? (
               <Image

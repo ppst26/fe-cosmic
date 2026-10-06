@@ -468,7 +468,7 @@ export function ProviderGameGrid({
               onClick={() => handlePlay(game)}
             >
               {/* 1. Thumbnail Card (สี่เหลี่ยมจัตุรัสขอบมน borderless) */}
-              <div className="relative aspect-square w-full overflow-hidden rounded-[var(--radius-panel)] bg-[#121127] shadow-[0_2px_8px_rgba(0,0,0,0.35)] transition-all duration-200 group-hover:brightness-110 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
+              <div className="relative aspect-square w-full overflow-hidden rounded-[var(--radius-thumb)] bg-[#121127] shadow-[0_2px_8px_rgba(0,0,0,0.35)] transition-all duration-200 group-hover:brightness-110 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
                 {/* ภาพ Thumbnail อาร์ตเวิร์ก */}
                 <GameThumbnailArtwork game={game} />
 

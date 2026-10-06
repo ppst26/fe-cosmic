@@ -55,14 +55,14 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
 
   return (
     <section
-      className="promo-carousel relative my-0.5 w-full min-w-0 overflow-hidden sm:my-3"
+      className="promo-carousel relative w-full min-w-0 overflow-hidden py-2.5 sm:py-3"
       aria-label="แบนเนอร์โปรโมชันและสิทธิพิเศษ"
     >
       <div className="relative min-w-0">
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="promo-carousel__track flex gap-2 overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory py-0 sm:gap-3"
+          className="promo-carousel__track flex gap-0 overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory py-0 sm:gap-3"
           tabIndex={0}
           aria-label="รายการโปรโมชัน"
         >
@@ -71,7 +71,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
             key={item.id}
             href={item.href}
             aria-label={[item.title, item.subtitle].filter(Boolean).join(" — ")}
-            className="promo-carousel__slide group relative aspect-[2.35/1] w-full max-w-none shrink-0 snap-start overflow-hidden rounded-[var(--radius-panel)] border border-white/8 bg-[var(--surface-mid)] motion-press transition-[filter,transform] duration-150 hover:brightness-110 max-lg:rounded-[var(--radius-card)] sm:w-[78%] sm:max-w-[420px]"
+            className="promo-carousel__slide group relative aspect-[2.35/1] w-full max-w-none shrink-0 snap-center snap-always overflow-hidden rounded-[var(--radius-panel)] border border-white/8 bg-[var(--surface-mid)] motion-press transition-[filter,transform] duration-150 hover:brightness-110 max-lg:rounded-[var(--radius-card)] sm:w-[78%] sm:snap-start sm:max-w-[420px]"
             style={
               item.bannerSrc
                 ? undefined

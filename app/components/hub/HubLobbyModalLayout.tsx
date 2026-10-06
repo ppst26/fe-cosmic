@@ -209,7 +209,7 @@ export function HubLobbyGameTile({
   const className = "hub-lobby-game-tile flex flex-col gap-[0.35rem] p-0 text-left";
   const inner = (
     <>
-      <span className="hub-lobby-game-tile__cover relative aspect-[3/4] overflow-hidden rounded-[14px]">
+      <span className="hub-lobby-game-tile__cover relative aspect-[3/4] overflow-hidden rounded-[var(--radius-thumb)]">
         {imageSrc ? (
           <img
             src={imageSrc}

@@ -48,7 +48,7 @@ export function PopularHighlights({
                 key={item.id}
                 href={item.href}
                 aria-label={item.title}
-                className="group relative aspect-[2.35/1] min-h-[56px] overflow-hidden rounded-[var(--radius-panel)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.98]"
+                className="group relative aspect-[2.35/1] min-h-[56px] overflow-hidden rounded-[var(--radius-thumb)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.98]"
               >
                 <Image
                   src={item.imageSrc}

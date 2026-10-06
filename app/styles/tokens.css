@@ -241,6 +241,8 @@
 
   --radius-control: 4px;
   --radius-card: 6px;
+  /** ปกเกม / thumbnail ค่าย — มุมมนน้อยกว่า panel */
+  --radius-thumb: var(--radius-card);
   /** ปุ่ม/ชิป header — มนกว่า sm เล็กน้อย */
   --header-chip-radius: var(--radius-card);
   --radius-panel: 18px;

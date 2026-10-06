@@ -112,33 +112,14 @@ section > .lobby-section-header-band .glass-icon-btn svg {
   --carousel-gap: var(--space-2);
   --carousel-min: 132px;
 }
-/* หมวดค่าย lobby — การ์ดคาสิโน/กีฬาแนวตั้ง 3 ใบ + peek */
-.carousel-lobby-category {
-  --carousel-cols: 3.2;
-  --carousel-gap: 8px;
-  --carousel-min: 96px;
-}
-/* หมวดสล็อต lobby — การ์ดสี่เหลี่ยม 3 ใบ + peek */
-.carousel-lobby-slots {
-  --carousel-cols: 3.2;
-  --carousel-gap: 8px;
-  --carousel-min: 88px;
-}
 .carousel-tournament-card {
   position: relative;
   display: block;
   width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: var(--radius-panel);
+  border-radius: var(--radius-thumb);
   background: var(--surface-mid);
-}
-@media (min-width: 640px) and (max-width: 1023px) {
-  .carousel-lobby-category,
-  .carousel-lobby-slots {
-    --carousel-cols: 3.35;
-    --carousel-min: 100px;
-  }
 }
 @media (min-width: 768px) {
   .carousel-games,
@@ -181,46 +162,6 @@ section > .lobby-section-header-band .glass-icon-btn svg {
     --carousel-gap: var(--space-3);
   }
 }
-
-/* กริดค่ายใต้ CategoryNav — มือถือ/แท็บเล็ตเป็น carousel-track, lg+ เป็นกริด */
-@media (min-width: 1024px) {
-  .lobby-category-provider-track.carousel-track,
-  .lobby-category-slot-track.carousel-track {
-    display: grid;
-    overflow: visible;
-    scroll-snap-type: none;
-  }
-
-  .lobby-category-provider-track.carousel-track > *,
-  .lobby-category-slot-track.carousel-track > * {
-    flex: unset;
-    width: 100%;
-    scroll-snap-align: unset;
-  }
-
-  .lobby-category-provider-track.carousel-track {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.625rem;
-  }
-
-  .lobby-category-slot-track.carousel-track {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 0.625rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .lobby-category-provider-track.carousel-track {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1536px) {
-  .lobby-category-provider-track.carousel-track {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .carousel-track {
     scroll-behavior: auto;

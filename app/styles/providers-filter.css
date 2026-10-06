@@ -164,15 +164,16 @@
 
 @media (max-width: 1023px) {
   .promo-carousel__track {
-    gap: 8px;
-    padding-inline: 8px;
-    scroll-padding-inline: 8px;
+    gap: 0;
+    padding-inline: 0;
+    scroll-padding-inline: 0;
     box-sizing: border-box;
   }
 
+  /* หนึ่งสไลด์เต็มความกว้าง — ไม่ peek สไลด์ถัดไป */
   .promo-carousel__slide {
-    flex: 0 0 calc(100% - 16px);
-    width: calc(100% - 16px);
+    flex: 0 0 100%;
+    width: 100%;
     max-width: none;
     box-sizing: border-box;
   }

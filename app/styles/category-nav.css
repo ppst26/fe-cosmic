@@ -111,9 +111,9 @@
       0 8px 22px rgb(0 0 0 / 0.14);
   }
 
-  /* หน้าแรกมือถือ — แถบ progress ชิด pills ลดช่องก่อนเกมยอดฮิต */
+  /* หน้าแรกมือถือ — ช่องใต้ CategoryNav ก่อนเกมยอดฮิต */
   .page-shell--lobby .lobby-mobile-home-sections {
-    margin-top: 0.375rem;
+    margin-top: 0;
   }
 
   .page-shell--lobby .lobby-mobile-home-sections .carousel-track {
@@ -358,16 +358,6 @@
 /* กริดค่ายใต้ CategoryNav — animate เฉพาะส่วนใต้ toolbar */
 .lobby-category-providers {
   transform-origin: top center;
-}
-
-@media (max-width: 1023px) {
-  .lobby-category-providers .lobby-category-provider-track.carousel-track,
-  .lobby-category-providers .lobby-category-slot-track.carousel-track {
-    margin-inline: -0.5rem;
-    padding-inline: 0.5rem;
-    scroll-padding-inline: 0.5rem;
-    padding-block: 2px;
-  }
 }
 
 .lobby-category-providers__swap {
