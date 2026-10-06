@@ -150,7 +150,7 @@ export function isResponsiveSheetHub(id: DesktopHubId): boolean {
 export function getHubSheetSize(
   id: DesktopHubId,
 ): "compact" | "wide" | "hubCompact" | "hubNarrow" {
-  if (id === "check-in") {
+  if (id === "check-in" || id === "gems-store") {
     return "hubCompact";
   }
   if (id === "account") {

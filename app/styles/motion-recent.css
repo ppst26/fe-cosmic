@@ -1,0 +1,206 @@
+/** Motion เพิ่มเติม — คอมโพเนนต์ล่าสุด (ต้อง import หลัง menu-drawer / data-table / notifications / alerts) */
+/* ── Motion: คอมโพเนนต์ล่าสุด (menu toolbar · notification footer · pagination · formula row · alerts) ── */
+
+@keyframes motion-sheen {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(260%) skewX(-18deg);
+  }
+}
+
+@keyframes motion-active-pop {
+  0% {
+    transform: scale(0.82);
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes motion-alert-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Menu drawer toolbar — ปุ่มฝาก/ถอน: แสงกวาดตอน hover/โฟกัส + ไอคอนเด้ง */
+.menu-drawer-quick-actions__btn::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.22), transparent);
+  transform: translateX(-120%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.menu-drawer-quick-actions__icon {
+  transition: transform var(--motion-base) var(--ease-spring);
+}
+
+@media (hover: hover) {
+  .menu-drawer-quick-actions__btn:hover::after {
+    animation: motion-sheen 700ms var(--ease-out) both;
+  }
+
+  .menu-drawer-quick-actions__btn:hover .menu-drawer-quick-actions__icon {
+    transform: translateY(-1px) scale(1.12) rotate(-6deg);
+  }
+
+  .menu-drawer-income-card:hover {
+    transform: translateY(-1px);
+  }
+
+  .menu-drawer-income-card:hover .menu-drawer-income-card__chevron {
+    transform: translateX(2px);
+  }
+
+  .menu-drawer-referral-bar__copy:hover {
+    transform: scale(1.08);
+  }
+}
+
+.menu-drawer-quick-actions__btn:focus-visible::after {
+  animation: motion-sheen 700ms var(--ease-out) both;
+}
+
+.menu-drawer-income-card {
+  transition:
+    filter var(--motion-fast) ease,
+    transform var(--motion-fast) var(--ease-out);
+}
+
+.menu-drawer-income-card:active {
+  transform: scale(0.97);
+}
+
+.menu-drawer-income-card__chevron {
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.menu-drawer-referral-bar__copy {
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.menu-drawer-referral-bar__copy:active {
+  transform: scale(0.88);
+}
+
+/* Notification footer — ไอคอนเข้าทีละตัว + ยกตอน hover */
+.notification-center__footer-link {
+  animation: motion-pop-in var(--motion-base) var(--ease-spring) both;
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.notification-center__footer-link:nth-child(2) {
+  animation-delay: var(--stagger);
+}
+
+.notification-center__footer-link:nth-child(n + 3) {
+  animation-delay: calc(var(--stagger) * 2);
+}
+
+.notification-center__footer-link:active {
+  transform: scale(0.9);
+}
+
+@media (hover: hover) {
+  .notification-center__footer-link:hover {
+    transform: translateY(-2px) scale(1.08);
+  }
+}
+
+/* Pagination — ปุ่มกดยุบ · หน้า active เด้งเข้า */
+.cosmic-pagination-btn {
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    background-color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.cosmic-pagination-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.cosmic-pagination-btn.is-active {
+  animation: motion-active-pop var(--motion-base) var(--ease-spring) both;
+}
+
+@media (hover: hover) {
+  .cosmic-pagination-btn:hover:not(:disabled):not(.is-active) {
+    transform: translateY(-1px);
+  }
+}
+
+/* Formula row — ช่อง/ตัวดำเนินไล่เข้าตามลำดับ */
+.cosmic-formula-cell,
+.cosmic-formula-operator {
+  animation: motion-reveal-in var(--motion-base) var(--ease-out) backwards;
+}
+
+.cosmic-formula-row > :nth-child(2) {
+  animation-delay: calc(var(--stagger) * 1);
+}
+.cosmic-formula-row > :nth-child(3) {
+  animation-delay: calc(var(--stagger) * 2);
+}
+.cosmic-formula-row > :nth-child(4) {
+  animation-delay: calc(var(--stagger) * 3);
+}
+.cosmic-formula-row > :nth-child(n + 5) {
+  animation-delay: calc(var(--stagger) * 4);
+}
+
+/* Inline alerts — เลื่อนลงเข้า */
+.cosmic-alert {
+  animation: motion-alert-in var(--motion-base) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-drawer-quick-actions__btn::after {
+    display: none;
+  }
+
+  .menu-drawer-quick-actions__btn:hover .menu-drawer-quick-actions__icon,
+  .menu-drawer-income-card:hover,
+  .menu-drawer-income-card:hover .menu-drawer-income-card__chevron,
+  .menu-drawer-income-card:active,
+  .menu-drawer-referral-bar__copy:hover,
+  .menu-drawer-referral-bar__copy:active,
+  .notification-center__footer-link:hover,
+  .notification-center__footer-link:active,
+  .cosmic-pagination-btn:hover:not(:disabled),
+  .cosmic-pagination-btn:active:not(:disabled) {
+    transform: none;
+  }
+
+  .notification-center__footer-link,
+  .cosmic-pagination-btn.is-active,
+  .cosmic-formula-cell,
+  .cosmic-formula-operator,
+  .cosmic-alert {
+    animation: none;
+  }
+}

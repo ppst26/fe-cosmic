@@ -89,11 +89,11 @@ export interface RandomCardDisplayItem {
 }
 
 export const RANDOM_CARD_DISPLAY_ITEMS: RandomCardDisplayItem[] = [
-  { id: "rc-1", imageSrc: "/assets/gems/gems.webp", pointsValue: 2000 },
+  { id: "rc-1", imageSrc: "/assets/gems/diamond.avif", pointsValue: 2000 },
   { id: "rc-2", imageSrc: "/assets/3d/diamond.avif", pointsValue: 0 },
-  { id: "rc-3", imageSrc: "/assets/3d/diamonds.avif", pointsValue: 10000 },
+  { id: "rc-3", imageSrc: "/assets/check-in/diamonds.avif", pointsValue: 10000 },
   { id: "rc-4", imageSrc: "/assets/coins/coins3.webp", pointsValue: 5000 },
-  { id: "rc-5", imageSrc: "/assets/gems/gems.webp", pointsValue: 1000 },
+  { id: "rc-5", imageSrc: "/assets/gems/diamond.avif", pointsValue: 1000 },
 ];
 
 export interface ExchangeMoneyPackage {

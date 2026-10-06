@@ -55,7 +55,10 @@ export function GemsStorePageContent({
 
   return (
     <div
-      className={cn("flex flex-col gap-4 pb-4 sm:gap-5", flatHub && "gems-store-hub gems-store-hub--flat")}
+      className={cn(
+        "flex flex-col gap-4 sm:gap-5",
+        flatHub ? "gems-store-hub gems-store-hub--flat pb-2" : "pb-4",
+      )}
     >
       <header className={cn(!embedded && "flex flex-col")}>
         <GemsStoreSummaryCard gemsBalance={gemsBalance} />
@@ -84,42 +87,36 @@ export function GemsStorePageContent({
         </div>
       </section>
 
-      <section
-        className={
-          flatHub
-            ? "gems-store-terms overflow-hidden border-t border-[var(--border-subtle)]/45 pt-1"
-            : `overflow-hidden ${COSMIC_PANEL_GLASS}`
-        }
-      >
-        <button
-          type="button"
-          onClick={() => setTermsOpen((open) => !open)}
-          className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20"
-          aria-expanded={termsOpen}
-        >
-          <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium text-[var(--text-muted)]">
-            i
-          </span>
-          <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการแลกรางวัล</span>
-          <ChevronDownIcon
-            className={`h-4 w-4 text-[var(--icon-default)] transition-transform ${
-              termsOpen ? "rotate-180" : ""
-            }`}
-          />
-        </button>
-        {termsOpen && (
-          <ul className="space-y-2 border-t border-[var(--border-subtle)]/40 px-4 py-3.5 text-xs leading-relaxed text-[var(--text-secondary)]">
-            {gemsStore.terms.map((line) => (
-              <li key={line} className="flex gap-2">
-                <span className="text-[var(--border-active)]" aria-hidden="true">
-                  •
-                </span>
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+      {!flatHub ? (
+        <section className={`gems-store-terms overflow-hidden ${COSMIC_PANEL_GLASS}`}>
+          <button
+            type="button"
+            onClick={() => setTermsOpen((open) => !open)}
+            className="flex w-full items-center gap-2.5 px-4 py-3.5 text-left transition-colors hover:bg-[var(--surface-selected)]/20"
+            aria-expanded={termsOpen}
+          >
+            <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium text-[var(--text-muted)]">
+              i
+            </span>
+            <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการแลกรางวัล</span>
+            <ChevronDownIcon
+              className={`h-4 w-4 text-[var(--icon-default)] transition-transform ${
+                termsOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          {termsOpen ? (
+            <ul className="space-y-2 border-t border-[var(--border-subtle)]/40 px-4 py-3.5 text-xs leading-relaxed text-[var(--text-secondary)]">
+              {gemsStore.terms.map((line) => (
+                <li key={line} className="flex gap-2">
+                  <span className="text-[var(--border-active)]" aria-hidden="true">•</span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </section>
+      ) : null}
 
       <GemsRedeemConfirmDialog
         open={confirmPkg != null}

@@ -2,7 +2,6 @@ import Image from "next/image";
 import { formatGemsBalance } from "@/app/data/gemsStoreMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { HistoryIcon } from "@/app/components/ui/Icons";
-import { COSMIC_PANEL_GLASS } from "@/app/components/ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 
 interface GemsStoreSummaryCardProps {
@@ -11,7 +10,7 @@ interface GemsStoreSummaryCardProps {
 }
 
 /**
- * การ์ดยอดเพชรด้านบนร้านค้า — หัวซ้าย · ยอดขวาบน · โควตา · ข้อความรีเซ็ต
+ * การ์ดยอดเพชรด้านบนร้านค้า — เพชรกลางบน · ยอด · label · โควตากลาง
  * ใช้ใน GemsStorePageContent.tsx
  */
 export function GemsStoreSummaryCard({ gemsBalance, className }: GemsStoreSummaryCardProps) {
@@ -20,46 +19,48 @@ export function GemsStoreSummaryCard({ gemsBalance, className }: GemsStoreSummar
 
   return (
     <aside
-      className={cn("flex flex-col gap-3 px-3.5 py-3 sm:px-4 sm:py-3.5", COSMIC_PANEL_GLASS, className)}
+      className={cn("gems-store-summary flex flex-col gap-2 px-0.5 py-1 sm:px-1 sm:py-1.5", className)}
       aria-label="เพชรคงเหลือ"
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0 flex-1 pr-1">
-          <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">เพชรคงเหลือ</p>
-          <p className="mt-0.5 text-[11px] leading-snug text-[var(--text-secondary)] sm:text-xs">
-            แลกเพชรเป็นเครดิตและรางวัล
+      <div className="flex flex-col items-center gap-1 px-1 pt-0.5 text-center sm:gap-1.5">
+        <div
+          className="gems-store-summary__gem relative h-[4.25rem] w-[4.25rem] shrink-0 sm:h-[4.75rem] sm:w-[4.75rem]"
+          aria-hidden="true"
+        >
+          <Image
+            src="/assets/gems/diamond.avif"
+            alt=""
+            fill
+            sizes="(max-width: 640px) 68px, 76px"
+            className="object-contain drop-shadow-[0_0_20px_rgba(119,71,229,0.5)]"
+          />
+        </div>
+        <p
+          className="text-[1.75rem] font-medium leading-none tabular-nums text-[var(--accent-highlight)] sm:text-[2rem]"
+          aria-label={`เพชรคงเหลือ ${formatGemsBalance(gemsBalance)}`}
+        >
+          {formatGemsBalance(gemsBalance)}
+        </p>
+        <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">เพชรคงเหลือ</p>
+
+        <div
+          className="gems-store-summary__quota mt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-[var(--text-primary)] sm:gap-x-5 sm:text-[13px]"
+        >
+          <p className="flex items-center gap-1.5">
+            <GemsQuotaCalendarIcon className="h-3.5 w-3.5 shrink-0 text-[var(--icon-active)]" />
+            <span>
+              วันนี้{" "}
+              <span className="font-medium tabular-nums">{dailyUsed}/{dailyLimit}</span>
+            </span>
+          </p>
+          <p className="flex items-center gap-1.5">
+            <HistoryIcon className="h-3.5 w-3.5 shrink-0 text-[var(--icon-active)]" />
+            <span>
+              สัปดาห์นี้{" "}
+              <span className="font-medium tabular-nums">{weeklyUsed}/{weeklyLimit}</span>
+            </span>
           </p>
         </div>
-
-        <div className="shrink-0 text-right">
-          <p className="text-2xl font-medium tabular-nums leading-none text-[var(--accent-highlight)] sm:text-[1.75rem]">
-            {formatGemsBalance(gemsBalance)}
-          </p>
-          <p className="mt-1 text-xs text-[var(--text-secondary)]">เพชร</p>
-        </div>
-      </div>
-
-      <div className="h-px w-full bg-[var(--border-subtle)]/55" aria-hidden="true" />
-
-      <div className="grid grid-cols-2 gap-2 sm:gap-3">
-        <p className="flex min-w-0 items-center gap-2 text-xs text-[var(--text-primary)] sm:text-[13px]">
-          <GemsQuotaCalendarIcon className="h-4 w-4 shrink-0 text-[var(--icon-active)]" />
-          <span className="truncate">
-            วันนี้{" "}
-            <span className="font-medium tabular-nums text-[var(--text-primary)]">
-              {dailyUsed}/{dailyLimit}
-            </span>
-          </span>
-        </p>
-        <p className="flex min-w-0 items-center justify-end gap-2 text-right text-xs text-[var(--text-primary)] sm:justify-start sm:text-left sm:text-[13px]">
-          <HistoryIcon className="h-4 w-4 shrink-0 text-[var(--icon-active)]" />
-          <span className="truncate">
-            สัปดาห์นี้{" "}
-            <span className="font-medium tabular-nums text-[var(--text-primary)]">
-              {weeklyUsed}/{weeklyLimit}
-            </span>
-          </span>
-        </p>
       </div>
 
       <p className="text-center text-[10px] leading-snug text-[var(--text-muted)] sm:text-[11px]">

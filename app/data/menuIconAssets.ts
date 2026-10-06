@@ -30,7 +30,7 @@ export const MENU_ICON_SRC: Record<string, string> = {
   "reward-hub": `${MENU_ICON_BASE}/event.avif`,
   "lucky-box": "/assets/3d/card-1-mobile.avif",
   "random-card": `${MENU_ICON_BASE}/card.avif`,
-  "exchange-money": "/assets/3d/diamon3.avif",
+  "exchange-money": "/assets/check-in/diamon3.avif",
   freespins: `${MENU_ICON_BASE}/slot.avif`,
 };
 

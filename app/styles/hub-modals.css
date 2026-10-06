@@ -85,6 +85,18 @@
   padding-inline: 0;
 }
 
+/** Hub sheet desktop — จำกัดความสูง · เลื่อนเนื้อหาใน shell (ไม่ตัดแถวล่าง) */
+@media (min-width: 1024px) {
+  .cosmic-mobile-sheet.cosmic-mobile-sheet--hub.vip-modal:not(.vip-modal--daily-check-in) {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .cosmic-mobile-sheet.vip-modal--gems-store {
+    max-height: min(88dvh, 700px);
+  }
+}
+
 /**
  * Lobby catalog modal — toolbar + sidebar + game grid (HubLobbyModalLayout)
  * อ้าง design.md § Dialog & Modal — Lobby catalog (XL)

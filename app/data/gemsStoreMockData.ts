@@ -16,7 +16,7 @@ export const GEMS_STORE_RESET_NOTICE =
   "รีเซ็ตรายวัน 00:00 · รีเซ็ตรายสัปดาห์ทุกวันจันทร์ 00:00";
 
 /** ไอคอง Gems หัวหน้าร้าน — public/assets/gems */
-export const GEMS_STORE_GEM_ASSET = "/assets/gems/gems.webp";
+export const GEMS_STORE_GEM_ASSET = "/assets/gems/diamond.avif";
 
 export interface GemsStorePackage {
   id: string;

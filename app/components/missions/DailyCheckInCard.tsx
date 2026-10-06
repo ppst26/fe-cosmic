@@ -63,6 +63,128 @@ export function DailyCheckInCard({
   const progressPercent = Math.min(100, Math.max(10, (checkedInCount / 7) * 100));
 
   const isHubSurface = !isStandalone;
+  const weekGridGap = isHubSurface ? "gap-1.5 sm:gap-2" : "gap-1 sm:gap-1.5";
+
+  const renderDayCell = (item: DailyCheckInDayReward) => {
+    const isClaimed = item.status === "claimed";
+    const isToday = item.status === "today";
+    const isLocked = item.status === "locked";
+    const isBig = item.isBigReward || item.day === 7;
+
+    return (
+      <div
+        key={item.day}
+        onClick={() => isToday && handleClaim(item.day)}
+        className={cn(
+          "group relative flex flex-col items-center justify-between rounded-xl text-center transition-all duration-200",
+          isHubSurface ? "min-h-[8rem] py-2.5 px-1 sm:min-h-[8.5rem] sm:py-3" : "min-h-[7.5rem] py-2 px-1 sm:min-h-[8rem]",
+          isClaimed && [
+            "border border-[#7747e5]/30 bg-gradient-to-b from-[#1c162b] to-[#110e1a]",
+            "shadow-[inset_0_1px_0_rgba(119,71,229,0.1)]",
+          ],
+          isToday && [
+            "border-1.5 border-[#7747e5] bg-gradient-to-b from-[#261c3e] to-[#14101e] cursor-pointer",
+            "shadow-[0_0_16px_rgba(119,71,229,0.45),inset_0_1px_0_rgba(255,255,255,0.12)] scale-[1.02] ring-1 ring-[#7747e5]/50",
+          ],
+          isLocked && [
+            "border border-white/8 bg-gradient-to-b from-[#1c1a24] to-[#121017] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] opacity-85 hover:border-white/15",
+          ],
+          justClaimed === item.day && "scale-105 ring-2 ring-[#7747e5]",
+        )}
+      >
+        {isClaimed ? (
+          <div
+            className="absolute -top-1.5 -right-1 z-20 flex h-4 w-4 sm:h-4.5 sm:w-4.5 items-center justify-center rounded-full border border-[#7747e5] bg-[#1a1230] text-[#c4b5fd] shadow-[0_0_8px_rgba(119,71,229,0.4)]"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-2.5 w-2.5 sm:h-3 sm:w-3"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+        ) : null}
+
+        <span
+          className={cn(
+            "font-medium leading-tight",
+            isHubSurface ? "text-sm sm:text-[0.9375rem]" : "text-xs sm:text-[13px]",
+            isClaimed ? "text-[#c4b5fd]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
+          )}
+        >
+          {item.label}
+        </span>
+
+        <div
+          className={cn(
+            "relative my-1 flex shrink-0 items-center justify-center sm:my-1.5",
+            isHubSurface
+              ? isBig
+                ? "h-[3.75rem] w-[3.75rem] sm:h-[4.25rem] sm:w-[4.25rem]"
+                : "h-[3.25rem] w-[3.25rem] sm:h-[3.75rem] sm:w-[3.75rem]"
+              : isBig
+                ? "h-14 w-14 sm:h-16 sm:w-16"
+                : "h-12 w-12 sm:h-14 sm:w-14",
+          )}
+        >
+          <div
+            className={cn(
+              "pointer-events-none absolute inset-[8%] rounded-full blur-[2px]",
+              isClaimed && "bg-[radial-gradient(circle,rgb(119_71_229/0.42)_0%,transparent_72%)]",
+              isToday &&
+                "bg-[radial-gradient(circle,rgb(91_140_255/0.5)_0%,rgb(119_71_229/0.35)_45%,transparent_75%)]",
+              isLocked && "bg-[radial-gradient(circle,rgb(255_255_255/0.12)_0%,transparent_70%)]",
+            )}
+            aria-hidden
+          />
+          <Image
+            src={isBig ? "/assets/check-in/diamonds.avif" : "/assets/check-in/diamond.avif"}
+            alt={isBig ? "Diamonds Gift Box" : "Diamond"}
+            fill
+            sizes={isBig ? "80px" : "72px"}
+            className={cn(
+              "relative z-[1] object-contain transition-transform duration-200",
+              isClaimed &&
+                "drop-shadow-[0_0_14px_rgba(119,71,229,0.75)] drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]",
+              isToday &&
+                "scale-[1.12] drop-shadow-[0_0_20px_rgba(119,71,229,0.95)] drop-shadow-[0_0_28px_rgba(91,140,255,0.45)]",
+              isLocked &&
+                "opacity-90 drop-shadow-[0_0_10px_rgba(119,71,229,0.25)] drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]",
+            )}
+          />
+        </div>
+
+        <span
+          className={cn(
+            "font-medium leading-tight mb-1 tabular-nums",
+            isHubSurface ? "text-sm sm:text-[0.9375rem]" : "text-xs sm:text-[13px]",
+            isClaimed ? "text-[#d8b4fe]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
+          )}
+        >
+          +{item.credits}
+        </span>
+
+        <div
+          className={cn(
+            "w-full rounded text-center font-medium transition-all whitespace-nowrap",
+            isHubSurface ? "py-1 text-xs sm:text-sm" : "py-0.5 text-xs",
+            isClaimed && "border border-[#7747e5]/30 bg-[#7747e5]/15 text-[#c4b5fd]",
+            isToday &&
+              "bg-gradient-to-r from-[#7747e5] to-[#5b8cff] text-white shadow-[0_0_10px_rgba(119,71,229,0.5)] group-hover:brightness-110 font-medium",
+            isLocked && "bg-white/6 text-[var(--text-muted)]",
+          )}
+        >
+          {isClaimed ? "รับแล้ว" : isToday ? "กดรับ" : "รอรับ"}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div
@@ -145,7 +267,7 @@ export function DailyCheckInCard({
           )}
         >
           <Image
-            src="/assets/3d/diamon3.avif"
+            src="/assets/check-in/diamon3.avif"
             alt="Diamonds"
             fill
             sizes="120px"
@@ -184,121 +306,14 @@ export function DailyCheckInCard({
         </span>
       </div>
 
-      {/* ── 7-Day Grid (จ. - อา.) ── */}
-      <div
-        className={cn(
-          "relative z-10 grid grid-cols-7",
-          isHubSurface ? "gap-1.5 sm:gap-2" : "gap-1 sm:gap-1.5",
-        )}
-      >
-        {days.map((item) => {
-          const isClaimed = item.status === "claimed";
-          const isToday = item.status === "today";
-          const isLocked = item.status === "locked";
-          const isBig = item.isBigReward || item.day === 7;
-
-          return (
-            <div
-              key={item.day}
-              onClick={() => isToday && handleClaim(item.day)}
-              className={cn(
-                "group relative flex flex-col items-center justify-between rounded-xl text-center transition-all duration-200",
-                isHubSurface ? "min-h-[7.25rem] py-2.5 px-1 sm:min-h-[7.75rem] sm:py-3" : "py-2 px-1",
-                isClaimed && [
-                  "border border-[#7747e5]/30 bg-gradient-to-b from-[#1c162b] to-[#110e1a]",
-                  "shadow-[inset_0_1px_0_rgba(119,71,229,0.1)]",
-                ],
-                isToday && [
-                  "border-1.5 border-[#7747e5] bg-gradient-to-b from-[#261c3e] to-[#14101e] cursor-pointer",
-                  "shadow-[0_0_16px_rgba(119,71,229,0.45),inset_0_1px_0_rgba(255,255,255,0.12)] scale-[1.02] ring-1 ring-[#7747e5]/50",
-                ],
-                isLocked && [
-                  "border border-white/8 bg-gradient-to-b from-[#1c1a24] to-[#121017] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] opacity-85 hover:border-white/15",
-                ],
-                justClaimed === item.day && "scale-105 ring-2 ring-[#7747e5]",
-              )}
-            >
-              {/* Checkmark Badge for Claimed */}
-              {isClaimed ? (
-                <div
-                  className="absolute -top-1.5 -right-1 z-20 flex h-4 w-4 sm:h-4.5 sm:w-4.5 items-center justify-center rounded-full border border-[#7747e5] bg-[#1a1230] text-[#c4b5fd] shadow-[0_0_8px_rgba(119,71,229,0.4)]"
-                  aria-hidden="true"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-2.5 w-2.5 sm:h-3 sm:w-3"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </div>
-              ) : null}
-
-              {/* Day Label */}
-              <span
-                className={cn(
-                  "font-medium leading-tight",
-                  isHubSurface ? "text-sm sm:text-[0.9375rem]" : "text-xs sm:text-[13px]",
-                  isClaimed ? "text-[#c4b5fd]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
-                )}
-              >
-                {item.label}
-              </span>
-
-              {/* Diamond Image */}
-              <div
-                className={cn(
-                  "relative my-0.5 flex items-center justify-center sm:my-1",
-                  isHubSurface ? "h-9 w-9 sm:h-10 sm:w-10" : "h-7.5 w-7.5 sm:h-9 sm:w-9",
-                )}
-              >
-                <Image
-                  src={isBig ? "/assets/3d/diamonds.avif" : "/assets/3d/diamond.avif"}
-                  alt={isBig ? "Diamonds Gift Box" : "Diamond"}
-                  width={isHubSurface ? (isBig ? 48 : 40) : isBig ? 40 : 32}
-                  height={isHubSurface ? (isBig ? 48 : 40) : isBig ? 40 : 32}
-                  className={cn(
-                    "object-contain transition-transform duration-200",
-                    isClaimed
-                      ? "drop-shadow-[0_0_8px_rgba(119,71,229,0.5)]"
-                      : isToday
-                        ? "drop-shadow-[0_0_12px_rgba(119,71,229,0.8)] scale-110"
-                        : "opacity-75 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]",
-                  )}
-                />
-              </div>
-
-              {/* Reward Amount */}
-              <span
-                className={cn(
-                  "font-medium leading-tight mb-1 tabular-nums",
-                  isHubSurface ? "text-sm sm:text-[0.9375rem]" : "text-xs sm:text-[13px]",
-                  isClaimed ? "text-[#d8b4fe]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
-                )}
-              >
-                +{item.credits}
-              </span>
-
-              {/* Action Button/Tag */}
-              <div
-                className={cn(
-                  "w-full rounded text-center font-medium transition-all whitespace-nowrap",
-                  isHubSurface ? "py-1 text-xs sm:text-sm" : "py-0.5 text-xs",
-                  isClaimed && "border border-[#7747e5]/30 bg-[#7747e5]/15 text-[#c4b5fd]",
-                  isToday &&
-                    "bg-gradient-to-r from-[#7747e5] to-[#5b8cff] text-white shadow-[0_0_10px_rgba(119,71,229,0.5)] group-hover:brightness-110 font-medium",
-                  isLocked && "bg-white/6 text-[var(--text-muted)]",
-                )}
-              >
-                {isClaimed ? "รับแล้ว" : isToday ? "กดรับ" : "รอรับ"}
-              </div>
-            </div>
-          );
-        })}
+      {/* ── 7-Day Grid — แถวบน 3 วัน · แถวล่าง 4 วัน ── */}
+      <div className={cn("daily-check-in-week-grid relative z-10 flex flex-col", weekGridGap)}>
+        <div className={cn("grid grid-cols-3", weekGridGap)}>
+          {days.slice(0, 3).map((item) => renderDayCell(item))}
+        </div>
+        <div className={cn("grid grid-cols-4", weekGridGap)}>
+          {days.slice(3, 7).map((item) => renderDayCell(item))}
+        </div>
       </div>
 
       {/* ── Cumulative Rewards Box (รางวัลเช็คอินสะสม) ── */}
@@ -376,7 +391,7 @@ export function DailyCheckInCard({
                   {isReached ? (
                     <div className="relative h-5.5 w-5.5 sm:h-6 sm:w-6">
                       <Image
-                        src="/assets/3d/diamonds.avif"
+                        src="/assets/check-in/diamonds.avif"
                         alt="Gift Box"
                         fill
                         sizes="32px"
@@ -386,7 +401,7 @@ export function DailyCheckInCard({
                   ) : (
                     <div className="relative h-5 w-5 sm:h-5.5 sm:w-5.5 opacity-40 grayscale flex items-center justify-center">
                       <Image
-                        src="/assets/3d/diamonds.avif"
+                        src="/assets/check-in/diamonds.avif"
                         alt="Locked Gift Box"
                         fill
                         sizes="32px"

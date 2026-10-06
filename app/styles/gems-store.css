@@ -37,6 +37,41 @@
   }
 }
 
+/** Gems hub modal (desktop) — กระชับให้พอดีจอ + เลื่อนดูเงื่อนไขได้ */
+@media (min-width: 1024px) {
+  .cosmic-mobile-sheet.vip-modal--gems-store .gems-store-hub--flat {
+    gap: 0.65rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .cosmic-mobile-sheet.vip-modal--gems-store .gems-store-summary {
+    gap: 0.5rem;
+    padding-block: 0.25rem;
+  }
+
+  .cosmic-mobile-sheet.vip-modal--gems-store .gems-store-summary__gem {
+    height: 3.25rem;
+    width: 3.25rem;
+  }
+
+  .cosmic-mobile-sheet.vip-modal--gems-store .gems-store-redeem-grid {
+    gap: 0.375rem;
+  }
+
+  .cosmic-mobile-sheet.vip-modal--gems-store .gems-store-redeem-grid .gems-store-redeem-card__inner {
+    padding: 0.4rem 0.3rem 0.3rem;
+  }
+
+  .cosmic-mobile-sheet.vip-modal--gems-store .gems-store-redeem-grid .gems-store-redeem-card__art {
+    max-width: 3.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .cosmic-mobile-sheet.vip-modal--gems-store .gems-store-redeem-grid .gems-store-redeem-card__title {
+    font-size: 0.6875rem;
+  }
+}
+
 .gems-store-redeem-card {
   border: 1px solid rgb(255 255 255 / 0.07);
   border-radius: var(--radius-panel);
@@ -46,22 +81,22 @@
   backdrop-filter: none;
 }
 
+/** พื้น inner รางวัล — ไล่จากเกือบดำบน → เทาเข้มล่าง (ไม่ใช่โทนปุ่มเหลือง/ม่วง hub) */
 .gems-store-redeem-card__inner {
+  --gems-redeem-inner-bg: linear-gradient(
+    180deg,
+    #121212 0%,
+    #141414 22%,
+    #1e1e1e 58%,
+    #2a2a2a 100%
+  );
+
   min-height: 0;
   border: 0;
   border-radius: calc(var(--radius-panel) - 6px);
   padding: 0.625rem 0.5rem 0.5rem;
-  box-shadow: none;
-}
-
-.gems-store-redeem-card__inner:not(.hub-modal-card) {
-  background: linear-gradient(
-    180deg,
-    rgb(12 10 18 / 1) 0%,
-    rgb(20 17 28 / 1) 38%,
-    rgb(34 30 46 / 0.98) 72%,
-    rgb(44 40 58 / 0.96) 100%
-  );
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.045);
+  background: var(--gems-redeem-inner-bg);
 }
 
 @media (min-width: 640px) {
@@ -77,22 +112,29 @@
     0 0 0 1px color-mix(in srgb, var(--accent-primary) 28%, transparent);
 }
 
-/* inner ใน hub — gradient เข้มบน · ไม่มี border / เงานอก */
+/* ทับ hub-modal-card ม่วง — inner ใช้ไล่เทาเดียวกันทุก hub / มือถือ / หน้าเต็ม */
 .hub-modal-shell .gems-store-redeem-card__inner.hub-modal-card,
+.cosmic-mobile-sheet .gems-store-redeem-card__inner.hub-modal-card,
 .gems-store-redeem-card__inner.hub-modal-card {
   border: 0;
   border-radius: 14px;
-  background: var(--inner-card-fill);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+  background: var(--gems-redeem-inner-bg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.045);
 }
 
 .hub-modal-shell .gems-store-redeem-card__inner.hub-modal-card.is-active,
+.cosmic-mobile-sheet .gems-store-redeem-card__inner.hub-modal-card.is-active,
 .gems-store-redeem-card__inner.hub-modal-card.is-active {
   border: 0;
-  background: color-mix(in srgb, var(--accent-primary) 12%, var(--inner-card-fill));
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 0 0 1px color-mix(in srgb, var(--accent-primary) 28%, transparent);
+  --gems-redeem-inner-bg: linear-gradient(
+    180deg,
+    #121212 0%,
+    #161616 24%,
+    #222222 60%,
+    #303030 100%
+  );
+  background: var(--gems-redeem-inner-bg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
 .gems-store-redeem-card__title {

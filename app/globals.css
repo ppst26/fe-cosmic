@@ -41,6 +41,7 @@
 @import "./styles/game-play.css";
 @import "./styles/notifications.css";
 @import "./styles/providers-filter.css";
+@import "./styles/motion-recent.css";
 
 /* ── Feature sections ── */
 @import "./styles/hall-of-fame.css";

@@ -138,6 +138,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                   hubId === "check-in" && "vip-modal--daily-check-in !p-0 overflow-hidden",
                   hubId === "account" && "vip-modal--account",
                   hubId === "activities" && "vip-modal--activities",
+                  hubId === "gems-store" && "vip-modal--gems-store",
                 ),
                 { variant: sheetVariant },
               )}
@@ -164,7 +165,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                     }
                   />
 
-                  <div className="cosmic-modal-shell--hub min-h-0 flex-1 overflow-y-auto pb-4 pt-1">
+                  <div className="cosmic-modal-shell--hub min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain pb-4 pt-1">
                     <HubModalBody hubId={hubId} options={options} />
                   </div>
                 </>
