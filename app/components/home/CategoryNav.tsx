@@ -104,18 +104,19 @@ export function CategoryNav({
     };
   }, [updateScrollProgress]);
 
-  useEffect(() => {
-    if (activeIdProp) {
-      setPickedId(activeIdProp);
-    }
-  }, [activeIdProp]);
+  /** sync highlight เมื่อ prop activeId เปลี่ยน — ปรับ state ระหว่าง render แทน effect */
+  const [prevActiveIdProp, setPrevActiveIdProp] = useState(activeIdProp);
+  if (prevActiveIdProp !== activeIdProp) {
+    setPrevActiveIdProp(activeIdProp);
+    if (activeIdProp) setPickedId(activeIdProp);
+  }
 
   /** route mode — sync จาก URL เมื่อ path เปลี่ยน (เช่น back/forward) */
-  useEffect(() => {
-    if (navigationMode === "route" && routeActiveId) {
-      setPickedId(routeActiveId);
-    }
-  }, [navigationMode, routeActiveId]);
+  const [prevRouteActiveId, setPrevRouteActiveId] = useState(routeActiveId);
+  if (prevRouteActiveId !== routeActiveId) {
+    setPrevRouteActiveId(routeActiveId);
+    if (navigationMode === "route" && routeActiveId) setPickedId(routeActiveId);
+  }
 
   /** แตะแล้ว highlight ทันที (optimistic) ไม่รอ route เสร็จ */
   const activeId =

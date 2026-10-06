@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // build output ของ lottery kit และไฟล์ dump ชั่วคราว
+    "exports/**",
+    ".tmp-*",
   ]),
 ]);
 

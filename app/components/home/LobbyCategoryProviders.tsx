@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import type { CategoryId } from "../../types/lobby";
 import { CategorySectionHead } from "./CategorySectionHead";
 import { ProviderCategoryToolbar } from "../slots/ProviderCategoryToolbar";
@@ -115,7 +115,8 @@ export function LobbyCategoryProviders({ categoryId }: LobbyCategoryProvidersPro
   if (categoryId === "home") {
     return null;
   }
-  return <LobbyCategoryProvidersContent categoryId={categoryId} />;
+  /** key = รีเซ็ตค่ายที่เลือกและคำค้นเมื่อเปลี่ยนหมวด */
+  return <LobbyCategoryProvidersContent key={categoryId} categoryId={categoryId} />;
 }
 
 const LOBBY_PROVIDER_FILTER_ID = "all-in-one";
@@ -123,11 +124,6 @@ const LOBBY_PROVIDER_FILTER_ID = "all-in-one";
 function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [slotProviderId, setSlotProviderId] = useState<string | null>(null);
-
-  useEffect(() => {
-    setSlotProviderId(null);
-    setSearchQuery("");
-  }, [categoryId]);
 
   const slotsContent = useMemo(() => {
     let grid = GRID_SLOT_PROVIDERS.filter((p) => matchesGridFilter(p, LOBBY_PROVIDER_FILTER_ID));

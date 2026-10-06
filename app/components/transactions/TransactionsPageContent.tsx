@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import type { TransactionKind } from "@/app/types/transaction";
 import {
   countPromotionClaims,
@@ -67,9 +67,13 @@ export function TransactionsPageContent({
     [allItems, appliedFrom, appliedTo],
   );
 
-  useEffect(() => {
+  /** เปลี่ยนแท็บหรือช่วงวันที่ → กลับหน้า 1 (ปรับ state ระหว่าง render แทน effect) */
+  const pageResetKey = `${activeKind}|${appliedFrom.getTime()}|${appliedTo.getTime()}`;
+  const [prevPageResetKey, setPrevPageResetKey] = useState(pageResetKey);
+  if (prevPageResetKey !== pageResetKey) {
+    setPrevPageResetKey(pageResetKey);
     setBetPage(1);
-  }, [activeKind, appliedFrom, appliedTo]);
+  }
 
   const betTotalPages = Math.max(1, Math.ceil(items.length / TRANSACTION_BET_PAGE_SIZE));
   const betPageSafe = Math.min(Math.max(1, betPage), betTotalPages);

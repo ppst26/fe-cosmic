@@ -96,9 +96,15 @@ export function VipRankEmblem({
     setUseStacked(needsStackedAlpha());
   }, []);
 
+  /** วิดีโอใหม่ → ยกเลิกโหมดเจาะดำระหว่าง render · ref รีเซ็ตใน effect (ห้ามเขียน ref ตอน render) */
+  const [prevVideoSrc, setPrevVideoSrc] = useState(videoSrc);
+  if (prevVideoSrc !== videoSrc) {
+    setPrevVideoSrc(videoSrc);
+    setKnockOutBlack(false);
+  }
+
   useEffect(() => {
     alphaSettledRef.current = false;
-    setKnockOutBlack(false);
   }, [videoSrc]);
 
   useEffect(() => {

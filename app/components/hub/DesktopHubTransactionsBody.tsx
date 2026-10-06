@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import type { TransactionKind } from "@/app/types/transaction";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { TransactionsPageContent } from "@/app/components/transactions/TransactionsPageContent";
@@ -16,9 +16,12 @@ export function DesktopHubTransactionsBody({
   const { isAuthenticated } = useAuth();
   const [activeKind, setActiveKind] = useState<TransactionKind>(initialKind);
 
-  useEffect(() => {
+  /** เปิดจากลิงก์อื่น (เช่น ?kind=withdraw) ขณะ modal เปิดอยู่ — sync แท็บระหว่าง render */
+  const [prevInitialKind, setPrevInitialKind] = useState(initialKind);
+  if (prevInitialKind !== initialKind) {
+    setPrevInitialKind(initialKind);
     setActiveKind(initialKind);
-  }, [initialKind]);
+  }
 
   return (
     <TransactionsPageContent

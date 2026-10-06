@@ -50,6 +50,11 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
   const [state, setState] = useState<HubModalState | null>(null);
   const { open: openLogin } = useOverlayLayer("login");
 
+  /*
+   * sync กับ URL (ระบบภายนอก) และสั่ง redirect / เปิด login ใน effect เดียวกัน — setState ที่นี่ตั้งใจ
+   * แยกเป็น derived state ไม่ได้เพราะ openHub ใส่ options ที่ไม่อยู่ใน URL (เช่น cashbackTab)
+   */
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const layer = readOverlayLayer(searchParams);
     if (layer !== "hub") {
@@ -93,6 +98,7 @@ export function DesktopHubModalProvider({ children }: { children: React.ReactNod
       return options ? { id: hubId, options } : prev?.id === hubId ? prev : { id: hubId };
     });
   }, [isAuthenticated, isLoading, openLogin, pathname, router, searchParams]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const closeHub = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());

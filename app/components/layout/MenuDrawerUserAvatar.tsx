@@ -34,11 +34,17 @@ export function MenuDrawerUserAvatar({ isMenuOpen = false }: MenuDrawerUserAvata
   const { isAuthenticated, isLoading } = useAuth();
   const [profile, setProfile] = useState<ProfileUser | null>(cachedProfile);
 
+  /** ออกจากระบบ — ล้างรูปเดิมระหว่าง render (กันรูปคนก่อนค้างตอน login ใหม่) */
+  const [wasAuthenticated, setWasAuthenticated] = useState(isAuthenticated);
+  if (wasAuthenticated !== isAuthenticated) {
+    setWasAuthenticated(isAuthenticated);
+    if (!isAuthenticated) setProfile(null);
+  }
+
   useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
       cachedProfile = null;
-      setProfile(null);
       return;
     }
     let active = true;

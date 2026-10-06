@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
 import {
@@ -56,9 +56,12 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
     setConfirmOpen(false);
   };
 
-  useEffect(() => {
+  /** ปิดจากภายนอก (isOpen → false) — รีเซ็ตฟอร์มระหว่าง render แทน effect */
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  if (wasOpen !== isOpen) {
+    setWasOpen(isOpen);
     if (!isOpen) resetFlow();
-  }, [isOpen]);
+  }
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {

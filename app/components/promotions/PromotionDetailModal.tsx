@@ -19,35 +19,31 @@ interface PromotionDetailModalProps {
 export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModalProps) {
   const open = detailId !== null;
   const { fetchDetail, getCachedDetail } = usePromotionsCatalog();
-  const [content, setContent] = useState<PromotionDetailContent | null>(null);
-  const [loading, setLoading] = useState(false);
+  /** ผลโหลดล่าสุดผูกกับ id — content / loading คำนวณตอน render ไม่ต้อง sync state ใน effect */
+  const [fetched, setFetched] = useState<{
+    id: PromotionDetailId;
+    content: PromotionDetailContent | null;
+  } | null>(null);
+
+  const cached = detailId ? getCachedDetail(detailId) : null;
 
   useEffect(() => {
-    if (!detailId) {
-      setContent(null);
-      return;
-    }
-
-    const cached = getCachedDetail(detailId);
-    if (cached) {
-      setContent(cached);
-      return;
-    }
+    if (!detailId || getCachedDetail(detailId)) return;
 
     let cancelled = false;
-    setLoading(true);
     fetchDetail(detailId)
+      .catch(() => null)
       .then((detail) => {
-        if (!cancelled) setContent(detail);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) setFetched({ id: detailId, content: detail });
       });
 
     return () => {
       cancelled = true;
     };
   }, [detailId, fetchDetail, getCachedDetail]);
+
+  const content = cached ?? (fetched?.id === detailId ? fetched.content : null);
+  const loading = detailId !== null && !cached && fetched?.id !== detailId;
 
   const handleOpenChange = (next: boolean) => {
     if (!next) onClose();

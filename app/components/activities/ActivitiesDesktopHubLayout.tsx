@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { type ActivityHubItem } from "@/app/data/activitiesHubMockData";
 import { fetchActivities } from "@/lib/api/activities";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
@@ -49,15 +49,11 @@ function ActivityMasterRow({
  */
 export function ActivitiesDesktopHubLayout() {
   const activities = fetchActivities();
-  const [selectedId, setSelectedId] = useState(activities[0]?.id ?? "");
+  const [pickedId, setSelectedId] = useState(activities[0]?.id ?? "");
 
-  useEffect(() => {
-    if (!activities.some((item) => item.id === selectedId)) {
-      setSelectedId(activities[0]?.id ?? "");
-    }
-  }, [selectedId, activities]);
-
-  const selected = activities.find((item) => item.id === selectedId) ?? activities[0];
+  /** id ที่เลือกหายจากรายการ → ใช้รายการแรกแทน (คำนวณตอน render ไม่ต้อง sync state) */
+  const selected = activities.find((item) => item.id === pickedId) ?? activities[0];
+  const selectedId = selected?.id ?? "";
 
   return (
     <div className="activities-desktop-hub activities-desktop-hub--flat grid min-h-[min(58dvh,560px)] lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:items-stretch lg:gap-5">

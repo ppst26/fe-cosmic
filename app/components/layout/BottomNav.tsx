@@ -1,9 +1,10 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useMemo } from "react";
 import { createPortal } from "react-dom";
 
+import { useIsClient } from "@/app/hooks/useIsClient";
 import type { BottomNavItem } from "@/app/types/lobby";
 import { cn } from "@/lib/utils";
 
@@ -155,13 +156,9 @@ export function BottomNav({
   onMenuClick,
   isMenuOpen,
 }: BottomNavProps) {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const pathname = usePathname();
   const router = useRouter();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const { openDeposit } = useDeposit();
   const { openWithdraw } = useWithdraw();

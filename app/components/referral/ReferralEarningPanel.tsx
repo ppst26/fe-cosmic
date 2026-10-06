@@ -69,9 +69,12 @@ export function ReferralEarningPanel({
     return history.slice(start, start + pageSize);
   }, [history, currentPage, pageSize]);
 
-  React.useEffect(() => {
+  /** ข้อมูลประวัติชุดใหม่ → กลับหน้า 1 (ปรับ state ระหว่าง render แทน effect) */
+  const [prevHistory, setPrevHistory] = useState(history);
+  if (prevHistory !== history) {
+    setPrevHistory(history);
     setPage(1);
-  }, [history]);
+  }
 
   const rangeStart = total === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const rangeEnd = Math.min(currentPage * pageSize, total);

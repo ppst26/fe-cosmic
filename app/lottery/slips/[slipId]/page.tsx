@@ -7,6 +7,14 @@ import { LotterySlipSummary } from "@/app/components/lottery/LotterySlipSummary"
 import { fetchLotterySlip } from "@/lib/lottery/fetchLotterySlip";
 import type { LotterySubmittedSlip } from "@/app/types/lotterySlip";
 
+/** รับเฉพาะ path ภายในเว็บ — กัน open redirect เช่น ?continue=https://evil.com หรือ //evil.com */
+function toSafeInternalHref(href: string | null): string | null {
+  if (!href || !href.startsWith("/") || href.startsWith("//") || href.startsWith("/\\")) {
+    return null;
+  }
+  return href;
+}
+
 /**
  * หน้าสรุปโพยหลังส่งแทง — /lottery/slips/[slipId]
  */
@@ -14,24 +22,28 @@ export default function LotterySlipSummaryPage() {
   const urlParams = useParams();
   const searchParams = useSearchParams();
   const slipId = (urlParams?.slipId as string) || "";
-  const continuePlayHref = searchParams.get("continue");
+  const continuePlayHref = toSafeInternalHref(searchParams.get("continue"));
 
-  const [slip, setSlip] = useState<LotterySubmittedSlip | null>(null);
-  const [loading, setLoading] = useState(true);
+  /** ผลโหลดผูกกับ slipId — loading คำนวณตอน render ไม่ต้อง set ใน effect */
+  const [fetched, setFetched] = useState<{
+    id: string;
+    slip: LotterySubmittedSlip | null;
+  } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    void fetchLotterySlip(slipId).then((data) => {
-      if (!cancelled) {
-        setSlip(data);
-        setLoading(false);
-      }
-    });
+    void fetchLotterySlip(slipId)
+      .catch(() => null)
+      .then((data) => {
+        if (!cancelled) setFetched({ id: slipId, slip: data });
+      });
     return () => {
       cancelled = true;
     };
   }, [slipId]);
+
+  const loading = fetched?.id !== slipId;
+  const slip = loading ? null : fetched.slip;
 
   return (
     <LobbyDesktopPageShell

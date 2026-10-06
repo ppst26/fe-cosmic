@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUrlSearchParams } from "@/app/hooks/useUrlSearchParams";
 import {
@@ -19,9 +19,15 @@ export function useOverlayLayer(layer: OverlayLayer) {
   const searchParams = useUrlSearchParams();
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
+  /** URL เปลี่ยน (รวมปุ่มย้อน) → sync isOpen ระหว่าง render แทน effect */
+  const [syncedFrom, setSyncedFrom] = useState<{
+    searchParams: typeof searchParams;
+    layer: OverlayLayer;
+  } | null>(null);
+  if (syncedFrom?.searchParams !== searchParams || syncedFrom.layer !== layer) {
+    setSyncedFrom({ searchParams, layer });
     setIsOpen(readOverlayLayer(searchParams) === layer);
-  }, [searchParams, layer]);
+  }
 
   const open = useCallback(
     (extra?: Record<string, string>) => {

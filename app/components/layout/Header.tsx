@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useIsClient } from "@/app/hooks/useIsClient";
 import { CosmicbetLogo, SearchIcon, HamburgerMenuIcon, HistoryIcon } from "../ui/Icons";
 import { HeaderWalletChip } from "./HeaderWalletChip";
 import { useAuth } from "../auth/AuthProvider";
@@ -48,13 +49,9 @@ export function Header({
     useAuth();
   const { openDeposit } = useDeposit();
   const { openHub } = useDesktopHubModal();
-  const [isClientReady, setIsClientReady] = useState(false);
+  const isClientReady = useIsClient();
 
   const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    setIsClientReady(true);
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 4);

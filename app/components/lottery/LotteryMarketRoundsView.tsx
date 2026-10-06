@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
+import { useIsClient } from "@/app/hooks/useIsClient";
 import { getLotteryCatalogEntry } from "@/app/data/lotteryCatalogMockData";
 import { fetchLotteryPlayRounds, fetchThaiLottoBoard } from "@/lib/api/lotteryContent";
 import { LotteryMarketShell } from "./LotteryMarketShell";
@@ -17,10 +18,7 @@ interface LotteryMarketRoundsViewProps {
 export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewProps) {
   const entry = getLotteryCatalogEntry(marketSlug);
   /** รอบอิงเวลาจริง — สร้างหลัง mount เพื่อไม่ให้ SSR/client คนละ snapshot */
-  const [roundsReady, setRoundsReady] = useState(false);
-  useEffect(() => {
-    setRoundsReady(true);
-  }, []);
+  const roundsReady = useIsClient();
   const rounds = useMemo(
     () => (roundsReady ? fetchLotteryPlayRounds(marketSlug) : []),
     [marketSlug, roundsReady],

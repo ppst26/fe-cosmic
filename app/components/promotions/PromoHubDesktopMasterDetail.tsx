@@ -27,8 +27,11 @@ interface PromoMasterListItem {
 export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKind }) {
   const { catalog, fetchDetail, getCachedDetail } = usePromotionsCatalog();
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-  const [detailContent, setDetailContent] = useState<PromotionDetailContent | null>(null);
+  const [pickedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [fetchedDetail, setFetchedDetail] = useState<{
+    id: PromotionDetailId;
+    content: PromotionDetailContent | null;
+  } | null>(null);
 
   const listItems = useMemo(() => {
     const items: PromoMasterListItem[] = [];
@@ -69,40 +72,31 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
     return items;
   }, [catalog, categoryFilter, kind]);
 
-  useEffect(() => {
-    if (listItems.length === 0) {
-      setSelectedItemId(null);
-      return;
-    }
-    setSelectedItemId((current) => {
-      if (current && listItems.some((item) => item.id === current)) return current;
-      return listItems[0].id;
-    });
-  }, [listItems]);
-
-  const selectedItem = listItems.find((item) => item.id === selectedItemId) ?? null;
+  /** id ที่เลือกหายจากรายการ (เปลี่ยนหมวด) → ใช้รายการแรกแทน คำนวณตอน render */
+  const selectedItem =
+    listItems.find((item) => item.id === pickedItemId) ?? listItems[0] ?? null;
+  const selectedItemId = selectedItem?.id ?? null;
+  const selectedDetailId = selectedItem?.detailId ?? null;
 
   useEffect(() => {
-    if (!selectedItem) {
-      setDetailContent(null);
-      return;
-    }
-
-    const cached = getCachedDetail(selectedItem.detailId);
-    if (cached) {
-      setDetailContent(cached);
-      return;
-    }
+    if (!selectedDetailId || getCachedDetail(selectedDetailId)) return;
 
     let cancelled = false;
-    fetchDetail(selectedItem.detailId).then((detail) => {
-      if (!cancelled) setDetailContent(detail);
-    });
+    fetchDetail(selectedDetailId)
+      .catch(() => null)
+      .then((detail) => {
+        if (!cancelled) setFetchedDetail({ id: selectedDetailId, content: detail });
+      });
 
     return () => {
       cancelled = true;
     };
-  }, [selectedItem, fetchDetail, getCachedDetail]);
+  }, [selectedDetailId, fetchDetail, getCachedDetail]);
+
+  const detailContent = selectedDetailId
+    ? (getCachedDetail(selectedDetailId) ??
+      (fetchedDetail?.id === selectedDetailId ? fetchedDetail.content : null))
+    : null;
 
   const emptyMessage =
     kind === "promotions"

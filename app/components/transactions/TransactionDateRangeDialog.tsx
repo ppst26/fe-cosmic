@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Dialog } from "radix-ui";
 import {
   THAI_MONTH_OPTIONS,
@@ -35,12 +35,16 @@ export function TransactionDateRangeDialog({
   const [rangeStart, setRangeStart] = useState<Date | null>(from);
   const [rangeEnd, setRangeEnd] = useState<Date | null>(to);
 
-  useEffect(() => {
-    if (!open) return;
-    setViewMonth(startOfDay(from));
-    setRangeStart(from);
-    setRangeEnd(to);
-  }, [open, from, to]);
+  /** เปิด dialog หรือช่วงจากภายนอกเปลี่ยนขณะเปิด → เริ่มจากช่วงปัจจุบัน (ปรับระหว่าง render) */
+  const [synced, setSynced] = useState({ open, from, to });
+  if (synced.open !== open || synced.from !== from || synced.to !== to) {
+    setSynced({ open, from, to });
+    if (open) {
+      setViewMonth(startOfDay(from));
+      setRangeStart(from);
+      setRangeEnd(to);
+    }
+  }
 
   const cells = useMemo(() => getCalendarMonthCells(viewMonth), [viewMonth]);
 

@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "export:lottery-kit": "node scripts/export-lottery-kit.mjs"
+    "export:lottery-kit": "node scripts/export-lottery-kit.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test \"lib/**/*.test.ts\" \"scripts/**/*.test.ts\""
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -29,6 +31,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   },
   "packageManager": "pnpm@10.11.0"

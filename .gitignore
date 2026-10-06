@@ -44,3 +44,6 @@ yarn-error.log*
 
 # generated lottery export bundle (pnpm export:lottery-kit)
 exports/lottery-kit/dist/
+
+# scratch dumps
+.tmp-*
