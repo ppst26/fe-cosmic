@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 interface NotificationBellButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   showBadge?: boolean;
+  /** มือถือ header — ไอคอนเส้นอย่างเดียว ไม่มี glass/bg */
+  plain?: boolean;
 }
 
 /**
@@ -15,7 +17,7 @@ export const NotificationBellButton = React.forwardRef<
   HTMLButtonElement,
   NotificationBellButtonProps
 >(function NotificationBellButton(
-  { className, showBadge = true, type = "button", ...props },
+  { className, showBadge = true, plain = false, type = "button", ...props },
   ref,
 ) {
   return (
@@ -23,7 +25,10 @@ export const NotificationBellButton = React.forwardRef<
       ref={ref}
       type={type}
       className={cn(
-        "header-desktop-bar__icon-btn glass-card--soft glass-icon-btn relative inline-flex shrink-0 items-center justify-center rounded-(--header-chip-radius) border-0",
+        "relative inline-flex shrink-0 items-center justify-center border-0",
+        plain
+          ? "bg-transparent p-0 text-white/90 shadow-none hover:bg-transparent hover:text-white active:scale-95"
+          : "header-desktop-bar__icon-btn glass-card--soft glass-icon-btn rounded-(--header-chip-radius)",
         className,
       )}
       aria-label={props["aria-label"] ?? "การแจ้งเตือน"}

@@ -176,8 +176,8 @@ export function SportProviderCards({
       </div>
       ) : null}
 
-      {/* กริดแสดงผล 3 คอลัมน์แนวตั้งตามแบบภาพอ้างอิง */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+      {/* มือถือ: carousel 3 ใบ + peek | เดสก์ท็อป: กริด (carousel.css) */}
+      <div className="lobby-category-provider-track carousel-track carousel-lobby-category">
         {items.map((item) => {
           const hasCover = Boolean(item.coverSrc);
 
@@ -186,7 +186,7 @@ export function SportProviderCards({
             key={item.id}
             href={item.href}
             aria-label={hasCover ? `${item.title} — ${item.provider}` : undefined}
-            className={`group relative flex aspect-[3/4.2] w-full min-w-0 flex-col justify-between overflow-hidden rounded-[var(--radius-panel)] shadow-md transition-all duration-200 hover:brightness-110 active:scale-[0.98] ${
+            className={`group relative flex aspect-[3/4] w-full min-w-0 flex-col justify-between overflow-hidden rounded-[var(--radius-card)] border border-white/[0.08] shadow-md transition-all duration-200 hover:brightness-110 active:scale-[0.98] ${
               hasCover
                 ? "bg-[var(--surface-mid)] p-0"
                 : `bg-gradient-to-b ${item.bgGradient ?? "from-[#1e1b4b] to-[#0f172a]"} p-2 sm:p-2.5`
@@ -197,7 +197,7 @@ export function SportProviderCards({
                 src={item.coverSrc}
                 alt=""
                 fill
-                sizes="(min-width: 1024px) 11vw, (min-width: 768px) 20vw, 33vw"
+                sizes="(min-width: 1024px) 11vw, 42vw"
                 className="object-cover"
               />
             ) : null}

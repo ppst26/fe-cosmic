@@ -120,7 +120,13 @@
     padding-block: var(--space-1);
   }
 
-  .page-shell--lobby .lobby-mobile-home-sections .carousel-games,
+  /* แถวเกมยอดฮิต / SLOTS / คาสิโน ฯลฯ — bleed ให้เห็น peek ชิดขอบจอ */
+  .page-shell--lobby .lobby-mobile-home-sections .carousel-track.carousel-games {
+    margin-inline: -0.5rem;
+    padding-inline: 0.5rem;
+    scroll-padding-inline: 0.5rem;
+  }
+
   .page-shell--lobby .lobby-mobile-home-sections .carousel-popular,
   .page-shell--lobby .lobby-mobile-home-sections .carousel-providers {
     --carousel-gap: var(--space-3);
@@ -352,6 +358,16 @@
 /* กริดค่ายใต้ CategoryNav — animate เฉพาะส่วนใต้ toolbar */
 .lobby-category-providers {
   transform-origin: top center;
+}
+
+@media (max-width: 1023px) {
+  .lobby-category-providers .lobby-category-provider-track.carousel-track,
+  .lobby-category-providers .lobby-category-slot-track.carousel-track {
+    margin-inline: -0.5rem;
+    padding-inline: 0.5rem;
+    scroll-padding-inline: 0.5rem;
+    padding-block: 2px;
+  }
 }
 
 .lobby-category-providers__swap {

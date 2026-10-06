@@ -158,11 +158,19 @@ export function HomeLobbyPage() {
                     onClose={closeMenu}
                   />
 
-                  <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col px-3 pb-8 pt-0 lg:mx-0 lg:max-w-none lg:px-0 lg:pt-0">
+                  <main className="page-shell page-shell--lobby mx-auto flex w-full min-h-0 min-w-0 max-w-[var(--content-max)] flex-col max-lg:px-2 pb-8 pt-0 sm:max-lg:px-2.5 lg:mx-0 lg:max-w-none lg:px-0 lg:pt-0">
                     {/* มือถือ: hero → ประกาศ → โปร — ระยะแนบให้คอนเทนต์ต่อเนื่อง (หน้าแรก) */}
                     <div className="flex flex-col gap-2.5 lg:hidden">
-                      <WelcomeBanner />
-                      <div className="-mx-3">
+                      {/* hero carousel — ซ่อนไว้ก่อน (เปิดเมื่อมี asset พร้อม) */}
+                      <div className="hidden" aria-hidden="true">
+                        <WelcomeBanner />
+                      </div>
+
+                      <div className="-mx-2 sm:-mx-2.5">
+                        <PromoCarousel items={homeBanners.promoCarousel} />
+                      </div>
+
+                      <div className="-mx-2 mt-2.5 sm:-mx-2.5">
                         <LobbyAnnouncementMarquee
                           messages={lobbyAnnouncements}
                           variant="mobile"
@@ -188,8 +196,6 @@ export function HomeLobbyPage() {
                           </button>
                         </div>
                       )}
-
-                      <PromoCarousel items={homeBanners.promoCarousel} />
                     </div>
 
                     <div
@@ -200,7 +206,7 @@ export function HomeLobbyPage() {
 
                     {/* มือถือ: host คงความสูงใน flow · แถบ fixed ตอนประกบ header จนสุดหน้า */}
                     <div
-                      className="lobby-mobile-category-sticky-host -mx-3 mt-1 lg:hidden"
+                      className="lobby-mobile-category-sticky-host -mx-2 mt-1 sm:-mx-2.5 lg:hidden"
                       style={
                         isCategoryNavStuck && categoryBarHeight > 0
                           ? { height: `${categoryBarHeight}px` }
@@ -210,7 +216,7 @@ export function HomeLobbyPage() {
                       <div
                         ref={categoryBarRef}
                         className={cn(
-                          "lobby-mobile-category-sticky w-full min-w-0 px-3",
+                          "lobby-mobile-category-sticky w-full min-w-0 px-2 sm:px-2.5",
                           "py-1.5",
                           isCategoryNavStuck && "is-stuck",
                         )}

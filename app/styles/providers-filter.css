@@ -162,6 +162,22 @@
   scroll-padding-inline: 0;
 }
 
+@media (max-width: 1023px) {
+  .promo-carousel__track {
+    gap: 8px;
+    padding-inline: 8px;
+    scroll-padding-inline: 8px;
+    box-sizing: border-box;
+  }
+
+  .promo-carousel__slide {
+    flex: 0 0 calc(100% - 16px);
+    width: calc(100% - 16px);
+    max-width: none;
+    box-sizing: border-box;
+  }
+}
+
 .welcome-banner__dots-pill {
   display: inline-flex;
   align-items: center;

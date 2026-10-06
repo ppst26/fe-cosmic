@@ -441,13 +441,13 @@ export function SlotProviderCards({
       </div>
       ) : null}
 
-      {/* 2. กริดค่ายเกม 3 คอลัมน์ */}
-      <div className="slot-provider-grid grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-8">
+      {/* 2. มือถือ: carousel ค่ายสล็อต | lg+: 8 คอลัมน์ (carousel.css) */}
+      <div className="slot-provider-grid lobby-category-slot-track carousel-track carousel-lobby-slots">
         {gridProviders.map((item) => {
           const hasCover = Boolean(item.coverSrc);
 
           const href = item.href || `/slots/${item.id}`;
-          const gridClasses = `${cardSurfaceClass} flex aspect-square flex-col overflow-hidden rounded-[var(--radius-panel)] active:scale-[0.98] ${
+          const gridClasses = `${cardSurfaceClass} relative flex aspect-square w-full min-w-0 flex-col overflow-hidden rounded-[var(--radius-card)] border border-white/[0.08] active:scale-[0.98] ${
               hasCover
                 ? "bg-[var(--surface-mid)]"
                 : `bg-gradient-to-b ${item.bgGradient}`
@@ -460,7 +460,7 @@ export function SlotProviderCards({
                 src={item.coverSrc}
                 alt=""
                 fill
-                sizes="(min-width: 768px) 20vw, 33vw"
+                sizes="(min-width: 1024px) 10vw, 38vw"
                 className="object-cover"
               />
             )}

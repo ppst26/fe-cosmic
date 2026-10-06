@@ -100,7 +100,7 @@ export function Header({
       <header
         data-scrolled={mobileSticky && isScrolled ? "true" : undefined}
         className={cn(
-          "w-full min-w-0 border-0 px-3.5 pb-2 sm:px-4 lg:hidden",
+          "w-full min-w-0 border-0 px-2 pb-2 sm:px-2.5 lg:hidden",
           mobileSticky
             ? "cosmic-mobile-chrome-surface sticky top-0 z-50 pt-[calc(env(safe-area-inset-top,0px)+8px)]"
             : "relative bg-transparent pt-2",
@@ -161,8 +161,9 @@ export function Header({
             {showWallet ? (
               <div className="relative z-10 flex min-w-0 shrink-0 items-center gap-1.5 overflow-visible">
                 <NotificationBellButton
+                  plain
                   onClick={openNotifications}
-                  className="!h-8 !w-8 rounded-md bg-[#222228] text-white/90 hover:bg-[#2c2c34]"
+                  className="h-8 w-8"
                   aria-haspopup="dialog"
                 />
                 <HeaderWalletChip
