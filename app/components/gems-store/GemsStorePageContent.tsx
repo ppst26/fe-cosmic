@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { fetchGemsStore } from "@/lib/api/gemsStore";
+import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
+import type { GemsStoreData } from "@/lib/api/gemsStore";
+import { useGemsStore } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
 import { GemsRedeemConfirmDialog } from "./GemsRedeemConfirmDialog";
 import { ChevronDownIcon } from "../ui/Icons";
@@ -26,7 +29,26 @@ export function GemsStorePageContent({
   initialBalance?: number;
   embedded?: boolean;
 }) {
-  const gemsStore = fetchGemsStore();
+  const gemsStore = useGemsStore();
+  return (
+    <ResourceGate resource={gemsStore} loadingLabel="กำลังโหลดร้านค้าเพชร…" errorTitle="โหลดร้านค้าเพชรไม่สำเร็จ">
+      {(data) => (
+        <GemsStoreView gemsStore={data} initialBalance={initialBalance} embedded={embedded} />
+      )}
+    </ResourceGate>
+  );
+}
+
+/** เนื้อหาหลังโหลดเสร็จ — ยอดเพชรเริ่มต้นจาก API แล้วหักในเครื่องหลังแลก */
+function GemsStoreView({
+  gemsStore,
+  initialBalance,
+  embedded,
+}: {
+  gemsStore: GemsStoreData;
+  initialBalance?: number;
+  embedded: boolean;
+}) {
   const [gemsBalance, setGemsBalance] = useState(initialBalance ?? gemsStore.balance);
   const [termsOpen, setTermsOpen] = useState(false);
   const [confirmPkg, setConfirmPkg] = useState<GemsStorePackage | null>(null);
@@ -58,7 +80,7 @@ export function GemsStorePageContent({
       )}
     >
       <header className={cn(!embedded && "flex flex-col")}>
-        <GemsStoreSummaryCard gemsBalance={gemsBalance} />
+        <GemsStoreSummaryCard gemsBalance={gemsBalance} store={gemsStore} />
       </header>
 
       <section aria-labelledby="gems-store-redeem-heading">
@@ -142,7 +164,7 @@ function GemsRedeemCard({
 }) {
   const redeemLabel = affordable ? "แลก" : "ไม่พอ";
   const redeemAria = affordable ? `แลกรางวัล ${formatGemsCredits(pkg.credits)}` : "Gems ไม่เพียงพอ";
-  const gemAsset = fetchGemsStore().gemAsset;
+  const gemAsset = GEMS_STORE_GEM_ASSET;
 
   return (
     <article

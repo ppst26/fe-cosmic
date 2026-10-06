@@ -14,8 +14,10 @@ import {
   LUCKY_WHEEL_TICKETS_PER_SPIN,
 } from "@/app/data/luckyWheelMockData";
 import { LUCKY_WHEEL_HISTORY_PAGE_SIZE } from "@/lib/uiConstants";
+import type { ApiResult } from "./http";
+import { mockResult } from "./mock";
 
-export function fetchWheel() {
+function wheelMock() {
   return {
     segments: LUCKY_WHEEL_SEGMENTS,
     benefits: LUCKY_WHEEL_BENEFITS,
@@ -32,4 +34,14 @@ export function fetchWheel() {
     initialGems: LUCKY_WHEEL_INITIAL_GEMS,
     initialTickets: LUCKY_WHEEL_INITIAL_TICKETS,
   };
+}
+
+/** รูปข้อมูลที่ backend ต้องส่ง — GET /api/wheel (ตอนนี้อนุมานจาก mock) */
+export type WheelData = ReturnType<typeof wheelMock>;
+
+/**
+ * ต่อ backend: return apiFetch<WheelData>("/api/wheel")
+ */
+export function fetchWheel(): Promise<ApiResult<WheelData>> {
+  return mockResult(wheelMock());
 }

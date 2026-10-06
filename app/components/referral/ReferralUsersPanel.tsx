@@ -9,7 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchReferralUsers } from "@/lib/api/referral";
+import { useReferralUsers } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
 import { REFERRAL_USERS_PAGE_SIZE } from "@/lib/uiConstants";
@@ -20,7 +21,17 @@ import type { ReferralUserRow } from "@/app/types/referral";
  * แท็บ Referral users — ตารางเพื่อนที่แนะนำ + pagination (10 แถว/หน้า)
  * ใช้ใน ReferralPageContent
  */
-export function ReferralUsersPanel({ users = fetchReferralUsers() }: { users?: ReferralUserRow[] }) {
+export function ReferralUsersPanel({ users: usersProp }: { users?: ReferralUserRow[] }) {
+  const usersResource = useReferralUsers();
+  if (usersProp) return <ReferralUsersTable users={usersProp} />;
+  return (
+    <ResourceGate resource={usersResource} loadingLabel="กำลังโหลดรายชื่อเพื่อน…" errorTitle="โหลดรายชื่อเพื่อนไม่สำเร็จ">
+      {(users) => <ReferralUsersTable users={users} />}
+    </ResourceGate>
+  );
+}
+
+function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
   const [page, setPage] = useState(1);
   const total = users.length;
   const pageSize = REFERRAL_USERS_PAGE_SIZE;

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { useIsClient } from "@/app/hooks/useIsClient";
+import React from "react";
 import { getLotteryCatalogEntry } from "@/app/data/lotteryCatalogMockData";
-import { fetchLotteryPlayRounds, fetchThaiLottoBoard } from "@/lib/api/lotteryContent";
+import { useLotteryPlayRounds, useThaiLottoBoard } from "@/app/hooks/api/lottery";
 import { LotteryMarketShell } from "./LotteryMarketShell";
 import { LotteryPlayRoundList } from "./LotteryPlayRoundList";
 import { ThaiLottoResultPanel } from "./thai/ThaiLottoResultPanel";
-import { EmptyState, LoadingState } from "../ui/StatusState";
+import { EmptyState } from "../ui/StatusState";
+import { ResourceGate } from "../ui/ResourceGate";
 
 interface LotteryMarketRoundsViewProps {
   marketSlug: string;
@@ -18,13 +18,10 @@ interface LotteryMarketRoundsViewProps {
  */
 export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewProps) {
   const entry = getLotteryCatalogEntry(marketSlug);
-  /** รอบอิงเวลาจริง — สร้างหลัง mount เพื่อไม่ให้ SSR/client คนละ snapshot */
-  const roundsReady = useIsClient();
-  const rounds = useMemo(
-    () => (roundsReady ? fetchLotteryPlayRounds(marketSlug) : []),
-    [marketSlug, roundsReady],
-  );
-  const thaiLastResult = fetchThaiLottoBoard().lastResult;
+  /** รอบอิงเวลาจริง — ดึงฝั่ง client (SWR) ไม่มี SSR snapshot คนละเวลา */
+  const roundsResource = useLotteryPlayRounds(marketSlug);
+  const rounds = roundsResource.data ?? [];
+  const thaiLastResult = useThaiLottoBoard().data?.lastResult ?? null;
 
   if (!entry) {
     return (
@@ -44,12 +41,12 @@ export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewP
 
   return (
     <LotteryMarketShell activeEntry={entry} roundCount={openCount}>
-      {!roundsReady ? (
-        <LoadingState label="กำลังโหลดรอบ…" />
-      ) : (
-        <LotteryPlayRoundList rounds={rounds} marketSlug={marketSlug} basePath={entry.roundsHref} />
-      )}
-      {showThaiLastResult ? (
+      <ResourceGate resource={roundsResource} loadingLabel="กำลังโหลดรอบ…" errorTitle="โหลดรอบไม่สำเร็จ">
+        {(list) => (
+          <LotteryPlayRoundList rounds={list} marketSlug={marketSlug} basePath={entry.roundsHref} />
+        )}
+      </ResourceGate>
+      {showThaiLastResult && thaiLastResult ? (
         <div className="lottery-market-rounds__result hidden mt-4 min-w-0 lg:block">
           <ThaiLottoResultPanel result={thaiLastResult} />
         </div>

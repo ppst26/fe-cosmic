@@ -9,7 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchReferralEarnings } from "@/lib/api/referral";
+import { useReferralEarnings } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { BonusNavIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_PRIMARY,
@@ -27,20 +28,7 @@ import {
 } from "@/lib/format";
 import type { ReferralEarningHistoryRow, ReferralEarningSummaryMock } from "@/app/types/referral";
 
-/**
- * แท็บ Earning — สรุปโบนัส + ประวัติรับโบนัส (10 แถว/หน้า)
- * ใช้ใน ReferralPageContent
- */
-export function ReferralEarningPanel({
-  summary = fetchReferralEarnings().summary,
-  history = fetchReferralEarnings().history,
-  showSummary = true,
-  sectionTitle = "ประวัติรับโบนัส",
-  received: receivedProp,
-  claimable: claimableProp,
-  onClaim,
-  flat = false,
-}: {
+type ReferralEarningPanelProps = {
   summary?: ReferralEarningSummaryMock;
   history?: ReferralEarningHistoryRow[];
   showSummary?: boolean;
@@ -50,6 +38,42 @@ export function ReferralEarningPanel({
   onClaim?: () => void;
   /** desktop hub — ตารางไม่ห่อการ์ดทึบ */
   flat?: boolean;
+};
+
+/**
+ * แท็บ Earning — สรุปโบนัส + ประวัติรับโบนัส (10 แถว/หน้า)
+ * ใช้ใน ReferralPageContent · ไม่ส่ง summary/history → โหลดจาก useReferralEarnings
+ */
+export function ReferralEarningPanel(props: ReferralEarningPanelProps) {
+  const earnings = useReferralEarnings();
+  if (props.summary && props.history) {
+    return <ReferralEarningPanelContent {...props} summary={props.summary} history={props.history} />;
+  }
+  return (
+    <ResourceGate resource={earnings} loadingLabel="กำลังโหลดรายได้…" errorTitle="โหลดรายได้ไม่สำเร็จ">
+      {(data) => (
+        <ReferralEarningPanelContent
+          {...props}
+          summary={props.summary ?? data.summary}
+          history={props.history ?? data.history}
+        />
+      )}
+    </ResourceGate>
+  );
+}
+
+function ReferralEarningPanelContent({
+  summary,
+  history,
+  showSummary = true,
+  sectionTitle = "ประวัติรับโบนัส",
+  received: receivedProp,
+  claimable: claimableProp,
+  onClaim,
+  flat = false,
+}: ReferralEarningPanelProps & {
+  summary: ReferralEarningSummaryMock;
+  history: ReferralEarningHistoryRow[];
 }) {
   const [page, setPage] = useState(1);
   const [claimableInternal, setClaimableInternal] = useState(summary.bonusClaimableThb);

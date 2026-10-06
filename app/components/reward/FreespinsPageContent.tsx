@@ -2,7 +2,8 @@
 
 import React from "react";
 import { REWARD_FREESPINS_COMING_SOON_LABEL } from "@/app/data/rewardFeaturesMockData";
-import { fetchRewardHub } from "@/lib/api/rewardFeatures";
+import { useRewardHub } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { RewardHubShortcutRow } from "./RewardHubShortcutRow";
 import { RewardPointsBar } from "./RewardPointsBar";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
@@ -12,12 +13,18 @@ import { cn } from "@/lib/utils";
  * แลกฟรีสปิน / ชิป — ปิดชั่วคราว (Coming soon)
  */
 export function FreespinsPageContent() {
-  const hub = fetchRewardHub();
+  const hub = useRewardHub();
 
   return (
     <div className="flex flex-col gap-4 pb-6">
-      <RewardPointsBar pointsBalance={hub.pointsBalance} />
-      <RewardHubShortcutRow shortcuts={hub.shortcuts} />
+      <ResourceGate resource={hub} loadingLabel="กำลังโหลดพอยท์…" errorTitle="โหลดข้อมูลรางวัลไม่สำเร็จ">
+        {(data) => (
+          <>
+            <RewardPointsBar pointsBalance={data.pointsBalance} />
+            <RewardHubShortcutRow shortcuts={data.shortcuts} />
+          </>
+        )}
+      </ResourceGate>
 
       <div
         className={cn(

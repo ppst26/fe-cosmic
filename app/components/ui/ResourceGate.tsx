@@ -3,6 +3,7 @@
 import React from "react";
 import type { ApiResource } from "@/app/hooks/useApi";
 import { ErrorState, LoadingState } from "./StatusState";
+import { LoginPrompt } from "./LoginPrompt";
 
 interface ResourceGateProps<T> {
   resource: ApiResource<T>;
@@ -12,7 +13,7 @@ interface ResourceGateProps<T> {
   errorTitle?: string;
   /** แทน LoadingState เริ่มต้น เช่น skeleton ขนาดเท่าเนื้อหาจริง (กัน layout ขยับ) */
   loadingFallback?: React.ReactNode;
-  /** แสดงเมื่อ idle (ยังไม่ login) — ค่าเริ่มต้นไม่แสดงอะไร */
+  /** แสดงเมื่อ idle (ยังไม่ login) — ค่าเริ่มต้นเป็นการ์ดชวนเข้าสู่ระบบ · ส่ง null เพื่อซ่อน */
   idleFallback?: React.ReactNode;
   className?: string;
 }
@@ -27,11 +28,13 @@ export function ResourceGate<T>({
   loadingLabel,
   errorTitle = "โหลดข้อมูลไม่สำเร็จ",
   loadingFallback,
-  idleFallback = null,
+  idleFallback,
   className,
 }: ResourceGateProps<T>) {
   if (resource.data !== null) return <>{children(resource.data)}</>;
-  if (resource.status === "idle") return <>{idleFallback}</>;
+  if (resource.status === "idle") {
+    return <>{idleFallback === undefined ? <LoginPrompt className={className} /> : idleFallback}</>;
+  }
   if (resource.status === "error") {
     return (
       <ErrorState

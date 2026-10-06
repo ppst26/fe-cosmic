@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContainedVerticalScroll } from "./useContainedVerticalScroll";
 import type { LotteryCatalogEntry } from "@/app/types/lottery";
-import { fetchLotteryCatalog } from "@/lib/api/lotteryContent";
+import { useLotteryCatalog } from "@/app/hooks/api/lottery";
 import { getLotteryIconSrc } from "@/app/data/lotteryIconAssets";
 import { LotteryCountdown } from "./LotteryFlagOrb";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
@@ -22,6 +22,7 @@ interface LotteryMarketShellProps {
  * โครง layout มือถือ/เดสก์ท็อปใช้ Tailwind — สไตล์การ์ด/สถานะอยู่ใน lottery.css
  */
 export function LotteryMarketShell({ activeEntry, roundCount, children }: LotteryMarketShellProps) {
+  const catalog = useLotteryCatalog();
   const sidebarScrollRef = useRef<HTMLDivElement>(null);
   const roundsScrollRef = useRef<HTMLDivElement>(null);
   const bannerArtSrc = getLotteryIconSrc(activeEntry.slug);
@@ -67,7 +68,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               "m-0 flex list-none flex-col gap-1 p-0 lg:gap-2",
             )}
           >
-            {fetchLotteryCatalog().map((entry) => (
+            {(catalog.data ?? []).map((entry) => (
               <li key={entry.slug}>
                 <LotteryMarketSidebarLink
                   entry={entry}

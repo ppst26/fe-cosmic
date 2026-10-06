@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { fetchReferralOverview } from "@/lib/api/referral";
+import { useReferralOverview } from "@/app/hooks/api/member";
 import { ProfileAccountFieldRow } from "./ProfileAccountFieldRow";
 import { cn } from "@/lib/utils";
 import { buildReferralLink } from "@/lib/domain/referral";
@@ -11,8 +11,9 @@ import { buildReferralLink } from "@/lib/domain/referral";
  */
 export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) {
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const referralCode = fetchReferralOverview().refCode;
-  const referralLink = buildReferralLink(referralCode);
+  const overview = useReferralOverview();
+  /** ลิงก์พร้อมเมื่อโหลดรหัสแนะนำแล้ว · ระหว่างโหลดแสดง "—" */
+  const referralLink = overview.data ? buildReferralLink(overview.data.refCode) : null;
 
   const copyText = async (field: string, text: string) => {
     try {
@@ -46,8 +47,8 @@ export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) 
 
       <ProfileAccountFieldRow
         label="ลิงก์ชวนเพื่อน"
-        value={referralLink}
-        onCopy={() => void copyText("link", referralLink)}
+        value={referralLink ?? "—"}
+        onCopy={referralLink ? () => void copyText("link", referralLink) : undefined}
         copyLabel="คัดลอกลิงก์ชวนเพื่อน"
       />
     </section>

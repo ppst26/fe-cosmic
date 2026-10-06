@@ -2,6 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { API_ERROR_MESSAGES, apiFetch, apiUrl } from "./http";
 
+/** จำลอง browser (มี window) — test ฝั่ง server ด้านล่างลบออกชั่วคราว */
+(globalThis as { window?: unknown }).window ??= globalThis;
+
 /** แทน global fetch ชั่วคราวในแต่ละ test */
 function mockFetch(impl: (url: string, init?: RequestInit) => Promise<Response>) {
   const original = globalThis.fetch;
@@ -84,5 +87,22 @@ test("apiFetch maps network failures and bad JSON without throwing", async () =>
     if (!res.ok) assert.equal(res.error.code, "PARSE");
   } finally {
     broken.restore();
+  }
+});
+
+test("apiFetch on the server without a base URL fails with a config message instead of fetching", async () => {
+  const g = globalThis as { window?: unknown };
+  const hadWindow = "window" in g;
+  const savedWindow = g.window;
+  delete g.window;
+  const m = mockFetch(async () => Response.json({}));
+  try {
+    const res = await apiFetch("/api/x");
+    assert.equal(res.ok, false);
+    if (!res.ok) assert.match(res.error.message, /NEXT_PUBLIC_API_BASE_URL/);
+    assert.equal(m.calls.length, 0);
+  } finally {
+    m.restore();
+    if (hadWindow) g.window = savedWindow;
   }
 });

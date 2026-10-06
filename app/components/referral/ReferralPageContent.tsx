@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { fetchReferralOverview } from "@/lib/api/referral";
+import type { ReferralOverviewData } from "@/lib/api/referral";
+import { useReferralOverview } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
+import { LoginPrompt } from "../ui/LoginPrompt";
 import { UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 import { ReferralUsersPanel } from "./ReferralUsersPanel";
 import { ReferralEarningPanel } from "./ReferralEarningPanel";
@@ -47,13 +50,45 @@ function TabIcon({ tab }: { tab: ReferralTabId }) {
  * เนื้อหาหน้าแนะนำเพื่อน — ใช้ใน /referral และ DesktopHubModal
  */
 export function ReferralPageContent({
-  refCode = fetchReferralOverview().refCode,
+  refCode,
   embedded = false,
 }: {
   refCode?: string;
   embedded?: boolean;
 }) {
-  const referralOverview = fetchReferralOverview();
+  const overview = useReferralOverview();
+  return (
+    <ResourceGate
+      resource={overview}
+      loadingLabel="กำลังโหลดข้อมูลแนะนำเพื่อน…"
+      errorTitle="โหลดข้อมูลแนะนำเพื่อนไม่สำเร็จ"
+      idleFallback={
+        <LoginPrompt
+          title="เข้าสู่ระบบเพื่อดูลิงก์แนะนำเพื่อน"
+          description="ลิงก์และรายได้จากการแนะนำจะแสดงหลังเข้าสู่ระบบ"
+        />
+      }
+    >
+      {(referralOverview) => (
+        <ReferralPageContentInner
+          refCode={refCode ?? referralOverview.refCode}
+          embedded={embedded}
+          referralOverview={referralOverview}
+        />
+      )}
+    </ResourceGate>
+  );
+}
+
+function ReferralPageContentInner({
+  refCode,
+  embedded,
+  referralOverview,
+}: {
+  refCode: string;
+  embedded: boolean;
+  referralOverview: ReferralOverviewData;
+}) {
   const [tab, setTab] = useState<ReferralTabId>("overview");
   const [copied, setCopied] = useState(false);
   const stats = referralOverview.stats;
@@ -117,7 +152,7 @@ function ReferralMobileTabs({
   copied: boolean;
   onCopy: (link: string) => void;
   stats: ReferralStatsMock;
-  overview: ReturnType<typeof fetchReferralOverview>;
+  overview: ReferralOverviewData;
 }) {
   return (
     <div className="referral-mobile flex flex-col gap-5 pb-4">

@@ -2,7 +2,9 @@
 
 import React, { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
-import { fetchWheel } from "@/lib/api/wheel";
+import { useWheel } from "@/app/hooks/api/member";
+import type { WheelData } from "@/lib/api/wheel";
+import { ResourceGate } from "../ui/ResourceGate";
 import { ArrowLeftIcon } from "../ui/Icons";
 import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
 import { LuckyWheelLiveWinners } from "./LuckyWheelLiveWinners";
@@ -12,10 +14,21 @@ import { formatGemsBalance } from "@/lib/format";
 import type { WheelPrizeHistoryRow, WheelSegment, WheelSpinMethod } from "@/app/types/reward";
 
 /**
- * หน้าเล่นวงล้อพารวย — รองรับ Mobile-first layout ตรงตาม mockup
+ * หน้าเล่นวงล้อพารวย — โหลดข้อมูลวงล้อแล้วส่งให้ LuckyWheelPlay (state เริ่มต้นมาจากข้อมูลที่โหลดแล้ว)
  */
 export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean }) {
-  const wheel = fetchWheel();
+  const wheel = useWheel();
+  return (
+    <ResourceGate resource={wheel} loadingLabel="กำลังโหลดวงล้อ…" errorTitle="โหลดวงล้อไม่สำเร็จ">
+      {(data) => <LuckyWheelPlay wheel={data} embedded={embedded} />}
+    </ResourceGate>
+  );
+}
+
+/**
+ * ตัวเล่นวงล้อพารวย — รองรับ Mobile-first layout ตรงตาม mockup
+ */
+function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boolean }) {
   const segmentDeg = 360 / wheel.segments.length;
   const [gemsBalance, setGemsBalance] = useState(wheel.initialGems);
   const [ticketCount, setTicketCount] = useState(wheel.initialTickets);

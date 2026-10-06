@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { responsiveSheetCloseButtonClass } from "@/app/components/ui/responsiveSheetDialog";
-import { fetchCheckIn } from "@/lib/api/checkIn";
+import type { CheckInData } from "@/lib/api/checkIn";
+import { useCheckIn } from "@/app/hooks/api/member";
+import { ResourceGate } from "@/app/components/ui/ResourceGate";
 import { cn } from "@/lib/utils";
 import {
   COSMIC_BTN_CONFIRM_TEXT,
@@ -22,12 +24,23 @@ interface DailyCheckInCardProps {
   isStandalone?: boolean;
 }
 
-export function DailyCheckInCard({
+/** การ์ดเช็คอินรายวัน — โหลดผ่าน useCheckIn แล้วส่งให้ DailyCheckInCardView */
+export function DailyCheckInCard(props: DailyCheckInCardProps) {
+  const checkIn = useCheckIn();
+  return (
+    <ResourceGate resource={checkIn} loadingLabel="กำลังโหลดเช็คอิน…" errorTitle="โหลดข้อมูลเช็คอินไม่สำเร็จ">
+      {(data) => <DailyCheckInCardView {...props} checkIn={data} />}
+    </ResourceGate>
+  );
+}
+
+/** เนื้อหาหลังโหลดเสร็จ — วันเริ่มต้นมาจาก API แล้วอัปเดตในเครื่องหลังกดรับ */
+function DailyCheckInCardView({
   onClose,
   className,
   isStandalone = false,
-}: DailyCheckInCardProps) {
-  const checkIn = fetchCheckIn();
+  checkIn,
+}: DailyCheckInCardProps & { checkIn: CheckInData }) {
   const [days, setDays] = useState<DailyCheckInDayReward[]>(checkIn.days);
   const [justClaimed, setJustClaimed] = useState<number | null>(null);
   const [claimSuccessCredits, setClaimSuccessCredits] = useState<number | null>(

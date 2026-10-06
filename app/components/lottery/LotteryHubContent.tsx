@@ -6,7 +6,7 @@ import type {
   LotteryGridItem,
   LotteryResultRow,
 } from "@/app/types/lottery";
-import { fetchLotteryHub } from "@/lib/api/lotteryContent";
+import { useLotteryHub } from "@/app/hooks/api/lottery";
 import { lotteryHrefToSlug } from "@/app/data/lotteryIconAssets";
 import { LotteryHubMarketLink } from "./LotteryHubMarketLink";
 import { LotteryLatestResultsTable } from "./LotteryLatestResultsTable";
@@ -29,10 +29,10 @@ export function LotteryHubContent({
   gridItems,
   results,
 }: LotteryHubContentProps) {
-  const hub = fetchLotteryHub();
-  const resolvedFeatured = featured ?? hub.featured;
-  const resolvedGridItems = gridItems ?? hub.grid;
-  const resolvedResults = results ?? hub.latest;
+  const hub = useLotteryHub();
+  const resolvedFeatured = featured ?? hub.data?.featured ?? [];
+  const resolvedGridItems = gridItems ?? hub.data?.grid ?? [];
+  const resolvedResults = results ?? hub.data?.latest ?? [];
 
   return (
     <div className="lottery-hub flex min-w-0 flex-col gap-6 sm:gap-8">

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { fetchWheel } from "@/lib/api/wheel";
+import { useWheel } from "@/app/hooks/api/member";
 import type { WheelPrizeHistoryRow, WheelSpinMethod } from "@/app/types/reward";
 
 interface LuckyWheelPrizeHistoryProps {
@@ -12,20 +12,23 @@ interface LuckyWheelPrizeHistoryProps {
  * ตารางประวัติการหมุนของฉัน — ดีไซน์การ์ดมนตามภาพตัวอย่าง
  */
 export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistoryProps) {
-  const wheel = fetchWheel();
+  /** ใช้ cache เดียวกับ LuckyWheelPageContent (SWR) */
+  const wheel = useWheel().data;
   const [page, setPage] = useState(1);
 
-  const allRows = useMemo(() => [...extraRows, ...wheel.prizeHistory], [extraRows, wheel.prizeHistory]);
+  const prizeHistory = wheel?.prizeHistory;
+  const historyPageSize = wheel?.historyPageSize ?? 1;
+  const allRows = useMemo(() => [...extraRows, ...(prizeHistory ?? [])], [extraRows, prizeHistory]);
   const totalPages = Math.max(
     1,
     Math.min(
-      wheel.historyTotalPages,
-      Math.ceil(allRows.length / wheel.historyPageSize),
+      wheel?.historyTotalPages ?? 1,
+      Math.ceil(allRows.length / historyPageSize),
     ),
   );
   const safePage = Math.min(page, totalPages);
-  const sliceStart = (safePage - 1) * wheel.historyPageSize;
-  const pageRows = allRows.slice(sliceStart, sliceStart + wheel.historyPageSize);
+  const sliceStart = (safePage - 1) * historyPageSize;
+  const pageRows = allRows.slice(sliceStart, sliceStart + historyPageSize);
 
   return (
     <section

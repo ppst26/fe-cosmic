@@ -5,7 +5,9 @@ import Image from "next/image";
 import {
   CASHBACK_PAGE_ICON_SRC,
 } from "@/app/data/cashbackMockData";
-import { fetchCashbackPanels } from "@/lib/api/cashback";
+import type { CashbackPanelsData } from "@/lib/api/cashback";
+import { useCashbackPanels } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
@@ -27,7 +29,26 @@ export function CashbackPageContent({
   initialTab = "play",
   embedded = false,
 }: CashbackPageContentProps) {
-  const cashbackPanels = fetchCashbackPanels();
+  const cashbackPanels = useCashbackPanels();
+  return (
+    <ResourceGate resource={cashbackPanels} loadingLabel="กำลังโหลดคืนยอด…" errorTitle="โหลดข้อมูลคืนยอดไม่สำเร็จ">
+      {(data) => (
+        <CashbackPanelsView cashbackPanels={data} initialTab={initialTab} embedded={embedded} />
+      )}
+    </ResourceGate>
+  );
+}
+
+/** เนื้อหาหลังโหลดเสร็จ — panel เริ่มต้นมาจาก API แล้วอัปเดตในเครื่องหลังกดรับ */
+function CashbackPanelsView({
+  cashbackPanels,
+  initialTab,
+  embedded,
+}: {
+  cashbackPanels: CashbackPanelsData;
+  initialTab: CashbackTabId;
+  embedded: boolean;
+}) {
   const wallet = useWallet();
   const [tab, setTab] = useState<CashbackTabId>(initialTab);
   const [playPanel, setPlayPanel] = useState(cashbackPanels.play);

@@ -6,7 +6,8 @@ import {
   getVipBenefitCellValue,
   getVipRankIndex,
 } from "@/app/data/vipMockData";
-import { fetchVipBenefits, fetchVipRanks } from "@/lib/api/vip";
+import { useVipBenefits, useVipRanks } from "@/app/hooks/api/member";
+import { ErrorState, LoadingState } from "../ui/StatusState";
 import { ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
 
@@ -25,8 +26,10 @@ export function VipBenefitsComparisonTable({
   currentRankId,
   variant = "default",
 }: VipBenefitsComparisonTableProps) {
-  const { rows: benefitRows, values: benefitValues } = fetchVipBenefits();
-  const vipRankTiers = fetchVipRanks().tiers;
+  const benefits = useVipBenefits();
+  const ranks = useVipRanks();
+  /** ตารางโผล่หลังโหลดเสร็จ — ใช้เป็น dependency ให้เลื่อนไปคอลัมน์ระดับปัจจุบันอีกครั้ง */
+  const tableReady = Boolean(benefits.data && ranks.data);
   const isDesktopFull = variant === "desktop-full";
   const scrollRef = useRef<HTMLDivElement>(null);
   const currentColRef = useRef<HTMLTableCellElement>(null);
@@ -38,7 +41,23 @@ export function VipBenefitsComparisonTable({
 
     const colLeft = col.offsetLeft - scroller.clientWidth / 2 + col.offsetWidth / 2;
     scroller.scrollTo({ left: Math.max(0, colLeft - 120), behavior: "smooth" });
-  }, [currentRankId]);
+  }, [currentRankId, tableReady]);
+
+  if (!benefits.data || !ranks.data) {
+    const failed = benefits.status === "error" ? benefits : ranks.status === "error" ? ranks : null;
+    return failed ? (
+      <ErrorState
+        title="โหลดสิทธิประโยชน์ไม่สำเร็จ"
+        description={failed.error?.message}
+        primaryAction={{ label: "ลองใหม่", onClick: failed.refresh }}
+      />
+    ) : (
+      <LoadingState label="กำลังโหลดสิทธิประโยชน์…" />
+    );
+  }
+
+  const { rows: benefitRows, values: benefitValues } = benefits.data;
+  const vipRankTiers = ranks.data.tiers;
 
   return (
     <div

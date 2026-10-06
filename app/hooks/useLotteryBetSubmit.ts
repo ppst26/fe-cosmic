@@ -60,7 +60,8 @@ export function useThaiGovernmentBetSubmit(roundId: string, meta: LotteryBetRoun
 
   const onSubmit = useCallback(
     async (entries: { typeId: string; number: string; amount: number }[]) => {
-      const board = fetchThaiLottoBoard();
+      const boardRes = await fetchThaiLottoBoard();
+      const board = boardRes.ok ? boardRes.data : { betTypes: [] as { id: string; label?: string; payoutRate?: number }[] };
       return submit({
         market: "thai-government",
         roundId,
@@ -91,7 +92,10 @@ export function useYikiStyleBetSubmit(market: string, roundId: string, meta: Lot
 
   const onSubmit = useCallback(
     async (entries: { settlementTypeId: string; number: string; amount: number | null }[]) => {
-      const board = fetchYikiBoard();
+      const boardRes = await fetchYikiBoard();
+      const settlementMap: Record<string, { label?: string; payoutRate?: number } | undefined> = boardRes.ok
+        ? boardRes.data.settlement
+        : {};
       return submit({
         market,
         roundId,
@@ -99,8 +103,7 @@ export function useYikiStyleBetSubmit(market: string, roundId: string, meta: Lot
         drawCloseAt: meta.drawCloseAt,
         continuePlayHref: meta.continuePlayHref,
         lines: entries.map((entry) => {
-          const settlement =
-            board.settlement[entry.settlementTypeId as keyof typeof board.settlement];
+          const settlement = settlementMap[entry.settlementTypeId];
           return {
             typeKey: entry.settlementTypeId,
             typeLabel: settlement?.label,

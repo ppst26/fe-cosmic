@@ -80,7 +80,7 @@ export const WELCOME_BANNER_MOBILE_ASSETS = [
 
 /**
  * สไลด์ Welcome Hero — WelcomeBanner carousel มือถือ (HomeLobbyPage lg:hidden)
- * ถูกเรียกใช้ใน WelcomeBanner.tsx · fetchHomeBanners().welcomeSlides
+ * ถูกเรียกใช้ผ่าน fetchHomeBanners() → loadLobbyContent() → WelcomeBanner
  */
 export const WELCOME_BANNER_SLIDES: WelcomeBannerSlide[] = [
   {

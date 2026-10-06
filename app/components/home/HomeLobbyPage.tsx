@@ -32,23 +32,17 @@ import {
   LOBBY_TOURNAMENTS_SECTION_ITEMS,
   BOTTOM_NAV_DATA,
 } from "@/app/data/lobbyMockData";
-import {
-  fetchHallOfFame,
-  fetchHomeBanners,
-  fetchHomeGames,
-  fetchHomeTournaments,
-  fetchLobbyAnnouncements,
-} from "@/lib/api/lobby";
+import type { LobbyContent } from "@/lib/api/lobby";
 
 /**
  * หน้า lobby หลัก — หมวดซิงก์จาก URL (/slots, /casino ฯลฯ)
- * ใช้ใน app/page.tsx และเส้นทางหมวดที่แชร์ layout เดียวกัน
+ * เนื้อหา (แบนเนอร์ · เกม · ทัวร์นาเมนต์ · ประกาศ · Hall of Fame) โหลดฝั่ง server ใน app/(lobby)/layout.tsx แล้วส่งมาเป็น props
  */
-export function HomeLobbyPage() {
-  const homeBanners = fetchHomeBanners();
-  const homeGames = fetchHomeGames();
-  const homeTournaments = fetchHomeTournaments();
-  const lobbyAnnouncements = fetchLobbyAnnouncements();
+export function HomeLobbyPage({ content }: { content: LobbyContent }) {
+  const homeBanners = content.banners;
+  const homeGames = content.games;
+  const homeTournaments = content.tournaments;
+  const lobbyAnnouncements = content.announcements;
 
   const pathname = usePathname();
   const activeCategoryId = useMemo(
@@ -163,7 +157,7 @@ export function HomeLobbyPage() {
                     <div className="flex flex-col gap-3 lg:hidden">
                       {/* hero carousel — ซ่อนไว้ก่อน (เปิดเมื่อมี asset พร้อม) */}
                       <div className="hidden" aria-hidden="true">
-                        <WelcomeBanner />
+                        <WelcomeBanner items={homeBanners.welcomeSlides} />
                       </div>
 
                       <div className="-mx-2 sm:-mx-2.5">
@@ -295,7 +289,7 @@ export function HomeLobbyPage() {
 
                     {isHomeLobby ? (
                       <>
-                        <HallOfFame datasets={fetchHallOfFame()} />
+                        <HallOfFame datasets={content.hallOfFame} />
                         <div className="hidden lg:block">
                           <TournamentsSection items={LOBBY_TOURNAMENTS_SECTION_ITEMS} />
                         </div>

@@ -98,6 +98,9 @@ exports/lottery-kit ชุดย้ายระบบหวยไปโปรเ
 - หลัง mutation: `refresh()` เพื่อดึงใหม่ หรือ `setData(ผลจาก server)` เพื่ออัปเดต cache ทันที (เช่น `wallet.refresh()` หลังฝาก/ถอน/คูปอง/รับ cashback)
 - ค่าเริ่มต้น SWR อยู่ใน `app/providers.tsx`: ไม่ดึงใหม่ตอนสลับแท็บ · 4xx ไม่ retry · network/5xx retry สูงสุด 3 ครั้ง
 - ฟังก์ชันใน `lib/api` คืน `Promise<ApiResult<T>>` · ระหว่างยังไม่มี backend ใช้ `mockResult(data)` (`lib/api/mock.ts`)
+- hook ที่มี: `app/hooks/api/account.ts` (profile · wallet) · `money.ts` (ฝาก/ถอน) · `transactions.ts` · `member.ts` (VIP · referral · cashback · เช็คอิน · เพชร · วงล้อ · รางวัล · กิจกรรม) · `lottery.ts`
+- แสดงผลด้วย `ResourceGate` (`app/components/ui/ResourceGate.tsx`): กำลังโหลด · error + ลองใหม่ · ยังไม่ login = การ์ด `LoginPrompt`
+- **เนื้อหา lobby (แบนเนอร์ · เกม · ทัวร์นาเมนต์ · ประกาศ · Hall of Fame) ดึงฝั่ง server** ใน `app/(lobby)/layout.tsx` ผ่าน `loadLobbyContent()` แล้วส่ง props — HTML แรกมีเนื้อหาครบ ส่วนที่พลาดใช้ค่าว่างไม่ให้หน้าพัง · การเรียก API ฝั่ง server ต้องตั้ง `NEXT_PUBLIC_API_BASE_URL` แบบ absolute
 
 ## สถานะโหลด / ว่าง / ผิดพลาด
 

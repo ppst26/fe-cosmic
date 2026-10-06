@@ -60,9 +60,11 @@ export function useApi<T>(
   );
 
   const hasData = data !== undefined;
+  /** ยังเช็ก session ไม่เสร็จ = กำลังโหลด (ไม่ใช่ idle) — กันการ์ดชวน login กระพริบตอนเปิดหน้า */
+  const waitingForAuth = Boolean(options.auth) && authLoading;
   return {
     data: hasData ? data : null,
-    status: resolveApiStatus({
+    status: waitingForAuth ? "loading" : resolveApiStatus({
       hasKey: swrKey !== null,
       hasData,
       hasError: Boolean(error),

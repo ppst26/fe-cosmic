@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { fetchGemsStore } from "@/lib/api/gemsStore";
+import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import { cn } from "@/lib/utils";
 import { formatRewardPoints } from "@/lib/format";
@@ -25,7 +25,8 @@ export function RandomCardRedeemPanel({
   comingSoonLabel: string;
   className?: string;
 }) {
-  const gemAsset = fetchGemsStore().gemAsset;
+  /** รูปเพชร — asset คงที่ ไม่ได้มาจาก API */
+  const gemAsset = GEMS_STORE_GEM_ASSET;
   const topRow = cards.slice(0, 3);
   const bottomRow = cards.slice(3, 5);
 

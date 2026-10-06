@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { fetchWheel } from "@/lib/api/wheel";
+import { useWheel } from "@/app/hooks/api/member";
 
 /**
  * รายการผู้เล่นคนอื่นได้รับรางวัล — ดีไซน์การ์ดมนตามภาพตัวอย่าง
  */
 export function LuckyWheelLiveWinners() {
-  const liveWinners = fetchWheel().liveWinners;
+  /** ใช้ cache เดียวกับ LuckyWheelPageContent (SWR) — ยังไม่มีข้อมูลแสดงรายการว่าง */
+  const liveWinners = useWheel().data?.liveWinners ?? [];
   return (
     <section
       className="flex h-full min-h-0 flex-col rounded-2xl border border-white/10 bg-[#0e0b16]/90 p-4 shadow-xl"

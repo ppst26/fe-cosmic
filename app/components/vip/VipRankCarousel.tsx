@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import type { VipRankId } from "@/app/types/vip";
+import type { VipRankId, VipRankTier } from "@/app/types/vip";
 import {
   getVipRankViewStatus,
   getVipTurnoverTarget,
 } from "@/app/data/vipMockData";
-import { fetchVipRanks } from "@/lib/api/vip";
 import { ChevronLeftIcon, ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
 import { formatVipAmount } from "@/lib/format";
@@ -15,6 +14,8 @@ interface VipRankCarouselProps {
   focusIndex: number;
   onFocusChange: (index: number) => void;
   playerRankId: VipRankId;
+  /** ตารางระดับจาก useVipRanks (ส่งลงมาจาก VipPageContent) */
+  vipRankTiers: VipRankTier[];
 }
 
 /**
@@ -24,8 +25,8 @@ export function VipRankCarousel({
   focusIndex,
   onFocusChange,
   playerRankId,
+  vipRankTiers,
 }: VipRankCarouselProps) {
-  const vipRankTiers = fetchVipRanks().tiers;
   const safeIndex = Math.max(0, Math.min(focusIndex, vipRankTiers.length - 1));
   const focused = vipRankTiers[safeIndex];
   const focusStatus = getVipRankViewStatus(focused.id, playerRankId);

@@ -16,7 +16,8 @@ import {
   SignUpPickerGridItem,
   SignUpPickerSheet,
 } from "./SignUpPickerSheet";
-import { fetchSignUpOptions } from "@/lib/api/profile";
+import { useSignUpOptions } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import {
@@ -265,7 +266,7 @@ export function SignUpBottomDrawer({
   const [stepTwo, setStepTwo] = useState<SignUpStepTwoData>(EMPTY_STEP_TWO);
   const [signUpPicker, setSignUpPicker] = useState<null | "bank" | "channel">(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const signUpOptions = fetchSignUpOptions();
+  const signUpOptions = useSignUpOptions();
 
   const resetForm = () => {
     setStep(1);
@@ -410,8 +411,10 @@ export function SignUpBottomDrawer({
             onClose={() => setSignUpPicker(null)}
             ariaLabel="เลือกธนาคาร"
           >
+            <ResourceGate resource={signUpOptions} loadingLabel="กำลังโหลดรายชื่อธนาคาร…" errorTitle="โหลดรายชื่อธนาคารไม่สำเร็จ">
+              {({ banks }) => (
             <div className="grid grid-cols-4 gap-2 px-1">
-              {signUpOptions.banks.map((bank) => (
+              {banks.map((bank) => (
                 <SignUpPickerGridItem
                   key={bank.id}
                   label={bank.label}
@@ -424,6 +427,8 @@ export function SignUpBottomDrawer({
                 />
               ))}
             </div>
+              )}
+            </ResourceGate>
           </SignUpPickerSheet>
 
           <SignUpPickerSheet
@@ -431,8 +436,10 @@ export function SignUpBottomDrawer({
             onClose={() => setSignUpPicker(null)}
             ariaLabel="เลือกช่องทาง"
           >
+            <ResourceGate resource={signUpOptions} loadingLabel="กำลังโหลดช่องทาง…" errorTitle="โหลดช่องทางไม่สำเร็จ">
+              {({ channels }) => (
             <div className="grid grid-cols-4 gap-2 px-1">
-              {signUpOptions.channels.map((channel) => (
+              {channels.map((channel) => (
                 <SignUpPickerGridItem
                   key={channel.id}
                   label={channel.label}
@@ -445,6 +452,8 @@ export function SignUpBottomDrawer({
                 />
               ))}
             </div>
+              )}
+            </ResourceGate>
           </SignUpPickerSheet>
         </Dialog.Content>
       </Dialog.Portal>

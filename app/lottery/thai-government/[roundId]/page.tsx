@@ -6,7 +6,8 @@ import { useParams } from "next/navigation";
 import { LotteryPlayPageShell } from "@/app/components/lottery/LotteryPlayPageShell";
 import { ThaiLottoBetBoard } from "@/app/components/lottery/thai/ThaiLottoBetBoard";
 import { LotteryBetResultDialog } from "@/app/components/lottery/LotteryBetResultDialog";
-import { fetchThaiLottoBoard } from "@/lib/api/lotteryContent";
+import { useThaiLottoBoard } from "@/app/hooks/api/lottery";
+import { LoadingState } from "@/app/components/ui/StatusState";
 import { getThaiLottoDrawByRoundId } from "@/app/data/lotteryRoundsMockData";
 import { useThaiGovernmentBetSubmit } from "@/app/hooks/useLotteryBetSubmit";
 
@@ -14,7 +15,7 @@ import { useThaiGovernmentBetSubmit } from "@/app/hooks/useLotteryBetSubmit";
  * Step 3 — แทงหวยรัฐบาลไทยตามรอบที่เลือก
  */
 export default function ThaiGovernmentLotteryPlayPage() {
-  const thaiBoard = fetchThaiLottoBoard();
+  const thaiBoard = useThaiLottoBoard().data;
   const urlParams = useParams();
   const roundId = (urlParams?.roundId as string) || "";
   const draw = useMemo(() => getThaiLottoDrawByRoundId(roundId), [roundId]);
@@ -37,7 +38,9 @@ export default function ThaiGovernmentLotteryPlayPage() {
       mainClassName="mx-auto max-w-[var(--content-max)] lg:mx-0 lg:max-w-none"
     >
       {({ onStepChange }) =>
-        draw ? (
+        draw && !thaiBoard ? (
+          <LoadingState label="กำลังโหลดกระดานแทง…" />
+        ) : draw && thaiBoard ? (
           <>
             <ThaiLottoBetBoard
               draw={draw}

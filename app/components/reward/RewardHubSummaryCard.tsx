@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useWallet } from "@/app/hooks/api/account";
-import { fetchGemsStore } from "@/lib/api/gemsStore";
+import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
 import { HeaderWalletAssetIcon } from "@/app/components/layout/HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
 import { formatRewardPoints, formatHeaderWalletBalance } from "@/lib/format";
@@ -19,7 +19,6 @@ export function RewardHubSummaryCard({
   className?: string;
 }) {
   const wallet = useWallet();
-  const gems = fetchGemsStore();
 
   return (
     <aside
@@ -37,7 +36,7 @@ export function RewardHubSummaryCard({
         </div>
         <div className="flex shrink-0 items-center gap-2 rounded-full border border-[var(--border-subtle)]/60 bg-[var(--surface-base)]/50 px-2.5 py-1.5">
           <Image
-            src={gems.gemAsset}
+            src={GEMS_STORE_GEM_ASSET}
             alt=""
             width={22}
             height={22}

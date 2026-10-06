@@ -4,8 +4,7 @@ import React, { useMemo } from "react";
 import { useToast } from "@/context/ToastContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { fetchCashbackPanels } from "@/lib/api/cashback";
-import { fetchReferralOverview } from "@/lib/api/referral";
+import { useCashbackPanels, useReferralOverview } from "@/app/hooks/api/member";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
 import { useWithdraw } from "../withdraw/WithdrawProvider";
@@ -35,19 +34,21 @@ export function MenuDrawerMobileToolbar({
   const { openWithdraw } = useWithdraw();
   const { showToast } = useToast();
 
-  const overview = fetchReferralOverview();
-  const cashbackPanels = fetchCashbackPanels();
-  const referralLink = buildReferralLink(overview.refCode);
+  const overview = useReferralOverview();
+  const cashbackPanels = useCashbackPanels();
+  const referralLink = overview.data ? buildReferralLink(overview.data.refCode) : null;
+  const playClaimable = cashbackPanels.data?.play.claimableThb;
+  const lossClaimable = cashbackPanels.data?.loss.claimableThb;
 
   const playBonusLabel = useMemo(() => {
-    if (!isAuthenticated || isLoading) return "—";
-    return formatCashbackCurrency(cashbackPanels.play.claimableThb);
-  }, [isAuthenticated, isLoading, cashbackPanels.play.claimableThb]);
+    if (!isAuthenticated || isLoading || playClaimable === undefined) return "—";
+    return formatCashbackCurrency(playClaimable);
+  }, [isAuthenticated, isLoading, playClaimable]);
 
   const lossBonusLabel = useMemo(() => {
-    if (!isAuthenticated || isLoading) return "—";
-    return formatCashbackCurrency(cashbackPanels.loss.claimableThb);
-  }, [isAuthenticated, isLoading, cashbackPanels.loss.claimableThb]);
+    if (!isAuthenticated || isLoading || lossClaimable === undefined) return "—";
+    return formatCashbackCurrency(lossClaimable);
+  }, [isAuthenticated, isLoading, lossClaimable]);
 
   const goCashback = (tab: "play" | "loss") => {
     if (!isAuthenticated) {
@@ -76,6 +77,7 @@ export function MenuDrawerMobileToolbar({
       window.setTimeout(() => onRequireLogin(), 0);
       return;
     }
+    if (!referralLink) return;
     try {
       await navigator.clipboard.writeText(referralLink);
       showToast("คัดลอกลิงก์แล้ว", "success", 2500);
@@ -156,7 +158,7 @@ export function MenuDrawerMobileToolbar({
         <div className="min-w-0 flex-1">
           <p className="font-medium text-[var(--text-secondary)]">ลิงก์แนะนำเพื่อน</p>
           <p className="truncate font-medium text-[var(--text-primary)] tabular-nums">
-            {isAuthenticated ? referralLink : "เข้าสู่ระบบเพื่อดูลิงก์"}
+            {isAuthenticated ? (referralLink ?? "—") : "เข้าสู่ระบบเพื่อดูลิงก์"}
           </p>
         </div>
         <button

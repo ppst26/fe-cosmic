@@ -3,8 +3,7 @@
 import React from "react";
 import type { ProfileUser } from "@/app/types/auth";
 import { getVipRankTier } from "@/app/data/vipMockData";
-import { fetchProfileHubStats } from "@/lib/api/profile";
-import { fetchVipPlayer } from "@/lib/api/vip";
+import { useProfileHubStats, useVipPlayer } from "@/app/hooks/api/member";
 import { ProfileHubHeader } from "./ProfileHubHeader";
 import { ProfileHubRow } from "./ProfileHubAccordion";
 import {
@@ -58,8 +57,10 @@ export function ProfileHubBody({
   showHeader = true,
   onProfileUpdated,
 }: ProfileHubBodyProps) {
-  const stats = fetchProfileHubStats();
-  const vipRankLabel = getVipRankTier(fetchVipPlayer().currentRankId).label;
+  /** สถิติ / ระดับ VIP — แสดง "—" ระหว่างโหลด (แถวคงความสูงเดิม) */
+  const stats = useProfileHubStats().data;
+  const vipPlayer = useVipPlayer().data;
+  const vipRankLabel = vipPlayer ? getVipRankTier(vipPlayer.currentRankId).label : "—";
   const rowLayout = showHeader ? "default" : "sheet";
 
   return (
@@ -99,7 +100,7 @@ export function ProfileHubBody({
           title="เพชรของฉัน"
           trailing={
             <span className="tabular-nums text-[var(--text-secondary)]">
-              {formatDiamonds(stats.diamonds)}
+              {stats ? formatDiamonds(stats.diamonds) : "—"}
             </span>
           }
         />
@@ -111,7 +112,7 @@ export function ProfileHubBody({
           onClick={onOpenLossRebate}
           trailing={
             <span className="tabular-nums text-[var(--text-secondary)]">
-              {formatThb(stats.lossBonusThb)}
+              {stats ? formatThb(stats.lossBonusThb) : "—"}
             </span>
           }
         />
@@ -121,7 +122,7 @@ export function ProfileHubBody({
           title="ยอด Affiliate"
           trailing={
             <span className="tabular-nums text-[var(--text-secondary)]">
-              {formatThb(stats.affiliateBalanceThb)}
+              {stats ? formatThb(stats.affiliateBalanceThb) : "—"}
             </span>
           }
         />
@@ -131,7 +132,7 @@ export function ProfileHubBody({
           title="โปรโมชั่นที่ใช้อยู่"
           trailing={
             <span className="max-w-[46%] truncate text-[var(--text-secondary)]">
-              {stats.activePromotionLabel}
+              {stats ? stats.activePromotionLabel : "—"}
             </span>
           }
         />

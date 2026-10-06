@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { fetchActivities } from "@/lib/api/activities";
+import { useActivities } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 import type { ActivityHubItem } from "@/app/types/activities";
 
@@ -48,7 +49,15 @@ function ActivityMasterRow({
  * ใช้ใน ActivitiesHubPageContent (embedded + lg+)
  */
 export function ActivitiesDesktopHubLayout() {
-  const activities = fetchActivities();
+  const activitiesResource = useActivities();
+  return (
+    <ResourceGate resource={activitiesResource} loadingLabel="กำลังโหลดกิจกรรม…" errorTitle="โหลดกิจกรรมไม่สำเร็จ">
+      {(activities) => <ActivitiesDesktopHubContent activities={activities} />}
+    </ResourceGate>
+  );
+}
+
+function ActivitiesDesktopHubContent({ activities }: { activities: ActivityHubItem[] }) {
   const [pickedId, setSelectedId] = useState(activities[0]?.id ?? "");
 
   /** id ที่เลือกหายจากรายการ → ใช้รายการแรกแทน (คำนวณตอน render ไม่ต้อง sync state) */

@@ -91,6 +91,18 @@ export async function apiFetch<T>(path: string, options: ApiFetchOptions = {}): 
   const { method = "GET", body, query, headers, signal, cache } = options;
   const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
 
+  /** ฝั่ง server (เช่น layout ที่โหลดเนื้อหา lobby) fetch path แบบ relative ไม่ได้ — ต้องมี base URL แบบ absolute */
+  if (typeof window === "undefined" && !API_BASE_URL) {
+    return {
+      ok: false,
+      error: {
+        code: "NETWORK",
+        status: 0,
+        message: "ยังไม่ได้ตั้ง NEXT_PUBLIC_API_BASE_URL สำหรับการเรียก API ฝั่ง server",
+      },
+    };
+  }
+
   let res: Response;
   try {
     res = await fetch(apiUrl(path, query), {

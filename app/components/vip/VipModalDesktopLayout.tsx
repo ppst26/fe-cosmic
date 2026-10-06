@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import type { VipModalTabId, VipPlayerState, VipRankId } from "@/app/types/vip";
-import { fetchVipRanks } from "@/lib/api/vip";
+import type { VipModalTabId, VipPlayerState, VipRankId, VipRankTier } from "@/app/types/vip";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
 import { getVipRankTier } from "@/app/data/vipMockData";
 import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
@@ -14,6 +13,8 @@ import { VipRankLevelUpCard } from "./VipRankLevelUpCard";
 interface VipModalDesktopLayoutProps {
   tab: VipModalTabId;
   player: VipPlayerState;
+  /** ตารางระดับจาก useVipRanks (VipPageContent) */
+  vipRankTiers: VipRankTier[];
   rankFocusIndex: number;
   onRankFocusChange: (index: number) => void;
 }
@@ -24,12 +25,12 @@ interface VipModalDesktopLayoutProps {
 export function VipModalDesktopLayout({
   tab,
   player,
+  vipRankTiers,
   rankFocusIndex,
   onRankFocusChange,
 }: VipModalDesktopLayoutProps) {
   const currentTier = getVipRankTier(player.currentRankId);
   const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
-  const vipRankTiers = fetchVipRanks().tiers;
   const focusRankId = vipRankTiers[rankFocusIndex]?.id ?? player.currentRankId;
 
   if (tab === "benefits") {
@@ -49,6 +50,7 @@ export function VipModalDesktopLayout({
               focusIndex={rankFocusIndex}
               onFocusChange={onRankFocusChange}
               playerRankId={player.currentRankId}
+              vipRankTiers={vipRankTiers}
             />
           </section>
           <section className="vip-modal-desktop__panel vip-modal-desktop__panel--fill min-w-0 flex min-h-0 flex-col py-4 lg:min-h-0 lg:py-0 lg:pl-5">

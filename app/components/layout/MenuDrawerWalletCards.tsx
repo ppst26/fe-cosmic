@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { fetchGemsStore } from "@/lib/api/gemsStore";
-import { fetchMenuTicketCount } from "@/lib/api/profile";
+import { useGemsStore, useMenuTicketCount } from "@/app/hooks/api/member";
+import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
 import { useWallet } from "@/app/hooks/api/account";
 import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";
 import { useAuth } from "@/app/components/auth/AuthProvider";
-import { formatGemsBalance, formatHeaderWalletBalance } from "@/lib/format";
+import { formatGemsBalance, formatHeaderWalletBalance, formatNumber } from "@/lib/format";
 
 const MENU_TICKET_ICON_SRC = getMenuIconSrc("ticket") ?? "/assets/3d/menuicon/lottery.avif";
 
@@ -23,15 +23,15 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
   const { isAuthenticated, isLoading } = useAuth();
   const showAmounts = isAuthenticated && !isLoading;
   const wallet = useWallet();
-  const gemsStore = fetchGemsStore();
-  const ticketCount = fetchMenuTicketCount();
+  const gemsStore = useGemsStore();
+  const ticketCount = useMenuTicketCount();
 
   const balanceLabel =
     showAmounts && wallet.data ? formatHeaderWalletBalance(wallet.data.amount) : "—";
-  const gemsLabel = showAmounts ? formatGemsBalance(gemsStore.balance) : "—";
-  const ticketLabel = showAmounts
-    ? new Intl.NumberFormat("th-TH").format(ticketCount)
-    : "—";
+  const gemsLabel =
+    showAmounts && gemsStore.data ? formatGemsBalance(gemsStore.data.balance) : "—";
+  const ticketLabel =
+    showAmounts && ticketCount.data !== null ? formatNumber(ticketCount.data) : "—";
 
   return (
     <div className={cn("menu-drawer-balances grid grid-cols-3", className)}>
@@ -47,7 +47,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
 
       <div className="menu-drawer-balance flex flex-col items-center justify-center px-1 text-center">
         <Image
-          src={gemsStore.gemAsset}
+          src={GEMS_STORE_GEM_ASSET}
           alt=""
           width={36}
           height={36}

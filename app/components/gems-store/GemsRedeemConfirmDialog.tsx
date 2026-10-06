@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Dialog } from "radix-ui";
-import { fetchGemsStore } from "@/lib/api/gemsStore";
+import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
 import { cn } from "@/lib/utils";
 import { formatGemsBalance } from "@/lib/format";
 import type { GemsStorePackage } from "@/app/types/reward";
@@ -32,7 +32,7 @@ export function GemsRedeemConfirmDialog({
   loading = false,
   onConfirm,
 }: GemsRedeemConfirmDialogProps) {
-  const gemAsset = fetchGemsStore().gemAsset;
+  const gemAsset = GEMS_STORE_GEM_ASSET;
   const credits = pkg?.credits ?? 0;
   const gemsCost = pkg?.gemsCost ?? 0;
   const balanceAfter = gemsBalance - gemsCost;

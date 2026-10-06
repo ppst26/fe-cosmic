@@ -6,7 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/components/ui/Icons";
 import type { PromoItem } from "@/app/types/lobby";
-import { fetchHomeBanners } from "@/lib/api/lobby";
+import { HOME_DESKTOP_PEEK_BANNER_SIZE } from "@/app/data/lobbyMockData";
 
 const MOCK_SHELL_SLIDE_COUNT = 6;
 
@@ -279,7 +279,7 @@ export function HomeDesktopPeekCarousel({
               );
             }
 
-            const bannerIntrinsic = isShellBand ? fetchHomeBanners().peekSize : null;
+            const bannerIntrinsic = isShellBand ? HOME_DESKTOP_PEEK_BANNER_SIZE : null;
 
             return (
               <Link

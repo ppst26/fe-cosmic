@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { fetchActivities } from "@/lib/api/activities";
+import { useActivities } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 import { PromoHubPillLabel, promoCardButtonClass } from "../promotions/promoHubCardPrimitives";
 import { CloseIcon } from "../ui/Icons";
@@ -14,7 +15,7 @@ type MobileView = "list" | "detail";
  * ใช้ใน ActivitiesHubPageContent (ไม่ embedded หรือ embedded แต่ < lg)
  */
 export function ActivitiesMobileHub() {
-  const activities = fetchActivities();
+  const activitiesResource = useActivities();
   const [view, setView] = useState<MobileView>("list");
   const [selected, setSelected] = useState<ActivityHubItem | null>(null);
 
@@ -52,6 +53,8 @@ export function ActivitiesMobileHub() {
   }
 
   return (
+    <ResourceGate resource={activitiesResource} loadingLabel="กำลังโหลดกิจกรรม…" errorTitle="โหลดกิจกรรมไม่สำเร็จ">
+      {(activities) => (
     <ul className="activities-mobile-hub flex flex-col gap-3" aria-label="รายการกิจกรรม">
       {activities.map((item) => (
         <li key={item.id}>
@@ -81,5 +84,7 @@ export function ActivitiesMobileHub() {
         </li>
       ))}
     </ul>
+      )}
+    </ResourceGate>
   );
 }

@@ -1,11 +1,13 @@
 import Image from "next/image";
-import { fetchGemsStore } from "@/lib/api/gemsStore";
+import type { GemsStoreData } from "@/lib/api/gemsStore";
 import { HistoryIcon } from "@/app/components/ui/Icons";
 import { cn } from "@/lib/utils";
 import { formatGemsBalance } from "@/lib/format";
 
 interface GemsStoreSummaryCardProps {
   gemsBalance: number;
+  /** ข้อมูลร้านค้าที่โหลดแล้ว (โควตา · ข้อความรีเซ็ต · อัตราแลก) */
+  store: Pick<GemsStoreData, "quota" | "resetNotice" | "rateLabel">;
   className?: string;
 }
 
@@ -13,8 +15,8 @@ interface GemsStoreSummaryCardProps {
  * การ์ดยอดเพชรด้านบนร้านค้า — เพชรกลางบน · ยอด · label · โควตากลาง
  * ใช้ใน GemsStorePageContent.tsx
  */
-export function GemsStoreSummaryCard({ gemsBalance, className }: GemsStoreSummaryCardProps) {
-  const { quota, resetNotice, rateLabel } = fetchGemsStore();
+export function GemsStoreSummaryCard({ gemsBalance, store, className }: GemsStoreSummaryCardProps) {
+  const { quota, resetNotice, rateLabel } = store;
   const { dailyUsed, dailyLimit, weeklyUsed, weeklyLimit } = quota;
 
   return (

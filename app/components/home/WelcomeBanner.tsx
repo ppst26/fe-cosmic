@@ -3,19 +3,17 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import type { WelcomeBannerSlide } from "@/app/types/lobby";
-import { fetchHomeBanners } from "@/lib/api/lobby";
 
 interface WelcomeBannerProps {
-  items?: WelcomeBannerSlide[];
+  /** สไลด์จาก loadLobbyContent() (HomeLobbyPage) */
+  items: WelcomeBannerSlide[];
 }
 
 /**
  * WelcomeBanner — carousel แบนเนอร์ hero เต็มความกว้าง + dots ด้านใน
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx (มือถือ — carousel บนสุด)
  */
-export function WelcomeBanner({
-  items = fetchHomeBanners().welcomeSlides,
-}: WelcomeBannerProps) {
+export function WelcomeBanner({ items }: WelcomeBannerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 

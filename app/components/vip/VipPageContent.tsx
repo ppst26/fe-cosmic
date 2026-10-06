@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import type { VipModalTabId } from "@/app/types/vip";
-import { fetchVipPlayer, fetchVipRanks } from "@/lib/api/vip";
+import type { VipModalTabId, VipPlayerState, VipRankTier } from "@/app/types/vip";
+import { useVipPlayer, useVipRanks } from "@/app/hooks/api/member";
+import { ResourceGate } from "@/app/components/ui/ResourceGate";
 import { cn } from "@/lib/utils";
 import { VipModalDesktopLayout } from "./VipModalDesktopLayout";
 import { VipMobileTabPanels } from "./VipMobileTabPanels";
@@ -18,15 +19,35 @@ interface VipPageContentProps {
 }
 
 /**
- * เนื้อหาหน้า VIP standalone — line tabs · desktop/mobile layout
+ * เนื้อหาหน้า VIP standalone — โหลดข้อมูลผู้เล่น + ตารางระดับ แล้วส่งต่อให้ VipPageContentInner
  */
-export function VipPageContent({
+export function VipPageContent(props: VipPageContentProps) {
+  const player = useVipPlayer();
+  const ranks = useVipRanks();
+
+  return (
+    <ResourceGate resource={player} loadingLabel="กำลังโหลดข้อมูล VIP…" errorTitle="โหลดข้อมูล VIP ไม่สำเร็จ">
+      {(playerData) => (
+        <ResourceGate resource={ranks} loadingLabel="กำลังโหลดระดับ VIP…" errorTitle="โหลดระดับ VIP ไม่สำเร็จ">
+          {(ranksData) => (
+            <VipPageContentInner {...props} player={playerData} vipRankTiers={ranksData.tiers} />
+          )}
+        </ResourceGate>
+      )}
+    </ResourceGate>
+  );
+}
+
+/**
+ * line tabs · desktop/mobile layout — mount หลังมีข้อมูลแล้ว (useState ตั้งแรงค์เริ่มจาก player ได้ตรง)
+ */
+function VipPageContentInner({
   activeTab,
   onSelectTab,
   embedded = false,
-}: VipPageContentProps) {
-  const player = fetchVipPlayer();
-  const vipRankTiers = fetchVipRanks().tiers;
+  player,
+  vipRankTiers,
+}: VipPageContentProps & { player: VipPlayerState; vipRankTiers: VipRankTier[] }) {
   const currentRankIndex = vipRankTiers.findIndex((t) => t.id === player.currentRankId);
   const [rankFocusIndex, setRankFocusIndex] = useState(
     currentRankIndex >= 0 ? currentRankIndex : 0,
@@ -48,6 +69,7 @@ export function VipPageContent({
           <VipModalDesktopLayout
             tab={tab}
             player={player}
+            vipRankTiers={vipRankTiers}
             rankFocusIndex={rankFocusIndex}
             onRankFocusChange={setRankFocusIndex}
           />
@@ -57,6 +79,7 @@ export function VipPageContent({
           <VipMobileTabPanels
             tab={tab}
             player={player}
+            vipRankTiers={vipRankTiers}
             rankFocusIndex={rankFocusIndex}
             onRankFocusChange={setRankFocusIndex}
           />

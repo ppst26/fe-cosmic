@@ -8,7 +8,6 @@ import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { ReferralPageContent } from "@/app/components/referral/ReferralPageContent";
-import { fetchReferralOverview } from "@/lib/api/referral";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 
 /**
@@ -18,9 +17,8 @@ export default function ReferralPage() {
   const { isAuthenticated, isLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: profile } = useProfile();
-  /** รหัสชวนเพื่อน = memberId ของผู้ใช้ที่ login · ยังไม่ login ใช้ค่าจาก referral overview */
-  const refCode =
-    (isAuthenticated ? profile?.memberId : undefined) ?? fetchReferralOverview().refCode;
+  /** รหัสชวนเพื่อน = memberId ของผู้ใช้ที่ login · ไม่มีให้ ReferralPageContent ใช้ refCode จาก overview */
+  const refCode = isAuthenticated ? profile?.memberId : undefined;
 
   if (isLoading) {
     return null;

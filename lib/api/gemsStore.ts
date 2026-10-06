@@ -8,8 +8,10 @@ import {
   GEMS_STORE_RESET_NOTICE,
   GEMS_STORE_TERMS,
 } from "@/app/data/gemsStoreMockData";
+import type { ApiResult } from "./http";
+import { mockResult } from "./mock";
 
-export function fetchGemsStore() {
+function gemsStoreMock() {
   return {
     balance: GEMS_STORE_BALANCE_MOCK,
     quota: GEMS_STORE_REDEEM_QUOTA_MOCK,
@@ -20,4 +22,14 @@ export function fetchGemsStore() {
     rateLabel: GEMS_STORE_EXCHANGE_RATE_LABEL,
     resetNotice: GEMS_STORE_RESET_NOTICE,
   };
+}
+
+/** รูปข้อมูลที่ backend ต้องส่ง — GET /api/gems-store (ตอนนี้อนุมานจาก mock) */
+export type GemsStoreData = ReturnType<typeof gemsStoreMock>;
+
+/**
+ * ต่อ backend: return apiFetch<GemsStoreData>("/api/gems-store")
+ */
+export function fetchGemsStore(): Promise<ApiResult<GemsStoreData>> {
+  return mockResult(gemsStoreMock());
 }

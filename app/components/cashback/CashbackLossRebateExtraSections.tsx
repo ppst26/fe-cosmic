@@ -9,7 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchLossRebate } from "@/lib/api/cashback";
+import type { LossRebateData } from "@/lib/api/cashback";
+import { useLossRebate } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import { ChevronDownIcon } from "../ui/Icons";
 import { COSMIC_PANEL_SOLID } from "../ui/cosmicButtonClasses";
 import { CosmicSelectField } from "../ui/CosmicSelectField";
@@ -36,12 +38,33 @@ type CashbackLossRebateExtraSectionsProps = {
 
 /**
  * สูตรคำนวณ + ตารางประวัติ + เงื่อนไขคืนยอดเสีย — ต่อท้าย CashbackPageContent แท็บเสีย
+ * โหลดผ่าน useLossRebate · ส่ง summary / history มาแทนค่าจาก API ได้
  */
-export function CashbackLossRebateExtraSections({
-  summary = fetchLossRebate().summary,
-  history = fetchLossRebate().history,
-}: CashbackLossRebateExtraSectionsProps) {
-  const lossRebate = fetchLossRebate();
+export function CashbackLossRebateExtraSections({ summary, history }: CashbackLossRebateExtraSectionsProps) {
+  const lossRebate = useLossRebate();
+  return (
+    <ResourceGate resource={lossRebate} loadingLabel="กำลังโหลดคืนยอดเสีย…" errorTitle="โหลดข้อมูลคืนยอดเสียไม่สำเร็จ">
+      {(data) => (
+        <LossRebateSections
+          lossRebate={data}
+          summary={summary ?? data.summary}
+          history={history ?? data.history}
+        />
+      )}
+    </ResourceGate>
+  );
+}
+
+/** เนื้อหาหลังโหลดเสร็จ — เดือนเริ่มต้นมาจาก lossRebate.months */
+function LossRebateSections({
+  lossRebate,
+  summary,
+  history,
+}: {
+  lossRebate: LossRebateData;
+  summary: LossRebateSummaryMock;
+  history: LossRebateHistoryRow[];
+}) {
   const [monthId, setMonthId] = useState(lossRebate.months[0]?.id ?? "2026-09");
   const [historyPage, setHistoryPage] = useState(1);
   const [termsOpen, setTermsOpen] = useState(false);

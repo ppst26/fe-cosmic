@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { fetchCheckIn } from "@/lib/api/checkIn";
+import { useCheckIn } from "@/app/hooks/api/member";
 import { CheckInCoinGraphic, DailyCheckInCalendarGraphic } from "./DailyCheckInGraphics";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
 import { formatCheckInCredits } from "@/lib/format";
@@ -23,7 +23,8 @@ export function DailyCheckInDesktopLayout({
   claimMessage,
   onClaimDay,
 }: DailyCheckInDesktopLayoutProps) {
-  const checkInTerms = fetchCheckIn().terms;
+  /** ข้อความเงื่อนไข — cache เดียวกับ DailyCheckInCard (โหลดแล้วก่อน render ส่วนนี้) */
+  const checkInTerms = useCheckIn().data?.terms ?? [];
   const todayReward = days.find((d) => d.status === "today");
 
   return (

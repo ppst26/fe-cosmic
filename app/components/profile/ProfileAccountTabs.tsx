@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import type { ProfileUser } from "@/app/types/auth";
 import { getVipRankTier } from "@/app/data/vipMockData";
-import { fetchVipPlayer } from "@/lib/api/vip";
+import { useVipPlayer } from "@/app/hooks/api/member";
 import { ProfileAccountFieldRow, ProfileAccountNavRow } from "./ProfileAccountFieldRow";
 import { ProfileBankAccountCard } from "./ProfileBankAccountCard";
 import { ProfileReferralInviteCard } from "./ProfileReferralInviteCard";
@@ -31,8 +31,6 @@ interface ProfileAccountTabsProps {
   compact?: boolean;
 }
 
-const vipRankLabel = getVipRankTier(fetchVipPlayer().currentRankId).label;
-
 /**
  * หน้าข้อมูลบัญชี — แท็บข้อมูลส่วนตัว / บัญชีธนาคาร + ชวนเพื่อน (ProfileSheetBody)
  */
@@ -46,6 +44,9 @@ export function ProfileAccountTabs({
 }: ProfileAccountTabsProps) {
   const [activeTab, setActiveTab] = useState<ProfileAccountTab>("personal");
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const vipPlayer = useVipPlayer();
+  /** ระดับ VIP — "—" ระหว่างโหลด */
+  const vipRankLabel = vipPlayer.data ? getVipRankTier(vipPlayer.data.currentRankId).label : "—";
 
   const copyText = async (field: string, text: string) => {
     try {

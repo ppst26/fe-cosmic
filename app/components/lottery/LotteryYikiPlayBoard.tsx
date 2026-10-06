@@ -4,7 +4,8 @@ import React, { useMemo } from "react";
 import { EmptyState } from "../ui/StatusState";
 import { YikiBetBoard } from "./yiki/YikiBetBoard";
 import { LotteryBetResultDialog } from "./LotteryBetResultDialog";
-import { fetchYikiBoard } from "@/lib/api/lotteryContent";
+import { useYikiBoard } from "@/app/hooks/api/lottery";
+import { LoadingState } from "../ui/StatusState";
 import { lotteryPlayMarketMeta, resolveLotteryPlayRound } from "@/lib/lottery/resolvePlayRound";
 import { useYikiStyleBetSubmit } from "@/app/hooks/useLotteryBetSubmit";
 
@@ -24,7 +25,8 @@ export function LotteryYikiPlayBoard({
   backHref,
   onStepChange,
 }: LotteryYikiPlayBoardProps) {
-  const yikiBoard = fetchYikiBoard();
+  const yikiBoardResource = useYikiBoard();
+  const yikiBoard = yikiBoardResource.data;
   const playRound = useMemo(
     () => resolveLotteryPlayRound(marketSlug, roundId),
     [marketSlug, roundId],
@@ -57,6 +59,10 @@ export function LotteryYikiPlayBoard({
         description="รอบนี้อาจปิดรับแทงแล้ว เลือกรอบถัดไปจากรายการรอบ"
       />
     );
+  }
+
+  if (!yikiBoard) {
+    return <LoadingState label="กำลังโหลดกระดานแทง…" />;
   }
 
   return (

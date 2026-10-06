@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { fetchReferralEarnings, fetchReferralOverview } from "@/lib/api/referral";
+import type { ReferralEarningsData, ReferralOverviewData } from "@/lib/api/referral";
+import { useReferralEarnings, useReferralOverview } from "@/app/hooks/api/member";
+import { ResourceGate } from "../ui/ResourceGate";
 import {
   COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_SHEET_SUBMIT,
@@ -26,8 +28,34 @@ interface ReferralDesktopHubLayoutProps {
  * ใช้ใน ReferralPageContent (embedded + lg+)
  */
 export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutProps) {
-  const referralEarnings = fetchReferralEarnings();
-  const referralOverview = fetchReferralOverview();
+  const earnings = useReferralEarnings();
+  const overview = useReferralOverview();
+  return (
+    <ResourceGate resource={earnings} loadingLabel="กำลังโหลดรายได้…" errorTitle="โหลดรายได้ไม่สำเร็จ">
+      {(referralEarnings) => (
+        <ResourceGate resource={overview} loadingLabel="กำลังโหลดข้อมูลแนะนำเพื่อน…" errorTitle="โหลดข้อมูลแนะนำเพื่อนไม่สำเร็จ">
+          {(referralOverview) => (
+            <ReferralDesktopHubContent
+              refCode={refCode}
+              referralEarnings={referralEarnings}
+              referralOverview={referralOverview}
+            />
+          )}
+        </ResourceGate>
+      )}
+    </ResourceGate>
+  );
+}
+
+/** เนื้อหาหลังโหลดครบ — ยอดรับได้ / รับแล้ว seed จาก summary (useState) */
+function ReferralDesktopHubContent({
+  refCode,
+  referralEarnings,
+  referralOverview,
+}: ReferralDesktopHubLayoutProps & {
+  referralEarnings: ReferralEarningsData;
+  referralOverview: ReferralOverviewData;
+}) {
   const [copied, setCopied] = useState(false);
   const [period, setPeriod] = useState<ReferralEarningPeriodId>("all");
   const [claimable, setClaimable] = useState(referralEarnings.summary.bonusClaimableThb);

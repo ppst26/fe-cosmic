@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import type { VipModalTabId, VipPlayerState } from "@/app/types/vip";
-import { fetchVipRanks } from "@/lib/api/vip";
+import type { VipModalTabId, VipPlayerState, VipRankTier } from "@/app/types/vip";
 import { VipBenefitsComparisonTable } from "./VipBenefitsComparisonTable";
 import { VipMyLevelPanel } from "./VipMyLevelPanel";
 import { VipRankCarousel } from "./VipRankCarousel";
@@ -11,6 +10,8 @@ import { VipRankLevelUpCard } from "./VipRankLevelUpCard";
 interface VipMobileTabPanelsProps {
   tab: VipModalTabId;
   player: VipPlayerState;
+  /** ตารางระดับจาก useVipRanks (VipPageContent) */
+  vipRankTiers: VipRankTier[];
   rankFocusIndex: number;
   onRankFocusChange: (index: number) => void;
 }
@@ -21,6 +22,7 @@ interface VipMobileTabPanelsProps {
 export function VipMobileTabPanels({
   tab,
   player,
+  vipRankTiers,
   rankFocusIndex,
   onRankFocusChange,
 }: VipMobileTabPanelsProps) {
@@ -36,12 +38,13 @@ export function VipMobileTabPanels({
             focusIndex={rankFocusIndex}
             onFocusChange={onRankFocusChange}
             playerRankId={player.currentRankId}
+            vipRankTiers={vipRankTiers}
           />
         </div>
 
         <VipRankLevelUpCard
           player={player}
-          focusRankId={fetchVipRanks().tiers[rankFocusIndex]?.id ?? player.currentRankId}
+          focusRankId={vipRankTiers[rankFocusIndex]?.id ?? player.currentRankId}
           rankSurface
         />
       </div>
