@@ -148,7 +148,11 @@ export function MenuDrawerMobileToolbar({
         className="menu-drawer-referral-bar menu-enter-item flex w-full min-w-0 max-w-full items-center gap-1.5"
         style={{ "--menu-enter-i": 4 } as React.CSSProperties}
       >
-        <MenuItemIcon iconId="referral" variant="asset" className="h-7 w-7 shrink-0 object-contain" />
+        <MenuItemIcon
+          iconId="referral"
+          variant="asset"
+          className="menu-drawer-referral-bar__icon shrink-0 object-contain"
+        />
         <div className="min-w-0 flex-1">
           <p className="text-[11px] font-medium text-[var(--text-secondary)]">ลิงก์แนะนำเพื่อน</p>
           <p className="truncate text-xs font-medium text-[var(--text-primary)] tabular-nums">

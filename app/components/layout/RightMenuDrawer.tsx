@@ -96,13 +96,13 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           iconId={tile.iconId}
           variant="asset"
           className={cn(
-            "menu-grid-icon h-8 w-8 object-contain shrink-0 lg:h-9 lg:w-9",
+            "menu-grid-icon object-contain shrink-0 lg:h-9 lg:w-9",
             comingSoon && "opacity-45 grayscale-[0.35]",
           )}
         />
         <span
           className={cn(
-            "menu-grid-label w-full text-[10px] font-medium leading-[1.2] sm:text-[11px] lg:text-[11.5px]",
+            "menu-grid-label w-full font-medium leading-[1.2] lg:text-[11.5px]",
             comingSoon ? "text-[var(--text-muted)]" : "text-white",
           )}
         >
@@ -184,9 +184,9 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           <MenuItemIcon
             iconId={tile.iconId}
             variant="asset"
-            className="menu-list-icon h-7 w-7 object-contain shrink-0 lg:h-7 lg:w-7"
+            className="menu-list-icon object-contain shrink-0 lg:h-7 lg:w-7"
           />
-          <span className="menu-list-label min-w-0 flex-1 truncate text-[13px] font-medium leading-none text-white lg:text-[13.5px]">
+          <span className="menu-list-label min-w-0 flex-1 truncate font-medium leading-none text-white lg:text-[13.5px]">
             {tile.label}
           </span>
         </div>

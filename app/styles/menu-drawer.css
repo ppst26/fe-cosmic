@@ -846,9 +846,18 @@
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
-  padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
-  gap: 0.875rem;
+  /** สเกลตามความกว้างจอ — ไม่พึ่ง breakpoint เดียว */
+  --menu-drawer-pad-inline: clamp(0.75rem, 3vw, 1rem);
+  --menu-drawer-stack-gap: clamp(0.75rem, 2.5vw, 1rem);
+  --menu-drawer-avatar-size: clamp(4.25rem, 13.5vw, 5.5rem);
+  --menu-drawer-grid-icon: clamp(1.75rem, 7.5vw, 2.125rem);
+  --menu-drawer-grid-label: clamp(0.625rem, 2.75vw, 0.6875rem);
+  --menu-drawer-grid-tile-min-h: clamp(3.35rem, 14vw, 4.25rem);
+  --menu-drawer-list-icon: clamp(1.625rem, 7vw, 1.875rem);
+  --menu-drawer-list-label: clamp(0.8125rem, 3.25vw, 0.875rem);
+  padding-left: max(var(--menu-drawer-pad-inline), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--menu-drawer-pad-inline), env(safe-area-inset-right, 0px));
+  gap: var(--menu-drawer-stack-gap);
   /* linear gradient ซ้าย → ขวา · เทาเข้มเกือบดำ */
   --menu-drawer-grad-a: linear-gradient(
     90deg,
@@ -912,12 +921,9 @@
   --menu-drawer-chip-border-hover: rgb(255 255 255 / 0.4);
 }
 
-@media (min-width: 380px) {
-  .menu-content--mobile-stack {
-    padding-left: max(1.375rem, env(safe-area-inset-left, 0px));
-    padding-right: max(1.375rem, env(safe-area-inset-right, 0px));
-    gap: 1rem;
-  }
+.menu-content--mobile-stack .menu-drawer-avatar__img {
+  width: var(--menu-drawer-avatar-size);
+  height: var(--menu-drawer-avatar-size);
 }
 
 .menu-drawer-balances {
@@ -1194,8 +1200,8 @@
 
 .menu-drawer-grid-card .menu-grid-tile {
   min-width: 0;
-  min-height: 3.75rem;
-  padding-block: 0.3rem;
+  min-height: var(--menu-drawer-grid-tile-min-h);
+  padding-block: clamp(0.25rem, 1vw, 0.35rem);
   border: 0;
   border-radius: 0;
   border-right: 1px solid var(--menu-drawer-stroke);
@@ -1223,21 +1229,58 @@
   border-radius: 0;
 }
 
-@media (min-width: 380px) {
-  .menu-drawer-grid-card .menu-grid--mobile-drawer {
-    gap: 0;
-  }
-
-  .menu-drawer-grid-card .menu-grid--mobile-drawer .menu-grid-tile {
-    min-height: 4rem;
-    border-radius: 0;
-  }
-}
-
 .menu-content--mobile-stack .menu-drawer-list-card,
 .menu-content--mobile-stack .menu-card-group {
   min-width: 0;
   max-width: 100%;
+}
+
+/** เมนูมือถือ — ขนาดไอคอน/ตัวอักษรตาม viewport (ชนะ legacy breakpoint 1023px) */
+.menu-content--mobile-stack .menu-grid--mobile-drawer .menu-grid-icon {
+  width: var(--menu-drawer-grid-icon);
+  height: var(--menu-drawer-grid-icon);
+}
+
+.menu-content--mobile-stack .menu-grid--mobile-drawer .menu-grid-label {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: break-word;
+  font-size: var(--menu-drawer-grid-label);
+  line-height: 1.2;
+}
+
+.menu-content--mobile-stack .menu-grid--mobile-drawer .menu-grid-tile {
+  min-height: var(--menu-drawer-grid-tile-min-h);
+  padding-block: clamp(0.25rem, 1vw, 0.35rem);
+  border-radius: 0;
+}
+
+.menu-content--mobile-stack .menu-drawer-list-card .menu-list-icon {
+  width: var(--menu-drawer-list-icon);
+  height: var(--menu-drawer-list-icon);
+}
+
+.menu-content--mobile-stack .menu-drawer-list-card .menu-list-label {
+  font-size: var(--menu-drawer-list-label);
+}
+
+.menu-content--mobile-stack .menu-drawer-referral-bar__icon {
+  width: var(--menu-drawer-list-icon);
+  height: var(--menu-drawer-list-icon);
+}
+
+.menu-content--mobile-stack .menu-drawer-quick-actions__btn {
+  min-height: clamp(2.5rem, 11vw, 2.85rem);
+}
+
+.menu-content--mobile-stack .menu-drawer-quick-actions__label {
+  font-size: clamp(0.6875rem, 3.2vw, 0.8125rem);
+}
+
+.menu-content--mobile-stack .menu-drawer-income-card__label {
+  font-size: clamp(0.625rem, 2.8vw, 0.6875rem);
 }
 
 .menu-drawer-logout--mobile {
