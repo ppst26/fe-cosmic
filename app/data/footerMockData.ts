@@ -174,6 +174,32 @@ export const FOOTER_SOCIAL_LINKS: FooterNavLink[] = [
   { label: "Telegram", href: "/support" },
 ];
 
+/** โลโก้ธนาคาร/ช่องทางชำระ — footer desktop (public/assets/bank-logo) */
+export interface FooterPaymentBank {
+  id: string;
+  name: string;
+  logoSrc: string;
+}
+
+export const FOOTER_PAYMENT_BANKS: readonly FooterPaymentBank[] = [
+  { id: "bbl", name: "ธนาคารกรุงเทพ", logoSrc: "/assets/bank-logo/BBL.webp" },
+  { id: "kbank", name: "ธนาคารกสิกรไทย", logoSrc: "/assets/bank-logo/KBANK.webp" },
+  { id: "ktb", name: "ธนาคารกรุงไทย", logoSrc: "/assets/bank-logo/KTB.webp" },
+  { id: "ttb", name: "ธนาคารทหารไทยธนชาต", logoSrc: "/assets/bank-logo/TTB.webp" },
+  { id: "scb", name: "ธนาคารไทยพาณิชย์", logoSrc: "/assets/bank-logo/SCB.webp" },
+  { id: "bay", name: "ธนาคารกรุงศรีอยุธยา", logoSrc: "/assets/bank-logo/BAY.webp" },
+  { id: "gsb", name: "ธนาคารออมสิน", logoSrc: "/assets/bank-logo/GSB.webp" },
+  { id: "tmn", name: "TrueMoney Wallet", logoSrc: "/assets/bank-logo/TMN.webp" },
+  { id: "baac", name: "ธ.ก.ส.", logoSrc: "/assets/bank-logo/BAAC.webp" },
+  { id: "ghb", name: "ธนาคารอาคารสงเคราะห์", logoSrc: "/assets/bank-logo/GHB.webp" },
+  { id: "kkp", name: "ธนาคารเกียรตินาคินภัทร", logoSrc: "/assets/bank-logo/KKP.webp" },
+  { id: "lhfg", name: "ธนาคารแลนด์ แอนด์ เฮ้าส์", logoSrc: "/assets/bank-logo/LHFG.webp" },
+  { id: "cimb", name: "ธนาคารซีไอเอ็มบี", logoSrc: "/assets/bank-logo/CIMBT.webp" },
+  { id: "uob", name: "ธนาคารยูโอบี", logoSrc: "/assets/bank-logo/UOBT.webp" },
+  { id: "tisco", name: "ธนาคารทิสโก้", logoSrc: "/assets/bank-logo/TISCO.webp" },
+  { id: "tcd", name: "ธนาคารไทยเครดิต", logoSrc: "/assets/bank-logo/TCD.webp" },
+];
+
 export const FOOTER_PAYMENT_LABELS: readonly string[] = ["PromptPay", "TrueMoney", "ธนาคาร"];
 
 export const FOOTER_LEGAL_LINKS: FooterNavLink[] = [

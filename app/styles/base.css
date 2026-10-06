@@ -27,10 +27,15 @@ body {
   min-height: 100vh;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
-  padding-bottom: calc(
-    var(--nav-height) + var(--nav-float-offset) + var(--nav-safe) + var(--nav-scroll-gap)
-  );
   background-color: transparent;
+}
+
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: calc(
+      var(--nav-height) + var(--nav-float-offset) + var(--nav-safe) + var(--nav-scroll-gap)
+    );
+  }
 }
 
 

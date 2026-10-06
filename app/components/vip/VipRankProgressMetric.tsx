@@ -54,7 +54,10 @@ export function VipRankProgressMetric({
       >
         <div
           className={cn(
-            "vip-progress-fill vip-progress-fill--rank-card",
+            "vip-progress-fill",
+            iconKind === "deposit"
+              ? "vip-progress-fill--deposit"
+              : "vip-progress-fill--turnover",
             complete && "is-complete",
           )}
           style={{ width: locked ? "0%" : `${pct}%` }}

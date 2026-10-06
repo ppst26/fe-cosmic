@@ -1,0 +1,42 @@
+/**
+ * ความชัดของข้อความ — ไม่ใช้ text-shadow / glow บนตัวอักษรทั้งแอป
+ * ผูกกับ html.cosmic-page ใน app/layout.tsx
+ */
+html.cosmic-page,
+html.cosmic-page *,
+html.cosmic-page *::before,
+html.cosmic-page *::after {
+  text-shadow: none !important;
+}
+
+/**
+ * Tailwind drop-shadow บนองค์ประกอบตัวอักษร (ไม่กระทบ img / svg / video โดยตรง)
+ */
+html.cosmic-page
+  :is(
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    a,
+    button,
+    label,
+    li,
+    td,
+    th,
+    small,
+    strong,
+    em,
+    dt,
+    dd,
+    figcaption,
+    .cosmic-line-tab,
+    [class*="cosmic-type-"]
+  ):is([class*="drop-shadow"]) {
+  --tw-drop-shadow: ;
+  filter: none !important;
+}

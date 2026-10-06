@@ -344,7 +344,7 @@ export function SlotProviderCards({
 
       {/* 1. แบนเนอร์ feature 2 ใบเต็มความกว้าง (JILI แล้ว PRAGMATIC PLAY) — design.md slot providers */}
       {!hideFeatured && featuredProviders.length > 0 ? (
-      <div className="slot-provider-featured flex flex-col gap-2 sm:gap-2.5">
+      <div className="slot-provider-featured flex flex-col gap-2 sm:gap-2.5 lg:hidden">
         {featuredProviders.slice(0, 2).map((feat, index) => {
           const isJili = feat.id === "jili";
           const isPrimaryFeatured = index === 0;

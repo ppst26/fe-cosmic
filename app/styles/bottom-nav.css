@@ -57,12 +57,6 @@
   outline-offset: 2px;
 }
 
-@media (min-width: 1024px) {
-  body:has(.lobby-desktop-shell) {
-    padding-bottom: var(--space-6);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .bottom-nav__item {
     transition: none;

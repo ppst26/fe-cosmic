@@ -1115,12 +1115,10 @@
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-shadow: 0 1px 2px rgb(0 0 0 / 0.28);
 }
 
 .menu-drawer-quick-actions__btn--withdraw .menu-drawer-quick-actions__label {
   color: #2a2210;
-  text-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
 }
 
 .menu-drawer-quick-actions__btn--deposit .menu-drawer-quick-actions__icon {

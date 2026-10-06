@@ -133,7 +133,7 @@ export function HomeLobbyPage() {
         <div className="lobby-mobile-header-band__spacer lg:hidden" aria-hidden="true" />
 
         <div className="lobby-desktop-shell__desk-body lg:relative lg:w-full lg:min-w-0 lg:flex-1">
-          <div className="lobby-desktop-shell__sidebar-outside hidden shrink-0 lg:fixed lg:left-(--lobby-desktop-cluster-gutter) lg:top-(--lobby-sidebar-sticky-top) lg:z-[6] lg:flex lg:w-(--lobby-sidebar-card-width) lg:flex-col lg:items-stretch lg:gap-2 lg:max-h-[calc(100dvh-var(--lobby-sidebar-sticky-top)-var(--space-6))] lg:overflow-visible">
+          <div className="lobby-desktop-shell__sidebar-outside hidden shrink-0 lg:flex lg:flex-col lg:items-stretch lg:gap-2 lg:overflow-visible">
             <LobbyDesktopSidebarColumn
               categories={CATEGORIES_DATA}
               activeCategoryId={activeCategoryId}
@@ -142,8 +142,8 @@ export function HomeLobbyPage() {
             />
           </div>
 
-          <div className="lobby-desktop-shell__center-container min-w-0 flex-1 lg:flex lg:w-full lg:justify-center">
-            <div className="lobby-desktop-shell__frame lobby-desktop-shell__frame--dex lg:flex lg:min-w-0 lg:w-(--lobby-desktop-center-width) lg:max-w-none lg:flex-col lg:mx-auto lg:px-0 lg:flex-[0_1_var(--lobby-desktop-center-width)]">
+          <div className="lobby-desktop-shell__center-container min-w-0 flex-1 lg:flex lg:min-w-0 lg:w-full">
+            <div className="lobby-desktop-shell__frame lobby-desktop-shell__frame--dex lg:flex lg:min-w-0 lg:w-full lg:max-w-none lg:flex-col lg:px-0">
             <div className="lobby-desktop-main min-w-0 w-full lg:flex lg:flex-col lg:items-stretch lg:flex-1">
               <div className="lobby-desktop-main__peek hidden lg:block lg:w-full lg:shrink-0 lg:mb-2">
                 <HomeDesktopPeekCarousel

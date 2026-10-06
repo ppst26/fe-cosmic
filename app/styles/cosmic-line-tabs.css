@@ -63,7 +63,6 @@
   cursor: pointer;
   transition:
     color var(--motion-fast) ease,
-    text-shadow var(--motion-fast) ease,
     transform var(--motion-instant) var(--ease-out);
 }
 
@@ -100,7 +99,6 @@
 
 .cosmic-line-tab.is-active {
   color: var(--text-primary);
-  text-shadow: 0 0 18px rgb(112 71 235 / 0.35);
 }
 
 .cosmic-line-tab.is-active::after {

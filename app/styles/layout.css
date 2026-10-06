@@ -374,7 +374,7 @@
 
 @media (min-width: 1024px) {
   body {
-    padding-bottom: var(--space-6);
+    padding-bottom: 0;
   }
 
   /** Desktop lobby — กรอบกลาง max 1680 · 3 คอลัมน์ flex (sidebar หด/ขยาย → main ปรับตาม) */
@@ -409,12 +409,44 @@
     max-width: none;
   }
 
-  /** Sidebar นอก container กลาง — ชิดซ้าย viewport — transition ของแผงยุบ/ขยาย */
+  /**
+   * กลุ่ม sidebar + main — อยู่ใน flow (sticky ไม่ลอยทับ footer ท้ายหน้า)
+   */
+  .lobby-desktop-shell__desk-body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1rem;
+    padding-inline: var(--lobby-desktop-cluster-gutter);
+    box-sizing: border-box;
+  }
+
+  /** Sidebar — sticky ใน cluster ไม่ fixed ลงถึง footer */
   .lobby-desktop-shell__sidebar-outside {
+    position: sticky;
+    top: var(--lobby-sidebar-sticky-top);
+    z-index: 6;
+    flex: 0 0 var(--lobby-sidebar-card-width);
+    width: var(--lobby-sidebar-card-width);
+    max-height: calc(100dvh - var(--lobby-sidebar-sticky-top) - var(--space-6));
     transition:
       transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 260ms ease,
       visibility 320ms;
+  }
+
+  .lobby-desktop-shell__center-container {
+    flex: 0 1 var(--lobby-desktop-center-width);
+    max-width: var(--lobby-desktop-center-width);
+    justify-content: flex-start;
+  }
+
+  .lobby-desktop-shell__frame.lobby-desktop-shell__frame--dex {
+    width: 100%;
+    max-width: none;
+    flex: 1 1 auto;
+    margin-inline: 0;
   }
 
   .lobby-desktop-shell__sidebar-outside .lobby-desktop-sidebar.glass-sidebar {
@@ -435,10 +467,14 @@
   }
 
   .lobby-desktop-shell.is-sidebar-collapsed .lobby-desktop-shell__sidebar-outside {
-    transform: translateX(calc(-100% - var(--lobby-desktop-cluster-gutter) - 0.75rem));
+    flex: 0 0 0;
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    transform: none;
   }
 
 

@@ -69,14 +69,20 @@
   }
 }
 
-.vip-page .vip-rank-stack .vip-progress-fill--rank-card,
-.vip-modal .vip-rank-stack .vip-progress-fill--rank-card {
-  background: var(--vip-rank-card-accent);
+.vip-progress-fill--deposit {
+  background: var(--vip-progress-deposit-fill);
+  box-shadow: 0 0 14px rgb(245 158 11 / 0.32);
 }
 
-.vip-page .vip-rank-stack .vip-progress-fill--rank-card.is-complete,
-.vip-modal .vip-rank-stack .vip-progress-fill--rank-card.is-complete {
-  background: var(--vip-rank-card-accent);
+.vip-progress-fill--turnover {
+  background: var(--vip-progress-turnover-fill);
+  box-shadow: 0 0 14px rgb(124 58 237 / 0.28);
+}
+
+.vip-progress-fill--deposit.is-complete,
+.vip-progress-fill--turnover.is-complete {
+  background: var(--vip-progress-complete-fill);
+  box-shadow: 0 0 12px rgb(52 211 153 / 0.35);
 }
 
 .vip-page .vip-rank-stack .vip-rank-metric__complete,
@@ -169,7 +175,6 @@
 
 .vip-level-up-card__percent {
   color: var(--vip-level-up-percent);
-  text-shadow: none;
 }
 
 .vip-level-up-card__label {
@@ -204,24 +209,24 @@
   transition: width 500ms ease;
 }
 
-.vip-progress-fill--rank-card {
-  background: var(--vip-level-up-bar);
-}
-
 .vip-progress-fill--level-up {
-  background: var(--vip-level-up-bar);
+  background: var(--vip-progress-deposit-fill);
+  box-shadow: 0 0 12px rgb(245 158 11 / 0.28);
 }
 
 .vip-progress-fill--level-up.is-complete {
-  background: var(--success);
+  background: var(--vip-progress-complete-fill);
+  box-shadow: 0 0 12px rgb(52 211 153 / 0.35);
 }
 
 .vip-progress-fill--maintain {
-  background: var(--vip-maintain-bar);
+  background: var(--vip-progress-turnover-fill);
+  box-shadow: 0 0 12px rgb(124 58 237 / 0.26);
 }
 
 .vip-progress-fill--maintain.is-complete {
-  background: var(--success);
+  background: var(--vip-progress-complete-fill);
+  box-shadow: 0 0 12px rgb(52 211 153 / 0.35);
 }
 
 /** สิทธิประโยชน์ — การ์ดกลุ่มเดียว (หัวข้อ + กริด) */
@@ -239,6 +244,24 @@
   min-height: 2.75rem;
   border-radius: var(--radius-control);
   padding: 0.5rem 0.625rem;
+}
+
+.vip-my-level-benefits__cell--flat {
+  min-height: 2rem;
+  border-radius: 0;
+  padding: 0.25rem 0;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.vip-my-level-benefits--flat .vip-my-level-benefits__cell--a,
+.vip-my-level-benefits--flat .vip-my-level-benefits__cell--b,
+.vip-page .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell--compact.vip-my-level-benefits__cell--a,
+.vip-modal .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell--compact.vip-my-level-benefits__cell--b,
+.vip-page .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell--compact.vip-my-level-benefits__cell--b,
+.vip-modal .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell--compact.vip-my-level-benefits__cell--a {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .vip-page .vip-rank-stack .vip-my-level-benefits__cell--compact,
@@ -278,7 +301,8 @@
 
 .vip-my-level-benefits__value {
   color: var(--vip-benefit-value);
-  text-shadow: none;
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
 }
 
 .vip-my-level-benefits__value--muted {
@@ -287,27 +311,21 @@
 
 .vip-my-level-benefits__value--success {
   color: var(--vip-benefit-value-success);
-  text-shadow: none;
 }
 
-/** VIP — แท็บ/ตัวเลข accent ไม่ glow */
-.vip-modal .cosmic-line-tab.is-active {
-  text-shadow: none;
-}
-
+/** VIP — แท็บ underline ไม่ glow */
 .vip-modal .cosmic-line-tab.is-active::after {
   background: var(--vip-rank-accent-line);
-  box-shadow: 0 0 10px rgb(0 0 0 / 0.35);
+  box-shadow: none;
 }
 
 .vip-page .cosmic-line-tab.is-active::after {
   background: var(--vip-rank-accent-line);
-  box-shadow: 0 0 10px rgb(0 0 0 / 0.35);
+  box-shadow: none;
 }
 
 .vip-modal .vip-maintain-rank-panel .vip-maintain-rank-panel__days {
   color: var(--vip-level-up-percent);
-  text-shadow: none;
 }
 
 /* เลย์เอาต์ desktop บนหน้า — ไม่จำกัดความสูงแบบ sheet */

@@ -207,6 +207,76 @@
   stroke-linejoin: round;
 }
 
+/** แถบวิธีการชำระเงิน — footer desktop */
+.cosmic-footer__payment-band {
+  margin-top: 0.25rem;
+  padding-top: 1.75rem;
+  padding-bottom: 0.25rem;
+  border-top: 1px solid color-mix(in srgb, var(--accent-primary) 32%, var(--border-subtle));
+  text-align: center;
+}
+
+.cosmic-footer__payment-title {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+}
+
+.cosmic-footer__payment-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem 0.5rem;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.cosmic-footer__payment-grid > li {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.cosmic-footer__payment-icon {
+  display: block;
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgb(255 255 255 / 0.04);
+}
+
+@media (min-width: 640px) {
+  .cosmic-footer__payment-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .cosmic-footer__payment-grid {
+    gap: 0.5rem 0.55rem;
+  }
+}
+
+.cosmic-footer__payment-band--mobile {
+  width: 100%;
+  max-width: min(100%, 28rem);
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-top: 0;
+}
+
+.cosmic-footer__payment-band--mobile .cosmic-footer__payment-grid {
+  max-width: none;
+  width: 100%;
+  padding-inline: 0.125rem;
+}
+
 .cosmic-footer__payments {
   display: flex;
   flex-wrap: wrap;
@@ -258,12 +328,20 @@
 
 @media (width >= 1024px) {
   .cosmic-footer {
-    margin-inline: max(var(--page-gutter), calc((100% - min(100%, 1680px)) / 2 + var(--page-gutter)));
+    margin-inline: 0;
+    margin-top: var(--space-8);
+    margin-bottom: 0;
+    padding-bottom: 0;
+    width: 100%;
+    max-width: none;
+    background: var(--cosmic-footer-desktop-bg);
+    border-top: 1px solid var(--border-subtle);
+    border-radius: 0;
   }
 
   .cosmic-footer__container {
     padding-top: 2rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 0;
   }
 
   .cosmic-footer__dex .cosmic-footer__bottom {
@@ -328,6 +406,31 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.5rem;
+}
+
+.cosmic-footer__trust-grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.cosmic-footer__trust-grid--three .cosmic-footer__trust-card {
+  min-height: 3.75rem;
+  padding: 0.5rem 0.45rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.cosmic-footer__trust-grid--three .cosmic-footer__trust-name {
+  font-size: 0.7rem;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+/** ปุ่มแชทพื้นขาว — ไม่ให้ .cosmic-footer a ทับสีข้อความ */
+.cosmic-footer__cta-chat,
+.cosmic-footer__cta-chat:hover {
+  color: #0a0a0c;
 }
 
 .cosmic-footer__trust-card {

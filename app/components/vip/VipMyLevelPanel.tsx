@@ -37,9 +37,7 @@ export function VipMyLevelPanel({ player }: { player: VipPlayerState }) {
       </div>
 
       <div className="vip-rank-stack w-full">
-        <section className="vip-panel-card vip-rank-surface-card">
-          <VipMyLevelBenefitsCard player={player} variant="in-rank-card" />
-        </section>
+        <VipMyLevelBenefitsCard player={player} rankSurface />
 
         <VipRankLevelUpCard
           player={player}

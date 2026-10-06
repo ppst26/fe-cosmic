@@ -25,7 +25,7 @@ interface VipMyLevelBenefitsCardProps {
 }
 
 /**
- * บล็อกสิทธิประโยชน์ — การ์ดกลุ่ม + inner chip สลับสีในกริด
+ * บล็อกสิทธิประโยชน์ — rankSurface ใช้การ์ดนอก vip-rank-surface-card · แถวข้อมูลไม่มีพื้น chip
  */
 export function VipMyLevelBenefitsCard({
   player,
@@ -33,6 +33,7 @@ export function VipMyLevelBenefitsCard({
   rankSurface = false,
 }: VipMyLevelBenefitsCardProps) {
   const compactCells = variant === "in-rank-card" || rankSurface;
+  const flatCells = rankSurface || variant === "in-rank-card";
   const gridGapClass = compactCells ? "gap-1" : "gap-1.5 sm:gap-2";
 
   const grid = (
@@ -49,7 +50,11 @@ export function VipMyLevelBenefitsCard({
                 className={cn(
                   "vip-my-level-benefits__cell flex min-w-0 items-center gap-1 sm:gap-1.5",
                   compactCells && "vip-my-level-benefits__cell--compact",
-                  index % 2 === 0 ? "vip-my-level-benefits__cell--a" : "vip-my-level-benefits__cell--b",
+                  flatCells && "vip-my-level-benefits__cell--flat",
+                  !flatCells &&
+                    (index % 2 === 0
+                      ? "vip-my-level-benefits__cell--a"
+                      : "vip-my-level-benefits__cell--b"),
                 )}
               >
                 <BenefitRowIcon rowId={row.id} />
@@ -58,7 +63,7 @@ export function VipMyLevelBenefitsCard({
                 </span>
                 <p
                   className={cn(
-                    "vip-my-level-benefits__value shrink-0 text-right text-lg font-bold leading-none tabular-nums sm:text-xl",
+                    "vip-my-level-benefits__value shrink-0 text-right text-lg font-semibold leading-none tabular-nums sm:text-xl",
                     benefitValueTone(value),
                   )}
                 >
@@ -70,18 +75,45 @@ export function VipMyLevelBenefitsCard({
         </ul>
   );
 
-  if (variant === "in-rank-card") {
-    return <div className="vip-my-level-benefits w-full min-w-0">{grid}</div>;
+  if (variant === "in-rank-card" || rankSurface) {
+    const heading = (
+      <h3
+        className={cn(
+          "mb-2 font-medium text-[var(--text-primary)] sm:mb-2.5",
+          rankSurface
+            ? "text-left text-base sm:text-lg"
+            : "text-center text-lg tracking-wide sm:text-xl",
+        )}
+      >
+        สิทธิประโยชน์
+      </h3>
+    );
+
+    const body = (
+      <>
+        {heading}
+        {grid}
+      </>
+    );
+
+    if (rankSurface) {
+      return (
+        <section
+          className="vip-panel-card vip-rank-surface-card vip-my-level-benefits vip-my-level-benefits--flat w-full min-w-0"
+        >
+          {body}
+        </section>
+      );
+    }
+
+    return (
+      <div className="vip-my-level-benefits vip-my-level-benefits--flat w-full min-w-0">{body}</div>
+    );
   }
 
   return (
     <section className="vip-my-level-benefits w-full">
-      <div
-        className={cn(
-          "vip-panel-card vip-my-level-benefits__group",
-          rankSurface && "vip-rank-surface-card",
-        )}
-      >
+      <div className="vip-panel-card vip-my-level-benefits__group">
         <h3 className="mb-2.5 text-center text-lg font-medium tracking-wide text-[var(--text-primary)] sm:mb-3 sm:text-xl">
           สิทธิประโยชน์
         </h3>

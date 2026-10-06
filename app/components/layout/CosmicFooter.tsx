@@ -7,9 +7,7 @@ import {
   FOOTER_DESKTOP_COLUMNS,
   FOOTER_DESKTOP_SOCIAL,
   FOOTER_DISCLAIMER,
-  FOOTER_EXTERNAL_MOCK_LINKS,
-  FOOTER_LEGAL_LINKS,
-  FOOTER_MOBILE_SOCIAL,
+  FOOTER_PAYMENT_BANKS,
   FOOTER_TRUST_BADGES,
   type FooterSocialIcon,
 } from "@/app/data/footerMockData";
@@ -37,9 +35,6 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
 
 /** Footer มือถือ — layout อิง Dexsport (CTA · social · trust · legal) */
 function CosmicFooterMobile() {
-  const legalPrimary = FOOTER_LEGAL_LINKS.slice(0, 3);
-  const legalSecondary = FOOTER_LEGAL_LINKS.slice(3);
-
   return (
     <div className="cosmic-footer__dex-mobile lg:hidden">
       <Link href="/" className="cosmic-footer__logo-link" aria-label="cosmicbet หน้าหลัก">
@@ -48,20 +43,12 @@ function CosmicFooterMobile() {
 
       <FooterCommunityChatCta className="cosmic-footer__cta-row w-full max-w-md" />
 
-      <nav className="cosmic-footer__social-row" aria-label="โซเชียลมีเดีย">
-        {FOOTER_MOBILE_SOCIAL.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className="cosmic-footer__social-icon-btn"
-            aria-label={item.label}
-          >
-            <FooterSocialGlyph icon={item.icon} />
-          </Link>
-        ))}
-      </nav>
+      <FooterPaymentMethodsBand variant="mobile" />
 
-      <ul className="cosmic-footer__trust-grid m-0 w-full max-w-md list-none p-0" aria-label="การรับรอง">
+      <ul
+        className="cosmic-footer__trust-grid cosmic-footer__trust-grid--three m-0 w-full max-w-md list-none p-0"
+        aria-label="การรับรอง"
+      >
         {FOOTER_TRUST_BADGES.map((badge) => (
           <li key={badge.name} className={`cosmic-footer__trust-card ${COSMIC_SHEET_SOFT_GLASS}`}>
             <span className="cosmic-footer__trust-check" aria-hidden>✓</span>
@@ -85,32 +72,49 @@ function CosmicFooterMobile() {
         <span className="cosmic-footer__compliance-seal" aria-hidden />
       </div>
 
-      <nav className="cosmic-footer__market-links" aria-label="ลิงก์ตลาด">
-        {FOOTER_EXTERNAL_MOCK_LINKS.map((link) => (
-          <Link key={link.label} href={link.href} className="cosmic-footer__market-link text-sm">
-            {link.label}
-          </Link>
-        ))}
-      </nav>
-
       <div className="cosmic-footer__bottom cosmic-footer__bottom--dex w-full max-w-md text-xs font-medium">
         <p>{FOOTER_COPYRIGHT}</p>
-        <nav className="cosmic-footer__legal" aria-label="นโยบายและข้อกำหนด">
-          {legalPrimary.map((link) => (
-            <Link key={link.label} href={link.href}>{link.label}</Link>
-          ))}
-        </nav>
-        {legalSecondary.map((link) => (
-          <nav key={link.label} className="cosmic-footer__legal cosmic-footer__legal--solo">
-            <Link href={link.href}>{link.label}</Link>
-          </nav>
-        ))}
       </div>
     </div>
   );
 }
 
-/** ปุ่มชุมชน + แชทออนไลน์ — ใช้ทั้ง mobile Dexsport และ desktop footer */
+/** ช่องทางการชำระเงิน — โลโก้ธนาคาร (footer mobile + desktop) */
+function FooterPaymentMethodsBand({ variant = "desktop" }: { variant?: "desktop" | "mobile" }) {
+  const isMobile = variant === "mobile";
+  const titleId = isMobile ? "cosmic-footer-payment-title-mobile" : "cosmic-footer-payment-title";
+
+  return (
+    <section
+      className={cn(
+        "cosmic-footer__payment-band",
+        isMobile && "cosmic-footer__payment-band--mobile",
+      )}
+      aria-labelledby={titleId}
+    >
+      <h3 id={titleId} className="cosmic-footer__payment-title">
+        วิธีการชำระเงิน
+      </h3>
+      <ul className="cosmic-footer__payment-grid m-0 list-none p-0">
+        {FOOTER_PAYMENT_BANKS.map((bank) => (
+          <li key={bank.id}>
+            <img
+              src={bank.logoSrc}
+              alt={bank.name}
+              className="cosmic-footer__payment-icon"
+              width={32}
+              height={32}
+              loading="lazy"
+              decoding="async"
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/** ปุ่มชุมชน + แชทออนไลน์ — มือถือ Dexsport footer */
 function FooterCommunityChatCta({ className }: { className?: string }) {
   return (
     <div className={cn("grid grid-cols-2 gap-2.5", className)}>
@@ -197,27 +201,7 @@ function CosmicFooterDesktop() {
         ))}
       </nav>
 
-      <div className="flex flex-wrap items-center justify-between gap-6 border-t border-[var(--border-subtle)] pt-6">
-        <ul className="m-0 flex list-none flex-wrap gap-6 p-0">
-          {FOOTER_TRUST_BADGES.map((badge) => (
-            <li key={badge.name} className="flex items-center gap-2.5 text-[var(--text-muted)]">
-              <span
-                className="inline-flex size-6 items-center justify-center rounded-full bg-[color-mix(in_srgb,#22c55e_25%,transparent)] text-xs text-emerald-400"
-                aria-hidden
-              >
-                ✓
-              </span>
-              <span className="text-xs leading-snug">
-                {badge.label}
-                <strong className="mt-0.5 block text-sm font-medium text-[var(--text-primary)]">
-                  {badge.name}
-                </strong>
-              </span>
-            </li>
-          ))}
-        </ul>
-        <FooterCommunityChatCta className="max-w-sm" />
-      </div>
+      <FooterPaymentMethodsBand />
 
       <div className="cosmic-footer__bottom !mt-0 border-t border-[var(--border-subtle)] pt-5 !text-sm !text-[var(--text-secondary)]">
         <p>{FOOTER_COPYRIGHT}</p>
