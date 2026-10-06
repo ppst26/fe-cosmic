@@ -6,7 +6,6 @@
   min-height: 2.75rem;
   align-items: center;
   gap: 0.5rem;
-  border-radius: var(--radius-panel);
   border: 1px solid color-mix(in srgb, var(--border-subtle) 80%, transparent);
   background: var(--inner-card-fill);
   padding: 0 0.75rem 0 1rem;
@@ -20,11 +19,64 @@
   border-color: color-mix(in srgb, var(--border-active) 55%, transparent);
 }
 
+.tx-date-field--calendar {
+  width: 2.75rem;
+  flex-shrink: 0;
+  justify-content: center;
+  padding: 0;
+}
+
+.tx-date-field--range {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/** แถวเดียว — ช่วงวันที่ · ปฏิทิน · ล้าง · ค้นหา */
+.tx-date-filter__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.tx-date-filter__toolbar .tx-date-field {
+  min-height: 2.75rem;
+}
+
+/** ล้างฟิลเตอร์ — ข้อความ ไม่ใช่ปุ่ม glass */
+.tx-date-filter__clear {
+  min-height: 2.75rem;
+  padding: 0 0.25rem;
+  border: 0;
+  background: transparent;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--motion-fast) ease;
+}
+
+.tx-date-filter__search {
+  min-height: 2.75rem !important;
+  min-width: 4.75rem;
+  padding-inline: 1rem !important;
+  white-space: nowrap;
+}
+
+.tx-date-filter__clear:hover {
+  color: var(--text-primary);
+}
+
+.tx-date-filter__clear:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-control);
+}
+
+/** ใช้ร่วมกับ .cosmic-data-table-shell (data-table.css) */
 .tx-history-table-wrap {
   overflow: hidden;
-  border-radius: var(--radius-panel);
-  border: 1px solid color-mix(in srgb, var(--border-subtle) 65%, transparent);
-  background: var(--inner-card-fill);
 }
 
 .tx-history-table {
@@ -41,19 +93,13 @@
 
 .tx-history-table thead th {
   padding: 0.65rem 0.5rem;
-  background: color-mix(in srgb, var(--surface-mid) 75%, transparent);
-  font-weight: 500;
-  line-height: 1.3;
-  color: var(--text-secondary);
   text-align: left;
   white-space: nowrap;
 }
 
 .tx-history-table tbody td {
   padding: 0.7rem 0.5rem;
-  border-top: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
   vertical-align: top;
-  color: var(--text-primary);
   line-height: 1.35;
 }
 
@@ -117,4 +163,37 @@
 .tx-calendar-day.is-range-end {
   background: var(--action-solid);
   color: var(--text-primary);
+}
+
+/** เงาขอบตารางเมื่อเลื่อนแนวนอนได้ — ซ้าย/ขวาแสดงตามตำแหน่ง scroll */
+.tx-history-table-wrap {
+  position: relative;
+}
+
+.tx-history-table-wrap::before,
+.tx-history-table-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 1.5rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-fast) ease;
+}
+
+.tx-history-table-wrap::before {
+  left: 0;
+  background: linear-gradient(to right, rgb(0 0 0 / 0.55), transparent);
+}
+
+.tx-history-table-wrap::after {
+  right: 0;
+  background: linear-gradient(to left, rgb(0 0 0 / 0.55), transparent);
+}
+
+.tx-history-table-wrap[data-scroll-start="true"]::before,
+.tx-history-table-wrap[data-scroll-end="true"]::after {
+  opacity: 1;
 }

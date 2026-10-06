@@ -26,6 +26,8 @@
   --cosmic-pagination-active-fg: #1c1c22;
   /** พื้นหน้า standalone มือถือ — flat neutral (ไม่ทับ nebula .cosmic-bg) */
   --standalone-page-bg: #141416;
+  /** แถบย้อนกลับ + ชื่อหน้า (page-sub-header) มือถือ */
+  --page-sub-header-bg: #121014;
   --surface-gradient: linear-gradient(
     110deg,
     var(--surface-start) 0%,
@@ -256,6 +258,8 @@
 
   --radius-control: 4px;
   --radius-card: 6px;
+  /** ช่อง filter · select trigger · ปุ่มค้นหาในแถบฟิลเตอร์ — มุมน้อยเดียวกันทุกหน้า */
+  --radius-filter: var(--radius-card);
   /** ปกเกม / thumbnail ค่าย — มุมมนน้อยกว่า panel */
   --radius-thumb: var(--radius-card);
   /** ปุ่ม/ชิป header — มนกว่า sm เล็กน้อย */

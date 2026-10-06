@@ -11,7 +11,7 @@
 }
 
 .provider-category-toolbar .glass-card--soft {
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-filter);
   box-shadow: none;
 }
 

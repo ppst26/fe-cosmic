@@ -26,12 +26,9 @@
   .mobile-standalone-page .slot-providers-header,
   .mobile-standalone-page .profile-page-header,
   .mobile-standalone-page .provider-breadcrumb-nav {
-    background-color: var(--cosmic-page-base);
-    background-image: var(--cosmic-nebula-bg-image);
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: 100% max(100dvh, 640px);
-    border-bottom: 1px solid color-mix(in srgb, #2d1b4e 45%, transparent);
+    background-color: var(--page-sub-header-bg);
+    background-image: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
   }
 }
 
