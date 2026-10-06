@@ -22,7 +22,6 @@ export function DesktopHubTransactionsBody({
 
   return (
     <TransactionsPageContent
-      embedded
       activeKind={activeKind}
       onSelectKind={setActiveKind}
       isAuthenticated={isAuthenticated}

@@ -25,6 +25,8 @@ interface ProfileAccountTabsProps {
   profile: ProfileUser;
   onLogout: () => void;
   onOpenVip?: () => void;
+  /** เปิด modal ประวัติธุรกรรมแยก — แสดงแถวนำทางเมื่อส่งมา */
+  onOpenTransactions?: () => void;
   onProfileUpdated?: (profile: ProfileUser) => void;
   compact?: boolean;
 }
@@ -38,6 +40,7 @@ export function ProfileAccountTabs({
   profile,
   onLogout,
   onOpenVip,
+  onOpenTransactions,
   onProfileUpdated,
   compact = false,
 }: ProfileAccountTabsProps) {
@@ -103,6 +106,9 @@ export function ProfileAccountTabs({
               editLabel="เปลี่ยนรหัสผ่าน"
             />
             <ProfileAccountFieldRow label="LINE" value="—" />
+            {onOpenTransactions ? (
+              <ProfileAccountNavRow label="ประวัติธุรกรรม" value="ฝาก · ถอน · เดิมพัน" onClick={onOpenTransactions} />
+            ) : null}
             {onOpenVip ? (
               <ProfileAccountNavRow label="VIP" value={vipRankLabel} onClick={onOpenVip} />
             ) : (

@@ -8,6 +8,7 @@ interface ProfileSheetBodyProps {
   profile: ProfileUser;
   onLogout: () => void;
   onOpenVip?: () => void;
+  onOpenTransactions?: () => void;
   onProfileUpdated?: (profile: ProfileUser) => void;
   /** ใช้ใน popover โปรไฟล์ — ย่อ spacing */
   compact?: boolean;
@@ -20,6 +21,7 @@ export function ProfileSheetBody({
   profile,
   onLogout,
   onOpenVip,
+  onOpenTransactions,
   onProfileUpdated,
   compact = false,
 }: ProfileSheetBodyProps) {
@@ -28,6 +30,7 @@ export function ProfileSheetBody({
       profile={profile}
       onLogout={onLogout}
       onOpenVip={onOpenVip}
+      onOpenTransactions={onOpenTransactions}
       onProfileUpdated={onProfileUpdated}
       compact={compact}
     />

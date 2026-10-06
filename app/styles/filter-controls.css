@@ -1,0 +1,20 @@
+/**
+ * แถบฟิลเตอร์ / select / ช่องวันที่ — มุมโค้งมาตรฐาน (--radius-filter)
+ * ใช้ร่วมกับ CosmicSelectField · TransactionDateFilter · provider toolbar
+ */
+
+.tx-date-field,
+.cosmic-filter-control {
+  border-radius: var(--radius-filter);
+}
+
+.cosmic-select__trigger--solid {
+  border-radius: var(--radius-filter);
+}
+
+/** ปุ่ม primary ในแถบฟิลเตอร์ (ไม่ใช้ pill ของ --sm) */
+.cosmic-cta-primary--filter,
+.btn-primary--filter,
+.tx-date-filter__search {
+  border-radius: var(--radius-filter);
+}

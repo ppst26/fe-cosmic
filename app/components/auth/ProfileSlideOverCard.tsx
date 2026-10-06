@@ -180,6 +180,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
                       profile={profile}
                       onLogout={openLogoutConfirm}
                       onOpenVip={handleOpenVip}
+                      onOpenTransactions={handleOpenTransactions}
                     />
                   </div>
                 </>

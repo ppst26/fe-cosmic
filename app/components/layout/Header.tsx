@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CosmicbetLogo, SearchIcon, HamburgerMenuIcon } from "../ui/Icons";
+import { CosmicbetLogo, SearchIcon, HamburgerMenuIcon, HistoryIcon } from "../ui/Icons";
 import { HeaderWalletChip } from "./HeaderWalletChip";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
@@ -266,23 +266,35 @@ export function Header({
                 aria-hidden="true"
               />
             ) : showWallet ? (
-              <div className="inline-flex max-w-full flex-nowrap items-center justify-end gap-[0.45rem]">
-                <HeaderWalletChip
-                  balanceLabel={balanceLabel}
-                  variant="desktop"
-                />
+              <>
+                <div className="header-wallet-capsule">
+                  <HeaderWalletChip
+                    balanceLabel={balanceLabel}
+                    variant="desktop"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={openDeposit}
+                    className="btn-primary btn-primary--sm header-wallet-capsule__deposit !w-auto !px-4 !py-0 text-sm tracking-[0.04em]"
+                    aria-label="ฝากเงิน"
+                    aria-haspopup="dialog"
+                  >
+                    ฝาก
+                  </button>
+                </div>
+
+                <NotificationDesktopPopover />
 
                 <button
                   type="button"
-                  onClick={openDeposit}
-                  className="btn-primary btn-primary--sm !h-(--header-control-height) !min-h-(--header-control-height) !w-auto !px-3 !py-0 text-sm tracking-[0.04em]"
-                  aria-label="ฝากเงิน"
+                  onClick={() => openHub("transactions")}
+                  className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn inline-flex h-(--header-control-height) w-(--header-control-height) shrink-0 items-center justify-center rounded-(--header-chip-radius) border-0"
+                  aria-label="ประวัติธุรกรรม"
                   aria-haspopup="dialog"
                 >
-                  ฝาก
+                  <HistoryIcon className="h-5 w-5" />
                 </button>
-
-                <NotificationDesktopPopover />
 
                 <button
                   type="button"
@@ -302,7 +314,7 @@ export function Header({
                     className="h-[calc(var(--header-control-height)-0.35rem)] w-[calc(var(--header-control-height)-0.35rem)] max-h-full max-w-full rounded-full"
                   />
                 </button>
-              </div>
+              </>
             ) : (
               <HeaderGuestAuthButtons
                 onLoginClick={onLoginClick}

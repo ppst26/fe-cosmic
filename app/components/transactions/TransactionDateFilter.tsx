@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { formatTransactionDateRangeLabel } from "@/app/lib/transactionDateUtils";
 import { TransactionDateRangeDialog } from "./TransactionDateRangeDialog";
-import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 
 interface TransactionDateFilterProps {
   draftFrom: Date;
@@ -29,29 +29,35 @@ export function TransactionDateFilter({
     <div className="flex flex-col gap-2.5">
       <label className="text-sm text-[var(--text-secondary)]">เลือกวันที่</label>
 
-      <button
-        type="button"
-        onClick={() => setPickerOpen(true)}
-        className="tx-date-field w-full"
-      >
-        <span className="min-w-0 flex-1 truncate text-sm tabular-nums">
-          {formatTransactionDateRangeLabel(draftFrom, draftTo)}
-        </span>
-        <CalendarIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
-      </button>
-
-      <div className="grid grid-cols-2 gap-2">
+      <div className="tx-date-filter__toolbar">
+        <button
+          type="button"
+          onClick={() => setPickerOpen(true)}
+          className="tx-date-field tx-date-field--range min-w-0"
+        >
+          <span className="min-w-0 flex-1 truncate text-left text-sm tabular-nums">
+            {formatTransactionDateRangeLabel(draftFrom, draftTo)}
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setPickerOpen(true)}
+          className="tx-date-field tx-date-field--calendar shrink-0"
+          aria-label="เปิดปฏิทินเลือกวันที่"
+        >
+          <CalendarIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
+        </button>
         <button
           type="button"
           onClick={onClear}
-          className={`${COSMIC_BTN_GLASS_PILL} !min-h-11 w-full text-sm font-medium`}
+          className="tx-date-filter__clear shrink-0"
         >
           ล้าง
         </button>
         <button
           type="button"
           onClick={onSearch}
-          className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm !min-h-11 w-full text-sm font-medium`}
+          className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm tx-date-filter__search shrink-0 text-sm font-medium`}
         >
           ค้นหา
         </button>

@@ -54,7 +54,7 @@ export function CosmicSelectField({
         size={size}
         aria-label={ariaLabel}
         className={cn(
-          "cosmic-select__trigger !h-auto min-w-[8.5rem] gap-2 rounded-[var(--radius-control)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] shadow-none focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-0 data-[size=sm]:h-auto",
+          "cosmic-select__trigger !h-auto min-w-[8.5rem] gap-2 rounded-[var(--radius-filter)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] shadow-none focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-0 data-[size=sm]:h-auto",
           isSolid
             ? "cosmic-select__trigger--solid border"
             : "glass-card--soft border-0",
@@ -66,7 +66,7 @@ export function CosmicSelectField({
       </SelectTrigger>
       <SelectContent
         className={cn(
-          "cosmic-select__content z-[var(--z-overlay,80)] min-w-[var(--radix-select-trigger-width)] rounded-[var(--radius-panel)] text-[var(--text-primary)] ring-0",
+          "cosmic-select__content z-[var(--z-overlay,80)] min-w-[var(--radix-select-trigger-width)] rounded-[var(--radius-filter)] text-[var(--text-primary)] ring-0",
           isSolid
             ? "cosmic-select__content--solid"
             : "border border-[var(--glass-border)] bg-[var(--glass-fill-modal)] shadow-[0_16px_40px_rgb(0_0_0_/_0.45)]",

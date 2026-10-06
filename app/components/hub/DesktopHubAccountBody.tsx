@@ -12,7 +12,7 @@ import { useVipModal } from "@/app/components/vip/VipModalProvider";
  * เนื้อหา hub ข้อมูลบัญชี — โหลดโปรไฟล์เมื่อ mount ใน DesktopHubModal
  */
 export function DesktopHubAccountBody() {
-  const { closeHub } = useDesktopHubModal();
+  const { closeHub, openHub } = useDesktopHubModal();
   const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(closeHub);
   const { openVipModal } = useVipModal();
   const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
@@ -46,6 +46,7 @@ export function DesktopHubAccountBody() {
       <ProfileSheetBody
         profile={profile}
         onLogout={openLogoutConfirm}
+        onOpenTransactions={() => openHub("transactions")}
         onOpenVip={() => {
           closeHub();
           openVipModal();

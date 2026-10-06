@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { BetRowType, TransactionItem, TransactionKind, TransactionStatus } from "@/app/types/transaction";
 
 function formatDateOnly(iso: string | null | undefined): string {
@@ -276,11 +276,35 @@ export function TransactionHistoryTable({
   items: TransactionItem[];
 }) {
   const columns = columnsForKind(kind);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [edges, setEdges] = useState({ start: false, end: false });
+
+  const updateEdges = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    const left = Math.abs(el.scrollLeft);
+    const next = { start: left > 2, end: max - left > 2 };
+    setEdges((prev) => (prev.start === next.start && prev.end === next.end ? prev : next));
+  }, []);
+
+  useEffect(() => {
+    updateEdges();
+    const el = scrollRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(updateEdges);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [updateEdges, kind, items.length]);
 
   return (
-    <div className="tx-history-table-wrap">
-      <div className="tx-history-table__scroll">
-        <table className={`tx-history-table ${minWidthForKind(kind)}`}>
+    <div
+      className="cosmic-data-table-shell tx-history-table-wrap"
+      data-scroll-start={edges.start ? "true" : undefined}
+      data-scroll-end={edges.end ? "true" : undefined}
+    >
+      <div ref={scrollRef} onScroll={updateEdges} className="tx-history-table__scroll">
+        <table className={`cosmic-data-table tx-history-table ${minWidthForKind(kind)}`}>
           <thead>
             <tr>
               {columns.map((col) => (
