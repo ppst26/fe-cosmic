@@ -1,18 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import {
-  formatGemsBalance,
-} from "@/app/data/gemsStoreMockData";
-import {
-  formatHeaderWalletBalance,
-} from "@/app/data/walletMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { fetchMenuTicketCount, fetchWalletBalance } from "@/lib/api/profile";
 import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";
 import { useAuth } from "@/app/components/auth/AuthProvider";
+import { formatGemsBalance, formatHeaderWalletBalance } from "@/lib/format";
 
 const MENU_TICKET_ICON_SRC = getMenuIconSrc("ticket") ?? "/assets/3d/menuicon/lottery.avif";
 

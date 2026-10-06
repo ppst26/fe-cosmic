@@ -5,8 +5,6 @@ import { Dialog } from "radix-ui";
 import { cn } from "@/lib/utils";
 import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
 import {
-  formatDepositAmount,
-  formatDepositTransferAmount,
   type DepositMethodId,
 } from "@/app/data/depositMockData";
 import {
@@ -32,6 +30,7 @@ import {
   COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_SHEET_SUBMIT,
 } from "../ui/cosmicButtonClasses";
+import { formatDepositAmount, formatDepositTransferAmount } from "@/lib/format";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 

@@ -27,12 +27,6 @@ export const TOURNAMENT_IMAGE_PATHS = {
   sportWin: "/tournament/sport-win.avif",
 } as const;
 
-/** จำนวนการ์ดสูงสุดต่อ carousel หมวดเกมหน้าแรก (ทุกประเภทเกม) */
-export const HOME_LOBBY_GAME_CAROUSEL_MAX = 8;
-
-/** จำนวนการ์ดสูงสุด carousel ผู้ให้บริการหน้าแรก */
-export const HOME_LOBBY_CAROUSEL_MAX = 15;
-
 /** แถว SLOTS หน้าแรก — รูปค่ายจาก public/slots (สูงสุด 15 ใบต่อ carousel) */
 export const HOME_SLOTS_PROVIDER_ITEMS: GameItem[] = GRID_SLOT_PROVIDERS.slice(0, 15).map(
   (provider) => ({

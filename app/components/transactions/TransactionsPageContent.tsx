@@ -2,15 +2,6 @@
 
 import React, { useMemo, useState } from "react";
 import type { TransactionKind } from "@/app/types/transaction";
-import {
-  countPromotionClaims,
-  filterTransactionsByDateRange,
-  sumBetStakeTotal,
-  sumBetWinLossTotal,
-  sumCompletedDepositAmount,
-  sumCompletedWithdrawAmount,
-  TRANSACTION_BET_PAGE_SIZE,
-} from "@/app/data/transactionsMockData";
 import { fetchTransactions } from "@/lib/api/transactions";
 import { getDefaultTransactionDateRange } from "@/app/lib/transactionDateUtils";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
@@ -20,6 +11,15 @@ import { TransactionHistoryTable } from "./TransactionHistoryTable";
 import { TransactionHistoryPagination } from "./TransactionHistoryPagination";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
+import {
+  countPromotionClaims,
+  filterTransactionsByDateRange,
+  sumBetStakeTotal,
+  sumBetWinLossTotal,
+  sumCompletedDepositAmount,
+  sumCompletedWithdrawAmount,
+} from "@/lib/domain/transactions";
+import { TRANSACTION_BET_PAGE_SIZE } from "@/lib/uiConstants";
 
 interface TransactionsPageContentProps {
   activeKind: TransactionKind;

@@ -4,10 +4,6 @@ import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
 import {
-  formatWithdrawAmount,
-  formatWithdrawMoney,
-} from "@/app/data/withdrawMockData";
-import {
   fetchWithdrawAccount,
   fetchWithdrawBalance,
   fetchWithdrawQuickAmounts,
@@ -27,6 +23,7 @@ import {
   COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_SHEET_SUBMIT,
 } from "../ui/cosmicButtonClasses";
+import { formatWithdrawAmount, formatWithdrawMoney } from "@/lib/format";
 
 interface WithdrawBottomSheetProps {
   isOpen: boolean;

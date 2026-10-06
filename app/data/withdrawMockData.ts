@@ -18,13 +18,3 @@ export const WITHDRAW_DEFAULT_AMOUNT = 500;
 
 export const WITHDRAW_QUICK_AMOUNTS: number[] = [100, 300, 500, 1000, 5000];
 
-export function formatWithdrawAmount(value: number): string {
-  return new Intl.NumberFormat("th-TH").format(value);
-}
-
-export function formatWithdrawMoney(value: number): string {
-  return new Intl.NumberFormat("th-TH", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-}

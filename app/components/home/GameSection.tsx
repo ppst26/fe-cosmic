@@ -1,10 +1,10 @@
 import React from "react";
 import { GameSectionData } from "../../types/lobby";
-import { HOME_LOBBY_GAME_CAROUSEL_MAX } from "../../data/lobbyMockData";
 import { Carousel } from "../ui/Carousel";
 import { GameCard } from "../ui/GameCard";
 import { SectionIcon } from "../ui/SectionIcon";
 import MotionReveal from "../ui/MotionReveal";
+import { HOME_LOBBY_GAME_CAROUSEL_MAX } from "@/lib/uiConstants";
 
 interface GameSectionProps {
   section: GameSectionData;

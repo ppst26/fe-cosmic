@@ -1,9 +1,5 @@
 import type { HallOfFameRow, HallOfFameTabId } from "../types/lobby";
-
-/** จำนวนแถวที่แสดงคงที่ */
-export const HALL_OF_FAME_ROW_LIMIT = 8;
-/** ช่วงสุ่มแถวใหม่ (ms) */
-export const HALL_OF_FAME_TICK_MS = 2000;
+import { formatWonAt } from "@/lib/format";
 
 const thumb = (file: string) => `/slots/${encodeURIComponent(file)}`;
 
@@ -41,12 +37,6 @@ function randomChars(source: string, length: number, rand: () => number): string
 /** ชื่อผู้เล่นปิดบัง เช่น mfx***832 */
 function randomPlayerMasked(rand: () => number): string {
   return `${randomChars(LETTERS, 3, rand)}***${randomChars(ALNUM, 3, rand)}`;
-}
-
-/** DD/MM/YYYY HH:mm:ss */
-export function formatWonAt(date: Date): string {
-  const p = (n: number) => String(n).padStart(2, "0");
-  return `${p(date.getDate())}/${p(date.getMonth() + 1)}/${date.getFullYear()} ${p(date.getHours())}:${p(date.getMinutes())}:${p(date.getSeconds())}`;
 }
 
 /** ยอดชนะ — log-uniform 1,000–90,000 ปัดทีละ 0.05 (ยอดต่ำพบบ่อยกว่ายอดสูง) */

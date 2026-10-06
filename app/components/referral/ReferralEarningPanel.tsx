@@ -10,10 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  REFERRAL_EARNING_PAGE_SIZE,
-  formatReferralCurrency,
-  formatReferralEarningDateTime,
-  formatReferralRecordCount,
   type ReferralEarningHistoryRow,
   type ReferralEarningSummaryMock,
 } from "@/app/data/referralMockData";
@@ -27,6 +23,12 @@ import {
 import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
 import { cn } from "@/lib/utils";
+import { REFERRAL_EARNING_PAGE_SIZE } from "@/lib/uiConstants";
+import {
+  formatReferralCurrency,
+  formatReferralEarningDateTime,
+  formatReferralRecordCount,
+} from "@/lib/format";
 
 /**
  * แท็บ Earning — สรุปโบนัส + ประวัติรับโบนัส (10 แถว/หน้า)

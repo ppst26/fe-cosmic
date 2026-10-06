@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
-  formatGemsBalance,
-  formatGemsCredits,
   type GemsStorePackage,
 } from "@/app/data/gemsStoreMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
@@ -18,6 +16,7 @@ import {
   COSMIC_PANEL_GLASS,
 } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
+import { formatGemsBalance, formatGemsCredits } from "@/lib/format";
 
 /**
  * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal

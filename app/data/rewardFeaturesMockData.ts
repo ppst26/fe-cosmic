@@ -4,13 +4,6 @@ export const REWARD_POINTS_BALANCE_MOCK = 3_365;
 
 export const REWARD_POINTS_LABEL = "พอยท์";
 
-export function formatRewardPoints(amount: number): string {
-  return new Intl.NumberFormat("th-TH", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-}
-
 export type RewardHubShortcutId = "lucky-box" | "random-card" | "freespins";
 
 export interface RewardHubShortcut {

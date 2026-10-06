@@ -8,12 +8,12 @@ import {
   type WheelSpinMethod,
 } from "@/app/data/luckyWheelMockData";
 import { fetchWheel } from "@/lib/api/wheel";
-import { formatGemsBalance } from "@/app/data/gemsStoreMockData";
 import { ArrowLeftIcon } from "../ui/Icons";
 import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
 import { LuckyWheelLiveWinners } from "./LuckyWheelLiveWinners";
 import { LuckyWheelPrizeHistory } from "./LuckyWheelPrizeHistory";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
+import { formatGemsBalance } from "@/lib/format";
 
 /**
  * หน้าเล่นวงล้อพารวย — รองรับ Mobile-first layout ตรงตาม mockup

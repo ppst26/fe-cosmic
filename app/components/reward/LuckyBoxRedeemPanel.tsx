@@ -2,10 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
-import { formatRewardPoints } from "@/app/data/rewardFeaturesMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import { cn } from "@/lib/utils";
+import { formatRewardPoints } from "@/lib/format";
 
 /**
  * กระดาน Lucky Box — layout อ้างอิงเว็นอ้างอิง (ปิดใช้งาน · Coming soon)

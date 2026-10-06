@@ -2,10 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import { formatRewardPoints, REWARD_POINTS_LABEL } from "@/app/data/rewardFeaturesMockData";
+import { REWARD_POINTS_LABEL } from "@/app/data/rewardFeaturesMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { COSMIC_PANEL_GLASS } from "@/app/components/ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
+import { formatRewardPoints } from "@/lib/format";
 
 /**
  * แถบยอดพอยท์คงเหลือ — ใช้ซ้ำในหน้าย่อย /reward/*

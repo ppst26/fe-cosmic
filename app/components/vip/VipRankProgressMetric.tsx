@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { formatVipAmount, formatVipCompactAmount } from "@/app/data/vipMockData";
 import { cn } from "@/lib/utils";
+import { formatVipAmount, formatVipCompactAmount } from "@/lib/format";
 
 export interface VipRankProgressMetricProps {
   label: string;

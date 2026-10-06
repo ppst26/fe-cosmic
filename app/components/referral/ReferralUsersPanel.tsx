@@ -10,14 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  REFERRAL_USERS_PAGE_SIZE,
-  formatReferralCount,
-  formatReferralRegisteredAt,
   type ReferralUserRow,
 } from "@/app/data/referralMockData";
 import { fetchReferralUsers } from "@/lib/api/referral";
 import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
+import { REFERRAL_USERS_PAGE_SIZE } from "@/lib/uiConstants";
+import { formatReferralCount, formatReferralRegisteredAt } from "@/lib/format";
 
 /**
  * แท็บ Referral users — ตารางเพื่อนที่แนะนำ + pagination (10 แถว/หน้า)

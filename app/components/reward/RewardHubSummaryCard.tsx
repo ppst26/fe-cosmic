@@ -2,12 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import { formatRewardPoints } from "@/app/data/rewardFeaturesMockData";
-import { formatHeaderWalletBalance } from "@/app/data/walletMockData";
 import { fetchWalletBalance } from "@/lib/api/profile";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { HeaderWalletAssetIcon } from "@/app/components/layout/HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
+import { formatRewardPoints, formatHeaderWalletBalance } from "@/lib/format";
 
 /**
  * การ์ดยอดเครดิต · พอยท์ — หัวหน้า /reward

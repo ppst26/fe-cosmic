@@ -54,13 +54,3 @@ export const CASHBACK_LOSS_PANEL_MOCK: CashbackPanelMock = {
   claimButtonLabel: "ยังไม่มียอดให้รับ",
 };
 
-export function formatCashbackCurrency(amountThb: number): string {
-  return `฿ ${amountThb.toLocaleString("th-TH", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
-}
-
-export function formatCashbackPercent(value: number): string {
-  return `${value.toLocaleString("th-TH", { maximumFractionDigits: 2 })}%`;
-}

@@ -5,7 +5,6 @@ import Image from "next/image";
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { responsiveSheetCloseButtonClass } from "@/app/components/ui/responsiveSheetDialog";
 import {
-  countCheckedInDays,
   type DailyCheckInDayReward,
 } from "@/app/data/dailyCheckInMockData";
 import { fetchCheckIn } from "@/lib/api/checkIn";
@@ -17,6 +16,7 @@ import {
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { MODAL_TITLE_LEADING_ICON_CLASS } from "@/app/components/ui/ModalTitleLeadingIcon";
 import { DailyCheckInClaimSuccessDialog } from "./DailyCheckInClaimSuccessDialog";
+import { countCheckedInDays } from "@/lib/domain/checkIn";
 
 interface DailyCheckInCardProps {
   onClose?: () => void;

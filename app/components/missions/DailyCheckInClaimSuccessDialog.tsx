@@ -3,10 +3,10 @@
 import React from "react";
 import { Dialog } from "radix-ui";
 import Image from "next/image";
-import { formatCheckInCredits } from "@/app/data/dailyCheckInMockData";
 import { COSMIC_BTN_PRIMARY } from "@/app/components/ui/cosmicButtonClasses";
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { responsiveSheetCloseButtonClass } from "@/app/components/ui/responsiveSheetDialog";
+import { formatCheckInCredits } from "@/lib/format";
 
 export interface DailyCheckInClaimSuccessDialogProps {
   open: boolean;

@@ -52,14 +52,3 @@ export const GEMS_STORE_TERMS: string[] = [
   "ข้อมูลในหน้านี้เป็นตัวอย่างสำหรับการแสดงผล UI",
 ];
 
-export function formatGemsAmount(value: number): string {
-  return `${new Intl.NumberFormat("th-TH").format(value)} Gems`;
-}
-
-export function formatGemsCredits(value: number): string {
-  return `${new Intl.NumberFormat("th-TH").format(value)} เครดิต`;
-}
-
-export function formatGemsBalance(value: number): string {
-  return new Intl.NumberFormat("th-TH").format(value);
-}

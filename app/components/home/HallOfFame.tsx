@@ -5,10 +5,9 @@ import Image from "next/image";
 import type { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
 import { SectionIcon } from "../ui/SectionIcon";
 import {
-  HALL_OF_FAME_ROW_LIMIT,
-  HALL_OF_FAME_TICK_MS,
   createHallOfFameRow,
 } from "../../data/hallOfFameGenerator";
+import { HALL_OF_FAME_ROW_LIMIT, HALL_OF_FAME_TICK_MS } from "@/lib/uiConstants";
 
 const TAB_LABELS: { id: HallOfFameTabId; label: string }[] = [
   { id: "latest-winner", label: "Latest Winner" },

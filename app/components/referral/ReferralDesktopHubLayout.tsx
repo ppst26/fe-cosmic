@@ -2,9 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import {
-  formatReferralCurrency,
   type ReferralEarningPeriodId,
-  filterReferralEarningHistoryByPeriod,
 } from "@/app/data/referralMockData";
 import { fetchReferralEarnings, fetchReferralOverview } from "@/lib/api/referral";
 import {
@@ -18,6 +16,8 @@ import {
   ReferralPromoBanner,
   ReferralStatsSection,
 } from "./ReferralOverviewSections";
+import { formatReferralCurrency } from "@/lib/format";
+import { filterReferralEarningHistoryByPeriod } from "@/lib/domain/referral";
 
 interface ReferralDesktopHubLayoutProps {
   refCode: string;

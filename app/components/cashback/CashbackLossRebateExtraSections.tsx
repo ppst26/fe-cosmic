@@ -10,11 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  LOSS_REBATE_HISTORY_PAGE_SIZE,
-  formatLossRebateCurrency,
-  formatLossRebateDateTime,
-  formatLossRebatePercent,
-  formatLossRebateRecordCount,
   type LossRebateHistoryRow,
   type LossRebateSummaryMock,
 } from "@/app/data/lossRebateMockData";
@@ -29,6 +24,13 @@ import {
 } from "../ui/CosmicFormulaRow";
 import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
+import { LOSS_REBATE_HISTORY_PAGE_SIZE } from "@/lib/uiConstants";
+import {
+  formatLossRebateCurrency,
+  formatLossRebateDateTime,
+  formatLossRebatePercent,
+  formatLossRebateRecordCount,
+} from "@/lib/format";
 
 type CashbackLossRebateExtraSectionsProps = {
   summary?: LossRebateSummaryMock;

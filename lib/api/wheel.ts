@@ -2,7 +2,6 @@ import {
   LUCKY_WHEEL_BENEFITS,
   LUCKY_WHEEL_GEMS_PER_SPIN,
   LUCKY_WHEEL_HISTORY,
-  LUCKY_WHEEL_HISTORY_PAGE_SIZE,
   LUCKY_WHEEL_HISTORY_TOTAL_PAGES,
   LUCKY_WHEEL_INITIAL_GEMS,
   LUCKY_WHEEL_INITIAL_TICKETS,
@@ -14,6 +13,7 @@ import {
   LUCKY_WHEEL_TERMS,
   LUCKY_WHEEL_TICKETS_PER_SPIN,
 } from "@/app/data/luckyWheelMockData";
+import { LUCKY_WHEEL_HISTORY_PAGE_SIZE } from "@/lib/uiConstants";
 
 export function fetchWheel() {
   return {

@@ -4,8 +4,6 @@ import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import {
   CASHBACK_PAGE_ICON_SRC,
-  formatCashbackCurrency,
-  formatCashbackPercent,
   type CashbackPanelMock,
   type CashbackTabId,
 } from "@/app/data/cashbackMockData";
@@ -13,6 +11,7 @@ import { fetchCashbackPanels } from "@/lib/api/cashback";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
+import { formatCashbackCurrency, formatCashbackPercent } from "@/lib/format";
 
 interface CashbackPageContentProps {
   initialTab?: CashbackTabId;

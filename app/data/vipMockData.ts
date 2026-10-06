@@ -6,6 +6,7 @@ import type {
   VipRankId,
   VipRankTier,
 } from "@/app/types/vip";
+import { formatVipAmount } from "@/lib/format";
 
 /**
  * ลำดับแรงค์ VIP (ต่ำ → สูง)
@@ -245,23 +246,6 @@ export function getVipRankTier(id: VipRankId): VipRankTier {
   return VIP_RANK_TIERS.find((t) => t.id === id) ?? VIP_RANK_TIERS[0];
 }
 
-export function formatVipAmount(value: number): string {
-  return new Intl.NumberFormat("th-TH").format(value);
-}
-
-/** ยอดใหญ่ในการ์ดเลื่อนระดับ — แสดงหน่วยล้านเมื่อ ≥ 1M */
-export function formatVipCompactAmount(value: number): string {
-  if (value >= 1_000_000) {
-    const millions = value / 1_000_000;
-    const text =
-      millions >= 10
-        ? new Intl.NumberFormat("th-TH", { maximumFractionDigits: 0 }).format(millions)
-        : new Intl.NumberFormat("th-TH", { maximumFractionDigits: 1 }).format(millions);
-    return `${text} ล้าน`;
-  }
-  return formatVipAmount(value);
-}
-
 /** เป้าฝากและเทิร์นเพื่อถึงแรงค์ที่ระบุ */
 export function getVipRankLevelUpAmounts(rankId: VipRankId): {
   depositTarget: number;
@@ -283,8 +267,6 @@ export function getVipLevelUpOverallPercent(
     turnoverTarget > 0 ? Math.min(100, (turnoverProgress / turnoverTarget) * 100) : 0;
   return Math.min(depositPct, turnoverPct);
 }
-
-export const formatVipExp = formatVipAmount;
 
 /** เป้าเทิร์นตามแรงค์ */
 export function getVipTurnoverTarget(rankId: VipRankId): number {
@@ -362,10 +344,6 @@ export function getVipScaledMissions(
       icon: "play",
     },
   ];
-}
-
-export function formatVipMissionStatus(mission: VipMission): string {
-  return `${formatVipAmount(mission.progress)} / ${formatVipAmount(mission.target)} ${mission.unit}`;
 }
 
 /** ข้อมูลรักษาระดับของแรงค์ปัจจุบัน (ถ้ามี) */

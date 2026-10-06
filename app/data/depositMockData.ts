@@ -47,14 +47,3 @@ export const DEPOSIT_QUICK_AMOUNTS: number[] = [100, 300, 500, 1000, 3000, 5000]
 
 export const DEPOSIT_DEFAULT_AMOUNT = 500;
 
-export function formatDepositAmount(value: number): string {
-  return new Intl.NumberFormat("th-TH").format(value);
-}
-
-/** แสดงยอดโอนแบบทศนิยม 2 ตำแหน่ง — step 3 */
-export function formatDepositTransferAmount(value: number): string {
-  return new Intl.NumberFormat("th-TH", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-}

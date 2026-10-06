@@ -50,25 +50,6 @@ export const REFERRAL_STEPS = [
   { id: "earn", label: "รับส่วนแบ่ง" },
 ] as const;
 
-export function buildReferralLink(refCode: string): string {
-  if (typeof window !== "undefined") {
-    return `${window.location.origin}/?ref=${refCode}`;
-  }
-  return `https://cosmicbet.example/?ref=${refCode}`;
-}
-
-export function formatReferralCurrency(value: number): string {
-  return new Intl.NumberFormat("th-TH", {
-    style: "currency",
-    currency: "THB",
-    minimumFractionDigits: 2,
-  }).format(value);
-}
-
-export function formatReferralCount(value: number): string {
-  return `${new Intl.NumberFormat("th-TH").format(value)} คน`;
-}
-
 /** แถวรายชื่อเพื่อนที่สมัครผ่านลิงก์ — ใช้ในแท็บ Referral users */
 export interface ReferralUserRow {
   id: string;
@@ -76,8 +57,6 @@ export interface ReferralUserRow {
   /** ISO 8601 */
   registeredAt: string;
 }
-
-export const REFERRAL_USERS_PAGE_SIZE = 10;
 
 /** จำนวนแถว mock ให้ตรงกับ stats.friendsCount */
 function buildReferralUsersMock(count: number): ReferralUserRow[] {
@@ -97,22 +76,6 @@ export const REFERRAL_USERS_MOCK: ReferralUserRow[] = buildReferralUsersMock(
   REFERRAL_STATS_MOCK.friendsCount,
 );
 
-/** จัดรูปแบบวันที่สมัครในตาราง — dd/mm/yyyy · HH:mm */
-export function formatReferralRegisteredAt(iso: string): string {
-  const date = new Date(iso);
-  const datePart = new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(date);
-  const timePart = new Intl.DateTimeFormat("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).format(date);
-  return `${datePart} · ${timePart}`;
-}
-
 /** สรุปโบนัสแท็บ Earning */
 export interface ReferralEarningSummaryMock {
   bonusReceivedThb: number;
@@ -124,8 +87,6 @@ export interface ReferralEarningHistoryRow {
   amountThb: number;
   occurredAt: string;
 }
-
-export const REFERRAL_EARNING_PAGE_SIZE = 10;
 
 export const REFERRAL_EARNING_SUMMARY_MOCK: ReferralEarningSummaryMock = {
   bonusReceivedThb: 500,
@@ -145,15 +106,6 @@ function buildReferralEarningHistoryMock(): ReferralEarningHistoryRow[] {
 export const REFERRAL_EARNING_HISTORY_MOCK: ReferralEarningHistoryRow[] =
   buildReferralEarningHistoryMock();
 
-/** จัดรูปแบบวันที่ในตาราง Earning — dd/mm/yyyy • HH:mm */
-export function formatReferralEarningDateTime(iso: string): string {
-  return formatReferralRegisteredAt(iso).replace(" · ", " • ");
-}
-
-export function formatReferralRecordCount(value: number): string {
-  return `${new Intl.NumberFormat("th-TH").format(value)} รายการ`;
-}
-
 /** ช่วงเวลาฟิลเตอร์รายได้ — dialog desktop แนะนำเพื่อน */
 export type ReferralEarningPeriodId = "all" | "today" | "week" | "month";
 
@@ -164,33 +116,3 @@ export const REFERRAL_EARNING_PERIOD_OPTIONS: { id: ReferralEarningPeriodId; lab
   { id: "month", label: "เดือนที่แล้ว" },
 ];
 
-function startOfLocalDay(date: Date): Date {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
-
-/** กรองประวัติรายได้ตามช่วงเวลา (mock client-side) */
-export function filterReferralEarningHistoryByPeriod(
-  rows: ReferralEarningHistoryRow[],
-  period: ReferralEarningPeriodId,
-  now: Date = new Date(),
-): ReferralEarningHistoryRow[] {
-  if (period === "all") return rows;
-
-  const todayStart = startOfLocalDay(now).getTime();
-  const msDay = 24 * 60 * 60 * 1000;
-
-  return rows.filter((row) => {
-    const at = new Date(row.occurredAt).getTime();
-    if (period === "today") {
-      return at >= todayStart;
-    }
-    if (period === "week") {
-      const weekStart = todayStart - 7 * msDay;
-      const weekEnd = todayStart;
-      return at >= weekStart && at < weekEnd;
-    }
-    const monthStart = todayStart - 30 * msDay;
-    const monthEnd = todayStart - 7 * msDay;
-    return at >= monthStart && at < monthEnd;
-  });
-}

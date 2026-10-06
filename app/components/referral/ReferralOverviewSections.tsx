@@ -2,9 +2,6 @@
 
 import React from "react";
 import {
-  buildReferralLink,
-  formatReferralCount,
-  formatReferralCurrency,
   type ReferralStatsMock,
 } from "@/app/data/referralMockData";
 import { CopyIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
@@ -15,6 +12,8 @@ import {
   COSMIC_PANEL_SOLID,
   COSMIC_SHEET_FIELD_ROW,
 } from "../ui/cosmicButtonClasses";
+import { buildReferralLink } from "@/lib/domain/referral";
+import { formatReferralCount, formatReferralCurrency } from "@/lib/format";
 
 /**
  * แบนเนอร์โปรโมชันแนะนำเพื่อน — ใช้ใน overview / desktop hub

@@ -10,8 +10,6 @@ import type {
 } from "@/app/data/activitiesHubMockData";
 import {
   ACTIVITY_HUB_CATEGORY_TABS,
-  formatActivityCredits,
-  formatActivityNumber,
 } from "@/app/data/activitiesHubMockData";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import {
@@ -20,6 +18,7 @@ import {
   COSMIC_BTN_GLASS_PILL_SM,
   COSMIC_BTN_PRIMARY,
 } from "../ui/cosmicButtonClasses";
+import { formatActivityCredits, formatActivityNumber } from "@/lib/format";
 
 /**
  * รูปย่อกิจกรรม — รูปภาพจริง (ถ้ามี) หรือ gradient mock (ใช้ใน list ซ้าย / การ์ดมือถือ)

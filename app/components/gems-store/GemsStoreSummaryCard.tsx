@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { formatGemsBalance } from "@/app/data/gemsStoreMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { HistoryIcon } from "@/app/components/ui/Icons";
 import { cn } from "@/lib/utils";
+import { formatGemsBalance } from "@/lib/format";
 
 interface GemsStoreSummaryCardProps {
   gemsBalance: number;

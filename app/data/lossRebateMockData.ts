@@ -25,8 +25,6 @@ export interface LossRebateHistoryRow {
   receivedAt: string;
 }
 
-export const LOSS_REBATE_HISTORY_PAGE_SIZE = 5;
-
 export const LOSS_REBATE_SUMMARY_MOCK: LossRebateSummaryMock = {
   rebateReadyThb: 640,
   exampleRatePercent: 8,
@@ -80,34 +78,3 @@ function buildLossRebateHistoryMock(): LossRebateHistoryRow[] {
 
 export const LOSS_REBATE_HISTORY_MOCK: LossRebateHistoryRow[] = buildLossRebateHistoryMock();
 
-export function formatLossRebateCurrency(value: number): string {
-  return new Intl.NumberFormat("th-TH", {
-    style: "currency",
-    currency: "THB",
-    minimumFractionDigits: 2,
-  }).format(value);
-}
-
-export function formatLossRebatePercent(value: number): string {
-  return `${new Intl.NumberFormat("th-TH", { maximumFractionDigits: 2 }).format(value)}%`;
-}
-
-export function formatLossRebateRecordCount(value: number): string {
-  return `${new Intl.NumberFormat("th-TH").format(value)} รายการ`;
-}
-
-/** dd/mm/yyyy • HH:mm */
-export function formatLossRebateDateTime(iso: string): string {
-  const date = new Date(iso);
-  const datePart = new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(date);
-  const timePart = new Intl.DateTimeFormat("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).format(date);
-  return `${datePart} • ${timePart}`;
-}

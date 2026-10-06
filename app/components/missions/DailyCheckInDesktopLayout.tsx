@@ -2,12 +2,12 @@
 
 import React from "react";
 import {
-  formatCheckInCredits,
   type DailyCheckInDayReward,
 } from "@/app/data/dailyCheckInMockData";
 import { fetchCheckIn } from "@/lib/api/checkIn";
 import { CheckInCoinGraphic, DailyCheckInCalendarGraphic } from "./DailyCheckInGraphics";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
+import { formatCheckInCredits } from "@/lib/format";
 
 interface DailyCheckInDesktopLayoutProps {
   days: DailyCheckInDayReward[];

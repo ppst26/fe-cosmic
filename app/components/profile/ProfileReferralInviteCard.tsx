@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  buildReferralLink,
-} from "@/app/data/referralMockData";
 import { fetchReferralOverview } from "@/lib/api/referral";
 import { ProfileAccountFieldRow } from "./ProfileAccountFieldRow";
 import { cn } from "@/lib/utils";
+import { buildReferralLink } from "@/lib/domain/referral";
 
 /**
  * บล็อกชวนเพื่อน — ลิงก์คัดลอก (ProfileAccountTabs)

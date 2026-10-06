@@ -146,10 +146,3 @@ export const ACTIVITIES_HUB_ITEMS: ActivityHubItem[] = [
   },
 ];
 
-export function formatActivityCredits(value: number): string {
-  return `${value.toLocaleString("th-TH")} เครดิต`;
-}
-
-export function formatActivityNumber(value: number): string {
-  return value.toLocaleString("th-TH");
-}

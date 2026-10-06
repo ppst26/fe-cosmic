@@ -1,7 +1,7 @@
 /** ข้อมูล mock dialog รายการรอดำเนินการ (ฝาก/ถอน) */
 
-import { formatDepositTransferAmount } from "@/app/data/depositMockData";
 import { WITHDRAW_USER_BANK_MOCK } from "@/app/data/withdrawMockData";
+import { formatDepositTransferAmount } from "@/lib/format";
 
 export type PendingTransactionKind = "deposit" | "withdraw";
 

@@ -3,13 +3,13 @@
 import React from "react";
 import type { VipRankId } from "@/app/types/vip";
 import {
-  formatVipAmount,
   getVipRankViewStatus,
   getVipTurnoverTarget,
 } from "@/app/data/vipMockData";
 import { fetchVipRanks } from "@/lib/api/vip";
 import { ChevronLeftIcon, ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
+import { formatVipAmount } from "@/lib/format";
 
 interface VipRankCarouselProps {
   focusIndex: number;

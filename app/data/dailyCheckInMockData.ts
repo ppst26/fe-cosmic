@@ -40,14 +40,3 @@ export const DAILY_CHECKIN_INITIAL: DailyCheckInDayReward[] = [
   { day: 7, label: "อา.", credits: 20, status: "locked", isBigReward: true },
 ];
 
-export function formatCheckInCredits(value: number): string {
-  return `${new Intl.NumberFormat("th-TH").format(value)} เพชร`;
-}
-
-export function countCheckedInDays(days: DailyCheckInDayReward[]): number {
-  return days.filter((d) => d.status === "claimed").length;
-}
-
-export function getTodayReward(days: DailyCheckInDayReward[]): DailyCheckInDayReward | undefined {
-  return days.find((d) => d.status === "today");
-}

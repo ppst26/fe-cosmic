@@ -4,8 +4,6 @@ import React, { useMemo } from "react";
 import { useToast } from "@/context/ToastContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { formatCashbackCurrency } from "@/app/data/cashbackMockData";
-import { buildReferralLink } from "@/app/data/referralMockData";
 import { fetchCashbackPanels } from "@/lib/api/cashback";
 import { fetchReferralOverview } from "@/lib/api/referral";
 import { useAuth } from "../auth/AuthProvider";
@@ -14,6 +12,8 @@ import { useWithdraw } from "../withdraw/WithdrawProvider";
 import { CopyIcon, DepositNavIcon, WithdrawNavIcon } from "../ui/Icons";
 import { MenuItemIcon } from "./MenuItemIcon";
 import { cn } from "@/lib/utils";
+import { formatCashbackCurrency } from "@/lib/format";
+import { buildReferralLink } from "@/lib/domain/referral";
 
 interface MenuDrawerMobileToolbarProps {
   className?: string;

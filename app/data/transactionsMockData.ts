@@ -1,5 +1,4 @@
-import type { TransactionItem, TransactionKind, TransactionKindTab } from "../types/transaction";
-import { endOfDay, isDateInRange, startOfDay } from "@/app/lib/transactionDateUtils";
+import type { TransactionItem, TransactionKindTab } from "../types/transaction";
 
 /** แท็บเลือกประเภท */
 export const TRANSACTION_KIND_TABS: TransactionKindTab[] = [
@@ -8,8 +7,6 @@ export const TRANSACTION_KIND_TABS: TransactionKindTab[] = [
   { id: "promotion", label: "โปรโมชัน" },
   { id: "bet", label: "เดิมพัน" },
 ];
-
-export const TRANSACTION_BET_PAGE_SIZE = 10;
 
 /** Mock รายการฝาก */
 export const MOCK_DEPOSIT_TRANSACTIONS: TransactionItem[] = [
@@ -251,65 +248,3 @@ export const MOCK_BET_TRANSACTIONS: TransactionItem[] = [
   },
 ];
 
-export function getTransactionsByKind(kind: TransactionKind): TransactionItem[] {
-  switch (kind) {
-    case "deposit":
-      return MOCK_DEPOSIT_TRANSACTIONS;
-    case "withdraw":
-      return MOCK_WITHDRAW_TRANSACTIONS;
-    case "promotion":
-      return MOCK_PROMOTION_TRANSACTIONS;
-    case "bet":
-      return MOCK_BET_TRANSACTIONS;
-    default:
-      return [];
-  }
-}
-
-export function filterTransactionsByDateRange(
-  items: TransactionItem[],
-  from: Date,
-  to: Date,
-): TransactionItem[] {
-  const start = startOfDay(from);
-  const end = endOfDay(to);
-  return items.filter((item) => {
-    const created = new Date(item.createdAt);
-    return isDateInRange(created, start, end);
-  });
-}
-
-export function sumCompletedDepositAmount(items: TransactionItem[]): number {
-  return items
-    .filter((item) => item.kind === "deposit" && item.status === "completed")
-    .reduce((sum, item) => sum + item.amount, 0);
-}
-
-export function sumCompletedWithdrawAmount(items: TransactionItem[]): number {
-  return items
-    .filter((item) => item.kind === "withdraw" && item.status === "completed")
-    .reduce((sum, item) => sum + item.amount, 0);
-}
-
-/** จำนวนครั้งที่รับโปรในช่วงที่กรอง */
-export function countPromotionClaims(items: TransactionItem[]): number {
-  return items.filter((item) => item.kind === "promotion").length;
-}
-
-/** ยอดวิน/ลอสรวม — กำไรจากผลลัพธ์ลบยอดเดิมพัน */
-export function sumBetWinLossTotal(items: TransactionItem[]): number {
-  return items
-    .filter((item) => item.kind === "bet")
-    .reduce((sum, item) => {
-      if (item.betRowType === "result") return sum + item.amount;
-      if (item.betRowType === "bet") return sum - Math.abs(item.amount);
-      return sum;
-    }, 0);
-}
-
-/** ยอดเดิมพันรวม (เฉพาะแถวประเภทเดิมพัน) */
-export function sumBetStakeTotal(items: TransactionItem[]): number {
-  return items
-    .filter((item) => item.kind === "bet" && item.betRowType === "bet")
-    .reduce((sum, item) => sum + Math.abs(item.amount), 0);
-}

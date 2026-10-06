@@ -4,11 +4,11 @@ import React from "react";
 import Image from "next/image";
 import { Dialog } from "radix-ui";
 import {
-  formatGemsBalance,
   type GemsStorePackage,
 } from "@/app/data/gemsStoreMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { cn } from "@/lib/utils";
+import { formatGemsBalance } from "@/lib/format";
 
 function formatCreditAmount(value: number): string {
   return new Intl.NumberFormat("th-TH").format(value);

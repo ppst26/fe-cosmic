@@ -10,9 +10,6 @@ import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";
 import { HeaderUserAvatar } from "./HeaderUserAvatar";
 import { HEADER_DESKTOP_NAV } from "@/app/data/lobbyMockData";
-import {
-  formatHeaderWalletBalance,
-} from "@/app/data/walletMockData";
 import { fetchWalletBalance } from "@/lib/api/profile";
 import { useLobbyShellSidebarOptional } from "./LobbyShellSidebarContext";
 import { cn } from "@/lib/utils";
@@ -22,6 +19,7 @@ import { NotificationBellButton } from "../notifications/NotificationBellButton"
 import { useNotifications } from "../notifications/NotificationProvider";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { parseHubFromHref } from "../hub/hubModalRegistry";
+import { formatHeaderWalletBalance } from "@/lib/format";
 
 interface HeaderProps {
   onLoginClick?: () => void;
