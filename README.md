@@ -90,6 +90,12 @@ exports/lottery-kit ชุดย้ายระบบหวยไปโปรเ
 | `.cursor/`, `agent/` | rules + skills ของ agent (เนื้อหาเหมือนกัน) |
 | `docs/superpowers/` | spec และ plan ของแต่ละฟีเจอร์ |
 
+## สถานะโหลด / ว่าง / ผิดพลาด
+
+- ระดับ route: `app/loading.tsx` · `app/error.tsx` (ปุ่มลองใหม่ = `retry()` ของ Next 16) · `app/not-found.tsx` · `app/global-error.tsx` (root layout พัง)
+- ในหน้า: ใช้ `LoadingState` · `EmptyState` · `ErrorState` · `Skeleton` จาก `app/components/ui/StatusState.tsx` — สีทึบตาม token ไม่ใช้ glass
+- ข้อมูลที่โหลดจาก API ต้องมีครบ 3 สถานะ: กำลังโหลด · ไม่มีข้อมูล · โหลดไม่สำเร็จ (พร้อมปุ่มลองใหม่)
+
 ## แนวทางหลัก
 
 - Mobile-first เสมอ แล้วค่อยขยายไป desktop (`lg:`)

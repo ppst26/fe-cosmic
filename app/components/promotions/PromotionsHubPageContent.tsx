@@ -14,6 +14,7 @@ import { PromotionsMobileFeed } from "./PromotionsMobileFeed";
 import { PromoHubDesktopMasterDetail } from "./PromoHubDesktopMasterDetail";
 import { PromotionsCatalogProvider, usePromotionsCatalog } from "./PromotionsCatalogProvider";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
+import { ErrorState, LoadingState } from "../ui/StatusState";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
 
 /**
@@ -28,7 +29,7 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
 }
 
 function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolean }) {
-  const { catalog, loading, error: loadError } = usePromotionsCatalog();
+  const { catalog, loading, error: loadError, reload } = usePromotionsCatalog();
   const [detailId, setDetailId] = useState<PromotionDetailId | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
 
@@ -54,13 +55,14 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
 
   return (
     <>
-      {loading ? (
-        <p className="py-8 text-center text-sm text-[var(--text-secondary)]">กำลังโหลดโปรโมชั่น…</p>
-      ) : null}
+      {loading ? <LoadingState label="กำลังโหลดโปรโมชั่น…" /> : null}
       {!loading && loadError && !catalog ? (
-        <p className="py-8 text-center text-sm text-[var(--text-secondary)]">
-          ไม่สามารถแสดงโปรโมชั่นได้ในขณะนี้
-        </p>
+        <ErrorState
+          variant="card"
+          title="โหลดโปรโมชั่นไม่สำเร็จ"
+          description="ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่อีกครั้ง"
+          primaryAction={{ label: "ลองใหม่", onClick: reload }}
+        />
       ) : null}
 
       {catalog && showDesktopHub ? (

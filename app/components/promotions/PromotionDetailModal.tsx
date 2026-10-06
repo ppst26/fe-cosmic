@@ -6,6 +6,7 @@ import type { PromotionDetailContent, PromotionDetailId } from "@/app/types/prom
 import { CloseIcon } from "../ui/Icons";
 import { responsiveSheetCloseButtonClass } from "../ui/responsiveSheetDialog";
 import { PromotionDetailPanel } from "./PromotionDetailPanel";
+import { EmptyState, LoadingState } from "../ui/StatusState";
 import { usePromotionsCatalog } from "./PromotionsCatalogProvider";
 
 interface PromotionDetailModalProps {
@@ -79,16 +80,13 @@ export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModal
             </div>
 
             <div className="promo-detail-modal__scroll">
-              {loading && !content ? (
-                <p className="px-4 py-10 text-center text-sm text-[var(--text-secondary)]">
-                  กำลังโหลดรายละเอียด…
-                </p>
-              ) : null}
+              {loading && !content ? <LoadingState label="กำลังโหลดรายละเอียด…" /> : null}
               {showPanel ? <PromotionDetailPanel content={content} variant="modal" /> : null}
               {!loading && !content ? (
-                <p className="px-4 py-10 text-center text-sm text-[var(--text-secondary)]">
-                  ไม่พบรายละเอียดโปรโมชั่น
-                </p>
+                <EmptyState
+                  title="ไม่พบรายละเอียดโปรโมชั่น"
+                  description="โปรโมชั่นนี้อาจหมดเวลาแล้ว หรือโหลดไม่สำเร็จ"
+                />
               ) : null}
             </div>
           </Dialog.Content>

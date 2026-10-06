@@ -13,6 +13,8 @@ interface PromotionsCatalogContextValue {
   catalog: PromotionsCatalogResponse | null;
   loading: boolean;
   error: string | null;
+  /** โหลด catalog ใหม่หลังพลาด */
+  reload: () => void;
   fetchDetail: (id: PromotionDetailId) => Promise<PromotionDetailContent | null>;
   getCachedDetail: (id: PromotionDetailId) => PromotionDetailContent | null;
 }
@@ -31,6 +33,14 @@ export function PromotionsCatalogProvider({ children }: { children: React.ReactN
   const [error, setError] = useState<string | null>(null);
   const detailCacheRef = useRef<Partial<Record<PromotionDetailId, PromotionDetailContent>>>({});
   const loadErrorToastedRef = useRef(false);
+  /** เพิ่มค่าเพื่อโหลด catalog ใหม่ (ปุ่มลองใหม่) */
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const reload = useCallback(() => {
+    setError(null);
+    setLoading(true);
+    setReloadKey((key) => key + 1);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -50,7 +60,7 @@ export function PromotionsCatalogProvider({ children }: { children: React.ReactN
     return () => {
       cancelled = true;
     };
-  }, [showToast]);
+  }, [showToast, reloadKey]);
 
   const getCachedDetail = useCallback((id: PromotionDetailId) => detailCacheRef.current[id] ?? null, []);
 
@@ -64,8 +74,8 @@ export function PromotionsCatalogProvider({ children }: { children: React.ReactN
   }, []);
 
   const value = useMemo(
-    () => ({ catalog, loading, error, fetchDetail, getCachedDetail }),
-    [catalog, loading, error, fetchDetail, getCachedDetail],
+    () => ({ catalog, loading, error, reload, fetchDetail, getCachedDetail }),
+    [catalog, loading, error, reload, fetchDetail, getCachedDetail],
   );
 
   return (

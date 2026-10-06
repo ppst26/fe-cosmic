@@ -6,6 +6,7 @@ import { LobbyDesktopPageShell } from "@/app/components/layout/LobbyDesktopPageS
 import { formatBaht, formatLotterySlipDateTime } from "@/app/components/lottery/lotteryUtils";
 import { fetchLotterySlips } from "@/lib/lottery/fetchLotterySlip";
 import type { LotterySubmittedSlip } from "@/app/types/lotterySlip";
+import { EmptyState, LoadingState } from "@/app/components/ui/StatusState";
 
 /**
  * รายการโพยที่ส่งแล้ว (mock) — /lottery/slips
@@ -28,9 +29,15 @@ export default function LotterySlipsListPage() {
       mainClassName="lottery-slips-page mx-auto max-w-[var(--content-max)] pb-8 lg:mx-0 lg:max-w-none"
     >
       {loading ? (
-        <p className="py-12 text-center text-sm text-[var(--text-secondary)]">กำลังโหลด…</p>
+        <LoadingState label="กำลังโหลดโพย…" />
       ) : slips.length === 0 ? (
-        <p className="py-12 text-center text-sm text-[var(--text-secondary)]">ยังไม่มีโพยที่ส่ง</p>
+        <EmptyState
+          className="mt-4"
+          variant="card"
+          title="ยังไม่มีโพยที่ส่ง"
+          description="เลือกหวยที่ต้องการแล้วส่งโพยแรกได้เลย"
+          primaryAction={{ label: "ไปแทงหวย", href: "/lottery" }}
+        />
       ) : (
         <ul className="lottery-slips-list flex flex-col gap-[0.65rem] m-0 pt-2">
           {slips.map((slip) => (

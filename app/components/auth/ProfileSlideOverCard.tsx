@@ -11,6 +11,7 @@ import { getIsDesktopViewport } from "../hub/useIsDesktop";
 import { ProfileHubBody } from "../profile/ProfileHubBody";
 import { ProfileHubHeader } from "../profile/ProfileHubHeader";
 import { ProfileSheetBody } from "../profile/ProfileSheetBody";
+import { ErrorState, LoadingState } from "../ui/StatusState";
 import { CloseIcon } from "../ui/Icons";
 import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
 import {
@@ -146,12 +147,13 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
 
           <div className="profile-hub-sheet__pane flex min-h-0 flex-1 flex-col">
             <div className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4 lg:px-5 lg:pb-4 lg:pt-1">
-              {loading ? (
-                <p className="py-4 text-center text-xs text-[var(--text-muted)]">กำลังโหลด...</p>
-              ) : null}
+              {loading ? <LoadingState label="กำลังโหลดโปรไฟล์…" /> : null}
 
               {!loading && profile === null ? (
-                <p className="py-4 text-center text-xs text-[var(--text-muted)]">ไม่พบข้อมูลโปรไฟล์</p>
+                <ErrorState
+                  title="โหลดโปรไฟล์ไม่สำเร็จ"
+                  description="ปิดแล้วเปิดใหม่อีกครั้ง หากยังไม่ได้ ให้เข้าสู่ระบบใหม่"
+                />
               ) : null}
 
               {!loading && profile ? (

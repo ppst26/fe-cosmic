@@ -8,6 +8,7 @@ import type {
   PromoHubCategoryFilterId,
 } from "@/app/types/promotions";
 import { PromotionDetailPanel } from "./PromotionDetailPanel";
+import { LoadingState } from "../ui/StatusState";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
 import { usePromotionsCatalog } from "./PromotionsCatalogProvider";
 
@@ -163,9 +164,7 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
             {detailContent ? (
               <PromotionDetailPanel key={detailContent.id} content={detailContent} variant="hub" />
             ) : (
-              <p className="px-4 py-10 text-center text-sm text-[var(--text-secondary)]">
-                กำลังโหลดรายละเอียด…
-              </p>
+              <LoadingState label="กำลังโหลดรายละเอียด…" />
             )}
           </div>
         </div>

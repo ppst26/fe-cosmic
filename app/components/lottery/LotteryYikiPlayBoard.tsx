@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import { EmptyState } from "../ui/StatusState";
 import { YikiBetBoard } from "./yiki/YikiBetBoard";
 import { LotteryBetResultDialog } from "./LotteryBetResultDialog";
 import { fetchYikiBoard } from "@/lib/api/lotteryContent";
@@ -48,7 +49,14 @@ export function LotteryYikiPlayBoard({
   );
 
   if (!round) {
-    return <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ไม่พบรอบที่เลือก</p>;
+    return (
+      <EmptyState
+        className="mt-4"
+        variant="card"
+        title="ไม่พบรอบที่เลือก"
+        description="รอบนี้อาจปิดรับแทงแล้ว เลือกรอบถัดไปจากรายการรอบ"
+      />
+    );
   }
 
   return (

@@ -1,0 +1,111 @@
+/**
+ * สถานะโหลด / ว่าง / ผิดพลาด / skeleton — StatusState.tsx · app/error.tsx · not-found · loading
+ * ภาษา Solid: fill ทึบจาก token ไม่มี blur / gradient / glow · layout อยู่ใน Tailwind (TSX)
+ */
+
+.status-state {
+  color: var(--text-primary);
+}
+
+/* การ์ดทึบรอบเนื้อหา (variant="card") */
+.status-state--card {
+  background: var(--surface-solid-inner);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-panel);
+}
+
+.status-state__icon {
+  background: var(--sheet-row-fill);
+  color: var(--icon-default);
+}
+
+.status-state--error .status-state__icon {
+  background: color-mix(in srgb, var(--destructive) 16%, var(--surface-solid-inner));
+  color: var(--destructive);
+}
+
+.status-state__description {
+  color: var(--text-secondary);
+}
+
+.status-state__code {
+  color: var(--text-muted);
+}
+
+/* ปุ่มหลัก — ม่วงทึบชั้นเดียว */
+.status-state__primary {
+  background: var(--action-solid);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  transition: background var(--motion-fast, 150ms) ease;
+}
+
+.status-state__primary:hover {
+  background: var(--action-solid-hover);
+}
+
+/* ปุ่มรอง — chip ทึบ */
+.status-state__secondary {
+  background: var(--sheet-row-fill);
+  color: var(--text-primary);
+  border-radius: var(--radius-pill);
+  transition: background var(--motion-fast, 150ms) ease;
+}
+
+.status-state__secondary:hover {
+  background: var(--sheet-row-fill-hover);
+}
+
+.status-state__primary:focus-visible,
+.status-state__secondary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* spinner — วงแหวนทึบ หมุน */
+.status-spinner {
+  border: 3px solid var(--sheet-row-fill-hover);
+  border-top-color: var(--action-solid);
+  border-radius: 999px;
+  animation: status-spin 0.8s linear infinite;
+}
+
+/* skeleton — แท่งทึบ กะพริบความสว่างเบา ๆ */
+.status-skeleton {
+  background: var(--sheet-row-fill);
+  border-radius: var(--radius-card);
+  animation: status-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes status-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    background: var(--sheet-row-fill);
+  }
+  50% {
+    background: var(--sheet-row-fill-hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-spinner {
+    animation-duration: 2.4s;
+  }
+
+  .status-skeleton {
+    animation: none;
+  }
+}
+
+/* global-error.tsx — พื้นทึบทั้งหน้า (ไม่มี layout/พื้นหลัง gradient ของแอป) */
+.status-page-solid {
+  background: var(--surface-solid-outer);
+  color: var(--text-primary);
+  font-family: var(--font-noto-sans-thai), ui-sans-serif, system-ui, sans-serif;
+}

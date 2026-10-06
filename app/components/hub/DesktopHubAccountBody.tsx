@@ -7,6 +7,7 @@ import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
 import { ProfileSheetBody } from "@/app/components/profile/ProfileSheetBody";
 import { useDesktopHubModal } from "./DesktopHubModalProvider";
 import { useVipModal } from "@/app/components/vip/VipModalProvider";
+import { ErrorState, LoadingState } from "@/app/components/ui/StatusState";
 
 /**
  * เนื้อหา hub ข้อมูลบัญชี — โหลดโปรไฟล์เมื่อ mount ใน DesktopHubModal
@@ -17,6 +18,8 @@ export function DesktopHubAccountBody() {
   const { openVipModal } = useVipModal();
   const [profile, setProfile] = useState<ProfileUser | null | undefined>(undefined);
   const fetchGenRef = useRef(0);
+  /** เพิ่มค่าเพื่อโหลดโปรไฟล์ใหม่ (ปุ่มลองใหม่) */
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     const gen = ++fetchGenRef.current;
@@ -27,17 +30,25 @@ export function DesktopHubAccountBody() {
     return () => {
       fetchGenRef.current += 1;
     };
-  }, []);
+  }, [reloadKey]);
 
   if (profile === undefined) {
-    return (
-      <p className="py-12 text-center text-sm text-[var(--text-muted)]">กำลังโหลด...</p>
-    );
+    return <LoadingState label="กำลังโหลดข้อมูลบัญชี…" />;
   }
 
   if (profile === null) {
     return (
-      <p className="py-12 text-center text-sm text-[var(--text-muted)]">ไม่พบข้อมูลบัญชี</p>
+      <ErrorState
+        title="โหลดข้อมูลบัญชีไม่สำเร็จ"
+        description="ลองใหม่อีกครั้ง หากยังไม่ได้ ให้ออกจากระบบแล้วเข้าสู่ระบบใหม่"
+        primaryAction={{
+          label: "ลองใหม่",
+          onClick: () => {
+            setProfile(undefined);
+            setReloadKey((key) => key + 1);
+          },
+        }}
+      />
     );
   }
 

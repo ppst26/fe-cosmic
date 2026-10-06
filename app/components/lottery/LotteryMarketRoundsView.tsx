@@ -7,6 +7,7 @@ import { fetchLotteryPlayRounds, fetchThaiLottoBoard } from "@/lib/api/lotteryCo
 import { LotteryMarketShell } from "./LotteryMarketShell";
 import { LotteryPlayRoundList } from "./LotteryPlayRoundList";
 import { ThaiLottoResultPanel } from "./thai/ThaiLottoResultPanel";
+import { EmptyState, LoadingState } from "../ui/StatusState";
 
 interface LotteryMarketRoundsViewProps {
   marketSlug: string;
@@ -27,7 +28,13 @@ export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewP
 
   if (!entry) {
     return (
-      <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ไม่พบประเภทหวยนี้</p>
+      <EmptyState
+        className="mt-4"
+        variant="card"
+        title="ไม่พบประเภทหวยนี้"
+        description="หวยนี้อาจปิดให้บริการแล้ว เลือกหวยอื่นจากหน้ารวม"
+        primaryAction={{ label: "ดูหวยทั้งหมด", href: "/lottery" }}
+      />
     );
   }
 
@@ -38,13 +45,7 @@ export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewP
   return (
     <LotteryMarketShell activeEntry={entry} roundCount={openCount}>
       {!roundsReady ? (
-        <p
-          className="py-10 text-center text-sm text-[var(--text-muted)]"
-          aria-busy="true"
-          aria-live="polite"
-        >
-          กำลังโหลดรอบ…
-        </p>
+        <LoadingState label="กำลังโหลดรอบ…" />
       ) : (
         <LotteryPlayRoundList rounds={rounds} marketSlug={marketSlug} basePath={entry.roundsHref} />
       )}

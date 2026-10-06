@@ -6,6 +6,7 @@ import { LobbyDesktopPageShell } from "@/app/components/layout/LobbyDesktopPageS
 import { LotterySlipSummary } from "@/app/components/lottery/LotterySlipSummary";
 import { fetchLotterySlip } from "@/lib/lottery/fetchLotterySlip";
 import type { LotterySubmittedSlip } from "@/app/types/lotterySlip";
+import { EmptyState, LoadingState } from "@/app/components/ui/StatusState";
 
 /** รับเฉพาะ path ภายในเว็บ — กัน open redirect เช่น ?continue=https://evil.com หรือ //evil.com */
 function toSafeInternalHref(href: string | null): string | null {
@@ -52,11 +53,17 @@ export default function LotterySlipSummaryPage() {
       mainClassName="lottery-slips-page mx-auto max-w-[var(--content-max)] pb-8 lg:mx-0 lg:max-w-none"
     >
       {loading ? (
-        <p className="py-12 text-center text-sm text-[var(--text-secondary)]">กำลังโหลดโพย…</p>
+        <LoadingState label="กำลังโหลดโพย…" />
       ) : slip ? (
         <LotterySlipSummary slip={slip} continuePlayHref={continuePlayHref ?? undefined} />
       ) : (
-        <p className="py-12 text-center text-sm text-[var(--text-secondary)]">ไม่พบโพยนี้</p>
+        <EmptyState
+          className="mt-4"
+          variant="card"
+          title="ไม่พบโพยนี้"
+          description="โพยอาจถูกลบหรือลิงก์ไม่ถูกต้อง"
+          primaryAction={{ label: "ดูโพยทั้งหมด", href: "/lottery/slips" }}
+        />
       )}
     </LobbyDesktopPageShell>
   );

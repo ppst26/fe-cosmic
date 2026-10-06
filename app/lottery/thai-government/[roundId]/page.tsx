@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import { EmptyState } from "@/app/components/ui/StatusState";
 import { useParams } from "next/navigation";
 import { LotteryPlayPageShell } from "@/app/components/lottery/LotteryPlayPageShell";
 import { ThaiLottoBetBoard } from "@/app/components/lottery/thai/ThaiLottoBetBoard";
@@ -50,7 +51,13 @@ export default function ThaiGovernmentLotteryPlayPage() {
             <LotteryBetResultDialog state={dialog} onClose={closeDialog} />
           </>
         ) : (
-          <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ไม่พบรอบที่เลือก</p>
+          <EmptyState
+            className="mt-4"
+            variant="card"
+            title="ไม่พบรอบที่เลือก"
+            description="รอบนี้อาจปิดรับแทงแล้ว เลือกรอบอื่นได้จากรายการรอบ"
+            primaryAction={{ label: "ดูรอบทั้งหมด", href: "/lottery/thai-government" }}
+          />
         )
       }
     </LotteryPlayPageShell>
