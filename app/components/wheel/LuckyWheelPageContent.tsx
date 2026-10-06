@@ -7,6 +7,7 @@ import type { WheelData } from "@/lib/api/wheel";
 import { ResourceGate } from "../ui/ResourceGate";
 import { ArrowLeftIcon } from "../ui/Icons";
 import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
+import { resolveWheelTheme } from "@/lib/domain/wheelTheme";
 import { LuckyWheelLiveWinners } from "./LuckyWheelLiveWinners";
 import { LuckyWheelPrizeHistory } from "./LuckyWheelPrizeHistory";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
@@ -30,6 +31,8 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
  */
 function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boolean }) {
   const segmentDeg = 360 / wheel.segments.length;
+  /** เวลาหมุนจากธีม — ใช้ทั้ง transition ของวงและจังหวะประกาศผล */
+  const spinDurationMs = resolveWheelTheme(wheel.theme).spinDurationMs;
   const [gemsBalance, setGemsBalance] = useState(wheel.initialGems);
   const [ticketCount, setTicketCount] = useState(wheel.initialTickets);
   const [spinMethod, setSpinMethod] = useState<WheelSpinMethod>("ticket");
@@ -79,8 +82,8 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
         method: spinMethod,
       };
       setRecentHistoryRows((prev) => [row, ...prev].slice(0, 5));
-    }, 4200);
-  }, [canAfford, currentGemsCost, currentTicketCost, rotation, segmentDeg, spinMethod, spinning, wheel.segments]);
+    }, spinDurationMs);
+  }, [spinDurationMs, canAfford, currentGemsCost, currentTicketCost, rotation, segmentDeg, spinMethod, spinning, wheel.segments]);
 
   return (
     <div className={`lucky-wheel-page ${embedded ? "lucky-wheel-page--embedded" : ""}`}>
@@ -147,6 +150,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
             spinning={spinning}
             onCenterClick={handleSpin}
             centerDisabled={!canAfford}
+            theme={wheel.theme}
           />
 
           {/* Indicator dots 2 จุด ใต้วงล้อ */}

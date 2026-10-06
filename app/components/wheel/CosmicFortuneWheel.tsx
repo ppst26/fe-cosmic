@@ -2,9 +2,15 @@
 
 import React, { useId } from "react";
 import type { WheelSegment } from "@/app/types/reward";
-
-const SEGMENT_COUNT = 8;
-const SEGMENT_DEG = 360 / SEGMENT_COUNT;
+import type { WheelTheme } from "@/app/types/wheelTheme";
+import {
+  resolveWheelTheme,
+  safeCssColor,
+  safeImageUrl,
+  segmentFill,
+  wheelThemeCssVars,
+} from "@/lib/domain/wheelTheme";
+import { cn } from "@/lib/utils";
 
 interface CosmicFortuneWheelProps {
   segments: WheelSegment[];
@@ -12,6 +18,8 @@ interface CosmicFortuneWheelProps {
   spinning: boolean;
   onCenterClick?: () => void;
   centerDisabled?: boolean;
+  /** ธีมจาก API (GET /api/wheel → theme) — ไม่ส่ง = ดีไซน์เริ่มต้น */
+  theme?: WheelTheme;
 }
 
 /** ปัดพิกัด SVG ให้ SSR/client ตรงกัน (ลด hydration mismatch จาก float) */
@@ -37,7 +45,8 @@ function wedgePath(cx: number, cy: number, r: number, startDeg: number, endDeg: 
 }
 
 /**
- * วงล้อ 8 ช่อง — สีจากธีม Cosmicbet (ไม่ใช้สี mock ทอง/ดำ)
+ * วงล้อรางวัล — จำนวนช่องตามข้อมูล (2–16) · ปรับหน้าตาทั้งชุดผ่าน theme
+ * ชิ้นที่ปรับได้: วงนอก/กรอบ · ไฟรอบวง · สีช่อง (สลับ/รายช่อง) · ไอคอนรางวัล · เข็มชี้ · ปุ่ม SPIN/โลโก้ · พื้นหลัง · เวลาหมุน
  * ใช้ใน LuckyWheelPageContent
  */
 export function CosmicFortuneWheel({
@@ -46,6 +55,7 @@ export function CosmicFortuneWheel({
   spinning,
   onCenterClick,
   centerDisabled,
+  theme,
 }: CosmicFortuneWheelProps) {
   const uid = useId().replace(/:/g, "");
   const hubGradId = `wheelHub-${uid}`;
@@ -53,15 +63,33 @@ export function CosmicFortuneWheel({
   const cy = 200;
   const r = 168;
 
+  const t = resolveWheelTheme(theme);
+  const slices = segments.slice(0, 16);
+  const segmentDeg = 360 / Math.max(slices.length, 1);
+  const hasIcons = slices.some((segment) => safeImageUrl(segment.iconUrl));
+
   return (
-    <div className="lucky-wheel__stage">
-      <div className="lucky-wheel__pointer" aria-hidden="true" />
+    <div
+      className={cn(
+        "lucky-wheel__stage",
+        t.lightAnimation !== "none" && `lucky-wheel__stage--lights-${t.lightAnimation}`,
+        spinning && t.fastLightsWhileSpinning && "lucky-wheel__stage--lights-fast",
+      )}
+      style={wheelThemeCssVars(theme)}
+    >
+      {t.pointerImageUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element -- รูปจาก API (โดเมนไม่แน่นอน) ขนาดเล็ก
+        <img src={t.pointerImageUrl} alt="" className="lucky-wheel__pointer-img" draggable={false} />
+      ) : (
+        <div className="lucky-wheel__pointer" aria-hidden="true" />
+      )}
+
       <div
         className="lucky-wheel__disc"
         style={{
           transform: `rotate(${rotationDeg}deg)`,
           transition: spinning
-            ? "transform 4.2s cubic-bezier(0.12, 0.85, 0.18, 1)"
+            ? `transform ${t.spinDurationMs}ms cubic-bezier(0.12, 0.85, 0.18, 1)`
             : "none",
         }}
       >
@@ -73,46 +101,81 @@ export function CosmicFortuneWheel({
             </radialGradient>
           </defs>
 
+          {/* แถบวงนอก (พื้นใต้ไฟ) — โปร่งใสถ้าธีมไม่กำหนด */}
+          <circle cx={cx} cy={cy} r={r + 10} className="lucky-wheel__rim-band" strokeWidth={14} fill="none" />
+
           <circle
             cx={cx}
             cy={cy}
             r={r + 12}
             fill="none"
             className="lucky-wheel__rim"
-            strokeWidth="2"
+            strokeWidth={t.rimWidth}
           />
 
-          {Array.from({ length: 24 }).map((_, i) => {
-            const angle = (360 / 24) * i;
-            const dot = polar(cx, cy, r + 10, angle);
+          {Array.from({ length: t.lightCount }).map((_, i) => {
+            const dot = polar(cx, cy, r + 10, (360 / t.lightCount) * i);
             return (
               <circle
                 key={`dot-${i}`}
                 cx={dot.x}
                 cy={dot.y}
-                r={2.2}
-                className="lucky-wheel__rim-dot"
+                r={t.lightSize}
+                className={cn("lucky-wheel__rim-dot", i % 2 === 1 && "lucky-wheel__rim-dot--odd")}
+                style={
+                  t.lightAnimation === "chase"
+                    ? ({ "--wheel-light-index": i, "--wheel-light-count": t.lightCount } as React.CSSProperties)
+                    : undefined
+                }
               />
             );
           })}
 
-          {segments.slice(0, SEGMENT_COUNT).map((segment, index) => {
-            const start = index * SEGMENT_DEG;
-            const end = start + SEGMENT_DEG;
-            const mid = start + SEGMENT_DEG / 2;
-            const labelPos = polar(cx, cy, r * 0.64, mid);
+          {slices.map((segment, index) => {
+            const start = index * segmentDeg;
+            const end = start + segmentDeg;
+            const mid = start + segmentDeg / 2;
+            const iconUrl = safeImageUrl(segment.iconUrl);
+            /** มีไอคอน = ไอคอนด้านนอก ข้อความขยับเข้าใน */
+            const labelPos = polar(cx, cy, r * (hasIcons ? 0.56 : 0.64), mid);
+            const iconPos = polar(cx, cy, r * 0.8, mid);
+            const fill = segmentFill(index, segment, t.segmentColors);
+            const labelColor = safeCssColor(segment.labelColor);
 
             return (
               <g key={segment.id}>
                 <path
                   d={wedgePath(cx, cy, r, start, end)}
-                  className={index % 2 === 0 ? "lucky-wheel__slice lucky-wheel__slice--a" : "lucky-wheel__slice lucky-wheel__slice--b"}
+                  className={cn(
+                    "lucky-wheel__slice",
+                    !fill && (index % 2 === 0 ? "lucky-wheel__slice--a" : "lucky-wheel__slice--b"),
+                  )}
+                  style={{
+                    ...(fill ? { fill } : null),
+                    ...(t.segmentBorderWidth !== undefined ? { strokeWidth: t.segmentBorderWidth } : null),
+                  }}
                 />
+                {iconUrl ? (
+                  <image
+                    href={iconUrl}
+                    x={iconPos.x - t.iconSize / 2}
+                    y={iconPos.y - t.iconSize / 2}
+                    width={t.iconSize}
+                    height={t.iconSize}
+                    preserveAspectRatio="xMidYMid meet"
+                    transform={`rotate(${roundSvgCoord(mid)} ${iconPos.x} ${iconPos.y})`}
+                    className="lucky-wheel__slice-icon"
+                  />
+                ) : null}
                 <g transform={`translate(${labelPos.x} ${labelPos.y}) rotate(${roundSvgCoord(mid)})`}>
                   <text
                     y={4}
                     textAnchor="middle"
                     className="lucky-wheel__slice-label"
+                    style={{
+                      ...(labelColor ? { fill: labelColor } : null),
+                      ...(t.labelSize ? { fontSize: t.labelSize } : null),
+                    }}
                   >
                     {segment.label}
                   </text>
@@ -125,14 +188,26 @@ export function CosmicFortuneWheel({
         </svg>
       </div>
 
+      {t.frameImageUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element -- กรอบจาก API (โดเมนไม่แน่นอน) ทับทั้งวง
+        <img src={t.frameImageUrl} alt="" className="lucky-wheel__frame-img" draggable={false} />
+      ) : null}
+
       <button
         type="button"
         className="lucky-wheel__hub-btn"
         disabled={centerDisabled || spinning}
         onClick={onCenterClick}
         aria-label="หมุนวงล้อ"
+        /** letter-spacing ของ "SPIN" ทำให้ภาษาไทยห่างเกิน — ปิดเมื่อข้อความไม่ใช่ตัวอักษรละติน */
+        style={/[^\x20-\x7e]/.test(t.hubLabel) ? { letterSpacing: 0 } : undefined}
       >
-        SPIN
+        {t.hubLogoUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element -- โลโก้จาก API
+          <img src={t.hubLogoUrl} alt="" className="lucky-wheel__hub-logo" draggable={false} />
+        ) : (
+          t.hubLabel
+        )}
       </button>
     </div>
   );

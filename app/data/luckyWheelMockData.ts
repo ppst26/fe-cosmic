@@ -1,3 +1,4 @@
+import type { WheelTheme } from "@/app/types/wheelTheme";
 /** ข้อมูล mock หน้าวงล้อพารวย (/wheel) */
 
 import type {
@@ -18,6 +19,12 @@ export const LUCKY_WHEEL_TICKETS_PER_SPIN = 1;
 export const LUCKY_WHEEL_INITIAL_GEMS = 48_931;
 export const LUCKY_WHEEL_INITIAL_TICKETS = 0;
 export const LUCKY_WHEEL_HISTORY_TOTAL_PAGES = 15;
+
+/**
+ * ธีมวงล้อ mock — ว่าง = ดีไซน์เริ่มต้น · backend ส่งค่าตาม WheelTheme เพื่อเปลี่ยนหน้าตาทั้งชุด
+ * ตัวอย่างเต็ม: docs/api/wheel-theme.md
+ */
+export const LUCKY_WHEEL_THEME: WheelTheme = {};
 
 export const LUCKY_WHEEL_SEGMENTS: WheelSegment[] = [
   { id: "w1", label: "เพชร 3", kind: "gems" },

@@ -1,3 +1,4 @@
+import type { WheelSegmentStyle } from "./wheelTheme";
 /* ── จาก app/data/gemsStoreMockData.ts ── */
 
 export interface GemsStorePackage {
@@ -58,7 +59,8 @@ export type WheelPrizeKind = "credit" | "gems";
 
 export type WheelSpinMethod = "gems" | "ticket";
 
-export interface WheelSegment {
+/** ช่องรางวัล — สี / สีข้อความ / ไอคอน ปรับรายช่องได้ (WheelSegmentStyle) */
+export interface WheelSegment extends WheelSegmentStyle {
   id: string;
   label: string;
   kind: WheelPrizeKind;

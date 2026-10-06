@@ -9,6 +9,7 @@ import {
   LUCKY_WHEEL_LIVE_WINNERS,
   LUCKY_WHEEL_PRIZE_HISTORY,
   LUCKY_WHEEL_SEGMENTS,
+  LUCKY_WHEEL_THEME,
   LUCKY_WHEEL_TAGLINE,
   LUCKY_WHEEL_TERMS,
   LUCKY_WHEEL_TICKETS_PER_SPIN,
@@ -20,6 +21,8 @@ import { mockResult } from "./mock";
 function wheelMock() {
   return {
     segments: LUCKY_WHEEL_SEGMENTS,
+    /** ธีมวงล้อ (ไม่บังคับ) — ดู app/types/wheelTheme.ts · docs/api/wheel-theme.md */
+    theme: LUCKY_WHEEL_THEME,
     benefits: LUCKY_WHEEL_BENEFITS,
     introLead: LUCKY_WHEEL_INTRO_LEAD,
     tagline: LUCKY_WHEEL_TAGLINE,
