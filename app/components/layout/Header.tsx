@@ -150,13 +150,10 @@ export function Header({
             >
               <Link
                 href="/"
-                className="flex flex-col items-center justify-center text-center outline-none transition-transform hover:scale-102"
+                className="inline-flex items-center justify-center outline-none transition-transform hover:scale-102"
                 aria-label="Cosmicbet หน้าแรก"
               >
                 <CosmicbetLogo className="h-[21px] w-auto max-w-[115px] object-contain sm:h-6 sm:max-w-[130px]" />
-                <span className="text-[7.5px] font-medium tracking-[0.24em] text-white/85 uppercase font-sans select-none">
-                  PLAY BEYOND LIMITS
-                </span>
               </Link>
             </div>
 

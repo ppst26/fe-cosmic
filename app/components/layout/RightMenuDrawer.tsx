@@ -43,7 +43,35 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const { openHub } = useDesktopHubModal();
   const { isAuthenticated, isLoading } = useAuth();
   const { open: openLogin } = useOverlayLayer("login");
+  const { open: openSignUp } = useOverlayLayer("signup");
   const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(onClose);
+
+  const openLoginFromMenu = () => {
+    onClose();
+    window.setTimeout(() => openLogin(), 0);
+  };
+
+  const openSignUpFromMenu = () => {
+    onClose();
+    window.setTimeout(() => openSignUp(), 0);
+  };
+
+  const renderGuestAuthActions = (enterIndex: number, withEnterAnimation = true) => (
+    <div
+      className={cn(
+        "menu-drawer-guest-auth flex w-full shrink-0 flex-col gap-2.5",
+        withEnterAnimation && "menu-enter-item",
+      )}
+      style={withEnterAnimation ? ({ "--menu-enter-i": enterIndex } as React.CSSProperties) : undefined}
+    >
+      <button type="button" className="auth-btn auth-btn--register w-full" onClick={openSignUpFromMenu}>
+        สมัครสมาชิก
+      </button>
+      <button type="button" className="auth-btn auth-btn--login w-full" onClick={openLoginFromMenu}>
+        เข้าสู่ระบบ
+      </button>
+    </div>
+  );
 
   /** เมนูที่ต้องล็อกอิน — ปิดเมนูแล้วเปิด login sheet */
   const runWithAuth = (tile: MenuDialogTile, action: () => void) => {
@@ -252,34 +280,48 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
   };
 
+  const mobileMenuEnterBase = isAuthenticated ? 5 : 1;
+  const mobileGuestAuthEnterIndex =
+    mobileMenuEnterBase +
+    MENU_DIALOG_MOBILE_LIST_ITEMS.length +
+    MENU_DIALOG_MOBILE_GRID_ITEMS.length;
+
   const renderMobileMenu = () => (
     <div
-      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden overflow-y-auto pb-[max(12px,env(safe-area-inset-bottom,0px))] pt-[max(44px,calc(env(safe-area-inset-top,0px)+36px))]"
+      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden pb-[max(12px,env(safe-area-inset-bottom,0px))] pt-[max(44px,calc(env(safe-area-inset-top,0px)+36px))]"
     >
-      <MenuDrawerUserAvatar isMenuOpen={isOpen} />
+      {isAuthenticated ? (
+        <MenuDrawerUserAvatar isMenuOpen={isOpen} />
+      ) : (
+        <div className="menu-drawer-guest-brand menu-enter-logo flex shrink-0 justify-center pb-0.5 pt-0.5">
+          <CosmicbetLogo className="h-7 w-auto max-w-[min(72vw,168px)] object-contain" />
+        </div>
+      )}
 
-      <MenuDrawerMobileToolbar
-        onClose={onClose}
-        onRequireLogin={() => openLogin()}
-      />
+      {isAuthenticated ? (
+        <MenuDrawerMobileToolbar onClose={onClose} onRequireLogin={() => openLogin()} />
+      ) : null}
 
-      <div className="menu-card-group menu-drawer-list-card menu-enter-item flex flex-col overflow-hidden rounded-[var(--radius-panel)]">
+      <div className="menu-card-group menu-drawer-list-card menu-enter-item flex shrink-0 flex-col overflow-hidden rounded-[var(--radius-panel)]">
         {MENU_DIALOG_MOBILE_LIST_ITEMS.map((tile, index) =>
-          renderRow(tile, index + 5, "compact"),
+          renderRow(tile, mobileMenuEnterBase + index, "compact"),
         )}
       </div>
 
       <div
-        className="menu-drawer-grid-card menu-enter-item w-full shrink-0 overflow-hidden rounded-[var(--radius-panel)]"
+        className="menu-drawer-grid-card menu-enter-item w-full shrink-0 overflow-hidden"
         style={
           {
-            "--menu-enter-i": 5 + MENU_DIALOG_MOBILE_LIST_ITEMS.length,
+            "--menu-enter-i": mobileMenuEnterBase + MENU_DIALOG_MOBILE_LIST_ITEMS.length,
           } as React.CSSProperties
         }
       >
         <div className="menu-grid menu-grid--mobile-drawer menu-grid--three grid w-full">
           {MENU_DIALOG_MOBILE_GRID_ITEMS.map((tile, index) =>
-            renderGridTile(tile, index + 6 + MENU_DIALOG_MOBILE_LIST_ITEMS.length),
+            renderGridTile(
+              tile,
+              mobileMenuEnterBase + MENU_DIALOG_MOBILE_LIST_ITEMS.length + 1 + index,
+            ),
           )}
         </div>
       </div>
@@ -287,13 +329,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       {isAuthenticated ? (
         <button
           type="button"
-          className="menu-drawer-logout menu-drawer-logout--mobile menu-enter-item flex w-full shrink-0 items-center justify-center gap-1.5"
-          style={
-            {
-              "--menu-enter-i":
-                5 + MENU_DIALOG_MOBILE_LIST_ITEMS.length + MENU_DIALOG_MOBILE_GRID_ITEMS.length,
-            } as React.CSSProperties
-          }
+          className="menu-drawer-logout menu-drawer-logout--mobile menu-enter-item mt-auto flex w-full shrink-0 items-center justify-center gap-1.5"
+          style={{ "--menu-enter-i": mobileGuestAuthEnterIndex } as React.CSSProperties}
           onClick={() => {
             onClose();
             window.setTimeout(() => openLogoutConfirm(), 0);
@@ -304,7 +341,14 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             ออกจากระบบ
           </span>
         </button>
-      ) : null}
+      ) : (
+        <div
+          className="menu-drawer-guest-auth-slot menu-enter-item flex min-h-0 w-full flex-1 flex-col justify-center"
+          style={{ "--menu-enter-i": mobileGuestAuthEnterIndex } as React.CSSProperties}
+        >
+          {renderGuestAuthActions(mobileGuestAuthEnterIndex, false)}
+        </div>
+      )}
     </div>
   );
 
@@ -348,7 +392,9 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             ออกจากระบบ
           </span>
         </button>
-      ) : null}
+      ) : (
+        renderGuestAuthActions(MENU_DIALOG_SECTIONS.reduce((n, s) => n + s.items.length, 0))
+      )}
     </div>
   );
 

@@ -16,6 +16,7 @@ import {
 } from "@/app/components/ui/cosmicButtonClasses";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { MODAL_TITLE_LEADING_ICON_CLASS } from "@/app/components/ui/ModalTitleLeadingIcon";
+import { DailyCheckInClaimSuccessDialog } from "./DailyCheckInClaimSuccessDialog";
 
 interface DailyCheckInCardProps {
   onClose?: () => void;
@@ -31,6 +32,9 @@ export function DailyCheckInCard({
   const checkIn = fetchCheckIn();
   const [days, setDays] = useState<DailyCheckInDayReward[]>(checkIn.days);
   const [justClaimed, setJustClaimed] = useState<number | null>(null);
+  const [claimSuccessCredits, setClaimSuccessCredits] = useState<number | null>(
+    null,
+  );
 
   const checkedInCount = countCheckedInDays(days);
   const todayReward = days.find((d) => d.status === "today");
@@ -58,6 +62,7 @@ export function DailyCheckInCard({
     );
     setJustClaimed(targetDay);
     setTimeout(() => setJustClaimed(null), 1500);
+    setClaimSuccessCredits(reward.credits);
   };
 
   const progressPercent = Math.min(100, Math.max(10, (checkedInCount / 7) * 100));
@@ -449,6 +454,14 @@ export function DailyCheckInCard({
           {isTodayClaimed ? "เช็คอินแล้ววันนี้" : "กดรับรางวัลวันนี้"}
         </span>
       </button>
+
+      <DailyCheckInClaimSuccessDialog
+        open={claimSuccessCredits !== null}
+        credits={claimSuccessCredits ?? 0}
+        onOpenChange={(open) => {
+          if (!open) setClaimSuccessCredits(null);
+        }}
+      />
     </div>
   );
 }

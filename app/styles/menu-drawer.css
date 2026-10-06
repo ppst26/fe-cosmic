@@ -800,6 +800,32 @@
   opacity: 0.88;
 }
 
+/** ก่อนล็อกอิน — โลโก้บน · ปุ่มสมัคร/เข้าสู่ระบบล่าง (RightMenuDrawer) */
+.menu-drawer-guest-brand {
+  width: 100%;
+}
+
+/** ช่องว่างกลางจอ — ปุ่มสมัคร/ล็อกอิน (ใต้ grid เมนู) */
+.menu-drawer-guest-auth-slot {
+  width: 100%;
+  min-height: clamp(7rem, 24dvh, 11.5rem);
+  padding-block: clamp(0.65rem, 3.5dvh, 1.5rem);
+}
+
+.menu-drawer-guest-auth-slot .menu-drawer-guest-auth {
+  margin-top: 0;
+}
+
+.menu-drawer-guest-auth {
+  margin-top: var(--menu-drawer-stack-gap, 0.5rem);
+  padding-top: 0;
+}
+
+.menu-drawer-guest-auth .auth-btn {
+  min-height: clamp(2.75rem, 10vw, 3rem);
+  font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+}
+
 /** Avatar วงกลม — MenuDrawerUserAvatar · ProfileAccountAvatarSection */
 .menu-drawer-avatar {
   display: flex;
@@ -855,7 +881,7 @@
   --menu-drawer-grid-tile-min-h: clamp(2.65rem, 10.5vw, 3.25rem);
   --menu-drawer-list-icon: clamp(1.25rem, 5.2vw, 1.5rem);
   --menu-drawer-list-label: clamp(0.75rem, 2.9vw, 0.8125rem);
-  --menu-drawer-list-row-py: clamp(0.3rem, 1.2vw, 0.45rem);
+  --menu-drawer-list-row-py: clamp(0.5rem, 1.85vw, 0.68rem);
   --menu-drawer-list-row-px: clamp(0.6rem, 2.4vw, 0.8rem);
   padding-left: max(var(--menu-drawer-pad-inline), env(safe-area-inset-left, 0px));
   padding-right: max(var(--menu-drawer-pad-inline), env(safe-area-inset-right, 0px));
@@ -921,6 +947,8 @@
   /** วง chevron / ปุ่มคัดลอก — border ขาวมาตรฐานเดียวกับรายการเมนู */
   --menu-drawer-chip-border: rgb(255 255 255 / 0.28);
   --menu-drawer-chip-border-hover: rgb(255 255 255 / 0.4);
+  /** พื้นกริดไอคอน — กล่องเดียว */
+  --menu-drawer-grid-shell: #19181c;
 }
 
 .menu-content--mobile-stack .menu-drawer-avatar {
@@ -998,7 +1026,7 @@
   padding: 0.45rem 0.4rem;
   overflow: hidden;
   border: 1px solid var(--menu-drawer-stroke);
-  border-radius: var(--radius-panel);
+  border-radius: var(--radius-card);
   color: var(--text-primary);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -1084,7 +1112,7 @@
   gap: 0.1rem;
   min-height: 0;
   padding: 0.38rem 1.2rem 0.38rem 0.45rem;
-  border: 1px solid var(--menu-drawer-stroke-purple);
+  border: 0;
   border-radius: var(--radius-control);
   color: inherit;
   text-decoration: none;
@@ -1132,15 +1160,14 @@
   place-items: center;
   width: 1.5rem;
   height: 1.5rem;
-  border-radius: 999px;
-  border: 1px solid var(--menu-drawer-chip-border);
+  border-radius: var(--radius-control);
+  border: 0;
   background: var(--menu-drawer-grad-press);
   color: var(--text-secondary);
   box-shadow: none;
   transition:
     background-color var(--motion-fast) ease,
-    color var(--motion-fast) ease,
-    border-color var(--motion-fast) ease;
+    color var(--motion-fast) ease;
 }
 
 .menu-drawer-income-card__chevron svg {
@@ -1152,7 +1179,7 @@
   min-width: 0;
   max-width: 100%;
   padding: 0.35rem 0.45rem;
-  border: 1px solid var(--menu-drawer-stroke-purple);
+  border: 0;
   border-radius: var(--radius-control);
   background:
     radial-gradient(110% 80% at 50% 0%, rgb(120 115 135 / 0.08) 0%, transparent 48%),
@@ -1168,7 +1195,7 @@
   place-items: center;
   width: 2rem;
   height: 2rem;
-  border: 1px solid var(--menu-drawer-chip-border);
+  border: 0;
   border-radius: var(--radius-control);
   background: var(--menu-drawer-grad-press);
   color: var(--text-secondary);
@@ -1176,14 +1203,13 @@
   box-shadow: none;
   transition:
     background-color var(--motion-fast) ease,
-    color var(--motion-fast) ease,
-    border-color var(--motion-fast) ease;
+    color var(--motion-fast) ease;
 }
 
 .menu-drawer-list-card {
   gap: 0;
   overflow: hidden;
-  border: 1px solid var(--menu-drawer-stroke) !important;
+  border: 0 !important;
   border-radius: var(--radius-panel);
   background: var(--menu-drawer-shell);
   box-shadow: none;
@@ -1208,7 +1234,7 @@
 .menu-drawer-grid-card {
   min-width: 0;
   max-width: 100%;
-  border: 1px solid var(--menu-drawer-stroke);
+  border: 0;
   background: var(--menu-drawer-shell);
   box-shadow: none;
 }
@@ -1264,8 +1290,10 @@
 
 .menu-content--mobile-stack .menu-grid--mobile-drawer .menu-grid-tile {
   min-height: var(--menu-drawer-grid-tile-min-h);
-  padding-block: clamp(0.25rem, 1vw, 0.35rem);
+  padding-block: clamp(0.35rem, 1.35vw, 0.5rem);
   border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-icon {
@@ -1277,14 +1305,22 @@
   font-size: var(--menu-drawer-list-label);
 }
 
+.menu-content--mobile-stack .menu-drawer-list-card {
+  gap: clamp(0.3rem, 1.15vw, 0.42rem);
+  padding: clamp(0.2rem, 0.85vw, 0.3rem);
+  background: transparent;
+}
+
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-row {
   gap: clamp(0.35rem, 1.5vw, 0.5rem);
   padding: var(--menu-drawer-list-row-py) var(--menu-drawer-list-row-px);
+  border-radius: var(--radius-card);
 }
 
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-chevron {
   width: clamp(1.125rem, 4.5vw, 1.25rem);
   height: clamp(1.125rem, 4.5vw, 1.25rem);
+  border-radius: var(--radius-control);
 }
 
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-chevron svg {
@@ -1309,6 +1345,7 @@
   gap: 0.25rem;
   min-height: clamp(2.1rem, 8.5vw, 2.4rem);
   padding: 0.3rem 0.35rem;
+  border-radius: var(--radius-card);
 }
 
 .menu-content--mobile-stack .menu-drawer-quick-actions__icon {
@@ -1376,8 +1413,76 @@
   height: 0.85rem;
 }
 
-.menu-content--mobile-stack .menu-grid--mobile-drawer .menu-grid-tile {
-  padding-block: clamp(0.15rem, 0.7vw, 0.28rem);
+/** กริดมือถือ — พื้นเดียวครอบทั้งกริด ช่องย่อยไม่มี bg/ขอบ */
+.menu-content--mobile-stack .menu-drawer-grid-card {
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--menu-drawer-grid-shell);
+  padding: clamp(0.35rem, 1.35vw, 0.5rem);
+  box-shadow: none;
+}
+
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid--mobile-drawer {
+  gap: clamp(0.2rem, 0.9vw, 0.35rem);
+  padding: 0;
+}
+
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile {
+  padding-block: clamp(0.35rem, 1.35vw, 0.5rem);
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:nth-child(odd),
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:nth-child(even) {
+  background: transparent !important;
+}
+
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) {
+  z-index: auto;
+  transform: none;
+  background: transparent !important;
+  filter: none;
+  box-shadow: none !important;
+}
+
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:active {
+  transform: scale(0.97);
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent-primary) 50%, transparent);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) .menu-grid-icon {
+  transform: translateY(-1px) scale(1.04);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) {
+    transform: none;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) .menu-grid-label {
+    color: inherit;
+    transform: none;
+  }
+
+  .menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:active {
+    transform: scale(0.97);
+  }
+
+  .menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:active .menu-grid-icon {
+    transform: scale(0.96);
+  }
 }
 
 .menu-content--mobile-stack .menu-drawer-logout--mobile {
@@ -1399,11 +1504,12 @@
   box-shadow: none;
 }
 
-/** เมนูมือถือ — chevron / chip มาตรฐาน border ขาว */
+/** เมนูมือถือ — chevron / ปุ่มคัดลอก ไม่มีขอบ */
 .menu-content--mobile-stack .menu-list-chevron,
 .menu-content--mobile-stack .menu-drawer-income-card__chevron,
 .menu-content--mobile-stack .menu-drawer-referral-bar__copy {
-  border: 1px solid var(--menu-drawer-chip-border);
+  border: 0;
+  border-radius: var(--radius-control);
   background: var(--menu-drawer-grad-press);
   color: var(--text-secondary);
   box-shadow: none;
@@ -1411,7 +1517,6 @@
 
 .menu-content--mobile-stack .menu-drawer-income-card:is(:hover, :focus-visible) .menu-drawer-income-card__chevron,
 .menu-content--mobile-stack .menu-drawer-referral-bar__copy:is(:hover, :focus-visible) {
-  border-color: var(--menu-drawer-chip-border-hover);
   background: var(--menu-drawer-grad-accent);
   color: var(--text-primary);
 }
@@ -1425,7 +1530,6 @@
   .menu-drawer-list-card
   .menu-list-row:is(:hover, :focus-visible)
   .menu-list-chevron {
-  border-color: var(--menu-drawer-chip-border-hover);
   background: var(--menu-drawer-grad-accent);
   color: var(--text-primary);
 }
@@ -1436,6 +1540,11 @@
   background: var(--menu-drawer-grad-accent) !important;
   box-shadow: none;
   filter: brightness(1.04);
+}
+
+.menu-content--mobile-stack .menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) {
+  background: transparent !important;
+  filter: none;
 }
 
 .menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) .menu-grid-icon {

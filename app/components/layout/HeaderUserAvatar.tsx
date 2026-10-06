@@ -1,74 +1,46 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import type { ProfileUser } from "@/app/types/auth";
-import { fetchProfile } from "@/lib/auth/client";
-import { useAuth } from "../auth/AuthProvider";
-import { UserAvatar, UserAvatarPlaceholder } from "../profile/UserAvatar";
+import React from "react";
+import { ProfileNavIcon } from "../ui/Icons";
 import { cn } from "@/lib/utils";
 
 interface HeaderUserAvatarProps {
-  /** รีเฟรชรูปเมื่อปิด sheet โปรไฟล์ (Header) */
+  /** คงไว้เพื่อ API เดิมกับ Header — ไม่ใช้รูป preset แล้ว */
   refreshWhenProfileCloses?: boolean;
   isProfileOpen?: boolean;
   className?: string;
   size?: "xs" | "sm" | "md";
 }
 
+const WRAP_CLASS: Record<NonNullable<HeaderUserAvatarProps["size"]>, string> = {
+  xs: "h-8 w-8",
+  sm: "h-10 w-10",
+  md: "h-11 w-11",
+};
+
+const ICON_CLASS: Record<NonNullable<HeaderUserAvatarProps["size"]>, string> = {
+  xs: "h-[1.125rem] w-[1.125rem]",
+  sm: "h-5 w-5",
+  md: "h-6 w-6",
+};
+
 /**
- * รูปโปรไฟล์ใน header desktop — จาก preset ที่ user เลือก (Header · LobbyDesktopTopBar)
+ * ไอคอนโปรไฟล์แบบเส้นใน header — Header · LobbyDesktopTopBar
  */
 export function HeaderUserAvatar({
-  refreshWhenProfileCloses = false,
-  isProfileOpen = false,
   className,
   size = "sm",
 }: HeaderUserAvatarProps) {
-  const { isAuthenticated, isLoading } = useAuth();
-  const [profile, setProfile] = useState<ProfileUser | null>(null);
-  const wasProfileOpen = useRef(isProfileOpen);
-
-  const loadProfile = () => {
-    void fetchProfile().then((data) => {
-      setProfile(data);
-    });
-  };
-
-  useEffect(() => {
-    if (isLoading || !isAuthenticated) {
-      setProfile(null);
-      return;
-    }
-    let active = true;
-    void fetchProfile().then((data) => {
-      if (active) setProfile(data);
-    });
-    return () => {
-      active = false;
-    };
-  }, [isAuthenticated, isLoading]);
-
-  useEffect(() => {
-    if (
-      refreshWhenProfileCloses &&
-      wasProfileOpen.current &&
-      !isProfileOpen &&
-      isAuthenticated
-    ) {
-      loadProfile();
-    }
-    wasProfileOpen.current = isProfileOpen;
-  }, [isProfileOpen, isAuthenticated, refreshWhenProfileCloses]);
-
-  if (!isAuthenticated || !profile) {
-    return <UserAvatarPlaceholder size={size} className={className} />;
-  }
-
   return (
-    <UserAvatar
-      profile={profile}
-      size={size}
-      className={cn("ring-1 ring-[var(--border-subtle)]", className)}
-    />
+    <span
+      className={cn(
+        "inline-flex shrink-0 items-center justify-center rounded-full text-current",
+        WRAP_CLASS[size],
+        className,
+      )}
+      aria-hidden="true"
+    >
+      <ProfileNavIcon className={ICON_CLASS[size]} />
+    </span>
   );
 }

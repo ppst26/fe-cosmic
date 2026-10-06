@@ -28,6 +28,8 @@ export interface UserAvatarProps {
   size?: UserAvatarSize;
   className?: string;
   imageClassName?: string;
+  /** โหลดทันที (ไม่ lazy) — สำหรับ avatar ที่เห็นตั้งแต่เปิด เช่น menu drawer */
+  eager?: boolean;
 }
 
 /**
@@ -38,6 +40,7 @@ export function UserAvatar({
   size = "md",
   className,
   imageClassName,
+  eager = false,
 }: UserAvatarProps) {
   const px = SIZE_PX[size];
   const presetId = resolveAvatarPresetId(profile.avatarPresetId, profile.id);
@@ -57,7 +60,8 @@ export function UserAvatar({
         width={px}
         height={px}
         className={cn("h-full w-full object-cover", imageClassName)}
-        loading="lazy"
+        loading={eager ? "eager" : "lazy"}
+        fetchPriority={eager ? "high" : undefined}
         decoding="async"
       />
       <span className="sr-only">รูปโปรไฟล์ {profile.displayName}</span>

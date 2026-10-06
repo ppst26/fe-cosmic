@@ -5,10 +5,10 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /** path โลโก้แบรนด์ใน public — ใช้ทั้ง Header และที่อื่นที่อ้าง CosmicbetLogo */
-export const BRAND_LOGO_SRC = "/cm-logo.png";
+export const BRAND_LOGO_SRC = "/cosmic-dark.png";
 
 /**
- * โลโก้แบรนด์ Cosmicbet จาก asset โปร่งใส (public/cm-logo.png)
+ * โลโก้แบรนด์ Cosmicbet (public/cosmic-dark.png)
  * รักษาสัดส่วน ไม่ยืด — ใช้ใน Header
  */
 export function CosmicbetLogo({ className }: { className?: string }) {
