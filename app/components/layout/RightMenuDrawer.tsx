@@ -117,7 +117,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
 
     const tileClass = cn(
-      "menu-grid-tile menu-enter-item group flex min-w-0 flex-col items-center justify-center px-0.5 py-2 min-h-0 select-none outline-none lg:min-h-[72px] lg:py-2.5",
+      "menu-grid-tile menu-enter-item group flex min-w-0 flex-col items-center justify-center px-0.5 py-1 min-h-0 select-none outline-none lg:min-h-[72px] lg:py-2.5",
       comingSoon
         ? "cursor-not-allowed opacity-70 pointer-events-none"
         : "cursor-pointer",
@@ -212,7 +212,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     const rowClass = cn(
       "menu-list-row menu-enter-item group flex w-full items-center justify-between text-left cursor-pointer select-none outline-none",
       density === "compact"
-        ? "px-3.5 py-2"
+        ? "menu-list-row--drawer-compact"
         : "px-4 py-3.5 lg:px-3.5 lg:py-2.5",
     );
     const enterStyle = { "--menu-enter-i": index } as React.CSSProperties;
@@ -254,7 +254,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
 
   const renderMobileMenu = () => (
     <div
-      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden overflow-y-auto pb-[max(20px,env(safe-area-inset-bottom,0px))] pt-[max(52px,calc(env(safe-area-inset-top,0px)+44px))]"
+      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden overflow-y-auto pb-[max(12px,env(safe-area-inset-bottom,0px))] pt-[max(44px,calc(env(safe-area-inset-top,0px)+36px))]"
     >
       <MenuDrawerUserAvatar isMenuOpen={isOpen} />
 
@@ -287,7 +287,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       {isAuthenticated ? (
         <button
           type="button"
-          className="menu-drawer-logout menu-drawer-logout--mobile menu-enter-item mt-1 flex w-full shrink-0 items-center justify-center gap-2 px-3 py-3"
+          className="menu-drawer-logout menu-drawer-logout--mobile menu-enter-item flex w-full shrink-0 items-center justify-center gap-1.5"
           style={
             {
               "--menu-enter-i":
@@ -299,8 +299,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             window.setTimeout(() => openLogoutConfirm(), 0);
           }}
         >
-          <LogOutIcon className="h-5 w-5 shrink-0 text-destructive" aria-hidden="true" />
-          <span className="menu-drawer-logout__label text-sm font-medium text-destructive">
+          <LogOutIcon className="shrink-0 text-destructive" aria-hidden="true" />
+          <span className="menu-drawer-logout__label font-medium text-destructive">
             ออกจากระบบ
           </span>
         </button>

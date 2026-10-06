@@ -85,7 +85,7 @@ export function MenuDrawerMobileToolbar({
   };
 
   return (
-    <div className={cn("menu-drawer-mobile-toolbar flex w-full min-w-0 max-w-full flex-col gap-2", className)}>
+    <div className={cn("menu-drawer-mobile-toolbar flex w-full min-w-0 max-w-full flex-col", className)}>
       <div className="menu-drawer-quick-actions grid w-full min-w-0 grid-cols-2 gap-1.5">
         <button
           type="button"
@@ -154,8 +154,8 @@ export function MenuDrawerMobileToolbar({
           className="menu-drawer-referral-bar__icon shrink-0 object-contain"
         />
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] font-medium text-[var(--text-secondary)]">ลิงก์แนะนำเพื่อน</p>
-          <p className="truncate text-xs font-medium text-[var(--text-primary)] tabular-nums">
+          <p className="font-medium text-[var(--text-secondary)]">ลิงก์แนะนำเพื่อน</p>
+          <p className="truncate font-medium text-[var(--text-primary)] tabular-nums">
             {isAuthenticated ? referralLink : "เข้าสู่ระบบเพื่อดูลิงก์"}
           </p>
         </div>
@@ -165,7 +165,7 @@ export function MenuDrawerMobileToolbar({
           aria-label="คัดลอกลิงก์แนะนำเพื่อน"
           onClick={() => void copyReferralLink()}
         >
-          <CopyIcon className="h-4 w-4" />
+          <CopyIcon className="shrink-0" aria-hidden />
         </button>
       </div>
     </div>
