@@ -85,8 +85,8 @@ export function MenuDrawerMobileToolbar({
   };
 
   return (
-    <div className={cn("menu-drawer-mobile-toolbar flex flex-col gap-2", className)}>
-      <div className="menu-drawer-quick-actions grid grid-cols-2 gap-2">
+    <div className={cn("menu-drawer-mobile-toolbar flex w-full min-w-0 max-w-full flex-col gap-2", className)}>
+      <div className="menu-drawer-quick-actions grid w-full min-w-0 grid-cols-2 gap-1.5">
         <button
           type="button"
           className="menu-drawer-quick-actions__btn menu-drawer-quick-actions__btn--deposit menu-enter-item"
@@ -107,7 +107,7 @@ export function MenuDrawerMobileToolbar({
         </button>
       </div>
 
-      <div className="menu-drawer-income-duo grid grid-cols-2">
+      <div className="menu-drawer-income-duo grid w-full min-w-0 grid-cols-2 gap-0">
         <Link
           href="/cashback"
           className="menu-drawer-income-card menu-enter-item"
@@ -145,10 +145,10 @@ export function MenuDrawerMobileToolbar({
       </div>
 
       <div
-        className="menu-drawer-referral-bar menu-enter-item flex items-center gap-2"
+        className="menu-drawer-referral-bar menu-enter-item flex w-full min-w-0 max-w-full items-center gap-1.5"
         style={{ "--menu-enter-i": 4 } as React.CSSProperties}
       >
-        <MenuItemIcon iconId="referral" variant="asset" className="h-9 w-9 shrink-0 object-contain" />
+        <MenuItemIcon iconId="referral" variant="asset" className="h-7 w-7 shrink-0 object-contain" />
         <div className="min-w-0 flex-1">
           <p className="text-[11px] font-medium text-[var(--text-secondary)]">ลิงก์แนะนำเพื่อน</p>
           <p className="truncate text-xs font-medium text-[var(--text-primary)] tabular-nums">

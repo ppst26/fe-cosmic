@@ -91,18 +91,18 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     const comingSoon = tile.comingSoon === true;
 
     const content = (
-      <div className="flex flex-col items-center justify-center gap-1.5 w-full min-w-0 px-1 text-center">
+      <div className="flex flex-col items-center justify-center gap-1 w-full min-w-0 px-0.5 text-center">
         <MenuItemIcon
           iconId={tile.iconId}
           variant="asset"
           className={cn(
-            "menu-grid-icon h-10 w-10 object-contain shrink-0 sm:h-11 sm:w-11 lg:h-9 lg:w-9",
+            "menu-grid-icon h-8 w-8 object-contain shrink-0 lg:h-9 lg:w-9",
             comingSoon && "opacity-45 grayscale-[0.35]",
           )}
         />
         <span
           className={cn(
-            "menu-grid-label w-full text-[11px] font-medium leading-[1.25] sm:text-xs lg:text-[11.5px]",
+            "menu-grid-label w-full text-[10px] font-medium leading-[1.2] sm:text-[11px] lg:text-[11.5px]",
             comingSoon ? "text-[var(--text-muted)]" : "text-white",
           )}
         >
@@ -117,7 +117,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     );
 
     const tileClass = cn(
-      "menu-grid-tile menu-enter-item group flex flex-col items-center justify-center py-2.5 px-1 min-h-[5.25rem] sm:min-h-[5.5rem] lg:min-h-[72px] select-none outline-none",
+      "menu-grid-tile menu-enter-item group flex min-w-0 flex-col items-center justify-center px-0.5 py-2 min-h-0 select-none outline-none lg:min-h-[72px] lg:py-2.5",
       comingSoon
         ? "cursor-not-allowed opacity-70 pointer-events-none"
         : "cursor-pointer",
@@ -180,18 +180,18 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   ) => {
     const content = (
       <>
-        <div className="flex items-center gap-3.5 min-w-0">
+        <div className="flex min-w-0 flex-1 items-center gap-2.5">
           <MenuItemIcon
             iconId={tile.iconId}
             variant="asset"
-            className="menu-list-icon h-9 w-9 lg:h-7 lg:w-7 object-contain shrink-0"
+            className="menu-list-icon h-7 w-7 object-contain shrink-0 lg:h-7 lg:w-7"
           />
-          <span className="menu-list-label text-[15px] lg:text-[13.5px] font-medium text-white truncate leading-none">
+          <span className="menu-list-label min-w-0 flex-1 truncate text-[13px] font-medium leading-none text-white lg:text-[13.5px]">
             {tile.label}
           </span>
         </div>
         <span
-          className="menu-list-chevron flex h-6 w-6 lg:h-5 lg:w-5 shrink-0 items-center justify-center rounded-full"
+          className="menu-list-chevron flex h-5 w-5 shrink-0 items-center justify-center rounded-full lg:h-5 lg:w-5"
           aria-hidden="true"
         >
           <svg
@@ -254,7 +254,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
 
   const renderMobileMenu = () => (
     <div
-      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-[max(20px,env(safe-area-inset-bottom,0px))] pt-[max(52px,calc(env(safe-area-inset-top,0px)+44px))]"
+      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden overflow-y-auto pb-[max(20px,env(safe-area-inset-bottom,0px))] pt-[max(52px,calc(env(safe-area-inset-top,0px)+44px))]"
     >
       <MenuDrawerUserAvatar isMenuOpen={isOpen} />
 
