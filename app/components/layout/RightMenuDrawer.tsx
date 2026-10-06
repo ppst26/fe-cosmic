@@ -119,7 +119,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
     const comingSoon = tile.comingSoon === true;
 
     const content = (
-      <div className="flex flex-col items-center justify-center gap-1 w-full min-w-0 px-0.5 text-center">
+      <div className="flex flex-col items-center justify-center gap-1.5 w-full min-w-0 px-0.5 text-center">
         <MenuItemIcon
           iconId={tile.iconId}
           variant="asset"
@@ -130,7 +130,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         />
         <span
           className={cn(
-            "menu-grid-label w-full font-medium leading-[1.2] lg:text-[11.5px]",
+            "menu-grid-label w-full font-medium leading-snug lg:text-[11.5px]",
             comingSoon ? "text-[var(--text-muted)]" : "text-white",
           )}
         >
@@ -208,13 +208,13 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   ) => {
     const content = (
       <>
-        <div className="flex min-w-0 flex-1 items-center gap-2.5">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           <MenuItemIcon
             iconId={tile.iconId}
             variant="asset"
             className="menu-list-icon object-contain shrink-0 lg:h-7 lg:w-7"
           />
-          <span className="menu-list-label min-w-0 flex-1 truncate font-medium leading-none text-white lg:text-[13.5px]">
+          <span className="menu-list-label min-w-0 flex-1 truncate font-medium leading-snug text-white lg:text-[13.5px]">
             {tile.label}
           </span>
         </div>
@@ -288,67 +288,69 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
 
   const renderMobileMenu = () => (
     <div
-      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden pb-[max(12px,env(safe-area-inset-bottom,0px))] pt-[max(44px,calc(env(safe-area-inset-top,0px)+36px))]"
+      className="menu-content menu-content--mobile menu-content--mobile-stack flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-hidden"
     >
-      {isAuthenticated ? (
-        <MenuDrawerUserAvatar isMenuOpen={isOpen} />
-      ) : (
-        <div className="menu-drawer-guest-brand menu-enter-logo flex shrink-0 justify-center pb-0.5 pt-0.5">
-          <CosmicbetLogo className="h-7 w-auto max-w-[min(72vw,168px)] object-contain" />
-        </div>
-      )}
-
-      {isAuthenticated ? (
-        <MenuDrawerMobileToolbar onClose={onClose} onRequireLogin={() => openLogin()} />
-      ) : null}
-
-      <div className="menu-card-group menu-drawer-list-card menu-enter-item flex shrink-0 flex-col overflow-hidden rounded-[var(--radius-panel)]">
-        {MENU_DIALOG_MOBILE_LIST_ITEMS.map((tile, index) =>
-          renderRow(tile, mobileMenuEnterBase + index, "compact"),
+      <div className="menu-drawer-mobile-scroll">
+        {isAuthenticated ? (
+          <MenuDrawerUserAvatar isMenuOpen={isOpen} />
+        ) : (
+          <div className="menu-drawer-guest-brand menu-enter-logo flex shrink-0 justify-center pb-0.5 pt-0.5">
+            <CosmicbetLogo className="h-7 w-auto max-w-[min(72vw,168px)] object-contain" />
+          </div>
         )}
-      </div>
 
-      <div
-        className="menu-drawer-grid-card menu-enter-item w-full shrink-0 overflow-hidden"
-        style={
-          {
-            "--menu-enter-i": mobileMenuEnterBase + MENU_DIALOG_MOBILE_LIST_ITEMS.length,
-          } as React.CSSProperties
-        }
-      >
-        <div className="menu-grid menu-grid--mobile-drawer menu-grid--three grid w-full">
-          {MENU_DIALOG_MOBILE_GRID_ITEMS.map((tile, index) =>
-            renderGridTile(
-              tile,
-              mobileMenuEnterBase + MENU_DIALOG_MOBILE_LIST_ITEMS.length + 1 + index,
-            ),
+        {isAuthenticated ? (
+          <MenuDrawerMobileToolbar onClose={onClose} onRequireLogin={() => openLogin()} />
+        ) : null}
+
+        <div className="menu-card-group menu-drawer-list-card menu-enter-item flex shrink-0 flex-col overflow-hidden">
+          {MENU_DIALOG_MOBILE_LIST_ITEMS.map((tile, index) =>
+            renderRow(tile, mobileMenuEnterBase + index, "compact"),
           )}
         </div>
-      </div>
 
-      {isAuthenticated ? (
-        <button
-          type="button"
-          className="menu-drawer-logout menu-drawer-logout--mobile menu-enter-item mt-auto flex w-full shrink-0 items-center justify-center gap-1.5"
-          style={{ "--menu-enter-i": mobileGuestAuthEnterIndex } as React.CSSProperties}
-          onClick={() => {
-            onClose();
-            window.setTimeout(() => openLogoutConfirm(), 0);
-          }}
-        >
-          <LogOutIcon className="shrink-0 text-destructive" aria-hidden="true" />
-          <span className="menu-drawer-logout__label font-medium text-destructive">
-            ออกจากระบบ
-          </span>
-        </button>
-      ) : (
         <div
-          className="menu-drawer-guest-auth-slot menu-enter-item flex min-h-0 w-full flex-1 flex-col justify-center"
-          style={{ "--menu-enter-i": mobileGuestAuthEnterIndex } as React.CSSProperties}
+          className="menu-drawer-grid-card menu-enter-item w-full shrink-0 overflow-hidden"
+          style={
+            {
+              "--menu-enter-i": mobileMenuEnterBase + MENU_DIALOG_MOBILE_LIST_ITEMS.length,
+            } as React.CSSProperties
+          }
         >
-          {renderGuestAuthActions(mobileGuestAuthEnterIndex, false)}
+          <div className="menu-grid menu-grid--mobile-drawer menu-grid--three grid w-full">
+            {MENU_DIALOG_MOBILE_GRID_ITEMS.map((tile, index) =>
+              renderGridTile(
+                tile,
+                mobileMenuEnterBase + MENU_DIALOG_MOBILE_LIST_ITEMS.length + 1 + index,
+              ),
+            )}
+          </div>
         </div>
-      )}
+
+        {isAuthenticated ? (
+          <button
+            type="button"
+            className="menu-drawer-logout menu-drawer-logout--mobile menu-enter-item flex w-full shrink-0 items-center justify-center gap-1.5"
+            style={{ "--menu-enter-i": mobileGuestAuthEnterIndex } as React.CSSProperties}
+            onClick={() => {
+              onClose();
+              window.setTimeout(() => openLogoutConfirm(), 0);
+            }}
+          >
+            <LogOutIcon className="shrink-0 text-destructive" aria-hidden="true" />
+            <span className="menu-drawer-logout__label font-medium text-destructive">
+              ออกจากระบบ
+            </span>
+          </button>
+        ) : (
+          <div
+            className="menu-drawer-guest-auth-slot menu-enter-item flex w-full shrink-0 flex-col"
+            style={{ "--menu-enter-i": mobileGuestAuthEnterIndex } as React.CSSProperties}
+          >
+            {renderGuestAuthActions(mobileGuestAuthEnterIndex, false)}
+          </div>
+        )}
+      </div>
     </div>
   );
 

@@ -44,8 +44,10 @@
   isolation: isolate;
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
-  min-height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
   transform: translate3d(0, 0, 0);
   transform-origin: center center;
   backface-visibility: hidden;
@@ -234,8 +236,30 @@
   min-height: 0;
   min-width: 0;
   max-width: 100%;
+  overflow: hidden;
+}
+
+/** โซนเลื่อนเมนูมือถือ — จำกัดความสูงตาม viewport */
+.menu-drawer-mobile-scroll {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  gap: var(--menu-drawer-stack-gap, 0.45rem);
+  padding-top: var(--menu-drawer-pad-top);
+  padding-bottom: var(--menu-drawer-pad-bottom);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.menu-drawer-mobile-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .menu-panel.glass-menu-panel .menu-content:not(.menu-content--mobile) {
@@ -873,19 +897,21 @@
   min-width: 0;
   box-sizing: border-box;
   /** สเกลตามความกว้างจอ — ไม่พึ่ง breakpoint เดียว */
-  --menu-drawer-pad-inline: clamp(1.375rem, 6.5vw, 1.875rem);
-  --menu-drawer-stack-gap: clamp(0.45rem, 1.6vw, 0.65rem);
-  --menu-drawer-avatar-size: clamp(3.35rem, 10.5vw, 4.25rem);
-  --menu-drawer-grid-icon: clamp(1.375rem, 5.8vw, 1.75rem);
-  --menu-drawer-grid-label: clamp(0.5625rem, 2.35vw, 0.625rem);
-  --menu-drawer-grid-tile-min-h: clamp(2.65rem, 10.5vw, 3.25rem);
-  --menu-drawer-list-icon: clamp(1.25rem, 5.2vw, 1.5rem);
-  --menu-drawer-list-label: clamp(0.75rem, 2.9vw, 0.8125rem);
-  --menu-drawer-list-row-py: clamp(0.5rem, 1.85vw, 0.68rem);
-  --menu-drawer-list-row-px: clamp(0.6rem, 2.4vw, 0.8rem);
+  --menu-drawer-pad-inline: clamp(1.25rem, 5.8vw, 1.75rem);
+  --menu-drawer-pad-top: max(2.35rem, calc(env(safe-area-inset-top, 0px) + 1.85rem));
+  --menu-drawer-pad-bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
+  --menu-drawer-stack-gap: clamp(0.35rem, 1.35vw, 0.52rem);
+  --menu-drawer-avatar-size: clamp(3rem, 9.2vw, 3.85rem);
+  --menu-drawer-grid-icon: clamp(1.75rem, 7vw, 2.25rem);
+  --menu-drawer-grid-label: clamp(0.75rem, 2.9vw, 0.8125rem);
+  --menu-drawer-grid-tile-min-h: clamp(3.35rem, 12.5vw, 4.15rem);
+  --menu-drawer-list-icon: clamp(1.5rem, 6.2vw, 1.875rem);
+  --menu-drawer-list-label: clamp(0.8125rem, 3.1vw, 0.9375rem);
+  --menu-drawer-list-row-py: clamp(0.55rem, 2vw, 0.72rem);
+  --menu-drawer-list-row-px: clamp(0.55rem, 2.2vw, 0.75rem);
   padding-left: max(var(--menu-drawer-pad-inline), env(safe-area-inset-left, 0px));
   padding-right: max(var(--menu-drawer-pad-inline), env(safe-area-inset-right, 0px));
-  gap: var(--menu-drawer-stack-gap);
+  gap: 0;
   /* linear gradient ซ้าย → ขวา · เทาเข้มเกือบดำ */
   --menu-drawer-grad-a: linear-gradient(
     90deg,
@@ -947,8 +973,9 @@
   /** วง chevron / ปุ่มคัดลอก — border ขาวมาตรฐานเดียวกับรายการเมนู */
   --menu-drawer-chip-border: rgb(255 255 255 / 0.28);
   --menu-drawer-chip-border-hover: rgb(255 255 255 / 0.4);
-  /** พื้นกริดไอคอน — กล่องเดียว */
+  /** พื้นกล่องเมนู (list / grid / โบนัส / แนะนำ) — กล่องเดียว */
   --menu-drawer-grid-shell: #19181c;
+  --menu-drawer-list-row-solid: #211f26;
 }
 
 .menu-content--mobile-stack .menu-drawer-avatar {
@@ -971,11 +998,22 @@
 /** จอสั้น — บีบสเกลทั้งก้อนให้เห็นเนื้อหาได้มากขึ้น */
 @media (max-height: 780px) {
   .menu-content--mobile-stack {
-    --menu-drawer-stack-gap: clamp(0.35rem, 1.2vw, 0.5rem);
-    --menu-drawer-avatar-size: clamp(3rem, 9.5vw, 3.75rem);
-    --menu-drawer-grid-tile-min-h: clamp(2.4rem, 9vw, 2.9rem);
-    --menu-drawer-grid-icon: clamp(1.25rem, 5.2vw, 1.5rem);
-    --menu-drawer-list-row-py: clamp(0.25rem, 1vw, 0.38rem);
+    --menu-drawer-pad-top: max(2.1rem, calc(env(safe-area-inset-top, 0px) + 1.65rem));
+    --menu-drawer-stack-gap: clamp(0.28rem, 1.05vw, 0.42rem);
+    --menu-drawer-avatar-size: clamp(2.75rem, 8.5vw, 3.35rem);
+    --menu-drawer-grid-tile-min-h: clamp(3rem, 11vw, 3.65rem);
+    --menu-drawer-grid-icon: clamp(1.5625rem, 6.2vw, 2rem);
+    --menu-drawer-list-icon: clamp(1.375rem, 5.5vw, 1.625rem);
+    --menu-drawer-list-row-py: clamp(0.48rem, 1.65vw, 0.62rem);
+  }
+}
+
+@media (max-height: 700px) {
+  .menu-content--mobile-stack {
+    --menu-drawer-pad-top: max(1.95rem, calc(env(safe-area-inset-top, 0px) + 1.5rem));
+    --menu-drawer-grid-tile-min-h: clamp(2.75rem, 10vw, 3.35rem);
+    --menu-drawer-grid-icon: clamp(1.4375rem, 5.8vw, 1.8125rem);
+    --menu-drawer-quick-actions-btn-min-h: clamp(1.95rem, 7.8vw, 2.2rem);
   }
 }
 
@@ -1285,12 +1323,14 @@
   -webkit-line-clamp: 2;
   word-break: break-word;
   font-size: var(--menu-drawer-grid-label);
-  line-height: 1.2;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--text-primary);
 }
 
 .menu-content--mobile-stack .menu-grid--mobile-drawer .menu-grid-tile {
   min-height: var(--menu-drawer-grid-tile-min-h);
-  padding-block: clamp(0.35rem, 1.35vw, 0.5rem);
+  padding-block: clamp(0.45rem, 1.65vw, 0.62rem);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
@@ -1303,29 +1343,43 @@
 
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-label {
   font-size: var(--menu-drawer-list-label);
+  line-height: 1.3;
 }
 
 .menu-content--mobile-stack .menu-drawer-list-card {
-  gap: clamp(0.3rem, 1.15vw, 0.42rem);
-  padding: clamp(0.2rem, 0.85vw, 0.3rem);
-  background: transparent;
+  gap: clamp(0.35rem, 1.35vw, 0.5rem);
+  padding: clamp(0.35rem, 1.35vw, 0.5rem);
+  border-radius: var(--radius-card);
+  background: var(--menu-drawer-grid-shell);
 }
 
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-row {
-  gap: clamp(0.35rem, 1.5vw, 0.5rem);
+  gap: clamp(0.5rem, 2vw, 0.65rem);
   padding: var(--menu-drawer-list-row-py) var(--menu-drawer-list-row-px);
   border-radius: var(--radius-card);
+  background: var(--menu-drawer-list-row-solid) !important;
+  box-shadow: none;
+}
+
+.menu-content--mobile-stack .menu-drawer-list-card .menu-list-row:nth-child(odd),
+.menu-content--mobile-stack .menu-drawer-list-card .menu-list-row:nth-child(even) {
+  background: var(--menu-drawer-list-row-solid) !important;
+}
+
+.menu-content--mobile-stack .menu-drawer-list-card .menu-list-label {
+  font-weight: 500;
 }
 
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-chevron {
-  width: clamp(1.125rem, 4.5vw, 1.25rem);
-  height: clamp(1.125rem, 4.5vw, 1.25rem);
-  border-radius: var(--radius-control);
+  width: clamp(1.375rem, 5.5vw, 1.625rem);
+  height: clamp(1.375rem, 5.5vw, 1.625rem);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--accent-primary) 78%, #fff);
 }
 
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-chevron svg {
-  width: 0.55rem;
-  height: 0.55rem;
+  width: 0.65rem;
+  height: 0.65rem;
 }
 
 .menu-content--mobile-stack .menu-drawer-mobile-toolbar {
@@ -1343,33 +1397,44 @@
 
 .menu-content--mobile-stack .menu-drawer-quick-actions__btn {
   gap: 0.25rem;
-  min-height: clamp(2.1rem, 8.5vw, 2.4rem);
-  padding: 0.3rem 0.35rem;
+  min-height: var(
+    --menu-drawer-quick-actions-btn-min-h,
+    clamp(1.95rem, 7.8vw, 2.25rem)
+  );
+  padding: 0.26rem 0.32rem;
   border-radius: var(--radius-card);
 }
 
 .menu-content--mobile-stack .menu-drawer-quick-actions__icon {
-  width: clamp(1rem, 4vw, 1.125rem);
-  height: clamp(1rem, 4vw, 1.125rem);
+  width: clamp(1.125rem, 4.5vw, 1.25rem);
+  height: clamp(1.125rem, 4.5vw, 1.25rem);
 }
 
 .menu-content--mobile-stack .menu-drawer-quick-actions__label {
-  font-size: clamp(0.625rem, 2.8vw, 0.75rem);
+  font-size: clamp(0.6875rem, 2.9vw, 0.8125rem);
 }
 
 .menu-content--mobile-stack .menu-drawer-income-duo {
-  gap: clamp(0.25rem, 1vw, 0.35rem);
+  gap: clamp(0.35rem, 1.35vw, 0.5rem);
+}
+
+.menu-content--mobile-stack .menu-drawer-income-duo .menu-drawer-income-card,
+.menu-content--mobile-stack .menu-drawer-income-duo .menu-drawer-income-card:first-child,
+.menu-content--mobile-stack .menu-drawer-income-duo .menu-drawer-income-card:last-child {
+  background: var(--menu-drawer-grid-shell) !important;
+  box-shadow: none;
 }
 
 .menu-content--mobile-stack .menu-drawer-income-card {
-  gap: 0.05rem;
-  padding: clamp(0.28rem, 1.1vw, 0.35rem) clamp(0.95rem, 3.5vw, 1.1rem)
-    clamp(0.28rem, 1.1vw, 0.35rem) clamp(0.38rem, 1.5vw, 0.45rem);
+  gap: 0.08rem;
+  padding: clamp(0.4rem, 1.45vw, 0.52rem) clamp(0.95rem, 3.5vw, 1.1rem)
+    clamp(0.4rem, 1.45vw, 0.52rem) clamp(0.45rem, 1.75vw, 0.55rem);
+  border-radius: var(--radius-card);
 }
 
 .menu-content--mobile-stack .menu-drawer-income-card__label {
-  font-size: clamp(0.5625rem, 2.4vw, 0.625rem);
-  line-height: 1.15;
+  font-size: clamp(0.625rem, 2.5vw, 0.6875rem);
+  line-height: 1.2;
 }
 
 .menu-content--mobile-stack .menu-drawer-income-card__value {
@@ -1390,7 +1455,10 @@
 
 .menu-content--mobile-stack .menu-drawer-referral-bar {
   gap: clamp(0.35rem, 1.4vw, 0.45rem);
-  padding: clamp(0.28rem, 1.1vw, 0.35rem) clamp(0.38rem, 1.5vw, 0.45rem);
+  padding: clamp(0.4rem, 1.45vw, 0.52rem) clamp(0.45rem, 1.75vw, 0.55rem);
+  border-radius: var(--radius-card);
+  background: var(--menu-drawer-grid-shell) !important;
+  box-shadow: none;
 }
 
 .menu-content--mobile-stack .menu-drawer-referral-bar p:first-of-type {
@@ -1418,12 +1486,12 @@
   border: 0;
   border-radius: var(--radius-card);
   background: var(--menu-drawer-grid-shell);
-  padding: clamp(0.35rem, 1.35vw, 0.5rem);
+  padding: clamp(0.4rem, 1.45vw, 0.55rem);
   box-shadow: none;
 }
 
 .menu-content--mobile-stack .menu-drawer-grid-card .menu-grid--mobile-drawer {
-  gap: clamp(0.2rem, 0.9vw, 0.35rem);
+  gap: clamp(0.35rem, 1.45vw, 0.55rem);
   padding: 0;
 }
 
@@ -1488,8 +1556,8 @@
 .menu-content--mobile-stack .menu-drawer-logout--mobile {
   margin-top: 0;
   min-height: 0;
-  padding: clamp(0.45rem, 1.6vw, 0.55rem) clamp(0.65rem, 2.5vw, 0.75rem);
-  font-size: clamp(0.75rem, 2.9vw, 0.8125rem);
+  padding: clamp(0.35rem, 1.25vw, 0.48rem) clamp(0.65rem, 2.5vw, 0.75rem);
+  font-size: clamp(0.71875rem, 2.75vw, 0.8125rem);
 }
 
 .menu-content--mobile-stack .menu-drawer-logout--mobile svg {
@@ -1522,8 +1590,8 @@
 }
 
 .menu-content--mobile-stack .menu-drawer-list-card .menu-list-row:is(:hover, :focus-visible) {
-  background: var(--menu-drawer-grad-accent);
-  filter: brightness(1.06);
+  background: color-mix(in srgb, var(--menu-drawer-list-row-solid) 88%, rgb(255 255 255 / 0.08)) !important;
+  filter: none;
 }
 
 .menu-content--mobile-stack
