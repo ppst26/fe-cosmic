@@ -1,19 +1,7 @@
+import type { MenuDialogAction, MenuDialogTile, MenuDialogSection } from "@/app/types/menu";
+
 /** จำนวนตั๋ว mock — การ์ดบนเมนูเต็มจอ (MenuDrawerWalletCards) */
 export const MENU_DIALOG_TICKET_COUNT_MOCK = 2;
-
-export type MenuDialogAction = "vip-rank" | "coupon";
-
-export interface MenuDialogTile {
-  id: string;
-  label: string;
-  href?: string;
-  action?: MenuDialogAction;
-  iconId: string;
-  /** ต้องล็อกอินก่อน — เปิด login sheet (RightMenuDrawer) */
-  requiresAuth?: boolean;
-  /** ยังไม่เปิดใช้ — แสดง Coming soon · ไม่นำทาง */
-  comingSoon?: boolean;
-}
 
 /** เมนูที่ต้องล็อกอินก่อนเข้า */
 export function menuTileRequiresAuth(tile: MenuDialogTile): boolean {
@@ -47,14 +35,6 @@ export function menuHrefRequiresAuth(href: string): boolean {
     return tileNorm === normalized;
   });
   return tile ? menuTileRequiresAuth(tile) : false;
-}
-
-export interface MenuDialogSection {
-  id: string;
-  sectionLabel: string;
-  columns: 2 | 3 | 4;
-  layout?: "vertical" | "horizontal";
-  items: MenuDialogTile[];
 }
 
 /**

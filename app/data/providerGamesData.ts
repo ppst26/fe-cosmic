@@ -3,24 +3,7 @@
  * โดยเฉพาะค่าย PRAGMATIC PLAY 20 เกมตามภาพตัวอย่างของผู้ใช้
  */
 
-export interface ProviderGameItem {
-  id: string;
-  title: string;
-  providerId: string;
-  category?: string;
-  artType: string;
-  bgGradient: string;
-  accentColor: string;
-  badge?: string;
-  isFavorite?: boolean;
-}
-
-export interface ProviderInfo {
-  id: string;
-  name: string;
-  slogan?: string;
-  totalGames: number;
-}
+import type { ProviderGameItem, ProviderInfo } from "@/app/types/providers";
 
 /**
  * ข้อมูลค่ายเกมสำหรับหน้ารายการเกม

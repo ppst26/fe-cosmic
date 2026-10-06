@@ -1,12 +1,6 @@
 /** ช่องทางฝากเงิน — step 1 ของ flow ฝาก (mock) */
 
-export type DepositMethodId = "bank" | "gateway" | "truemoney";
-
-export interface DepositMethodOption {
-  id: DepositMethodId;
-  title: string;
-  subtitle: string;
-}
+import type { DepositMethodOption, DepositBankAccountMock } from "@/app/types/wallet";
 
 export const DEPOSIT_METHOD_OPTIONS: DepositMethodOption[] = [
   {
@@ -25,15 +19,6 @@ export const DEPOSIT_METHOD_OPTIONS: DepositMethodOption[] = [
     subtitle: "ฝากเงินผ่าน TrueMoney Wallet",
   },
 ];
-
-/** บัญชีรับโอน mock — step 2 ฝากธนาคาร */
-export interface DepositBankAccountMock {
-  bankName: string;
-  accountNumberDisplay: string;
-  accountNumberCopy: string;
-  accountName: string;
-  sampleBadgeLabel: string;
-}
 
 export const DEPOSIT_BANK_ACCOUNT_MOCK: DepositBankAccountMock = {
   bankName: "ธนาคารกสิกรไทย",

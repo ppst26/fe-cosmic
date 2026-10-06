@@ -1,9 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  type ReferralStatsMock,
-} from "@/app/data/referralMockData";
 import { fetchReferralOverview } from "@/lib/api/referral";
 import { UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 import { ReferralUsersPanel } from "./ReferralUsersPanel";
@@ -17,6 +14,7 @@ import {
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { COSMIC_PANEL_GLASS_ICON, COSMIC_PANEL_SOLID } from "../ui/cosmicButtonClasses";
+import type { ReferralStatsMock } from "@/app/types/referral";
 type ReferralTabId = "overview" | "users" | "earning";
 
 const TABS: { id: ReferralTabId; label: string }[] = [

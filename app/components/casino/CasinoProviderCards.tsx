@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { CasinoCardItem } from "../../data/casinoProvidersData";
+import type { CasinoCardItem } from "@/app/types/providers";
 
 /**
  * คอมโพเนนต์วาดกราฟิกดีลเลอร์และองค์ประกอบของแต่ละเกมคาสิโนสดตามแบบภาพอ้างอิง

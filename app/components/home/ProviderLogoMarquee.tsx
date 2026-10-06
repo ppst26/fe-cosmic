@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { HomeProviderLogoItem } from "@/app/data/homeProviderLogosData";
+import type { HomeProviderLogoItem } from "@/app/types/providers";
 
 interface ProviderLogoMarqueeProps {
   items: HomeProviderLogoItem[];

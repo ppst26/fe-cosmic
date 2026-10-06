@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useId } from "react";
-import type { WheelSegment } from "@/app/data/luckyWheelMockData";
+import type { WheelSegment } from "@/app/types/reward";
 
 const SEGMENT_COUNT = 8;
 const SEGMENT_DEG = 360 / SEGMENT_COUNT;

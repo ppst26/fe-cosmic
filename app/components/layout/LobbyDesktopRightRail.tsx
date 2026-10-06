@@ -2,7 +2,7 @@
 
 import React from "react";
 import { LobbyDesktopRightMenuGrid } from "./LobbyDesktopRightMenuGrid";
-import type { MenuDialogAction } from "@/app/data/menuMockData";
+import type { MenuDialogAction } from "@/app/types/menu";
 
 interface LobbyDesktopRightRailProps {
   onMenuAction?: (action: MenuDialogAction) => void;

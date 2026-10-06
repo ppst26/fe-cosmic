@@ -1,51 +1,9 @@
-import { slotProviderCoverSrc } from "./slotProviderCoverData";
-
 /**
  * ข้อมูล mock หน้าค่ายสล็อต (/slots) — กริดรูปจาก public/slots
  */
-export interface SlotFilterTabItem {
-  id: string;
-  label: string;
-  iconId: "gift" | "gamepad" | "water-drop" | "chicken" | "flame" | "trophy" | "sparkle";
-}
 
-export interface FeaturedSlotProviderItem {
-  id: string;
-  name: string;
-  slogan: string;
-  badge?: string;
-  bgGradient: string;
-  borderColor: string;
-  glowColor: string;
-  href: string;
-  artType: "jili-skeleton" | "pragmatic-zeus";
-  /** รูปจาก public/slots */
-  coverSrc?: string;
-  tags?: string[];
-}
-
-export interface GridSlotProviderItem {
-  id: string;
-  name: string;
-  category: string;
-  bgGradient: string;
-  borderColor: string;
-  href: string;
-  artType:
-    | "ygr-caishen"
-    | "king-midas"
-    | "spade-girl"
-    | "joker-cards"
-    | "fachai-lion"
-    | "royal-adventurer"
-    | "relax-tropical"
-    | "ka-fantasy"
-    | "generic";
-  /** รูปจาก public/slots */
-  coverSrc?: string;
-  badge?: string;
-  tags?: string[];
-}
+import { slotProviderCoverSrc } from "./slotProviderCoverData";
+import type { SlotFilterTabItem, FeaturedSlotProviderItem } from "@/app/types/providers";
 
 /**
  * แท็บตัวกรองสำหรับหน้าสล็อต: ศูนย์รวม, ค่ายเกมทั้งหมด, Drops & Wins, ไก่, ซื้อฟรีสปิน, แจ็คพอต, เมกะเวย์
@@ -118,5 +76,4 @@ export const FEATURED_SLOT_PROVIDERS: FeaturedSlotProviderItem[] = [
 ];
 
 export { GRID_SLOT_PROVIDERS } from "./slotProviderCoverData";
-
 

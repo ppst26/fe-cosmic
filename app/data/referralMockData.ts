@@ -1,17 +1,11 @@
-/** ข้อมูล mock หน้าแนะนำเพื่อน */
-export interface ReferralStatsMock {
-  friendsCount: number;
-  totalTurnoverThb: number;
-  totalEarningsThb: number;
-}
-
-export interface ReferralCommissionTier {
-  id: string;
-  title: string;
-  subtitle: string;
-  rateLabel: string;
-  rateHint: string;
-}
+import type {
+  ReferralStatsMock,
+  ReferralCommissionTier,
+  ReferralUserRow,
+  ReferralEarningSummaryMock,
+  ReferralEarningHistoryRow,
+  ReferralEarningPeriodId,
+} from "@/app/types/referral";
 
 export const REFERRAL_MOCK_REF_CODE = "COSMIC88";
 
@@ -50,14 +44,6 @@ export const REFERRAL_STEPS = [
   { id: "earn", label: "รับส่วนแบ่ง" },
 ] as const;
 
-/** แถวรายชื่อเพื่อนที่สมัครผ่านลิงก์ — ใช้ในแท็บ Referral users */
-export interface ReferralUserRow {
-  id: string;
-  username: string;
-  /** ISO 8601 */
-  registeredAt: string;
-}
-
 /** จำนวนแถว mock ให้ตรงกับ stats.friendsCount */
 function buildReferralUsersMock(count: number): ReferralUserRow[] {
   const base = new Date("2026-09-14T18:42:00+07:00");
@@ -76,18 +62,6 @@ export const REFERRAL_USERS_MOCK: ReferralUserRow[] = buildReferralUsersMock(
   REFERRAL_STATS_MOCK.friendsCount,
 );
 
-/** สรุปโบนัสแท็บ Earning */
-export interface ReferralEarningSummaryMock {
-  bonusReceivedThb: number;
-  bonusClaimableThb: number;
-}
-
-export interface ReferralEarningHistoryRow {
-  id: string;
-  amountThb: number;
-  occurredAt: string;
-}
-
 export const REFERRAL_EARNING_SUMMARY_MOCK: ReferralEarningSummaryMock = {
   bonusReceivedThb: 500,
   bonusClaimableThb: 142.5,
@@ -105,9 +79,6 @@ function buildReferralEarningHistoryMock(): ReferralEarningHistoryRow[] {
 
 export const REFERRAL_EARNING_HISTORY_MOCK: ReferralEarningHistoryRow[] =
   buildReferralEarningHistoryMock();
-
-/** ช่วงเวลาฟิลเตอร์รายได้ — dialog desktop แนะนำเพื่อน */
-export type ReferralEarningPeriodId = "all" | "today" | "week" | "month";
 
 export const REFERRAL_EARNING_PERIOD_OPTIONS: { id: ReferralEarningPeriodId; label: string }[] = [
   { id: "all", label: "ทั้งหมด" },

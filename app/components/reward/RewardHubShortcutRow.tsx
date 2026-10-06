@@ -1,7 +1,5 @@
 "use client";
 
-
-
 import React from "react";
 
 import Link from "next/link";
@@ -9,18 +7,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import {
-
   REWARD_FREESPINS_COMING_SOON_LABEL,
-
-  type RewardHubShortcut,
-
 } from "@/app/data/rewardFeaturesMockData";
 
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 
 import { cn } from "@/lib/utils";
-
-
+import type { RewardHubShortcut } from "@/app/types/reward";
 
 /**
 
@@ -32,13 +25,9 @@ export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortc
 
   const pathname = usePathname();
 
-
-
   const isActive = (shortcut: RewardHubShortcut) =>
 
     !shortcut.comingSoon && pathname === shortcut.href;
-
-
 
   return (
 
@@ -55,8 +44,6 @@ export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortc
         const active = isActive(item);
 
         const inactive = item.comingSoon === true;
-
-
 
         const inner = (
 
@@ -108,8 +95,6 @@ export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortc
 
         );
 
-
-
         const tileClass = cn(
 
           "reward-hub-shortcut flex min-h-[88px] flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 text-center",
@@ -119,8 +104,6 @@ export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortc
           inactive && "reward-hub-shortcut--inactive cursor-not-allowed",
 
         );
-
-
 
         if (inactive) {
 
@@ -146,8 +129,6 @@ export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortc
 
         }
 
-
-
         return (
 
           <Link key={item.id} href={item.href} className={tileClass}>
@@ -165,5 +146,4 @@ export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortc
   );
 
 }
-
 

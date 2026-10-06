@@ -1,20 +1,6 @@
 /** ข้อมูล mock หน้าเช็คอินรายวัน (ธีมเพชรและทองคำหรูหรา) */
 
-export type DailyCheckInDayStatus = "claimed" | "today" | "locked";
-
-export interface DailyCheckInDayReward {
-  day: number;
-  label: string;
-  credits: number;
-  status: DailyCheckInDayStatus;
-  isBigReward?: boolean;
-}
-
-export interface CumulativeCheckInMilestone {
-  milestoneDay: number;
-  gemsReward: number;
-  isUnlocked: boolean;
-}
+import type { DailyCheckInDayReward, CumulativeCheckInMilestone } from "@/app/types/checkIn";
 
 export const CUMULATIVE_CHECKIN_MILESTONES: CumulativeCheckInMilestone[] = [
   { milestoneDay: 7, gemsReward: 20, isUnlocked: true },

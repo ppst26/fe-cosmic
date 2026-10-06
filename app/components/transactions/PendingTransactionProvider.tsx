@@ -7,11 +7,9 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import {
-  type PendingTransactionPayload,
-} from "@/app/data/pendingTransactionMockData";
 import { fetchPendingTransaction } from "@/lib/api/transactions";
 import { PendingTransactionDialog } from "./PendingTransactionDialog";
+import type { PendingTransactionPayload } from "@/app/types/transaction";
 
 interface PendingTransactionContextValue {
   showPendingDeposit: (amount: number) => void;

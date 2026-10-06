@@ -1,16 +1,11 @@
+import type { HomeProviderLogoItem } from "@/app/types/providers";
+
 /**
  * โลโก้ค่ายสำหรับ marquee หน้าแรก — ไฟล์ใน public/provider logo
  * ถูกเรียกใช้โดย ProviderLogoMarquee.tsx / ProvidersSection.tsx
  */
 
 const PROVIDER_LOGO_DIR = "/provider%20logo";
-
-export interface HomeProviderLogoItem {
-  id: string;
-  name: string;
-  logoSrc: string;
-  href: string;
-}
 
 function providerLogo(file: string): string {
   return `${PROVIDER_LOGO_DIR}/${file}`;

@@ -1,9 +1,6 @@
 "use client";
 
 import React from "react";
-import {
-  type ReferralStatsMock,
-} from "@/app/data/referralMockData";
 import { CopyIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_CONFIRM_INLINE,
@@ -14,6 +11,7 @@ import {
 } from "../ui/cosmicButtonClasses";
 import { buildReferralLink } from "@/lib/domain/referral";
 import { formatReferralCount, formatReferralCurrency } from "@/lib/format";
+import type { ReferralStatsMock } from "@/app/types/referral";
 
 /**
  * แบนเนอร์โปรโมชันแนะนำเพื่อน — ใช้ใน overview / desktop hub

@@ -1,3 +1,5 @@
+import type { AvatarPreset } from "@/app/types/avatar";
+
 /**
  * ชุด avatar preset — รูปจาก public/Avartar (ไม่มีอัปโหลดรูป)
  * ใช้ใน UserAvatar · ProfileAvatarPicker · resolveAvatarPresetId
@@ -9,11 +11,6 @@ export const AVATAR_ASSET_NUMBERS = [
 ] as const;
 
 export type AvatarAssetNumber = (typeof AVATAR_ASSET_NUMBERS)[number];
-
-export interface AvatarPreset {
-  id: string;
-  label: string;
-}
 
 export const AVATAR_PRESETS: readonly AvatarPreset[] = AVATAR_ASSET_NUMBERS.map(
   (n) => ({

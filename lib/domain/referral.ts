@@ -1,7 +1,4 @@
-import type {
-  ReferralEarningHistoryRow,
-  ReferralEarningPeriodId,
-} from "@/app/data/referralMockData";
+import type { ReferralEarningHistoryRow, ReferralEarningPeriodId } from "@/app/types/referral";
 
 /**
  * helper แนะนำเพื่อน — ย้ายมาจาก app/data/referralMockData.ts

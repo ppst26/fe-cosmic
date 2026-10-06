@@ -2,26 +2,7 @@
 
 import { WITHDRAW_USER_BANK_MOCK } from "@/app/data/withdrawMockData";
 import { formatDepositTransferAmount } from "@/lib/format";
-
-export type PendingTransactionKind = "deposit" | "withdraw";
-
-export interface PendingTransactionDetailRow {
-  label: string;
-  value: string;
-}
-
-export interface PendingTransactionPayload {
-  kind: PendingTransactionKind;
-  amount: number;
-  title: string;
-  subtitle: string;
-  amountDisplay: string;
-  referenceId: string;
-  referenceCopyValue: string;
-  transactionAtLabel: string;
-  rows: PendingTransactionDetailRow[];
-  historyHref: string;
-}
+import type { PendingTransactionPayload } from "@/app/types/transaction";
 
 const PENDING_TRANSACTION_AT_DEPOSIT = "15 ก.ย. 2569 • 14:30";
 const PENDING_TRANSACTION_AT_WITHDRAW = "15 ก.ย. 2569 • 14:35";

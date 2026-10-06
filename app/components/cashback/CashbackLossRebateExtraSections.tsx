@@ -9,10 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  type LossRebateHistoryRow,
-  type LossRebateSummaryMock,
-} from "@/app/data/lossRebateMockData";
 import { fetchLossRebate } from "@/lib/api/cashback";
 import { ChevronDownIcon } from "../ui/Icons";
 import { COSMIC_PANEL_SOLID } from "../ui/cosmicButtonClasses";
@@ -31,6 +27,7 @@ import {
   formatLossRebatePercent,
   formatLossRebateRecordCount,
 } from "@/lib/format";
+import type { LossRebateHistoryRow, LossRebateSummaryMock } from "@/app/types/cashback";
 
 type CashbackLossRebateExtraSectionsProps = {
   summary?: LossRebateSummaryMock;

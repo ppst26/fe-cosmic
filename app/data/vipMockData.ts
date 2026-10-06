@@ -7,6 +7,7 @@ import type {
   VipRankTier,
 } from "@/app/types/vip";
 import { formatVipAmount } from "@/lib/format";
+import type { VipRankRequirements, VipRankViewStatus } from "@/app/types/vip";
 
 /**
  * ลำดับแรงค์ VIP (ต่ำ → สูง)
@@ -209,13 +210,6 @@ export function getVipBenefitCellValue(
   return values[rowId]?.[rankId] ?? "—";
 }
 
-export interface VipRankRequirements {
-  turnoverTarget: number;
-  loginDays: number;
-  depositCount: number;
-  playCount: number;
-}
-
 export function getVipRankIndex(rankId: VipRankId): number {
   const index = VIP_RANK_TIERS.findIndex((t) => t.id === rankId);
   return index >= 0 ? index : 0;
@@ -285,8 +279,6 @@ export function getVipRequirementsForRank(rankId: VipRankId): VipRankRequirement
     playCount: VIP_MISSION_BASE.playCount * mult,
   };
 }
-
-export type VipRankViewStatus = "active" | "cleared" | "locked";
 
 export function getVipRankViewStatus(
   focusedRankId: VipRankId,

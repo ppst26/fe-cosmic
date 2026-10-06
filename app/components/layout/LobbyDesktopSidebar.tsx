@@ -8,13 +8,12 @@ import { ContactNavIcon } from "../ui/Icons";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import {
   MENU_DIALOG_SECTIONS,
-  type MenuDialogAction,
-  type MenuDialogTile,
 } from "@/app/data/menuMockData";
 import { MenuItemIcon } from "./MenuItemIcon";
 import { HubNavLink } from "@/app/components/hub/HubNavLink";
 import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
 import { cn } from "@/lib/utils";
+import type { MenuDialogAction, MenuDialogTile } from "@/app/types/menu";
 
 interface LobbyDesktopSidebarProps {
   categories: CategoryItem[];

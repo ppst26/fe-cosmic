@@ -12,10 +12,10 @@ import {
 import {
   menuActionRequiresAuth,
   menuHrefRequiresAuth,
-  type MenuDialogAction,
 } from "@/app/data/menuMockData";
 import { DESKTOP_RIGHT_MENU_TILES } from "@/app/data/desktopLobbyMockData";
 import { useRequireAuthAction } from "@/app/hooks/useRequireAuthAction";
+import type { MenuDialogAction } from "@/app/types/menu";
 
 interface LobbyDesktopHubMenuStackProps {
   onMenuAction?: (action: MenuDialogAction) => void;

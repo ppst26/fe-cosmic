@@ -1,4 +1,4 @@
-import type { GridSlotProviderItem } from "./slotProvidersData";
+import type { GridSlotProviderItem } from "@/app/types/providers";
 
 /** path รูปใน public/slots (รองรับชื่อไฟล์มีช่องว่าง) */
 export function slotProviderCoverSrc(file: string): string {

@@ -2,12 +2,6 @@
 
 import React from "react";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
-import type {
-  ActivityHubCategoryTab,
-  ActivityHubItem,
-  ActivityThumbTone,
-  ActivityTierRow,
-} from "@/app/data/activitiesHubMockData";
 import {
   ACTIVITY_HUB_CATEGORY_TABS,
 } from "@/app/data/activitiesHubMockData";
@@ -19,6 +13,12 @@ import {
   COSMIC_BTN_PRIMARY,
 } from "../ui/cosmicButtonClasses";
 import { formatActivityCredits, formatActivityNumber } from "@/lib/format";
+import type {
+  ActivityHubCategoryTab,
+  ActivityHubItem,
+  ActivityThumbTone,
+  ActivityTierRow,
+} from "@/app/types/activities";
 
 /**
  * รูปย่อกิจกรรม — รูปภาพจริง (ถ้ามี) หรือ gradient mock (ใช้ใน list ซ้าย / การ์ดมือถือ)

@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { SportCardItem } from "../../data/sportProvidersData";
+import type { SportCardItem } from "@/app/types/providers";
 
 /**
  * คอมโพเนนต์วาดกราฟิกกีฬาแต่ละประเภทตามสไตล์เดียวกับภาพอ้างอิง

@@ -1,21 +1,7 @@
 /** ข้อมูล mock หน้าคืนยอด (/cashback) */
 
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";
-
-export type CashbackTabId = "play" | "loss";
-
-export interface CashbackPanelMock {
-  title: string;
-  subtitle: string;
-  claimableThb: number;
-  statusHint: string;
-  ratePercent: number;
-  minThb: number;
-  maxPerClaimThb: number;
-  cycleLabel: string;
-  canClaim: boolean;
-  claimButtonLabel: string;
-}
+import type { CashbackTabId, CashbackPanelMock } from "@/app/types/cashback";
 
 export const CASHBACK_TABS: { id: CashbackTabId; label: string }[] = [
   { id: "play", label: "คืนยอดเล่น" },

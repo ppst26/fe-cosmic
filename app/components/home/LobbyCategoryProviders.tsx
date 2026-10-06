@@ -11,23 +11,26 @@ import { SportProviderCards } from "../sport/SportProviderCards";
 import {
   FEATURED_SLOT_PROVIDERS,
   GRID_SLOT_PROVIDERS,
-  type FeaturedSlotProviderItem,
-  type GridSlotProviderItem,
 } from "../../data/slotProvidersData";
 import {
   CASINO_ITEMS,
-  type CasinoCardItem,
 } from "../../data/casinoProvidersData";
 import {
   SPORT_ITEMS,
-  type SportCardItem,
 } from "../../data/sportProvidersData";
 import {
   FISHING_ITEMS,
-  type FishingCardItem,
 } from "../../data/fishingProvidersData";
-import { CARDS_ITEMS, type CardsCardItem } from "../../data/cardsProvidersData";
+import { CARDS_ITEMS } from "../../data/cardsProvidersData";
 import { LotteryHubContent } from "../lottery/LotteryHubContent";
+import type {
+  FeaturedSlotProviderItem,
+  GridSlotProviderItem,
+  CasinoCardItem,
+  SportCardItem,
+  FishingCardItem,
+  CardsCardItem,
+} from "@/app/types/providers";
 
 interface LobbyCategoryProvidersProps {
   categoryId: CategoryId;

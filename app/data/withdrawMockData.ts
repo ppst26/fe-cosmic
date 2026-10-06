@@ -1,10 +1,6 @@
 /** ข้อมูล mock ถอนเงิน — step 1 */
 
-export interface WithdrawUserBankMock {
-  bankShortName: string;
-  accountNumberDisplay: string;
-  holderLabel: string;
-}
+import type { WithdrawUserBankMock } from "@/app/types/wallet";
 
 export const WITHDRAW_USER_BANK_MOCK: WithdrawUserBankMock = {
   bankShortName: "กสิกรไทย",

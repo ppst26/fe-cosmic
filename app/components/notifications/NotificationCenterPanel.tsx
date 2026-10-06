@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import {
   NOTIFICATION_EMPTY_MESSAGE,
   NOTIFICATION_TABS,
-  type NotificationTabId,
 } from "@/app/data/notificationsMockData";
 import { NotificationEmptyState } from "./NotificationEmptyState";
 import { NotificationPopoverFooter } from "./NotificationPopoverFooter";
 import { cn } from "@/lib/utils";
+import type { NotificationTabId } from "@/app/types/notifications";
 
 interface NotificationCenterPanelProps {
   /** mobile sheet — ไม่จำกัดความสูงแคบ */

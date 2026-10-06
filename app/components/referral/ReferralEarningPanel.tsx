@@ -9,10 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  type ReferralEarningHistoryRow,
-  type ReferralEarningSummaryMock,
-} from "@/app/data/referralMockData";
 import { fetchReferralEarnings } from "@/lib/api/referral";
 import { BonusNavIcon } from "../ui/Icons";
 import {
@@ -29,6 +25,7 @@ import {
   formatReferralEarningDateTime,
   formatReferralRecordCount,
 } from "@/lib/format";
+import type { ReferralEarningHistoryRow, ReferralEarningSummaryMock } from "@/app/types/referral";
 
 /**
  * แท็บ Earning — สรุปโบนัส + ประวัติรับโบนัส (10 แถว/หน้า)

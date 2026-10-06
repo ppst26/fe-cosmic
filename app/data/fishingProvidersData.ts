@@ -3,23 +3,7 @@
  * การ์ดรูปจาก public/fishing — ใช้บนหน้า /fishing, carousel หน้าแรก และ lobby desktop
  */
 
-export interface FishingFilterTabItem {
-  id: string;
-  label: string;
-  iconId: "gift" | "gamepad" | "water-drop" | "flame" | "trophy";
-}
-
-export interface FishingCardItem {
-  id: string;
-  title: string;
-  provider: string;
-  badges: ("EXCLUSIVE" | "LIVE" | "HOT" | "POPULAR")[];
-  coverSrc?: string;
-  bgGradient?: string;
-  artType?: string;
-  tags: string[];
-  href: string;
-}
+import type { FishingFilterTabItem, FishingCardItem } from "@/app/types/providers";
 
 /** แถบตัวกรองหน้ายิงปลา */
 export const FISHING_FILTER_TABS: FishingFilterTabItem[] = [

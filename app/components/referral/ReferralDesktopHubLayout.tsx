@@ -1,9 +1,6 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import {
-  type ReferralEarningPeriodId,
-} from "@/app/data/referralMockData";
 import { fetchReferralEarnings, fetchReferralOverview } from "@/lib/api/referral";
 import {
   COSMIC_BTN_CONFIRM_TEXT,
@@ -18,6 +15,7 @@ import {
 } from "./ReferralOverviewSections";
 import { formatReferralCurrency } from "@/lib/format";
 import { filterReferralEarningHistoryByPeriod } from "@/lib/domain/referral";
+import type { ReferralEarningPeriodId } from "@/app/types/referral";
 
 interface ReferralDesktopHubLayoutProps {
   refCode: string;

@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { signUpCoverToneClass, SignUpCoverTone } from "../../data/signupMockData";
+import { signUpCoverToneClass } from "../../data/signupMockData";
 import { COSMIC_SHEET_SOFT_GLASS_INTERACTIVE } from "../ui/cosmicButtonClasses";
+import type { SignUpCoverTone } from "@/app/types/signup";
 
 interface SignUpPickerSheetProps {
   isOpen: boolean;

@@ -15,8 +15,6 @@ import {
   MENU_DIALOG_MOBILE_LIST_ITEMS,
   MENU_DIALOG_SECTIONS,
   menuTileRequiresAuth,
-  type MenuDialogAction,
-  type MenuDialogTile,
 } from "../../data/menuMockData";
 import { MenuDrawerMobileToolbar } from "./MenuDrawerMobileToolbar";
 import { useAuth } from "../auth/AuthProvider";
@@ -25,6 +23,7 @@ import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { parseHubFromHref } from "../hub/hubModalRegistry";
 import { getIsDesktopViewport, useIsDesktop } from "../hub/useIsDesktop";
 import { cn } from "@/lib/utils";
+import type { MenuDialogAction, MenuDialogTile } from "@/app/types/menu";
 
 interface RightMenuDrawerProps {
   isOpen: boolean;

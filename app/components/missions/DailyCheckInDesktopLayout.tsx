@@ -1,13 +1,11 @@
 "use client";
 
 import React from "react";
-import {
-  type DailyCheckInDayReward,
-} from "@/app/data/dailyCheckInMockData";
 import { fetchCheckIn } from "@/lib/api/checkIn";
 import { CheckInCoinGraphic, DailyCheckInCalendarGraphic } from "./DailyCheckInGraphics";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
 import { formatCheckInCredits } from "@/lib/format";
+import type { DailyCheckInDayReward } from "@/app/types/checkIn";
 
 interface DailyCheckInDesktopLayoutProps {
   days: DailyCheckInDayReward[];

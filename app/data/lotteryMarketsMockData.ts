@@ -1,17 +1,5 @@
-import type { LotteryFlagTone, LotteryMarketStatus } from "@/app/types/lottery";
 import { LOTTERY_GRID_ITEMS } from "./lotteryHubMockData";
-
-/** ตลาดหวยหุ้น/ต่างประเทศแบบง่าย (ไม่มีรายการรอบเหมือนยี่กี) — /lottery/[marketId] */
-export interface LotteryMarketConfig {
-  /** ตรงกับ segment ท้าย href ใน LOTTERY_GRID_ITEMS เช่น "baac", "laos" */
-  slug: string;
-  title: string;
-  flagLabel: string;
-  flagTone: LotteryFlagTone;
-  status: LotteryMarketStatus;
-  /** นาทีก่อนปิดรับนับจากตอนนี้ — mock; ติดลบ/0 = ปิดรับแล้ว */
-  closesInMinutes: number;
-}
+import type { LotteryMarketConfig } from "@/app/types/lottery";
 
 /** แปลง "03:29:01" (ชม:นาที:วินาที) เป็นจำนวนนาที — ใช้แปลง countdownLabel ของ hub เป็นเวลาปิดรับจริงในหน้าแทง */
 function parseCountdownToMinutes(label?: string): number {

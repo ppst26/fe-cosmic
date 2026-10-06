@@ -1,11 +1,8 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import {
-  type WheelPrizeHistoryRow,
-  type WheelSpinMethod,
-} from "@/app/data/luckyWheelMockData";
 import { fetchWheel } from "@/lib/api/wheel";
+import type { WheelPrizeHistoryRow, WheelSpinMethod } from "@/app/types/reward";
 
 interface LuckyWheelPrizeHistoryProps {
   extraRows?: WheelPrizeHistoryRow[];

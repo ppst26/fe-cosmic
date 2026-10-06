@@ -19,3 +19,28 @@ export interface SignUpStepTwoData {
 
 /** รวมข้อมูลทั้ง flow ก่อนส่ง API */
 export interface SignUpFormData extends SignUpStepOneData, SignUpStepTwoData {}
+
+/* ── จาก app/data/signupMockData.ts ── */
+
+/** โทนปก placeholder ตาม globals.css (.cover-tone-*) */
+export type SignUpCoverTone =
+  | "indigo"
+  | "rose"
+  | "emerald"
+  | "amber"
+  | "sky"
+  | "violet";
+
+/** ตัวเลือกธนาคารใน flow สมัครสมาชิก (mock) */
+export interface SignUpBankOption {
+  id: string;
+  label: string;
+  coverTone: SignUpCoverTone;
+}
+
+/** ตัวเลือกช่องทางที่รู้จัก (mock) */
+export interface SignUpChannelOption {
+  id: string;
+  label: string;
+  coverTone: SignUpCoverTone;
+}

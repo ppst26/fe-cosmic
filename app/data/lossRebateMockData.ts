@@ -1,29 +1,10 @@
 /** ข้อมูล mock ส่วนคืนยอดเสียใน /cashback (ตาราง + สูตร + เงื่อนไข) */
 
-export interface LossRebateSummaryMock {
-  rebateReadyThb: number;
-  exampleRatePercent: number;
-  calculationPeriodLabel: string;
-  statusLabel: string;
-  eligibleNetLossThb: number;
-  rebateRatePercent: number;
-  rebateBonusThb: number;
-  isReadyToClaim: boolean;
-}
-
-export interface LossRebateMonthOption {
-  id: string;
-  label: string;
-}
-
-export interface LossRebateHistoryRow {
-  id: string;
-  monthId: string;
-  periodLabel: string;
-  netLossThb: number;
-  bonusThb: number;
-  receivedAt: string;
-}
+import type {
+  LossRebateSummaryMock,
+  LossRebateMonthOption,
+  LossRebateHistoryRow,
+} from "@/app/types/cashback";
 
 export const LOSS_REBATE_SUMMARY_MOCK: LossRebateSummaryMock = {
   rebateReadyThb: 640,

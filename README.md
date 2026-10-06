@@ -32,6 +32,7 @@ pnpm dev          # http://localhost:3000
 | ตัวแปร | ใช้ที่ | หมายเหตุ |
 |--------|--------|----------|
 | `NEXT_PUBLIC_API_BASE_URL` | `lib/api/http.ts` | base URL ของ backend · ว่าง = เรียก mock route ใน `app/api` · คนละ origin ต้องเปิด CORS + credentials |
+| `NEXT_PUBLIC_SITE_URL` | `lib/domain/referral.ts` | URL เว็บจริง สำหรับลิงก์ชวนเพื่อนตอน SSR |
 | `NEXT_PUBLIC_IMAGE_HOSTS` | `next.config.ts` | origin รูปจาก CDN สำหรับ `next/image` (คั่นด้วย comma) · origin ของ API ถูกเพิ่มให้อัตโนมัติ |
 | `AUTH_SESSION_SECRET` | `lib/auth/session.ts` | secret เซ็น cookie ของ mock auth · **ต้องตั้งใน production** (ถ้าไม่ตั้งจะใช้ค่า dev ที่ฝังในโค้ด) |
 
@@ -63,15 +64,18 @@ app/
   (lobby)/          หน้าหมวดเกม — layout เลือกเนื้อหาจาก pathname, page.tsx คืน null
   api/              mock route handlers (ดูตารางด้านบน)
   components/       UI แยกตามโดเมน (deposit, lottery, vip, ...) · ui/ = primitives ของโปรเจกต์
-  data/             mock data + formatter/helper (กำลังทยอยย้าย helper ออก)
+  data/             mock data + config คงที่ (เมนู, ฟุตเตอร์, ไอคอน) — ไฟล์ *MockData.ts ลบได้เมื่อ endpoint พร้อม
   hooks/            hooks ใช้ร่วม
   lib/              utils ฝั่ง UI (วันที่, path)
   styles/           CSS ตามโดเมน — import ทั้งหมดผ่าน app/globals.css · tokens.css = design tokens
-  types/            type ใช้ร่วมระหว่าง route กับ client
+  types/            รูปข้อมูลทุกโดเมน = สัญญา response ที่ backend ต้องส่ง (ใช้ร่วม route ↔ client)
 components/ui/      shadcn primitives (button, chart, select, table)
 lib/
-  api/              จุดดึงข้อมูลทั้งหมด + endpoints.ts
+  api/              จุดดึงข้อมูลทั้งหมด + endpoints.ts + http.ts (apiFetch)
   auth/             session, password, user store (mock)
+  domain/           คำนวณฝั่ง client ที่ไม่ผูก mock (สรุปธุรกรรม, กรองรายได้ referral, ลิงก์ชวนเพื่อน)
+  format.ts         formatter ตัวเลข/เงิน/วันที่กลาง — ห้ามสร้าง Intl.NumberFormat ใหม่ใน component
+  uiConstants.ts    page size และจำนวนการ์ด
   lottery/, promotions/
 public/             รูปและ asset
 exports/lottery-kit ชุดย้ายระบบหวยไปโปรเจกต์อื่น

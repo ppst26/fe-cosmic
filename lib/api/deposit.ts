@@ -3,8 +3,8 @@ import {
   DEPOSIT_DEFAULT_AMOUNT,
   DEPOSIT_METHOD_OPTIONS,
   DEPOSIT_QUICK_AMOUNTS,
-  type DepositMethodId,
 } from "@/app/data/depositMockData";
+import type { DepositMethodId } from "@/app/types/wallet";
 
 /** ช่องทางฝาก — คืนรายการ mock ทันที */
 export function fetchDepositMethods() {

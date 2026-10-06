@@ -2,9 +2,9 @@
 
 import React from "react";
 import type { CategoryId, CategoryItem } from "@/app/types/lobby";
-import type { MenuDialogAction } from "@/app/data/menuMockData";
 import { LobbyDesktopSidebar } from "./LobbyDesktopSidebar";
 import { LobbyDesktopHubMenuStack } from "./LobbyDesktopHubMenuStack";
+import type { MenuDialogAction } from "@/app/types/menu";
 
 interface LobbyDesktopSidebarColumnProps {
   categories: CategoryItem[];

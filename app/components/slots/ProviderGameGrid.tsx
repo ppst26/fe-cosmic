@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { buildGamePlayHref } from "@/lib/gamePlayPaths";
-import { ProviderGameItem } from "../../data/providerGamesData";
+import type { ProviderGameItem } from "@/app/types/providers";
 
 interface ProviderGameGridProps {
   games: ProviderGameItem[];

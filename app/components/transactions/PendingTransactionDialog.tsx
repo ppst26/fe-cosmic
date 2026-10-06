@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Dialog } from "radix-ui";
-import type { PendingTransactionPayload } from "@/app/data/pendingTransactionMockData";
 import { CloseIcon, CopyIcon } from "../ui/Icons";
 import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 import { responsiveSheetCloseButtonClass } from "../ui/responsiveSheetDialog";
 import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
+import type { PendingTransactionPayload } from "@/app/types/transaction";
 
 interface PendingTransactionDialogProps {
   payload: PendingTransactionPayload | null;

@@ -1,4 +1,4 @@
-import type { DailyCheckInDayReward } from "@/app/data/dailyCheckInMockData";
+import type { DailyCheckInDayReward } from "@/app/types/checkIn";
 
 /** จำนวนวันที่เช็คอินแล้วในรอบ — ใช้ใน DailyCheckInCard */
 export function countCheckedInDays(days: DailyCheckInDayReward[]): number {

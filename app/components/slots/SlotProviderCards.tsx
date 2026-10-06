@@ -4,10 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FlameHotIcon } from "../ui/Icons";
-import {
-  FeaturedSlotProviderItem,
-  GridSlotProviderItem,
-} from "../../data/slotProvidersData";
+import type { FeaturedSlotProviderItem, GridSlotProviderItem } from "@/app/types/providers";
 
 /**
  * กราฟิกอาร์ตเวิร์กด้านขวาของแบนเนอร์ JILI (นักดนตรีโครงกระดูกวันแห่งความตาย)

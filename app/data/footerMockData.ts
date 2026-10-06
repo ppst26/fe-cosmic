@@ -1,3 +1,10 @@
+import type {
+  FooterNavLink,
+  FooterLinkColumn,
+  FooterSocialIcon,
+  FooterPaymentBank,
+} from "@/app/types/footer";
+
 /** ข้อมูล mock ส่วนท้ายเว็บ (CosmicFooter) */
 
 export const FOOTER_PARTNER_NAMES: readonly string[] = [
@@ -10,16 +17,6 @@ export const FOOTER_PARTNER_NAMES: readonly string[] = [
   "PG SOFT",
   "PRAGMATIC PLAY",
 ];
-
-export interface FooterNavLink {
-  label: string;
-  href: string;
-}
-
-export interface FooterLinkColumn {
-  title: string;
-  links: FooterNavLink[];
-}
 
 /** คอลัมน์ลิงก์ footer desktop — href จริงจาก route ในแอป · ที่ไม่มีใช้ /support */
 export const FOOTER_DESKTOP_COLUMNS: FooterLinkColumn[] = [
@@ -101,22 +98,6 @@ export const FOOTER_DESKTOP_COLUMNS: FooterLinkColumn[] = [
   },
 ];
 
-export interface FooterSocialIcon {
-  label: string;
-  href: string;
-  icon:
-    | "telegram"
-    | "x"
-    | "discord"
-    | "instagram"
-    | "youtube"
-    | "line"
-    | "medium"
-    | "linkedin"
-    | "reddit"
-    | "tiktok";
-}
-
 export const FOOTER_DESKTOP_SOCIAL: FooterSocialIcon[] = [
   { label: "Telegram", href: "/support", icon: "telegram" },
   { label: "X", href: "/support", icon: "x" },
@@ -173,13 +154,6 @@ export const FOOTER_SOCIAL_LINKS: FooterNavLink[] = [
   { label: "LINE", href: "/support" },
   { label: "Telegram", href: "/support" },
 ];
-
-/** โลโก้ธนาคาร/ช่องทางชำระ — footer desktop (public/assets/bank-logo) */
-export interface FooterPaymentBank {
-  id: string;
-  name: string;
-  logoSrc: string;
-}
 
 export const FOOTER_PAYMENT_BANKS: readonly FooterPaymentBank[] = [
   { id: "bbl", name: "ธนาคารกรุงเทพ", logoSrc: "/assets/bank-logo/BBL.webp" },

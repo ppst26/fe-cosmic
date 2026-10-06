@@ -1,49 +1,17 @@
 /** ข้อมูล mock หน้าวงล้อพารวย (/wheel) */
 
-export type WheelPrizeKind = "credit" | "gems";
-
-export type WheelSpinMethod = "gems" | "ticket";
-
-export interface WheelSegment {
-  id: string;
-  label: string;
-  kind: WheelPrizeKind;
-}
-
-export interface WheelHistoryEntry {
-  id: string;
-  label: string;
-  kind: WheelPrizeKind;
-  timeLabel: string;
-}
-
-export interface WheelBenefitCard {
-  id: string;
-  titleLines: readonly [string, string];
-  iconId: "prize" | "check-in" | "crown";
-}
+import type {
+  WheelSegment,
+  WheelHistoryEntry,
+  WheelBenefitCard,
+  WheelLiveWinnerEntry,
+  WheelPrizeHistoryRow,
+} from "@/app/types/reward";
 
 export const LUCKY_WHEEL_INTRO_LEAD: readonly [string, string] = [
   "ของรางวัลสุดพิเศษ รอคุณอยู่",
   "หมุนเลย.. โชคดีอาจเป็นของคุณ!",
 ];
-
-export interface WheelLiveWinnerEntry {
-  id: string;
-  avatarLetter: string;
-  maskedName: string;
-  gemsAmount: number;
-  timeLabel: string;
-}
-
-export interface WheelPrizeHistoryRow {
-  id: string;
-  atLabel: string;
-  prizeKind: WheelPrizeKind;
-  prizeName: string;
-  amount: string;
-  method: WheelSpinMethod;
-}
 
 export const LUCKY_WHEEL_GEMS_PER_SPIN = 10;
 export const LUCKY_WHEEL_TICKETS_PER_SPIN = 1;

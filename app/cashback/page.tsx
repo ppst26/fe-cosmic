@@ -9,7 +9,7 @@ import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { CashbackPageContent } from "@/app/components/cashback/CashbackPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
-import type { CashbackTabId } from "@/app/data/cashbackMockData";
+import type { CashbackTabId } from "@/app/types/cashback";
 
 /**
  * อ่าน query ?tab=loss สำหรับแท็บเริ่มต้น

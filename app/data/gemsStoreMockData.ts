@@ -1,3 +1,5 @@
+import type { GemsStorePackage } from "@/app/types/reward";
+
 /** ข้อมูล mock หน้าร้านค้า Gems */
 
 export const GEMS_STORE_EXCHANGE_RATE_LABEL = "อัตราแลก: 20 Gems = 1 เครดิต";
@@ -17,14 +19,6 @@ export const GEMS_STORE_RESET_NOTICE =
 
 /** ไอคอง Gems หัวหน้าร้าน — public/assets/gems */
 export const GEMS_STORE_GEM_ASSET = "/assets/gems/diamond.avif";
-
-export interface GemsStorePackage {
-  id: string;
-  credits: number;
-  gemsCost: number;
-  /** ไอคองค์เหรียญ — public/assets/coins (coins1 น้อย → coins4 มาก) */
-  coinSrc: string;
-}
 
 /** เรียงจากรางวalıน้อยไปมาก — คู่ละ 2 แพ็กใช้ tier เดียวกัน */
 export const GEMS_STORE_COIN_ASSETS = {

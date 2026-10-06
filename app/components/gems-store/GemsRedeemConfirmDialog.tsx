@@ -3,12 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import { Dialog } from "radix-ui";
-import {
-  type GemsStorePackage,
-} from "@/app/data/gemsStoreMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { cn } from "@/lib/utils";
 import { formatGemsBalance } from "@/lib/format";
+import type { GemsStorePackage } from "@/app/types/reward";
 
 function formatCreditAmount(value: number): string {
   return new Intl.NumberFormat("th-TH").format(value);

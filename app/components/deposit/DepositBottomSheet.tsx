@@ -5,9 +5,6 @@ import { Dialog } from "radix-ui";
 import { cn } from "@/lib/utils";
 import { MONEY_AMOUNT_MAX_DIGITS, sanitizeMoneyAmount } from "@/lib/fieldInput";
 import {
-  type DepositMethodId,
-} from "@/app/data/depositMockData";
-import {
   fetchDepositBankAccount,
   fetchDepositMethods,
   fetchDepositQuickAmounts,
@@ -31,6 +28,7 @@ import {
   COSMIC_SHEET_SUBMIT,
 } from "../ui/cosmicButtonClasses";
 import { formatDepositAmount, formatDepositTransferAmount } from "@/lib/format";
+import type { DepositMethodId } from "@/app/types/wallet";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 
@@ -559,8 +557,6 @@ function SlipPlaceholderIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-
-
 
 const DEPOSIT_METHOD_ASSETS: Record<DepositMethodId, { src: string; alt: string }> = {
   bank: {

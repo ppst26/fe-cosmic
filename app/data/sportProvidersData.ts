@@ -3,24 +3,7 @@
  * การ์ดรูปจาก public/sport — ใช้บนหน้า /sport และ carousel หน้าแรก
  */
 
-export interface SportFilterTabItem {
-  id: string;
-  label: string;
-  iconId: "gift" | "gamepad" | "football" | "basketball" | "esports" | "boxing" | "tennis";
-}
-
-export interface SportCardItem {
-  id: string;
-  title: string;
-  provider: string;
-  badges: ("EXCLUSIVE" | "LIVE" | "HOT" | "POPULAR")[];
-  /** รูปปกจาก public/sport — แสดงเต็มการ์ดแทน SVG mock */
-  coverSrc?: string;
-  bgGradient?: string;
-  artType?: string;
-  tags: string[];
-  href: string;
-}
+import type { SportFilterTabItem, SportCardItem } from "@/app/types/providers";
 
 /**
  * แถบตัวกรองสำหรับหน้ากีฬา

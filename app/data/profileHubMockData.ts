@@ -1,12 +1,4 @@
-/** สถิติ mock บนการ์ดโปรไฟล์ hub */
-export interface ProfileHubStats {
-  vipLevel: number;
-  vipLabel: string;
-  diamonds: number;
-  lossBonusThb: number;
-  affiliateBalanceThb: number;
-  activePromotionLabel: string;
-}
+import type { ProfileHubStats } from "@/app/types/profile";
 
 export const PROFILE_HUB_STATS_MOCK: ProfileHubStats = {
   vipLevel: 3,

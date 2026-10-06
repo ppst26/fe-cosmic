@@ -1,19 +1,16 @@
+import type {
+  RewardHubShortcut,
+  RewardPromoBanner,
+  RandomCardDisplayItem,
+  ExchangeMoneyPackage,
+  FreespinOffer,
+} from "@/app/types/reward";
+
 /** ข้อมูล mock ศูนย์สุ่มของรางวัล — อ้างอิง flow /th/reward ของ Z-Gaming */
 
 export const REWARD_POINTS_BALANCE_MOCK = 3_365;
 
 export const REWARD_POINTS_LABEL = "พอยท์";
-
-export type RewardHubShortcutId = "lucky-box" | "random-card" | "freespins";
-
-export interface RewardHubShortcut {
-  id: RewardHubShortcutId;
-  label: string;
-  href: string;
-  iconId: string;
-  /** ปิดใช้งานชั่วคราว — แสดง Coming soon */
-  comingSoon?: boolean;
-}
 
 export const REWARD_FREESPINS_COMING_SOON_LABEL = "Coming soon";
 
@@ -29,15 +26,6 @@ export const REWARD_HUB_SHORTCUTS: RewardHubShortcut[] = [
     comingSoon: true,
   },
 ];
-
-export interface RewardPromoBanner {
-  id: string;
-  title: string;
-  subtitle: string;
-  href: string;
-  imageSrc: string;
-  termsLabel: string;
-}
 
 export const REWARD_HUB_PROMO_BANNERS: RewardPromoBanner[] = [
   {
@@ -74,13 +62,6 @@ export const RANDOM_CARD_DRAW_COST_DISPLAY = 10;
 
 export const RANDOM_CARD_COMING_SOON_LABEL = REWARD_REDEEM_COMING_SOON_LABEL;
 
-/** การ์ดรางวัลแสดงผล — 3 บน · 2 ล่าง (อ้างอิง Redeem Card) */
-export interface RandomCardDisplayItem {
-  id: string;
-  imageSrc: string;
-  pointsValue: number;
-}
-
 export const RANDOM_CARD_DISPLAY_ITEMS: RandomCardDisplayItem[] = [
   { id: "rc-1", imageSrc: "/assets/gems/diamond.avif", pointsValue: 2000 },
   { id: "rc-2", imageSrc: "/assets/3d/diamond.avif", pointsValue: 0 },
@@ -88,12 +69,6 @@ export const RANDOM_CARD_DISPLAY_ITEMS: RandomCardDisplayItem[] = [
   { id: "rc-4", imageSrc: "/assets/coins/coins3.webp", pointsValue: 5000 },
   { id: "rc-5", imageSrc: "/assets/gems/diamond.avif", pointsValue: 1000 },
 ];
-
-export interface ExchangeMoneyPackage {
-  id: string;
-  credits: number;
-  pointsCost: number;
-}
 
 export const EXCHANGE_MONEY_PACKAGES: ExchangeMoneyPackage[] = [
   { id: "ex-50", credits: 50, pointsCost: 500 },
@@ -103,15 +78,6 @@ export const EXCHANGE_MONEY_PACKAGES: ExchangeMoneyPackage[] = [
 ];
 
 export const EXCHANGE_MONEY_RATE_LABEL = "อัตราแลก: 10 พอยท์ = 1 เครดิต (โดยประมาณ)";
-
-export interface FreespinOffer {
-  id: string;
-  gameName: string;
-  providerLabel: string;
-  pointsCost: number;
-  spins: number;
-  thumbSrc: string;
-}
 
 export const FREESPIN_OFFERS_MOCK: FreespinOffer[] = [
   {

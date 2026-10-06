@@ -1,25 +1,4 @@
-/** โทนปก placeholder ตาม globals.css (.cover-tone-*) */
-export type SignUpCoverTone =
-  | "indigo"
-  | "rose"
-  | "emerald"
-  | "amber"
-  | "sky"
-  | "violet";
-
-/** ตัวเลือกธนาคารใน flow สมัครสมาชิก (mock) */
-export interface SignUpBankOption {
-  id: string;
-  label: string;
-  coverTone: SignUpCoverTone;
-}
-
-/** ตัวเลือกช่องทางที่รู้จัก (mock) */
-export interface SignUpChannelOption {
-  id: string;
-  label: string;
-  coverTone: SignUpCoverTone;
-}
+import type { SignUpCoverTone, SignUpBankOption, SignUpChannelOption } from "@/app/types/signup";
 
 const COVER_TONES: SignUpCoverTone[] = [
   "indigo",

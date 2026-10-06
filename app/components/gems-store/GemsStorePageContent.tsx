@@ -2,9 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import {
-  type GemsStorePackage,
-} from "@/app/data/gemsStoreMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
 import { GemsRedeemConfirmDialog } from "./GemsRedeemConfirmDialog";
@@ -17,6 +14,7 @@ import {
 } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 import { formatGemsBalance, formatGemsCredits } from "@/lib/format";
+import type { GemsStorePackage } from "@/app/types/reward";
 
 /**
  * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal

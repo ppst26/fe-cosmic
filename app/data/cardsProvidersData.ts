@@ -2,17 +2,7 @@
  * Mock ค่ายเกมไพ่ — หน้า /cards และ lobby หมวดเกมไพ่
  */
 
-export interface CardsCardItem {
-  id: string;
-  title: string;
-  provider: string;
-  badges: ("EXCLUSIVE" | "LIVE" | "HOT" | "POPULAR")[];
-  coverSrc?: string;
-  bgGradient?: string;
-  artType?: string;
-  tags: string[];
-  href: string;
-}
+import type { CardsCardItem } from "@/app/types/providers";
 
 const CARDS_DEFAULT_TAGS = ["all-in-one", "all-providers"] as const;
 

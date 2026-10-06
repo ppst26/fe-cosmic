@@ -5,25 +5,7 @@
 
 import { casinoProviderHrefFromFile } from "@/lib/categoryProviderPaths";
 import { buildCasinoProviderPlayHref } from "@/lib/gamePlayPaths";
-
-export interface CasinoFilterTabItem {
-  id: string;
-  label: string;
-  iconId: "gift" | "gamepad" | "cards" | "roulette" | "game-shows" | "dice";
-}
-
-export interface CasinoCardItem {
-  id: string;
-  title: string;
-  provider: string;
-  badges: ("EXCLUSIVE" | "LIVE" | "HOT" | "POPULAR")[];
-  bgGradient?: string;
-  artType?: string;
-  /** รูปปกจาก public/casino — แสดงเต็มการ์ดแทน SVG */
-  coverSrc?: string;
-  tags: string[];
-  href: string;
-}
+import type { CasinoFilterTabItem, CasinoCardItem } from "@/app/types/providers";
 
 /**
  * แถบตัวกรองสำหรับหน้าคาสิโนสด

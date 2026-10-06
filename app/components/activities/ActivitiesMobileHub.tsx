@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { type ActivityHubItem } from "@/app/data/activitiesHubMockData";
 import { fetchActivities } from "@/lib/api/activities";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 import { PromoHubPillLabel, promoCardButtonClass } from "../promotions/promoHubCardPrimitives";
 import { CloseIcon } from "../ui/Icons";
+import type { ActivityHubItem } from "@/app/types/activities";
 
 type MobileView = "list" | "detail";
 

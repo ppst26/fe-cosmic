@@ -62,3 +62,14 @@ export interface VipMaintainState {
   turnoverProgress: number;
   turnoverTarget: number;
 }
+
+/* ── จาก app/data/vipMockData.ts ── */
+
+export interface VipRankRequirements {
+  turnoverTarget: number;
+  loginDays: number;
+  depositCount: number;
+  playCount: number;
+}
+
+export type VipRankViewStatus = "active" | "cleared" | "locked";

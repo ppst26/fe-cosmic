@@ -4,8 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { HubNavLink } from "@/app/components/hub/HubNavLink";
 import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
-import type { MenuDialogAction } from "@/app/data/menuMockData";
 import { DESKTOP_RIGHT_MENU_TILES } from "@/app/data/desktopLobbyMockData";
+import type { MenuDialogAction } from "@/app/types/menu";
 
 interface LobbyDesktopRightMenuGridProps {
   onMenuAction?: (action: MenuDialogAction) => void;

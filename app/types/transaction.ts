@@ -44,3 +44,25 @@ export interface TransactionKindTab {
   id: TransactionKind;
   label: string;
 }
+
+/* ── จาก app/data/pendingTransactionMockData.ts ── */
+
+export type PendingTransactionKind = "deposit" | "withdraw";
+
+export interface PendingTransactionDetailRow {
+  label: string;
+  value: string;
+}
+
+export interface PendingTransactionPayload {
+  kind: PendingTransactionKind;
+  amount: number;
+  title: string;
+  subtitle: string;
+  amountDisplay: string;
+  referenceId: string;
+  referenceCopyValue: string;
+  transactionAtLabel: string;
+  rows: PendingTransactionDetailRow[];
+  historyHref: string;
+}

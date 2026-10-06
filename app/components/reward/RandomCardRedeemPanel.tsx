@@ -2,13 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import {
-  type RandomCardDisplayItem,
-} from "@/app/data/rewardFeaturesMockData";
 import { fetchGemsStore } from "@/lib/api/gemsStore";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import { cn } from "@/lib/utils";
 import { formatRewardPoints } from "@/lib/format";
+import type { RandomCardDisplayItem } from "@/app/types/reward";
 
 /**
  * กระดานแลกการ์ดสุ่ม — layout อ้างอิง Redeem Card (ปิดใช้งาน · Coming soon)

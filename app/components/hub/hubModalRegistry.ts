@@ -1,6 +1,6 @@
-import type { CashbackTabId } from "@/app/data/cashbackMockData";
 import type { TransactionKind } from "@/app/types/transaction";
 import type { VipModalTabId } from "@/app/types/vip";
+import type { CashbackTabId } from "@/app/types/cashback";
 
 /** หมวด hub ที่เปิดเป็น modal บน desktop (lg+) */
 export type DesktopHubId =

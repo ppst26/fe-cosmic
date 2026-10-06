@@ -2,11 +2,6 @@
 
 import React, { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
-import {
-  type WheelPrizeHistoryRow,
-  type WheelSegment,
-  type WheelSpinMethod,
-} from "@/app/data/luckyWheelMockData";
 import { fetchWheel } from "@/lib/api/wheel";
 import { ArrowLeftIcon } from "../ui/Icons";
 import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
@@ -14,6 +9,7 @@ import { LuckyWheelLiveWinners } from "./LuckyWheelLiveWinners";
 import { LuckyWheelPrizeHistory } from "./LuckyWheelPrizeHistory";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import { formatGemsBalance } from "@/lib/format";
+import type { WheelPrizeHistoryRow, WheelSegment, WheelSpinMethod } from "@/app/types/reward";
 
 /**
  * หน้าเล่นวงล้อพารวย — รองรับ Mobile-first layout ตรงตาม mockup

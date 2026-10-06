@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { RewardPromoBanner } from "@/app/data/rewardFeaturesMockData";
 import { cn } from "@/lib/utils";
+import type { RewardPromoBanner } from "@/app/types/reward";
 
 /**
  * แบนเนอร์โปรโมใต้ shortcut — ลิงก์ไป lucky-box / random-card

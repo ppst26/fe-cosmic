@@ -9,11 +9,11 @@ import {
   FOOTER_DISCLAIMER,
   FOOTER_PAYMENT_BANKS,
   FOOTER_TRUST_BADGES,
-  type FooterSocialIcon,
 } from "@/app/data/footerMockData";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_SHEET_SOFT_GLASS } from "@/app/components/ui/cosmicButtonClasses";
 import { CosmicbetLogo } from "@/app/components/ui/Icons";
 import { cn } from "@/lib/utils";
+import type { FooterSocialIcon } from "@/app/types/footer";
 
 interface CosmicFooterProps {
   className?: string;
