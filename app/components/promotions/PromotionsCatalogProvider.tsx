@@ -2,6 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useToast } from "@/context/ToastContext";
+import { fetchPromotionDetail, fetchPromotionsCatalog } from "@/lib/api/promotions";
 import type {
   PromotionDetailContent,
   PromotionDetailId,
@@ -33,24 +34,19 @@ export function PromotionsCatalogProvider({ children }: { children: React.ReactN
 
   useEffect(() => {
     let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch("/api/promotions");
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = (await res.json()) as PromotionsCatalogResponse;
-        if (!cancelled) setCatalog(data);
-      } catch {
-        if (!cancelled) {
-          setError(PROMOTIONS_LOAD_ERROR);
-          if (!loadErrorToastedRef.current) {
-            loadErrorToastedRef.current = true;
-            showToast(PROMOTIONS_LOAD_ERROR, "error");
-          }
+    void fetchPromotionsCatalog().then((res) => {
+      if (cancelled) return;
+      if (res.ok) {
+        setCatalog(res.data);
+      } else {
+        setError(PROMOTIONS_LOAD_ERROR);
+        if (!loadErrorToastedRef.current) {
+          loadErrorToastedRef.current = true;
+          showToast(PROMOTIONS_LOAD_ERROR, "error");
         }
-      } finally {
-        if (!cancelled) setLoading(false);
       }
-    })();
+      setLoading(false);
+    });
     return () => {
       cancelled = true;
     };
@@ -62,11 +58,9 @@ export function PromotionsCatalogProvider({ children }: { children: React.ReactN
     const cached = detailCacheRef.current[id];
     if (cached) return cached;
 
-    const res = await fetch(`/api/promotions/${id}`);
-    if (!res.ok) return null;
-    const data = (await res.json()) as { detail: PromotionDetailContent };
-    detailCacheRef.current[id] = data.detail;
-    return data.detail;
+    const detail = await fetchPromotionDetail(id);
+    if (detail) detailCacheRef.current[id] = detail;
+    return detail;
   }, []);
 
   const value = useMemo(

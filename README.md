@@ -27,20 +27,22 @@ pnpm dev          # http://localhost:3000
 
 ## Environment variables
 
-ตอนนี้ยังไม่มีไฟล์ `.env.example` — ตัวแปรที่โค้ดอ่านอยู่จริง:
+คัดลอก `.env.example` เป็น `.env.local` แล้วแก้ค่า (เปลี่ยน `NEXT_PUBLIC_*` ต้อง restart dev server)
 
 | ตัวแปร | ใช้ที่ | หมายเหตุ |
 |--------|--------|----------|
-| `AUTH_SESSION_SECRET` | `lib/auth/session.ts` | secret เซ็น cookie `cm_session` · **ต้องตั้งใน production** (ถ้าไม่ตั้งจะใช้ค่า dev ที่ฝังในโค้ด) |
-
-ตัวแปรที่วางแผนไว้สำหรับต่อ backend (ยังไม่ได้ใช้ในโค้ด): `NEXT_PUBLIC_API_BASE_URL`, `NEXT_PUBLIC_SITE_URL`
+| `NEXT_PUBLIC_API_BASE_URL` | `lib/api/http.ts` | base URL ของ backend · ว่าง = เรียก mock route ใน `app/api` · คนละ origin ต้องเปิด CORS + credentials |
+| `NEXT_PUBLIC_IMAGE_HOSTS` | `next.config.ts` | origin รูปจาก CDN สำหรับ `next/image` (คั่นด้วย comma) · origin ของ API ถูกเพิ่มให้อัตโนมัติ |
+| `AUTH_SESSION_SECRET` | `lib/auth/session.ts` | secret เซ็น cookie ของ mock auth · **ต้องตั้งใน production** (ถ้าไม่ตั้งจะใช้ค่า dev ที่ฝังในโค้ด) |
 
 ## ข้อมูลตอนนี้เป็น mock — ต่อ API จริงตรงไหน
 
-ทุกหน้าดึงข้อมูลผ่าน **`lib/api/*.ts`** ซึ่งตอนนี้คืน mock จาก `app/data/*MockData.ts`
+ทุกหน้าดึงข้อมูลผ่าน **`lib/api/*.ts`** ซึ่งส่วนใหญ่ยังคืน mock จาก `app/data/*MockData.ts`
 
 - `lib/api/endpoints.ts` — แผนที่ฟังก์ชัน → method / path / ต้อง login หรือไม่ (สัญญาที่ backend ต้องทำให้ตรง)
-- ต่อ backend โดยแก้ **เฉพาะ body ของฟังก์ชันใน `lib/api/`** ให้คืนชนิดข้อมูลเดิม
+- `lib/api/http.ts` — **`apiFetch<T>(path, { method, body, query })`** ตัวเดียวสำหรับทุกการเรียก: ใส่ base URL, ส่ง cookie, รองรับ JSON / FormData และ **ไม่ throw** — คืน `{ ok: true, data }` หรือ `{ ok: false, error: { code, status, message } }` (`code`: `NETWORK` · `UNAUTHORIZED` · `HTTP` · `PARSE` · `ABORTED`, `message` พร้อมแสดงผู้ใช้)
+- auth (`lib/auth/client.ts`), หวย (`lib/lottery/*`) และโปรโมชัน (`lib/api/promotions.ts`) ใช้ `apiFetch` แล้ว
+- ต่อ backend โดยแก้ **เฉพาะ body ของฟังก์ชันใน `lib/api/`** ให้เรียก `apiFetch` และคืนชนิดข้อมูลเดิม ห้ามเรียก `fetch()` ตรงจาก component
 - ฟังก์ชัน `fetch*` ทั้งหมดยังเป็น synchronous และหลาย component เรียกระหว่าง render — เมื่อเปลี่ยนเป็น HTTP (async) ต้องปรับจุดเรียกด้วย
 - บาง component ยัง import จาก `app/data/*` ตรง (รายชื่อค่ายเกม, รายการเกม, VIP tiers, lookup หวย) — ต้องย้ายมาผ่าน `lib/api` ก่อน
 

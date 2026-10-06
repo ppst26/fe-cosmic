@@ -47,3 +47,6 @@ exports/lottery-kit/dist/
 
 # scratch dumps
 .tmp-*
+
+# ตัวอย่าง env ให้ทีม (commit ได้)
+!.env.example

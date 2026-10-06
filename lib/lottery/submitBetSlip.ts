@@ -2,23 +2,17 @@ import type {
   SubmitLotteryBetRequest,
   SubmitLotteryBetResponse,
 } from "@/app/types/lotteryBetApi";
+import { apiFetch } from "@/lib/api/http";
 
 /**
- * เรียก mock API ส่งโพยหวย — ใช้จากหน้าแทง step 3
+ * ส่งโพยหวย — ใช้จากหน้าแทง step 3 (useLotteryBetSubmit)
  */
 export async function submitLotteryBetSlip(
   body: SubmitLotteryBetRequest,
 ): Promise<SubmitLotteryBetResponse> {
-  const res = await fetch("/api/lottery/bets", {
+  const res = await apiFetch<SubmitLotteryBetResponse>("/api/lottery/bets", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(body),
+    body,
   });
-
-  try {
-    return (await res.json()) as SubmitLotteryBetResponse;
-  } catch {
-    return { ok: false, error: "ไม่สามารถอ่านผลจากเซิร์ฟเวอร์" };
-  }
+  return res.ok ? res.data : { ok: false, error: res.error.message };
 }

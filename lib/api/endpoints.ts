@@ -6,7 +6,7 @@
  */
 
 export interface EndpointDef {
-  method: "GET" | "POST";
+  method: "GET" | "POST" | "PATCH";
   path: string;
   auth: boolean;
   client: string;
@@ -55,4 +55,21 @@ export const ENDPOINTS = {
   fetchLotteryPlayRounds: { method: "GET", path: "/api/lottery/markets/:slug/rounds", auth: false, client: "fetchLotteryPlayRounds" },
   fetchYikiBoard: { method: "GET", path: "/api/lottery/yiki/board", auth: false, client: "fetchYikiBoard" },
   fetchThaiLottoBoard: { method: "GET", path: "/api/lottery/thai/board", auth: false, client: "fetchThaiLottoBoard" },
+  fetchRewardHub: { method: "GET", path: "/api/reward/hub", auth: true, client: "fetchRewardHub" },
+  fetchLuckyBox: { method: "GET", path: "/api/reward/lucky-box", auth: true, client: "fetchLuckyBox" },
+  fetchRandomCard: { method: "GET", path: "/api/reward/random-card", auth: true, client: "fetchRandomCard" },
+  fetchExchangeMoney: { method: "GET", path: "/api/reward/exchange-money", auth: true, client: "fetchExchangeMoney" },
+  fetchFreespins: { method: "GET", path: "/api/reward/freespins", auth: true, client: "fetchFreespins" },
+  // รายการด้านล่างเรียกผ่าน apiFetch แล้ว (lib/auth/client.ts · lib/lottery · lib/api/promotions.ts) — มี mock route ใน app/api
+  fetchSession: { method: "GET", path: "/api/auth/session", auth: false, client: "fetchSession" },
+  loginUser: { method: "POST", path: "/api/auth/login", auth: false, client: "loginUser" },
+  registerUser: { method: "POST", path: "/api/auth/register", auth: false, client: "registerUser" },
+  logoutUser: { method: "POST", path: "/api/auth/logout", auth: true, client: "logoutUser" },
+  fetchProfile: { method: "GET", path: "/api/auth/profile", auth: true, client: "fetchProfile" },
+  updateProfileAvatarPreset: { method: "PATCH", path: "/api/auth/profile", auth: true, client: "updateProfileAvatarPreset" },
+  submitLotteryBetSlip: { method: "POST", path: "/api/lottery/bets", auth: true, client: "submitLotteryBetSlip" },
+  fetchLotterySlips: { method: "GET", path: "/api/lottery/slips", auth: true, client: "fetchLotterySlips" },
+  fetchLotterySlip: { method: "GET", path: "/api/lottery/slips/:slipId", auth: true, client: "fetchLotterySlip" },
+  fetchPromotionsCatalog: { method: "GET", path: "/api/promotions", auth: false, client: "fetchPromotionsCatalog" },
+  fetchPromotionDetail: { method: "GET", path: "/api/promotions/:id", auth: false, client: "fetchPromotionDetail" },
 } as const satisfies Record<string, EndpointDef>;
