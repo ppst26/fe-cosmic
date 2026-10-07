@@ -11,14 +11,13 @@ import {
 } from "@/components/ui/table";
 import { useReferralEarnings } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
-import { BonusNavIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_PRIMARY,
-  COSMIC_PANEL_SOLID,
-  COSMIC_PANEL_GLASS_ICON,
 } from "../ui/cosmicButtonClasses";
+import { Menu3DIcon } from "../ui/Menu3DIcon";
 import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
+import { valueClass } from "@/lib/semanticValue";
 import { cn } from "@/lib/utils";
 import { REFERRAL_EARNING_PAGE_SIZE } from "@/lib/uiConstants";
 import {
@@ -115,32 +114,30 @@ function ReferralEarningPanelContent({
   return (
     <div className="referral-earning-panel flex min-h-0 flex-col gap-3">
       {showSummary ? (
-      <div className="flex flex-col gap-2.5">
-        <EarningSummaryCard
-          icon={<WalletCheckIcon className="h-7 w-7 text-[var(--icon-active)]" />}
-          label="โบนัสที่รับแล้ว"
-          hint="ยอดโบนัสที่คุณกดรับเข้ากระเป๋าแล้ว"
-          value={formatReferralCurrency(received)}
-          valueClassName="text-[var(--text-primary)]"
-        />
-        <EarningSummaryCard
-          icon={<BonusNavIcon className="h-7 w-7 text-[var(--icon-active)]" />}
-          label="โบนัสที่รับได้"
-          hint="ยอดที่พร้อมกดรับเข้ากระเป๋า"
-          value={formatReferralCurrency(claimable)}
-          valueClassName="text-[var(--text-primary)]"
-          trailing={
-            <button
-              type="button"
-              disabled={claimable <= 0}
-              onClick={handleClaimBonus}
-              className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm shrink-0 px-4 py-2.5 text-xs disabled:opacity-45 sm:text-sm`}
-            >
-              รับโบนัส
-            </button>
-          }
-        />
-      </div>
+        <section
+          className="referral-earning-claim surface-solid-stack flex items-center justify-between gap-3 px-3.5 py-3.5 sm:gap-4 sm:px-4 sm:py-4"
+          aria-label="โบนัสที่รับได้"
+        >
+          <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+            <Menu3DIcon iconId="cashback" size={40} className="h-10 w-10 shrink-0" />
+            <div className="min-w-0">
+              <p className="text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]">
+                โบนัสที่รับได้
+              </p>
+              <p className={valueClass("reward", "mt-0.5 text-xl leading-tight sm:text-2xl")}>
+                {formatReferralCurrency(claimable)}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            disabled={claimable <= 0}
+            onClick={handleClaimBonus}
+            className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm flex h-10 shrink-0 items-center justify-center px-4 text-xs disabled:opacity-45 sm:h-11 sm:px-5 sm:text-sm`}
+          >
+            รับโบนัส
+          </button>
+        </section>
       ) : (
         <div className="flex items-center justify-between gap-3">
           <h2
@@ -195,9 +192,10 @@ function ReferralEarningPanelContent({
               pageRows.map((row, index) => (
                 <TableRow key={row.id} className={cosmicDataTableRowClass(index)}>
                   <TableCell
-                    className={`px-4 font-medium tabular-nums text-[var(--text-primary)] sm:px-5 ${
-                      flat ? "py-4 text-base" : "py-3.5 text-sm"
-                    }`}
+                    className={valueClass(
+                      "reward",
+                      `px-4 sm:px-5 ${flat ? "py-4 text-base" : "py-3.5 text-sm"}`,
+                    )}
                   >
                     {formatReferralCurrency(row.amountThb)}
                   </TableCell>
@@ -234,78 +232,6 @@ function ReferralEarningPanelContent({
         )}
       </section>
     </div>
-  );
-}
-
-function EarningSummaryCard({
-  icon,
-  label,
-  hint,
-  value,
-  valueClassName,
-  trailing,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  hint: string;
-  value: string;
-  valueClassName: string;
-  trailing?: React.ReactNode;
-}) {
-  return (
-    <div className={`${COSMIC_PANEL_SOLID} flex items-center gap-3 px-4 py-3.5 sm:gap-4`}>
-      <div className={`${COSMIC_PANEL_GLASS_ICON} !h-12 !w-12`}>{icon}</div>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-1.5">
-          <p className="text-xs font-medium text-[var(--text-secondary)] sm:text-sm">{label}</p>
-          <InfoHintButton label={hint} />
-        </div>
-        <p className={`mt-0.5 text-lg font-medium tabular-nums sm:text-xl ${valueClassName}`}>
-          {value}
-        </p>
-      </div>
-      {trailing}
-    </div>
-  );
-}
-
-function InfoHintButton({ label }: { label: string }) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/80 text-xs font-medium text-[var(--text-muted)] transition-colors hover:border-[var(--border-active)] hover:text-[var(--text-secondary)]"
-    >
-      i
-    </button>
-  );
-}
-
-function WalletCheckIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <path
-        d="M4 8V6a2 2 0 0 1 2-2h12v14H6a2 2 0 0 1-2-2v-2"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M6 6h14v3H8a2 2 0 0 0-2 2v1"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="m9 14 1.5 1.5L13 12"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
 

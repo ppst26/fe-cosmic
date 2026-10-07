@@ -2,6 +2,11 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { BetRowType, TransactionItem, TransactionKind, TransactionStatus } from "@/app/types/transaction";
+import {
+  signedMoneyValueClass,
+  transactionStatusValueClass,
+  valueClass,
+} from "@/lib/semanticValue";
 
 function formatDateOnly(iso: string | null | undefined): string {
   if (!iso) return "—";
@@ -57,17 +62,6 @@ function statusLabel(status: TransactionStatus): string {
   }
 }
 
-function statusClass(status: TransactionStatus): string {
-  switch (status) {
-    case "completed":
-      return "text-[var(--success)]";
-    case "pending":
-      return "text-[var(--text-secondary)]";
-    case "failed":
-      return "text-[var(--destructive)]";
-  }
-}
-
 function betTypeLabel(type: BetRowType | undefined): string {
   if (type === "result") return "ผลลัพธ์";
   if (type === "bet") return "เดิมพัน";
@@ -83,7 +77,7 @@ function columnsForKind(kind: TransactionKind): Column[] {
         key: "amount",
         label: "จำนวนเงิน",
         render: (item) => (
-          <span className="font-medium tabular-nums text-[var(--success)]">
+          <span className={valueClass("emphasis", "font-medium")}>
             {formatAmount(item.amount)} ฿
           </span>
         ),
@@ -107,7 +101,9 @@ function columnsForKind(kind: TransactionKind): Column[] {
         key: "status",
         label: "สถานะ",
         render: (item) => (
-          <span className={`font-medium ${statusClass(item.status)}`}>{statusLabel(item.status)}</span>
+          <span className={transactionStatusValueClass(item.status, "font-medium")}>
+            {statusLabel(item.status)}
+          </span>
         ),
       },
     ];
@@ -127,7 +123,9 @@ function columnsForKind(kind: TransactionKind): Column[] {
         key: "status",
         label: "สถานะ",
         render: (item) => (
-          <span className={`font-medium ${statusClass(item.status)}`}>{statusLabel(item.status)}</span>
+          <span className={transactionStatusValueClass(item.status, "font-medium")}>
+            {statusLabel(item.status)}
+          </span>
         ),
       },
       {
@@ -196,7 +194,9 @@ function columnsForKind(kind: TransactionKind): Column[] {
         key: "status",
         label: "สถานะ",
         render: (item) => (
-          <span className={`font-medium ${statusClass(item.status)}`}>{statusLabel(item.status)}</span>
+          <span className={transactionStatusValueClass(item.status, "font-medium")}>
+            {statusLabel(item.status)}
+          </span>
         ),
       },
     ];
@@ -232,7 +232,9 @@ function columnsForKind(kind: TransactionKind): Column[] {
         key: "amount",
         label: "ยอดเงิน",
         render: (item) => (
-          <span className="font-medium tabular-nums">{formatAmount(item.amount)}</span>
+          <span className={signedMoneyValueClass(item.amount, "font-medium")}>
+            {formatAmount(item.amount)}
+          </span>
         ),
       },
       {

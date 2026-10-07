@@ -1,5 +1,6 @@
 import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
+import { valueClass } from "@/lib/semanticValue";
 
 type HeaderWalletChipProps = {
   balanceLabel: string;
@@ -27,9 +28,12 @@ export function HeaderWalletChip({
   const chipInner = (
     <>
       <span
-        className={cn(
-          "header-wallet-chip__amount cosmic-nav__wallet-balance tabular-nums",
-          variant === "desktop" && "max-w-[min(100%,7.5rem)] truncate",
+        className={valueClass(
+          "emphasis",
+          cn(
+            "header-wallet-chip__amount cosmic-nav__wallet-balance",
+            variant === "desktop" && "max-w-[min(100%,7.5rem)] truncate",
+          ),
         )}
       >
         {balanceLabel}

@@ -32,6 +32,7 @@ import {
 import { formatDepositAmount, formatDepositTransferAmount } from "@/lib/format";
 import type { DepositMethodId } from "@/app/types/wallet";
 import { useWallet } from "@/app/hooks/api/account";
+import { valueClass } from "@/lib/semanticValue";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 
@@ -245,7 +246,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
         summary={
           <p className="text-center text-sm font-medium text-[var(--text-primary)]">
             ยอดฝาก{" "}
-            <span className="text-[var(--accent-muted)]">฿ {formatDepositTransferAmount(amount)}</span>
+            <span className={valueClass("emphasis")}>฿ {formatDepositTransferAmount(amount)}</span>
           </p>
         }
         onConfirm={handleConfirmDeposit}
@@ -490,7 +491,7 @@ function DepositConfirmStep({
       >
         <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 text-center sm:px-4`}>
           <p className="cosmic-type-sheet-desc">ยอดเงินที่ต้องโอน</p>
-          <p className="mt-1 text-3xl font-medium text-[var(--accent-muted)] sm:text-4xl">
+          <p className={valueClass("emphasis", "mt-1 text-3xl sm:text-4xl")}>
             ฿ {formatDepositTransferAmount(amount)}
           </p>
         </section>

@@ -13,6 +13,7 @@ import {
   COSMIC_BTN_PRIMARY,
 } from "../ui/cosmicButtonClasses";
 import { formatActivityCredits, formatActivityNumber } from "@/lib/format";
+import { valueClass } from "@/lib/semanticValue";
 import type {
   ActivityHubCategoryTab,
   ActivityHubItem,
@@ -149,13 +150,13 @@ export function ActivityTurnProgressCard({
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         <div className="text-center sm:text-left">
           <p className="text-xs text-[var(--text-secondary)] sm:text-[13px]">ยอดเทิร์นปัจจุบัน</p>
-          <p className="mt-0.5 text-sm font-medium tabular-nums text-[var(--text-primary)]">
+          <p className={valueClass("emphasis", "mt-0.5 text-sm")}>
             {formatActivityCredits(progress.currentTurn)}
           </p>
         </div>
         <div className="text-center sm:text-right">
           <p className="text-xs text-[var(--text-secondary)] sm:text-[13px]">เป้าหมายลำดับที่ 1</p>
-          <p className="mt-0.5 text-sm font-medium tabular-nums text-[var(--text-primary)]">
+          <p className={valueClass("emphasis", "mt-0.5 text-sm")}>
             {formatActivityCredits(progress.rank1Target)}
           </p>
         </div>
@@ -166,7 +167,7 @@ export function ActivityTurnProgressCard({
           <div className="activity-hub-progress__track h-2 overflow-hidden rounded-full">
             <div className="activity-hub-progress__fill h-full rounded-full" style={{ width: `${pct}%` }} />
           </div>
-          <p className="mt-1 text-center text-xs font-medium tabular-nums text-[var(--text-secondary)]">
+          <p className={valueClass("neutral", "mt-1 text-center text-xs")}>
             จำนวนรางวัล {formatActivityNumber(progress.bonusEarned)} / {formatActivityNumber(progress.bonusCap)}
           </p>
         </div>
@@ -200,7 +201,7 @@ export function ActivityTierTable({ rows, flat = false }: { rows: ActivityTierRo
               <td className="px-2 py-2.5 tabular-nums text-[var(--text-secondary)] sm:px-3">
                 {formatActivityNumber(row.turnRequired)}
               </td>
-              <td className="px-2 py-2.5 text-center font-medium tabular-nums text-[#fde047] sm:px-3">
+              <td className={valueClass("reward", "px-2 py-2.5 text-center sm:px-3")}>
                 {formatActivityNumber(row.bonus)}
               </td>
               <td className="px-2 py-2.5 text-right sm:px-3">
@@ -243,8 +244,8 @@ function ActivityClaimButton({
       <span
         className={
           flat
-            ? `${COSMIC_BTN_GLASS_PILL_SM} ${base} !w-full text-[var(--success)]`
-            : `${base} glass-card--soft rounded-[var(--radius-control)] text-[var(--success)]`
+            ? `${COSMIC_BTN_GLASS_PILL_SM} ${base} !w-full ${valueClass("success")}`
+            : `${base} glass-card--soft rounded-[var(--radius-control)] ${valueClass("success")}`
         }
       >
         รับแล้ว

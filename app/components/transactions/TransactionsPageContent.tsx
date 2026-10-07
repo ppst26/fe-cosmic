@@ -13,6 +13,7 @@ import { TransactionHistoryTable } from "./TransactionHistoryTable";
 import { TransactionHistoryPagination } from "./TransactionHistoryPagination";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
+import { signedMoneyValueClass, valueClass } from "@/lib/semanticValue";
 import {
   countPromotionClaims,
   sumBetStakeTotal,
@@ -141,7 +142,7 @@ export function TransactionsPageContent({
             {activeKind === "deposit" ? (
               <div className="tx-history-summary">
                 <span>ยอดฝากทั้งหมด :</span>
-                <span className="font-medium tabular-nums text-[var(--success)]">
+                <span className={valueClass("success", "font-medium")}>
                   {formatMoney(sumCompletedDepositAmount(items))} ฿
                 </span>
               </div>
@@ -150,7 +151,7 @@ export function TransactionsPageContent({
             {activeKind === "withdraw" ? (
               <div className="tx-history-summary">
                 <span>ยอดถอนทั้งหมด :</span>
-                <span className="font-medium tabular-nums text-[var(--success)]">
+                <span className={valueClass("success", "font-medium")}>
                   {formatMoney(sumCompletedWithdrawAmount(items))} ฿
                 </span>
               </div>
@@ -159,7 +160,7 @@ export function TransactionsPageContent({
             {activeKind === "promotion" ? (
               <div className="tx-history-summary">
                 <span>จำนวนการรับโปรโมชั่น :</span>
-                <span className="font-medium tabular-nums text-[var(--success)]">
+                <span className={valueClass("emphasis", "font-medium")}>
                   {countPromotionClaims(items)}
                 </span>
               </div>
@@ -169,20 +170,13 @@ export function TransactionsPageContent({
               <div className="flex flex-col gap-2 pt-1">
                 <div className="tx-history-summary">
                   <span>ยอดวิน/ลอสรวม :</span>
-                  <span
-                    className={cn(
-                      "font-medium tabular-nums",
-                      sumBetWinLossTotal(items) < 0
-                        ? "text-[var(--destructive)]"
-                        : "text-[var(--success)]",
-                    )}
-                  >
+                  <span className={signedMoneyValueClass(sumBetWinLossTotal(items), "font-medium")}>
                     {formatMoney(sumBetWinLossTotal(items))} ฿
                   </span>
                 </div>
                 <div className="tx-history-summary">
                   <span>ยอดเดิมพันรวม :</span>
-                  <span className="font-medium tabular-nums text-[var(--success)]">
+                  <span className={valueClass("neutral", "font-medium")}>
                     {formatMoney(sumBetStakeTotal(items))} ฿
                   </span>
                 </div>

@@ -17,7 +17,9 @@ export function ProfilePageHeader({ title }: { title: string }) {
         >
           <ArrowLeftIcon className="h-6 w-6 text-white" />
         </Link>
-        <h1 className="absolute left-1/2 -translate-x-1/2 text-base font-medium tracking-tight text-white sm:text-lg select-none pointer-events-none truncate max-w-[70%] text-center leading-none">
+        <h1
+          className="page-sub-header__title absolute left-1/2 max-w-[70%] -translate-x-1/2 truncate text-center text-white select-none pointer-events-none"
+        >
           {title}
         </h1>
         <div className="w-10 h-10 shrink-0" aria-hidden="true" />

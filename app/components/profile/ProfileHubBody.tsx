@@ -19,6 +19,7 @@ import {
 } from "../ui/Icons";
 import { COSMIC_BTN_LOGOUT } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
+import { valueClass } from "@/lib/semanticValue";
 
 interface ProfileHubBodyProps {
   profile: ProfileUser;
@@ -99,7 +100,7 @@ export function ProfileHubBody({
           icon={<DiamondGemIcon className="h-5 w-5" />}
           title="เพชรของฉัน"
           trailing={
-            <span className="tabular-nums text-[var(--text-secondary)]">
+            <span className={valueClass("accent")}>
               {stats ? formatDiamonds(stats.diamonds) : "—"}
             </span>
           }
@@ -111,7 +112,7 @@ export function ProfileHubBody({
           showChevron
           onClick={onOpenLossRebate}
           trailing={
-            <span className="tabular-nums text-[var(--text-secondary)]">
+            <span className={valueClass("reward")}>
               {stats ? formatThb(stats.lossBonusThb) : "—"}
             </span>
           }
@@ -121,7 +122,7 @@ export function ProfileHubBody({
           icon={<UsersGroupIcon className="h-5 w-5" />}
           title="ยอด Affiliate"
           trailing={
-            <span className="tabular-nums text-[var(--text-secondary)]">
+            <span className={valueClass("reward")}>
               {stats ? formatThb(stats.affiliateBalanceThb) : "—"}
             </span>
           }

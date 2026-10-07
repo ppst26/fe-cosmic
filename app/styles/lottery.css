@@ -474,7 +474,7 @@
 }
 
 .lottery-play-round-card__countdown {
-  color: var(--success);
+  color: var(--value-success);
 }
 
 .lottery-play-round-card__opens {
@@ -552,7 +552,7 @@
 .lottery-play-round-grid__countdown {
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
-  color: var(--success);
+  color: var(--value-success);
 }
 
 .lottery-play-rounds__expand {
@@ -713,7 +713,7 @@
 }
 
 :is(.lottery-price-slip__group-head, .lottery-bet-slip__group-head) span:last-child {
-  color: #ffe66d;
+  color: var(--value-reward);
   font-variant-numeric: tabular-nums;
 }
 
@@ -781,7 +781,7 @@
 }
 
 .lottery-price-controls__total-value {
-  color: #ffe66d;
+  color: var(--value-reward);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1070,7 +1070,7 @@
 }
 
 .thai-lotto-hundreds__dot {
-  background: #ffe66d;
+  background: var(--value-reward);
 }
 
 .thai-lotto-grid__btn {
@@ -1107,7 +1107,7 @@
 .thai-lotto-feedback {
   margin: 0;
   text-align: center;
-  color: var(--success);
+  color: var(--value-success);
 }
 
 .thai-lotto-feedback:empty {
@@ -1259,7 +1259,7 @@
 }
 
 .lottery-bet-slip__group-head span:last-child {
-  color: #ffe66d;
+  color: var(--value-reward);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1282,7 +1282,7 @@
 }
 
 .lottery-bet-slip__rate {
-  color: #ffe66d;
+  color: var(--value-reward);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1311,7 +1311,7 @@
 
 .thai-lotto-result__first-value {
   line-height: 1.2;
-  color: #ffe66d;
+  color: var(--value-reward);
   letter-spacing: 0.12em;
   font-variant-numeric: tabular-nums;
 }
@@ -1662,12 +1662,12 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 .lottery-slip-summary__slip-id {
   border: 0;
   background: transparent;
-  color: #ffe66d;
+  color: var(--value-reward);
   cursor: pointer;
 }
 
 .lottery-slip-summary__status {
-  color: var(--success);
+  color: var(--value-success);
 }
 
 .lottery-slip-summary__note {
@@ -1720,7 +1720,7 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 }
 
 .lottery-slip-summary__pill--stake {
-  color: #ffe66d;
+  color: var(--value-reward);
   border-color: rgb(255 230 109 / 0.22);
   background: rgb(255 230 109 / 0.08);
 }
@@ -1737,7 +1737,7 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 
 .lottery-slip-summary__total-value {
   line-height: 1;
-  color: #ffe66d;
+  color: var(--value-reward);
 }
 
 .lottery-slip-summary__total-muted {
@@ -1745,7 +1745,7 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 }
 
 .lottery-slip-summary__copy-hint {
-  color: var(--success);
+  color: var(--value-success);
 }
 
 .lottery-slip-summary__continue {
@@ -1764,11 +1764,11 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 }
 
 .lottery-slips-list__id {
-  color: #ffe66d;
+  color: var(--value-reward);
 }
 
 .lottery-slips-list__status {
-  color: var(--success);
+  color: var(--value-success);
 }
 
 .lottery-slips-list__meta {

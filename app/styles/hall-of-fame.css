@@ -169,7 +169,7 @@
 }
 
 .hall-of-fame-table__payout {
-  color: #ffe66d;
+  color: var(--value-reward);
 }
 
 .cosmic-modal-shell--hub {

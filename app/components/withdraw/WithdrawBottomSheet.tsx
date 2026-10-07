@@ -26,6 +26,7 @@ import {
 } from "../ui/cosmicButtonClasses";
 import { formatWithdrawAmount, formatWithdrawMoney } from "@/lib/format";
 import { useWallet } from "@/app/hooks/api/account";
+import { valueClass } from "@/lib/semanticValue";
 
 interface WithdrawBottomSheetProps {
   isOpen: boolean;
@@ -176,7 +177,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               <div className="mt-4 pb-3">
                 <div className="flex items-baseline justify-center gap-0.5">
                   <span
-                    className="shrink-0 text-5xl font-medium leading-none text-[var(--accent-muted)] sm:text-6xl"
+                    className={valueClass("emphasis", "shrink-0 text-5xl leading-none sm:text-6xl")}
                     aria-hidden="true"
                   >
                     ฿
@@ -266,7 +267,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
         summary={
           <p className="text-center text-sm font-medium text-[var(--text-primary)]">
             ยอดถอน{" "}
-            <span className="text-[var(--accent-muted)]">฿ {formatWithdrawAmount(amount)}</span>
+            <span className={valueClass("emphasis")}>฿ {formatWithdrawAmount(amount)}</span>
           </p>
         }
         onConfirm={handleConfirm}

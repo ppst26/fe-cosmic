@@ -1,12 +1,13 @@
 /**
- * หน้า standalone มือถือ (โปรไฟล์, ธุรกรรม, โปรโมชัน ฯลฯ) — พื้น solid อ่านง่าย
+ * หน้า standalone มือถือ (โปรไฟล์, ธุรกรรม, โปรโมชัน ฯลฯ) — radial กลางจอไล่ดำ
  */
 .mobile-standalone-page {
   display: flex;
   min-height: 0;
   flex: 1;
   flex-direction: column;
-  background: var(--standalone-page-bg);
+  background-color: var(--standalone-page-bg);
+  background-image: var(--standalone-page-bg-radial);
   color: var(--text-primary);
 }
 
@@ -29,6 +30,20 @@
     background-color: var(--page-sub-header-bg);
     background-image: none;
     border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+  }
+}
+
+/** ชื่อหน้ากลางแถบย่อย — ตัวเล็ก น้ำหนักบาง */
+.page-sub-header__title {
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+@media (min-width: 640px) {
+  .page-sub-header__title {
+    font-size: 0.9375rem;
   }
 }
 

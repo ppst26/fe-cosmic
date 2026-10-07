@@ -8,6 +8,7 @@ import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 import { responsiveSheetCloseButtonClass } from "../ui/responsiveSheetDialog";
 import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 import type { PendingTransactionPayload } from "@/app/types/transaction";
+import { valueClass } from "@/lib/semanticValue";
 
 interface PendingTransactionDialogProps {
   payload: PendingTransactionPayload | null;
@@ -83,7 +84,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
             />
           </div>
 
-          <p className="mt-6 text-center text-4xl font-medium tracking-tight text-[var(--text-primary)] sm:text-[2.75rem]">
+          <p className={valueClass("emphasis", "mt-6 text-center text-4xl tracking-tight sm:text-[2.75rem]")}>
             <span className="text-[var(--icon-active)]">฿</span> {payload.amountDisplay}
           </p>
 

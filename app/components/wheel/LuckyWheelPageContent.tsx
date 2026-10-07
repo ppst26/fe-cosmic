@@ -13,6 +13,7 @@ import { LuckyWheelPrizeHistory } from "./LuckyWheelPrizeHistory";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import { formatGemsBalance } from "@/lib/format";
 import type { WheelPrizeHistoryRow, WheelSegment, WheelSpinMethod } from "@/app/types/reward";
+import { valueClass } from "@/lib/semanticValue";
 
 /**
  * หน้าเล่นวงล้อพารวย — โหลดข้อมูลวงล้อแล้วส่งให้ LuckyWheelPlay (state เริ่มต้นมาจากข้อมูลที่โหลดแล้ว)
@@ -110,7 +111,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
             aria-label="ยอดเพชรของคุณ"
           >
             <GoldGemIcon className="h-3.5 w-3.5 shrink-0 text-sky-400" />
-            <span className="text-xs font-medium text-white tabular-nums tracking-tight">
+            <span className={valueClass("accent", "text-xs tracking-tight text-white")}>
               {formatGemsBalance(gemsBalance)}
             </span>
           </Link>
@@ -237,7 +238,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
           )}
 
           {lastWin ? (
-            <div className="mt-2 text-center text-xs font-medium text-emerald-400 animate-fade-in" role="status">
+            <div className={valueClass("reward", "mt-2 text-center text-xs animate-fade-in")} role="status">
               {lastWin}
             </div>
           ) : null}

@@ -12,6 +12,7 @@ import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { CashbackLossRebateExtraSections } from "./CashbackLossRebateExtraSections";
 import { formatCashbackCurrency, formatCashbackPercent } from "@/lib/format";
+import { valueClass } from "@/lib/semanticValue";
 import type { CashbackPanelMock, CashbackTabId } from "@/app/types/cashback";
 import { useWallet } from "@/app/hooks/api/account";
 
@@ -111,7 +112,7 @@ function CashbackPanelsView({
           priority
         />
         <p className="mt-3 text-xs font-medium text-[var(--text-secondary)]">ยอดคืนที่รับได้</p>
-        <p className="mt-1 text-3xl font-medium tabular-nums text-[var(--icon-active)] sm:text-4xl">
+        <p className={valueClass("reward", "mt-1 text-3xl sm:text-4xl")}>
           {formatCashbackCurrency(panel.claimableThb)}
         </p>
         <p className="mt-1 text-xs text-[var(--text-muted)]">{panel.statusHint}</p>

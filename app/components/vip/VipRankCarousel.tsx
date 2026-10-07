@@ -9,6 +9,8 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
 import { formatVipAmount } from "@/lib/format";
+import { cn } from "@/lib/utils";
+import { valueClass } from "@/lib/semanticValue";
 
 interface VipRankCarouselProps {
   focusIndex: number;
@@ -88,13 +90,14 @@ export function VipRankCarousel({
           {focused.label}
         </p>
         <p
-          className={`text-xs font-medium sm:text-sm ${
+          className={cn(
+            "text-xs font-medium sm:text-sm",
             isActive
               ? "text-[var(--text-secondary)]"
               : isCleared
-                ? "text-[var(--success)]"
-                : "text-[var(--text-muted)]"
-          }`}
+                ? valueClass("success")
+                : "text-[var(--text-muted)]",
+          )}
         >
           {statusLabel}
         </p>

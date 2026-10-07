@@ -28,7 +28,7 @@ export function RewardPromoBannerCard({
       >
         <div className="relative flex min-h-[120px] items-center justify-between gap-3 px-4 py-4 sm:min-h-[132px]">
           <div className="relative z-[1] min-w-0">
-            <p className="text-lg font-semibold uppercase tracking-wide text-[var(--accent-highlight)] sm:text-xl">
+            <p className="text-lg font-medium uppercase tracking-wide text-[var(--accent-highlight)] sm:text-xl">
               {banner.title}
             </p>
             <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-[13px]">{banner.subtitle}</p>

@@ -19,6 +19,7 @@ description: >-
 - [ ] ชั้น UI ใหม่เป็น **solid** (`--inner-card-fill` ฯลฯ) — ไม่เพิ่ม backdrop-blur / frosted glass
 - [ ] Promo carousel pagination แยกจากกิจกรรม (dots กลางสำหรับทัวร์นาเมนต์)
 - [ ] ข้อความไทยไม่ขาดสระ; ยอดเงินไม่ถูกตัด; โลโก้/ปกเกมไม่เสียสัดส่วนผิดวิธี
+- [ ] ตัวเลข/สถานะใช้ `cosmic-value` + role ตาม `design.md` § Semantic values (ไม่ใช้สี Tailwind สดกับค่า)
 - [ ] Floating nav ไม่บังแถวท้าย; มี safe area; focus ใช้ได้
 - [ ] ตรวจที่ความกว้าง 360, 390, 768, 1280px; ไม่มี horizontal overflow ที่ไม่ได้ตั้งใจ
 - [ ] Search, tabs, View All, arrows ทำงาน; มี loading/empty/error ตามบริบท

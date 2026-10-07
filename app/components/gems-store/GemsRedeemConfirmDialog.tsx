@@ -7,6 +7,7 @@ import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
 import { cn } from "@/lib/utils";
 import { formatGemsBalance } from "@/lib/format";
 import type { GemsStorePackage } from "@/app/types/reward";
+import { valueClass } from "@/lib/semanticValue";
 
 function formatCreditAmount(value: number): string {
   return new Intl.NumberFormat("th-TH").format(value);
@@ -71,7 +72,7 @@ export function GemsRedeemConfirmDialog({
                       </p>
                     </div>
                     <div className="gems-redeem-confirm-dialog__reward shrink-0 text-right">
-                      <p className="gems-redeem-confirm-dialog__reward-amount">
+                      <p className={valueClass("reward", "gems-redeem-confirm-dialog__reward-amount")}>
                         +{formatCreditAmount(credits)}
                       </p>
                       <p className="gems-redeem-confirm-dialog__reward-label">เครดิต</p>
@@ -88,7 +89,7 @@ export function GemsRedeemConfirmDialog({
                         </span>
                         เพชรที่ใช้
                       </dt>
-                      <dd className="gems-redeem-confirm-dialog__row-value tabular-nums">
+                      <dd className={valueClass("accent", "gems-redeem-confirm-dialog__row-value")}>
                         {formatGemsBalance(gemsCost)}
                       </dd>
                     </div>
@@ -99,7 +100,7 @@ export function GemsRedeemConfirmDialog({
                         </span>
                         คงเหลือหลังแลก
                       </dt>
-                      <dd className="gems-redeem-confirm-dialog__row-value tabular-nums">
+                      <dd className={valueClass("accent", "gems-redeem-confirm-dialog__row-value")}>
                         {formatGemsBalance(balanceAfter)}
                       </dd>
                     </div>

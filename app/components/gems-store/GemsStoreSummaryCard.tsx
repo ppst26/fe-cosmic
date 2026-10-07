@@ -3,6 +3,7 @@ import type { GemsStoreData } from "@/lib/api/gemsStore";
 import { HistoryIcon } from "@/app/components/ui/Icons";
 import { cn } from "@/lib/utils";
 import { formatGemsBalance } from "@/lib/format";
+import { valueClass } from "@/lib/semanticValue";
 
 interface GemsStoreSummaryCardProps {
   gemsBalance: number;
@@ -38,7 +39,7 @@ export function GemsStoreSummaryCard({ gemsBalance, store, className }: GemsStor
           />
         </div>
         <p
-          className="text-[1.75rem] font-medium leading-none tabular-nums text-[var(--accent-highlight)] sm:text-[2rem]"
+          className={valueClass("accent", "text-[1.75rem] leading-none sm:text-[2rem]")}
           aria-label={`เพชรคงเหลือ ${formatGemsBalance(gemsBalance)}`}
         >
           {formatGemsBalance(gemsBalance)}

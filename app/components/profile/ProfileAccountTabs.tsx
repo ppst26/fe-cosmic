@@ -95,6 +95,7 @@ export function ProfileAccountTabs({
             <ProfileAccountFieldRow
               label="ยูสเซอร์เข้าเกม"
               value={profile.memberId}
+              valueRole="emphasis"
               onCopy={() => void copyText("memberId", profile.memberId)}
               copyLabel="คัดลอกยูสเซอร์เข้าเกม"
             />
@@ -106,14 +107,19 @@ export function ProfileAccountTabs({
               }}
               editLabel="เปลี่ยนรหัสผ่าน"
             />
-            <ProfileAccountFieldRow label="LINE" value="—" />
+            <ProfileAccountFieldRow label="LINE" value="—" valueRole="muted" />
             {onOpenTransactions ? (
               <ProfileAccountNavRow label="ประวัติธุรกรรม" value="ฝาก · ถอน · เดิมพัน" onClick={onOpenTransactions} />
             ) : null}
             {onOpenVip ? (
-              <ProfileAccountNavRow label="VIP" value={vipRankLabel} onClick={onOpenVip} />
+              <ProfileAccountNavRow
+                label="VIP"
+                value={vipRankLabel}
+                valueRole="reward"
+                onClick={onOpenVip}
+              />
             ) : (
-              <ProfileAccountFieldRow label="VIP" value={vipRankLabel} />
+              <ProfileAccountFieldRow label="VIP" value={vipRankLabel} valueRole="reward" />
             )}
           </div>
         ) : (

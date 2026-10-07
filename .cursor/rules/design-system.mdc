@@ -21,6 +21,7 @@ alwaysApply: false
 - **Providers:** marquee โลโก้ ไม่ห่อการ์ด; ช่องว่างบน ~48px
 - **Hall of Fame:** แถวแยกการ์ด + gap แนวตั้งชัด; แท็บ solid
 - **Typography:** Noto Sans Thai; น้ำหนักสูงสุด **500** · ขนาดผ่าน Tailwind / `cosmic-type-*` — **ห้าม** `font-size` ใน feature CSS · ดู `design.md` §4 และ rule `typography.mdc`
+- **Semantic values:** ตัวเลข/สถานะใช้ `cosmic-value` + `cosmic-value--*` หรือ `lib/semanticValue.ts` — ห้าม hex / `text-emerald-*` ใน TSX · ดู `design.md` § Semantic values
 - Mobile-first; `max-width` 1200px; gutter จาก `design.md`
 - ลำดับ section หมวด 6 + แผนไฟล์หมวด 10 ใน `design.md`
 - เกณฑ์ตรวจ: หมวด 11 ใน `design.md` หรือ skill `ui-qa-checklist`

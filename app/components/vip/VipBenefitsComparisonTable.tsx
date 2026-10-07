@@ -10,6 +10,8 @@ import { useVipBenefits, useVipRanks } from "@/app/hooks/api/member";
 import { ErrorState, LoadingState } from "../ui/StatusState";
 import { ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
+import { cn } from "@/lib/utils";
+import { valueClass, vipBenefitValueClass } from "@/lib/semanticValue";
 
 interface VipBenefitsComparisonTableProps {
   currentRankId: VipRankId;
@@ -139,18 +141,26 @@ export function VipBenefitsComparisonTable({
                   {vipRankTiers.map((tier) => {
                     const isCurrent = tier.id === currentRankId;
                     const locked = getVipRankIndex(tier.id) > getVipRankIndex(currentRankId);
+                    const display = getVipBenefitCellValue(row.id, tier.id, benefitValues);
                     return (
                       <td
                         key={tier.id}
-                        className={`vip-benefits-table__value ${COL_MIN} px-2 py-3 text-center tabular-nums ${
-                          isCurrent
-                            ? "vip-benefits-table__value--current font-medium"
-                            : locked
-                              ? "text-[var(--text-muted)]"
-                              : "text-[var(--text-secondary)]"
-                        }`}
+                        className={cn(
+                          locked
+                            ? valueClass("muted", `${COL_MIN} px-2 py-3 text-center`)
+                            : vipBenefitValueClass(
+                                row.id,
+                                display,
+                                cn(
+                                  "vip-benefits-table__value",
+                                  COL_MIN,
+                                  "px-2 py-3 text-center",
+                                  isCurrent && "vip-benefits-table__value--current font-medium",
+                                ),
+                              ),
+                        )}
                       >
-                        {getVipBenefitCellValue(row.id, tier.id, benefitValues)}
+                        {display}
                       </td>
                     );
                   })}

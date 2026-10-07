@@ -6,6 +6,7 @@ import { CheckInCoinGraphic, DailyCheckInCalendarGraphic } from "./DailyCheckInG
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
 import { formatCheckInCredits } from "@/lib/format";
 import type { DailyCheckInDayReward } from "@/app/types/checkIn";
+import { valueClass } from "@/lib/semanticValue";
 
 interface DailyCheckInDesktopLayoutProps {
   days: DailyCheckInDayReward[];
@@ -169,7 +170,7 @@ function DailyCheckInDayRow({
       <div className="daily-check-in-desktop__day-action flex min-w-[5.5rem] justify-end">
         {isClaimed ? (
           <span
-            className={`${COSMIC_BTN_GLASS_PILL_SM} daily-check-in-desktop__claim-pill min-w-[5.25rem] whitespace-nowrap !w-full text-[var(--success)]`}
+            className={`${COSMIC_BTN_GLASS_PILL_SM} daily-check-in-desktop__claim-pill min-w-[5.25rem] whitespace-nowrap !w-full ${valueClass("success")}`}
           >
             รับแล้ว
           </span>

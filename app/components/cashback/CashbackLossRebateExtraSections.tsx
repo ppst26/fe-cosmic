@@ -22,6 +22,7 @@ import {
 } from "../ui/CosmicFormulaRow";
 import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
+import { valueClass } from "@/lib/semanticValue";
 import { LOSS_REBATE_HISTORY_PAGE_SIZE } from "@/lib/uiConstants";
 import {
   formatLossRebateCurrency,
@@ -153,7 +154,7 @@ function LossRebateSections({
                     <TableCell className="px-3 py-3 text-right text-xs tabular-nums text-[var(--text-secondary)] sm:px-4">
                       {formatLossRebateCurrency(row.netLossThb)}
                     </TableCell>
-                    <TableCell className="px-3 py-3 text-right text-xs font-medium tabular-nums text-[var(--text-primary)] sm:px-4">
+                    <TableCell className={valueClass("reward", "px-3 py-3 text-right text-xs sm:px-4")}>
                       {formatLossRebateCurrency(row.bonusThb)}
                     </TableCell>
                     <TableCell className="hidden px-3 py-3 text-right text-xs tabular-nums text-[var(--text-secondary)] sm:table-cell sm:px-4">

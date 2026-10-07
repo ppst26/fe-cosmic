@@ -119,6 +119,17 @@ export interface ProviderItem {
   logoSrc?: string;
 }
 
+/** การ์ดค่าย/เกมในแถบ «ออนไลน์มากที่สุด» หน้าแรก — MostOnlineProvidersSection */
+export interface MostOnlineLobbyItem {
+  id: string;
+  brandName: string;
+  tagline: string;
+  href: string;
+  coverSrc: string;
+  onlineCount: number;
+  showHot?: boolean;
+}
+
 /** ไอคอนประจำการ์ดฟีเจอร์ — ร้านค้าเพชร / ภารกิจ / วงล้อ */
 export type FeatureActionIconId = "diamond-shop" | "missions" | "prize-wheel";
 

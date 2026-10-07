@@ -7,6 +7,7 @@ import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
 import { HeaderWalletAssetIcon } from "@/app/components/layout/HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
 import { formatRewardPoints, formatHeaderWalletBalance } from "@/lib/format";
+import { valueClass } from "@/lib/semanticValue";
 
 /**
  * การ์ดยอดเครดิต · พอยท์ — หัวหน้า /reward
@@ -28,7 +29,7 @@ export function RewardHubSummaryCard({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs text-[var(--text-secondary)]">เครดิตทั้งหมด</p>
-          <p className="mt-0.5 flex items-center gap-1.5 text-xl font-medium tabular-nums text-white sm:text-2xl">
+          <p className={valueClass("emphasis", "mt-0.5 flex items-center gap-1.5 text-xl sm:text-2xl")}>
             <HeaderWalletAssetIcon className="h-6 w-6 shrink-0 object-contain" />
             {wallet.data ? formatHeaderWalletBalance(wallet.data.amount) : "—"}
             <span className="text-sm font-normal text-[var(--text-secondary)]">฿</span>
@@ -42,7 +43,7 @@ export function RewardHubSummaryCard({
             height={22}
             className="h-[22px] w-[22px] object-contain"
           />
-          <span className="text-sm font-medium tabular-nums text-[var(--accent-highlight)]">
+          <span className={valueClass("accent", "text-sm")}>
             {formatRewardPoints(pointsBalance)}
           </span>
         </div>

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/components/ui/Icons";
 import type { PromoItem } from "@/app/types/lobby";
 import { HOME_DESKTOP_PEEK_BANNER_SIZE } from "@/app/data/lobbyMockData";
-import { useCarouselAutoplay } from "@/app/hooks/useCarouselAutoplay";
+import { HERO_CAROUSEL_AUTOPLAY_MS, useCarouselAutoplay } from "@/app/hooks/useCarouselAutoplay";
 
 const MOCK_SHELL_SLIDE_COUNT = 6;
 
@@ -179,15 +179,19 @@ export function HomeDesktopPeekCarousel({
   logicalIndexRef.current = logicalIndex;
 
   const autoplayEnabled = slides.length > 1 && !isMock;
-  const { pauseFor } = useCarouselAutoplay(autoplayEnabled, () => {
-    advanceFromAutoplayRef.current = true;
-    if (loopEnabled) {
-      scrollToTrackIndex(trackIndexRef.current + 1);
-      return;
-    }
-    const nextLogical = (logicalIndexRef.current + 1) % slides.length;
-    scrollToLogicalIndex(nextLogical);
-  }, { rootRef: viewportRef });
+  const { pauseFor } = useCarouselAutoplay(
+    autoplayEnabled,
+    () => {
+      advanceFromAutoplayRef.current = true;
+      if (loopEnabled) {
+        scrollToTrackIndex(trackIndexRef.current + 1);
+        return;
+      }
+      const nextLogical = (logicalIndexRef.current + 1) % slides.length;
+      scrollToLogicalIndex(nextLogical);
+    },
+    { intervalMs: HERO_CAROUSEL_AUTOPLAY_MS, rootRef: viewportRef },
+  );
 
   useEffect(() => {
     const container = scrollContainerRef.current;

@@ -23,6 +23,7 @@ import {
 } from "@/app/data/vipMockData";
 
 import { VipRankProgressMetric } from "@/app/components/vip/VipRankProgressMetric";
+import { valueClass } from "@/lib/semanticValue";
 
 
 
@@ -165,11 +166,11 @@ export function VipRankLevelUpCard({
         </div>
 
         <span
-
-          className="vip-level-up-card__percent shrink-0 text-2xl font-medium tabular-nums sm:text-[1.75rem]"
-
+          className={valueClass(
+            "emphasis",
+            "vip-level-up-card__percent shrink-0 text-2xl sm:text-[1.75rem]",
+          )}
           aria-label={`ความคืบหน้ารวม ${Math.round(overallPct)} เปอร์เซ็นต์`}
-
         >
 
           {Math.round(overallPct)}%

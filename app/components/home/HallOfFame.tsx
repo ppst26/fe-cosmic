@@ -297,7 +297,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                     </td>
                     <td className="hall-of-fame-table__td hall-of-fame-table__td--value py-[0.2rem] px-0 text-right">
                       {isLatestWinner && row.payout != null ? (
-                        <span className="hall-of-fame-table__payout text-xs font-medium tabular-nums sm:text-sm">
+                        <span className="hall-of-fame-table__payout cosmic-value text-xs sm:text-sm">
                           {formatPayoutThb(row.payout)}
                         </span>
                       ) : null}

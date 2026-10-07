@@ -45,6 +45,7 @@ export const ENDPOINTS = {
   fetchHomeProviders: { method: "GET", path: "/api/lobby/providers", auth: false, client: "fetchHomeProviders" },
   fetchHomeFeatureActions: { method: "GET", path: "/api/lobby/feature-actions", auth: false, client: "fetchHomeFeatureActions" },
   fetchHomeTournaments: { method: "GET", path: "/api/lobby/tournaments", auth: false, client: "fetchHomeTournaments" },
+  fetchHomeMostOnline: { method: "GET", path: "/api/lobby/most-online", auth: false, client: "fetchHomeMostOnline" },
   fetchLobbyAnnouncements: { method: "GET", path: "/api/lobby/announcements", auth: false, client: "fetchLobbyAnnouncements" },
   fetchHallOfFame: { method: "GET", path: "/api/lobby/hall-of-fame", auth: false, client: "fetchHallOfFame" },
   fetchDesktopPlayerPanel: { method: "GET", path: "/api/lobby/desktop-player", auth: true, client: "fetchDesktopPlayerPanel" },

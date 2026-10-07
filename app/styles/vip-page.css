@@ -15,11 +15,135 @@
 
 .vip-page .vip-rank-stack .vip-rank-surface-card,
 .vip-modal .vip-rank-stack .vip-rank-surface-card {
-  border: 1px solid var(--vip-panel-border);
+  border: 1px solid color-mix(in srgb, var(--vip-panel-border) 82%, var(--vip-rank-card-bg) 18%);
   border-radius: var(--vip-rank-card-radius);
-  background: var(--vip-rank-card-top-radial), var(--vip-rank-card-face-gradient);
-  padding: 1.25rem;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 4%, transparent);
+  background-color: var(--vip-rank-card-bg);
+  background-image:
+    linear-gradient(180deg, rgb(0 0 0 / 0.22) 0%, transparent 38%),
+    var(--vip-rank-card-top-radial),
+    var(--vip-rank-card-face-gradient);
+  padding: 1rem;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 3%, transparent);
+}
+
+/* สแตก 3 การ์ดแท็บระดับของฉัน — ตัวหนังสือเล็กลง */
+.vip-page .vip-rank-stack .vip-rank-surface-card h3,
+.vip-modal .vip-rank-stack .vip-rank-surface-card h3 {
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-rank-surface-card h3,
+  .vip-modal .vip-rank-stack .vip-rank-surface-card h3 {
+    font-size: 1rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-rank-surface-card h3 + p,
+.vip-modal .vip-rank-stack .vip-rank-surface-card h3 + p {
+  font-size: 0.6875rem;
+  line-height: 1.35;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-rank-surface-card h3 + p,
+  .vip-modal .vip-rank-stack .vip-rank-surface-card h3 + p {
+    font-size: 0.75rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-level-up-card__percent,
+.vip-modal .vip-rank-stack .vip-level-up-card__percent,
+.vip-page .vip-rank-stack .vip-maintain-rank-panel__days,
+.vip-modal .vip-rank-stack .vip-maintain-rank-panel__days {
+  font-size: 1.375rem;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-level-up-card__percent,
+  .vip-modal .vip-rank-stack .vip-level-up-card__percent,
+  .vip-page .vip-rank-stack .vip-maintain-rank-panel__days,
+  .vip-modal .vip-rank-stack .vip-maintain-rank-panel__days {
+    font-size: 1.5rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-maintain-rank-panel__days + span,
+.vip-modal .vip-rank-stack .vip-maintain-rank-panel__days + span {
+  font-size: 0.625rem;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-maintain-rank-panel__days + span,
+  .vip-modal .vip-rank-stack .vip-maintain-rank-panel__days + span {
+    font-size: 0.6875rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell span,
+.vip-modal .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell span {
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell span,
+  .vip-modal .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell span {
+    font-size: 0.8125rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__value,
+.vip-modal .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__value {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__value,
+  .vip-modal .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__value {
+    font-size: 1rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell svg,
+.vip-modal .vip-rank-stack .vip-my-level-benefits--flat .vip-my-level-benefits__cell svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.vip-page .vip-rank-stack .vip-rank-metric__label,
+.vip-modal .vip-rank-stack .vip-rank-metric__label {
+  font-size: 0.75rem;
+}
+
+.vip-page .vip-rank-stack .vip-rank-metric__values,
+.vip-modal .vip-rank-stack .vip-rank-metric__values {
+  font-size: 0.6875rem;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-rank-metric__values,
+  .vip-modal .vip-rank-stack .vip-rank-metric__values {
+    font-size: 0.75rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-rank-metric__foot,
+.vip-modal .vip-rank-stack .vip-rank-metric__foot {
+  font-size: 0.625rem;
+}
+
+@media (min-width: 640px) {
+  .vip-page .vip-rank-stack .vip-rank-metric__foot,
+  .vip-modal .vip-rank-stack .vip-rank-metric__foot {
+    font-size: 0.6875rem;
+  }
+}
+
+.vip-page .vip-rank-stack .vip-rank-metric__icon,
+.vip-modal .vip-rank-stack .vip-rank-metric__icon {
+  width: 0.875rem;
+  height: 0.875rem;
 }
 
 .vip-page .vip-rank-stack .vip-rank-surface-card::before,
@@ -300,17 +424,8 @@
 }
 
 .vip-my-level-benefits__value {
-  color: var(--vip-benefit-value);
-  font-weight: 600;
+  font-weight: 500;
   -webkit-font-smoothing: antialiased;
-}
-
-.vip-my-level-benefits__value--muted {
-  color: var(--vip-benefit-value-muted);
-}
-
-.vip-my-level-benefits__value--success {
-  color: var(--vip-benefit-value-success);
 }
 
 /** VIP — แท็บ underline ไม่ glow */

@@ -3,10 +3,13 @@
 import React from "react";
 import { ChevronRightIcon, CopyIcon } from "../ui/Icons";
 import { cn } from "@/lib/utils";
+import { valueClass, type ValueRole } from "@/lib/semanticValue";
 
 type ProfileAccountFieldRowProps = {
   label: string;
   value: string;
+  /** โทนค่าตาม design.md § Semantic values */
+  valueRole?: ValueRole;
   className?: string;
   onCopy?: () => void;
   copyLabel?: string;
@@ -20,6 +23,7 @@ type ProfileAccountFieldRowProps = {
 export function ProfileAccountFieldRow({
   label,
   value,
+  valueRole,
   className,
   onCopy,
   copyLabel = "คัดลอก",
@@ -36,7 +40,14 @@ export function ProfileAccountFieldRow({
       <span className="w-[5.5rem] shrink-0 text-xs text-[var(--text-secondary)] sm:w-24 sm:text-[13px]">
         {label}
       </span>
-      <span className="min-w-0 flex-1 truncate text-end text-sm font-medium text-[var(--text-primary)] tabular-nums">
+      <span
+        className={cn(
+          "min-w-0 flex-1 truncate text-end text-sm",
+          valueRole
+            ? valueClass(valueRole)
+            : "font-medium text-[var(--text-primary)] tabular-nums",
+        )}
+      >
         {value}
       </span>
       <div className="flex w-9 shrink-0 justify-end">
@@ -72,11 +83,13 @@ export function ProfileAccountFieldRow({
 export function ProfileAccountNavRow({
   label,
   value,
+  valueRole,
   onClick,
   className,
 }: {
   label: string;
   value?: string;
+  valueRole?: ValueRole;
   onClick: () => void;
   className?: string;
 }) {
@@ -92,7 +105,14 @@ export function ProfileAccountNavRow({
       <span className="w-[5.5rem] shrink-0 text-xs text-[var(--text-secondary)] sm:w-24 sm:text-[13px]">
         {label}
       </span>
-      <span className="min-w-0 flex-1 truncate text-end text-sm font-medium text-[var(--text-primary)]">
+      <span
+        className={cn(
+          "min-w-0 flex-1 truncate text-end text-sm",
+          valueRole
+            ? valueClass(valueRole)
+            : "font-medium text-[var(--text-primary)]",
+        )}
+      >
         {value ?? ""}
       </span>
       <span className="flex w-9 shrink-0 justify-end text-[var(--icon-default)]">

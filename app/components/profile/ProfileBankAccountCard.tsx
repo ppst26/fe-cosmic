@@ -2,6 +2,7 @@ import type { ProfileUser } from "@/app/types/auth";
 import { getSignUpBankById, signUpCoverToneClass } from "@/app/data/signupMockData";
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
+import { valueClass } from "@/lib/semanticValue";
 
 /**
  * จัดรูปเลขบัญชีสำหรับแสดงบนหน้าโปรไฟล์
@@ -50,7 +51,7 @@ export function ProfileBankAccountCard({
       </span>
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium leading-snug text-[var(--text-primary)]">{profile.bankLabel}</p>
-        <p className="mt-1.5 text-base font-medium tabular-nums tracking-tight text-[var(--accent-highlight)]">
+        <p className={valueClass("emphasis", "mt-1.5 text-base tracking-tight")}>
           {accountFormatted}
         </p>
         <p className="mt-1 truncate text-xs text-[var(--text-secondary)]">{profile.displayName}</p>

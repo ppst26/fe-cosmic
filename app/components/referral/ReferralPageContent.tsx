@@ -5,18 +5,15 @@ import type { ReferralOverviewData } from "@/lib/api/referral";
 import { useReferralOverview } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { LoginPrompt } from "../ui/LoginPrompt";
-import { UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
+import { ChevronRightIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
 import { ReferralUsersPanel } from "./ReferralUsersPanel";
 import { ReferralEarningPanel } from "./ReferralEarningPanel";
 import { ReferralDesktopHubLayout } from "./ReferralDesktopHubLayout";
-import {
-  ReferralLinkSection,
-  ReferralPromoBanner,
-  ReferralStatsSection,
-} from "./ReferralOverviewSections";
+import { ReferralLinkSection, ReferralStatsSection } from "./ReferralOverviewSections";
+import { valueClass } from "@/lib/semanticValue";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
-import { COSMIC_PANEL_GLASS_ICON, COSMIC_PANEL_SOLID } from "../ui/cosmicButtonClasses";
+import { COSMIC_PANEL_GLASS_ICON } from "../ui/cosmicButtonClasses";
 import type { ReferralStatsMock } from "@/app/types/referral";
 type ReferralTabId = "overview" | "users" | "earning";
 
@@ -176,29 +173,38 @@ function ReferralMobileTabs({
       <TabPanelTransition tabKey={tab} order={TABS.map((item) => item.id)}>
       {tab === "overview" && (
         <div className="flex flex-col gap-5">
-          <ReferralPromoBanner />
           <ReferralLinkSection refCode={refCode} copied={copied} onCopy={onCopy} />
           <ReferralStatsSection stats={stats} />
 
-          <section className={`${COSMIC_PANEL_SOLID} px-4 py-4`}>
+          <section className="surface-solid-stack px-4 py-4">
             <h2 className="text-sm font-medium text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
             <p className="mt-0.5 text-xs text-[var(--text-secondary)]">
               แชร์ลิงก์แล้วรับส่วนแบ่งจากยอดเทิร์นของเครือข่าย
             </p>
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="mt-4 flex flex-col gap-3">
               {overview.tiers.map((tier) => (
                 <div
                   key={tier.id}
-                  className="cosmic-inset-card flex gap-3 p-3"
+                  className="surface-solid-inner flex items-center gap-3 p-3 sm:gap-4"
                 >
                   <div className={COSMIC_PANEL_GLASS_ICON}>
                     <UsersGroupIcon className="h-5 w-5 text-[var(--icon-default)]" />
                   </div>
-                  <div className="min-w-0">
-                    <p className="text-xs font-medium text-[var(--text-primary)]">{tier.title}</p>
-                    <p className="text-xs text-[var(--text-secondary)]">{tier.subtitle}</p>
-                    <p className="mt-1 text-2xl font-medium text-[var(--text-primary)]">{tier.rateLabel}</p>
-                    <p className="text-xs text-[var(--text-secondary)]">{tier.rateHint}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-medium text-[var(--text-primary)] sm:text-[13px]">
+                      {tier.title}
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-[var(--text-secondary)] sm:text-xs">
+                      {tier.subtitle}
+                    </p>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <p className={valueClass("reward", "text-xl leading-none sm:text-2xl")}>
+                      {tier.rateLabel}
+                    </p>
+                    <p className="mt-1 text-[10px] text-[var(--text-secondary)] sm:text-xs">
+                      {tier.rateHint}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -220,16 +226,28 @@ function ReferralMobileTabs({
             <h2 className="mb-3 text-sm font-medium text-[var(--text-primary)]">
               เริ่มต้นง่าย ๆ ใน 3 ขั้นตอน
             </h2>
-            <div className="grid grid-cols-3 gap-2">
+            <ol className="flex list-none items-start gap-0 p-0">
               {overview.steps.map((step, index) => (
-                <div key={step.id} className="flex flex-col items-center text-center">
-                  <div className="glass-control flex h-12 w-12 items-center justify-center rounded-full text-xs font-medium text-[var(--text-primary)]">
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <p className="mt-2 text-xs sm:text-[13px] font-medium text-[var(--text-primary)]">{step.label}</p>
-                </div>
+                <React.Fragment key={step.id}>
+                  <li className="flex min-w-0 flex-1 flex-col items-center text-center">
+                    <div className="glass-control flex h-12 w-12 items-center justify-center rounded-full text-xs font-medium text-[var(--text-primary)]">
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
+                    <p className="mt-2 text-xs font-medium text-[var(--text-primary)] sm:text-[13px]">
+                      {step.label}
+                    </p>
+                  </li>
+                  {index < overview.steps.length - 1 ? (
+                    <li
+                      className="flex h-12 w-5 shrink-0 items-center justify-center text-[var(--border-active)] sm:w-6"
+                      aria-hidden="true"
+                    >
+                      <ChevronRightIcon className="h-4 w-4 opacity-80" />
+                    </li>
+                  ) : null}
+                </React.Fragment>
               ))}
-            </div>
+            </ol>
           </section>
         </div>
       )}

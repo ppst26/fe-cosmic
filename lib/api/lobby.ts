@@ -13,6 +13,7 @@ import {
   PROVIDERS_DATA,
   WELCOME_BANNER_SLIDES,
 } from "@/app/data/lobbyMockData";
+import { MOST_ONLINE_LOBBY_ITEMS } from "@/app/data/mostOnlineLobbyMockData";
 import type {
   FeatureActionItem,
   GameItem,
@@ -22,6 +23,7 @@ import type {
   HighlightItem,
   HomeLobbyTournamentItem,
   IntroStats,
+  MostOnlineLobbyItem,
   PromoItem,
   ProviderItem,
   WelcomeBannerSlide,
@@ -77,6 +79,11 @@ export function fetchHomeFeatureActions(): Promise<ApiResult<FeatureActionItem[]
 }
 
 /** ทัวร์นาเมนต์ — GET /api/lobby/tournaments */
+/** แถบออนไลน์มากที่สุดหน้าแรก — GET /api/lobby/most-online */
+export function fetchHomeMostOnline(): Promise<ApiResult<MostOnlineLobbyItem[]>> {
+  return mockResult(MOST_ONLINE_LOBBY_ITEMS);
+}
+
 export function fetchHomeTournaments(): Promise<ApiResult<HomeLobbyTournamentItem[]>> {
   return mockResult(HOME_LOBBY_TOURNAMENT_ITEMS);
 }
@@ -100,6 +107,7 @@ export function fetchDesktopPlayerPanel(): Promise<ApiResult<typeof DESKTOP_PLAY
 export interface LobbyContent {
   banners: HomeBannersData;
   games: HomeGamesData;
+  mostOnline: MostOnlineLobbyItem[];
   tournaments: HomeLobbyTournamentItem[];
   announcements: readonly string[];
   hallOfFame: HallOfFameData;
@@ -118,9 +126,10 @@ function orFallback<T>(res: ApiResult<T>, fallback: T, label: string): T {
  * ใช้ใน app/(lobby)/layout.tsx (server)
  */
 export async function loadLobbyContent(): Promise<LobbyContent> {
-  const [banners, games, tournaments, announcements, hallOfFame] = await Promise.all([
+  const [banners, games, mostOnline, tournaments, announcements, hallOfFame] = await Promise.all([
     fetchHomeBanners(),
     fetchHomeGames(),
+    fetchHomeMostOnline(),
     fetchHomeTournaments(),
     fetchLobbyAnnouncements(),
     fetchHallOfFame(),
@@ -128,6 +137,7 @@ export async function loadLobbyContent(): Promise<LobbyContent> {
   return {
     banners: orFallback(banners, { welcomeSlides: [], promoCarousel: [], peek: [] }, "banners"),
     games: orFallback(games, { sections: [], slotProviders: [] }, "games"),
+    mostOnline: orFallback(mostOnline, [], "most online"),
     tournaments: orFallback(tournaments, [], "tournaments"),
     announcements: orFallback(announcements, [], "announcements"),
     hallOfFame: orFallback(hallOfFame, EMPTY_HALL_OF_FAME, "hall of fame"),

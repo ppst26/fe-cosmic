@@ -24,8 +24,18 @@
   --cosmic-pagination-border: color-mix(in srgb, var(--border-subtle) 72%, #4a4458);
   --cosmic-pagination-active-bg: color-mix(in srgb, var(--inner-card-fill-hover) 42%, #e4e4ea);
   --cosmic-pagination-active-fg: #1c1c22;
-  /** พื้นหน้า standalone มือถือ — flat neutral (ไม่ทับ nebula .cosmic-bg) */
-  --standalone-page-bg: #141416;
+  /** พื้นหลังหน้า standalone + sticky มือถือ — เทาเข้มเกือบดำ */
+  --standalone-page-bg: #0a0a0c;
+  /** เรืองกลางจอ (layer บน --standalone-page-bg) — .mobile-standalone-page */
+  --standalone-page-bg-radial: radial-gradient(
+    ellipse 95% 72% at 50% 46%,
+    #232326 0%,
+    #1c1c1f 16%,
+    #141416 36%,
+    #0a0a0c 58%,
+    #040405 78%,
+    var(--standalone-page-bg) 100%
+  );
   /** แถบย้อนกลับ + ชื่อหน้า (page-sub-header) มือถือ */
   --page-sub-header-bg: #121014;
   /** แถบประกาศเลื่อน lobby มือถือ — ม่วงเข้มออกเทา · ป้ายเข้ม / marquee อ่อนกว่า */
@@ -67,11 +77,19 @@
     #120f1c 100%
   );
   /**
-   * Bottom sheet มือถือ — พื้นเดียวกับ modal desktop (graphite → ม่วง linear)
+   * Bottom sheet มือถือ — graphite สว่างกว่า modal กลางจอเล็กน้อย (อ่านง่ายบนมือถือ)
    * ใช้กับ .cosmic-mobile-sheet · .sign-up-picker-sheet · ฝาก/ถอน ฯลฯ
    * hub-modal-shell ยัง override พื้นเองใน hub-modals.css
    */
-  --cosmic-mobile-sheet-bg: var(--cosmic-dialog-shell-bg);
+  --cosmic-mobile-sheet-bg: linear-gradient(
+    168deg,
+    #262528 0%,
+    #222124 24%,
+    #1e1d21 46%,
+    #1a191d 62%,
+    #1c1925 78%,
+    #1e1b24 100%
+  );
   /**
    * Header / bottom nav — graphite กลาง (R≈G, ไม่ปนม่วง)
    * ม่วง brand คงที่ chip หมวด active · CTA · progress เท่านั้น
@@ -84,11 +102,11 @@
   --cosmic-mobile-sheet-shadow: 0 -24px 56px rgb(0 0 0 / 0.58);
   --cosmic-mobile-sheet-handle: rgb(255 255 255 / 0.18);
   /**
-   * Inner card ใน bottom sheet — ทึบ อ่อนกว่า shell (--cosmic-dialog-shell-bg ~#131218)
+   * Inner card ใน bottom sheet — ทึบ อ่อนกว่า shell (--cosmic-mobile-sheet-bg ~#1e1d21)
    * ไม่ใช้ gradient/alpha/blur (ลดกระตุก GPU) · class: cosmic-sheet-soft-glass, cosmic-sheet-field, cosmic-choice-btn
    */
-  --sheet-row-fill: #1f1f23;
-  --sheet-row-fill-hover: #27272b;
+  --sheet-row-fill: #2f2f34;
+  --sheet-row-fill-hover: #37373c;
   /** inner card ใน sheet / hub / โปรไฟล์ — alias ของแถว sheet */
   --inner-card-fill: var(--sheet-row-fill);
   --inner-card-fill-hover: var(--sheet-row-fill-hover);
@@ -96,14 +114,14 @@
   --sheet-soft-fill-hover: var(--sheet-row-fill-hover);
   --sheet-soft-border: transparent;
   --sheet-soft-blur: 0px;
-  --sheet-icon-well-fill: #323038;
+  --sheet-icon-well-fill: #383840;
   --sheet-icon-well-border: transparent;
   /** ช่องกรอก — สว่างกว่าแถวเลือกเล็กน้อย */
-  --sheet-field-fill: #28262e;
-  --sheet-field-fill-focus: #302e37;
+  --sheet-field-fill: #35333b;
+  --sheet-field-fill-focus: #3d3b43;
   --sheet-field-border: transparent;
   --sheet-field-border-focus: transparent;
-  --sheet-field-addon-bg: #1f1d24;
+  --sheet-field-addon-bg: #28262d;
   --glass-blur: 20px;          /* ลดจาก 32px — ลด GPU overdraw มือถือ */
   --glass-blur-overlay: 18px;  /* ลดจาก 28px */
   /* Scrim dialog — ไม่ blur (ประหยัด GPU มือถือ) */
@@ -195,14 +213,14 @@
     transparent 100%
   );
   --vip-level-up-bar: var(--vip-bar-gradient);
-  --vip-level-up-percent: var(--text-primary);
+  --vip-level-up-percent: var(--value-emphasis);
   --vip-level-up-label: var(--text-secondary);
   --vip-maintain-bar: var(--vip-bar-gradient);
   --vip-rank-card-accent: #a1a1aa;
-  --vip-rank-metric-complete: var(--success);
-  --vip-benefit-value: #e4e4e7;
-  --vip-benefit-value-muted: var(--text-muted);
-  --vip-benefit-value-success: var(--success);
+  --vip-rank-metric-complete: var(--value-success);
+  --vip-benefit-value: var(--value-reward);
+  --vip-benefit-value-muted: var(--value-muted);
+  --vip-benefit-value-success: var(--value-success);
   /** chip สิทธิประโยชน์ — สลับสองโทนในกริด (เห็นสัดส่วนคอลัมน์) */
   --vip-benefit-cell-a: var(--vip-panel-inner-bg);
   --vip-benefit-cell-b: var(--inner-card-fill-hover);
@@ -210,17 +228,17 @@
    * การ์ดแรงค์ VIP — gradient หน้าการ์ด (ใช้เฉพาะ .vip-rank-stack ใน vip-page.css)
    */
   --vip-rank-card-radius: var(--radius-panel);
-  --vip-rank-card-bg: #161618;
+  --vip-rank-card-bg: #0e0e10;
   --vip-rank-card-top-radial: radial-gradient(
-    ellipse 100% 72% at 50% -8%,
-    rgb(255 255 255 / 0.07) 0%,
-    transparent 54%
+    ellipse 88% 68% at 50% -6%,
+    rgb(255 255 255 / 0.028) 0%,
+    transparent 46%
   );
   --vip-rank-card-face-gradient: linear-gradient(
     165deg,
-    #2a2a2e 0%,
-    #1c1c1f 46%,
-    #101012 100%
+    #1e1e21 0%,
+    #141416 48%,
+    #08080a 100%
   );
   /** chip สิทธิใน .vip-rank-stack — ดำเข้มกว่าหน้าการ์ด */
   --vip-rank-benefit-cell-a: color-mix(in srgb, var(--surface-end) 94%, var(--vip-rank-card-bg) 6%);
@@ -251,6 +269,16 @@
   --category-active-gradient: linear-gradient(110deg, #26205b, #202d65);
   --gold-gradient: linear-gradient(180deg, #ffe66d, #d99a08);
   --success: #41d995;
+  --warning: #e8b339;
+  --value-reward-fg: #f0c14b;
+  --value-emphasis: var(--text-primary);
+  --value-neutral: var(--text-secondary);
+  --value-muted: var(--text-muted);
+  --value-success: var(--success);
+  --value-danger: var(--destructive);
+  --value-warning: var(--warning);
+  --value-reward: var(--value-reward-fg);
+  --value-accent: var(--accent-primary);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -264,6 +292,8 @@
 
   --radius-control: 4px;
   --radius-card: 6px;
+  /** กรอบตาราง solid (.cosmic-data-table-shell) — มุมน้อยกว่า panel */
+  --radius-data-table: 8px;
   /** ช่อง filter · select trigger · ปุ่มค้นหาในแถบฟิลเตอร์ — มุมน้อยเดียวกันทุกหน้า */
   --radius-filter: var(--radius-card);
   /** ปกเกม / thumbnail ค่าย — มุมมนน้อยกว่า panel */

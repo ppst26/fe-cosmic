@@ -19,6 +19,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { VipRankProgressMetric } from "@/app/components/vip/VipRankProgressMetric";
+import { vipMaintainDaysClass } from "@/lib/semanticValue";
 
 
 
@@ -107,9 +108,10 @@ export function VipMaintainRankPanel({
         <div className="shrink-0 text-right">
 
           <span
-
-            className="vip-maintain-rank-panel__days block text-2xl font-medium tabular-nums leading-none sm:text-[1.75rem]"
-
+            className={vipMaintainDaysClass(
+              maintain.daysRemaining,
+              "vip-maintain-rank-panel__days block text-2xl leading-none sm:text-[1.75rem]",
+            )}
           >
 
             {maintain.daysRemaining}

@@ -3,6 +3,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { formatVipAmount, formatVipCompactAmount } from "@/lib/format";
+import { valueClass } from "@/lib/semanticValue";
 
 export interface VipRankProgressMetricProps {
   label: string;
@@ -41,9 +42,9 @@ export function VipRankProgressMetric({
           )}
           <span className="vip-rank-metric__label shrink-0 text-sm font-medium">{label}</span>
         </div>
-        <p className="vip-rank-metric__values min-w-0 text-right text-xs tabular-nums sm:text-sm">
-          <span className="font-medium text-[var(--text-primary)]">{formatAmount(progress)}</span>
-          <span className="text-[var(--text-secondary)]"> / {formatAmount(target)}</span>
+        <p className="vip-rank-metric__values min-w-0 text-right text-xs sm:text-sm">
+          <span className={valueClass("emphasis")}>{formatAmount(progress)}</span>
+          <span className={valueClass("neutral")}> / {formatAmount(target)}</span>
         </p>
       </div>
       <div
@@ -67,7 +68,12 @@ export function VipRankProgressMetric({
         {locked ? (
           <span className="text-[var(--text-secondary)]">เป้า {formatAmount(target)}</span>
         ) : complete ? (
-          <span className="vip-rank-metric__complete inline-flex items-center justify-end gap-1">
+          <span
+            className={valueClass(
+              "success",
+              "vip-rank-metric__complete inline-flex items-center justify-end gap-1",
+            )}
+          >
             <CheckMiniIcon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             ครบแล้ว
           </span>

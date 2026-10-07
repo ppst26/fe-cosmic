@@ -235,7 +235,7 @@
   font-size: 1.375rem;
   font-weight: 500;
   line-height: 1.1;
-  color: var(--accent-primary);
+  color: var(--value-reward);
   font-variant-numeric: tabular-nums;
 }
 

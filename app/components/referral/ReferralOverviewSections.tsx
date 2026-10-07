@@ -1,14 +1,13 @@
 "use client";
 
 import React from "react";
-import { CopyIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
+import { CopyIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_CONFIRM_INLINE,
   COSMIC_BTN_CONFIRM_TEXT,
-  COSMIC_PANEL_GLASS_ICON,
-  COSMIC_PANEL_SOLID,
   COSMIC_SHEET_FIELD_ROW,
 } from "../ui/cosmicButtonClasses";
+import { Menu3DIcon } from "../ui/Menu3DIcon";
 import { buildReferralLink } from "@/lib/domain/referral";
 import { formatReferralCount, formatReferralCurrency } from "@/lib/format";
 import type { ReferralStatsMock } from "@/app/types/referral";
@@ -156,10 +155,9 @@ export function ReferralStatsSection({
   flat?: boolean;
   variant?: "default" | "hub";
 }) {
-  const gridClass =
-    layout === "stack"
-      ? "grid grid-cols-1 gap-2"
-      : "grid grid-cols-1 gap-2.5 sm:grid-cols-3";
+  const isStack = layout === "stack";
+  const gridClass = isStack ? "grid grid-cols-1 gap-2" : "grid grid-cols-3 gap-2 sm:gap-2.5";
+  const cardOrientation = isStack ? "row" : "column";
 
   return (
     <section>
@@ -174,32 +172,28 @@ export function ReferralStatsSection({
         <StatCard
           flat={flat}
           emphasized={variant === "hub"}
-          icon={<UsersGroupIcon className="h-5 w-5 text-[var(--border-active)]" />}
+          orientation={cardOrientation}
+          iconId="referral"
           label="เพื่อนที่สมัคร"
           value={formatReferralCount(stats.friendsCount)}
         />
         <StatCard
           flat={flat}
           emphasized={variant === "hub"}
-          icon={<WalletCryptoIcon className="h-5 w-5 text-[var(--border-active)]" />}
+          orientation={cardOrientation}
+          iconId="transactions"
           label="ยอดเล่นรวม"
           value={formatReferralCurrency(stats.totalTurnoverThb)}
-          valueClassName="text-[var(--success)]"
+          valueClassName="cosmic-value cosmic-value--emphasis"
         />
         <StatCard
           flat={flat}
           emphasized={variant === "hub"}
-          icon={
-            <svg viewBox="0 0 24 24" className="h-5 w-5 text-[var(--border-active)]" aria-hidden="true">
-              <path
-                d="M4 18V6h16v12H4Zm2-2h12V8H6v8Zm2-6h2v4H8v-4Zm4 0h4v4h-4v-4Z"
-                fill="currentColor"
-              />
-            </svg>
-          }
+          orientation={cardOrientation}
+          iconId="cashback"
           label="รายได้สะสม"
           value={formatReferralCurrency(stats.totalEarningsThb)}
-          valueClassName="text-[var(--text-primary)]"
+          valueClassName="cosmic-value cosmic-value--reward"
         />
       </div>
     </section>
@@ -207,37 +201,55 @@ export function ReferralStatsSection({
 }
 
 function StatCard({
-  icon,
+  iconId,
   label,
   value,
-  valueClassName = "text-[var(--text-primary)]",
+  valueClassName = "cosmic-value cosmic-value--neutral",
   flat = false,
   emphasized = false,
+  orientation = "row",
 }: {
-  icon: React.ReactNode;
+  iconId: string;
   label: string;
   value: string;
   valueClassName?: string;
   flat?: boolean;
   emphasized?: boolean;
+  orientation?: "row" | "column";
 }) {
+  const isColumn = orientation === "column";
+  const iconSize = emphasized ? 44 : 40;
+  const iconEl = (
+    <Menu3DIcon
+      iconId={iconId}
+      size={iconSize}
+      className={emphasized ? "h-11 w-11" : "h-10 w-10"}
+    />
+  );
+
   return (
     <div
-      className={`flex items-center gap-3 ${emphasized ? "py-3.5" : "py-3"} ${
-        flat ? "referral-stat-row border-b border-[var(--border-subtle)]/45 px-0 last:border-b-0" : `${COSMIC_PANEL_SOLID} px-3`
-      }`}
+      className={
+        flat
+          ? `referral-stat-row flex items-center gap-3 border-b border-[var(--border-subtle)]/45 px-0 last:border-b-0 ${
+              emphasized ? "py-3.5" : "py-3"
+            }`
+          : isColumn
+            ? "flex min-w-0 flex-col items-center gap-1.5 px-1 py-1 text-center sm:gap-2"
+            : `flex items-center gap-3 ${emphasized ? "py-3.5" : "py-3"}`
+      }
     >
-      <div className={emphasized ? `${COSMIC_PANEL_GLASS_ICON} !h-11 !w-11` : COSMIC_PANEL_GLASS_ICON}>
-        {icon}
-      </div>
-      <div className="min-w-0">
+      {iconEl}
+      <div className={isColumn ? "min-w-0 w-full" : "min-w-0"}>
         <p
-          className={`text-[var(--text-secondary)] ${emphasized ? "text-sm" : "text-xs"}`}
+          className={`leading-snug text-[var(--text-secondary)] ${
+            emphasized ? "text-sm" : isColumn ? "text-[10px] sm:text-xs" : "text-xs"
+          }`}
         >
           {label}
         </p>
         <p
-          className={`font-medium tabular-nums ${emphasized ? "text-lg" : "text-sm"} ${valueClassName}`}
+          className={`mt-0.5 tabular-nums ${emphasized ? "text-lg" : isColumn ? "text-xs sm:text-sm" : "text-sm"} ${valueClassName}`}
         >
           {value}
         </p>

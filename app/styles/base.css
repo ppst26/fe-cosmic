@@ -114,6 +114,44 @@ body {
 }
 
 @layer components {
+  /** ตัวเลข / เปอร์เซ็นต์ / สถานะ — ดู design.md § Semantic values */
+  .cosmic-value {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  .cosmic-value--emphasis {
+    color: var(--value-emphasis);
+  }
+
+  .cosmic-value--neutral {
+    color: var(--value-neutral);
+  }
+
+  .cosmic-value--muted {
+    color: var(--value-muted);
+  }
+
+  .cosmic-value--success {
+    color: var(--value-success);
+  }
+
+  .cosmic-value--danger {
+    color: var(--value-danger);
+  }
+
+  .cosmic-value--warning {
+    color: var(--value-warning);
+  }
+
+  .cosmic-value--reward {
+    color: var(--value-reward);
+  }
+
+  .cosmic-value--accent {
+    color: var(--value-accent);
+  }
+
   .cosmic-type-section-title {
     @apply text-lg font-medium leading-snug text-text-primary md:text-xl;
   }

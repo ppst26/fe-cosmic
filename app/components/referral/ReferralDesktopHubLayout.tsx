@@ -16,6 +16,7 @@ import {
   ReferralStatsSection,
 } from "./ReferralOverviewSections";
 import { formatReferralCurrency } from "@/lib/format";
+import { valueClass } from "@/lib/semanticValue";
 import { filterReferralEarningHistoryByPeriod } from "@/lib/domain/referral";
 import type { ReferralEarningPeriodId } from "@/app/types/referral";
 
@@ -107,7 +108,7 @@ function ReferralDesktopHubContent({
         >
           <div>
             <p className="text-sm font-medium text-[var(--text-secondary)]">รายได้ที่รับได้</p>
-            <p className="mt-1.5 text-3xl font-medium tabular-nums text-[var(--accent-highlight)]">
+            <p className={valueClass("reward", "mt-1.5 text-3xl")}>
               {formatReferralCurrency(claimable)}
             </p>
           </div>

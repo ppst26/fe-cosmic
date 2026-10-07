@@ -50,7 +50,9 @@ export function StandaloneSubHeader({
         </Link>
 
         {/* ชื่อหน้า กึ่งกลาง */}
-        <h1 className="absolute left-1/2 -translate-x-1/2 text-lg font-semibold tracking-tight text-white sm:text-xl select-none pointer-events-none truncate max-w-[70%] text-center leading-none">
+        <h1
+          className="page-sub-header__title absolute left-1/2 max-w-[70%] -translate-x-1/2 truncate text-center text-white select-none pointer-events-none"
+        >
           {title}
         </h1>
 

@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { useWheel } from "@/app/hooks/api/member";
 import type { WheelPrizeHistoryRow, WheelSpinMethod } from "@/app/types/reward";
+import { valueClass } from "@/lib/semanticValue";
 
 interface LuckyWheelPrizeHistoryProps {
   extraRows?: WheelPrizeHistoryRow[];
@@ -66,7 +67,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-white/90">
                 <DiamondSmallIcon />
               </span>
-              <span>{row.amount} {row.prizeName}</span>
+              <span className={valueClass("reward")}>{row.amount} {row.prizeName}</span>
             </div>
             <div className="flex w-20 shrink-0 items-center justify-end gap-1 text-[var(--text-secondary)] text-xs">
               <DiamondOutlineSmallIcon />

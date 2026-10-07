@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useWheel } from "@/app/hooks/api/member";
+import { valueClass } from "@/lib/semanticValue";
 
 /**
  * รายการผู้เล่นคนอื่นได้รับรางวัล — ดีไซน์การ์ดมนตามภาพตัวอย่าง
@@ -51,7 +52,7 @@ export function LuckyWheelLiveWinners() {
               </span>
               <span>
                 ได้รับ{" "}
-                <span className="font-medium text-purple-300">
+                <span className={valueClass("accent")}>
                   {entry.gemsAmount.toFixed(2)} เพชร
                 </span>
               </span>

@@ -16,6 +16,7 @@ import {
   COSMIC_PANEL_GLASS,
 } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
+import { valueClass } from "@/lib/semanticValue";
 import { formatGemsBalance, formatGemsCredits } from "@/lib/format";
 import type { GemsStorePackage } from "@/app/types/reward";
 
@@ -196,7 +197,9 @@ function GemsRedeemCard({
           <span className="gems-store-redeem-card__cost-icon" aria-hidden="true">
             <Image src={gemAsset} alt="" fill sizes="14px" className="object-contain" />
           </span>
-          <span className="gems-store-redeem-card__cost-value tabular-nums">{formatGemsBalance(pkg.gemsCost)}</span>
+          <span className={valueClass("accent", "gems-store-redeem-card__cost-value")}>
+            {formatGemsBalance(pkg.gemsCost)}
+          </span>
         </p>
       </div>
       <button

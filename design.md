@@ -140,6 +140,23 @@ Cosmicbet ใช้โลโก้และ copy ของแบรนด์ต�
 - **ห้าม** `font-size` / `font-weight` ใน feature CSS (`app/styles/*.css` ยกเว้น `base.css`, `tokens.css`, `buttons.css` และ edge case เช่น mock/debug label, icon-only)
 - ไล่ refactor ตามโดเมน: **lobby** → **hub** → **lottery** (ดูสถานะใน `.cursor/rules/typography.mdc`)
 
+### Semantic values (ตัวเลข / สถานะ)
+
+ใช้ **role** ตามความหมายของข้อมูล ไม่ใช่ขนาดฟอนต์ · token ใน `app/styles/tokens.css` (`--value-*`) · class `cosmic-value` + `cosmic-value--{role}` ใน `app/styles/base.css` · helper `lib/semanticValue.ts`
+
+| Role | Token | ใช้เมื่อ |
+| :--- | :--- | :--- |
+| emphasis | `--value-emphasis` | ตัวเลขสำคัญไม่บอกทิศทาง (% ความคืบหน้ารวม, ยอดหลัก) |
+| neutral | `--value-neutral` | ตัวเลขในตารางทั่วไป, ยอดเดิมพันรวม |
+| muted | `--value-muted` | `—` / ไม่มีค่า |
+| success | `--value-success` | สำเร็จ, ครบเงื่อนไข, กำไร |
+| danger | `--value-danger` | ล้มเหลว, ขาดทุน |
+| warning | `--value-warning` | รอดำเนินการ, วันคงเหลือ 0 |
+| reward | `--value-reward` | % สิทธิ/cashback, payout ชนะ (solid gold ไม่ gradient text) |
+| accent | `--value-accent` | เพชร/gems, promo +% |
+
+นโยบายเริ่มต้น: cashback/rolling % → reward; เพชรจากฝาก +% → accent; สถานะธุรกรรม pending → warning (ไม่ใช่ secondary)
+
 ---
 
 ## 5. Layout และ responsive

@@ -7,6 +7,7 @@ import {
   VIP_BENEFIT_COMPARISON_VALUES,
 } from "@/app/data/vipMockData";
 import { cn } from "@/lib/utils";
+import { vipBenefitValueClass } from "@/lib/semanticValue";
 
 /** สิทธิ์ในแท็บระดับของฉัน — ตรงตารางสิทธิประโยชน์ */
 const MY_LEVEL_BENEFIT_ROWS: { id: string; label: string }[] = [
@@ -62,9 +63,10 @@ export function VipMyLevelBenefitsCard({
                   {row.label}
                 </span>
                 <p
-                  className={cn(
-                    "vip-my-level-benefits__value shrink-0 text-right text-lg font-semibold leading-none tabular-nums sm:text-xl",
-                    benefitValueTone(value),
+                  className={vipBenefitValueClass(
+                    row.id,
+                    value,
+                    "vip-my-level-benefits__value shrink-0 text-right text-lg font-medium leading-none sm:text-xl",
                   )}
                 >
                   {value}
@@ -121,17 +123,6 @@ export function VipMyLevelBenefitsCard({
       </div>
     </section>
   );
-}
-
-function benefitValueTone(value: string): string {
-  const normalized = value.trim();
-  if (normalized === "—" || normalized === "-" || normalized === "–") {
-    return "vip-my-level-benefits__value--muted";
-  }
-  if (normalized.includes("✓") || normalized.includes("✔")) {
-    return "vip-my-level-benefits__value--success";
-  }
-  return "";
 }
 
 function BenefitRowIcon({ rowId, className: extraClass }: { rowId: string; className?: string }) {

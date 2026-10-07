@@ -7,6 +7,7 @@ import { COSMIC_BTN_PRIMARY } from "@/app/components/ui/cosmicButtonClasses";
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { responsiveSheetCloseButtonClass } from "@/app/components/ui/responsiveSheetDialog";
 import { formatCheckInCredits } from "@/lib/format";
+import { valueClass } from "@/lib/semanticValue";
 
 export interface DailyCheckInClaimSuccessDialogProps {
   open: boolean;
@@ -67,7 +68,7 @@ export function DailyCheckInClaimSuccessDialog({
               id="daily-check-in-claim-success-desc"
               className="mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)]"
             >
-              คุณได้รับ <span className="font-medium text-[#c4b5fd]">{rewardLabel}</span> แล้ว
+              คุณได้รับ <span className={valueClass("accent")}>{rewardLabel}</span> แล้ว
             </p>
           </div>
 

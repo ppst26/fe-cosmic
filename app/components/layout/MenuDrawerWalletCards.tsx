@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { formatGemsBalance, formatHeaderWalletBalance, formatNumber } from "@/lib/format";
+import { valueClass } from "@/lib/semanticValue";
 
 const MENU_TICKET_ICON_SRC = getMenuIconSrc("ticket") ?? "/assets/3d/menuicon/lottery.avif";
 
@@ -40,7 +41,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
         <span className="text-[11px] font-medium leading-tight text-[var(--text-secondary)] sm:text-xs">
           ยอดเงินในเกม
         </span>
-        <p className="text-2xl font-medium tabular-nums leading-none text-white sm:text-[1.75rem]">
+        <p className={valueClass("emphasis", "text-2xl leading-none sm:text-[1.75rem]")}>
           {balanceLabel}
         </p>
       </div>
@@ -56,7 +57,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
         <span className="text-[11px] font-medium leading-tight text-[var(--text-secondary)] sm:text-xs">
           เพชร
         </span>
-        <p className="text-2xl font-medium tabular-nums leading-none text-white sm:text-[1.75rem]">
+        <p className={valueClass("accent", "text-2xl leading-none sm:text-[1.75rem]")}>
           {gemsLabel}
         </p>
       </div>
@@ -72,7 +73,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
         <span className="text-[11px] font-medium leading-tight text-[var(--text-secondary)] sm:text-xs">
           ตั๋ว
         </span>
-        <p className="text-2xl font-medium tabular-nums leading-none text-white sm:text-[1.75rem]">
+        <p className={valueClass("emphasis", "text-2xl leading-none sm:text-[1.75rem]")}>
           {ticketLabel}
         </p>
       </div>
