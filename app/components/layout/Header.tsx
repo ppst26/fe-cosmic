@@ -103,17 +103,17 @@ export function Header({
         )}
       >
           <div className="relative mx-auto flex h-11 w-full max-w-(--content-max) items-center justify-between">
-            {/* ซ้าย: ไอคอนเมนู (หลังล็อกอิน) — ไม่มี card ครอบ */}
-            {showWallet ? (
-              <div className="relative z-10 flex shrink-0 items-center gap-0.5">
-                <button
-                  type="button"
-                  onClick={handleMenuClick}
-                  className="flex h-9.5 w-9.5 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
-                  aria-label="เปิดเมนู"
-                >
-                  <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
-                </button>
+            {/* ซ้าย: แฮมเบอร์เกอร์ (ทุกสถานะ) · โปรไฟล์เมื่อล็อกอิน */}
+            <div className="relative z-10 flex shrink-0 items-center gap-0.5">
+              <button
+                type="button"
+                onClick={handleMenuClick}
+                className="flex h-9.5 w-9.5 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
+                aria-label="เปิดเมนู"
+              >
+                <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
+              </button>
+              {showWallet ? (
                 <Link
                   href="/profile/account"
                   className={cn(
@@ -130,19 +130,12 @@ export function Header({
                     className="ring-0"
                   />
                 </Link>
-              </div>
-            ) : (
-              <div className="w-0 shrink-0" aria-hidden="true" />
-            )}
+              ) : null}
+            </div>
 
             {/* กลาง: โลโก้ */}
             <div
-              className={cn(
-                "pointer-events-auto",
-                showWallet
-                  ? "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                  : "mx-auto"
-              )}
+              className="pointer-events-auto absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             >
               <Link
                 href="/"
@@ -175,7 +168,7 @@ export function Header({
                 />
               </div>
             ) : (
-              <div className="w-0 shrink-0" aria-hidden="true" />
+              <div className="h-9.5 w-9.5 shrink-0" aria-hidden="true" />
             )}
         </div>
       </header>

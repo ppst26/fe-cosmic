@@ -116,3 +116,37 @@
     mask-image: none;
   }
 }
+
+/** มือถือก่อนล็อกอิน — ลดระยะ promo · marquee · ปุ่ม auth (HomeLobbyPage) */
+.lobby-mobile-guest-stack {
+  --lobby-announcement-mobile-spacing-y: 0.375rem;
+}
+
+.lobby-mobile-guest-stack .promo-carousel {
+  padding-bottom: var(--lobby-announcement-mobile-spacing-y);
+}
+
+.lobby-mobile-guest-stack .lobby-announcement-marquee--mobile {
+  margin-bottom: var(--lobby-announcement-mobile-spacing-y);
+}
+
+.lobby-mobile-guest-stack .lobby-announcement-marquee--mobile .lobby-announcement-marquee__lead {
+  padding: 0.3125rem 0.5rem;
+}
+
+.lobby-mobile-guest-stack .lobby-announcement-marquee--mobile .lobby-announcement-marquee__viewport {
+  padding-block: 0.3125rem;
+  padding-inline: 0.5rem 0.3125rem;
+}
+
+.lobby-mobile-guest-stack .auth-actions {
+  margin-top: 0.5rem;
+  padding-top: 0;
+  gap: 0.5rem;
+}
+
+.lobby-mobile-guest-stack .auth-actions--soft .auth-btn {
+  min-height: 2.5rem;
+  padding-inline: 0.625rem;
+  font-size: 0.8125rem;
+}

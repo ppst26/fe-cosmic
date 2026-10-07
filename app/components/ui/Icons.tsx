@@ -490,23 +490,15 @@ export function SaturnIcon({ className = "w-16 h-16" }: { className?: string }) 
 }
 
 /**
- * ไอคอนเมนูแฮมเบอร์ger — ใช้ใน Header ด้านขวา
+ * ไอคอนเมนูแฮมเบอร์เกอร์ 3 เส้น — เคลื่อนไหวตลอด (Header.tsx)
  */
 export function HamburgerMenuIcon({ className = "w-6 h-6" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <line x1="4" y1="7" x2="20" y2="7" />
-      <line x1="4" y1="12" x2="20" y2="12" />
-      <line x1="4" y1="17" x2="20" y2="17" />
-    </svg>
+    <span className={`hamburger-menu-icon ${className ?? ""}`.trim()} aria-hidden="true">
+      <span className="hamburger-menu-icon__line" />
+      <span className="hamburger-menu-icon__line" />
+      <span className="hamburger-menu-icon__line" />
+    </span>
   );
 }
 

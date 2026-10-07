@@ -58,7 +58,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const renderGuestAuthActions = (enterIndex: number, withEnterAnimation = true) => (
     <div
       className={cn(
-        "menu-drawer-guest-auth flex w-full shrink-0 flex-col gap-2.5",
+        "menu-drawer-guest-auth grid w-full shrink-0 grid-cols-2 gap-2.5",
         withEnterAnimation && "menu-enter-item",
       )}
       style={withEnterAnimation ? ({ "--menu-enter-i": enterIndex } as React.CSSProperties) : undefined}
@@ -293,8 +293,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         {isAuthenticated ? (
           <MenuDrawerUserAvatar />
         ) : (
-          <div className="menu-drawer-guest-brand menu-enter-logo flex shrink-0 justify-center pb-0.5 pt-0.5">
-            <CosmicbetLogo className="h-7 w-auto max-w-[min(72vw,168px)] object-contain" />
+          <div className="menu-drawer-guest-brand menu-enter-logo flex shrink-0 justify-center">
+            <CosmicbetLogo className="menu-drawer-guest-brand__logo h-7 w-auto max-w-[min(72vw,168px)] object-contain" />
           </div>
         )}
 

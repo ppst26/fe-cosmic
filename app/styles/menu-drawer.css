@@ -827,13 +827,20 @@
 /** ก่อนล็อกอิน — โลโก้บน · ปุ่มสมัคร/เข้าสู่ระบบล่าง (RightMenuDrawer) */
 .menu-drawer-guest-brand {
   width: 100%;
+  padding-top: clamp(0.5rem, 2dvh, 0.85rem);
+  padding-bottom: clamp(0.85rem, 3.2dvh, 1.25rem);
+  margin-bottom: clamp(0.15rem, 0.8dvh, 0.35rem);
+}
+
+.menu-drawer-guest-brand__logo {
+  display: block;
 }
 
 /** ช่องว่างกลางจอ — ปุ่มสมัคร/ล็อกอิน (ใต้ grid เมนู) */
 .menu-drawer-guest-auth-slot {
   width: 100%;
-  min-height: clamp(7rem, 24dvh, 11.5rem);
-  padding-block: clamp(0.65rem, 3.5dvh, 1.5rem);
+  min-height: 0;
+  padding-block: clamp(0.5rem, 2.5dvh, 1rem);
 }
 
 .menu-drawer-guest-auth-slot .menu-drawer-guest-auth {
