@@ -22,10 +22,10 @@ interface WelcomeBannerProps {
  */
 export function WelcomeBanner({ items }: WelcomeBannerProps) {
   const loopEnabled = items.length > 1;
-  const sectionRef = useRef<HTMLElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollJumpLockRef = useRef(false);
-  const advanceFromAutoplayRef = useRef(false);
+  const snapRestoreTimerRef = useRef<number | null>(null);
+  const scrollAnimRef = useRef<number | null>(null);
 
   const trackSlides = useMemo((): TrackEntry[] => {
     if (!loopEnabled) {
@@ -76,8 +76,53 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
       const stride = getSlideStride();
       if (!container || stride <= 0) return;
       const clamped = Math.min(Math.max(index, 0), trackSlides.length - 1);
-      container.scrollTo({ left: clamped * stride, behavior });
+      const left = clamped * stride;
+
+      if (scrollAnimRef.current !== null) {
+        window.cancelAnimationFrame(scrollAnimRef.current);
+        scrollAnimRef.current = null;
+      }
+      if (snapRestoreTimerRef.current !== null) {
+        window.clearTimeout(snapRestoreTimerRef.current);
+      }
+
+      container.style.scrollSnapType = "none";
+      container.style.scrollBehavior = "auto";
+
+      const finish = () => {
+        reconcileRef.current();
+        snapRestoreTimerRef.current = window.setTimeout(() => {
+          container.style.scrollSnapType = "";
+          container.style.scrollBehavior = "";
+          snapRestoreTimerRef.current = null;
+        }, 40);
+      };
+
+      if (behavior === "auto" || Math.abs(container.scrollLeft - left) < 1) {
+        container.scrollLeft = left;
+        setTrackIndex(clamped);
+        finish();
+        return;
+      }
+
+      const start = container.scrollLeft;
+      const delta = left - start;
+      const duration = 420;
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - t0) / duration);
+        const eased = 1 - (1 - t) * (1 - t);
+        container.scrollLeft = start + delta * eased;
+        if (t < 1) {
+          scrollAnimRef.current = window.requestAnimationFrame(step);
+          return;
+        }
+        scrollAnimRef.current = null;
+        container.scrollLeft = left;
+        finish();
+      };
       setTrackIndex(clamped);
+      scrollAnimRef.current = window.requestAnimationFrame(step);
     },
     [getSlideStride, trackSlides.length],
   );
@@ -101,7 +146,8 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
     if (index <= 0) {
       scrollJumpLockRef.current = true;
       const jumpTo = items.length;
-      container.scrollTo({ left: jumpTo * stride, behavior: "auto" });
+      container.style.scrollSnapType = "none";
+      container.scrollLeft = jumpTo * stride;
       setTrackIndex(jumpTo);
       window.requestAnimationFrame(() => {
         scrollJumpLockRef.current = false;
@@ -111,7 +157,8 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
 
     if (index >= trackSlides.length - 1) {
       scrollJumpLockRef.current = true;
-      container.scrollTo({ left: stride, behavior: "auto" });
+      container.style.scrollSnapType = "none";
+      container.scrollLeft = stride;
       setTrackIndex(1);
       window.requestAnimationFrame(() => {
         scrollJumpLockRef.current = false;
@@ -124,11 +171,12 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
 
   const trackIndexRef = useRef(0);
   trackIndexRef.current = trackIndex;
+  const reconcileRef = useRef(reconcileLoopScroll);
+  reconcileRef.current = reconcileLoopScroll;
 
   const { pauseFor } = useCarouselAutoplay(loopEnabled, () => {
-    advanceFromAutoplayRef.current = true;
     scrollToTrackIndex(trackIndexRef.current + 1);
-  }, { rootRef: sectionRef });
+  });
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -137,25 +185,24 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
     const initialIndex = loopEnabled ? 1 : 0;
     scrollToTrackIndex(initialIndex, "auto");
 
+    let settleTimer: number | undefined;
     const onScroll = () => {
-      if (!scrollJumpLockRef.current && !advanceFromAutoplayRef.current) {
-        pauseFor(12_000);
-      }
-      advanceFromAutoplayRef.current = false;
       const stride = getSlideStride();
       if (stride > 0 && !scrollJumpLockRef.current) {
         const index = getTrackIndexFromScroll();
         const clamped = Math.min(Math.max(index, 0), trackSlides.length - 1);
         setTrackIndex(clamped);
       }
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(() => {
+        reconcileLoopScroll();
+      }, 140);
     };
 
-    const onScrollEnd = () => {
-      reconcileLoopScroll();
-    };
-
+    const pauseFromUser = () => pauseFor(12_000);
     container.addEventListener("scroll", onScroll, { passive: true });
-    container.addEventListener("scrollend", onScrollEnd);
+    container.addEventListener("pointerdown", pauseFromUser);
+    container.addEventListener("wheel", pauseFromUser, { passive: true });
 
     const observer = new ResizeObserver(() => {
       const index = loopEnabled
@@ -166,8 +213,10 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
     observer.observe(container);
 
     return () => {
+      window.clearTimeout(settleTimer);
       container.removeEventListener("scroll", onScroll);
-      container.removeEventListener("scrollend", onScrollEnd);
+      container.removeEventListener("pointerdown", pauseFromUser);
+      container.removeEventListener("wheel", pauseFromUser);
       observer.disconnect();
     };
   }, [
@@ -187,7 +236,6 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
 
   return (
     <section
-      ref={sectionRef}
       className="welcome-banner lobby-carousel-bleed relative my-0 w-full min-w-0 sm:my-2"
       aria-label="แบนเนอร์ต้อนรับและโปรโมชัน"
     >

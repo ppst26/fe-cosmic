@@ -37,6 +37,8 @@ export function useCarouselAutoplay(
     if (reducedMq.matches) return;
 
     const root = rootRef?.current ?? null;
+    const hoverPause =
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches && root;
 
     const pauseHover = () => {
       hoverPausedRef.current = true;
@@ -45,10 +47,10 @@ export function useCarouselAutoplay(
       hoverPausedRef.current = false;
     };
 
-    root?.addEventListener("pointerenter", pauseHover);
-    root?.addEventListener("pointerleave", resumeHover);
-    root?.addEventListener("focusin", pauseHover);
-    root?.addEventListener("focusout", resumeHover);
+    if (hoverPause) {
+      root.addEventListener("pointerenter", pauseHover);
+      root.addEventListener("pointerleave", resumeHover);
+    }
 
     const onVisibility = () => {
       if (document.visibilityState === "visible") {
@@ -67,10 +69,10 @@ export function useCarouselAutoplay(
 
     return () => {
       window.clearInterval(id);
-      root?.removeEventListener("pointerenter", pauseHover);
-      root?.removeEventListener("pointerleave", resumeHover);
-      root?.removeEventListener("focusin", pauseHover);
-      root?.removeEventListener("focusout", resumeHover);
+      if (hoverPause) {
+        root.removeEventListener("pointerenter", pauseHover);
+        root.removeEventListener("pointerleave", resumeHover);
+      }
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [enabled, intervalMs, pauseFor, rootRef]);
