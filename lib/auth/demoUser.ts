@@ -1,6 +1,7 @@
 import type { StoredUser } from "@/app/types/auth";
+import { DEMO_LOGIN_PHONE } from "./demoCredentials";
 
-const DEMO_PHONE = "0999999999";
+const DEMO_PHONE = DEMO_LOGIN_PHONE;
 
 /**
  * เปิดบัญชีเดโมไหม — dev เปิดเสมอ · production ต้องตั้ง AUTH_ENABLE_DEMO_USER=1 เอง (ค่าเริ่มต้นปิด)
@@ -21,8 +22,9 @@ export const DEMO_USER: StoredUser = {
   bankAccountNumber: "1234567890",
   bankId: "scb",
   channelId: "facebook",
+  /** hash ของ DEMO_LOGIN_PASSWORD (demo1234) — scrypt salt:hash */
   passwordHash:
-    "73c43eb2b9122e30a7a50a39bcdf8a7a:83a4d0c3c940a32fb8c8a6b1784e73b2f7a4a981301696af8f9669b9880c9519a06c37155a69d1be4ea77586a1326abf1eb74faa7630bbebfdea8f4bc1815045",
+    "35d232d831f80bda204063593b4214f0:0d4b3fd191c31dc420c6f701fa511bd8c1df974defb94c30438f4eb7d24e4b595573b50f41e950a3488bfc4bfb8cfc8c30b95a193153ae3457cd9dd5dc18b669",
   createdAt: "2026-10-01T00:00:00.000Z",
   avatarPresetId: "avatar-1",
 };

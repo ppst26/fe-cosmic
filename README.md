@@ -35,7 +35,7 @@ pnpm dev          # http://localhost:3000
 | `NEXT_PUBLIC_SITE_URL` | `lib/domain/referral.ts` | URL เว็บจริง สำหรับลิงก์ชวนเพื่อนตอน SSR |
 | `NEXT_PUBLIC_IMAGE_HOSTS` | `next.config.ts` | origin รูปจาก CDN สำหรับ `next/image` (คั่นด้วย comma) · origin ของ API ถูกเพิ่มให้อัตโนมัติ |
 | `AUTH_SESSION_SECRET` | `lib/auth/session.ts` | secret เซ็น cookie ของ mock auth · **production ต้องตั้ง ≥ 32 ตัวอักษร ไม่งั้น login error** (dev ใช้ค่า fallback) |
-| `AUTH_ENABLE_DEMO_USER` | `lib/auth/demoUser.ts` | `1` = เปิดบัญชีเดโมบน production (ค่าเริ่มต้นปิด · dev เปิดเสมอ) |
+| `AUTH_ENABLE_DEMO_USER` | `lib/auth/demoUser.ts` | `1` = เปิดบัญชีเดโมบน production (ค่าเริ่มต้นปิด · dev เปิดเสมอ) · เบอร์ `0999999999` / รหัส `demo1234` |
 
 ## ข้อมูลตอนนี้เป็น mock — ต่อ API จริงตรงไหน
 
