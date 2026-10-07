@@ -26,8 +26,7 @@ import {
   COSMIC_SHEET_FIELD_ROW,
   COSMIC_SHEET_SOFT_GLASS,
   COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
-  COSMIC_BTN_CONFIRM_TEXT,
-  COSMIC_SHEET_SUBMIT,
+  COSMIC_BTN_PRIMARY,
 } from "../ui/cosmicButtonClasses";
 import { formatDepositAmount, formatDepositTransferAmount } from "@/lib/format";
 import type { DepositMethodId } from "@/app/types/wallet";
@@ -439,9 +438,9 @@ function DepositBankStep({
           type="button"
           disabled={!canProceed}
           onClick={onNext}
-          className={COSMIC_SHEET_SUBMIT}
+          className={COSMIC_BTN_PRIMARY}
         >
-          <span className={COSMIC_BTN_CONFIRM_TEXT}>ถัดไป</span>
+          ถัดไป
         </button>
       </div>
     </>
@@ -578,11 +577,9 @@ function DepositConfirmStep({
           type="button"
           disabled={submitting}
           onClick={onConfirm}
-          className={COSMIC_SHEET_SUBMIT}
+          className={COSMIC_BTN_PRIMARY}
         >
-          <span className={COSMIC_BTN_CONFIRM_TEXT}>
-            {submitting ? "กำลังส่ง..." : "ยืนยันการฝากเงิน"}
-          </span>
+          {submitting ? "กำลังส่ง..." : "ยืนยันการฝากเงิน"}
         </button>
       </div>
     </>

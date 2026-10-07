@@ -2,12 +2,9 @@
 
 import React from "react";
 import { CopyIcon } from "../ui/Icons";
-import {
-  COSMIC_BTN_CONFIRM_INLINE,
-  COSMIC_BTN_CONFIRM_TEXT,
-  COSMIC_SHEET_FIELD_ROW,
-} from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_PRIMARY, COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import { Menu3DIcon } from "../ui/Menu3DIcon";
+import { useToast } from "@/context/ToastContext";
 import { buildReferralLink } from "@/lib/domain/referral";
 import { formatReferralCount, formatReferralCurrency } from "@/lib/format";
 import type { ReferralStatsMock } from "@/app/types/referral";
@@ -96,18 +93,24 @@ export function ReferralPromoBanner({
  */
 export function ReferralLinkSection({
   refCode,
-  copied,
-  onCopy,
   variant = "default",
 }: {
   refCode: string;
-  copied: boolean;
-  onCopy: (link: string) => void;
   /** desktop hub modal — ตัวอักษรใหญ่ขึ้น */
   variant?: "default" | "hub";
 }) {
+  const { showToast } = useToast();
   const referralLink = buildReferralLink(refCode);
   const isHub = variant === "hub";
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(referralLink);
+      showToast("คัดลอกลิงก์แล้ว", "success", 2500);
+    } catch {
+      showToast("ไม่สามารถคัดลอกลิงก์ได้", "error");
+    }
+  };
 
   return (
     <section>
@@ -126,15 +129,13 @@ export function ReferralLinkSection({
         </div>
         <button
           type="button"
-          onClick={() => onCopy(referralLink)}
-          className={`${COSMIC_BTN_CONFIRM_INLINE} shrink-0 items-center gap-1.5 px-3.5 py-2.5 ${
+          onClick={() => void handleCopy()}
+          className={`${COSMIC_BTN_PRIMARY} btn-primary--sm !h-12 shrink-0 gap-1.5 px-3.5 ${
             isHub ? "text-sm" : "text-xs sm:text-sm"
           }`}
         >
           <CopyIcon className="h-4 w-4 shrink-0" aria-hidden />
-          <span className={COSMIC_BTN_CONFIRM_TEXT}>
-            {copied ? "คัดลอกแล้ว" : "Copy"}
-          </span>
+          Copy
         </button>
       </div>
     </section>

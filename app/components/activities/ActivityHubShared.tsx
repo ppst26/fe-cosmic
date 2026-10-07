@@ -7,8 +7,6 @@ import {
 } from "@/app/data/activitiesHubMockData";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import {
-  COSMIC_BTN_CONFIRM_COMPACT,
-  COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_BTN_GLASS_PILL_SM,
   COSMIC_BTN_PRIMARY,
 } from "../ui/cosmicButtonClasses";
@@ -231,11 +229,11 @@ function ActivityClaimButton({
         type="button"
         className={
           flat
-            ? `${COSMIC_BTN_CONFIRM_COMPACT} activity-hub-claim-btn--glow !min-w-[5.5rem]`
+            ? `${COSMIC_BTN_PRIMARY} btn-primary--sm !w-full !min-w-[5.5rem]`
             : `${base} rounded-[var(--radius-control)] ${COSMIC_BTN_PRIMARY}`
         }
       >
-        {flat ? <span className={COSMIC_BTN_CONFIRM_TEXT}>รับรางวัล</span> : "รับรางวัล"}
+        รับรางวัล
       </button>
     );
   }

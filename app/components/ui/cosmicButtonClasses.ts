@@ -38,22 +38,6 @@ export const COSMIC_BTN_PRIMARY_ICON = "btn-primary__icon";
 
 
 
-/** ชั้น 3 — ยืนยันใน bottom sheet (pill glow) */
-
-export const COSMIC_SHEET_SUBMIT = "btn-confirm-glow btn-confirm-glow--centered";
-
-/** วงไอคอน + ข้อความในปุ่ม sheet glow */
-
-export const COSMIC_BTN_CONFIRM_ICON = "btn-confirm-glow__icon";
-
-export const COSMIC_BTN_CONFIRM_TEXT = "btn-confirm-glow__text";
-
-export const COSMIC_BTN_CONFIRM_COMPACT =
-  "btn-confirm-glow btn-confirm-glow--compact btn-confirm-glow--centered";
-
-export const COSMIC_BTN_CONFIRM_INLINE = "btn-confirm-glow btn-confirm-glow--inline";
-
-
 
 /** panel ข้อมูลใน bottom sheet — พื้น solid inner (--sheet-row-fill ใน .cosmic-mobile-sheet) */
 

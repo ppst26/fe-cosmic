@@ -17,6 +17,39 @@
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
+/** ตาราง outline — กรอบรอบนอก แถวโปร่ง ไม่ zebra */
+.cosmic-data-table-shell--outline {
+  background: transparent;
+  box-shadow: none;
+  border-color: color-mix(in srgb, var(--border-subtle) 70%, transparent);
+}
+
+.cosmic-data-table-shell--outline .cosmic-data-table thead tr {
+  border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+}
+
+.cosmic-data-table-shell--outline .cosmic-data-table thead th {
+  background: transparent;
+}
+
+.cosmic-data-table-shell--outline .cosmic-data-table tbody tr {
+  background: transparent;
+  border-top-color: color-mix(in srgb, var(--border-subtle) 35%, transparent);
+}
+
+.cosmic-data-table-shell--outline .cosmic-data-table tbody tr.cosmic-data-table__row--alt {
+  background: transparent;
+}
+
+.cosmic-data-table-shell--outline .cosmic-data-table tbody tr:hover {
+  background: color-mix(in srgb, var(--border-subtle) 14%, transparent);
+}
+
+.cosmic-data-table-shell--outline .cosmic-data-table__footer {
+  background: transparent;
+  border-top-color: color-mix(in srgb, var(--border-subtle) 55%, transparent);
+}
+
 .cosmic-data-table thead tr {
   border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 50%, transparent);
 }
@@ -138,8 +171,12 @@
 }
 
 .loss-rebate-page__info-well {
-  background: var(--cosmic-formula-cell-bg);
+  background: var(--surface-solid-inner);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.loss-rebate-page .cosmic-formula-cell {
+  background: var(--surface-solid-inner);
 }
 
 /** Pagination — พื้นเข้มกว่าการ์ดตาราง · หน้า active สว่าง (CosmicDataTablePagination) */

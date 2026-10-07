@@ -10,9 +10,8 @@ import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
 import { GemsRedeemConfirmDialog } from "./GemsRedeemConfirmDialog";
 import { ChevronDownIcon } from "../ui/Icons";
 import {
-  COSMIC_BTN_CONFIRM_COMPACT,
-  COSMIC_BTN_CONFIRM_TEXT,
   COSMIC_BTN_GLASS_PILL_SM,
+  COSMIC_BTN_PRIMARY,
   COSMIC_PANEL_GLASS,
 } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
@@ -209,14 +208,12 @@ function GemsRedeemCard({
         aria-label={redeemAria}
         className={
           affordable
-            ? COSMIC_BTN_CONFIRM_COMPACT
+            ? `${COSMIC_BTN_PRIMARY} btn-primary--sm !w-full`
             : `${COSMIC_BTN_GLASS_PILL_SM} flex w-full min-h-8 items-center justify-center !px-1 !py-1.5 !text-xs text-[var(--text-secondary)]`
         }
       >
-        <span className={COSMIC_BTN_CONFIRM_TEXT}>
-          <span className="sm:hidden">{redeemLabel}</span>
-          <span className="hidden sm:inline">{affordable ? "แลกรางวัล" : "Gems ไม่เพียงพอ"}</span>
-        </span>
+        <span className="sm:hidden">{redeemLabel}</span>
+        <span className="hidden sm:inline">{affordable ? "แลกรางวัล" : "Gems ไม่เพียงพอ"}</span>
       </button>
     </article>
   );

@@ -13,7 +13,10 @@ import type { LossRebateData } from "@/lib/api/cashback";
 import { useLossRebate } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { ChevronDownIcon } from "../ui/Icons";
-import { COSMIC_PANEL_SOLID } from "../ui/cosmicButtonClasses";
+import {
+  COSMIC_DATA_TABLE,
+  COSMIC_DATA_TABLE_SHELL_OUTLINE,
+} from "../ui/cosmicDataTableClasses";
 import { CosmicSelectField } from "../ui/CosmicSelectField";
 import {
   CosmicFormulaCell,
@@ -117,8 +120,8 @@ function LossRebateSections({
           </div>
         </div>
 
-        <div className="cosmic-data-table-shell">
-          <Table className="cosmic-data-table text-sm">
+        <div className={COSMIC_DATA_TABLE_SHELL_OUTLINE}>
+          <Table className={`${COSMIC_DATA_TABLE} text-sm`}>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
                 <TableHead className="h-11 px-3 text-xs font-medium text-[var(--text-secondary)] sm:px-4">
@@ -147,7 +150,7 @@ function LossRebateSections({
                 </TableRow>
               ) : (
                 pageRows.map((row, index) => (
-                  <TableRow key={row.id} className={cosmicDataTableRowClass(index)}>
+                  <TableRow key={row.id} className={cosmicDataTableRowClass(index, "outline")}>
                     <TableCell className="px-3 py-3 text-xs font-medium text-[var(--text-primary)] sm:px-4">
                       {row.periodLabel}
                     </TableCell>
@@ -182,7 +185,7 @@ function LossRebateSections({
         </div>
       </section>
 
-      <section className={`${COSMIC_PANEL_SOLID} overflow-hidden`}>
+      <section className="surface-solid-stack overflow-hidden">
         <button
           type="button"
           onClick={() => setTermsOpen((open) => !open)}
@@ -218,7 +221,7 @@ function LossRebateSections({
 
 function LossRebateFormulaSection({ summary }: { summary: LossRebateSummaryMock }) {
   return (
-    <section className={`${COSMIC_PANEL_SOLID} px-4 py-4 sm:px-5`}>
+    <section className="surface-solid-stack px-4 py-4 sm:px-5">
       <h2 className="text-sm font-medium text-[var(--text-primary)]">รายละเอียดการคำนวณ</h2>
       <CosmicFormulaRow className="mt-4">
         <CosmicFormulaCell

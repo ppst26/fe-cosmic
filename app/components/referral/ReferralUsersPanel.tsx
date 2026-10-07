@@ -12,6 +12,10 @@ import {
 import { useReferralUsers } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
+import {
+  COSMIC_DATA_TABLE,
+  COSMIC_DATA_TABLE_SHELL_OUTLINE,
+} from "../ui/cosmicDataTableClasses";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
 import { REFERRAL_USERS_PAGE_SIZE } from "@/lib/uiConstants";
 import { formatReferralCount, formatReferralRegisteredAt } from "@/lib/format";
@@ -61,8 +65,8 @@ function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
         </span>
       </div>
 
-      <section className="cosmic-data-table-shell" aria-labelledby="referral-users-title">
-        <Table className="cosmic-data-table text-sm">
+      <section className={COSMIC_DATA_TABLE_SHELL_OUTLINE} aria-labelledby="referral-users-title">
+        <Table className={`${COSMIC_DATA_TABLE} text-sm`}>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
               <TableHead className="h-11 px-4 text-xs font-medium text-[var(--text-secondary)] sm:px-5">
@@ -85,7 +89,7 @@ function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
               </TableRow>
             ) : (
               pageRows.map((row, index) => (
-                <TableRow key={row.id} className={cosmicDataTableRowClass(index)}>
+                <TableRow key={row.id} className={cosmicDataTableRowClass(index, "outline")}>
                   <TableCell className="px-4 py-3.5 font-medium text-[var(--text-primary)] sm:px-5">
                     {row.username}
                   </TableCell>

@@ -16,6 +16,10 @@ import {
 } from "../ui/cosmicButtonClasses";
 import { Menu3DIcon } from "../ui/Menu3DIcon";
 import { CosmicDataTablePagination } from "../ui/CosmicDataTablePagination";
+import {
+  COSMIC_DATA_TABLE,
+  COSMIC_DATA_TABLE_SHELL_OUTLINE,
+} from "../ui/cosmicDataTableClasses";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
 import { valueClass } from "@/lib/semanticValue";
 import { cn } from "@/lib/utils";
@@ -156,10 +160,10 @@ function ReferralEarningPanelContent({
           "referral-earning-table min-h-0 overflow-hidden",
           flat
             ? "border-t border-[var(--border-subtle)]/50 pt-1"
-            : "cosmic-data-table-shell",
+            : COSMIC_DATA_TABLE_SHELL_OUTLINE,
         )}
       >
-        <Table className={cn("cosmic-data-table", flat ? "text-base" : "text-sm")}>
+        <Table className={cn(COSMIC_DATA_TABLE, flat ? "text-base" : "text-sm")}>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
               <TableHead
@@ -190,7 +194,10 @@ function ReferralEarningPanelContent({
               </TableRow>
             ) : (
               pageRows.map((row, index) => (
-                <TableRow key={row.id} className={cosmicDataTableRowClass(index)}>
+                <TableRow
+                  key={row.id}
+                  className={cosmicDataTableRowClass(index, flat ? "solid" : "outline")}
+                >
                   <TableCell
                     className={valueClass(
                       "reward",

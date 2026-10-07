@@ -21,8 +21,7 @@ import { CosmicConfirmDialog } from "../ui/CosmicConfirmDialog";
 import {
   COSMIC_CHOICE_BTN,
   COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
-  COSMIC_BTN_CONFIRM_TEXT,
-  COSMIC_SHEET_SUBMIT,
+  COSMIC_BTN_PRIMARY,
 } from "../ui/cosmicButtonClasses";
 import { formatWithdrawAmount, formatWithdrawMoney } from "@/lib/format";
 import { useWallet } from "@/app/hooks/api/account";
@@ -242,11 +241,9 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               type="button"
               disabled={!canConfirm || submitting}
               onClick={handleRequestConfirm}
-              className={COSMIC_SHEET_SUBMIT}
+              className={COSMIC_BTN_PRIMARY}
             >
-              <span className={COSMIC_BTN_CONFIRM_TEXT}>
-                {submitting ? "กำลังส่ง..." : "ยืนยันถอนเงิน"}
-              </span>
+              {submitting ? "กำลังส่ง..." : "ยืนยันถอนเงิน"}
             </button>
           </div>
         </Dialog.Content>

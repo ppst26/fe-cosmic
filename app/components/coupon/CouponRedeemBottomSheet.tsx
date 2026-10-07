@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { PromoTicketIcon } from "../ui/Icons";
 import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
-import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_PRIMARY, COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
   responsiveSheetContentClass,
@@ -110,7 +110,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
             <button
               type="submit"
               disabled={submitting}
-              className="cosmic-sheet-submit"
+              className={COSMIC_BTN_PRIMARY}
             >
               {submitting ? "กำลังตรวจสอบ..." : "แลกเครดิตฟรี"}
             </button>

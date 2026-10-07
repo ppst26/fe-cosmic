@@ -87,18 +87,7 @@ function ReferralPageContentInner({
   referralOverview: ReferralOverviewData;
 }) {
   const [tab, setTab] = useState<ReferralTabId>("overview");
-  const [copied, setCopied] = useState(false);
   const stats = referralOverview.stats;
-
-  const handleCopy = async (link: string) => {
-    try {
-      await navigator.clipboard.writeText(link);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* clipboard ไม่พร้อม */
-    }
-  };
 
   if (embedded) {
     return (
@@ -111,8 +100,6 @@ function ReferralPageContentInner({
             refCode={refCode}
             tab={tab}
             setTab={setTab}
-            copied={copied}
-            onCopy={(link) => void handleCopy(link)}
             stats={stats}
             overview={referralOverview}
           />
@@ -126,8 +113,6 @@ function ReferralPageContentInner({
       refCode={refCode}
       tab={tab}
       setTab={setTab}
-      copied={copied}
-      onCopy={(link) => void handleCopy(link)}
       stats={stats}
       overview={referralOverview}
     />
@@ -138,16 +123,12 @@ function ReferralMobileTabs({
   refCode,
   tab,
   setTab,
-  copied,
-  onCopy,
   stats,
   overview,
 }: {
   refCode: string;
   tab: ReferralTabId;
   setTab: (tab: ReferralTabId) => void;
-  copied: boolean;
-  onCopy: (link: string) => void;
   stats: ReferralStatsMock;
   overview: ReferralOverviewData;
 }) {
@@ -173,7 +154,7 @@ function ReferralMobileTabs({
       <TabPanelTransition tabKey={tab} order={TABS.map((item) => item.id)}>
       {tab === "overview" && (
         <div className="flex flex-col gap-5">
-          <ReferralLinkSection refCode={refCode} copied={copied} onCopy={onCopy} />
+          <ReferralLinkSection refCode={refCode} />
           <ReferralStatsSection stats={stats} />
 
           <section className="surface-solid-stack px-4 py-4">

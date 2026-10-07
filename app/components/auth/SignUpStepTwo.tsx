@@ -13,6 +13,7 @@ import {
   getSignUpChannelById,
 } from "../../data/signupMockData";
 import {
+  COSMIC_BTN_PRIMARY,
   COSMIC_SHEET_FIELD_ROW,
   COSMIC_SHEET_SOFT_GLASS_INTERACTIVE,
 } from "../ui/cosmicButtonClasses";
@@ -225,7 +226,7 @@ export function SignUpStepTwo({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="cosmic-sheet-submit !w-auto text-sm"
+            className={`${COSMIC_BTN_PRIMARY} !h-12 !min-h-12 text-sm`}
           >
             {isSubmitting ? "กำลังสมัคร..." : "สมัครสมาชิก"}
           </button>

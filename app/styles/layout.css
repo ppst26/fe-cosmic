@@ -236,9 +236,9 @@
 .promo-detail-modal {
   --promo-detail-title-gold: linear-gradient(180deg, #fff8e7 0%, #fde047 72%, #f59e0b 100%);
   /** การ์ด «รายละเอียด» modal มือถือ — โทนเทา + หัวข้อบล็อกส้ม (อ้างอิง PIXXYBET) */
-  --promo-detail-accord-header-bg: #3a3a40;
-  --promo-detail-accord-body-bg: #161618;
-  --promo-detail-accord-border: #4a4a52;
+  --promo-detail-accord-header-bg: #45454d;
+  --promo-detail-accord-body-bg: #1f1f24;
+  --promo-detail-accord-border: #56565f;
   --promo-detail-block-heading: #ff5c3a;
   width: min(calc(100vw - 2 * var(--layout-inline-gutter)), 27.5rem);
   height: min(38rem, 90dvh);
@@ -249,7 +249,7 @@
 }
 
 .promo-detail-modal.cosmic-modal-shell {
-  background: var(--surface-solid-outer);
+  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #2c2c32);
 }
 
 .promo-detail-modal__header {

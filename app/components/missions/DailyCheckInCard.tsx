@@ -8,10 +8,7 @@ import type { CheckInData } from "@/lib/api/checkIn";
 import { useCheckIn } from "@/app/hooks/api/member";
 import { ResourceGate } from "@/app/components/ui/ResourceGate";
 import { cn } from "@/lib/utils";
-import {
-  COSMIC_BTN_CONFIRM_TEXT,
-  COSMIC_SHEET_SUBMIT,
-} from "@/app/components/ui/cosmicButtonClasses";
+import { COSMIC_BTN_PRIMARY } from "@/app/components/ui/cosmicButtonClasses";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { MODAL_TITLE_LEADING_ICON_CLASS } from "@/app/components/ui/ModalTitleLeadingIcon";
 import { DailyCheckInClaimSuccessDialog } from "./DailyCheckInClaimSuccessDialog";
@@ -455,15 +452,13 @@ function DailyCheckInCardView({
         disabled={isTodayClaimed}
         onClick={() => todayReward && handleClaim(todayReward.day)}
         className={cn(
-          COSMIC_SHEET_SUBMIT,
+          COSMIC_BTN_PRIMARY,
           isHubSurface ? "text-base sm:text-lg" : "text-sm sm:text-base",
           isTodayClaimed &&
             "!border-white/8 !bg-[var(--surface-elevated)] !text-[var(--text-muted)] !shadow-none",
         )}
       >
-        <span className={COSMIC_BTN_CONFIRM_TEXT}>
-          {isTodayClaimed ? "เช็คอินแล้ววันนี้" : "กดรับรางวัลวันนี้"}
-        </span>
+        {isTodayClaimed ? "เช็คอินแล้ววันนี้" : "กดรับรางวัลวันนี้"}
       </button>
 
       <DailyCheckInClaimSuccessDialog

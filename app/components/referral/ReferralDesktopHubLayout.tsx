@@ -4,10 +4,7 @@ import React, { useMemo, useState } from "react";
 import type { ReferralEarningsData, ReferralOverviewData } from "@/lib/api/referral";
 import { useReferralEarnings, useReferralOverview } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
-import {
-  COSMIC_BTN_CONFIRM_TEXT,
-  COSMIC_SHEET_SUBMIT,
-} from "../ui/cosmicButtonClasses";
+import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { ReferralEarningPanel } from "./ReferralEarningPanel";
 import {
@@ -57,7 +54,6 @@ function ReferralDesktopHubContent({
   referralEarnings: ReferralEarningsData;
   referralOverview: ReferralOverviewData;
 }) {
-  const [copied, setCopied] = useState(false);
   const [period, setPeriod] = useState<ReferralEarningPeriodId>("all");
   const [claimable, setClaimable] = useState(referralEarnings.summary.bonusClaimableThb);
   const [received, setReceived] = useState(referralEarnings.summary.bonusReceivedThb);
@@ -80,26 +76,11 @@ function ReferralDesktopHubContent({
     setClaimable(0);
   };
 
-  const handleCopy = async (link: string) => {
-    try {
-      await navigator.clipboard.writeText(link);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* clipboard ไม่พร้อม */
-    }
-  };
-
   return (
     <div className="referral-desktop-hub referral-desktop-hub--flat grid min-h-0 gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-start">
       <div className="flex min-w-0 flex-col gap-4">
         <ReferralPromoBanner compact flat />
-        <ReferralLinkSection
-          refCode={refCode}
-          copied={copied}
-          onCopy={(link) => void handleCopy(link)}
-          variant="hub"
-        />
+        <ReferralLinkSection refCode={refCode} variant="hub" />
         <ReferralStatsSection stats={stats} layout="stack" flat variant="hub" />
 
         <section
@@ -116,9 +97,9 @@ function ReferralDesktopHubContent({
             type="button"
             disabled={claimable <= 0}
             onClick={handleClaim}
-            className={COSMIC_SHEET_SUBMIT}
+            className={COSMIC_BTN_PRIMARY}
           >
-            <span className={COSMIC_BTN_CONFIRM_TEXT}>รับโบนัส</span>
+            รับโบนัส
           </button>
           <p className="text-sm text-[var(--text-secondary)]">
             รับสะสมแล้ว {formatReferralCurrency(received)}
