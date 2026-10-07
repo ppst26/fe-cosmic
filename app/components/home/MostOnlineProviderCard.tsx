@@ -66,11 +66,6 @@ export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCa
         >
           <Heart className={cn("h-3 w-3 sm:h-4 sm:w-4", favorited && "fill-[var(--icon-active)] text-[var(--icon-active)]")} />
         </button>
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] px-1 pb-1 pt-4 sm:px-2 sm:pb-2 sm:pt-6">
-          <p className="truncate text-[9px] font-medium uppercase tracking-wide text-white/95 sm:text-xs">{item.brandName}</p>
-          <p className="hidden truncate text-[11px] text-white/70 sm:block">{item.tagline}</p>
-        </div>
       </div>
 
       <div className="flex items-center justify-between gap-1 border-t border-white/6 bg-[var(--surface-hover)] px-1.5 py-1.5 sm:gap-2 sm:px-2.5 sm:py-2">
