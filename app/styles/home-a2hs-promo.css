@@ -40,7 +40,7 @@
   justify-content: center;
   gap: 0.625rem;
   padding: 0.875rem 0.75rem 0.875rem 0.875rem;
-  max-width: calc(100% - 5.5rem);
+  max-width: calc(100% - 6.75rem);
 }
 
 .home-a2hs-card__lead {
@@ -125,51 +125,43 @@
 .home-a2hs-card__hero {
   position: absolute;
   top: 50%;
-  right: -1.25rem;
+  right: -3.75rem;
   z-index: 0;
-  width: 7.5rem;
-  height: 7.5rem;
-  transform: translateY(-52%);
+  display: grid;
+  width: 11.5rem;
+  height: 11.5rem;
+  place-items: center;
+  transform: translateY(-50%);
   pointer-events: none;
 }
 
-.home-a2hs-card__hero-ring {
-  position: relative;
-  display: grid;
+/** วงกลมใหญ่ — ออร่าม่วงชมพูจาง ล้มขอบการ์ดด้านขวา */
+.home-a2hs-card__hero-aura {
+  grid-area: 1 / 1;
   width: 100%;
   height: 100%;
-  place-items: center;
   border-radius: 999px;
   background: radial-gradient(
-    circle at 42% 32%,
-    color-mix(in srgb, var(--home-a2hs-glow) 55%, #ffffff 8%) 0%,
-    color-mix(in srgb, var(--home-a2hs-glow) 88%, #000000 12%) 48%,
-    #1a0a12 100%
+    circle at 48% 50%,
+    color-mix(in srgb, var(--home-a2hs-glow) 52%, #ffffff 6%) 0%,
+    color-mix(in srgb, var(--home-a2hs-glow) 38%, transparent) 28%,
+    color-mix(in srgb, #0d0a0f 22%, transparent) 48%,
+    color-mix(in srgb, #3a1848 10%, transparent) 62%,
+    transparent 74%
   );
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--home-a2hs-glow) 55%, transparent),
-    0 0 28px color-mix(in srgb, var(--home-a2hs-glow) 42%, transparent),
-    inset 0 2px 6px rgb(255 255 255 / 0.18),
-    inset 0 -4px 10px rgb(0 0 0 / 0.45);
-}
-
-.home-a2hs-card__hero-ring::before {
-  content: "";
-  position: absolute;
-  inset: 12%;
-  border-radius: inherit;
-  background: radial-gradient(circle at 50% 38%, rgb(255 255 255 / 0.12) 0%, transparent 62%);
-  pointer-events: none;
 }
 
 .home-a2hs-card__hero-img {
-  position: relative;
+  grid-area: 1 / 1;
   z-index: 1;
-  width: 4.25rem;
-  height: auto;
-  max-height: 2.75rem;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.35));
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 999px;
+  object-fit: cover;
+  transform: translate(12%, -4%);
+  filter: drop-shadow(0 10px 20px rgb(24 10 42 / 0.92))
+    drop-shadow(0 3px 6px rgb(10 4 18 / 0.88))
+    drop-shadow(0 0 16px rgb(88 44 140 / 0.48));
 }
 
 .home-a2hs-accordion {
@@ -251,18 +243,19 @@
   }
 
   .home-a2hs-card__body {
-    max-width: calc(100% - 6.5rem);
+    max-width: calc(100% - 7.25rem);
     padding: 1rem 1rem 1rem 1.125rem;
   }
 
   .home-a2hs-card__hero {
-    right: -0.75rem;
-    width: 8.25rem;
-    height: 8.25rem;
+    right: -3.25rem;
+    width: 12.5rem;
+    height: 12.5rem;
   }
 
   .home-a2hs-card__hero-img {
-    width: 4.75rem;
-    max-height: 3rem;
+    width: 6.5rem;
+    height: 6.5rem;
+    transform: translate(14%, -4%);
   }
 }

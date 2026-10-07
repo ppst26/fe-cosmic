@@ -7,6 +7,9 @@ import { BRAND_LOGO_SRC } from "@/app/components/ui/Icons";
 import { SectionHeader } from "@/app/components/ui/SectionHeader";
 import { cn } from "@/lib/utils";
 
+/** โลโก้กลมในวง glow — public/cmb-rounded.avif */
+const HOME_A2HS_ROUND_LOGO_SRC = "/cmb-rounded.avif";
+
 type InstallPlatform = "android" | "ios";
 
 const INSTALL_STEP_LAUNCH =
@@ -99,7 +102,7 @@ function useIsInstalledPwa() {
 export function HomeScreenShortcutPromo({ className }: { className?: string }) {
   const isInstalled = useIsInstalledPwa();
   const [platform, setPlatform] = useState<InstallPlatform>("ios");
-  const [stepsOpen, setStepsOpen] = useState(true);
+  const [stepsOpen, setStepsOpen] = useState(false);
 
   if (isInstalled) return null;
 
@@ -158,15 +161,14 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
         </div>
 
         <div className="home-a2hs-card__hero" aria-hidden="true">
-          <div className="home-a2hs-card__hero-ring">
-            <Image
-              src={BRAND_LOGO_SRC}
-              alt=""
-              width={180}
-              height={52}
-              className="home-a2hs-card__hero-img"
-            />
-          </div>
+          <div className="home-a2hs-card__hero-aura" />
+          <Image
+            src={HOME_A2HS_ROUND_LOGO_SRC}
+            alt=""
+            width={136}
+            height={136}
+            className="home-a2hs-card__hero-img"
+          />
         </div>
       </div>
 
