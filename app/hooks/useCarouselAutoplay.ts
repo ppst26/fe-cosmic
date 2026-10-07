@@ -4,6 +4,9 @@ import { useCallback, useEffect, useRef, type RefObject } from "react";
 
 const DEFAULT_INTERVAL_MS = 5500;
 
+/** ช่วงรอระหว่างสไลด์แบนเนอร์ hero (มือถือ + desktop peek) */
+export const HERO_CAROUSEL_AUTOPLAY_MS = 4000;
+
 type UseCarouselAutoplayOptions = {
   intervalMs?: number;
   /** หยุดชั่วคราวเมื่อ hover / focus ภายในโซน carousel */
