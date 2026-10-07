@@ -490,7 +490,7 @@ export function SaturnIcon({ className = "w-16 h-16" }: { className?: string }) 
 }
 
 /**
- * ไอคอนเมนูแฮมเบอร์เกอร์ 3 เส้น — เคลื่อนไหวตลอด (Header.tsx)
+ * ไอคอนเมนูแฮมเบอร์เกอร์ 3 เส้น — แต่ละเส้นหด–ยาวตลอด (Header.tsx · header.css)
  */
 export function HamburgerMenuIcon({ className = "w-6 h-6" }: { className?: string }) {
   return (

@@ -359,31 +359,56 @@ header.cosmic-mobile-chrome-surface {
   height: 2px;
   border-radius: 999px;
   background-color: currentColor;
-  animation: hamburger-line-drift 1.65s ease-in-out infinite;
+  transform-origin: left center;
+  will-change: transform;
 }
 
 .hamburger-menu-icon__line:nth-child(1) {
+  animation: hamburger-line-pulse-short 1.15s ease-in-out infinite;
   animation-delay: 0s;
 }
 
 .hamburger-menu-icon__line:nth-child(2) {
-  animation-delay: 0.16s;
+  animation: hamburger-line-pulse-long 1.45s ease-in-out infinite;
+  animation-delay: 0.22s;
 }
 
 .hamburger-menu-icon__line:nth-child(3) {
-  animation-delay: 0.32s;
+  animation: hamburger-line-pulse-mid 1.28s ease-in-out infinite;
+  animation-delay: 0.48s;
 }
 
-@keyframes hamburger-line-drift {
+/** เส้นบน/ล่างหด–ยาวชัด · เส้นกลางเต็มความกว้างสลับกับย่อลงเล็กน้อย */
+@keyframes hamburger-line-pulse-short {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scaleX(1);
-    opacity: 1;
+    transform: scaleX(0.46);
   }
 
   50% {
-    transform: translate3d(3px, 0, 0) scaleX(0.9);
-    opacity: 0.86;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes hamburger-line-pulse-long {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(0.62);
+  }
+}
+
+@keyframes hamburger-line-pulse-mid {
+  0%,
+  100% {
+    transform: scaleX(0.58);
+  }
+
+  50% {
+    transform: scaleX(0.92);
   }
 }
 
