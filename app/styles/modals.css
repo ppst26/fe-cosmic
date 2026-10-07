@@ -139,6 +139,92 @@ a.cosmic-sheet-soft-glass--interactive:hover {
   background: var(--sheet-row-fill-hover);
 }
 
+/**
+ * Bottom sheet — พื้นหัวข้อ + แถบแท็บ (COSMIC_SHEET_* ใน cosmicButtonClasses.ts)
+ * ใช้ ResponsiveSheetHeader · NotificationCenterPanel
+ */
+.cosmic-sheet-header-surface {
+  border-radius: var(--radius-card);
+  background: var(--cosmic-nested-surface);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  padding: 0.5rem 0.65rem 0.45rem;
+}
+
+/** แคปซูลม่วงครอบหัวข้อ — โทนเดียวแท็บ active ใน sheet */
+.cosmic-sheet-title-capsule {
+  display: inline-flex;
+  max-width: min(100%, 15rem);
+  align-items: center;
+  justify-content: center;
+  padding: 0.32rem 1.05rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    152deg,
+    color-mix(in srgb, var(--action-solid) 32%, rgb(255 255 255 / 0.38)) 0%,
+    color-mix(in srgb, var(--action-solid) 88%, rgb(255 255 255 / 0.06)) 38%,
+    var(--action-solid) 62%,
+    color-mix(in srgb, var(--action-solid) 72%, #1a0a3d) 100%
+  );
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, rgb(255 255 255) 26%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, #1a0a3d 35%, transparent),
+    0 6px 18px color-mix(in srgb, var(--action-solid) 40%, transparent);
+}
+
+.cosmic-sheet-title-capsule :where([data-radix-dialog-title], h2, h3) {
+  margin: 0;
+  line-height: 1.2;
+  color: inherit;
+}
+
+/** แคปซูลหัวข้อ — ม่วงเข้มเกือบดำ (ค่าเริ่มต้น ResponsiveSheetHeader) */
+.cosmic-sheet-title-capsule.cosmic-sheet-title-capsule--deep {
+  background: var(--cosmic-sheet-title-capsule-deep-bg);
+  border: 0;
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 4px 14px rgb(0 0 0 / 0.34);
+}
+
+.cosmic-sheet-segment-track {
+  display: grid;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--cosmic-nested-surface);
+  padding: 0.2rem;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.cosmic-sheet-segment-track .cosmic-segment-btn {
+  min-height: 2.25rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+.cosmic-sheet-segment-track .cosmic-segment-btn.is-active {
+  background: linear-gradient(
+    152deg,
+    color-mix(in srgb, var(--action-solid) 32%, rgb(255 255 255 / 0.38)) 0%,
+    color-mix(in srgb, var(--action-solid) 88%, rgb(255 255 255 / 0.06)) 38%,
+    var(--action-solid) 62%,
+    color-mix(in srgb, var(--action-solid) 72%, #1a0a3d) 100%
+  );
+  color: var(--text-primary);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, rgb(255 255 255) 26%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, #1a0a3d 35%, transparent),
+    0 6px 20px color-mix(in srgb, var(--action-solid) 44%, transparent);
+}
+
+.cosmic-sheet-segment-track .cosmic-segment-btn:hover:not(.is-active) {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--action-solid) 14%, transparent);
+}
+
 .cosmic-mobile-sheet .cosmic-sheet-icon-well,
 .sign-up-picker-sheet .cosmic-sheet-icon-well {
   border: 0;

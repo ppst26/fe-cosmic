@@ -3,8 +3,8 @@ import { GameSectionData } from "../../types/lobby";
 import { Carousel } from "../ui/Carousel";
 import { GameCard } from "../ui/GameCard";
 import { SectionIcon } from "../ui/SectionIcon";
-import MotionReveal from "../ui/MotionReveal";
 import { HOME_LOBBY_GAME_CAROUSEL_MAX } from "@/lib/uiConstants";
+import { GameCardStaggerShell } from "@/app/lib/gameCardEnterMotion";
 
 interface GameSectionProps {
   section: GameSectionData;
@@ -22,7 +22,6 @@ export function GameSection({ section, className = "mt-6 sm:mt-8" }: GameSection
   const carouselGames = games.slice(0, limit);
 
   return (
-    <MotionReveal>
     <Carousel
       title={title}
       icon={<SectionIcon id={icon} className="h-[1.35rem] w-[1.35rem] text-[var(--icon-default)] sm:h-6 sm:w-6" />}
@@ -32,10 +31,11 @@ export function GameSection({ section, className = "mt-6 sm:mt-8" }: GameSection
       isEmpty={carouselGames.length === 0}
       emptyMessage="ยังไม่มีเกมในหมวดนี้"
     >
-      {carouselGames.map((game) => (
-        <GameCard key={`${id}-${game.id}`} game={game} />
+      {carouselGames.map((game, index) => (
+        <GameCardStaggerShell key={`${id}-${game.id}`} index={index} className="min-w-0">
+          <GameCard game={game} />
+        </GameCardStaggerShell>
       ))}
     </Carousel>
-    </MotionReveal>
   );
 }

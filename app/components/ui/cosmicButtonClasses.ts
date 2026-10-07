@@ -122,4 +122,16 @@ export const COSMIC_SHEET_FIELD_AMOUNT =
 
 export const COSMIC_CHOICE_BTN = "cosmic-choice-btn";
 
+/** พื้นหัวข้อ bottom sheet ทั้งแถบ — optional */
+export const COSMIC_SHEET_HEADER_SURFACE_CLASS = "cosmic-sheet-header-surface";
+
+/** แคปซูลหัวข้อ sheet — gradient ม่วงสด (accent) */
+export const COSMIC_SHEET_TITLE_CAPSULE_CLASS = "cosmic-sheet-title-capsule";
+
+/** แคปซูลหัวข้อ sheet — ม่วงเข้มเกือบดำ (deep · ค่าเริ่มต้น header) */
+export const COSMIC_SHEET_TITLE_CAPSULE_DEEP_CLASS =
+  "cosmic-sheet-title-capsule cosmic-sheet-title-capsule--deep";
+
+/** แถบแท็บ segmented ใน sheet — track + active gradient ม่วง (แจ้งเตือน ฯลฯ) */
+export const COSMIC_SHEET_SEGMENT_TRACK_CLASS = "cosmic-sheet-segment-track";
 

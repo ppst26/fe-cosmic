@@ -7,6 +7,7 @@ import { ChevronRightIcon, SwipeBetEmblem } from "../ui/Icons";
 import { SectionIcon } from "../ui/SectionIcon";
 import { SectionHeader } from "../ui/SectionHeader";
 import { HighlightItem } from "../../types/lobby";
+import { gameCardEnterClassName, gameCardEnterStyle } from "@/app/lib/gameCardEnterMotion";
 
 interface PopularHighlightsProps {
   items: HighlightItem[];
@@ -41,14 +42,17 @@ export function PopularHighlights({
       />
 
       <div className="grid grid-cols-2 gap-2">
-        {items.map((item) => {
+        {items.map((item, index) => {
           if (item.imageSrc) {
             return (
               <Link
                 key={item.id}
                 href={item.href}
                 aria-label={item.title}
-                className="group relative aspect-[2.35/1] min-h-[56px] overflow-hidden rounded-[var(--radius-thumb)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.98]"
+                style={gameCardEnterStyle(index)}
+                className={gameCardEnterClassName(
+                  "group relative aspect-[2.35/1] min-h-[56px] overflow-hidden rounded-[var(--radius-thumb)] bg-[var(--surface-mid)] transition-[filter] duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.98]",
+                )}
               >
                 <Image
                   src={item.imageSrc}
@@ -66,7 +70,10 @@ export function PopularHighlights({
               <Link
                 key={item.id}
                 href={item.href}
-                className="group flex items-center justify-between rounded-[var(--radius-panel)] bg-[var(--surface-gradient)] px-3.5 py-3 transition-colors duration-[var(--motion-fast)] hover:bg-[var(--surface-hover)]"
+                style={gameCardEnterStyle(index)}
+                className={gameCardEnterClassName(
+                  "group flex items-center justify-between rounded-[var(--radius-panel)] bg-[var(--surface-gradient)] px-3.5 py-3 transition-colors duration-[var(--motion-fast)] hover:bg-[var(--surface-hover)]",
+                )}
               >
                 <div className="flex min-w-0 items-center gap-3">
                   <SwipeBetEmblem className="h-10 w-10 shrink-0" />
@@ -85,7 +92,10 @@ export function PopularHighlights({
             <Link
               key={item.id}
               href={item.href}
-              className="group relative flex min-h-[56px] items-center justify-between overflow-hidden rounded-[var(--radius-panel)] bg-gradient-to-r from-[#181135] via-[#1b1540] to-[#25103a] px-4 py-2.5 transition-colors duration-[var(--motion-fast)] hover:brightness-105"
+              style={gameCardEnterStyle(index)}
+              className={gameCardEnterClassName(
+                "group relative flex min-h-[56px] items-center justify-between overflow-hidden rounded-[var(--radius-panel)] bg-gradient-to-r from-[#181135] via-[#1b1540] to-[#25103a] px-4 py-2.5 transition-colors duration-[var(--motion-fast)] hover:brightness-105",
+              )}
             >
               <div className="z-10 flex flex-col">
                 <span className="font-mono text-lg font-medium italic tracking-tighter text-white drop-shadow sm:text-xl">

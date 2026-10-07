@@ -1,11 +1,16 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  categoryProviderMatchesLobbyCategory,
+  parseCategoryProviderFromPath,
+} from "@/app/lib/categoryProviderFromPath";
+import { LobbyProviderGamesView } from "../game/LobbyProviderGamesView";
 import type { CategoryId } from "../../types/lobby";
 import { CategorySectionHead } from "./CategorySectionHead";
 import { ProviderCategoryToolbar } from "../slots/ProviderCategoryToolbar";
 import { SlotProviderCards, type SlotProviderPick } from "../slots/SlotProviderCards";
-import { LobbySlotProviderView } from "../slots/LobbySlotProviderView";
 import { CasinoProviderCards } from "../casino/CasinoProviderCards";
 import { SportProviderCards } from "../sport/SportProviderCards";
 import {
@@ -125,8 +130,14 @@ export function LobbyCategoryProviders({ categoryId }: LobbyCategoryProvidersPro
 const LOBBY_PROVIDER_FILTER_ID = "all-in-one";
 
 function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersProps) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState("");
-  const [slotProviderId, setSlotProviderId] = useState<string | null>(null);
+
+  const categoryProviderRoute = useMemo(
+    () => parseCategoryProviderFromPath(pathname),
+    [pathname],
+  );
 
   const slotsContent = useMemo(() => {
     let grid = GRID_SLOT_PROVIDERS.filter((p) => matchesGridFilter(p, LOBBY_PROVIDER_FILTER_ID));
@@ -267,18 +278,35 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
               : 0;
 
   const handleSlotProviderSelect = (provider: SlotProviderPick) => {
-    setSlotProviderId(provider.id);
+    router.push(provider.href || `/slots/${provider.id}`);
   };
 
-  if (categoryId === "slots" && slotProviderId) {
+  if (
+    categoryProviderRoute &&
+    categoryProviderMatchesLobbyCategory(categoryProviderRoute, categoryId)
+  ) {
+    const categoryLabel =
+      categoryId === "slots"
+        ? "สล็อต"
+        : categoryId === "fishing"
+          ? "ยิงปลา"
+          : categoryId === "cards"
+            ? "เกมไพ่"
+            : "";
+    const resolveCategory =
+      categoryId === "fishing" || categoryId === "cards" ? categoryId : undefined;
+
     return (
       <section
         className="lobby-category-providers flex min-w-0 flex-col gap-3"
-        aria-label="รายการเกมสล็อตตามค่ายที่เลือก"
+        aria-label={`รายการเกม${categoryLabel}ตามค่ายที่เลือก`}
       >
-        <LobbySlotProviderView
-          providerId={slotProviderId}
-          onBack={() => setSlotProviderId(null)}
+        <LobbyProviderGamesView
+          key={`${categoryId}-${categoryProviderRoute.slug}`}
+          categoryLabel={categoryLabel}
+          providerSlug={categoryProviderRoute.slug}
+          resolveCategory={resolveCategory}
+          onBack={() => router.push(categoryProviderRoute.listHref)}
         />
       </section>
     );

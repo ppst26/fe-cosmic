@@ -9,8 +9,8 @@
   /** พื้นทึบสองชั้น — กลุ่มข้อมูล / อัตราต่อรอง / ช่องข้อความ (.surface-solid-*) */
   --surface-solid-outer: #131216;
   --surface-solid-inner: #1d1a22;
-  /** Footer desktop — พื้นทึบเต็มความกว้าง (CosmicFooter) */
-  --cosmic-footer-desktop-bg: var(--surface-solid-outer);
+  /** Footer desktop — ไล่สีเดียวกับ .lobby-desktop-shell__header-band (อ้าง token ด้านล่าง) */
+  --cosmic-footer-desktop-bg: var(--header-desktop-chrome-gradient);
   /**
    * ชั้นซ้อนในการ์ดทึบ — อ่อนกว่าเดิม ใกล้ --inner-card-fill แต่ยังแยกชั้น
    * CosmicFormulaRow · cosmic-data-table thead/zebra · pagination
@@ -28,6 +28,12 @@
   --standalone-page-bg: #141416;
   /** แถบย้อนกลับ + ชื่อหน้า (page-sub-header) มือถือ */
   --page-sub-header-bg: #121014;
+  /** แถบประกาศเลื่อน lobby มือถือ — ม่วงเข้มออกเทา · ป้ายเข้ม / marquee อ่อนกว่า */
+  --lobby-announcement-mobile-lead-fill: color-mix(in srgb, var(--surface-solid-inner) 68%, #0b090f);
+  --lobby-announcement-mobile-marquee-fill: color-mix(in srgb, var(--surface-solid-inner) 82%, #0f0e13);
+  --lobby-announcement-mobile-fade-edge: color-mix(in srgb, var(--surface-end) 78%, #14101c);
+  /** ระยะบน–ล่างแถบประกาศ มือถือ (เท่ากับช่องใต้แบนเนอร์ / เหนือ CategoryNav) */
+  --lobby-announcement-mobile-spacing-y: 0.625rem;
   --surface-gradient: linear-gradient(
     110deg,
     var(--surface-start) 0%,
@@ -300,6 +306,8 @@
   --motion-base: 240ms;
   --motion-slow: 400ms;
   --stagger: 40ms;
+  /** กริด/แถวเกม — เฟดเข้าทีละใบ (motion.css .motion-game-card-enter) */
+  --game-card-stagger: 55ms;
   /* sheet / modal 2 step (motion.css) */
   --motion-sheet-in: 560ms;
   --motion-sheet-out: 520ms;
@@ -336,15 +344,36 @@
   --profile-menu-row-bg-hover: color-mix(in srgb, var(--surface-solid-inner) 38%, var(--surface-solid-outer));
   --header-desktop-bar-height: 72px;
   /**
-   * Desktop lobby header band — radial เข้มกว่า .cosmic-mobile-chrome-surface (มือถือ)
+   * Desktop lobby header band — ไล่ขวา→ซ้าย ม่วงเทาเข้ม → เทาเข้ม
    * ใช้ใน header.css กับ .lobby-desktop-shell__header-band เท่านั้น
    */
-  --header-desktop-chrome-bg: #0e0e10;
-  --header-desktop-chrome-radial: radial-gradient(
-    ellipse 130% 100% at 50% 0%,
-    rgb(34 28 50 / 1) 0%,
-    rgb(20 18 28 / 1) 42%,
-    var(--header-desktop-chrome-bg) 100%
+  --header-desktop-chrome-start: color-mix(
+    in srgb,
+    var(--surface-start) 56%,
+    rgb(44 38 58) 44%
+  );
+  --header-desktop-chrome-end: color-mix(
+    in srgb,
+    var(--surface-mid) 55%,
+    rgb(24 24 28) 45%
+  );
+  /** แคปซูลหัวข้อ bottom sheet — ม่วงเข้มเกือบดำ (variant --deep) */
+  --cosmic-sheet-title-capsule-deep-bg: linear-gradient(
+    168deg,
+    color-mix(in srgb, #231f2e 88%, var(--action-solid) 12%) 0%,
+    color-mix(in srgb, #14111c 94%, #000) 58%,
+    #0e0c14 100%
+  );
+  --header-desktop-chrome-bg: var(--header-desktop-chrome-end);
+  --header-desktop-chrome-gradient: linear-gradient(
+    270deg,
+    var(--header-desktop-chrome-start) 0%,
+    color-mix(
+      in srgb,
+      var(--header-desktop-chrome-start) 34%,
+      var(--header-desktop-chrome-end) 66%
+    ) 55%,
+    var(--header-desktop-chrome-end) 100%
   );
   --header-top-line: color-mix(in srgb, var(--border-active) 38%, var(--border-subtle));
 
@@ -357,7 +386,7 @@
   --menu-drawer-scrim:
     radial-gradient(
       ellipse 110% 56% at 50% -4%,
-      color-mix(in srgb, var(--accent-primary) 18%, #2c2838) 0%,
+      color-mix(in srgb, var(--accent-primary) 18%, #352838) 0%,
       #211d2b 42%,
       rgb(33 29 43 / 0) 74%
     ),

@@ -45,16 +45,17 @@
   }
 }
 
-/** Desktop lobby header — แถบเต็ม viewport (token --header-desktop-chrome-*) */
+/** Desktop lobby header — ไล่สีขวา→ซ้าย (token --header-desktop-chrome-*) */
 @media (min-width: 1024px) {
   .lobby-desktop-shell__header-band.cosmic-mobile-chrome-surface {
     background-color: var(--header-desktop-chrome-bg);
-    background-image: var(--header-desktop-chrome-radial);
+    background-image: var(--header-desktop-chrome-gradient);
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    background-position: 0 0;
     border: 0;
     border-radius: 0;
-    box-shadow: none;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
   }
 }
 

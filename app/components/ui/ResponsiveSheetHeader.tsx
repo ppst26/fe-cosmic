@@ -10,6 +10,11 @@ import {
   responsiveSheetCloseButtonClass,
 } from "./responsiveSheetDialog";
 import {
+  COSMIC_SHEET_HEADER_SURFACE_CLASS,
+  COSMIC_SHEET_TITLE_CAPSULE_CLASS,
+  COSMIC_SHEET_TITLE_CAPSULE_DEEP_CLASS,
+} from "./cosmicButtonClasses";
+import {
   ModalTitleLeadingAssetIcon,
   ModalTitleLeadingMenuIcon,
 } from "./ModalTitleLeadingIcon";
@@ -34,6 +39,12 @@ type ResponsiveSheetHeaderProps = {
   titleIconSrc?: string;
   /** แสดง titleIcon* เฉพาะ lg+ (ค่าเริ่มต้น true) */
   titleIconDesktopOnly?: boolean;
+  /** พื้น nested surface ทั้งแถบหัว — ปิดตามค่าเริ่มต้น */
+  titleSurface?: boolean;
+  /** แคปซูลครอบหัวข้อ — เปิดเมื่อ title อยู่กลาง (ฝาก/ถอน · แจ้งเตือน) */
+  titleCapsule?: boolean;
+  /** deep = ม่วงเข้มเกือบดำ · accent = gradient ม่วงสด (แท็บ) */
+  titleCapsuleVariant?: "deep" | "accent";
 };
 
 /**
@@ -52,7 +63,18 @@ export function ResponsiveSheetHeader({
   titleIconId,
   titleIconSrc,
   titleIconDesktopOnly = true,
+  titleSurface = false,
+  titleCapsule,
+  titleCapsuleVariant = "deep",
 }: ResponsiveSheetHeaderProps) {
+  const showTitleCapsule = titleCapsule ?? titleAlign === "center";
+  const titleCapsuleClass =
+    titleCapsuleVariant === "accent"
+      ? COSMIC_SHEET_TITLE_CAPSULE_CLASS
+      : COSMIC_SHEET_TITLE_CAPSULE_DEEP_CLASS;
+
+  const renderTitle = (content: React.ReactNode) =>
+    showTitleCapsule ? <div className={titleCapsuleClass}>{content}</div> : content;
   const resolvedLeading =
     leadingSlot ??
     (titleIconId ? (
@@ -74,6 +96,7 @@ export function ResponsiveSheetHeader({
       <header
         className={cn(
           "responsive-sheet-header--start grid w-full shrink-0 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-3 pb-2 pt-0.5",
+          titleSurface && COSMIC_SHEET_HEADER_SURFACE_CLASS,
           className,
         )}
       >
@@ -91,7 +114,7 @@ export function ResponsiveSheetHeader({
             resolvedLeading
           ) : null}
           <div className="min-w-0 text-left [&_h2]:text-left">
-            {title}
+            {renderTitle(title)}
             {subtitle}
           </div>
         </div>
@@ -105,7 +128,11 @@ export function ResponsiveSheetHeader({
     : undefined;
 
   return (
-    <header className={RESPONSIVE_SHEET_HEADER_ROW_CLASS(cn(colClass, className))}>
+    <header
+      className={RESPONSIVE_SHEET_HEADER_ROW_CLASS(
+        cn(titleSurface && COSMIC_SHEET_HEADER_SURFACE_CLASS, colClass, className),
+      )}
+    >
       <div className="flex min-h-9 items-center justify-start">
         {onBack ? (
           <button
@@ -123,8 +150,8 @@ export function ResponsiveSheetHeader({
         )}
       </div>
 
-      <div className="min-w-0 px-1 text-center">
-        {title}
+      <div className="flex min-w-0 flex-col items-center px-1 text-center">
+        {renderTitle(title)}
         {subtitle}
       </div>
 

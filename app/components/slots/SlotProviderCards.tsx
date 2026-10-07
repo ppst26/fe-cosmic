@@ -5,6 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { FlameHotIcon } from "../ui/Icons";
 import type { FeaturedSlotProviderItem, GridSlotProviderItem } from "@/app/types/providers";
+import {
+  gameCardEnterClassName,
+  gameCardEnterListKey,
+  gameCardEnterStyle,
+} from "@/app/lib/gameCardEnterMotion";
 
 /**
  * กราฟิกอาร์ตเวิร์กด้านขวาของแบนเนอร์ JILI (นักดนตรีโครงกระดูกวันแห่งความตาย)
@@ -327,6 +332,8 @@ export function SlotProviderCards({
 }: SlotProviderCardsProps) {
   const cardSurfaceClass =
     "group relative flex w-full transition-all duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.99]";
+  const featuredList = !hideFeatured ? featuredProviders.slice(0, 2) : [];
+  const gridEnterOffset = featuredList.length;
 
   return (
     <div className="space-y-4">
@@ -340,9 +347,9 @@ export function SlotProviderCards({
       ) : null}
 
       {/* 1. แบนเนอร์ feature 2 ใบเต็มความกว้าง (JILI แล้ว PRAGMATIC PLAY) — design.md slot providers */}
-      {!hideFeatured && featuredProviders.length > 0 ? (
+      {featuredList.length > 0 ? (
       <div className="slot-provider-featured flex flex-col gap-2 sm:gap-2.5 lg:hidden">
-        {featuredProviders.slice(0, 2).map((feat, index) => {
+        {featuredList.map((feat, index) => {
           const isJili = feat.id === "jili";
           const isPrimaryFeatured = index === 0;
           const hasCover = Boolean(feat.coverSrc);
@@ -351,11 +358,11 @@ export function SlotProviderCards({
             ? "aspect-[1.92/1] sm:aspect-[2.05/1] p-3 sm:p-3.5"
             : "aspect-[2.85/1] sm:aspect-[3/1] p-2.5 sm:p-3";
 
-          const featClasses = `${cardSurfaceClass} relative flex w-full min-h-0 flex-col justify-end overflow-hidden rounded-[var(--radius-panel)] ${featSizeClass} ${
-                hasCover
-                  ? "bg-[var(--surface-mid)]"
-                  : `bg-gradient-to-br ${feat.bgGradient}`
-              }`;
+          const featClasses = gameCardEnterClassName(
+            `${cardSurfaceClass} relative flex w-full min-h-0 flex-col justify-end overflow-hidden rounded-[var(--radius-panel)] ${featSizeClass} ${
+              hasCover ? "bg-[var(--surface-mid)]" : `bg-gradient-to-br ${feat.bgGradient}`
+            }`,
+          );
 
           const featInner = (
             <>
@@ -450,6 +457,7 @@ export function SlotProviderCards({
                   })
                 }
                 className={featClasses}
+                style={gameCardEnterStyle(index)}
               >
                 {featInner}
               </button>
@@ -457,7 +465,12 @@ export function SlotProviderCards({
           }
 
           return (
-            <Link key={feat.id} href={feat.href} className={featClasses}>
+            <Link
+              key={feat.id}
+              href={feat.href}
+              className={featClasses}
+              style={gameCardEnterStyle(index)}
+            >
               {featInner}
             </Link>
           );
@@ -466,16 +479,20 @@ export function SlotProviderCards({
       ) : null}
 
       {/* 2. กริดค่ายเกม — มือถือ 3 คอลัมน์ */}
-      <div className="slot-provider-grid grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-8">
-        {gridProviders.map((item) => {
+      <div
+        key={gameCardEnterListKey(gridProviders.map((item) => item.id))}
+        className="slot-provider-grid grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-8"
+      >
+        {gridProviders.map((item, index) => {
           const hasCover = Boolean(item.coverSrc);
 
           const href = item.href || `/slots/${item.id}`;
-          const gridClasses = `${cardSurfaceClass} flex aspect-square flex-col overflow-hidden rounded-[var(--radius-thumb)] active:scale-[0.98] ${
-              hasCover
-                ? "bg-[var(--surface-mid)]"
-                : `bg-gradient-to-b ${item.bgGradient}`
-            }`;
+          const gridClasses = gameCardEnterClassName(
+            `${cardSurfaceClass} flex aspect-square flex-col overflow-hidden rounded-[var(--radius-thumb)] active:scale-[0.98] ${
+              hasCover ? "bg-[var(--surface-mid)]" : `bg-gradient-to-b ${item.bgGradient}`
+            }`,
+          );
+          const gridEnterStyle = gameCardEnterStyle(index + gridEnterOffset);
 
           const gridInner = (
             <>
@@ -528,6 +545,7 @@ export function SlotProviderCards({
                   })
                 }
                 className={gridClasses}
+                style={gridEnterStyle}
               >
                 {gridInner}
               </button>
@@ -540,6 +558,7 @@ export function SlotProviderCards({
               href={href}
               aria-label={`${item.name} — สล็อต`}
               className={gridClasses}
+              style={gridEnterStyle}
             >
               {gridInner}
             </Link>

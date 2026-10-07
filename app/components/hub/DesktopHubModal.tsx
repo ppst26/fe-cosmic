@@ -155,6 +155,7 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
                   <ResponsiveSheetHeader
                     closeAriaLabel="ปิด"
                     titleAlign="start"
+                    titleSurface={false}
                     titleIconId={HUB_MODAL_ICON_IDS[hubId]}
                     titleIconDesktopOnly
                     className="responsive-sheet-header--hub responsive-sheet-header--hub-shell"

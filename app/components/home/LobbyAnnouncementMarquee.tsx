@@ -43,16 +43,18 @@ export function LobbyAnnouncementMarquee({
       className={cn(
         "lobby-announcement-marquee flex min-w-0 items-center gap-2.5",
         variant === "mobile"
-          ? "lobby-announcement-marquee--mobile px-3 py-1.5"
+          ? "lobby-announcement-marquee--mobile w-full min-w-0 gap-0"
           : "px-3 py-2 sm:gap-3 sm:px-3.5 sm:py-2.5",
         className,
       )}
       aria-label="ประกาศจากระบบ"
     >
-      <span className="lobby-announcement-marquee__label cosmic-type-marquee-label shrink-0">
-        ประกาศ
-      </span>
-      <MegaphoneGlyph className="lobby-announcement-marquee__icon h-4 w-4 shrink-0 text-[var(--icon-default)]" />
+      <div className="lobby-announcement-marquee__lead flex shrink-0 items-center gap-2">
+        <span className="lobby-announcement-marquee__label cosmic-type-marquee-label shrink-0">
+          ประกาศ
+        </span>
+        <MegaphoneGlyph className="lobby-announcement-marquee__icon h-4 w-4 shrink-0 text-[var(--icon-default)]" />
+      </div>
       <div className="lobby-announcement-marquee__viewport min-w-0 flex-1 overflow-hidden">
         <div className="lobby-announcement-marquee__track flex">
           {renderGroup("a")}

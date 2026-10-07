@@ -8,6 +8,7 @@ import type {
 } from "@/app/types/lottery";
 import { useLotteryHub } from "@/app/hooks/api/lottery";
 import { lotteryHrefToSlug } from "@/app/data/lotteryIconAssets";
+import { gameCardEnterListKey, GameCardStaggerShell } from "@/app/lib/gameCardEnterMotion";
 import { LotteryHubMarketLink } from "./LotteryHubMarketLink";
 import { LotteryLatestResultsTable } from "./LotteryLatestResultsTable";
 
@@ -48,36 +49,44 @@ export function LotteryHubContent({
       ) : null}
 
       <section className="lottery-hub__featured" aria-label="หวยแนะนำ">
-        <div className="lottery-feature-grid grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {resolvedFeatured.map((item) => (
-            <LotteryHubMarketLink
-              key={item.id}
-              href={item.href}
-              marketSlug={lotteryHrefToSlug(item.href)}
-              variant="feature"
-              title={item.title}
-              countdownLabel={item.countdownLabel}
-              fallbackLabel={item.visual === "thai-gov" ? "TH" : "YK"}
-              fallbackTone={item.visual === "thai-gov" ? "th" : "gold"}
-            />
+        <div
+          key={gameCardEnterListKey(resolvedFeatured.map((item) => item.id))}
+          className="lottery-feature-grid grid grid-cols-1 gap-3 sm:grid-cols-3"
+        >
+          {resolvedFeatured.map((item, index) => (
+            <GameCardStaggerShell key={item.id} index={index} className="min-w-0">
+              <LotteryHubMarketLink
+                href={item.href}
+                marketSlug={lotteryHrefToSlug(item.href)}
+                variant="feature"
+                title={item.title}
+                countdownLabel={item.countdownLabel}
+                fallbackLabel={item.visual === "thai-gov" ? "TH" : "YK"}
+                fallbackTone={item.visual === "thai-gov" ? "th" : "gold"}
+              />
+            </GameCardStaggerShell>
           ))}
         </div>
       </section>
 
       <section className="lottery-hub__markets min-w-0" aria-label="ประเภทหวยทั้งหมด">
-        <div className="lottery-type-grid grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
-          {resolvedGridItems.map((item) => (
-            <LotteryHubMarketLink
-              key={item.id}
-              href={item.href}
-              marketSlug={lotteryHrefToSlug(item.href)}
-              variant="type"
-              title={item.title}
-              countdownLabel={item.countdownLabel}
-              isClosed={item.status === "closed"}
-              fallbackLabel={item.flagLabel}
-              fallbackTone={item.flagTone}
-            />
+        <div
+          key={gameCardEnterListKey(resolvedGridItems.map((item) => item.id))}
+          className="lottery-type-grid grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6"
+        >
+          {resolvedGridItems.map((item, index) => (
+            <GameCardStaggerShell key={item.id} index={index} className="min-w-0">
+              <LotteryHubMarketLink
+                href={item.href}
+                marketSlug={lotteryHrefToSlug(item.href)}
+                variant="type"
+                title={item.title}
+                countdownLabel={item.countdownLabel}
+                isClosed={item.status === "closed"}
+                fallbackLabel={item.flagLabel}
+                fallbackTone={item.flagTone}
+              />
+            </GameCardStaggerShell>
           ))}
         </div>
       </section>

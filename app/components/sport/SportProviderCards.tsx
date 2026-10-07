@@ -4,6 +4,11 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { SportCardItem } from "@/app/types/providers";
+import {
+  gameCardEnterClassName,
+  gameCardEnterListKey,
+  gameCardEnterStyle,
+} from "@/app/lib/gameCardEnterMotion";
 
 /**
  * คอมโพเนนต์วาดกราฟิกกีฬาแต่ละประเภทตามสไตล์เดียวกับภาพอ้างอิง
@@ -177,8 +182,11 @@ export function SportProviderCards({
       ) : null}
 
       {/* กริดแสดงผล 3 คอลัมน์แนวตั้งตามแบบภาพอ้างอิง */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-        {items.map((item) => {
+      <div
+        key={gameCardEnterListKey(items.map((item) => item.id))}
+        className="grid grid-cols-3 gap-2 sm:gap-2.5 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8"
+      >
+        {items.map((item, index) => {
           const hasCover = Boolean(item.coverSrc);
 
           return (
@@ -186,11 +194,14 @@ export function SportProviderCards({
             key={item.id}
             href={item.href}
             aria-label={hasCover ? `${item.title} — ${item.provider}` : undefined}
-            className={`group relative flex aspect-[3/4.2] w-full min-w-0 flex-col justify-between overflow-hidden rounded-[var(--radius-thumb)] shadow-md transition-all duration-200 hover:brightness-110 active:scale-[0.98] ${
-              hasCover
-                ? "bg-[var(--surface-mid)] p-0"
-                : `bg-gradient-to-b ${item.bgGradient ?? "from-[#1e1b4b] to-[#0f172a]"} p-2 sm:p-2.5`
-            }`}
+            style={gameCardEnterStyle(index)}
+            className={gameCardEnterClassName(
+              `group relative flex aspect-[3/4.2] w-full min-w-0 flex-col justify-between overflow-hidden rounded-[var(--radius-thumb)] shadow-md transition-all duration-200 hover:brightness-110 active:scale-[0.98] ${
+                hasCover
+                  ? "bg-[var(--surface-mid)] p-0"
+                  : `bg-gradient-to-b ${item.bgGradient ?? "from-[#1e1b4b] to-[#0f172a]"} p-2 sm:p-2.5`
+              }`,
+            )}
           >
             {hasCover && item.coverSrc ? (
               <Image

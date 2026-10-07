@@ -4,6 +4,11 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { buildGamePlayHref } from "@/lib/gamePlayPaths";
 import type { ProviderGameItem } from "@/app/types/providers";
+import {
+  gameCardEnterClassName,
+  gameCardEnterListKey,
+  gameCardEnterStyle,
+} from "@/app/lib/gameCardEnterMotion";
 
 interface ProviderGameGridProps {
   games: ProviderGameItem[];
@@ -457,14 +462,20 @@ export function ProviderGameGrid({
   return (
     <div className="my-4">
       {/* กริด 4 คอลัมน์บนมือถือ ตามภาพตัวอย่าง */}
-      <div className="provider-game-grid grid grid-cols-4 gap-2 sm:gap-3 lg:grid-cols-8">
-        {games.map((game) => {
+      <div
+        key={gameCardEnterListKey(games.map((g) => g.id))}
+        className="provider-game-grid grid grid-cols-4 gap-2 sm:gap-3 lg:grid-cols-8"
+      >
+        {games.map((game, index) => {
           const isFav = !!favorites[game.id];
 
           return (
             <div
               key={game.id}
-              className="group flex flex-col cursor-pointer select-none transition-transform duration-150 active:scale-95"
+              className={gameCardEnterClassName(
+                "group flex flex-col cursor-pointer select-none transition-transform duration-150 active:scale-95",
+              )}
+              style={gameCardEnterStyle(index)}
               onClick={() => handlePlay(game)}
             >
               {/* 1. Thumbnail Card (สี่เหลี่ยมจัตุรัสขอบมน borderless) */}
