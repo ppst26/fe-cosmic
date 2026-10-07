@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import { useToast } from "@/context/ToastContext";
 import type { ProfileUser } from "@/app/types/auth";
 import { CopyIcon, VerifiedCheckIcon } from "../ui/Icons";
 import { UserAvatar } from "./UserAvatar";
@@ -13,15 +14,14 @@ import {
  * สรุปโปรไฟล์ — avatar, เบอร์, ID, badge ยืนยัน
  */
 export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
-  const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
 
   const handleCopyId = async () => {
     try {
       await navigator.clipboard.writeText(profile.memberId);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      showToast("คัดลอก ID แล้ว", "success", 2500);
     } catch {
-      /* clipboard ไม่พร้อม */
+      showToast("ไม่สามารถคัดลอก ID ได้", "error");
     }
   };
 
@@ -41,15 +41,10 @@ export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
             type="button"
             onClick={() => void handleCopyId()}
             className={`${COSMIC_BTN_GLASS_ICON} !h-7 !w-7 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]`}
-            aria-label={copied ? "คัดลอกแล้ว" : "คัดลอก ID"}
+            aria-label="คัดลอก ID"
           >
             <CopyIcon className="h-4 w-4" />
           </button>
-          {copied && (
-            <span className="text-xs text-[var(--success)]" role="status">
-              คัดลอกแล้ว
-            </span>
-          )}
         </div>
         <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success)]/15 px-2.5 py-0.5 text-xs font-medium text-[var(--success)]">
           <VerifiedCheckIcon className="h-3 w-3" />

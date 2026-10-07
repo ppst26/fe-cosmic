@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useToast } from "@/context/ToastContext";
 import type { ProfileUser } from "@/app/types/auth";
 import { getSignUpBankById, signUpCoverToneClass } from "@/app/data/signupMockData";
 import { CopyIcon } from "../ui/Icons";
@@ -29,16 +30,15 @@ export function ProfileHubHeader({
   onProfileUpdated?: (profile: ProfileUser) => void;
 }) {
   const isSheet = variant === "sheet";
-  const [copied, setCopied] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const { showToast } = useToast();
 
   const handleCopyId = async () => {
     try {
       await navigator.clipboard.writeText(profile.memberId);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      showToast("คัดลอกไอดีผู้เล่นแล้ว", "success", 2500);
     } catch {
-      /* clipboard ไม่พร้อม */
+      showToast("ไม่สามารถคัดลอกไอดีได้", "error");
     }
   };
 
@@ -125,15 +125,10 @@ export function ProfileHubHeader({
               type="button"
               onClick={() => void handleCopyId()}
               className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded text-[var(--icon-default)] hover:bg-[var(--surface-hover)] hover:text-[var(--icon-active)]"
-              aria-label={copied ? "คัดลอกแล้ว" : "คัดลอกไอดีผู้เล่น"}
+              aria-label="คัดลอกไอดีผู้เล่น"
             >
               <CopyIcon className="h-3 w-3" />
             </button>
-            {copied && (
-              <span className="text-xs text-[var(--success)]" role="status">
-                คัดลอกแล้ว
-              </span>
-            )}
           </div>
         </div>
       </section>

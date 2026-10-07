@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useReferralOverview } from "@/app/hooks/api/member";
+import { useToast } from "@/context/ToastContext";
 import { ProfileAccountFieldRow } from "./ProfileAccountFieldRow";
 import { cn } from "@/lib/utils";
 import { buildReferralLink } from "@/lib/domain/referral";
@@ -10,18 +11,17 @@ import { buildReferralLink } from "@/lib/domain/referral";
  * บล็อกชวนเพื่อน — ลิงก์คัดลอก (ProfileAccountTabs)
  */
 export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) {
-  const [copiedField, setCopiedField] = useState<string | null>(null);
+  const { showToast } = useToast();
   const overview = useReferralOverview();
   /** ลิงก์พร้อมเมื่อโหลดรหัสแนะนำแล้ว · ระหว่างโหลดแสดง "—" */
   const referralLink = overview.data ? buildReferralLink(overview.data.refCode) : null;
 
-  const copyText = async (field: string, text: string) => {
+  const handleCopyLink = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      setCopiedField(field);
-      window.setTimeout(() => setCopiedField(null), 2000);
+      showToast("คัดลอกลิงก์แล้ว", "success", 2500);
     } catch {
-      /* clipboard ไม่พร้อม */
+      showToast("ไม่สามารถคัดลอกลิงก์ได้", "error");
     }
   };
 
@@ -41,14 +41,10 @@ export function ProfileReferralInviteCard({ flat = false }: { flat?: boolean }) 
         </p>
       </div>
 
-      {copiedField ? (
-        <p className="text-center text-xs text-[var(--success)]" role="status">คัดลอกแล้ว</p>
-      ) : null}
-
       <ProfileAccountFieldRow
         label="ลิงก์ชวนเพื่อน"
         value={referralLink ?? "—"}
-        onCopy={referralLink ? () => void copyText("link", referralLink) : undefined}
+        onCopy={referralLink ? () => void handleCopyLink(referralLink) : undefined}
         copyLabel="คัดลอกลิงก์ชวนเพื่อน"
       />
     </section>

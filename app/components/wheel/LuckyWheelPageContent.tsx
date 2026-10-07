@@ -14,6 +14,7 @@ import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import { formatGemsBalance } from "@/lib/format";
 import type { WheelPrizeHistoryRow, WheelSegment, WheelSpinMethod } from "@/app/types/reward";
 import { valueClass } from "@/lib/semanticValue";
+import { cn } from "@/lib/utils";
 
 /**
  * หน้าเล่นวงล้อพารวย — โหลดข้อมูลวงล้อแล้วส่งให้ LuckyWheelPlay (state เริ่มต้นมาจากข้อมูลที่โหลดแล้ว)
@@ -39,7 +40,6 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
   const [spinMethod, setSpinMethod] = useState<WheelSpinMethod>("ticket");
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
-  const [termsOpen, setTermsOpen] = useState(false);
   const [lastWin, setLastWin] = useState<string | null>(null);
   const [recentHistoryRows, setRecentHistoryRows] = useState<WheelPrizeHistoryRow[]>([]);
 
@@ -88,63 +88,59 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
 
   return (
     <div className={`lucky-wheel-page ${embedded ? "lucky-wheel-page--embedded" : ""}`}>
-      {/* 1. Header Bar: ย้อนกลับ arrow back ไร้ card ครอบ, หัวข้อกึ่งกลาง, และจำนวนเพชร/ตั๋วมินิมอลบนขวา */}
-      <div className="relative flex w-full items-center justify-between gap-3 px-1 py-1 sm:px-2">
-        <Link
-          href="/"
-          className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
-          aria-label="ย้อนกลับไปหน้าแรก"
-        >
-          <ArrowLeftIcon className="h-6 w-6 text-white" />
-        </Link>
-        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center text-center pointer-events-none">
-          <h1 className="text-base font-medium text-white sm:text-lg leading-tight">วงล้อพารวย</h1>
-          <p className="hidden text-xs sm:text-[13px] text-[var(--text-secondary)] sm:block">หมุนลุ้นรับรางวัลใหญ่ทุกวัน</p>
-        </div>
-
-        {/* ปุ่มเพชร และ ตั๋วมินิมอลบนขวา (ธีม Cosmicbet) */}
-        <div className="flex items-center gap-2">
-          {/* ชิปเพชร */}
+      {/* 1. Header — ย้อนกลับ + หัวข้อกลาง */}
+      <div className="w-full px-1 py-1 sm:px-2">
+        <div className="relative flex items-center justify-between gap-3">
           <Link
-            href="/gems-store"
-            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white shadow-[0_0_12px_rgba(168,85,247,0.15)] transition-all hover:border-purple-400/60 hover:bg-[#1d123d] active:scale-95"
-            aria-label="ยอดเพชรของคุณ"
+            href="/"
+            className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
+            aria-label="ย้อนกลับไปหน้าแรก"
           >
-            <GoldGemIcon className="h-3.5 w-3.5 shrink-0 text-sky-400" />
-            <span className={valueClass("accent", "text-xs tracking-tight text-white")}>
-              {formatGemsBalance(gemsBalance)}
-            </span>
+            <ArrowLeftIcon className="h-6 w-6 text-white" />
           </Link>
-
-          {/* ชิปตั๋ว */}
-          <div
-            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white shadow-[0_0_12px_rgba(168,85,247,0.15)]"
-            aria-label="จำนวนตั๋วของคุณ"
-          >
-            <GoldTicketIcon className="h-3.5 w-3.5 shrink-0 text-purple-400" />
-            <span className="text-xs font-medium text-white tabular-nums tracking-tight">
-              {ticketCount}
-            </span>
+          <div className="pointer-events-none absolute left-1/2 flex -translate-x-1/2 flex-col items-center text-center">
+            <h1 className="text-base font-medium leading-tight text-white sm:text-lg">วงล้อพารวย</h1>
+            <p className="hidden text-xs text-[var(--text-secondary)] sm:block sm:text-[13px]">
+              หมุนลุ้นรับรางวัลใหญ่ทุกวัน
+            </p>
           </div>
+          <div className="h-10 w-10 shrink-0" aria-hidden="true" />
         </div>
       </div>
 
-      {/* 2. โซนวงล้อ และปุ่มหมุน (Mobile-first centered column) */}
-      <div className="flex w-full flex-col items-center">
-        {/* ตัววงล้อ + ปุ่ม info ขวาบน */}
-        <div className="relative flex w-full max-w-[380px] sm:max-w-[420px] flex-col items-center justify-center pt-2">
-          {/* ปุ่ม Info กติกา ขวาบนวงล้อ */}
-          <button
-            type="button"
-            onClick={() => setTermsOpen((prev) => !prev)}
-            className="absolute right-1 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full border border-purple-500/30 bg-[#150d2c]/80 text-purple-300 backdrop-blur-md transition-colors hover:border-purple-400 hover:text-white active:scale-95 cursor-pointer"
-            aria-label="กติกาและเงื่อนไข"
-            title="กติกาและเงื่อนไข"
-          >
-            <span className="text-xs font-serif font-medium italic">i</span>
-          </button>
+      {/* 2–4. วงล้อกลาง · desktop ตารางซ้าย–ขวา */}
+      <div
+        className={cn(
+          "lucky-wheel-page__stage w-full",
+          "lg:grid lg:grid-cols-[minmax(0,15rem)_minmax(0,26rem)_minmax(0,15rem)] lg:items-center lg:justify-center lg:gap-x-5",
+          "xl:grid-cols-[17rem_minmax(0,28rem)_17rem] xl:gap-x-6",
+        )}
+      >
+        <aside className="hidden min-w-0 self-center lg:block">
+          <LuckyWheelPrizeHistory extraRows={recentHistoryRows} variant="sidebar" />
+        </aside>
 
-          {/* ดีไซน์วงล้อเดิม (ห้ามเปลี่ยนดีไซน์) */}
+        <div className="flex min-w-0 w-full flex-col items-center">
+        <div className="relative flex w-full max-w-[380px] flex-col items-center justify-center pt-2 sm:max-w-[420px]">
+          <div className="mb-2 flex w-full items-center justify-between gap-3 px-0.5 sm:px-1">
+            <Link
+              href="/gems-store"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white shadow-[0_0_12px_rgba(168,85,247,0.15)] transition-all hover:border-purple-400/60 hover:bg-[#1d123d] active:scale-95"
+              aria-label="ยอดเพชรของคุณ"
+            >
+              <GoldGemIcon className="h-3.5 w-3.5 shrink-0 text-sky-400" />
+              <span className={valueClass("accent", "text-xs tracking-tight text-white")}>
+                {formatGemsBalance(gemsBalance)}
+              </span>
+            </Link>
+            <div
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white shadow-[0_0_12px_rgba(168,85,247,0.15)]"
+              aria-label="จำนวนตั๋วของคุณ"
+            >
+              <GoldTicketIcon className="h-3.5 w-3.5 shrink-0 text-purple-400" />
+              <span className="text-xs font-medium tabular-nums tracking-tight text-white">{ticketCount}</span>
+            </div>
+          </div>
           <CosmicFortuneWheel
             segments={wheel.segments}
             rotationDeg={rotation}
@@ -161,38 +157,38 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
           </div>
         </div>
 
-        {/* 3. แท็บเลือกว่าจะใช้อะไรหมุน (เพชร ×10.00 / ตั๋ว ×1) — ธีม Cosmicbet */}
+        {/* 3. แท็บเลือกวิธีหมุน — surface solid เทา + segment แบบคืนยอด */}
         <div
           role="tablist"
           aria-label="เลือกวิธีหมุนวงล้อ"
-          className="my-3.5 flex items-center rounded-2xl border border-purple-500/20 bg-[#120b24]/90 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+          className={cn(
+            "cosmic-segment-track cosmic-segment-track--glass-white my-3.5 grid w-full max-w-[380px] grid-cols-2 gap-1.5 p-1.5 sm:max-w-[420px]",
+            "border-[var(--border-subtle)] bg-[var(--surface-solid-inner)] shadow-none [backdrop-filter:none] [-webkit-backdrop-filter:none]",
+          )}
         >
-          <button
-            type="button"
-            role="tab"
-            aria-selected={spinMethod === "gems"}
-            onClick={() => setSpinMethod("gems")}
-            className={`rounded-xl px-5 py-2 text-xs font-medium sm:text-sm transition-all cursor-pointer ${
-              spinMethod === "gems"
-                ? "border border-[#8b5cf6] bg-gradient-to-r from-[#7747e5]/40 to-[#9333ea]/30 text-purple-200 shadow-[0_0_14px_rgba(139,92,246,0.35)] font-medium"
-                : "text-white/60 hover:text-white"
-            }`}
-          >
-            เพชร ×{wheel.gemsPerSpin.toFixed(2)}
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={spinMethod === "ticket"}
-            onClick={() => setSpinMethod("ticket")}
-            className={`rounded-xl px-5 py-2 text-xs font-medium sm:text-sm transition-all cursor-pointer ${
-              spinMethod === "ticket"
-                ? "border border-[#8b5cf6] bg-gradient-to-r from-[#7747e5]/40 to-[#9333ea]/30 text-purple-200 shadow-[0_0_14px_rgba(139,92,246,0.35)] font-medium"
-                : "text-white/60 hover:text-white"
-            }`}
-          >
-            ตั๋ว ×{wheel.ticketsPerSpin}
-          </button>
+          {(
+            [
+              { id: "gems" as const, label: `เพชร ×${wheel.gemsPerSpin.toFixed(2)}` },
+              { id: "ticket" as const, label: `ตั๋ว ×${wheel.ticketsPerSpin}` },
+            ] as const
+          ).map((tab) => {
+            const isActive = spinMethod === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setSpinMethod(tab.id)}
+                className={cn(
+                  "cosmic-segment-btn min-h-9 px-3 py-2 text-xs font-medium sm:text-sm",
+                  isActive ? "is-active" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
+                )}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* 4. ปุ่มหมุนใหญ่ — สีตรงธีม Cosmicbet (ม่วงนีออน Action Gradient) */}
@@ -243,39 +239,22 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
             </div>
           ) : null}
         </div>
+        </div>
+
+        <aside className="hidden min-w-0 self-center lg:block">
+          <LuckyWheelLiveWinners variant="sidebar" />
+        </aside>
       </div>
 
-      {/* Accordion กติกาและเงื่อนไข (เมื่อกดปุ่ม i) */}
-      {termsOpen ? (
-        <section className="mx-auto w-full max-w-[640px] overflow-hidden rounded-2xl border border-white/10 bg-[#120e20]/90 p-4 shadow-xl">
-          <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
-            <h2 className="text-sm font-medium text-white">กติกาและเงื่อนไขการหมุนวงล้อ</h2>
-            <button
-              type="button"
-              onClick={() => setTermsOpen(false)}
-              className="text-xs text-white/60 hover:text-white cursor-pointer"
-            >
-              ปิด
-            </button>
-          </div>
-          <ul className="mt-3 space-y-2 text-xs leading-relaxed text-white/70">
-            {wheel.terms.map((line) => (
-              <li key={line} className="flex gap-2">
-                <span className="text-amber-400" aria-hidden="true">•</span>
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      {/* 5. ตารางยังเก็บไว้เหมือนเดิม (ประวัติการหมุนของฉัน & ผู้เล่นคนอื่นได้รับรางวัล) */}
-      <div className="mx-auto flex w-full max-w-[640px] flex-col gap-4 pt-4 lg:max-w-none lg:grid lg:grid-cols-2 lg:gap-5">
+      {/* มือถือ — ตารางใต้วงล้อ */}
+      <div className="mx-auto flex w-full max-w-[640px] flex-col gap-4 pt-4 lg:hidden">
         <LuckyWheelPrizeHistory extraRows={recentHistoryRows} />
         <LuckyWheelLiveWinners />
       </div>
 
-      <p className="pt-2 text-center text-xs text-[var(--text-secondary)]">ตัวอย่างรางวัลและยอดกระเป๋า</p>
+      <p className="pt-2 text-center text-xs text-[var(--text-secondary)]">
+        ตัวอย่างรางวัลและยอดกระเป๋า
+      </p>
     </div>
   );
 }

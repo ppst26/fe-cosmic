@@ -13,9 +13,8 @@ import {
 import { ResourceGate } from "../ui/ResourceGate";
 import type { DepositBankAccountMock } from "@/app/types/wallet";
 import { ChevronRightIcon, CopyIcon } from "../ui/Icons";
-import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
+import { ResponsiveSheetHeader, ResponsiveSheetTitleNotch } from "../ui/ResponsiveSheetHeader";
 import {
-  RESPONSIVE_SHEET_HANDLE_CLASS,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
@@ -32,6 +31,7 @@ import { formatDepositAmount, formatDepositTransferAmount } from "@/lib/format";
 import type { DepositMethodId } from "@/app/types/wallet";
 import { useWallet } from "@/app/hooks/api/account";
 import { valueClass } from "@/lib/semanticValue";
+import { useToast } from "@/context/ToastContext";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 
@@ -188,8 +188,6 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
             { variant: "default" },
           )}
         >
-          <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
-
           {step === "methods" && <DepositMethodsStep onSelectMethod={handleSelectMethod} />}
           {step === "bank" && (
             <ResourceGate resource={bankAccount} loadingLabel="กำลังโหลดบัญชีรับโอน…" errorTitle="โหลดบัญชีรับโอนไม่สำเร็จ">
@@ -258,17 +256,19 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
   const methods = useDepositMethods();
   return (
     <>
-      <ResponsiveSheetHeader
-        closeAriaLabel="ปิดหน้าฝากเงิน"
-        titleIconSrc="/assets/deposit/Wallet2.avif"
-        titleIconDesktopOnly={false}
-        title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ฝากเงิน</Dialog.Title>}
-        subtitle={
-          <p id="deposit-sheet-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
-            เลือกช่องทางการฝากเงิน
-          </p>
-        }
-      />
+      <ResponsiveSheetTitleNotch>
+        <ResponsiveSheetHeader
+          closeAriaLabel="ปิดหน้าฝากเงิน"
+          titleIconSrc="/assets/deposit/Wallet2.avif"
+          titleIconDesktopOnly={false}
+          title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ฝากเงิน</Dialog.Title>}
+          subtitle={
+            <p id="deposit-sheet-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
+              เลือกช่องทางการฝากเงิน
+            </p>
+          }
+        />
+      </ResponsiveSheetTitleNotch>
 
       <ResourceGate resource={methods} loadingLabel="กำลังโหลดช่องทางฝาก…" errorTitle="โหลดช่องทางฝากไม่สำเร็จ">
         {(methodList) => (
@@ -324,14 +324,16 @@ function DepositBankStep({
 
   return (
     <>
-      <ResponsiveSheetHeader
-        closeAriaLabel="ปิดหน้าฝากเงิน"
-        onBack={onBack}
-        backAriaLabel="กลับเลือกช่องทางฝาก"
-        title={
-          <Dialog.Title className="cosmic-type-sheet-title">ฝากผ่านบัญชีธนาคาร</Dialog.Title>
-        }
-      />
+      <ResponsiveSheetTitleNotch>
+        <ResponsiveSheetHeader
+          closeAriaLabel="ปิดหน้าฝากเงิน"
+          onBack={onBack}
+          backAriaLabel="กลับเลือกช่องทางฝาก"
+          title={
+            <Dialog.Title className="cosmic-type-sheet-title">ฝากผ่านบัญชีธนาคาร</Dialog.Title>
+          }
+        />
+      </ResponsiveSheetTitleNotch>
 
       <div
         id="deposit-bank-desc"
@@ -476,13 +478,15 @@ function DepositConfirmStep({
 }) {
   return (
     <>
-      <ResponsiveSheetHeader
-        closeAriaLabel="ปิดหน้าฝากเงิน"
-        onBack={onBack}
-        backAriaLabel="กลับแก้ไขยอดฝาก"
-        title={<Dialog.Title className="cosmic-type-sheet-title">ยืนยันการฝากเงิน</Dialog.Title>}
-        subtitle={<p className="cosmic-type-sheet-meta mt-0.5">ขั้นตอน 3 จาก 3</p>}
-      />
+      <ResponsiveSheetTitleNotch>
+        <ResponsiveSheetHeader
+          closeAriaLabel="ปิดหน้าฝากเงิน"
+          onBack={onBack}
+          backAriaLabel="กลับแก้ไขยอดฝาก"
+          title={<Dialog.Title className="cosmic-type-sheet-title">ยืนยันการฝากเงิน</Dialog.Title>}
+          subtitle={<p className="cosmic-type-sheet-meta mt-0.5">ขั้นตอน 3 จาก 3</p>}
+        />
+      </ResponsiveSheetTitleNotch>
 
       <div
         id="deposit-confirm-desc"

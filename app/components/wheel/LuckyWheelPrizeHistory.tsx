@@ -2,17 +2,21 @@
 
 import React, { useMemo, useState } from "react";
 import { useWheel } from "@/app/hooks/api/member";
-import type { WheelPrizeHistoryRow, WheelSpinMethod } from "@/app/types/reward";
-import { valueClass } from "@/lib/semanticValue";
+import type { WheelPrizeHistoryRow, WheelPrizeKind, WheelSpinMethod } from "@/app/types/reward";
+import { valueClass, type ValueRole } from "@/lib/semanticValue";
+import { cn } from "@/lib/utils";
 
 interface LuckyWheelPrizeHistoryProps {
   extraRows?: WheelPrizeHistoryRow[];
+  /** desktop — คอลัมน์แคบข้างวงล้อ */
+  variant?: "default" | "sidebar";
 }
 
 /**
  * ตารางประวัติการหมุนของฉัน — ดีไซน์การ์ดมนตามภาพตัวอย่าง
  */
-export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistoryProps) {
+export function LuckyWheelPrizeHistory({ extraRows = [], variant = "default" }: LuckyWheelPrizeHistoryProps) {
+  const isSidebar = variant === "sidebar";
   /** ใช้ cache เดียวกับ LuckyWheelPageContent (SWR) */
   const wheel = useWheel().data;
   const [page, setPage] = useState(1);
@@ -33,24 +37,26 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
 
   return (
     <section
-      className="flex h-full min-h-0 flex-col rounded-2xl border border-white/10 bg-[#0e0b16]/90 p-4 shadow-xl"
+      className={cn(
+        "surface-solid-stack cosmic-outline-subtle flex h-full min-h-0 flex-col p-4 lg:p-3",
+        isSidebar && "min-w-0",
+      )}
       aria-labelledby="wheel-history-title"
     >
-      <header className="flex items-center justify-between pb-3.5">
-        <div className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-500/20 text-purple-400">
-            <ClockIcon className="h-4 w-4" />
-          </span>
-          <h2 id="wheel-history-title" className="text-sm font-medium text-white">
-            ประวัติการหมุนของฉัน
-          </h2>
-        </div>
-        <button
-          type="button"
-          className="text-xs font-medium text-purple-400 transition-colors hover:text-purple-300 hover:underline cursor-pointer"
+      <header className={cn("flex items-start gap-2 pb-3.5 lg:pb-2.5", isSidebar && "gap-1.5")}>
+        <ClockIcon
+          className={cn("shrink-0 text-[var(--icon-default)]", isSidebar ? "mt-0.5 h-3.5 w-3.5" : "h-4 w-4")}
+          aria-hidden="true"
+        />
+        <h2
+          id="wheel-history-title"
+          className={cn(
+            "font-medium leading-snug text-[var(--text-primary)]",
+            isSidebar ? "text-[11px] lg:text-xs" : "text-sm",
+          )}
         >
-          ดูทั้งหมด &rsaquo;
-        </button>
+          ประวัติการหมุนของฉัน
+        </h2>
       </header>
 
       {/* รายการประวัติแบบการ์ดแถวมน ตรงตามรูปที่ 2 */}
@@ -58,21 +64,42 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
         {pageRows.map((row) => (
           <div
             key={row.id}
-            className="flex items-center justify-between rounded-xl border border-white/5 bg-[#14101e] px-3.5 py-3 text-xs transition-colors hover:bg-[#181326]"
+            className={cn(
+              "surface-solid-inner cosmic-outline-subtle rounded-[var(--radius-card)] transition-colors hover:bg-[color-mix(in_srgb,var(--surface-solid-inner)_72%,var(--surface-hover))]",
+              isSidebar
+                ? "flex min-w-0 flex-col gap-1 px-2.5 py-2 text-[10px] leading-snug lg:text-[11px]"
+                : "flex items-center justify-between gap-1 px-3 py-2.5 text-xs lg:px-2.5 lg:py-2",
+            )}
           >
-            <span className="w-24 shrink-0 text-[var(--text-secondary)] text-xs tabular-nums">
-              {row.atLabel}
-            </span>
-            <div className="flex flex-1 items-center justify-center gap-1.5 font-medium text-white">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-white/90">
-                <DiamondSmallIcon />
-              </span>
-              <span className={valueClass("reward")}>{row.amount} {row.prizeName}</span>
-            </div>
-            <div className="flex w-20 shrink-0 items-center justify-end gap-1 text-[var(--text-secondary)] text-xs">
-              <DiamondOutlineSmallIcon />
-              <span>{row.method === "gems" ? "ใช้เพชร" : "ใช้ตั๋ว"}</span>
-            </div>
+            {isSidebar ? (
+              <div className="flex items-start justify-between gap-2">
+                <span className={valueClass("muted", "shrink-0 tabular-nums")}>{row.atLabel}</span>
+                <div className="flex min-w-0 flex-col items-end gap-0.5 text-right leading-snug">
+                  <span className={valueClass(wheelPrizeValueRole(row.prizeKind), "font-medium tabular-nums")}>
+                    +{row.amount} {row.prizeName}
+                  </span>
+                  <span className={valueClass(wheelSpinCostRole(row.method), "tabular-nums")}>
+                    {row.method === "gems" ? "ใช้เพชร" : "ใช้ตั๋ว"}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <>
+                <span className="w-24 shrink-0 tabular-nums text-xs text-[var(--text-secondary)]">
+                  {row.atLabel}
+                </span>
+                <div className="flex flex-1 items-center justify-center gap-1.5 font-medium text-[var(--text-primary)]">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-white/90">
+                    <DiamondSmallIcon />
+                  </span>
+                  <span className={valueClass("reward")}>{row.amount} {row.prizeName}</span>
+                </div>
+                <div className="flex w-20 shrink-0 items-center justify-end gap-1 text-xs text-[var(--text-secondary)]">
+                  <DiamondOutlineSmallIcon />
+                  <span>{row.method === "gems" ? "ใช้เพชร" : "ใช้ตั๋ว"}</span>
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>
@@ -103,6 +130,16 @@ export function LuckyWheelPrizeHistory({ extraRows = [] }: LuckyWheelPrizeHistor
       </footer>
     </section>
   );
+}
+
+/** สีรางวัลที่ได้ — เขียว (ได้รับ) */
+function wheelPrizeValueRole(_kind: WheelPrizeKind): ValueRole {
+  return "success";
+}
+
+/** สีค่าใช้จ่าย — ใช้เพชรแดงอ่อน (ลด) · ใช้ตั๋ว neutral */
+function wheelSpinCostRole(method: WheelSpinMethod): ValueRole {
+  return method === "gems" ? "danger" : "neutral";
 }
 
 function ClockIcon({ className }: { className?: string }) {

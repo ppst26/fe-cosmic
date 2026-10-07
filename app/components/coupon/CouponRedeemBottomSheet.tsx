@@ -3,10 +3,9 @@
 import React, { useState } from "react";
 import { Dialog } from "radix-ui";
 import { PromoTicketIcon } from "../ui/Icons";
-import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
+import { ResponsiveSheetHeader, ResponsiveSheetTitleNotch } from "../ui/ResponsiveSheetHeader";
 import { COSMIC_BTN_PRIMARY, COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import {
-  RESPONSIVE_SHEET_HANDLE_CLASS,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
@@ -69,19 +68,19 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
           aria-describedby="coupon-redeem-desc"
           className={responsiveSheetContentClass("max-h-[min(85dvh,520px)] overflow-y-auto")}
         >
-          <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
-
-          <ResponsiveSheetHeader
-            closeAriaLabel="ปิดหน้าแลกคูปอง"
-            titleIconId="coupon"
-            titleIconDesktopOnly
-            title={<Dialog.Title className="cosmic-type-sheet-title text-xl sm:text-2xl">แลกคูปอง</Dialog.Title>}
-            subtitle={
-              <p id="coupon-redeem-desc" className="cosmic-type-sheet-desc mt-1">
-                โค้ดสำหรับแลกเครดิตฟรี
-              </p>
-            }
-          />
+          <ResponsiveSheetTitleNotch>
+            <ResponsiveSheetHeader
+              closeAriaLabel="ปิดหน้าแลกคูปอง"
+              titleIconId="coupon"
+              titleIconDesktopOnly
+              title={<Dialog.Title className="cosmic-type-sheet-title text-xl sm:text-2xl">แลกคูปอง</Dialog.Title>}
+              subtitle={
+                <p id="coupon-redeem-desc" className="cosmic-type-sheet-desc mt-1">
+                  โค้ดสำหรับแลกเครดิตฟรี
+                </p>
+              }
+            />
+          </ResponsiveSheetTitleNotch>
 
           <div className="flex flex-col items-center pt-1 text-center">
             <CouponTicketsGraphic className="mb-3 h-24 w-40 sm:h-28 sm:w-44" />

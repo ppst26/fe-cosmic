@@ -150,6 +150,46 @@ a.cosmic-sheet-soft-glass--interactive:hover {
   padding: 0.5rem 0.65rem 0.45rem;
 }
 
+/**
+ * หัว sheet มือถือ — เทาเข้มไล่สี + handle
+ * ResponsiveSheetTitleNotch · ฝาก / ถอน / คูปอง
+ */
+@media (max-width: 1023px) {
+  .cosmic-sheet-title-notch {
+    margin: -0.75rem -1rem 0.5rem;
+    padding: 0.15rem 1rem 0.6rem;
+    border-radius: 20px 20px var(--radius-card) var(--radius-card);
+    background:
+      var(--cosmic-sheet-title-notch-highlight),
+      var(--cosmic-sheet-title-notch-bg);
+    box-shadow:
+      inset 0 3px 12px rgb(0 0 0 / 0.28),
+      inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  .cosmic-sheet-title-notch .responsive-sheet-handle {
+    margin-bottom: 0.55rem;
+    background: rgb(255 255 255 / 0.26);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .cosmic-sheet-title-notch {
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cosmic-sheet-title-notch {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
 /** แคปซูลม่วงครอบหัวข้อ — โทนเดียวแท็บ active ใน sheet */
 .cosmic-sheet-title-capsule {
   display: inline-flex;
@@ -178,14 +218,15 @@ a.cosmic-sheet-soft-glass--interactive:hover {
   color: inherit;
 }
 
-/** แคปซูลหัวข้อ — ม่วงเข้มเกือบดำ (ค่าเริ่มต้น ResponsiveSheetHeader) */
+/** แคปซูลหัวข้อ — เทาไล่ดำ (ค่าเริ่มต้น ResponsiveSheetHeader) */
 .cosmic-sheet-title-capsule.cosmic-sheet-title-capsule--deep {
   background: var(--cosmic-sheet-title-capsule-deep-bg);
   border: 0;
   color: var(--text-primary);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.05),
-    0 4px 14px rgb(0 0 0 / 0.34);
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    inset 0 -1px 0 rgb(0 0 0 / 0.35),
+    0 4px 12px rgb(0 0 0 / 0.38);
 }
 
 .cosmic-sheet-segment-track {

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import { useToast } from "@/context/ToastContext";
 import Link from "next/link";
 import type { LotterySlipLine, LotterySubmittedSlip } from "@/app/types/lotterySlip";
 import { formatBaht, formatLotteryDigitsDisplay, formatLotterySlipDateTime } from "./lotteryUtils";
@@ -33,7 +34,7 @@ function groupSlipLines(lines: LotterySlipLine[]) {
  * สรุปโพยหลังส่งแทง — อ้างอิง UI โพยทอง (หัวงวด · รายการแยกประเภท · ยอดรวม · แทงต่อ)
  */
 export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummaryProps) {
-  const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
   const groups = groupSlipLines(slip.lines);
   const playHref = continuePlayHref ?? slip.continuePlayHref;
   const drawSchedule = formatLotterySlipDateTime(slip.drawAt);
@@ -42,10 +43,9 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
   const handleCopyId = async () => {
     try {
       await navigator.clipboard.writeText(slip.shortId);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      showToast("คัดลอกเลขโพยแล้ว", "success", 2500);
     } catch {
-      /* clipboard ไม่พร้อม */
+      showToast("ไม่สามารถคัดลอกเลขโพยได้", "error");
     }
   };
 
@@ -128,12 +128,6 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
           </span>
         </div>
       </footer>
-
-      {copied ? (
-        <p className="lottery-slip-summary__copy-hint m-0 text-center" role="status">
-          คัดลอกเลขโพยแล้ว
-        </p>
-      ) : null}
 
       <div className="lottery-slip-summary__actions grid grid-cols-2 gap-2.5">
         <Link

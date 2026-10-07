@@ -109,10 +109,13 @@ export const COSMIC_CHOICE_BTN = "cosmic-choice-btn";
 /** พื้นหัวข้อ bottom sheet ทั้งแถบ — optional */
 export const COSMIC_SHEET_HEADER_SURFACE_CLASS = "cosmic-sheet-header-surface";
 
+/** หัว sheet มือถือ — พื้นเทาเข้มไล่สี (handle + header) */
+export const COSMIC_SHEET_TITLE_NOTCH_CLASS = "cosmic-sheet-title-notch";
+
 /** แคปซูลหัวข้อ sheet — gradient ม่วงสด (accent) */
 export const COSMIC_SHEET_TITLE_CAPSULE_CLASS = "cosmic-sheet-title-capsule";
 
-/** แคปซูลหัวข้อ sheet — ม่วงเข้มเกือบดำ (deep · ค่าเริ่มต้น header) */
+/** แคปซูลหัวข้อ sheet — เทาไล่ดำ (deep · ค่าเริ่มต้น header) */
 export const COSMIC_SHEET_TITLE_CAPSULE_DEEP_CLASS =
   "cosmic-sheet-title-capsule cosmic-sheet-title-capsule--deep";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useToast } from "@/context/ToastContext";
 import type { ProfileUser } from "@/app/types/auth";
 import { getVipRankTier } from "@/app/data/vipMockData";
 import { useVipPlayer } from "@/app/hooks/api/member";
@@ -43,18 +44,17 @@ export function ProfileAccountTabs({
   compact = false,
 }: ProfileAccountTabsProps) {
   const [activeTab, setActiveTab] = useState<ProfileAccountTab>("personal");
-  const [copiedField, setCopiedField] = useState<string | null>(null);
+  const { showToast } = useToast();
   const vipPlayer = useVipPlayer();
   /** ระดับ VIP — "—" ระหว่างโหลด */
   const vipRankLabel = vipPlayer.data ? getVipRankTier(vipPlayer.data.currentRankId).label : "—";
 
-  const copyText = async (field: string, text: string) => {
+  const copyMemberId = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      setCopiedField(field);
-      window.setTimeout(() => setCopiedField(null), 2000);
+      showToast("คัดลอกยูสเซอร์เข้าเกมแล้ว", "success", 2500);
     } catch {
-      /* clipboard ไม่พร้อม */
+      showToast("ไม่สามารถคัดลอกได้", "error");
     }
   };
 
@@ -81,10 +81,6 @@ export function ProfileAccountTabs({
           columns={2}
         />
 
-        {copiedField ? (
-          <p className="text-center text-xs text-[var(--success)]" role="status">คัดลอกแล้ว</p>
-        ) : null}
-
         <TabPanelTransition
           tabKey={activeTab}
           order={PROFILE_ACCOUNT_TABS.map((t) => t.id)}
@@ -96,7 +92,7 @@ export function ProfileAccountTabs({
               label="ยูสเซอร์เข้าเกม"
               value={profile.memberId}
               valueRole="emphasis"
-              onCopy={() => void copyText("memberId", profile.memberId)}
+              onCopy={() => void copyMemberId(profile.memberId)}
               copyLabel="คัดลอกยูสเซอร์เข้าเกม"
             />
             <ProfileAccountFieldRow

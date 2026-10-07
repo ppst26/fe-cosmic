@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import { useToast } from "@/context/ToastContext";
 import Link from "next/link";
 import { Dialog } from "radix-ui";
 import { CloseIcon, CopyIcon } from "../ui/Icons";
@@ -20,23 +21,19 @@ interface PendingTransactionDialogProps {
  */
 export function PendingTransactionDialog({ payload, onClose }: PendingTransactionDialogProps) {
   const open = payload !== null;
-  const [copiedRef, setCopiedRef] = useState(false);
+  const { showToast } = useToast();
 
   const handleOpenChange = (next: boolean) => {
-    if (!next) {
-      setCopiedRef(false);
-      onClose();
-    }
+    if (!next) onClose();
   };
 
   const handleCopyRef = async () => {
     if (!payload) return;
     try {
       await navigator.clipboard.writeText(payload.referenceCopyValue);
-      setCopiedRef(true);
-      window.setTimeout(() => setCopiedRef(false), 2000);
+      showToast("คัดลอกเลขอ้างอิงแล้ว", "success", 2500);
     } catch {
-      /* clipboard ไม่พร้อม */
+      showToast("ไม่สามารถคัดลอกเลขอ้างอิงได้", "error");
     }
   };
 
@@ -113,12 +110,6 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
               );
             })}
           </dl>
-          {copiedRef && (
-            <p className="mt-2 text-right text-xs text-[var(--success)]" role="status">
-              คัดลอกเลขอ้างอิงแล้ว
-            </p>
-          )}
-
           <Dialog.Close asChild>
             <button
               type="button"

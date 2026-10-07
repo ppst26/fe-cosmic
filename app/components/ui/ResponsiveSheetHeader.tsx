@@ -5,6 +5,7 @@ import { Dialog } from "radix-ui";
 import { ChevronLeftIcon, CloseIcon } from "./Icons";
 import { cn } from "@/lib/utils";
 import {
+  RESPONSIVE_SHEET_HANDLE_CLASS,
   RESPONSIVE_SHEET_HEADER_ROW_CLASS,
   responsiveSheetBackButtonClass,
   responsiveSheetCloseButtonClass,
@@ -13,11 +14,30 @@ import {
   COSMIC_SHEET_HEADER_SURFACE_CLASS,
   COSMIC_SHEET_TITLE_CAPSULE_CLASS,
   COSMIC_SHEET_TITLE_CAPSULE_DEEP_CLASS,
+  COSMIC_SHEET_TITLE_NOTCH_CLASS,
 } from "./cosmicButtonClasses";
 import {
   ModalTitleLeadingAssetIcon,
   ModalTitleLeadingMenuIcon,
 } from "./ModalTitleLeadingIcon";
+
+type ResponsiveSheetTitleNotchProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+/**
+ * หัว sheet มือถือ — แถบลาก + header บนพื้นเทาเข้มไล่สี
+ * ใช้ครอบ ResponsiveSheetHeader ใน Deposit / Withdraw / Coupon
+ */
+export function ResponsiveSheetTitleNotch({ children, className }: ResponsiveSheetTitleNotchProps) {
+  return (
+    <div className={cn(COSMIC_SHEET_TITLE_NOTCH_CLASS, className)}>
+      <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
+      {children}
+    </div>
+  );
+}
 
 type ResponsiveSheetHeaderProps = {
   /** ข้อความหัวข้อ — มักเป็น Dialog.Title */
@@ -43,7 +63,7 @@ type ResponsiveSheetHeaderProps = {
   titleSurface?: boolean;
   /** แคปซูลครอบหัวข้อ — เปิดเมื่อ title อยู่กลาง (ฝาก/ถอน · แจ้งเตือน) */
   titleCapsule?: boolean;
-  /** deep = ม่วงเข้มเกือบดำ · accent = gradient ม่วงสด (แท็บ) */
+  /** deep = เทาไล่ดำ · accent = gradient ม่วงสด (แท็บ) */
   titleCapsuleVariant?: "deep" | "accent";
 };
 

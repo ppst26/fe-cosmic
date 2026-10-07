@@ -87,7 +87,7 @@ export function responsiveSheetContentClass(
 
 /** มือถือ — แถบลาก sheet · desktop ซ่อน */
 export const RESPONSIVE_SHEET_HANDLE_CLASS =
-  "mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-[var(--cosmic-mobile-sheet-handle)] lg:hidden";
+  "responsive-sheet-handle mx-auto mb-3 h-1 w-10 shrink-0 rounded-full bg-[var(--cosmic-mobile-sheet-handle)] lg:hidden";
 
 /**
  * ปุ่มปิด sheet — ไม่ใช้ Tailwind ring (โฟกัสดูแลใน globals ภายใน .cosmic-mobile-sheet)

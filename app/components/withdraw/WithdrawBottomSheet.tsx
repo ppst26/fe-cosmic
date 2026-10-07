@@ -11,9 +11,8 @@ import {
 } from "@/app/hooks/api/money";
 import { ResourceGate } from "../ui/ResourceGate";
 import { ChevronRightIcon } from "../ui/Icons";
-import { ResponsiveSheetHeader } from "../ui/ResponsiveSheetHeader";
+import { ResponsiveSheetHeader, ResponsiveSheetTitleNotch } from "../ui/ResponsiveSheetHeader";
 import {
-  RESPONSIVE_SHEET_HANDLE_CLASS,
   responsiveSheetContentClass,
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
@@ -133,14 +132,14 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
             "max-h-[min(88dvh,680px)] min-h-[min(70dvh,520px)] lg:min-h-0",
           )}
         >
-          <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden="true" />
-
-          <ResponsiveSheetHeader
-            closeAriaLabel="ปิดหน้าถอนเงิน"
-            titleIconSrc="/assets/deposit/Wallet2.avif"
-            titleIconDesktopOnly
-            title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ถอนเงิน</Dialog.Title>}
-          />
+          <ResponsiveSheetTitleNotch>
+            <ResponsiveSheetHeader
+              closeAriaLabel="ปิดหน้าถอนเงิน"
+              titleIconSrc="/assets/deposit/Wallet2.avif"
+              titleIconDesktopOnly
+              title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ถอนเงิน</Dialog.Title>}
+            />
+          </ResponsiveSheetTitleNotch>
 
           <div
             id="withdraw-sheet-desc"
