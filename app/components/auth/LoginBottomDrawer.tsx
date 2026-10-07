@@ -20,8 +20,6 @@ import {
   sanitizePassword,
   sanitizePhone,
 } from "@/lib/fieldInput";
-import { DEMO_LOGIN_PASSWORD, DEMO_LOGIN_PHONE } from "@/lib/auth/demoCredentials";
-
 interface LoginBottomDrawerProps {
   isOpen: boolean;
   onClose: () => void;
@@ -152,22 +150,6 @@ export function LoginBottomDrawer({
               className="mt-1"
               title={submitting ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
             />
-
-            <div className="rounded-[var(--radius-control)] bg-[var(--surface-hover)] px-3 py-2.5 text-center">
-              <p className="text-xs font-medium text-[var(--text-secondary)]">
-                บัญชีเดโม · {DEMO_LOGIN_PHONE} / {DEMO_LOGIN_PASSWORD}
-              </p>
-              <button
-                type="button"
-                className="mt-1.5 text-sm font-medium text-[var(--border-active)] hover:text-[var(--icon-active)]"
-                onClick={() => {
-                  setPhone(DEMO_LOGIN_PHONE);
-                  setPassword(DEMO_LOGIN_PASSWORD);
-                }}
-              >
-                เติมบัญชีเดโม
-              </button>
-            </div>
 
             <p className="text-center text-sm text-[var(--text-secondary)]">
               ยังไม่มีบัญชี?{" "}

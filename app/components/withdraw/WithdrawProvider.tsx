@@ -1,8 +1,9 @@
 "use client";
 
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo } from "react";
 import { WithdrawBottomSheet } from "./WithdrawBottomSheet";
 import { usePendingTransaction } from "@/app/components/transactions/PendingTransactionProvider";
+import { useAuth } from "@/app/components/auth/AuthProvider";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 
 interface WithdrawContextValue {
@@ -16,19 +17,41 @@ const WithdrawContext = createContext<WithdrawContextValue | null>(null);
  * เปิด/ปิด bottom sheet ถอนเงิน — mount ใน AppProviders · sync ?layer=withdraw
  */
 export function WithdrawProvider({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, isLoading } = useAuth();
   const { isOpen, open, close } = useOverlayLayer("withdraw");
+  const { open: openLogin } = useOverlayLayer("login");
   const { showPendingWithdraw } = usePendingTransaction();
 
+  const openWithdraw = useCallback(() => {
+    if (isLoading) return;
+    if (!isAuthenticated) {
+      openLogin();
+      return;
+    }
+    open();
+  }, [isAuthenticated, isLoading, open, openLogin]);
+
+  /** ?layer=withdraw โดยไม่ล็อกอิน → ปิดถอนแล้วเปิด login */
+  useEffect(() => {
+    if (!isOpen || isLoading) return;
+    if (!isAuthenticated) {
+      close();
+      openLogin();
+    }
+  }, [close, isAuthenticated, isLoading, isOpen, openLogin]);
+
   const value = useMemo(
-    () => ({ openWithdraw: open, closeWithdraw: close }),
-    [open, close],
+    () => ({ openWithdraw, closeWithdraw: close }),
+    [close, openWithdraw],
   );
+
+  const sheetOpen = isOpen && isAuthenticated;
 
   return (
     <WithdrawContext.Provider value={value}>
       {children}
       <WithdrawBottomSheet
-        isOpen={isOpen}
+        isOpen={sheetOpen}
         onClose={close}
         onCompleted={(amount) => showPendingWithdraw(amount)}
       />
