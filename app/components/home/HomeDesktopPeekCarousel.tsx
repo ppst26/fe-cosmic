@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/components/ui/Icons";
 import type { PromoItem } from "@/app/types/lobby";
 import { HOME_DESKTOP_PEEK_BANNER_SIZE } from "@/app/data/lobbyMockData";
+import { useCarouselAutoplay } from "@/app/hooks/useCarouselAutoplay";
 
 const MOCK_SHELL_SLIDE_COUNT = 6;
 
@@ -68,8 +69,12 @@ export function HomeDesktopPeekCarousel({
   const [trackIndex, setTrackIndex] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollJumpLockRef = useRef(false);
+  const trackIndexRef = useRef(0);
+  const logicalIndexRef = useRef(0);
+  const advanceFromAutoplayRef = useRef(false);
 
   const getSlideStride = useCallback(() => {
     const container = scrollContainerRef.current;
@@ -170,6 +175,20 @@ export function HomeDesktopPeekCarousel({
     }
   }, [getSlideStride, getTrackIndexFromScroll, loopEnabled, trackSlides.length]);
 
+  trackIndexRef.current = trackIndex;
+  logicalIndexRef.current = logicalIndex;
+
+  const autoplayEnabled = slides.length > 1 && !isMock;
+  const { pauseFor } = useCarouselAutoplay(autoplayEnabled, () => {
+    advanceFromAutoplayRef.current = true;
+    if (loopEnabled) {
+      scrollToTrackIndex(trackIndexRef.current + 1);
+      return;
+    }
+    const nextLogical = (logicalIndexRef.current + 1) % slides.length;
+    scrollToLogicalIndex(nextLogical);
+  }, { rootRef: viewportRef });
+
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -178,7 +197,13 @@ export function HomeDesktopPeekCarousel({
     scrollToTrackIndex(initialIndex, "auto");
     updateScrollState();
 
-    const onScroll = () => updateScrollState();
+    const onScroll = () => {
+      if (!scrollJumpLockRef.current && !advanceFromAutoplayRef.current) {
+        pauseFor(12_000);
+      }
+      advanceFromAutoplayRef.current = false;
+      updateScrollState();
+    };
     const onScrollEnd = () => {
       reconcileLoopScroll();
       updateScrollState();
@@ -204,6 +229,7 @@ export function HomeDesktopPeekCarousel({
   }, [
     getTrackIndexFromScroll,
     loopEnabled,
+    pauseFor,
     reconcileLoopScroll,
     scrollToTrackIndex,
     slides.length,
@@ -226,13 +252,16 @@ export function HomeDesktopPeekCarousel({
       )}
       aria-label="แบนเนอร์โปรโมชันและกิจกรรม"
     >
-      <div className="home-desktop-peek-carousel__viewport">
+      <div ref={viewportRef} className="home-desktop-peek-carousel__viewport">
         {showNav ? (
           <>
             <button
               type="button"
               className="home-desktop-peek-carousel__nav home-desktop-peek-carousel__nav--prev"
-              onClick={() => scrollToTrackIndex(trackIndex - 1)}
+              onClick={() => {
+                pauseFor(12_000);
+                scrollToTrackIndex(trackIndex - 1);
+              }}
               disabled={!loopEnabled && !canPrev}
               aria-label="สไลด์ก่อนหน้า"
             >
@@ -241,7 +270,10 @@ export function HomeDesktopPeekCarousel({
             <button
               type="button"
               className="home-desktop-peek-carousel__nav home-desktop-peek-carousel__nav--next"
-              onClick={() => scrollToTrackIndex(trackIndex + 1)}
+              onClick={() => {
+                pauseFor(12_000);
+                scrollToTrackIndex(trackIndex + 1);
+              }}
               disabled={!loopEnabled && !canNext}
               aria-label="สไลด์ถัดไป"
             >
@@ -328,7 +360,10 @@ export function HomeDesktopPeekCarousel({
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => scrollToLogicalIndex(idx)}
+                    onClick={() => {
+                      pauseFor(12_000);
+                      scrollToLogicalIndex(idx);
+                    }}
                     className={`home-desktop-peek-carousel__dot${isActive ? " is-active" : ""}`}
                     aria-label={`ไปยังสไลด์ที่ ${idx + 1}`}
                   />
