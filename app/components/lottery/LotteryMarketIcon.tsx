@@ -76,7 +76,6 @@ export function LotteryMarketIcon({
         width={px}
         height={px}
         className="h-full w-full object-contain"
-        sizes={`${px}px`}
       />
     </span>
   );

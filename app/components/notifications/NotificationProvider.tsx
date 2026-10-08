@@ -1,7 +1,13 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { NotificationMobileSheet } from "./NotificationMobileSheet";
+import dynamic from "next/dynamic";
+import { useLazyOverlayMount } from "@/app/hooks/useLazyOverlayMount";
+
+/** sheet แจ้งเตือนมือถือโหลดแยก chunk ตอนเปิดครั้งแรก — ไม่ติดไป bundle แรกของทุกหน้า */
+const NotificationMobileSheet = dynamic(() =>
+  import("./NotificationMobileSheet").then((m) => m.NotificationMobileSheet),
+);
 
 interface NotificationContextValue {
   openNotifications: () => void;
@@ -24,10 +30,14 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     [openNotifications, closeNotifications],
   );
 
+  const sheetMounted = useLazyOverlayMount(mobileOpen);
+
   return (
     <NotificationContext.Provider value={value}>
       {children}
-      <NotificationMobileSheet isOpen={mobileOpen} onClose={closeNotifications} />
+      {sheetMounted ? (
+        <NotificationMobileSheet isOpen={mobileOpen} onClose={closeNotifications} />
+      ) : null}
     </NotificationContext.Provider>
   );
 }

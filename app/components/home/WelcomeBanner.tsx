@@ -35,27 +35,32 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
           tabIndex={0}
           aria-label="สไลด์แบนเนอร์ต้อนรับ"
         >
-          {trackSlides.map((entry, index) => (
-            <article
-              key={entry.key}
-              className="welcome-banner__slide lobby-carousel-bleed__slide relative flex aspect-[16/10] w-full shrink-0 snap-start items-center justify-center overflow-hidden rounded-none max-lg:rounded-none lg:rounded-[var(--radius-panel)]"
-              aria-label={entry.item.title}
-              aria-hidden={entry.isClone ? true : undefined}
-            >
-              <Image
-                src={entry.item.bannerSrc}
-                alt=""
-                fill
-                preload={!entry.isClone && index === (loopEnabled ? 1 : 0)}
-                sizes="(max-width: 1200px) 100vw, 1200px"
-                className="object-cover object-center"
-              />
-              <div
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#090b18]/45 to-transparent"
-                aria-hidden="true"
-              />
-            </article>
-          ))}
+          {trackSlides.map((entry, index) => {
+            /** สไลด์จริงใบแรก = LCP ของมือถือ — eager + fetchPriority high แทน preload (ดู next/image § preload) */
+            const isLcpSlide = !entry.isClone && index === (loopEnabled ? 1 : 0);
+            return (
+              <article
+                key={entry.key}
+                className="welcome-banner__slide lobby-carousel-bleed__slide relative flex aspect-[16/10] w-full shrink-0 snap-start items-center justify-center overflow-hidden rounded-none max-lg:rounded-none lg:rounded-[var(--radius-panel)]"
+                aria-label={entry.item.title}
+                aria-hidden={entry.isClone ? true : undefined}
+              >
+                <Image
+                  src={entry.item.bannerSrc}
+                  alt=""
+                  fill
+                  loading={isLcpSlide ? "eager" : "lazy"}
+                  fetchPriority={isLcpSlide ? "high" : "auto"}
+                  sizes="(max-width: 1200px) 100vw, 1200px"
+                  className="object-cover object-center"
+                />
+                <div
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#090b18]/45 to-transparent"
+                  aria-hidden="true"
+                />
+              </article>
+            );
+          })}
         </div>
 
         {items.length > 1 ? (

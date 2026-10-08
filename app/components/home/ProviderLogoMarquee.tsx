@@ -35,7 +35,6 @@ export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
             width={152}
             height={40}
             className="provider-logo-marquee__img w-auto h-full max-w-full object-contain"
-            sizes="152px"
           />
         </Link>
       ))}

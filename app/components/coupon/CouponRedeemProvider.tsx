@@ -1,9 +1,15 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useMemo } from "react";
-import { CouponRedeemBottomSheet } from "./CouponRedeemBottomSheet";
+import dynamic from "next/dynamic";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { useAuth } from "@/app/components/auth/AuthProvider";
+import { useLazyOverlayMount } from "@/app/hooks/useLazyOverlayMount";
+
+/** sheet แลกคูปองโหลดแยก chunk ตอนเปิดครั้งแรก — ไม่ติดไป bundle แรกของทุกหน้า */
+const CouponRedeemBottomSheet = dynamic(() =>
+  import("./CouponRedeemBottomSheet").then((m) => m.CouponRedeemBottomSheet),
+);
 
 interface CouponRedeemContextValue {
   openCouponRedeem: () => void;
@@ -33,10 +39,12 @@ export function CouponRedeemProvider({ children }: { children: React.ReactNode }
     [close, openCouponRedeem],
   );
 
+  const sheetMounted = useLazyOverlayMount(isOpen);
+
   return (
     <CouponRedeemContext.Provider value={value}>
       {children}
-      <CouponRedeemBottomSheet isOpen={isOpen} onClose={close} />
+      {sheetMounted ? <CouponRedeemBottomSheet isOpen={isOpen} onClose={close} /> : null}
     </CouponRedeemContext.Provider>
   );
 }

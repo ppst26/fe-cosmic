@@ -1,10 +1,16 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo } from "react";
-import { WithdrawBottomSheet } from "./WithdrawBottomSheet";
+import dynamic from "next/dynamic";
 import { usePendingTransaction } from "@/app/components/transactions/PendingTransactionProvider";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
+import { useLazyOverlayMount } from "@/app/hooks/useLazyOverlayMount";
+
+/** sheet ถอนเงินโหลดแยก chunk ตอนเปิดครั้งแรก — ไม่ติดไป bundle แรกของทุกหน้า */
+const WithdrawBottomSheet = dynamic(() =>
+  import("./WithdrawBottomSheet").then((m) => m.WithdrawBottomSheet),
+);
 
 interface WithdrawContextValue {
   openWithdraw: () => void;
@@ -46,15 +52,18 @@ export function WithdrawProvider({ children }: { children: React.ReactNode }) {
   );
 
   const sheetOpen = isOpen && isAuthenticated;
+  const sheetMounted = useLazyOverlayMount(sheetOpen);
 
   return (
     <WithdrawContext.Provider value={value}>
       {children}
-      <WithdrawBottomSheet
-        isOpen={sheetOpen}
-        onClose={close}
-        onCompleted={(amount) => showPendingWithdraw(amount)}
-      />
+      {sheetMounted ? (
+        <WithdrawBottomSheet
+          isOpen={sheetOpen}
+          onClose={close}
+          onCompleted={(amount) => showPendingWithdraw(amount)}
+        />
+      ) : null}
     </WithdrawContext.Provider>
   );
 }

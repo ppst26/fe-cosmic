@@ -2,6 +2,8 @@
 
 import React, { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
+// สไตล์วงล้อโหลดเฉพาะหน้า /wheel — ไม่อยู่ใน globals.css แล้ว (ใช้ที่นี่ที่เดียว)
+import "@/app/styles/lucky-wheel.css";
 import { useWheel } from "@/app/hooks/api/member";
 import type { WheelData } from "@/lib/api/wheel";
 import { ResourceGate } from "../ui/ResourceGate";

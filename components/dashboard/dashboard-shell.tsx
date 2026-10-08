@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+// สไตล์ dashboard โหลดเฉพาะหน้า /dashboard — ไม่อยู่ใน globals.css แล้ว (ใช้ที่นี่ที่เดียว)
+import "@/app/styles/dashboard.css";
 import {
   BarChart3,
   CalendarDays,

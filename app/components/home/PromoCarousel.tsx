@@ -62,7 +62,6 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
                     fill
                     sizes="(max-width: 640px) 85vw, 420px"
                     className="object-cover object-center"
-                    preload={!entry.isClone && item.id === items[0]?.id}
                   />
                 ) : (
                   <>

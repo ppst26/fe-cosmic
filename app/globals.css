@@ -40,7 +40,6 @@
 @import "./styles/vip-page.css";
 @import "./styles/hub-modals.css";
 @import "./styles/gems-store.css";
-@import "./styles/reward-hub.css";
 @import "./styles/game-play.css";
 @import "./styles/notifications.css";
 @import "./styles/providers-filter.css";
@@ -51,11 +50,9 @@
 @import "./styles/tournaments-section.css";
 @import "./styles/home-desktop-peek-carousel.css";
 @import "./styles/home-a2hs-promo.css";
-@import "./styles/lucky-wheel.css";
 @import "./styles/lottery.css";
 @import "./styles/carousel.css";
 @import "./styles/footer.css";
-@import "./styles/dashboard.css";
 
 /* ── Utilities ── */
 @import "./styles/focus-input.css";

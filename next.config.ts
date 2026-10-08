@@ -52,6 +52,15 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     remotePatterns: imageRemotePatterns(),
+    /**
+     * ความกว้างที่ srcset จะสร้าง — ตัดจาก default (640…3840 + 32…384) ให้เหลือเท่าที่ใช้จริง
+     * หน้า lobby มีรูปเกิน 150 ใบ/หน้า srcset ยาวทุกใบทำให้ HTML บวมเกิน 1 ใน 3
+     * เพดาน 1920 พอสำหรับจอ desktop ที่กว้างสุดใน design.md (--lobby-desktop-center-width)
+     */
+    deviceSizes: [360, 640, 828, 1080, 1920],
+    imageSizes: [48, 96, 160, 256],
+    /** รูปใน public/ เป็น avif/webp นิ่งแล้ว — ยืดอายุ cache จาก default 4 ชม. เป็น 31 วัน ไม่ต้อง re-encode ซ้ำ */
+    minimumCacheTTL: 2678400,
   },
   async headers() {
     return [{ source: "/:path*", headers: SECURITY_HEADERS }];

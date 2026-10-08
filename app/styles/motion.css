@@ -268,8 +268,10 @@
     transition: transform var(--motion-fast) var(--ease-out);
   }
 
+  /* จอง compositor layer ตอนเมาส์เข้าเท่านั้น — ไม่ใส่ will-change ถาวรให้การ์ดทุกใบ (มือถือไม่ hover จึงไม่เสีย layer เลย) */
   .motion-lift:hover {
     transform: translateY(-2px);
+    will-change: transform;
   }
 }
 

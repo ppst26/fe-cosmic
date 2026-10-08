@@ -316,6 +316,8 @@ export function HomeDesktopPeekCarousel({
             }
 
             const bannerIntrinsic = isShellBand ? HOME_DESKTOP_PEEK_BANNER_SIZE : null;
+            /** แบนเนอร์ใบแรก = LCP ของ desktop — ใช้ fetchPriority ไม่ใช่ preload เพราะมือถือมี WelcomeBanner เป็น LCP คนละใบ */
+            const isLcpBanner = !entry.isClone && logicalIndex === 0;
 
             return (
               <Link
@@ -334,7 +336,7 @@ export function HomeDesktopPeekCarousel({
                     height={bannerIntrinsic.height}
                     sizes="(min-width: 1536px) 52rem, (min-width: 1280px) 90vw, 86vw"
                     className="block h-auto w-full max-w-full object-contain transition duration-200 group-hover:brightness-[1.04]"
-                    preload={!entry.isClone && logicalIndex === 0}
+                    fetchPriority={isLcpBanner ? "high" : "auto"}
                   />
                 ) : (
                   <Image
@@ -343,7 +345,7 @@ export function HomeDesktopPeekCarousel({
                     fill
                     sizes="(min-width: 1280px) 72vw, 68vw"
                     className="object-cover object-center transition duration-200 group-hover:brightness-[1.04]"
-                    preload={!entry.isClone && logicalIndex === 0}
+                    fetchPriority={isLcpBanner ? "high" : "auto"}
                   />
                 )}
               </Link>

@@ -11,7 +11,13 @@ import {
   buildPendingDepositPayload,
   buildPendingWithdrawPayload,
 } from "@/app/data/pendingTransactionMockData";
-import { PendingTransactionDialog } from "./PendingTransactionDialog";
+import dynamic from "next/dynamic";
+import { useLazyOverlayMount } from "@/app/hooks/useLazyOverlayMount";
+
+/** dialog ธุรกรรมค้างโหลดแยก chunk ตอนมี payload ครั้งแรก — ไม่ติดไป bundle แรกของทุกหน้า */
+const PendingTransactionDialog = dynamic(() =>
+  import("./PendingTransactionDialog").then((m) => m.PendingTransactionDialog),
+);
 import type { PendingTransactionPayload } from "@/app/types/transaction";
 
 interface PendingTransactionContextValue {
@@ -43,10 +49,14 @@ export function PendingTransactionProvider({ children }: { children: React.React
     [showPendingDeposit, showPendingWithdraw],
   );
 
+  const dialogMounted = useLazyOverlayMount(payload !== null);
+
   return (
     <PendingTransactionContext.Provider value={value}>
       {children}
-      <PendingTransactionDialog payload={payload} onClose={closePending} />
+      {dialogMounted ? (
+        <PendingTransactionDialog payload={payload} onClose={closePending} />
+      ) : null}
     </PendingTransactionContext.Provider>
   );
 }

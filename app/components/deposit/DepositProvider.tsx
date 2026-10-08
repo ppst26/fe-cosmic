@@ -1,10 +1,16 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo } from "react";
-import { DepositBottomSheet } from "./DepositBottomSheet";
+import dynamic from "next/dynamic";
 import { usePendingTransaction } from "@/app/components/transactions/PendingTransactionProvider";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
+import { useLazyOverlayMount } from "@/app/hooks/useLazyOverlayMount";
+
+/** sheet ฝากเงินโหลดแยก chunk ตอนเปิดครั้งแรก — ไม่ติดไป bundle แรกของทุกหน้า */
+const DepositBottomSheet = dynamic(() =>
+  import("./DepositBottomSheet").then((m) => m.DepositBottomSheet),
+);
 
 interface DepositContextValue {
   openDeposit: () => void;
@@ -46,15 +52,18 @@ export function DepositProvider({ children }: { children: React.ReactNode }) {
   );
 
   const sheetOpen = isOpen && isAuthenticated;
+  const sheetMounted = useLazyOverlayMount(sheetOpen);
 
   return (
     <DepositContext.Provider value={value}>
       {children}
-      <DepositBottomSheet
-        isOpen={sheetOpen}
-        onClose={close}
-        onCompleted={(amount) => showPendingDeposit(amount)}
-      />
+      {sheetMounted ? (
+        <DepositBottomSheet
+          isOpen={sheetOpen}
+          onClose={close}
+          onCompleted={(amount) => showPendingDeposit(amount)}
+        />
+      ) : null}
     </DepositContext.Provider>
   );
 }

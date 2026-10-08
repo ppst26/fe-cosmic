@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+// สไตล์ reward hub โหลดเฉพาะเส้นทาง /reward/* — ไม่อยู่ใน globals.css แล้ว (shell นี้ครอบทุกหน้า reward)
+import "@/app/styles/reward-hub.css";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
 import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
