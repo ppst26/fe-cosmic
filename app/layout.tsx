@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import { AppProviders } from "./providers";
 import { CosmicFooterGate } from "./components/layout/CosmicFooterGate";
@@ -18,8 +18,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  applicationName: "Cosmicbet",
   title: "Cosmicbet — อาณาจักรแห่งความมันส์",
   description: "Cosmicbet Front-end Gaming Lobby",
+  appleWebApp: {
+    capable: true,
+    title: "Cosmicbet",
+    statusBarStyle: "black-translucent",
+  },
+  icons: {
+    apple: "/pwa/apple-touch-icon.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#141416",
 };
 
 /**

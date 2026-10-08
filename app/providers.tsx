@@ -17,6 +17,7 @@ import { LobbyShellSidebarProvider } from "@/app/components/layout/LobbyShellSid
 import { GlobalAuthOverlays } from "@/app/components/auth/GlobalAuthOverlays";
 import { NotificationProvider } from "@/app/components/notifications/NotificationProvider";
 import { ToastProvider } from "@/context/ToastContext";
+import { PwaInstallProvider } from "@/app/components/pwa/PwaInstallProvider";
 
 /**
  * ค่าเริ่มต้น SWR ทั้งแอป — ไม่ดึงใหม่ทุกครั้งที่สลับแท็บ · 401 / 4xx ไม่ retry (retry เฉพาะ network / 5xx สูงสุด 3 ครั้ง)
@@ -37,13 +38,14 @@ const SWR_DEFAULTS = {
 };
 
 /**
- * ครอบ client providers — query string (ไม่ bailout SSR) + Auth + SWR (cache ข้อมูล API) + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
+ * ครอบ client providers — query string (ไม่ bailout SSR) + Auth + SWR + PWA มือถือ + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
  */
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <UrlSearchParamsProvider>
     <SWRConfig value={SWR_DEFAULTS}>
       <ToastProvider>
+      <PwaInstallProvider>
       <AuthProvider>
         <CouponRedeemProvider>
           <PendingTransactionProvider>
@@ -67,6 +69,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           </PendingTransactionProvider>
         </CouponRedeemProvider>
       </AuthProvider>
+      </PwaInstallProvider>
       </ToastProvider>
     </SWRConfig>
     </UrlSearchParamsProvider>

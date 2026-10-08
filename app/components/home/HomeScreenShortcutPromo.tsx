@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { usePwaInstall } from "@/app/components/pwa/PwaInstallProvider";
 import { BRAND_LOGO_SRC } from "@/app/components/ui/Icons";
 import { SectionHeader } from "@/app/components/ui/SectionHeader";
+import { useToast } from "@/context/ToastContext";
 import { cn } from "@/lib/utils";
 
 /** โลโก้กลมในวง glow — public/cmb-rounded.avif */
@@ -101,10 +103,43 @@ function useIsInstalledPwa() {
  */
 export function HomeScreenShortcutPromo({ className }: { className?: string }) {
   const isInstalled = useIsInstalledPwa();
+  const { canPrompt, promptInstall } = usePwaInstall();
+  const { showToast } = useToast();
   const [platform, setPlatform] = useState<InstallPlatform>("ios");
   const [stepsOpen, setStepsOpen] = useState(false);
+  const [installing, setInstalling] = useState(false);
+
+  useEffect(() => {
+    const android = /android/i.test(window.navigator.userAgent);
+    setPlatform(android ? "android" : "ios");
+  }, []);
 
   if (isInstalled) return null;
+
+  const openManualSteps = (next: InstallPlatform) => {
+    setPlatform(next);
+    setStepsOpen(true);
+  };
+
+  const handleAndroidClick = async () => {
+    setPlatform("android");
+    if (!canPrompt) {
+      openManualSteps("android");
+      return;
+    }
+    setInstalling(true);
+    const outcome = await promptInstall();
+    setInstalling(false);
+    if (outcome === "accepted") {
+      showToast("ติดตั้งแอปแล้ว", "success");
+      return;
+    }
+    if (outcome === "unavailable") openManualSteps("android");
+  };
+
+  const handleIosClick = () => {
+    openManualSteps("ios");
+  };
 
   const steps = INSTALL_STEPS[platform];
   const stepsPanelId = "home-a2hs-steps-panel";
@@ -142,7 +177,8 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
               className="home-a2hs-platform-btn"
               data-active={platform === "android"}
               aria-pressed={platform === "android"}
-              onClick={() => setPlatform("android")}
+              disabled={installing}
+              onClick={() => void handleAndroidClick()}
             >
               <AndroidGlyph />
               Android
@@ -152,7 +188,7 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
               className="home-a2hs-platform-btn"
               data-active={platform === "ios"}
               aria-pressed={platform === "ios"}
-              onClick={() => setPlatform("ios")}
+              onClick={handleIosClick}
             >
               <AppleGlyph />
               iOS

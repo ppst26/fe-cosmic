@@ -1,3 +1,4 @@
+import { withSerwist } from "@serwist/turbopack";
 import type { NextConfig } from "next";
 
 type RemotePattern = NonNullable<NonNullable<NextConfig["images"]>["remotePatterns"]>[number];
@@ -67,4 +68,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSerwist(nextConfig);
