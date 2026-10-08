@@ -3,6 +3,13 @@
  * ใช้ MostOnlineProviderCard.tsx
  */
 
+/** มือถือบังคับ 3 คอลัมน์ — specificity สูงกว่า utility grid-cols-4 จาก bundle เก่า */
+@media (max-width: 1023px) {
+  .most-online-section .most-online-section__track.grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .most-online-card__live-bar {
   border-top: 1px solid color-mix(in srgb, var(--success) 24%, transparent);
   background: linear-gradient(

@@ -42,19 +42,29 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
     window.addEventListener("appinstalled", onInstalled);
 
     const media = window.matchMedia(MOBILE_INSTALL_QUERY);
+
+    const unregisterSerwistWorkers = () => {
+      void navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+          const scriptUrl =
+            registration.active?.scriptURL ??
+            registration.installing?.scriptURL ??
+            registration.waiting?.scriptURL ??
+            "";
+          if (scriptUrl.includes("/serwist/")) void registration.unregister();
+        }
+      });
+    };
+
     const syncWorker = () => {
       if (!("serviceWorker" in navigator)) return;
+      /** dev / LAN บนมือถือ — ไม่ลงทะเบียน SW เพื่อไม่ให้แคช JS เก่าค้าง */
+      if (process.env.NODE_ENV !== "production") {
+        unregisterSerwistWorkers();
+        return;
+      }
       if (!media.matches) {
-        void navigator.serviceWorker.getRegistrations().then((registrations) => {
-          for (const registration of registrations) {
-            const scriptUrl =
-              registration.active?.scriptURL ??
-              registration.installing?.scriptURL ??
-              registration.waiting?.scriptURL ??
-              "";
-            if (scriptUrl.includes("/serwist/")) void registration.unregister();
-          }
-        });
+        unregisterSerwistWorkers();
         return;
       }
       void navigator.serviceWorker.register("/serwist/sw.js", { scope: "/", type: "module" });
