@@ -129,10 +129,13 @@ function FooterCommunityChatCta({ className }: { className?: string }) {
       </Link>
       <Link
         href="/support"
-        className="cosmic-footer__cta-chat inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-3 text-sm font-medium text-[#0a0a0c]"
+        className={cn(
+          COSMIC_BTN_GLASS_PILL,
+          "cosmic-footer__cta-chat inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-3 text-sm font-medium text-[var(--text-primary)]",
+        )}
       >
         <span className="relative inline-flex">
-          <HeadsetIcon className="text-[#0a0a0c]" />
+          <HeadsetIcon className="text-[var(--icon-default)]" />
           <span className="cosmic-footer__chat-online" aria-hidden />
         </span>
         แชทออนไลน์

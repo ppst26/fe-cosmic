@@ -431,12 +431,6 @@
   word-break: break-word;
 }
 
-/** ปุ่มแชทพื้นขาว — ไม่ให้ .cosmic-footer a ทับสีข้อความ */
-.cosmic-footer__cta-chat,
-.cosmic-footer__cta-chat:hover {
-  color: #0a0a0c;
-}
-
 .cosmic-footer__trust-card {
   display: flex;
   align-items: flex-start;
@@ -544,7 +538,7 @@
   height: 0.45rem;
   border-radius: 999px;
   background: #22c55e;
-  box-shadow: 0 0 0 2px #fff;
+  box-shadow: 0 0 0 2px var(--surface-mid);
 }
 
 .cosmic-footer__bottom--dex {

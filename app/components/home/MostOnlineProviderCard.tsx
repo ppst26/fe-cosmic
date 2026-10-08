@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Heart, Users } from "lucide-react";
 import type { MostOnlineLobbyItem } from "@/app/types/lobby";
 import { cn } from "@/lib/utils";
+import { getMostOnlineDisplayCount } from "@/lib/mostOnlineDisplayCount";
 import { valueClass } from "@/lib/semanticValue";
 import { FlameIcon } from "../ui/Icons";
 
@@ -20,7 +21,11 @@ interface MostOnlineProviderCardProps {
  */
 export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCardProps) {
   const [favorited, setFavorited] = useState(false);
-  const onlineLabel = item.onlineCount.toLocaleString("en-US");
+  const displayCount = useMemo(
+    () => getMostOnlineDisplayCount({ id: item.id, onlineCount: item.onlineCount }),
+    [item.id, item.onlineCount],
+  );
+  const onlineLabel = displayCount.toLocaleString("en-US");
 
   return (
     <article
@@ -35,7 +40,7 @@ export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCa
             src={item.coverSrc}
             alt=""
             fill
-            sizes="(max-width: 1023px) 33vw, 180px"
+            sizes="(max-width: 1023px) 50vw, 180px"
             className="object-cover object-center transition duration-200 group-hover:brightness-[1.06]"
           />
           <div
@@ -70,9 +75,14 @@ export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCa
 
       <div className="flex items-center justify-between gap-1 border-t border-white/6 bg-[var(--surface-hover)] px-1.5 py-1.5 sm:gap-2 sm:px-2.5 sm:py-2">
         <span className="text-[9px] font-medium text-[var(--border-active)] sm:text-[11px]">ออนไลน์</span>
-        <span className="inline-flex min-w-0 items-center gap-0.5 text-[9px] sm:gap-1 sm:text-[11px]">
-          <span className="h-1 w-1 shrink-0 rounded-sm bg-[var(--border-active)] sm:h-1.5 sm:w-1.5" aria-hidden />
-          <span className={valueClass("neutral", "truncate text-[9px] sm:text-[11px]")}>{onlineLabel}</span>
+        <span className="inline-flex min-w-0 items-center gap-1 text-[9px] sm:text-[11px]">
+          <Users
+            className="h-3 w-3 shrink-0 text-[var(--border-active)] sm:h-3.5 sm:w-3.5"
+            aria-hidden
+          />
+          <span className={valueClass("neutral", "truncate tabular-nums text-[9px] sm:text-[11px]")}>
+            {onlineLabel}
+          </span>
         </span>
       </div>
     </article>
