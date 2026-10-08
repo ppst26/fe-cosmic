@@ -1,0 +1,118 @@
+/**
+ * แถบออนไลน์มากที่สุด — การ์ดค่ายหน้าโฮม
+ * ใช้ MostOnlineProviderCard.tsx
+ */
+
+.most-online-card__live-bar {
+  border-top: 1px solid color-mix(in srgb, var(--success) 24%, transparent);
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--success) 14%, var(--surface-hover)) 0%,
+    var(--surface-hover) 42%,
+    color-mix(in srgb, var(--success) 10%, var(--surface-deep)) 100%
+  );
+}
+
+/** จุด LIVE กระพริบ — แทนข้อความ「ออนไลน์」 */
+.most-online-live-dot {
+  position: relative;
+  display: inline-flex;
+  width: 0.55rem;
+  height: 0.55rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--success);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--success) 55%, transparent),
+    0 0 12px color-mix(in srgb, var(--success) 55%, transparent);
+}
+
+.most-online-live-dot::before {
+  content: "";
+  position: absolute;
+  inset: -0.35rem;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--success) 38%, transparent);
+  animation: most-online-live-pulse 1.55s ease-in-out infinite;
+}
+
+@keyframes most-online-live-pulse {
+  0%,
+  100% {
+    transform: scale(0.55);
+    opacity: 0.25;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+.most-online-card__count-cluster {
+  min-width: 0;
+  padding: 0.1rem 0.35rem 0.1rem 0.15rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--success) 10%, rgb(0 0 0 / 0.22));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.most-online-card__count-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 22%, var(--surface-deep));
+  transition: transform 0.28s ease;
+}
+
+@media (min-width: 640px) {
+  .most-online-card__count-icon-wrap {
+    width: 1.65rem;
+    height: 1.65rem;
+  }
+}
+
+.most-online-card__count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  transition: transform 0.28s ease;
+}
+
+@media (min-width: 640px) {
+  .most-online-card__count {
+    font-size: 0.875rem;
+  }
+}
+
+.most-online-card__count-cluster.is-tick .most-online-card__count-icon-wrap {
+  transform: scale(1.08);
+}
+
+.most-online-card__count-cluster.is-tick .most-online-card__count {
+  transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .most-online-live-dot::before {
+    animation: none;
+    opacity: 0.45;
+    transform: scale(1);
+  }
+
+  .most-online-card__count-icon-wrap,
+  .most-online-card__count {
+    transition: none;
+  }
+
+  .most-online-card__count-cluster.is-tick .most-online-card__count-icon-wrap,
+  .most-online-card__count-cluster.is-tick .most-online-card__count {
+    transform: none;
+  }
+}

@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, Users } from "lucide-react";
 import type { MostOnlineLobbyItem } from "@/app/types/lobby";
 import { cn } from "@/lib/utils";
-import { getMostOnlineDisplayCount } from "@/lib/mostOnlineDisplayCount";
+import { useFluctuatingOnlineCount } from "@/app/hooks/useFluctuatingOnlineCount";
 import { valueClass } from "@/lib/semanticValue";
 import { FlameIcon } from "../ui/Icons";
 
@@ -21,11 +21,18 @@ interface MostOnlineProviderCardProps {
  */
 export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCardProps) {
   const [favorited, setFavorited] = useState(false);
-  const displayCount = useMemo(
-    () => getMostOnlineDisplayCount({ id: item.id, onlineCount: item.onlineCount }),
-    [item.id, item.onlineCount],
-  );
+  const displayCount = useFluctuatingOnlineCount({ id: item.id, onlineCount: item.onlineCount });
   const onlineLabel = displayCount.toLocaleString("en-US");
+  const prevCountRef = useRef(displayCount);
+  const [countTick, setCountTick] = useState(false);
+
+  useEffect(() => {
+    if (prevCountRef.current === displayCount) return;
+    prevCountRef.current = displayCount;
+    setCountTick(true);
+    const timer = window.setTimeout(() => setCountTick(false), 280);
+    return () => window.clearTimeout(timer);
+  }, [displayCount]);
 
   return (
     <article
@@ -40,7 +47,7 @@ export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCa
             src={item.coverSrc}
             alt=""
             fill
-            sizes="(max-width: 1023px) 50vw, 180px"
+            sizes="(max-width: 1023px) 33vw, 180px"
             className="object-cover object-center transition duration-200 group-hover:brightness-[1.06]"
           />
           <div
@@ -73,14 +80,19 @@ export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCa
         </button>
       </div>
 
-      <div className="flex items-center justify-between gap-1 border-t border-white/6 bg-[var(--surface-hover)] px-1.5 py-1.5 sm:gap-2 sm:px-2.5 sm:py-2">
-        <span className="text-[9px] font-medium text-[var(--border-active)] sm:text-[11px]">ออนไลน์</span>
-        <span className="inline-flex min-w-0 items-center gap-1 text-[9px] sm:text-[11px]">
-          <Users
-            className="h-3 w-3 shrink-0 text-[var(--border-active)] sm:h-3.5 sm:w-3.5"
-            aria-hidden
-          />
-          <span className={valueClass("neutral", "truncate tabular-nums text-[9px] sm:text-[11px]")}>
+      <div className="most-online-card__live-bar flex items-center justify-between gap-2 px-2 py-2 sm:px-2.5 sm:py-2.5">
+        <span className="most-online-live-dot" aria-hidden />
+        <span className="sr-only">กำลังเล่นอยู่ {onlineLabel} คน</span>
+        <span
+          className={cn(
+            "most-online-card__count-cluster inline-flex min-w-0 items-center gap-1.5 sm:gap-2",
+            countTick && "is-tick",
+          )}
+        >
+          <span className="most-online-card__count-icon-wrap" aria-hidden>
+            <Users className="h-4 w-4 sm:h-[1.125rem] sm:w-[1.125rem]" strokeWidth={2.25} />
+          </span>
+          <span className={valueClass("success", "most-online-card__count truncate tabular-nums")}>
             {onlineLabel}
           </span>
         </span>

@@ -12,7 +12,7 @@ interface MostOnlineProvidersSectionProps {
 }
 
 /**
- * แถบออนไลน์มากที่สุด — มือถือ grid 2 คอลัมน์ · desktop แถวเลื่อน autoplay
+ * แถบออนไลน์มากที่สุด — มือถือ grid 3 คอลัมน์ · desktop แถวเลื่อน autoplay
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx (หมวด home)
  */
 export function MostOnlineProvidersSection({ items, className }: MostOnlineProvidersSectionProps) {
@@ -61,7 +61,7 @@ export function MostOnlineProvidersSection({ items, className }: MostOnlineProvi
     >
       <div
         ref={trackRef}
-        className="most-online-section__track grid grid-cols-2 gap-2.5 max-lg:min-w-0 sm:gap-3 lg:flex lg:snap-x lg:snap-mandatory lg:gap-3 lg:overflow-x-auto lg:overscroll-x-contain lg:pb-1 no-scrollbar"
+        className="most-online-section__track grid grid-cols-3 gap-2 max-lg:min-w-0 sm:gap-2.5 lg:flex lg:snap-x lg:snap-mandatory lg:gap-3 lg:overflow-x-auto lg:overscroll-x-contain lg:pb-1 no-scrollbar"
         onPointerDown={() => pauseFor(12_000)}
       >
         {items.map((item) => (
