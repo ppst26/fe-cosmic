@@ -45,7 +45,7 @@ export function useFluctuatingOnlineCount(item: { id: string; onlineCount: numbe
       });
     };
 
-    let intervalId: ReturnType<typeof setInterval> | undefined;
+    let intervalId: number | undefined;
     const startId = window.setTimeout(() => {
       tick();
       intervalId = window.setInterval(tick, intervalMs);
