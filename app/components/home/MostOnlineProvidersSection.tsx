@@ -2,6 +2,8 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { MostOnlineLobbyItem } from "@/app/types/lobby";
+import { SectionHeader } from "../ui/SectionHeader";
+import { SectionIcon } from "../ui/SectionIcon";
 import { MostOnlineProviderCard } from "./MostOnlineProviderCard";
 import { HERO_CAROUSEL_AUTOPLAY_MS, useCarouselAutoplay } from "@/app/hooks/useCarouselAutoplay";
 import { cn } from "@/lib/utils";
@@ -57,8 +59,20 @@ export function MostOnlineProvidersSection({ items, className }: MostOnlineProvi
   return (
     <section
       className={cn("most-online-section w-full min-w-0", className)}
-      aria-label="ออนไลน์มากที่สุดในขณะนี้"
+      aria-labelledby="most-online-section-title"
     >
+      <SectionHeader
+        titleId="most-online-section-title"
+        icon={
+          <SectionIcon
+            id="flame"
+            className="h-[1.35rem] w-[1.35rem] text-[var(--icon-default)] sm:h-6 sm:w-6"
+          />
+        }
+        title="ออนไลน์มากที่สุดในขณะนี้"
+        className="lobby-section-header-band mb-0"
+      />
+
       <div
         ref={trackRef}
         className="most-online-section__track grid grid-cols-3 gap-2 max-lg:min-w-0 sm:gap-2.5 lg:flex lg:snap-x lg:snap-mandatory lg:gap-3 lg:overflow-x-auto lg:overscroll-x-contain lg:pb-1 no-scrollbar"

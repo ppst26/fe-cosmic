@@ -228,13 +228,6 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                       </div>
                     </div>
 
-                    {isHomeLobby ? (
-                      <MostOnlineProvidersSection
-                        items={content.mostOnline}
-                        className="mt-3 px-0 sm:mt-4 lg:hidden"
-                      />
-                    ) : null}
-
                     <div
                       className={cn(
                         "relative flex min-w-0 flex-col rounded-none pb-6 max-lg:overflow-x-visible lg:gap-3 lg:overflow-hidden lg:overflow-x-clip lg:pb-0 lg:pt-0",
@@ -266,23 +259,31 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                         </div>
 
                         <div className={cn(showMobileLobbySections, isHomeLobby && "lobby-mobile-home-sections")}>
-                          {isHomeLobby ? (
-                            <MostOnlineProvidersSection
-                              items={content.mostOnline}
-                              className="mt-2 hidden lg:block"
-                            />
-                          ) : null}
-                          {homeGames.sections.map((section, index) => (
-                            <GameSection
-                              key={section.id}
-                              section={section}
-                              className={
-                                index === 0
-                                  ? "mt-0 lg:mt-2"
-                                  : "mt-4 sm:mt-5"
-                              }
-                            />
-                          ))}
+                          {homeGames.sections.map((section, index) => {
+                            const sectionClassName =
+                              index === 0 ? "mt-0 lg:mt-2" : "mt-4 sm:mt-5";
+                            const gameSection = (
+                              <GameSection
+                                key={section.id}
+                                section={section}
+                                className={sectionClassName}
+                              />
+                            );
+
+                            if (isHomeLobby && section.id === "section-sports") {
+                              return (
+                                <React.Fragment key={section.id}>
+                                  {gameSection}
+                                  <MostOnlineProvidersSection
+                                    items={content.mostOnline}
+                                    className="mt-4 px-0 sm:mt-5"
+                                  />
+                                </React.Fragment>
+                              );
+                            }
+
+                            return gameSection;
+                          })}
                           <ProvidersSection />
                           {isHomeLobby ? (
                             <AuthGate
