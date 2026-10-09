@@ -993,7 +993,7 @@
       "navAriaLabel": "ပရိုဖိုင်မီနူး",
       "vipLevel": "VIP အဆင့်",
       "transactions": "ငွေသွင်း & ငွေထုတ်",
-      "myDiamonds": "ကျွန်ုပ်၏ စိန်များ",
+      "myDiamonds": "ကျွန်ုပ်၏ Gems",
       "lossRebate": "ရှုံးငွေပြန်အမ်း ဘောနပ်စ်",
       "affiliate": "ကော်မရှင်လက်ကျန်",
       "activePromotion": "လက်ရှိ ပရိုမိုးရှင်း",
@@ -1141,7 +1141,7 @@
     "benefitRows": {
       "cashback": "ဘောနပ်စ် ငွေပြန်အမ်း",
       "rolling": "ဘောနပ်စ် Rolling",
-      "diamondDeposit": "ငွေသွင်းမှ စိန်များ",
+      "diamondDeposit": "ငွေသွင်းမှ Gems",
       "fastWithdraw": "အမြန်ငွေထုတ်",
       "vipManager": "VIP မန်နေဂျာ",
       "upgradeBonus": "အဆင့်တက်ဘောနပ်စ်",
@@ -1156,7 +1156,7 @@
     "myLevelBenefits": {
       "cashback": "ငွေပြန်အမ်း",
       "rolling": "Rolling",
-      "diamondDeposit": "ငွေသွင်းစိန်များ"
+      "diamondDeposit": "ငွေသွင်း Gems"
     },
     "missions": {
       "login": "ဝင်ရောက်ရန်",

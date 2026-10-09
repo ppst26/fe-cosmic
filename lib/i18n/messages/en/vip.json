@@ -53,7 +53,7 @@
   "benefitRows": {
     "cashback": "Bonus Cashback",
     "rolling": "Bonus Rolling",
-    "diamondDeposit": "Diamonds from Deposits",
+    "diamondDeposit": "Gems from Deposits",
     "fastWithdraw": "Fast Withdrawal",
     "vipManager": "VIP Manager",
     "upgradeBonus": "Upgrade Bonus",
@@ -68,7 +68,7 @@
   "myLevelBenefits": {
     "cashback": "Cashback",
     "rolling": "Rolling",
-    "diamondDeposit": "Deposit Diamonds"
+    "diamondDeposit": "Deposit Gems"
   },
   "missions": {
     "login": "Log In",

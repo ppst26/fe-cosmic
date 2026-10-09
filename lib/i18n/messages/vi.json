@@ -514,7 +514,7 @@
       "allProviders": "Tất cả nhà cung cấp",
       "allGameProviders": "Tất cả nhà cung cấp",
       "dropsAndWins": "Drops & Wins",
-      "chicken": "Chicken",
+      "chicken": "Đá gà",
       "buyFeature": "Mua vòng quay miễn phí",
       "jackpot": "Jackpot",
       "megaways": "Megaways",
@@ -993,7 +993,7 @@
       "navAriaLabel": "Menu hồ sơ",
       "vipLevel": "Cấp VIP",
       "transactions": "Nạp & Rút tiền",
-      "myDiamonds": "Kim cương của tôi",
+      "myDiamonds": "Gems của tôi",
       "lossRebate": "Thưởng hoàn tiền thua cược",
       "affiliate": "Số dư đại lý",
       "activePromotion": "Khuyến mãi đang áp dụng",
@@ -1141,7 +1141,7 @@
     "benefitRows": {
       "cashback": "Thưởng hoàn tiền",
       "rolling": "Thưởng doanh số",
-      "diamondDeposit": "Kim cương từ tiền nạp",
+      "diamondDeposit": "Gems từ tiền nạp",
       "fastWithdraw": "Rút tiền nhanh",
       "vipManager": "Quản lý VIP",
       "upgradeBonus": "Thưởng thăng cấp",
@@ -1156,7 +1156,7 @@
     "myLevelBenefits": {
       "cashback": "Hoàn tiền",
       "rolling": "Doanh số",
-      "diamondDeposit": "Kim cương nạp tiền"
+      "diamondDeposit": "Gems nạp tiền"
     },
     "missions": {
       "login": "Đăng nhập",

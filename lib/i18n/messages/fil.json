@@ -244,7 +244,7 @@
       "allProviders": "Lahat ng Provider",
       "allGameProviders": "Lahat ng Provider",
       "dropsAndWins": "Drops & Wins",
-      "chicken": "Manok",
+      "chicken": "Sabong",
       "buyFeature": "Bumili ng Free Spins",
       "jackpot": "Jackpot",
       "megaways": "Megaways",
@@ -900,7 +900,7 @@
       "navAriaLabel": "Menu ng profile",
       "vipLevel": "VIP Level",
       "transactions": "Mga Deposit at Withdrawal",
-      "myDiamonds": "Aking mga Diamond",
+      "myDiamonds": "Aking Gems",
       "lossRebate": "Loss Rebate Bonus",
       "affiliate": "Balanse ng Affiliate",
       "activePromotion": "Aktibong Promo",
@@ -1457,7 +1457,7 @@
     "benefitRows": {
       "cashback": "Bonus Cashback",
       "rolling": "Bonus Rolling",
-      "diamondDeposit": "Mga Diamond mula sa Deposit",
+      "diamondDeposit": "Gems mula sa Deposit",
       "fastWithdraw": "Mabilis na Withdrawal",
       "vipManager": "VIP Manager",
       "upgradeBonus": "Bonus sa Pag-upgrade",
@@ -1472,7 +1472,7 @@
     "myLevelBenefits": {
       "cashback": "Cashback",
       "rolling": "Rolling",
-      "diamondDeposit": "Diamond sa Deposit"
+      "diamondDeposit": "Gems sa Deposit"
     },
     "missions": {
       "login": "Mag-log in",

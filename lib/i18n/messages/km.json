@@ -514,7 +514,7 @@
       "allProviders": "អ្នកផ្តល់សេវាទាំងអស់",
       "allGameProviders": "អ្នកផ្តល់សេវាទាំងអស់",
       "dropsAndWins": "Drops & Wins",
-      "chicken": "មាន់",
+      "chicken": "ជល់មាន់",
       "buyFeature": "ទិញបង្វិលឥតគិតថ្លៃ",
       "jackpot": "ហ្សែកផត",
       "megaways": "Megaways",
@@ -993,7 +993,7 @@
       "navAriaLabel": "ម៉ឺនុយប្រវត្តិរូប",
       "vipLevel": "កម្រិត VIP",
       "transactions": "ដាក់ប្រាក់ និងដកប្រាក់",
-      "myDiamonds": "ពេជ្ររបស់ខ្ញុំ",
+      "myDiamonds": "Gems របស់ខ្ញុំ",
       "lossRebate": "រង្វាន់សងប្រាក់ខាត",
       "affiliate": "សមតុល្យភ្នាក់ងារ",
       "activePromotion": "ប្រូម៉ូសិនកំពុងប្រើ",
@@ -1141,7 +1141,7 @@
     "benefitRows": {
       "cashback": "រង្វាន់ Cashback",
       "rolling": "រង្វាន់វិលភ្នាល់",
-      "diamondDeposit": "ពេជ្រពីការដាក់ប្រាក់",
+      "diamondDeposit": "Gems ពីការដាក់ប្រាក់",
       "fastWithdraw": "ដកប្រាក់លឿន",
       "vipManager": "អ្នកគ្រប់គ្រង VIP",
       "upgradeBonus": "ប្រាក់រង្វាន់ឡើងកម្រិត",
@@ -1156,7 +1156,7 @@
     "myLevelBenefits": {
       "cashback": "Cashback",
       "rolling": "វិលភ្នាល់",
-      "diamondDeposit": "ពេជ្រពីការដាក់ប្រាក់"
+      "diamondDeposit": "Gems ពីការដាក់ប្រាក់"
     },
     "missions": {
       "login": "ចូលគណនី",

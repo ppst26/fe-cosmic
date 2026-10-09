@@ -240,7 +240,7 @@
       "allProviders": "全部供应商",
       "allGameProviders": "全部供应商",
       "dropsAndWins": "Drops & Wins",
-      "chicken": "Chicken 系列",
+      "chicken": "斗鸡",
       "buyFeature": "购买免费旋转",
       "jackpot": "累积奖池",
       "megaways": "Megaways",
@@ -887,7 +887,7 @@
       "navAriaLabel": "个人资料菜单",
       "vipLevel": "VIP 等级",
       "transactions": "存取款记录",
-      "myDiamonds": "我的钻石",
+      "myDiamonds": "我的 Gems",
       "lossRebate": "亏损返还奖金",
       "affiliate": "代理余额",
       "activePromotion": "进行中的优惠",
@@ -1442,7 +1442,7 @@
     "benefitRows": {
       "cashback": "奖金返水",
       "rolling": "奖金流水",
-      "diamondDeposit": "存款钻石",
+      "diamondDeposit": "存款 Gems",
       "fastWithdraw": "极速取款",
       "vipManager": "VIP 专属经理",
       "upgradeBonus": "升级奖金",
@@ -1457,7 +1457,7 @@
     "myLevelBenefits": {
       "cashback": "返水",
       "rolling": "流水",
-      "diamondDeposit": "存款钻石"
+      "diamondDeposit": "存款 Gems"
     },
     "missions": {
       "login": "登录",

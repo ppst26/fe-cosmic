@@ -240,7 +240,7 @@
       "allProviders": "ທຸກຄ່າຍ",
       "allGameProviders": "ທຸກຄ່າຍເກມ",
       "dropsAndWins": "Drops & Wins",
-      "chicken": "ໄກ່",
+      "chicken": "ຊົນໄກ່",
       "buyFeature": "ຊື້ຟຣີສະປິນ",
       "jackpot": "ແຈັກພອດ",
       "megaways": "Megaways",
@@ -887,7 +887,7 @@
       "navAriaLabel": "ເມນູໂປຣໄຟລ໌",
       "vipLevel": "ລະດັບ VIP",
       "transactions": "ລາຍການຝາກຖອນ",
-      "myDiamonds": "ເພັດຂອງຂ້ອຍ",
+      "myDiamonds": "Gems ຂອງຂ້ອຍ",
       "lossRebate": "ໂບນັດຍອດເສຍ",
       "affiliate": "ຍອດ Affiliate",
       "activePromotion": "ໂປຣໂມຊັນທີ່ໃຊ້ຢູ່",
@@ -1442,7 +1442,7 @@
     "benefitRows": {
       "cashback": "ຄືນຍອດພິເສດ",
       "rolling": "ໂຣລລິ່ງພິເສດ",
-      "diamondDeposit": "ເພັດຈາກການຝາກ",
+      "diamondDeposit": "Gems ຈາກການຝາກ",
       "fastWithdraw": "ຖອນດ່ວນ",
       "vipManager": "VIP Manager",
       "upgradeBonus": "ໂບນັດອັບເກຣດ",
@@ -1457,7 +1457,7 @@
     "myLevelBenefits": {
       "cashback": "ຄືນຍອດ",
       "rolling": "ໂຣລລິ່ງ",
-      "diamondDeposit": "ເພັດຈາກການຝາກ"
+      "diamondDeposit": "Gems ຈາກການຝາກ"
     },
     "missions": {
       "login": "ເຂົ້າສູ່ລະບົບ",

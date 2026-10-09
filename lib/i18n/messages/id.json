@@ -240,7 +240,7 @@
       "allProviders": "Semua Provider",
       "allGameProviders": "Semua Provider",
       "dropsAndWins": "Drops & Wins",
-      "chicken": "Ayam",
+      "chicken": "Sabung Ayam",
       "buyFeature": "Beli Free Spin",
       "jackpot": "Jackpot",
       "megaways": "Megaways",
@@ -887,7 +887,7 @@
       "navAriaLabel": "Menu profil",
       "vipLevel": "Level VIP",
       "transactions": "Setoran & Penarikan",
-      "myDiamonds": "Diamond Saya",
+      "myDiamonds": "Gems Saya",
       "lossRebate": "Bonus Rebate Kekalahan",
       "affiliate": "Saldo Afiliasi",
       "activePromotion": "Promo Aktif",
@@ -1442,7 +1442,7 @@
     "benefitRows": {
       "cashback": "Bonus Cashback",
       "rolling": "Bonus Rolling",
-      "diamondDeposit": "Diamond dari Setoran",
+      "diamondDeposit": "Gems dari Setoran",
       "fastWithdraw": "Penarikan Cepat",
       "vipManager": "Manajer VIP",
       "upgradeBonus": "Bonus Naik Level",
@@ -1457,7 +1457,7 @@
     "myLevelBenefits": {
       "cashback": "Cashback",
       "rolling": "Rolling",
-      "diamondDeposit": "Diamond Setoran"
+      "diamondDeposit": "Gems Setoran"
     },
     "missions": {
       "login": "Masuk",
