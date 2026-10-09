@@ -163,7 +163,7 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
       <div className="lottery-slip-summary__actions grid grid-cols-2 gap-2.5">
         <Link
           href="/lottery/slips"
-          className="lottery-price-controls__back grid min-h-11 place-items-center px-3 text-center no-underline"
+          className="lottery-slip-summary__back grid place-items-center px-3 text-center no-underline"
         >
           {t("summary.allSlips")}
         </Link>

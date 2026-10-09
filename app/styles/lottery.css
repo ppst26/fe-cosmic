@@ -1731,13 +1731,10 @@ main.page-shell.lottery-page-main.lottery-slips-page {
   background: var(--surface-solid-inner);
 }
 
+/* หัวกลุ่มประเภท — พื้นทึบ --inner-card-fill (สว่างกว่าพื้นรายการ --surface-solid-inner) แทน gradient nebula เดิม */
 .lottery-slip-summary__group-head {
   color: #f3eeff;
-  background-color: var(--cosmic-page-base);
-  background-image: var(--cosmic-nebula-bg-image);
-  background-repeat: no-repeat;
-  background-position: left top;
-  background-size: 220% 380%;
+  background: var(--inner-card-fill);
   border-bottom: 1px solid rgb(255 255 255 / 0.06);
 }
 
@@ -1797,6 +1794,22 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 
 .lottery-slip-summary__continue {
   width: 100%;
+}
+
+/* ปุ่มรอง "โพยทั้งหมด" — ทรง rounded-full สูง 54px เท่าปุ่ม "แทงต่อ" */
+.lottery-slip-summary__back {
+  min-height: 54px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--lottery-glass-fill, var(--inner-card-fill));
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: background var(--motion-fast) ease;
+}
+
+.lottery-slip-summary__back:hover {
+  background: var(--lottery-glass-fill-hover, var(--inner-card-fill-hover));
 }
 
 /* รายการโพยทั้งหมด — /lottery/slips */
