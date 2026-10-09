@@ -1,5 +1,10 @@
 /* ── จาก app/data/referralMockData.ts ── */
 
+import type { MessageKey } from "@/lib/i18n/messages";
+
+/** key ใน namespace referral — แปลตอน render ด้วย useT("referral") */
+export type ReferralMessageKey = MessageKey<"referral">;
+
 /** ข้อมูล mock หน้าแนะนำเพื่อน */
 export interface ReferralStatsMock {
   friendsCount: number;
@@ -9,10 +14,10 @@ export interface ReferralStatsMock {
 
 export interface ReferralCommissionTier {
   id: string;
-  title: string;
-  subtitle: string;
+  titleKey: ReferralMessageKey;
+  subtitleKey: ReferralMessageKey;
   rateLabel: string;
-  rateHint: string;
+  rateHintKey: ReferralMessageKey;
 }
 
 /** แถวรายชื่อเพื่อนที่สมัครผ่านลิงก์ — ใช้ในแท็บ Referral users */

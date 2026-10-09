@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
 import Link from "@/lib/i18n/navigation";
 import type {
+  LotteryMessageKey,
   ThaiLottoBetEntry,
   ThaiLottoBetType,
   ThaiLottoBetTypeId,
@@ -19,16 +20,14 @@ import { ThaiLottoPricePanel } from "./ThaiLottoPricePanel";
 import { LotteryPriceControls } from "../LotteryPriceControls";
 import { LotteryPriceStepCard } from "../LotteryPriceStepCard";
 import { uniquePermutations } from "../lotteryUtils";
+import { useLotteryI18n } from "../useLotteryI18n";
 
-/** ป้ายแท็บวิธีใส่เลขของหวยรัฐบาลไทย */
-const THAI_INPUT_MODES: { id: LotteryInputMode; label: string }[] = [
-  { id: "manual", label: "กรอกเลขเอง" },
-  { id: "grid", label: "เลือกจากแผงเลข" },
-];
+/** แท็บวิธีใส่เลข — ป้ายแปลตอน render (lottery.inputMode.*) */
+const INPUT_MODE_IDS: LotteryInputMode[] = ["manual", "grid"];
 
 interface ThaiLottoBetBoardProps {
   draw: ThaiLottoDraw;
-  groups: { id: ThaiLottoDigitGroup; label: string }[];
+  groups: { id: ThaiLottoDigitGroup; labelKey: LotteryMessageKey }[];
   betTypes: ThaiLottoBetType[];
   backHref: string;
   /** ส่งโพยไป API — คืน true เมื่อสำเร็จเพื่อล้างโพย */
@@ -60,6 +59,8 @@ export function ThaiLottoBetBoard({
   onStepChange,
   isSubmitting = false,
 }: ThaiLottoBetBoardProps) {
+  const { t } = useLotteryI18n();
+  const inputModes = INPUT_MODE_IDS.map((id) => ({ id, label: t(`inputMode.${id}`) }));
   const firstTypeOf = useCallback(
     (group: ThaiLottoDigitGroup) => betTypes.find((type) => type.group === group)?.id,
     [betTypes],
@@ -112,7 +113,7 @@ export function ThaiLottoBetBoard({
     );
 
     if (fresh.length === 0) {
-      setFeedback(`${number} มีในโพยแล้ว`);
+      setFeedback(t("feedback.duplicate", { number }));
       return;
     }
 
@@ -122,14 +123,14 @@ export function ThaiLottoBetBoard({
     });
     setEntries((prev) => [...added, ...prev]);
     setLastAddedIds(added.map((entry) => entry.id));
-    setFeedback(`เพิ่ม ${number} ลงโพย ${fresh.length} รายการ`);
+    setFeedback(t("feedback.added", { number, count: fresh.length }));
   };
 
   const handleUndoLastAdd = () => {
     if (lastAddedIds.length === 0) return;
     setEntries((prev) => prev.filter((entry) => !lastAddedIds.includes(entry.id)));
     setLastAddedIds([]);
-    setFeedback("ย้อนรายการล่าสุดแล้ว");
+    setFeedback(t("feedback.undone"));
   };
 
   const handleDigit = (digit: string) => {
@@ -143,7 +144,7 @@ export function ThaiLottoBetBoard({
     if (next.length < digits) return;
 
     if (isClosed) {
-      setFeedback("ปิดรับแทงแล้ว");
+      setFeedback(t("feedback.closed"));
       return;
     }
 
@@ -178,7 +179,7 @@ export function ThaiLottoBetBoard({
     setEntries((prev) =>
       prev.filter((entry) => !(entry.number === number && selectedTypeIds.includes(entry.typeId))),
     );
-    setFeedback(`เอา ${number} ออกจากโพย`);
+    setFeedback(t("feedback.removed", { number }));
   };
 
   const handleInputModeChange = (mode: LotteryInputMode) => {
@@ -277,7 +278,7 @@ export function ThaiLottoBetBoard({
         {step === "pick" ? (
           <section
             className="thai-lotto-panel thai-lotto-layout__input flex min-h-0 flex-col gap-0 px-1.5 py-2 sm:gap-4 sm:p-4 md:p-5"
-            aria-label="เลือกเลข"
+            aria-label={t("board.pickAria")}
           >
             <div className="thai-lotto-layout__input-body flex min-h-0 flex-1 flex-col gap-2">
         <ThaiLottoBetTypePicker
@@ -302,12 +303,12 @@ export function ThaiLottoBetBoard({
             >
               <span className="thai-lotto-toggle__thumb absolute top-0.5 left-0.5 h-4 w-4 rounded-full" />
             </span>
-            กลับเลข
+            {t("board.reverse")}
           </button>
         ) : null}
 
         <LotteryInputModeTabs
-          modes={THAI_INPUT_MODES}
+          modes={inputModes}
           activeMode={inputMode}
           onChange={handleInputModeChange}
           panelId="thai-lotto-input-panel"
@@ -339,9 +340,9 @@ export function ThaiLottoBetBoard({
             ) : null}
             </div>
 
-            <div className="thai-lotto-layout__input-dock yiki-pick-actions grid shrink-0 gap-2 pt-1.5" aria-label="ดำเนินการต่อ">
+            <div className="thai-lotto-layout__input-dock yiki-pick-actions grid shrink-0 gap-2 pt-1.5" aria-label={t("board.actionsAria")}>
               <Link href={backHref} className="yiki-pick-actions__back">
-                กลับหน้าก่อนหน้า
+                {t("board.back")}
               </Link>
               <button
                 type="button"
@@ -349,7 +350,7 @@ export function ThaiLottoBetBoard({
                 disabled={entries.length === 0 || isClosed}
                 onClick={handleGoToPrice}
               >
-                ใส่ราคา
+                {t("board.enterPrice")}
               </button>
             </div>
           </section>

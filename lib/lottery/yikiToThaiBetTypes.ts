@@ -17,7 +17,7 @@ export function mapYikiBetTypesForPicker(
 
     return {
       id: type.id as ThaiLottoBetTypeId,
-      label: type.label,
+      labelKey: type.labelKey,
       group: type.group,
       digits: type.digits,
       payoutRate,

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import Link from "@/lib/i18n/navigation";
-import type { LotteryFlagTone, ThaiLottoBetTypeId } from "@/app/types/lottery";
+import type { LotteryFlagTone, LotteryMessageKey, ThaiLottoBetTypeId } from "@/app/types/lottery";
 import type {
   YikiBetEntry,
   YikiBetType,
@@ -22,10 +22,14 @@ import { YikiPricePanel } from "./YikiPricePanel";
 import { YikiPriceControls } from "./YikiPriceControls";
 import { LotteryPriceStepCard } from "../LotteryPriceStepCard";
 import { uniquePermutations } from "../lotteryUtils";
+import { useLotteryI18n } from "../useLotteryI18n";
+
+/** แท็บวิธีใส่เลข — ป้ายแปลตอน render (lottery.inputMode.*) */
+const INPUT_MODE_IDS: LotteryInputMode[] = ["manual", "grid"];
 
 interface YikiBetBoardProps {
   round: YikiRound;
-  groups: { id: YikiDigitGroup; label: string }[];
+  groups: { id: YikiDigitGroup; labelKey: LotteryMessageKey }[];
   betTypes: YikiBetType[];
   settlementTypes: Record<YikiSettlementTypeId, YikiSettlementType>;
   /** กลับหน้าก่อนหน้า — รายการรอบของยี่กี หรือหน้าเลือกหวยของตลาดที่ไม่มีรายการรอบ */
@@ -43,11 +47,6 @@ interface YikiBetBoardProps {
   /** แจ้ง shell ซ่อน bottom nav ตอนขั้นใส่ราคา (มือถือ) */
   onStepChange?: (step: "pick" | "price") => void;
 }
-
-const LOTTERY_INPUT_MODES: { id: LotteryInputMode; label: string }[] = [
-  { id: "manual", label: "กรอกเลขเอง" },
-  { id: "grid", label: "เลือกจากแผงเลข" },
-];
 
 /** เป้าหมายของ keydown เป็นช่องพิมพ์หรือไม่ — กันไม่ให้แป้นพิมพ์ไปแย่งช่องราคา */
 function isTypingTarget(target: EventTarget | null): boolean {
@@ -77,6 +76,8 @@ export function YikiBetBoard({
   onStepChange,
   isSubmitting = false,
 }: YikiBetBoardProps) {
+  const { t, roundLabel } = useLotteryI18n();
+  const inputModes = INPUT_MODE_IDS.map((id) => ({ id, label: t(`inputMode.${id}`) }));
   const firstTypeOf = useCallback(
     (group: YikiDigitGroup) => betTypes.find((type) => type.group === group)?.id,
     [betTypes],
@@ -128,7 +129,7 @@ export function YikiBetBoard({
     );
 
     if (fresh.length === 0) {
-      setFeedback(`${number} มีในโพยแล้ว`);
+      setFeedback(t("feedback.duplicate", { number }));
       return;
     }
 
@@ -138,7 +139,7 @@ export function YikiBetBoard({
     });
     setEntries((prev) => [...added, ...prev]);
     setLastAddedIds(added.map((entry) => entry.id));
-    setFeedback(`เพิ่ม ${number} ลงโพย ${fresh.length} รายการ`);
+    setFeedback(t("feedback.added", { number, count: fresh.length }));
   };
 
   const handleDigit = (digit: string) => {
@@ -152,7 +153,7 @@ export function YikiBetBoard({
     if (next.length < digits) return;
 
     if (isClosed) {
-      setFeedback("ปิดรับแทงแล้ว");
+      setFeedback(t("feedback.closed"));
       return;
     }
 
@@ -194,7 +195,7 @@ export function YikiBetBoard({
         (entry) => !(entry.number === number && activeType.settlementTypeIds.includes(entry.settlementTypeId)),
       ),
     );
-    setFeedback(`เอา ${number} ออกจากโพย`);
+    setFeedback(t("feedback.removed", { number }));
   };
 
   const handleInputModeChange = (mode: LotteryInputMode) => {
@@ -302,7 +303,7 @@ export function YikiBetBoard({
           <div className="thai-lotto-layout__draw">
             <LotteryDrawCard
               title={marketTitle}
-              drawLabel={round.label}
+              drawLabel={roundLabel(round.label)}
               remainingMs={remainingMs}
               flagLabel={flagLabel}
               flagTone={flagTone}
@@ -314,7 +315,7 @@ export function YikiBetBoard({
         {step === "pick" ? (
           <section
             className="thai-lotto-panel thai-lotto-layout__input flex min-h-0 flex-col gap-0 px-1.5 py-2 sm:gap-4 sm:p-4 md:p-5"
-            aria-label="เลือกเลข"
+            aria-label={t("board.pickAria")}
           >
             <div className="thai-lotto-layout__input-body flex min-h-0 flex-1 flex-col gap-2">
             <ThaiLottoBetTypePicker
@@ -328,7 +329,7 @@ export function YikiBetBoard({
             />
 
             <LotteryInputModeTabs
-              modes={LOTTERY_INPUT_MODES}
+              modes={inputModes}
               activeMode={inputMode}
               onChange={handleInputModeChange}
               panelId="yiki-input-panel"
@@ -360,9 +361,9 @@ export function YikiBetBoard({
             ) : null}
             </div>
 
-            <div className="thai-lotto-layout__input-dock yiki-pick-actions grid shrink-0 gap-2 pt-1.5" aria-label="ดำเนินการต่อ">
+            <div className="thai-lotto-layout__input-dock yiki-pick-actions grid shrink-0 gap-2 pt-1.5" aria-label={t("board.actionsAria")}>
               <Link href={backHref} className="yiki-pick-actions__back">
-                กลับหน้าก่อนหน้า
+                {t("board.back")}
               </Link>
               <button
                 type="button"
@@ -370,7 +371,7 @@ export function YikiBetBoard({
                 disabled={entries.length === 0 || isClosed}
                 onClick={handleGoToPrice}
               >
-                ใส่ราคา
+                {t("board.enterPrice")}
               </button>
             </div>
           </section>

@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useRouter } from "@/lib/i18n/navigation";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { submitLotteryBetSlip } from "@/lib/lottery/submitBetSlip";
 import type { SubmitLotteryBetRequest } from "@/app/types/lotteryBetApi";
 
@@ -18,6 +19,7 @@ export interface LotteryBetRoundMeta {
  */
 export function useLotteryBetSubmit(continuePlayHref?: string) {
   const router = useRouter();
+  const t = useT("lottery");
   const [dialog, setDialog] = useState<LotteryBetDialogState | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -41,13 +43,13 @@ export function useLotteryBetSubmit(continuePlayHref?: string) {
         setDialog({ kind: "error", message: result.error });
         return false;
       } catch {
-        setDialog({ kind: "error", message: "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์" });
+        setDialog({ kind: "error", message: t("submit.networkError") });
         return false;
       } finally {
         setIsSubmitting(false);
       }
     },
-    [continuePlayHref, router],
+    [continuePlayHref, router, t],
   );
 
   return { submit, dialog, closeDialog, isSubmitting };

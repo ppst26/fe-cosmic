@@ -16,6 +16,7 @@ import {
 import { DESKTOP_RIGHT_MENU_TILES } from "@/app/data/desktopLobbyMockData";
 import { useRequireAuthAction } from "@/app/hooks/useRequireAuthAction";
 import type { MenuDialogAction } from "@/app/types/menu";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface LobbyDesktopHubMenuStackProps {
   onMenuAction?: (action: MenuDialogAction) => void;
@@ -28,6 +29,8 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
   const router = useRouter();
   const { runWithAuth } = useRequireAuthAction();
   const tiles = DESKTOP_RIGHT_MENU_TILES;
+  const t = useT("nav");
+  const tHome = useT("home");
 
   const tileNeedsAuth = (tile: (typeof tiles)[number]) => {
     if ("action" in tile && tile.action) {
@@ -42,7 +45,7 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
   };
 
   return (
-    <div className="lobby-hub-menu-stack w-full min-w-0" aria-label="เมนูด่วน">
+    <div className="lobby-hub-menu-stack w-full min-w-0" aria-label={t("desktop.quickMenu")}>
       {tiles.map((tile, index) => {
         const isWideSpan =
           ("variant" in tile && (tile as { variant?: string }).variant === "wide") ||
@@ -69,7 +72,7 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
                 isBg ? "relative z-10 max-w-[54%] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]" : ""
               }`}
             >
-              {tile.title}
+              {tHome(tile.titleKey)}
             </span>
             {!isBg ? (
               <span className="lobby-hub-menu-card__visual" aria-hidden="true">
@@ -91,7 +94,7 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
               key={tile.id}
               type="button"
               className={className}
-              aria-label={tile.ariaLabel}
+              aria-label={tHome(tile.ariaLabelKey)}
               onClick={() =>
                 runWithAuth(tileNeedsAuth(tile), () => onMenuAction?.(tile.action!))
               }
@@ -103,7 +106,7 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
 
         if ("href" in tile && hrefToHubId(tile.href)) {
           return (
-            <HubNavLink key={tile.id} href={tile.href} className={className} title={tile.ariaLabel}>
+            <HubNavLink key={tile.id} href={tile.href} className={className} title={tHome(tile.ariaLabelKey)}>
               {body}
             </HubNavLink>
           );
@@ -116,7 +119,7 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
               key={tile.id}
               href={href}
               className={className}
-              title={tile.ariaLabel}
+              title={tHome(tile.ariaLabelKey)}
               onClick={(event) => {
                 if (!tileNeedsAuth(tile)) return;
                 event.preventDefault();

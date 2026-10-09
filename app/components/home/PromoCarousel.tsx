@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import Link from "@/lib/i18n/navigation";
 import { PromoItem } from "../../types/lobby";
@@ -15,6 +16,7 @@ interface PromoCarouselProps {
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx
  */
 export function PromoCarousel({ items }: PromoCarouselProps) {
+  const t = useT("home");
   const trackSlides = buildLoopedTrack(items);
   const { scrollContainerRef, logicalIndex, loopEnabled, pauseFor, scrollToLogicalIndex } =
     useInfiniteSnapCarousel(items.length);
@@ -28,14 +30,14 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
   return (
     <section
       className="promo-carousel relative w-full min-w-0 overflow-hidden py-2.5 sm:py-3"
-      aria-label="แบนเนอร์โปรโมชันและสิทธิพิเศษ"
+      aria-label={t("promoCarousel.ariaLabel")}
     >
       <div className="relative min-w-0">
         <div
           ref={scrollContainerRef}
           className="promo-carousel__track flex gap-0 overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory py-0 sm:gap-3"
           tabIndex={0}
-          aria-label="รายการโปรโมชัน"
+          aria-label={t("promoCarousel.listAriaLabel")}
         >
           {trackSlides.map((entry, index) => {
             const item = entry.item;
@@ -107,7 +109,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
                       scrollToLogicalIndex(idx);
                     }}
                     className={`welcome-banner__dot ${isDotActive ? "is-active" : ""}`}
-                    aria-label={`ไปยังสไลด์ที่ ${idx + 1}`}
+                    aria-label={t("carousel.goToSlide", { index: idx + 1 })}
                   />
                 );
               })}

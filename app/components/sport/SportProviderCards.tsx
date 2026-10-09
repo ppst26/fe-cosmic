@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Link from "@/lib/i18n/navigation";
 import Image from "next/image";
 import type { SportCardItem } from "@/app/types/providers";
@@ -166,8 +167,10 @@ export function SportProviderCards({
   items,
   totalCount,
   hideTitleRow = false,
-  sectionTitle = "กีฬา",
+  sectionTitle: sectionTitleProp,
 }: SportProviderCardsProps) {
+  const t = useT("games");
+  const sectionTitle = sectionTitleProp ?? t("sport.title");
   return (
     <div className="space-y-3.5">
       {!hideTitleRow ? (
@@ -176,7 +179,7 @@ export function SportProviderCards({
           {sectionTitle}
         </h2>
         <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
-          ({totalCount} รายการ/ค่ายเกม)
+          {t("sport.count", { count: totalCount })}
         </span>
       </div>
       ) : null}

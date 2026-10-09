@@ -6,6 +6,7 @@ import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import { cn } from "@/lib/utils";
 import { formatRewardPoints } from "@/lib/format";
+import { useT } from "@/lib/i18n/I18nProvider";
 import type { RandomCardDisplayItem } from "@/app/types/reward";
 
 /**
@@ -25,6 +26,7 @@ export function RandomCardRedeemPanel({
   comingSoonLabel: string;
   className?: string;
 }) {
+  const t = useT("rewards");
   /** รูปเพชร — asset คงที่ ไม่ได้มาจาก API */
   const gemAsset = GEMS_STORE_GEM_ASSET;
   const topRow = cards.slice(0, 3);
@@ -33,7 +35,7 @@ export function RandomCardRedeemPanel({
   return (
     <section
       className={cn("random-card-redeem reward-redeem-board", className)}
-      aria-label="แลกการ์ดสุ่ม"
+      aria-label={t("randomCard.pageTitle")}
       aria-disabled="true"
     >
       <div className="reward-redeem-board__soon-badge" role="status">
@@ -51,12 +53,12 @@ export function RandomCardRedeemPanel({
               height={14}
               className="inline-block h-3.5 w-3.5 object-contain align-[-2px]"
             />
-            <span className="ml-1">สุ่มของรางวัล</span>
+            <span className="ml-1">{t("redeemBoard.subtitle")}</span>
           </p>
         </header>
 
         <div className="reward-redeem-board__balance">
-          <p className="reward-redeem-board__balance-label">พอยท์สะสม</p>
+          <p className="reward-redeem-board__balance-label">{t("redeemBoard.pointsLabel")}</p>
           <p className="reward-redeem-board__balance-value">
             <Image src={gemAsset} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
             <span className="tabular-nums">{formatRewardPoints(pointsBalance)}</span>
@@ -76,7 +78,7 @@ export function RandomCardRedeemPanel({
           </div>
         </div>
 
-        <p className="reward-redeem-board__cost">สุ่มรางวัลครั้งละ {drawCost} พอยท์</p>
+        <p className="reward-redeem-board__cost">{t("redeemBoard.drawCost", { cost: drawCost })}</p>
 
         <div className="reward-redeem-board__action">
           <CosmicStackedActionButton
@@ -84,13 +86,13 @@ export function RandomCardRedeemPanel({
             disabled
             dimmed
             className="w-full opacity-60"
-            title="เริ่มการสุ่ม"
+            title={t("redeemBoard.startDraw")}
           />
           <span className="reward-redeem-board__soon-hint">{comingSoonLabel}</span>
         </div>
 
         <p className="reward-redeem-board__history">
-          {comingSoonLabel} · ประวัติการแลกของรางวัล
+          {comingSoonLabel} · {t("redeemBoard.history")}
         </p>
       </div>
 

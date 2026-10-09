@@ -2,6 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * เลขหน้าตาราง solid — คู่กับ cosmic-data-table (Cashback · Referral · ธุรกรรม)
@@ -12,7 +13,7 @@ export function CosmicDataTablePagination({
   onPageChange,
   className,
   size = "md",
-  "aria-label": ariaLabel = "เปลี่ยนหน้า",
+  "aria-label": ariaLabelProp,
 }: {
   page: number;
   totalPages: number;
@@ -21,7 +22,10 @@ export function CosmicDataTablePagination({
   size?: "sm" | "md";
   "aria-label"?: string;
 }) {
+  const t = useT("common");
   if (totalPages <= 1) return null;
+
+  const ariaLabel = ariaLabelProp ?? t("pagination.label");
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   const sizeClass = size === "sm" ? "h-8 min-w-8" : "h-9 min-w-9";
@@ -29,7 +33,7 @@ export function CosmicDataTablePagination({
   return (
     <nav className={cn("flex items-center gap-1.5", className)} aria-label={ariaLabel}>
       <CosmicPaginationButton
-        label="หน้าก่อน"
+        label={t("pagination.prev")}
         sizeClass={sizeClass}
         disabled={page <= 1}
         onClick={() => onPageChange(page - 1)}
@@ -39,7 +43,7 @@ export function CosmicDataTablePagination({
       {pages.map((num) => (
         <CosmicPaginationButton
           key={num}
-          label={`หน้า ${num}`}
+          label={t("pagination.page", { page: num })}
           sizeClass={sizeClass}
           active={num === page}
           onClick={() => onPageChange(num)}
@@ -48,7 +52,7 @@ export function CosmicDataTablePagination({
         </CosmicPaginationButton>
       ))}
       <CosmicPaginationButton
-        label="หน้าถัดไป"
+        label={t("pagination.next")}
         sizeClass={sizeClass}
         disabled={page >= totalPages}
         onClick={() => onPageChange(page + 1)}

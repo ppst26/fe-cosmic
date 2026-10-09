@@ -8,6 +8,7 @@ import { useYikiBoard } from "@/app/hooks/api/lottery";
 import { LoadingState } from "../ui/StatusState";
 import { lotteryPlayMarketMeta, resolveLotteryPlayRound } from "@/lib/lottery/resolvePlayRound";
 import { useYikiStyleBetSubmit } from "@/app/hooks/useLotteryBetSubmit";
+import { useLotteryI18n } from "./useLotteryI18n";
 
 interface LotteryYikiPlayBoardProps {
   marketSlug: string;
@@ -25,6 +26,7 @@ export function LotteryYikiPlayBoard({
   backHref,
   onStepChange,
 }: LotteryYikiPlayBoardProps) {
+  const { t, roundLabel } = useLotteryI18n();
   const yikiBoardResource = useYikiBoard();
   const yikiBoard = yikiBoardResource.data;
   const playRound = useMemo(
@@ -38,7 +40,7 @@ export function LotteryYikiPlayBoard({
 
   const betMeta = playRound
     ? {
-        drawLabel: playRound.label,
+        drawLabel: roundLabel(playRound.label),
         drawCloseAt: playRound.closeAt,
         continuePlayHref: `${backHref}/${roundId}`,
       }
@@ -55,14 +57,14 @@ export function LotteryYikiPlayBoard({
       <EmptyState
         className="mt-4"
         variant="card"
-        title="ไม่พบรอบที่เลือก"
-        description="รอบนี้อาจปิดรับแทงแล้ว เลือกรอบถัดไปจากรายการรอบ"
+        title={t("board.roundNotFoundTitle")}
+        description={t("board.roundNotFoundNext")}
       />
     );
   }
 
   if (!yikiBoard) {
-    return <LoadingState label="กำลังโหลดกระดานแทง…" />;
+    return <LoadingState label={t("board.loading")} />;
   }
 
   return (
@@ -73,7 +75,7 @@ export function LotteryYikiPlayBoard({
         betTypes={yikiBoard.betTypes}
         settlementTypes={yikiBoard.settlement}
         backHref={backHref}
-        marketTitle={marketMeta.title}
+        marketTitle={t(marketMeta.titleKey)}
         flagLabel={marketMeta.flagLabel}
         flagTone={marketMeta.flagTone}
         marketSlug={marketSlug}

@@ -19,6 +19,7 @@ import {
 import { formatCashbackCurrency, formatCashbackPercent } from "@/lib/format";
 import type { CashbackPanelMock, CashbackTabId } from "@/app/types/cashback";
 import { useWallet } from "@/app/hooks/api/account";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface CashbackPageContentProps {
   initialTab?: CashbackTabId;
@@ -35,8 +36,9 @@ export function CashbackPageContent({
   embedded = false,
 }: CashbackPageContentProps) {
   const cashbackPanels = useCashbackPanels();
+  const t = useT("cashback");
   return (
-    <ResourceGate resource={cashbackPanels} loadingLabel="กำลังโหลดคืนยอด…" errorTitle="โหลดข้อมูลคืนยอดไม่สำเร็จ">
+    <ResourceGate resource={cashbackPanels} loadingLabel={t("status.panelsLoading")} errorTitle={t("status.panelsError")}>
       {(data) => (
         <CashbackPanelsView cashbackPanels={data} initialTab={initialTab} embedded={embedded} />
       )}
@@ -55,6 +57,7 @@ function CashbackPanelsView({
   embedded: boolean;
 }) {
   const wallet = useWallet();
+  const t = useT("cashback");
   const [tab, setTab] = useState<CashbackTabId>(initialTab);
   const [insightPeriod, setInsightPeriod] = useState<CashbackInsightPeriodId>("all");
   const [refreshing, setRefreshing] = useState(false);
@@ -65,12 +68,12 @@ function CashbackPanelsView({
 
   const ruleRows = useMemo(
     () => [
-      { id: "rate", label: "อัตราคืน", value: formatCashbackPercent(panel.ratePercent) },
-      { id: "min", label: "ขั้นต่ำ", value: formatCashbackCurrency(panel.minThb) },
-      { id: "max", label: "สูงสุดต่อครั้ง", value: formatCashbackCurrency(panel.maxPerClaimThb) },
-      { id: "cycle", label: "รอบคำนวณ", value: panel.cycleLabel },
+      { id: "rate", label: t("rules.rate"), value: formatCashbackPercent(panel.ratePercent) },
+      { id: "min", label: t("rules.min"), value: formatCashbackCurrency(panel.minThb) },
+      { id: "max", label: t("rules.maxPerClaim"), value: formatCashbackCurrency(panel.maxPerClaimThb) },
+      { id: "cycle", label: t("rules.cycle"), value: t(panel.cycleLabelKey) },
     ],
-    [panel],
+    [panel, t],
   );
 
   const handleClaim = () => {
@@ -79,8 +82,8 @@ function CashbackPanelsView({
       ...prev,
       claimableThb: 0,
       canClaim: false,
-      statusHint: "รับแล้ว",
-      claimButtonLabel: "รับแล้ว",
+      statusHintKey: "panel.claimed" as const,
+      claimButtonLabelKey: "panel.claimed" as const,
     });
     if (tab === "play") setPlayPanel(reset);
     else setLossPanel(reset);
@@ -97,10 +100,10 @@ function CashbackPanelsView({
   return (
     <div className="flex flex-col gap-5 pb-6">
       <CosmicLineTabs
-        tabs={cashbackPanels.tabs}
+        tabs={cashbackPanels.tabs.map((item) => ({ id: item.id, label: t(item.labelKey) }))}
         activeId={tab}
         onSelect={setTab}
-        ariaLabel="ประเภทคืนยอด"
+        ariaLabel={t("tabs.ariaLabel")}
         columns={2}
       />
 
@@ -110,13 +113,13 @@ function CashbackPanelsView({
         className="flex flex-col gap-5"
       >
         <CashbackPanelShell embedded={embedded}>
-          <CashbackPanelHeader title={panel.title} subtitle={panel.subtitle} />
+          <CashbackPanelHeader title={t(panel.titleKey)} subtitle={t(panel.subtitleKey)} />
 
           <CashbackClaimRow
-            amountLabel="ยอดคืนที่รับได้"
+            amountLabel={t("panel.claimableAmount")}
             amount={formatCashbackCurrency(panel.claimableThb)}
-            statusHint={panel.statusHint}
-            claimLabel={panel.claimButtonLabel}
+            statusHint={t(panel.statusHintKey)}
+            claimLabel={t(panel.claimButtonLabelKey)}
             canClaim={panel.canClaim && panel.claimableThb > 0}
             onClaim={handleClaim}
             onRefresh={handleRefresh}
@@ -126,13 +129,13 @@ function CashbackPanelsView({
           <CashbackInsightPeriodTabs activeId={insightPeriod} onSelect={setInsightPeriod} />
 
           <CashbackHighlightCard
-            primaryLabel="ยอดคืนสะสม (รอบนี้)"
+            primaryLabel={t("panel.accumulatedThisCycle")}
             primaryValue={formatCashbackCurrency(panel.claimableThb)}
             secondaryValue={formatCashbackPercent(panel.ratePercent)}
-            secondaryHint="อัตราคืน"
+            secondaryHint={t("rules.rate")}
           />
 
-          <CashbackRulesTableSection title="รายละเอียดเงื่อนไข" rows={ruleRows} />
+          <CashbackRulesTableSection title={t("rules.title")} rows={ruleRows} />
         </CashbackPanelShell>
 
         {tab === "loss" ? <CashbackLossRebateExtraSections /> : null}

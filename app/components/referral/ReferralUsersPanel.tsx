@@ -18,8 +18,10 @@ import {
 } from "../ui/cosmicDataTableClasses";
 import { cosmicDataTableRowClass } from "../ui/cosmicDataTableRowClass";
 import { REFERRAL_USERS_PAGE_SIZE } from "@/lib/uiConstants";
-import { formatReferralCount, formatReferralRegisteredAt } from "@/lib/format";
+import { formatReferralRegisteredAt } from "@/lib/format";
 import type { ReferralUserRow } from "@/app/types/referral";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
 
 /**
  * แท็บ Referral users — ตารางเพื่อนที่แนะนำ + pagination (10 แถว/หน้า)
@@ -27,15 +29,18 @@ import type { ReferralUserRow } from "@/app/types/referral";
  */
 export function ReferralUsersPanel({ users: usersProp }: { users?: ReferralUserRow[] }) {
   const usersResource = useReferralUsers();
+  const t = useT("referral");
   if (usersProp) return <ReferralUsersTable users={usersProp} />;
   return (
-    <ResourceGate resource={usersResource} loadingLabel="กำลังโหลดรายชื่อเพื่อน…" errorTitle="โหลดรายชื่อเพื่อนไม่สำเร็จ">
+    <ResourceGate resource={usersResource} loadingLabel={t("status.usersLoading")} errorTitle={t("status.usersError")}>
       {(users) => <ReferralUsersTable users={users} />}
     </ResourceGate>
   );
 }
 
 function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
+  const t = useT("referral");
+  const fmt = useFormat();
   const [page, setPage] = useState(1);
   const total = users.length;
   const pageSize = REFERRAL_USERS_PAGE_SIZE;
@@ -58,10 +63,10 @@ function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
           id="referral-users-title"
           className="text-sm font-medium text-[var(--text-primary)] sm:text-base"
         >
-          เพื่อนที่แนะนำ
+          {t("tabs.users")}
         </h2>
         <span className="cosmic-inset-card rounded-[var(--radius-pill)] px-2.5 py-0.5 text-xs font-medium text-[var(--text-secondary)]">
-          {formatReferralCount(total)}
+          {fmt.people(total)}
         </span>
       </div>
 
@@ -73,7 +78,7 @@ function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
                 Username
               </TableHead>
               <TableHead className="h-11 px-4 text-right text-xs font-medium text-[var(--text-secondary)] sm:px-5">
-                สมัครเมื่อ
+                {t("users.registeredAt")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -84,7 +89,7 @@ function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
                   colSpan={2}
                   className="px-4 py-10 text-center text-xs text-[var(--text-muted)] sm:px-5"
                 >
-                  ยังไม่มีเพื่อนที่สมัครผ่านลิงก์ของคุณ
+                  {t("users.empty")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -105,13 +110,13 @@ function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
         {total > 0 && (
           <div className="cosmic-data-table__footer flex flex-col gap-3 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <p className="text-xs text-[var(--text-muted)]">
-              แสดง {rangeStart}–{rangeEnd} จาก {formatReferralCount(total)}
+              {t("pagination.showing", { start: rangeStart, end: rangeEnd, total: fmt.people(total) })}
             </p>
             <CosmicDataTablePagination
               page={currentPage}
               totalPages={totalPages}
               onPageChange={setPage}
-              aria-label="เปลี่ยนหน้ารายชื่อเพื่อน"
+              aria-label={t("users.paginationAriaLabel")}
             />
           </div>
         )}

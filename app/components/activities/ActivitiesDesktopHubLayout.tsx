@@ -5,6 +5,7 @@ import { useActivities } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 import type { ActivityHubItem } from "@/app/types/activities";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 function ActivityMasterRow({
   item,
@@ -49,15 +50,17 @@ function ActivityMasterRow({
  * ใช้ใน ActivitiesHubPageContent (embedded + lg+)
  */
 export function ActivitiesDesktopHubLayout() {
+  const t = useT("rewards");
   const activitiesResource = useActivities();
   return (
-    <ResourceGate resource={activitiesResource} loadingLabel="กำลังโหลดกิจกรรม…" errorTitle="โหลดกิจกรรมไม่สำเร็จ">
+    <ResourceGate resource={activitiesResource} loadingLabel={t("activities.loading")} errorTitle={t("activities.loadError")}>
       {(activities) => <ActivitiesDesktopHubContent activities={activities} />}
     </ResourceGate>
   );
 }
 
 function ActivitiesDesktopHubContent({ activities }: { activities: ActivityHubItem[] }) {
+  const t = useT("rewards");
   const [pickedId, setSelectedId] = useState(activities[0]?.id ?? "");
 
   /** id ที่เลือกหายจากรายการ → ใช้รายการแรกแทน (คำนวณตอน render ไม่ต้อง sync state) */
@@ -68,7 +71,7 @@ function ActivitiesDesktopHubContent({ activities }: { activities: ActivityHubIt
     <div className="activities-desktop-hub activities-desktop-hub--flat grid min-h-[min(58dvh,560px)] lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:items-stretch lg:gap-5">
       <nav
         className="activities-desktop-hub__list flex min-h-0 flex-col gap-2 overflow-y-auto [scrollbar-width:thin]"
-        aria-label="รายการกิจกรรม"
+        aria-label={t("activities.listAria")}
       >
         {activities.map((item) => (
           <ActivityMasterRow

@@ -4,6 +4,8 @@ import React from "react";
 import type { ApiResource } from "@/app/hooks/useApi";
 import { ErrorState, LoadingState } from "./StatusState";
 import { LoginPrompt } from "./LoginPrompt";
+import { useApiErrorText } from "@/app/hooks/useApiErrorText";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ResourceGateProps<T> {
   resource: ApiResource<T>;
@@ -26,11 +28,13 @@ export function ResourceGate<T>({
   resource,
   children,
   loadingLabel,
-  errorTitle = "โหลดข้อมูลไม่สำเร็จ",
+  errorTitle,
   loadingFallback,
   idleFallback,
   className,
 }: ResourceGateProps<T>) {
+  const t = useT("common");
+  const apiErrorText = useApiErrorText();
   if (resource.data !== null) return <>{children(resource.data)}</>;
   if (resource.status === "idle") {
     return <>{idleFallback === undefined ? <LoginPrompt className={className} /> : idleFallback}</>;
@@ -39,11 +43,11 @@ export function ResourceGate<T>({
     return (
       <ErrorState
         className={className}
-        title={errorTitle}
-        description={resource.error?.message}
-        primaryAction={{ label: "ลองใหม่", onClick: resource.refresh }}
+        title={errorTitle ?? t("loadFailed")}
+        description={apiErrorText(resource.error?.message)}
+        primaryAction={{ label: t("retry"), onClick: resource.refresh }}
       />
     );
   }
-  return <>{loadingFallback ?? <LoadingState className={className} label={loadingLabel} />}</>;
+  return <>{loadingFallback ?? <LoadingState className={className} label={loadingLabel ?? t("loading")} />}</>;
 }

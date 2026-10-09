@@ -6,6 +6,7 @@ import { HubNavLink } from "@/app/components/hub/HubNavLink";
 import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
 import { DESKTOP_RIGHT_MENU_TILES } from "@/app/data/desktopLobbyMockData";
 import type { MenuDialogAction } from "@/app/types/menu";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface LobbyDesktopRightMenuGridProps {
   onMenuAction?: (action: MenuDialogAction) => void;
@@ -57,8 +58,10 @@ function RightMenuGlassCardContent({
 }
 
 export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMenuGridProps) {
+  const t = useT("nav");
+  const tHome = useT("home");
   return (
-    <div className="lobby-right-menu-stack flex w-full min-w-0 flex-col gap-2" aria-label="เมนูด่วน">
+    <div className="lobby-right-menu-stack flex w-full min-w-0 flex-col gap-2" aria-label={t("desktop.quickMenu")}>
       {DESKTOP_RIGHT_MENU_TILES.map((tile) => {
         const className = [
           "lobby-right-menu-card",
@@ -70,8 +73,8 @@ export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMen
         const isBg = Boolean("isBg" in tile && tile.isBg);
         const body = (
           <RightMenuGlassCardContent
-            title={tile.title}
-            subtitle={tile.subtitle}
+            title={tHome(tile.titleKey)}
+            subtitle={tHome(tile.subtitleKey)}
             visualSrc={tile.visualSrc}
             isBg={isBg}
             emphasis={false}
@@ -84,7 +87,7 @@ export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMen
               key={tile.id}
               type="button"
               className={className}
-              aria-label={tile.ariaLabel}
+              aria-label={tHome(tile.ariaLabelKey)}
               onClick={() => onMenuAction?.(tile.action!)}
             >
               {body}
@@ -94,7 +97,7 @@ export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMen
 
         if ("href" in tile && hrefToHubId(tile.href)) {
           return (
-            <HubNavLink key={tile.id} href={tile.href} className={className} title={tile.ariaLabel}>
+            <HubNavLink key={tile.id} href={tile.href} className={className} title={tHome(tile.ariaLabelKey)}>
               {body}
             </HubNavLink>
           );
@@ -102,7 +105,7 @@ export function LobbyDesktopRightMenuGrid({ onMenuAction }: LobbyDesktopRightMen
 
         if ("href" in tile) {
           return (
-            <Link key={tile.id} href={tile.href} className={className} title={tile.ariaLabel}>
+            <Link key={tile.id} href={tile.href} className={className} title={tHome(tile.ariaLabelKey)}>
               {body}
             </Link>
           );

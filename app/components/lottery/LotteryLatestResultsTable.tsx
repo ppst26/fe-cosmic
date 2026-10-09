@@ -5,6 +5,7 @@ import Link from "@/lib/i18n/navigation";
 import type { LotteryResultRow } from "@/app/types/lottery";
 import { LOTTERY_RESULT_ROW_ICON_SLUG } from "@/app/data/lotteryIconAssets";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
+import { useLotteryI18n } from "./useLotteryI18n";
 
 function MegaphoneMiniIcon() {
   return (
@@ -33,6 +34,9 @@ export function LotteryLatestResultsTable({
   results,
   resultsPageHref = "/lottery/results",
 }: LotteryLatestResultsTableProps) {
+  const { t, shortDate } = useLotteryI18n();
+  const top3Label = t("betTypes.threeTop");
+  const bottom2Label = t("betTypes.twoBottom");
   return (
     <section className="lottery-results-board w-full min-w-0" aria-labelledby="lottery-results-title">
       <div className="lottery-results-board__head mb-3 flex flex-wrap items-center justify-between gap-2">
@@ -42,42 +46,42 @@ export function LotteryLatestResultsTable({
             id="lottery-results-title"
             className="text-[18px] font-medium tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
           >
-            ผลหวยล่าสุด
+            {t("results.title")}
           </h3>
         </div>
         <Link
           href={resultsPageHref}
           className="lottery-results-board__more-link shrink-0 text-xs font-medium text-[var(--text-secondary)] sm:text-sm"
         >
-          หน้าผลหวย &gt;&gt;
+          {t("results.morePage")}
         </Link>
       </div>
 
-      <div className="lottery-results-board__table" role="table" aria-label="รายการผลหวยล่าสุด">
+      <div className="lottery-results-board__table" role="table" aria-label={t("results.tableAria")}>
         <div
           className="lottery-results-board__header grid grid-cols-[var(--lottery-results-board-cols)] items-center gap-x-2 px-[0.15rem] pb-[0.4rem]"
           role="row"
         >
           <span className="lottery-results-board__header-cell" role="columnheader">
-            ประเภทหวย
+            {t("results.colMarket")}
           </span>
           <span
             className="lottery-results-board__header-cell lottery-results-board__header-cell--prize text-center"
             role="columnheader"
           >
-            3 ตัวบน
+            {top3Label}
           </span>
           <span
             className="lottery-results-board__header-cell lottery-results-board__header-cell--prize text-center"
             role="columnheader"
           >
-            2 ตัวล่าง
+            {bottom2Label}
           </span>
           <span
             className="lottery-results-board__header-cell lottery-results-board__header-cell--date text-right"
             role="columnheader"
           >
-            งวด / วันที่
+            {t("results.colDate")}
           </span>
         </div>
 
@@ -87,7 +91,7 @@ export function LotteryLatestResultsTable({
         >
           {results.length === 0 ? (
             <li className="lottery-results-board__empty" role="row">
-              <span role="cell">ยังไม่มีผลหวย</span>
+              <span role="cell">{t("results.empty")}</span>
             </li>
           ) : (
             results.map((row) => (
@@ -103,24 +107,24 @@ export function LotteryLatestResultsTable({
                     fallbackLabel={row.flagLabel}
                     fallbackTone={row.flagTone}
                   />
-                  <span className="lottery-results-board__market-name truncate">{row.title}</span>
+                  <span className="lottery-results-board__market-name truncate">{t(row.titleKey)}</span>
                 </div>
 
                 <div
                   className="lottery-results-board__prize flex min-w-0 flex-col items-center justify-center gap-[0.2rem]"
                   role="cell"
-                  aria-label={`3 ตัวบน ${row.top3}`}
+                  aria-label={`${top3Label} ${row.top3}`}
                 >
-                  <span className="lottery-results-board__prize-label whitespace-nowrap">3 ตัวบน</span>
+                  <span className="lottery-results-board__prize-label whitespace-nowrap">{top3Label}</span>
                   <span className="lottery-results-board__prize-value tabular-nums">{row.top3}</span>
                 </div>
 
                 <div
                   className="lottery-results-board__prize flex min-w-0 flex-col items-center justify-center gap-[0.2rem]"
                   role="cell"
-                  aria-label={`2 ตัวล่าง ${row.bottom2}`}
+                  aria-label={`${bottom2Label} ${row.bottom2}`}
                 >
-                  <span className="lottery-results-board__prize-label whitespace-nowrap">2 ตัวล่าง</span>
+                  <span className="lottery-results-board__prize-label whitespace-nowrap">{bottom2Label}</span>
                   <span className="lottery-results-board__prize-value tabular-nums">
                     {row.bottom2}
                   </span>
@@ -128,7 +132,7 @@ export function LotteryLatestResultsTable({
 
                 <div className="lottery-results-board__date flex min-w-0 items-center justify-end" role="cell">
                   <span className="lottery-results-board__date-text truncate tabular-nums">
-                    {row.dateLabel}
+                    {row.drawDate ? shortDate(row.drawDate, false) : t("results.today")}
                   </span>
                 </div>
               </li>

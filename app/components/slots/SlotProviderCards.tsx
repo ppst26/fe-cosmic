@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Link from "@/lib/i18n/navigation";
 import Image from "next/image";
 import { FlameHotIcon } from "../ui/Icons";
@@ -330,6 +331,7 @@ export function SlotProviderCards({
   hideFeatured = false,
   onProviderSelect,
 }: SlotProviderCardsProps) {
+  const t = useT("games");
   const cardSurfaceClass =
     "group relative flex w-full transition-all duration-[var(--motion-fast)] hover:brightness-110 active:scale-[0.99]";
   const featuredList = !hideFeatured ? featuredProviders.slice(0, 2) : [];
@@ -339,9 +341,9 @@ export function SlotProviderCards({
     <div className="space-y-4">
       {!hideTitleRow ? (
         <div className="flex items-baseline gap-2 pt-1">
-          <h2 className="text-lg font-medium text-white sm:text-xl">สล็อต</h2>
+          <h2 className="text-lg font-medium text-white sm:text-xl">{t("slots.title")}</h2>
           <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
-            ({totalCount} ค่ายเกม)
+            {t("slots.providerCount", { count: totalCount })}
           </span>
         </div>
       ) : null}
@@ -536,7 +538,7 @@ export function SlotProviderCards({
               <button
                 key={item.id}
                 type="button"
-                aria-label={`${item.name} — สล็อต`}
+                aria-label={t("slots.providerAriaLabel", { name: item.name })}
                 onClick={() =>
                   onProviderSelect({
                     id: providerRouteId(item),
@@ -556,7 +558,7 @@ export function SlotProviderCards({
             <Link
               key={item.id}
               href={href}
-              aria-label={`${item.name} — สล็อต`}
+              aria-label={t("slots.providerAriaLabel", { name: item.name })}
               className={gridClasses}
               style={gridEnterStyle}
             >

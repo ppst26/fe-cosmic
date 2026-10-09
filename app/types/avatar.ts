@@ -2,5 +2,6 @@
 
 export interface AvatarPreset {
   id: string;
-  label: string;
+  /** หมายเลขรูป — ชื่อแสดงผลแปลตอน render: useT("profile")("avatar.presetName", { n }) */
+  number: number;
 }

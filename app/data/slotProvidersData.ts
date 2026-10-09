@@ -11,37 +11,37 @@ import type { SlotFilterTabItem, FeaturedSlotProviderItem } from "@/app/types/pr
 export const SLOT_FILTER_TABS: SlotFilterTabItem[] = [
   {
     id: "all-in-one",
-    label: "ศูนย์รวม",
+    labelKey: "filters.allInOne",
     iconId: "gift",
   },
   {
     id: "all-providers",
-    label: "ค่ายเกมทั้งหมด",
+    labelKey: "filters.allGameProviders",
     iconId: "gamepad",
   },
   {
     id: "drops-and-wins",
-    label: "Drops & Wins",
+    labelKey: "filters.dropsAndWins",
     iconId: "water-drop",
   },
   {
     id: "chicken",
-    label: "ไก่",
+    labelKey: "filters.chicken",
     iconId: "chicken",
   },
   {
     id: "buy-feature",
-    label: "ซื้อฟรีสปิน",
+    labelKey: "filters.buyFeature",
     iconId: "flame",
   },
   {
     id: "jackpot",
-    label: "แจ็คพอต",
+    labelKey: "filters.jackpot",
     iconId: "trophy",
   },
   {
     id: "megaways",
-    label: "เมกะเวย์",
+    labelKey: "filters.megaways",
     iconId: "sparkle",
   },
 ];

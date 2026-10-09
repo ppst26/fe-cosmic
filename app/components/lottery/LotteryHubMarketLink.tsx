@@ -8,6 +8,7 @@ import { getLotteryIconSrc } from "@/app/data/lotteryIconAssets";
 import { cn } from "@/lib/utils";
 import { LotteryCountdown } from "./LotteryFlagOrb";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
+import { useLotteryI18n } from "./useLotteryI18n";
 
 type LotteryHubMarketLinkProps = {
   href: string;
@@ -33,9 +34,10 @@ export function LotteryHubMarketLink({
   fallbackTone,
   variant,
   countdownLabel,
-  closedLabel = "ปิดรับแทง",
+  closedLabel,
   isClosed = false,
 }: LotteryHubMarketLinkProps) {
+  const { t } = useLotteryI18n();
   const iconSrc = getLotteryIconSrc(marketSlug);
   const isFeature = variant === "feature";
 
@@ -81,7 +83,7 @@ export function LotteryHubMarketLink({
           {title}
         </span>
         {isClosed ? (
-          <span className="lottery-type-card__closed">{closedLabel}</span>
+          <span className="lottery-type-card__closed">{closedLabel ?? t("status.closed")}</span>
         ) : countdownLabel ? (
           <LotteryCountdown label={countdownLabel} />
         ) : null}

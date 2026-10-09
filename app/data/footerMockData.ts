@@ -1,11 +1,13 @@
 import type {
+  FooterBrandLink,
   FooterNavLink,
   FooterLinkColumn,
   FooterSocialIcon,
   FooterPaymentBank,
 } from "@/app/types/footer";
+import type { MessageKey } from "@/lib/i18n/messages";
 
-/** ข้อมูล mock ส่วนท้ายเว็บ (CosmicFooter) */
+/** ข้อมูล mock ส่วนท้ายเว็บ (CosmicFooter) — ป้ายเก็บเป็น key ของ dictionary nav */
 
 export const FOOTER_PARTNER_NAMES: readonly string[] = [
   "EVOPLAY",
@@ -21,79 +23,79 @@ export const FOOTER_PARTNER_NAMES: readonly string[] = [
 /** คอลัมน์ลิงก์ footer desktop — href จริงจาก route ในแอป · ที่ไม่มีใช้ /support */
 export const FOOTER_DESKTOP_COLUMNS: FooterLinkColumn[] = [
   {
-    title: "แพลตฟอร์ม",
+    titleKey: "footer.columns.platform",
     links: [
-      { label: "โปรไฟล์", href: "/profile" },
-      { label: "ธุรกรรม", href: "/transactions" },
-      { label: "โพยหวย", href: "/lottery/slips" },
-      { label: "ตั้งค่าบัญชี", href: "/profile/account" },
-      { label: "เช็คอินรายวัน", href: "/missions/check-in" },
-      { label: "ร้านอัญมณี", href: "/gems-store" },
-      { label: "ลีดเดอร์บอร์ด", href: "/support" },
-      { label: "ทายผล", href: "/support" },
+      { labelKey: "footer.link.profile", href: "/profile" },
+      { labelKey: "footer.link.transactions", href: "/transactions" },
+      { labelKey: "footer.link.lotterySlips", href: "/lottery/slips" },
+      { labelKey: "footer.link.accountSettings", href: "/profile/account" },
+      { labelKey: "footer.link.dailyCheckIn", href: "/missions/check-in" },
+      { labelKey: "footer.link.gemStore", href: "/gems-store" },
+      { labelKey: "footer.link.leaderboard", href: "/support" },
+      { labelKey: "footer.link.predictions", href: "/support" },
     ],
   },
   {
-    title: "กีฬา",
+    titleKey: "footer.columns.sports",
     links: [
-      { label: "กีฬาสด", href: "/sport" },
-      { label: "กีฬา", href: "/sport" },
-      { label: "อีสปอร์ต", href: "/sport" },
-      { label: "ทัวร์นาเมนต์", href: "/event" },
-      { label: "ฟุตบอล", href: "/sport" },
-      { label: "บาสเกตบอล", href: "/sport" },
-      { label: "เทนนิส", href: "/support" },
-      { label: "คริกเก็ต", href: "/support" },
+      { labelKey: "footer.link.liveSports", href: "/sport" },
+      { labelKey: "footer.link.sports", href: "/sport" },
+      { labelKey: "footer.link.esports", href: "/sport" },
+      { labelKey: "footer.link.tournaments", href: "/event" },
+      { labelKey: "footer.link.football", href: "/sport" },
+      { labelKey: "footer.link.basketball", href: "/sport" },
+      { labelKey: "footer.link.tennis", href: "/support" },
+      { labelKey: "footer.link.cricket", href: "/support" },
     ],
   },
   {
-    title: "คาสิโน",
+    titleKey: "footer.columns.casino",
     links: [
-      { label: "ล็อบบี้", href: "/casino" },
-      { label: "เกมยอดฮิต", href: "/" },
-      { label: "คาสิโนสด", href: "/casino" },
-      { label: "เกมใหม่", href: "/slots" },
-      { label: "เกมแครช", href: "/support" },
-      { label: "เกมโต๊ะ", href: "/cards" },
-      { label: "สล็อต", href: "/slots" },
-      { label: "ซื้อโบนัส", href: "/support" },
-      { label: "รูเล็ต", href: "/casino" },
-      { label: "ค่ายเกม", href: "/slots" },
+      { labelKey: "footer.link.lobby", href: "/casino" },
+      { labelKey: "footer.link.popularGames", href: "/" },
+      { labelKey: "footer.link.liveCasino", href: "/casino" },
+      { labelKey: "footer.link.newGames", href: "/slots" },
+      { labelKey: "footer.link.crashGames", href: "/support" },
+      { labelKey: "footer.link.tableGames", href: "/cards" },
+      { labelKey: "footer.link.slots", href: "/slots" },
+      { labelKey: "footer.link.bonusBuy", href: "/support" },
+      { labelKey: "footer.link.roulette", href: "/casino" },
+      { labelKey: "footer.link.providers", href: "/slots" },
     ],
   },
   {
-    title: "โปรโมชัน",
+    titleKey: "footer.columns.promotions",
     links: [
-      { label: "โปรโมชันทั้งหมด", href: "/promotions" },
-      { label: "โบนัสต้อนรับกีฬา", href: "/promotions" },
-      { label: "โบนัสต้อนรับคาสิโน", href: "/promotions" },
-      { label: "คืนยอดรายสัปดาห์", href: "/cashback" },
-      { label: "คลับกีฬา", href: "/sport" },
-      { label: "คลับ VIP", href: "/profile" },
-      { label: "ชวนเพื่อน", href: "/referral" },
+      { labelKey: "footer.link.allPromotions", href: "/promotions" },
+      { labelKey: "footer.link.sportsWelcome", href: "/promotions" },
+      { labelKey: "footer.link.casinoWelcome", href: "/promotions" },
+      { labelKey: "footer.link.weeklyCashback", href: "/cashback" },
+      { labelKey: "footer.link.sportsClub", href: "/sport" },
+      { labelKey: "footer.link.vipClub", href: "/profile" },
+      { labelKey: "footer.link.referFriends", href: "/referral" },
     ],
   },
   {
-    title: "ข้อมูล",
+    titleKey: "footer.columns.info",
     links: [
-      { label: "เกี่ยวกับเรา", href: "/support" },
-      { label: "กิจกรรม", href: "/event" },
-      { label: "ทัวร์นาเมนต์", href: "/activities" },
-      { label: "ร่วมงานกับเรา", href: "/support" },
-      { label: "ติดต่อเรา", href: "/support" },
-      { label: "แบรนด์", href: "/support" },
-      { label: "เล่นอย่างมีสติ", href: "/support" },
+      { labelKey: "footer.link.aboutUs", href: "/support" },
+      { labelKey: "footer.link.events", href: "/event" },
+      { labelKey: "footer.link.tournaments", href: "/activities" },
+      { labelKey: "footer.link.careers", href: "/support" },
+      { labelKey: "footer.link.contactUs", href: "/support" },
+      { labelKey: "footer.link.brand", href: "/support" },
+      { labelKey: "footer.link.responsibleGaming", href: "/support" },
     ],
   },
   {
-    title: "บริการ",
+    titleKey: "footer.columns.services",
     links: [
-      { label: "ศูนย์ช่วยเหลือ", href: "/support" },
-      { label: "คู่มือ", href: "/support" },
-      { label: "วงล้อนำโชค", href: "/wheel" },
-      { label: "หวย", href: "/lottery" },
-      { label: "ยิงปลา", href: "/fishing" },
-      { label: "คืนยอดเสีย", href: "/loss-rebate" },
+      { labelKey: "footer.link.helpCenter", href: "/support" },
+      { labelKey: "footer.link.guide", href: "/support" },
+      { labelKey: "footer.link.luckyWheel", href: "/wheel" },
+      { labelKey: "footer.link.lottery", href: "/lottery" },
+      { labelKey: "footer.link.fishing", href: "/fishing" },
+      { labelKey: "footer.link.lossRebate", href: "/loss-rebate" },
     ],
   },
 ];
@@ -120,37 +122,36 @@ export const FOOTER_MOBILE_SOCIAL: FooterSocialIcon[] = [
   { label: "TikTok", href: "/support", icon: "tiktok" },
 ];
 
-export const FOOTER_TRUST_BADGES: readonly { label: string; name: string }[] = [
-  { label: "ตรวจสอบโดย", name: "CERTIK" },
-  { label: "ตรวจสอบโดย", name: "PESSIMISTIC" },
-  { label: "อนุมัติโดย", name: "ECHELON" },
+export const FOOTER_TRUST_BADGES: readonly { labelKey: MessageKey<"nav">; name: string }[] = [
+  { labelKey: "footer.auditedBy", name: "CERTIK" },
+  { labelKey: "footer.auditedBy", name: "PESSIMISTIC" },
+  { labelKey: "footer.approvedBy", name: "ECHELON" },
 ];
 
-export const FOOTER_EXTERNAL_MOCK_LINKS: FooterNavLink[] = [
+export const FOOTER_EXTERNAL_MOCK_LINKS: FooterBrandLink[] = [
   { label: "CoinMarketCap", href: "/support" },
   { label: "CoinGecko", href: "/support" },
   { label: "DEXTools", href: "/support" },
 ];
 
-export const FOOTER_DISCLAIMER =
-  "cosmicbet ให้บริการความบันเทิงออนไลน์สำหรับผู้เล่นที่มีอายุครบตามกฎหมายในพื้นที่ของท่าน โปรดเล่นอย่างมีสติและรับผิดชอบต่อการตัดสินใจของตนเอง ข้อมูลบริษัทและใบอนุญาตเป็นตัวอย่างเพื่อการแสดงผล (mock) — ใช้เพื่อทดสอบ UI เท่านั้น";
+export const FOOTER_DISCLAIMER_KEY: MessageKey<"nav"> = "footer.disclaimer";
 
 export const FOOTER_GAME_LINKS: FooterNavLink[] = [
-  { label: "คาสิโน", href: "/casino" },
-  { label: "สล็อต", href: "/slots" },
-  { label: "ยิงปลา", href: "/fishing" },
-  { label: "กีฬา", href: "/sport" },
-  { label: "หวย", href: "/lottery" },
+  { labelKey: "footer.link.casino", href: "/casino" },
+  { labelKey: "footer.link.slots", href: "/slots" },
+  { labelKey: "footer.link.fishing", href: "/fishing" },
+  { labelKey: "footer.link.sports", href: "/sport" },
+  { labelKey: "footer.link.lottery", href: "/lottery" },
 ];
 
 export const FOOTER_INFO_LINKS: FooterNavLink[] = [
-  { label: "โปรโมชั่น", href: "/promotions" },
-  { label: "กิจกรรม", href: "/event" },
-  { label: "ระดับ VIP", href: "/profile" },
-  { label: "ชวนเพื่อน", href: "/referral" },
+  { labelKey: "footer.link.promotions", href: "/promotions" },
+  { labelKey: "footer.link.events", href: "/event" },
+  { labelKey: "footer.link.vipLevel", href: "/profile" },
+  { labelKey: "footer.link.referFriends", href: "/referral" },
 ];
 
-export const FOOTER_SOCIAL_LINKS: FooterNavLink[] = [
+export const FOOTER_SOCIAL_LINKS: FooterBrandLink[] = [
   { label: "LINE", href: "/support" },
   { label: "Telegram", href: "/support" },
 ];
@@ -177,12 +178,12 @@ export const FOOTER_PAYMENT_BANKS: readonly FooterPaymentBank[] = [
 export const FOOTER_PAYMENT_LABELS: readonly string[] = ["PromptPay", "TrueMoney", "ธนาคาร"];
 
 export const FOOTER_LEGAL_LINKS: FooterNavLink[] = [
-  { label: "นโยบายความเป็นส่วนตัว", href: "/support" },
-  { label: "ข้อกำหนดและเงื่อนไข", href: "/support" },
-  { label: "แชร์ความคิดเห็น", href: "/support" },
-  { label: "แผนผังเว็บ", href: "/support" },
+  { labelKey: "footer.link.privacy", href: "/support" },
+  { labelKey: "footer.link.terms", href: "/support" },
+  { labelKey: "footer.link.feedback", href: "/support" },
+  { labelKey: "footer.link.sitemap", href: "/support" },
 ];
 
 export const FOOTER_COPYRIGHT = "Copyright © cosmicbet, since 2021";
 
-export const FOOTER_TAGLINE = "รวมเกมและกิจกรรมไว้ในที่เดียว";
+export const FOOTER_TAGLINE_KEY: MessageKey<"nav"> = "footer.tagline";

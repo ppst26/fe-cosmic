@@ -10,14 +10,17 @@ import {
   COSMIC_BTN_GLASS_PILL_SM,
   COSMIC_BTN_PRIMARY,
 } from "../ui/cosmicButtonClasses";
-import { formatActivityCredits, formatActivityNumber } from "@/lib/format";
+import { formatActivityNumber } from "@/lib/format";
 import { valueClass } from "@/lib/semanticValue";
 import type {
   ActivityHubCategoryTab,
+  ActivityHubCategoryTabItem,
   ActivityHubItem,
   ActivityThumbTone,
   ActivityTierRow,
 } from "@/app/types/activities";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
 
 /**
  * รูปย่อกิจกรรม — รูปภาพจริง (ถ้ามี) หรือ gradient mock (ใช้ใน list ซ้าย / การ์ดมือถือ)
@@ -108,14 +111,15 @@ export function ActivityCategoryTabs({
 }: {
   activeId: ActivityHubCategoryTab;
   onSelect: (id: ActivityHubCategoryTab) => void;
-  tabs?: { id: ActivityHubCategoryTab; label: string }[];
+  tabs?: ActivityHubCategoryTabItem[];
 }) {
+  const t = useT("rewards");
   return (
     <CosmicLineTabs
-      tabs={tabs}
+      tabs={tabs.map((tab) => ({ id: tab.id, label: t(tab.labelKey) }))}
       activeId={activeId}
       onSelect={onSelect}
-      ariaLabel="หมวดกิจกรรม"
+      ariaLabel={t("activities.categoryTabsAria")}
       scrollable
       className="activities-hub-cat-tabs"
     />
@@ -129,6 +133,8 @@ export function ActivityTurnProgressCard({
   progress: NonNullable<ActivityHubItem["progress"]>;
   flat?: boolean;
 }) {
+  const t = useT("rewards");
+  const fmt = useFormat();
   const pct =
     progress.bonusCap > 0
       ? Math.min(100, (progress.bonusEarned / progress.bonusCap) * 100)
@@ -143,19 +149,19 @@ export function ActivityTurnProgressCard({
       }`}
     >
       <h3 className="text-center text-sm font-medium text-[var(--text-primary)] sm:text-base">
-        ยอดเทิร์นของคุณ
+        {t("activities.progress.title")}
       </h3>
       <div className="mt-3 grid gap-3 sm:grid-cols-2">
         <div className="text-center sm:text-left">
-          <p className="text-xs text-[var(--text-secondary)] sm:text-[13px]">ยอดเทิร์นปัจจุบัน</p>
+          <p className="text-xs text-[var(--text-secondary)] sm:text-[13px]">{t("activities.progress.current")}</p>
           <p className={valueClass("emphasis", "mt-0.5 text-sm")}>
-            {formatActivityCredits(progress.currentTurn)}
+            {fmt.credits(progress.currentTurn)}
           </p>
         </div>
         <div className="text-center sm:text-right">
-          <p className="text-xs text-[var(--text-secondary)] sm:text-[13px]">เป้าหมายลำดับที่ 1</p>
+          <p className="text-xs text-[var(--text-secondary)] sm:text-[13px]">{t("activities.progress.rank1Target")}</p>
           <p className={valueClass("emphasis", "mt-0.5 text-sm")}>
-            {formatActivityCredits(progress.rank1Target)}
+            {fmt.credits(progress.rank1Target)}
           </p>
         </div>
       </div>
@@ -166,7 +172,10 @@ export function ActivityTurnProgressCard({
             <div className="activity-hub-progress__fill h-full rounded-full" style={{ width: `${pct}%` }} />
           </div>
           <p className={valueClass("neutral", "mt-1 text-center text-xs")}>
-            จำนวนรางวัล {formatActivityNumber(progress.bonusEarned)} / {formatActivityNumber(progress.bonusCap)}
+            {t("activities.progress.rewardCount", {
+              earned: formatActivityNumber(progress.bonusEarned),
+              cap: formatActivityNumber(progress.bonusCap),
+            })}
           </p>
         </div>
       </div>
@@ -175,6 +184,7 @@ export function ActivityTurnProgressCard({
 }
 
 export function ActivityTierTable({ rows, flat = false }: { rows: ActivityTierRow[]; flat?: boolean }) {
+  const t = useT("rewards");
   return (
     <div
       className={`activity-hub-tier-table-wrap overflow-x-auto ${
@@ -184,10 +194,10 @@ export function ActivityTierTable({ rows, flat = false }: { rows: ActivityTierRo
       <table className="activity-hub-tier-table w-full min-w-[520px] border-collapse text-left text-xs sm:text-sm">
         <thead>
           <tr className="text-[11.5px] font-medium uppercase tracking-wider text-[var(--text-secondary)] sm:text-xs">
-            <th scope="col" className="px-2 py-2 sm:px-3">ลำดับ</th>
-            <th scope="col" className="px-2 py-2 sm:px-3">เทิร์น</th>
-            <th scope="col" className="px-2 py-2 text-center sm:px-3">โบนัส</th>
-            <th scope="col" className="px-2 py-2 text-right sm:px-3">รับรางวัล</th>
+            <th scope="col" className="px-2 py-2 sm:px-3">{t("activities.tiers.rank")}</th>
+            <th scope="col" className="px-2 py-2 sm:px-3">{t("activities.tiers.turn")}</th>
+            <th scope="col" className="px-2 py-2 text-center sm:px-3">{t("activities.tiers.bonus")}</th>
+            <th scope="col" className="px-2 py-2 text-right sm:px-3">{t("activities.tiers.claim")}</th>
           </tr>
         </thead>
         <tbody>
@@ -220,6 +230,7 @@ function ActivityClaimButton({
   state: ActivityTierRow["claimState"];
   flat?: boolean;
 }) {
+  const t = useT("rewards");
   const base =
     "activity-hub-claim-btn inline-flex min-w-[5.5rem] justify-center px-2 py-1.5 text-xs font-medium leading-tight sm:text-[13px]";
 
@@ -233,7 +244,7 @@ function ActivityClaimButton({
             : `${base} rounded-[var(--radius-control)] ${COSMIC_BTN_PRIMARY}`
         }
       >
-        รับรางวัล
+        {t("actions.claim")}
       </button>
     );
   }
@@ -246,12 +257,12 @@ function ActivityClaimButton({
             : `${base} glass-card--soft rounded-[var(--radius-control)] ${valueClass("success")}`
         }
       >
-        รับแล้ว
+        {t("status.claimed")}
       </span>
     );
   }
   return (
-    <span className={`${base} text-[var(--text-muted)] opacity-90`}>ไม่ผ่านเงื่อนไข</span>
+    <span className={`${base} text-[var(--text-muted)] opacity-90`}>{t("activities.tiers.notEligible")}</span>
   );
 }
 
@@ -294,6 +305,7 @@ export function ActivityRulesSection({
   className?: string;
   flat?: boolean;
 }) {
+  const t = useT("rewards");
   if (!rules || rules.length === 0) return null;
 
   return (
@@ -303,7 +315,7 @@ export function ActivityRulesSection({
           ? `activity-hub-rules-section--flat pt-2 ${className}`
           : `activity-hub-rules-card rounded-[var(--radius-panel)] p-4 sm:p-5 ${className}`
       }
-      aria-label="กติกาและเงื่อนไขกิจกรรม"
+      aria-label={t("activities.rulesTitle")}
     >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)]/30 pb-3">
         <div className="flex items-center gap-2">
@@ -325,7 +337,7 @@ export function ActivityRulesSection({
             </svg>
           </span>
           <h3 className="text-sm font-medium tracking-tight text-[var(--text-primary)] sm:text-base">
-            กติกาและเงื่อนไขกิจกรรม
+            {t("activities.rulesTitle")}
           </h3>
         </div>
         {period ? (

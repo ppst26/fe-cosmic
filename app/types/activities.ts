@@ -1,6 +1,14 @@
+import type { MessageKey } from "@/lib/i18n/messages";
+
 /* ── จาก app/data/activitiesHubMockData.ts ── */
 
 export type ActivityHubCategoryTab = "slots" | "casino";
+
+/** แท็บหมวดกิจกรรม — labelKey แปลตอน render (namespace rewards) */
+export interface ActivityHubCategoryTabItem {
+  id: ActivityHubCategoryTab;
+  labelKey: MessageKey<"rewards">;
+}
 
 export type ActivityTierClaimState = "locked" | "claimable" | "claimed";
 

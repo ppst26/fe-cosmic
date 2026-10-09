@@ -8,6 +8,9 @@ import { CopyIcon } from "../ui/Icons";
 import { UserAvatar } from "./UserAvatar";
 import { ProfileAvatarPicker } from "./ProfileAvatarPicker";
 import { cn } from "@/lib/utils";
+import { formatJoinedDate } from "@/lib/auth/profileFormat";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useLocale } from "@/lib/i18n/navigation";
 
 /**
  * แสดงเบอร์โทรแบบตัวเลขต่อกัน (ไม่ mask) ในหัว sheet
@@ -32,13 +35,17 @@ export function ProfileHubHeader({
   const isSheet = variant === "sheet";
   const [pickerOpen, setPickerOpen] = useState(false);
   const { showToast } = useToast();
+  const t = useT("profile");
+  const locale = useLocale();
+  /** th ใช้ joinedLabel จาก server ตามเดิม · ภาษาอื่นจัดรูปวันที่ใหม่ตามภาษา */
+  const joinedLabel = locale === "th" ? profile.joinedLabel : formatJoinedDate(profile.createdAt, locale);
 
   const handleCopyId = async () => {
     try {
       await navigator.clipboard.writeText(profile.memberId);
-      showToast("คัดลอกไอดีผู้เล่นแล้ว", "success", 2500);
+      showToast(t("hub.playerIdCopied"), "success", 2500);
     } catch {
-      showToast("ไม่สามารถคัดลอกไอดีได้", "error");
+      showToast(t("hub.copyPlayerIdFailed"), "error");
     }
   };
 
@@ -50,7 +57,7 @@ export function ProfileHubHeader({
         "group relative shrink-0 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)]",
         isSheet ? "rounded-xl" : "rounded-full",
       )}
-      aria-label="เปลี่ยนรูปโปรไฟล์"
+      aria-label={t("avatar.change")}
     >
       <UserAvatar
         profile={profile}
@@ -112,20 +119,20 @@ export function ProfileHubHeader({
 
         <div className="min-w-0 flex-1">
           <p className="profile-hub-header__name truncate text-sm font-medium text-[var(--text-primary)]">
-            สวัสดี {profile.displayName}
+            {t("hub.greeting", { name: profile.displayName })}
           </p>
           <p className="profile-hub-header__meta mt-0.5 text-xs leading-normal text-[var(--text-secondary)]">
-            เข้าร่วมเมื่อ: {profile.joinedLabel}
+            {t("hub.joinedAt", { date: joinedLabel })}
           </p>
           <div className="profile-hub-header__id mt-1 flex items-center gap-1.5">
             <span className="truncate text-xs text-[var(--text-secondary)]">
-              ID ผู้เล่น: {profile.memberId}
+              {t("hub.playerId", { id: profile.memberId })}
             </span>
             <button
               type="button"
               onClick={() => void handleCopyId()}
               className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded text-[var(--icon-default)] hover:bg-[var(--surface-hover)] hover:text-[var(--icon-active)]"
-              aria-label="คัดลอกไอดีผู้เล่น"
+              aria-label={t("hub.copyPlayerId")}
             >
               <CopyIcon className="h-3 w-3" />
             </button>

@@ -9,6 +9,27 @@ import type {
 import { cn } from "@/lib/utils";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { COSMIC_SEGMENT_PROMO_CTA } from "../ui/cosmicButtonClasses";
+import { useT } from "@/lib/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
+
+/** ป้ายแท็บหมวดตาม id (ฟิลเตอร์เป็น UI) — id ที่ไม่รู้จักใช้ label จาก catalog */
+const CATEGORY_LABEL_KEYS: Record<
+  PromoHubCategoryFilterId | PromoHubMobileCategoryFilterId,
+  MessageKey<"promotions">
+> = {
+  all: "categories.all",
+  slots: "categories.slots",
+  casino: "categories.casino",
+  sport: "categories.sport",
+  "new-member": "categories.newMember",
+  daily: "categories.daily",
+  privilege: "categories.privilege",
+};
+
+function resolveCategoryLabel(t: ReturnType<typeof useT<"promotions">>, tab: PromotionsCategoryTab) {
+  const key = (CATEGORY_LABEL_KEYS as Record<string, MessageKey<"promotions"> | undefined>)[tab.id];
+  return key ? t(key) : tab.label;
+}
 
 /**
  * แถบฟิลเตอร์หมวดโปรโมชั่น — ใช้ในหน้า /promotions และ PromotionsDesktopHubLayout
@@ -39,6 +60,9 @@ type PromotionsCategoryTabsProps =
  * แถบฟิลเตอร์หมวดโปรโมชั่น — ใช้ในหน้า /promotions และ PromotionsDesktopHubLayout
  */
 export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
+  const t = useT("promotions");
+  const categoryLabel = (tab: PromotionsCategoryTab) => resolveCategoryLabel(t, tab);
+
   if (props.variant === "mobile") {
     const { className, mobileActiveId, onMobileSelect, mobileCategoryTabs } = props;
     return (
@@ -49,7 +73,7 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
             "promo-hub-category-tabs promo-hub-category-tabs--mobile inline-flex w-fit max-w-full gap-0.5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden",
           )}
           role="tablist"
-          aria-label="กรองโปรโมชั่นตามหมวด"
+          aria-label={t("filterAria")}
         >
           {mobileCategoryTabs.map((tab) => {
             const selected = mobileActiveId === tab.id;
@@ -65,7 +89,7 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
                   selected && "is-active",
                 )}
               >
-                {tab.label}
+                {categoryLabel(tab)}
               </button>
             );
           })}
@@ -84,10 +108,10 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
         className={["promotions-desktop-hub__category-track promo-hub-category-tabs--flat", className]
           .filter(Boolean)
           .join(" ")}
-        tabs={tabs.map((tab) => ({ id: tab.id, label: tab.label }))}
+        tabs={tabs.map((tab) => ({ id: tab.id, label: categoryLabel(tab) }))}
         activeId={activeId}
         onSelect={onSelect}
-        ariaLabel="กรองโปรโมชั่นตามหมวด"
+        ariaLabel={t("filterAria")}
         scrollable
       />
     );
@@ -101,7 +125,7 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
         className,
       )}
       role="tablist"
-      aria-label="กรองโปรโมชั่นตามหมวด"
+      aria-label={t("filterAria")}
     >
       {tabs.map((tab) => {
         const selected = activeId === tab.id;
@@ -117,7 +141,7 @@ export function PromotionsCategoryTabs(props: PromotionsCategoryTabsProps) {
               selected && "is-active",
             )}
           >
-            {tab.label}
+            {categoryLabel(tab)}
           </button>
         );
       })}

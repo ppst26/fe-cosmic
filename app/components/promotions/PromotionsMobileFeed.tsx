@@ -11,6 +11,7 @@ import type {
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
 import { usePromotionsCatalog } from "./PromotionsCatalogProvider";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface PromotionsMobileFeedProps {
   onOpenDetail: (id: PromotionDetailId) => void;
@@ -20,6 +21,7 @@ interface PromotionsMobileFeedProps {
  * หน้าโปรโมชั่นมือถือ — แท็บหมวด + รายการแนวตั้ง (รูป · ชื่อ · หมดเขต · อ่านเงื่อนไข)
  */
 export function PromotionsMobileFeed({ onOpenDetail }: PromotionsMobileFeedProps) {
+  const t = useT("promotions");
   const { catalog } = usePromotionsCatalog();
   const [categoryFilter, setCategoryFilter] = useState<PromoHubMobileCategoryFilterId>("all");
 
@@ -47,7 +49,7 @@ export function PromotionsMobileFeed({ onOpenDetail }: PromotionsMobileFeedProps
 
       {items.length === 0 ? (
         <p className="py-10 text-center text-sm text-[var(--text-secondary)]">
-          ยังไม่มีโปรโมชั่นในหมวดนี้
+          {t("empty.category")}
         </p>
       ) : (
         <ul className="m-0 flex list-none flex-col gap-4 p-0 pt-1">
@@ -69,6 +71,7 @@ function PromotionsMobileListCard({
   item: PromoHubMobileListItem;
   onOpenDetail: (id: PromotionDetailId) => void;
 }) {
+  const t = useT("promotions");
   return (
     <button
       type="button"
@@ -80,7 +83,7 @@ function PromotionsMobileListCard({
         "active:scale-[0.995] active:opacity-95",
       )}
       onClick={() => onOpenDetail(item.detailId)}
-      aria-label={`${item.title} — อ่านเงื่อนไข`}
+      aria-label={t("mobile.readTermsAria", { title: item.title })}
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--surface-hover)]">
         <Image
@@ -99,13 +102,13 @@ function PromotionsMobileListCard({
 
         <div className="mt-2.5 flex items-center justify-between gap-3 border-t border-[var(--border-subtle)]/50 pt-2.5">
           <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
-            หมดเขต {item.expiresLabel}
+            {t("mobile.expires", { date: item.expiresLabel })}
           </span>
           <span
             className="shrink-0 text-xs font-medium text-[var(--accent-primary)] sm:text-sm"
             aria-hidden="true"
           >
-            อ่านเงื่อนไข
+            {t("mobile.readTerms")}
           </span>
         </div>
       </div>

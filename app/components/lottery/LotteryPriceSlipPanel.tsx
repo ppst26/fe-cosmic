@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import { formatLotteryDigitsDisplay } from "./lotteryUtils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 export interface LotteryPriceSlipEntry {
   id: string;
@@ -41,6 +42,7 @@ export function LotteryPriceSlipPanel({
   onAmountChange,
   onRemove,
 }: LotteryPriceSlipPanelProps) {
+  const t = useT("lottery");
   const totalCount = groups.reduce((sum, group) => sum + group.entries.length, 0);
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
@@ -51,14 +53,14 @@ export function LotteryPriceSlipPanel({
 
   return (
     <div className="lottery-price-slip flex flex-col gap-2 min-w-0">
-      <div className="lottery-price-slip__head m-0">{totalCount} รายการ</div>
+      <div className="lottery-price-slip__head m-0">{t("slip.itemCount", { count: totalCount })}</div>
 
       <div className="lottery-price-slip__list flex flex-col gap-2">
         {groups.map((group) => (
           <section key={group.key} className="lottery-price-slip__group" aria-label={group.label}>
             <div className="lottery-price-slip__group-head flex items-center justify-between px-2 py-[0.35rem]">
               <span>{group.label}</span>
-              <span>{group.entries.length} รายการ</span>
+              <span>{t("slip.itemCount", { count: group.entries.length })}</span>
             </div>
             <ul className="lottery-price-slip__rows flex flex-col gap-1 m-0 p-0">
               {group.entries.map((entry) => {
@@ -81,7 +83,7 @@ export function LotteryPriceSlipPanel({
                         focusAmount(entry.id);
                       }}
                     >
-                      ใส่ราคา
+                      {t("slip.enterPrice")}
                     </button>
                     <span className="lottery-price-row__rate shrink-0">x{entry.payoutRate}</span>
                     <span className="thai-lotto-amount thai-lotto-amount--sm lottery-price-row__amount inline-flex items-center gap-1 min-h-9 flex-[0_0_2.75rem] min-w-0 px-[0.35rem]">
@@ -92,7 +94,7 @@ export function LotteryPriceSlipPanel({
                         id={inputId}
                         inputMode="numeric"
                         value={entry.amount || ""}
-                        aria-label={`ราคา ${group.label} ${entry.number}`}
+                        aria-label={t("slip.priceAria", { label: group.label, number: entry.number })}
                         onFocus={() => onSelectEntry(entry.id)}
                         onClick={(event) => event.stopPropagation()}
                         onChange={(event) => onAmountChange(entry.id, parseAmount(event.target.value))}
@@ -106,7 +108,7 @@ export function LotteryPriceSlipPanel({
                         event.stopPropagation();
                         onRemove(entry.id);
                       }}
-                      aria-label={`ลบ ${group.label} ${entry.number}`}
+                      aria-label={t("slip.removeAria", { label: group.label, number: entry.number })}
                     >
                       <TrashIcon />
                     </button>

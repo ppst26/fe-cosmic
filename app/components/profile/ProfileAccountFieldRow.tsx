@@ -4,6 +4,7 @@ import React from "react";
 import { ChevronRightIcon, CopyIcon } from "../ui/Icons";
 import { cn } from "@/lib/utils";
 import { valueClass, type ValueRole } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 type ProfileAccountFieldRowProps = {
   label: string;
@@ -26,10 +27,11 @@ export function ProfileAccountFieldRow({
   valueRole,
   className,
   onCopy,
-  copyLabel = "คัดลอก",
+  copyLabel,
   onEdit,
-  editLabel = "แก้ไข",
+  editLabel,
 }: ProfileAccountFieldRowProps) {
+  const t = useT("profile");
   return (
     <div
       className={cn(
@@ -56,7 +58,7 @@ export function ProfileAccountFieldRow({
             type="button"
             onClick={onCopy}
             className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-[var(--icon-active)] transition-colors hover:bg-white/[0.06]"
-            aria-label={copyLabel}
+            aria-label={copyLabel ?? t("field.copy")}
           >
             <CopyIcon className="h-4 w-4" />
           </button>
@@ -66,7 +68,7 @@ export function ProfileAccountFieldRow({
             type="button"
             onClick={onEdit}
             className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-[var(--icon-active)] transition-colors hover:bg-white/[0.06]"
-            aria-label={editLabel}
+            aria-label={editLabel ?? t("field.edit")}
           >
             <ProfileFieldEditIcon className="h-4 w-4" />
           </button>

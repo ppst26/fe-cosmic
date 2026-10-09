@@ -21,6 +21,7 @@ import {
 } from "../ui/responsiveSheetDialog";
 import { Menu3DIcon } from "../ui/Menu3DIcon";
 import { useLogoutConfirm } from "@/app/hooks/useLogoutConfirm";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ProfileSlideOverCardProps {
   isOpen: boolean;
@@ -33,6 +34,8 @@ interface ProfileSlideOverCardProps {
  */
 export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardProps) {
   const router = useRouter();
+  const t = useT("auth");
+  const tCommon = useT("common");
   const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(onClose);
   const { openVipModal } = useVipModal();
   const { openHub } = useDesktopHubModal();
@@ -93,16 +96,16 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
             { variant: "profile" },
           )}
         >
-          <Dialog.Title className="sr-only">ข้อมูลบัญชี</Dialog.Title>
+          <Dialog.Title className="sr-only">{t("account.title")}</Dialog.Title>
 
           <div className="hidden shrink-0 px-4 pt-3 lg:block">
             <ResponsiveSheetHeader
-              closeAriaLabel="ปิด"
+              closeAriaLabel={tCommon("close")}
               titleAlign="start"
               titleIconId="profile"
               titleIconDesktopOnly={false}
               className="responsive-sheet-header--hub responsive-sheet-header--hub-shell"
-              title={<span className="text-2xl font-medium tracking-tight">ข้อมูลบัญชี</span>}
+              title={<span className="text-2xl font-medium tracking-tight">{t("account.title")}</span>}
             />
           </div>
 
@@ -116,7 +119,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
                   size={32}
                   className="profile-hub-sheet__title-icon h-8 w-8 shrink-0 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
                 />
-                <p className="truncate text-base font-medium text-white">โปรไฟล์</p>
+                <p className="truncate text-base font-medium text-white">{t("account.profile")}</p>
               </div>
               <Dialog.Close asChild>
                 <button
@@ -124,7 +127,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
                   className={responsiveSheetCloseButtonClass(
                     "profile-hub-sheet__close !border-white/20 !text-white/90 hover:!text-white",
                   )}
-                  aria-label="ปิดโปรไฟล์"
+                  aria-label={t("account.closeProfile")}
                 >
                   <CloseIcon className="h-4 w-4" />
                 </button>
@@ -134,13 +137,13 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
 
           <div className="profile-hub-sheet__pane flex min-h-0 flex-1 flex-col">
             <div className="profile-hub-sheet__body min-h-0 flex-1 overflow-y-auto px-3 pb-2 pt-3 sm:px-4 lg:px-5 lg:pb-4 lg:pt-1">
-              {loading ? <LoadingState label="กำลังโหลดโปรไฟล์…" /> : null}
+              {loading ? <LoadingState label={t("account.loadingProfile")} /> : null}
 
               {profileFailed ? (
                 <ErrorState
-                  title="โหลดโปรไฟล์ไม่สำเร็จ"
-                  description="ลองใหม่อีกครั้ง หากยังไม่ได้ ให้ออกจากระบบแล้วเข้าสู่ระบบใหม่"
-                  primaryAction={{ label: "ลองใหม่", onClick: refreshProfile }}
+                  title={t("account.profileFailed")}
+                  description={t("account.retryHint")}
+                  primaryAction={{ label: tCommon("retry"), onClick: refreshProfile }}
                 />
               ) : null}
 
@@ -183,7 +186,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
                   type="button"
                   className="cosmic-sheet-soft-glass flex w-full items-center justify-center rounded-[var(--radius-panel)] py-3.5 text-sm font-medium text-[var(--text-primary)] transition-[background,transform] duration-[var(--motion-fast)]"
                 >
-                  ปิด
+                  {tCommon("close")}
                 </button>
               </Dialog.Close>
             </footer>

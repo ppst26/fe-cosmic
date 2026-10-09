@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { useRouter } from "@/lib/i18n/navigation";
 import { buildGamePlayHref } from "@/lib/gamePlayPaths";
 import type { ProviderGameItem } from "@/app/types/providers";
@@ -411,6 +412,7 @@ export function ProviderGameGrid({
   games,
   onPlayGame,
 }: ProviderGameGridProps) {
+  const t = useT("games");
   const router = useRouter();
 
   const handlePlay = (game: ProviderGameItem) => {
@@ -451,9 +453,9 @@ export function ProviderGameGrid({
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#121127] text-2xl text-[var(--text-muted)]">
           🔍
         </div>
-        <h3 className="mt-3 text-base font-medium text-white">ไม่พบเกมที่ค้นหา</h3>
+        <h3 className="mt-3 text-base font-medium text-white">{t("providerGames.notFoundTitle")}</h3>
         <p className="mt-1 text-xs text-[var(--text-muted)]">
-          ลองค้นหาด้วยคำค้นอื่น หรือล้างช่องค้นหาเพื่อดูเกมทั้งหมด
+          {t("providerGames.notFoundHint")}
         </p>
       </div>
     );
@@ -487,7 +489,7 @@ export function ProviderGameGrid({
                 <button
                   type="button"
                   onClick={(e) => toggleFavorite(game.id, e)}
-                  aria-label={isFav ? "นำออกจากรายการโปรด" : "เพิ่มเป็นรายการโปรด"}
+                  aria-label={isFav ? t("providerGames.favoriteRemove") : t("providerGames.favoriteAdd")}
                   className="absolute right-1 top-1 z-20 flex h-6 w-6 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-xs transition-all hover:bg-black/60 hover:text-white active:scale-90 sm:h-6 sm:w-6"
                 >
                   <HeartIcon isFilled={isFav} className="h-3.5 w-3.5" />

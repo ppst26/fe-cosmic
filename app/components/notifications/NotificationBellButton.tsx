@@ -2,6 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface NotificationBellButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
@@ -20,6 +21,7 @@ export const NotificationBellButton = React.forwardRef<
   { className, showBadge = true, plain = false, type = "button", ...props },
   ref,
 ) {
+  const t = useT("common");
   return (
     <button
       ref={ref}
@@ -31,7 +33,7 @@ export const NotificationBellButton = React.forwardRef<
           : "header-desktop-bar__icon-btn glass-card--soft glass-icon-btn rounded-(--header-chip-radius)",
         className,
       )}
-      aria-label={props["aria-label"] ?? "การแจ้งเตือน"}
+      aria-label={props["aria-label"] ?? t("notifications.title")}
       {...props}
     >
       <NotificationBellIcon />

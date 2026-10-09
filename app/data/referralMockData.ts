@@ -5,6 +5,7 @@ import type {
   ReferralEarningSummaryMock,
   ReferralEarningHistoryRow,
   ReferralEarningPeriodId,
+  ReferralMessageKey,
 } from "@/app/types/referral";
 
 export const REFERRAL_MOCK_REF_CODE = "COSMIC88";
@@ -18,31 +19,31 @@ export const REFERRAL_STATS_MOCK: ReferralStatsMock = {
 export const REFERRAL_COMMISSION_TIERS: ReferralCommissionTier[] = [
   {
     id: "tier-1",
-    title: "ชั้น 1 — เพื่อนตรง",
-    subtitle: "เพื่อนที่สมัครผ่านลิงก์ของคุณ",
+    titleKey: "tiers.tier1.title",
+    subtitleKey: "tiers.tier1.subtitle",
     rateLabel: "0.5%",
-    rateHint: "จากยอดเทิร์น",
+    rateHintKey: "tiers.rateHint",
   },
   {
     id: "tier-2",
-    title: "ชั้น 2 — เพื่อนชวนต่อ",
-    subtitle: "เพื่อนของเพื่อนที่คุณชวน",
+    titleKey: "tiers.tier2.title",
+    subtitleKey: "tiers.tier2.subtitle",
     rateLabel: "0.05%",
-    rateHint: "จากยอดเทิร์น",
+    rateHintKey: "tiers.rateHint",
   },
 ];
 
-export const REFERRAL_FEATURE_CHECKS = [
-  "คำนวณแบบเรียลไทม์",
-  "รับค่าคอมตลอดชีพ",
-  "ถอนขั้นต่ำ ฿50.00",
-] as const;
+export const REFERRAL_FEATURE_CHECKS: ReferralMessageKey[] = [
+  "checks.realtime",
+  "checks.lifetimeCommission",
+  "checks.minWithdraw",
+];
 
-export const REFERRAL_STEPS = [
-  { id: "copy", label: "คัดลอกลิงก์" },
-  { id: "share", label: "แชร์ให้เพื่อน" },
-  { id: "earn", label: "รับส่วนแบ่ง" },
-] as const;
+export const REFERRAL_STEPS: { id: string; labelKey: ReferralMessageKey }[] = [
+  { id: "copy", labelKey: "steps.copy" },
+  { id: "share", labelKey: "steps.share" },
+  { id: "earn", labelKey: "steps.earn" },
+];
 
 /** จำนวนแถว mock ให้ตรงกับ stats.friendsCount */
 function buildReferralUsersMock(count: number): ReferralUserRow[] {
@@ -80,10 +81,10 @@ function buildReferralEarningHistoryMock(): ReferralEarningHistoryRow[] {
 export const REFERRAL_EARNING_HISTORY_MOCK: ReferralEarningHistoryRow[] =
   buildReferralEarningHistoryMock();
 
-export const REFERRAL_EARNING_PERIOD_OPTIONS: { id: ReferralEarningPeriodId; label: string }[] = [
-  { id: "all", label: "ทั้งหมด" },
-  { id: "today", label: "วันนี้" },
-  { id: "week", label: "สัปดาห์ที่แล้ว" },
-  { id: "month", label: "เดือนที่แล้ว" },
+export const REFERRAL_EARNING_PERIOD_OPTIONS: { id: ReferralEarningPeriodId; labelKey: ReferralMessageKey }[] = [
+  { id: "all", labelKey: "periods.all" },
+  { id: "today", labelKey: "periods.today" },
+  { id: "week", labelKey: "periods.lastWeek" },
+  { id: "month", labelKey: "periods.lastMonth" },
 ];
 

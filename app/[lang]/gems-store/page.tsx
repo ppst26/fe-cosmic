@@ -7,11 +7,13 @@ import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { GemsStorePageContent } from "@/app/components/gems-store/GemsStorePageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * หน้าร้านค้า Gems (/gems-store)
  */
 export default function GemsStorePage() {
+  const t = useT("rewards");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -20,7 +22,7 @@ export default function GemsStorePage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="ร้านค้า Gems" backHref="/" />
+      <SlotProvidersHeader title={t("gemsStore.title")} backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <GemsStorePageContent />

@@ -10,6 +10,7 @@ import { VipMobileTabPanels } from "./VipMobileTabPanels";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { VipTabList } from "./VipTabList";
 import { VIP_PAGE_TABS } from "./vipTabConfig";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface VipPageContentProps {
   activeTab: VipModalTabId;
@@ -24,11 +25,12 @@ interface VipPageContentProps {
 export function VipPageContent(props: VipPageContentProps) {
   const player = useVipPlayer();
   const ranks = useVipRanks();
+  const t = useT("vip");
 
   return (
-    <ResourceGate resource={player} loadingLabel="กำลังโหลดข้อมูล VIP…" errorTitle="โหลดข้อมูล VIP ไม่สำเร็จ">
+    <ResourceGate resource={player} loadingLabel={t("status.playerLoading")} errorTitle={t("status.playerError")}>
       {(playerData) => (
-        <ResourceGate resource={ranks} loadingLabel="กำลังโหลดระดับ VIP…" errorTitle="โหลดระดับ VIP ไม่สำเร็จ">
+        <ResourceGate resource={ranks} loadingLabel={t("status.ranksLoading")} errorTitle={t("status.ranksError")}>
           {(ranksData) => (
             <VipPageContentInner {...props} player={playerData} vipRankTiers={ranksData.tiers} />
           )}

@@ -16,8 +16,10 @@ import {
 } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 import { valueClass } from "@/lib/semanticValue";
-import { formatGemsBalance, formatGemsCredits } from "@/lib/format";
+import { formatGemsBalance } from "@/lib/format";
 import type { GemsStorePackage } from "@/app/types/reward";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
 
 /**
  * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal
@@ -29,9 +31,10 @@ export function GemsStorePageContent({
   initialBalance?: number;
   embedded?: boolean;
 }) {
+  const t = useT("rewards");
   const gemsStore = useGemsStore();
   return (
-    <ResourceGate resource={gemsStore} loadingLabel="กำลังโหลดร้านค้าเพชร…" errorTitle="โหลดร้านค้าเพชรไม่สำเร็จ">
+    <ResourceGate resource={gemsStore} loadingLabel={t("gemsStore.loading")} errorTitle={t("gemsStore.loadError")}>
       {(data) => (
         <GemsStoreView gemsStore={data} initialBalance={initialBalance} embedded={embedded} />
       )}
@@ -49,6 +52,7 @@ function GemsStoreView({
   initialBalance?: number;
   embedded: boolean;
 }) {
+  const t = useT("rewards");
   const [gemsBalance, setGemsBalance] = useState(initialBalance ?? gemsStore.balance);
   const [termsOpen, setTermsOpen] = useState(false);
   const [confirmPkg, setConfirmPkg] = useState<GemsStorePackage | null>(null);
@@ -88,7 +92,7 @@ function GemsStoreView({
           id="gems-store-redeem-heading"
           className="mb-2.5 px-0.5 text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]"
         >
-          แลกเครดิต
+          {t("gemsStore.redeemHeading")}
         </h2>
         <div className="gems-store-redeem-grid grid grid-cols-4 gap-1.5 sm:gap-2 lg:gap-3">
           {gemsStore.packages.map((pkg) => {
@@ -117,7 +121,7 @@ function GemsStoreView({
             <span className="glass-card--soft flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium text-[var(--text-muted)]">
               i
             </span>
-            <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการแลกรางวัล</span>
+            <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">{t("gemsStore.termsTitle")}</span>
             <ChevronDownIcon
               className={`h-4 w-4 text-[var(--icon-default)] transition-transform ${
                 termsOpen ? "rotate-180" : ""
@@ -162,8 +166,12 @@ function GemsRedeemCard({
   flat?: boolean;
   onRedeem: () => void;
 }) {
-  const redeemLabel = affordable ? "แลก" : "ไม่พอ";
-  const redeemAria = affordable ? `แลกรางวัล ${formatGemsCredits(pkg.credits)}` : "Gems ไม่เพียงพอ";
+  const t = useT("rewards");
+  const fmt = useFormat();
+  const redeemLabel = affordable ? t("gemsStore.redeemShort") : t("gemsStore.notEnoughShort");
+  const redeemAria = affordable
+    ? t("gemsStore.redeemAria", { credits: fmt.credits(pkg.credits) })
+    : t("gemsStore.notEnoughGems");
   const gemAsset = GEMS_STORE_GEM_ASSET;
 
   return (
@@ -182,7 +190,7 @@ function GemsRedeemCard({
           affordable && flat && "is-active",
         )}
       >
-        <p className="gems-store-redeem-card__title">{formatGemsCredits(pkg.credits)}</p>
+        <p className="gems-store-redeem-card__title">{fmt.credits(pkg.credits)}</p>
         <div className="gems-store-redeem-card__art mt-1.5 sm:mt-2">
           <Image
             src={pkg.coinSrc}
@@ -213,7 +221,7 @@ function GemsRedeemCard({
         }
       >
         <span className="sm:hidden">{redeemLabel}</span>
-        <span className="hidden sm:inline">{affordable ? "แลกรางวัล" : "Gems ไม่เพียงพอ"}</span>
+        <span className="hidden sm:inline">{affordable ? t("gemsStore.redeem") : t("gemsStore.notEnoughGems")}</span>
       </button>
     </article>
   );

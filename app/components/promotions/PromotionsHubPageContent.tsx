@@ -16,6 +16,7 @@ import { PromotionsCatalogProvider, usePromotionsCatalog } from "./PromotionsCat
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { ErrorState, LoadingState } from "../ui/StatusState";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * เนื้อหาหน้าโปรโมชั่น — ใช้ใน /promotions (กิจกรรมอยู่ที่ /event)
@@ -29,6 +30,7 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
 }
 
 function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolean }) {
+  const t = useT("promotions");
   const { catalog, loading, error: loadError, reload } = usePromotionsCatalog();
   const [detailId, setDetailId] = useState<PromotionDetailId | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
@@ -55,13 +57,13 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
 
   return (
     <>
-      {loading ? <LoadingState label="กำลังโหลดโปรโมชั่น…" /> : null}
+      {loading ? <LoadingState label={t("loading")} /> : null}
       {!loading && loadError && !catalog ? (
         <ErrorState
           variant="card"
-          title="โหลดโปรโมชั่นไม่สำเร็จ"
-          description="ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่อีกครั้ง"
-          primaryAction={{ label: "ลองใหม่", onClick: reload }}
+          title={t("loadError")}
+          description={t("loadErrorDesc")}
+          primaryAction={{ label: t("retry"), onClick: reload }}
         />
       ) : null}
 
@@ -89,7 +91,7 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
 
           {!hasAnyPromo ? (
             <p className={`${COSMIC_PANEL_GLASS} px-4 py-8 text-center text-sm text-[var(--text-secondary)]`}>
-              ยังไม่มีโปรโมชั่นในหมวดนี้ — ลองเลือก All Promotions
+              {t("empty.categoryHint")}
             </p>
           ) : null}
 
@@ -100,7 +102,7 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
           {featuredItems.length > 0 ? (
             <section aria-labelledby="promo-for-you-heading" className="flex flex-col gap-3">
               <h2 id="promo-for-you-heading" className="text-base font-medium text-[var(--text-primary)] sm:text-lg">
-                โปรโมชั่นสำหรับคุณ
+                {t("forYou")}
               </h2>
               <ul className="flex flex-col gap-3">
                 {featuredItems.map((item) => (

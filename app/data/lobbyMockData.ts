@@ -13,6 +13,7 @@ import {
   LobbyTournamentSectionItem,
   BottomNavItem,
 } from "../types/lobby";
+import type { MessageKey } from "@/lib/i18n/messages";
 import { CASINO_FEATURED_ITEMS } from "./casinoFeaturedData";
 import { SPORT_FEATURED_ITEMS } from "./sportFeaturedData";
 import { FISHING_FEATURED_ITEMS } from "./fishingFeaturedData";
@@ -43,17 +44,17 @@ export const HOME_SLOTS_PROVIDER_ITEMS: GameItem[] = GRID_SLOT_PROVIDERS.slice(0
  */
 /** แถบนำทาง header desktop (Dexsport-style pills) — Header.tsx */
 export const HEADER_DESKTOP_NAV = [
-  { id: "promotions", label: "โปรโมชัน", href: "/promotions", showBadge: true },
-] as const;
+  { id: "promotions", labelKey: "header.promotions", href: "/promotions", showBadge: true },
+] as const satisfies readonly { labelKey: MessageKey<"nav">; [field: string]: unknown }[];
 
 export const CATEGORIES_DATA: CategoryItem[] = [
-  { id: "home", label: "โฮม", href: "/" },
-  { id: "casino", label: "คาสิโน", href: "/casino" },
-  { id: "slots", label: "สล็อต", href: "/slots" },
-  { id: "fishing", label: "ยิงปลา", href: "/fishing" },
-  { id: "sports", label: "กีฬา", href: "/sport" },
-  { id: "lottery", label: "หวย", href: "/lottery" },
-  { id: "cards", label: "เกมไพ่", href: "/cards" },
+  { id: "home", labelKey: "categories.home", href: "/" },
+  { id: "casino", labelKey: "categories.casino", href: "/casino" },
+  { id: "slots", labelKey: "categories.slots", href: "/slots" },
+  { id: "fishing", labelKey: "categories.fishing", href: "/fishing" },
+  { id: "sports", labelKey: "categories.sports", href: "/sport" },
+  { id: "lottery", labelKey: "categories.lottery", href: "/lottery" },
+  { id: "cards", labelKey: "categories.cards", href: "/cards" },
 ];
 
 /** ไอคอน 3D หมวดเกม — แหล่งเดียวกับเมนู (menuIconAssets) */
@@ -205,6 +206,7 @@ export const GAME_SECTIONS_DATA: GameSectionData[] = [
   {
     id: "section-hot",
     title: "เกมยอดฮิต",
+    titleKey: "sections.hotGames",
     icon: "flame",
     viewAllHref: "/games?filter=hot",
     games: HOT_GAMES_FEATURED_ITEMS,
@@ -213,6 +215,7 @@ export const GAME_SECTIONS_DATA: GameSectionData[] = [
   {
     id: "section-slots",
     title: "SLOTS",
+    titleKey: "sections.slots",
     icon: "cherries",
     viewAllHref: "/slots",
     games: HOME_SLOTS_PROVIDER_ITEMS,
@@ -220,6 +223,7 @@ export const GAME_SECTIONS_DATA: GameSectionData[] = [
   {
     id: "section-casino",
     title: "คาสิโน",
+    titleKey: "sections.casino",
     icon: "cards",
     viewAllHref: "/casino",
     games: CASINO_FEATURED_ITEMS,
@@ -227,6 +231,7 @@ export const GAME_SECTIONS_DATA: GameSectionData[] = [
   {
     id: "section-fishing",
     title: "ยิงปลา",
+    titleKey: "sections.fishing",
     icon: "fish",
     viewAllHref: "/fishing",
     games: FISHING_FEATURED_ITEMS,
@@ -234,6 +239,7 @@ export const GAME_SECTIONS_DATA: GameSectionData[] = [
   {
     id: "section-sports",
     title: "กีฬา",
+    titleKey: "sections.sports",
     icon: "football",
     viewAllHref: "/sport",
     games: SPORT_FEATURED_ITEMS,
@@ -362,9 +368,9 @@ export { HALL_OF_FAME_DATA } from "./hallOfFameMockData";
  * ถูกเรียกใช้โดย FloatingBottomNav.tsx
  */
 export const BOTTOM_NAV_DATA: BottomNavItem[] = [
-  { id: "nav-withdraw", label: "ถอนเงิน", href: "/withdraw", icon: "withdraw" },
-  { id: "nav-deposit", label: "ฝากเงิน", href: "/deposit", icon: "deposit" },
-  { id: "nav-menu", label: "เมนู", href: "#menu", icon: "menu" },
-  { id: "nav-cashback", label: "คืนยอด", href: "/cashback", icon: "cashback" },
-  { id: "nav-contact", label: "ติดต่อ", href: "/support", icon: "contact" },
+  { id: "nav-withdraw", labelKey: "bottomNav.withdraw", href: "/withdraw", icon: "withdraw" },
+  { id: "nav-deposit", labelKey: "bottomNav.deposit", href: "/deposit", icon: "deposit" },
+  { id: "nav-menu", labelKey: "bottomNav.menu", href: "#menu", icon: "menu" },
+  { id: "nav-cashback", labelKey: "bottomNav.cashback", href: "/cashback", icon: "cashback" },
+  { id: "nav-contact", labelKey: "bottomNav.contact", href: "/support", icon: "contact" },
 ];

@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import { IntroStats } from "../../types/lobby";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface CosmicIntroProps {
   stats: IntroStats;
@@ -13,8 +16,10 @@ interface CosmicIntroProps {
  */
 export function CosmicIntro({
   stats,
-  title = "อาณาจักรแห่งความมันส์",
+  title: titleProp,
 }: CosmicIntroProps) {
+  const t = useT("home");
+  const title = titleProp ?? t("intro.title");
   const numberFormatter = new Intl.NumberFormat("en-US");
 
   return (
@@ -30,9 +35,10 @@ export function CosmicIntro({
           {title}
         </h2>
         <p className="cosmic-intro__stats mt-1.5 sm:mt-2">
-          เกมมากกว่า <strong>{numberFormatter.format(stats.gamesCount)}</strong> เกม
-          ผู้ให้บริการมากกว่า <strong>{numberFormatter.format(stats.providersCount)}</strong> ราย
-          การแข่งขันกีฬาทั่วโลก
+          {t("intro.gamesBefore")} <strong>{numberFormatter.format(stats.gamesCount)}</strong>{" "}
+          {t("intro.gamesAfter")} {t("intro.providersBefore")}{" "}
+          <strong>{numberFormatter.format(stats.providersCount)}</strong> {t("intro.providersAfter")}{" "}
+          {t("intro.sports")}
         </p>
       </div>
     </section>

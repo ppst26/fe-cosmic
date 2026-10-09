@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Link from "@/lib/i18n/navigation";
 import { HOME_PROVIDER_LOGO_MARQUEE } from "../../data/homeProviderLogosData";
 import { SectionIcon } from "../ui/SectionIcon";
@@ -11,6 +14,7 @@ import { ProviderLogoMarquee } from "./ProviderLogoMarquee";
  * ถูกเรียกใช้ใน app/page.tsx
  */
 export function ProvidersSection() {
+  const t = useT("home");
   const logos = HOME_PROVIDER_LOGO_MARQUEE;
 
   return (
@@ -26,7 +30,7 @@ export function ProvidersSection() {
       />
 
       {logos.length === 0 ? (
-        <p className="py-6 text-center text-sm text-[var(--text-muted)]">ยังไม่มีผู้ให้บริการ</p>
+        <p className="py-6 text-center text-sm text-[var(--text-muted)]">{t("providers.empty")}</p>
       ) : (
         <ProviderLogoMarquee items={logos} />
       )}

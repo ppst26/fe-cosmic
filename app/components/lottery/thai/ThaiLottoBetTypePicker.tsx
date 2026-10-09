@@ -2,13 +2,15 @@
 
 import React from "react";
 import type {
+  LotteryMessageKey,
   ThaiLottoBetType,
   ThaiLottoBetTypeId,
   ThaiLottoDigitGroup,
 } from "@/app/types/lottery";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ThaiLottoBetTypePickerProps {
-  groups: { id: ThaiLottoDigitGroup; label: string }[];
+  groups: { id: ThaiLottoDigitGroup; labelKey: LotteryMessageKey }[];
   betTypes: ThaiLottoBetType[];
   activeGroup: ThaiLottoDigitGroup;
   selectedTypeIds: ThaiLottoBetTypeId[];
@@ -31,11 +33,12 @@ export function ThaiLottoBetTypePicker({
   onToggleType,
   selectionMode = "multi",
 }: ThaiLottoBetTypePickerProps) {
+  const t = useT("lottery");
   const groupTypes = betTypes.filter((type) => type.group === activeGroup);
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="cosmic-segment-track grid grid-cols-3 gap-1" role="group" aria-label="จำนวนหลัก">
+      <div className="cosmic-segment-track grid grid-cols-3 gap-1" role="group" aria-label={t("board.digitGroupAria")}>
         {groups.map((group) => {
           const isActive = group.id === activeGroup;
           return (
@@ -48,7 +51,7 @@ export function ThaiLottoBetTypePicker({
                 isActive ? "is-active" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
-              {group.label}
+              {t(group.labelKey)}
             </button>
           );
         })}
@@ -57,7 +60,7 @@ export function ThaiLottoBetTypePicker({
       <div
         className="thai-lotto-type-grid grid grid-cols-2 gap-1.5"
         role="group"
-        aria-label="ประเภทการแทง"
+        aria-label={t("board.betTypeAria")}
       >
         {groupTypes.map((type) => {
           const isSelected = selectedTypeIds.includes(type.id);
@@ -69,8 +72,8 @@ export function ThaiLottoBetTypePicker({
               onClick={() => onToggleType(type.id)}
               className={`thai-lotto-type-chip flex min-h-[2.5rem] min-w-0 flex-col items-start justify-center gap-0.5 px-1.5 py-1.5 text-left${isSelected ? " is-active" : ""}`}
             >
-              <span className="thai-lotto-type-chip__label max-w-full truncate">{type.label}</span>
-              <span className="thai-lotto-type-chip__rate">จ่าย {type.payoutRate}</span>
+              <span className="thai-lotto-type-chip__label max-w-full truncate">{t(type.labelKey)}</span>
+              <span className="thai-lotto-type-chip__rate">{t("board.payout", { rate: type.payoutRate })}</span>
             </button>
           );
         })}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import type { MostOnlineLobbyItem } from "@/app/types/lobby";
 import { SectionHeader } from "../ui/SectionHeader";
 import { SectionIcon } from "../ui/SectionIcon";
@@ -18,6 +19,7 @@ interface MostOnlineProvidersSectionProps {
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx (หมวด home)
  */
 export function MostOnlineProvidersSection({ items, className }: MostOnlineProvidersSectionProps) {
+  const t = useT("home");
   const trackRef = useRef<HTMLDivElement>(null);
   const [isLg, setIsLg] = useState(false);
 
@@ -69,7 +71,7 @@ export function MostOnlineProvidersSection({ items, className }: MostOnlineProvi
             className="h-[1.35rem] w-[1.35rem] text-[var(--icon-default)] sm:h-6 sm:w-6"
           />
         }
-        title="ออนไลน์มากที่สุดในขณะนี้"
+        title={t("mostOnline.title")}
         className="lobby-section-header-band mb-0"
       />
 

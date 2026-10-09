@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "@/lib/i18n/navigation";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { useProfile } from "@/app/hooks/api/account";
 import { ErrorState, LoadingState } from "@/app/components/ui/StatusState";
@@ -18,6 +19,7 @@ import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
  */
 export default function ProfileAccountPage() {
   const router = useRouter();
+  const t = useT("profile");
   const { isAuthenticated, isLoading } = useAuth();
   const { openLogoutConfirm, LogoutConfirmDialog } = useLogoutConfirm(() => router.replace("/"));
   const { openVipModal } = useVipModal();
@@ -42,17 +44,17 @@ export default function ProfileAccountPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="ข้อมูลบัญชี" backHref="/" />
+      <SlotProvidersHeader title={t("account.title")} backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
-        {!profile && profileStatus === "loading" && <LoadingState label="กำลังโหลดข้อมูลบัญชี…" />}
+        {!profile && profileStatus === "loading" && <LoadingState label={t("account.loading")} />}
 
         {!profile && profileStatus === "error" && (
           <ErrorState
             variant="card"
-            title="โหลดข้อมูลบัญชีไม่สำเร็จ"
-            description="ลองใหม่อีกครั้ง หากยังไม่ได้ ให้ออกจากระบบแล้วเข้าสู่ระบบใหม่"
-            primaryAction={{ label: "ลองใหม่", onClick: refresh }}
+            title={t("account.loadErrorTitle")}
+            description={t("account.loadErrorDescription")}
+            primaryAction={{ label: t("retry"), onClick: refresh }}
           />
         )}
 

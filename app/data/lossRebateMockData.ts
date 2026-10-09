@@ -4,13 +4,14 @@ import type {
   LossRebateSummaryMock,
   LossRebateMonthOption,
   LossRebateHistoryRow,
+  CashbackMessageKey,
 } from "@/app/types/cashback";
 
 export const LOSS_REBATE_SUMMARY_MOCK: LossRebateSummaryMock = {
   rebateReadyThb: 640,
   exampleRatePercent: 8,
   calculationPeriodLabel: "14 ก.ย. 2569",
-  statusLabel: "คำนวณแล้ว",
+  statusLabelKey: "lossRebate.statusCalculated",
   eligibleNetLossThb: 8000,
   rebateRatePercent: 8,
   rebateBonusThb: 640,
@@ -22,11 +23,11 @@ export const LOSS_REBATE_MONTH_OPTIONS: LossRebateMonthOption[] = [
   { id: "2026-08", label: "สิงหาคม 2569" },
 ];
 
-export const LOSS_REBATE_TERMS: string[] = [
-  "คืนยอดเสียคำนวณจากยอดเสียสุทธิที่เข้าเงื่อนไขในรอบที่กำหนด",
-  "ต้องกดรับโบนัสภายในระยะเวลาที่ระบบเปิดรับ มิฉะนั้นโบนัสจะหมดอายุ",
-  "อัตราคืนและเงื่อนไขอาจเปลี่ยนแปลงตามประกาศของเว็บไซต์",
-  "ข้อมูลในหน้านี้เป็นตัวอย่างสำหรับการแสดงผล UI",
+export const LOSS_REBATE_TERMS: CashbackMessageKey[] = [
+  "lossRebate.terms.basis",
+  "lossRebate.terms.claimWindow",
+  "lossRebate.terms.subjectToChange",
+  "lossRebate.terms.sampleData",
 ];
 
 function buildLossRebateHistoryMock(): LossRebateHistoryRow[] {

@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 
 import { VipRankProgressMetric } from "@/app/components/vip/VipRankProgressMetric";
 import { vipMaintainDaysClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 
 
@@ -49,6 +50,8 @@ export function VipMaintainRankPanel({
 
 }: VipMaintainRankPanelProps) {
 
+  const t = useT("vip");
+
   const maintain = getVipMaintainState(activeRankId);
 
   if (!maintain) return null;
@@ -67,9 +70,9 @@ export function VipMaintainRankPanel({
 
     downgradeVipNumber != null
 
-      ? `ต้องครบทั้งคู่ ไม่เช่นนั้นลดเป็น VIP ${downgradeVipNumber}`
+      ? t("maintain.subtitleWithDowngrade", { level: downgradeVipNumber })
 
-      : "ต้องครบทั้งสองเงื่อนไข";
+      : t("progress.bothRequired");
 
 
 
@@ -93,7 +96,7 @@ export function VipMaintainRankPanel({
 
           <h3 className="text-base font-medium text-[var(--text-primary)] sm:text-lg">
 
-            รักษาระดับ VIP
+            {t("maintain.title")}
 
           </h3>
 
@@ -120,7 +123,7 @@ export function VipMaintainRankPanel({
 
           <span className="mt-0.5 block text-[0.65rem] leading-tight text-[var(--text-secondary)] sm:text-xs">
 
-            วันคงเหลือ
+            {t("maintain.daysRemaining")}
 
           </span>
 
@@ -134,7 +137,7 @@ export function VipMaintainRankPanel({
 
         <VipRankProgressMetric
 
-          label="ฝาก"
+          label={t("progress.deposit")}
 
           iconKind="deposit"
 
@@ -146,7 +149,7 @@ export function VipMaintainRankPanel({
 
         <VipRankProgressMetric
 
-          label="เทิร์น"
+          label={t("progress.turnover")}
 
           iconKind="turnover"
 

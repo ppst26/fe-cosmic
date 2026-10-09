@@ -1,5 +1,8 @@
 /** ช่วงวันที่สำหรับกรองรายการธุรกรรม */
 
+import type { Locale } from "@/lib/i18n/config";
+import { formatBangkokTimeHHmm } from "./bangkokTime";
+
 export function startOfDay(date: Date): Date {
   const d = new Date(date);
   d.setHours(0, 0, 0, 0);
@@ -20,16 +23,34 @@ export function getDefaultTransactionDateRange(): { from: Date; to: Date } {
   return { from, to };
 }
 
-export function formatTransactionDateShort(date: Date): string {
-  return new Intl.DateTimeFormat("th-TH", {
+/** locale ของแอป → tag ของ Intl (th → th-TH = ปฏิทินพุทธ ตามที่แสดงเดิม) */
+export function intlDateLocale(locale: Locale): string {
+  return locale === "th" ? "th-TH" : locale;
+}
+
+export function formatTransactionDateShort(date: Date, locale: Locale): string {
+  return new Intl.DateTimeFormat(intlDateLocale(locale), {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   }).format(date);
 }
 
-export function formatTransactionDateRangeLabel(from: Date, to: Date): string {
-  return `${formatTransactionDateShort(from)} - ${formatTransactionDateShort(to)}`;
+export function formatTransactionDateRangeLabel(from: Date, to: Date, locale: Locale): string {
+  return `${formatTransactionDateShort(from, locale)} - ${formatTransactionDateShort(to, locale)}`;
+}
+
+/** วันเวลาแบบย่อโซน Bangkok — th: "15 ก.ย. 2569 • 14:30" */
+export function formatTransactionDateTimeMedium(iso: string, locale: Locale): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "—";
+  const day = new Intl.DateTimeFormat(intlDateLocale(locale), {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "Asia/Bangkok",
+  }).format(date);
+  return `${day} • ${formatBangkokTimeHHmm(date)}`;
 }
 
 export function isSameDay(a: Date, b: Date): boolean {
@@ -63,19 +84,15 @@ export function getCalendarMonthCells(viewMonth: Date): { date: Date; inMonth: b
   return cells;
 }
 
-export const THAI_WEEKDAY_SHORT = ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"] as const;
+/** หัวคอลัมน์ปฏิทิน อาทิตย์ → เสาร์ (th: อา จ อ พ พฤ ศ ส) */
+export function getWeekdayShortLabels(locale: Locale): string[] {
+  const format = new Intl.DateTimeFormat(intlDateLocale(locale), { weekday: "narrow", timeZone: "UTC" });
+  /* 1 ม.ค. 2023 เป็นวันอาทิตย์ */
+  return Array.from({ length: 7 }, (_, i) => format.format(new Date(Date.UTC(2023, 0, 1 + i))));
+}
 
-export const THAI_MONTH_OPTIONS = [
-  "มกราคม",
-  "กุมภาพันธ์",
-  "มีนาคม",
-  "เมษายน",
-  "พฤษภาคม",
-  "มิถุนายน",
-  "กรกฎาคม",
-  "สิงหาคม",
-  "กันยายน",
-  "ตุลาคม",
-  "พฤศจิกายน",
-  "ธันวาคม",
-] as const;
+/** ชื่อเดือนเต็ม ม.ค. → ธ.ค. สำหรับ select */
+export function getMonthOptionLabels(locale: Locale): string[] {
+  const format = new Intl.DateTimeFormat(intlDateLocale(locale), { month: "long", timeZone: "UTC" });
+  return Array.from({ length: 12 }, (_, i) => format.format(new Date(Date.UTC(2023, i, 1))));
+}

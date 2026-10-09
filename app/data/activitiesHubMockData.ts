@@ -1,14 +1,14 @@
 /** ข้อมูล mock หน้ากิจกรรม (/event) — รายการซ้าย + รายละเอียดขวา (desktop) */
 
 import type {
-  ActivityHubCategoryTab,
+  ActivityHubCategoryTabItem,
   ActivityTierRow,
   ActivityHubItem,
 } from "@/app/types/activities";
 
-export const ACTIVITY_HUB_CATEGORY_TABS: { id: ActivityHubCategoryTab; label: string }[] = [
-  { id: "slots", label: "สล็อต" },
-  { id: "casino", label: "คาสิโน" },
+export const ACTIVITY_HUB_CATEGORY_TABS: ActivityHubCategoryTabItem[] = [
+  { id: "slots", labelKey: "activities.categories.slots" },
+  { id: "casino", labelKey: "activities.categories.casino" },
 ];
 
 const TURN_TIERS_SLOTS: ActivityTierRow[] = [

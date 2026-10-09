@@ -46,6 +46,8 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const { openLanguagePicker } = useLanguagePicker();
   const locale = useLocale();
   const tCommon = useT("common");
+  const t = useT("nav");
+  const tAuth = useT("auth");
   const { openHub } = useDesktopHubModal();
   const { isAuthenticated, isLoading } = useAuth();
   const { open: openLogin } = useOverlayLayer("login");
@@ -71,10 +73,10 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
       style={withEnterAnimation ? ({ "--menu-enter-i": enterIndex } as React.CSSProperties) : undefined}
     >
       <button type="button" className="auth-btn auth-btn--register w-full" onClick={openSignUpFromMenu}>
-        สมัครสมาชิก
+        {tAuth("signUp")}
       </button>
       <button type="button" className="auth-btn auth-btn--login w-full" onClick={openLoginFromMenu}>
-        เข้าสู่ระบบ
+        {tAuth("login")}
       </button>
     </div>
   );
@@ -152,7 +154,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             comingSoon ? "text-[var(--text-muted)]" : "text-white",
           )}
         >
-          {isLanguage ? tCommon("language") : tile.label}
+          {isLanguage ? tCommon("language") : t(tile.labelKey)}
         </span>
         {comingSoon ? (
           <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--accent-muted)]">
@@ -233,7 +235,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             className="menu-list-icon object-contain shrink-0 lg:h-7 lg:w-7"
           />
           <span className="menu-list-label min-w-0 flex-1 truncate font-medium leading-snug text-white lg:text-[13.5px]">
-            {tile.label}
+            {t(tile.labelKey)}
           </span>
         </div>
         <span
@@ -357,7 +359,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
           >
             <LogOutIcon className="shrink-0 text-destructive" aria-hidden="true" />
             <span className="menu-drawer-logout__label font-medium text-destructive">
-              ออกจากระบบ
+              {tAuth("logout")}
             </span>
           </button>
         ) : (
@@ -384,7 +386,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
             id={`menu-section-${section.id}`}
             className="menu-section-heading cosmic-type-caption mb-1 px-0.5 text-[#8f88ab]"
           >
-            {section.sectionLabel}
+            {t(section.sectionLabelKey)}
           </h3>
           {section.layout === "vertical" ? (
             <div className="menu-card-group rounded-xl bg-[#0f0c22] shadow-[0_4px_16px_rgba(0,0,0,0.4)] overflow-hidden divide-y divide-white/[0.04] flex flex-col">
@@ -409,7 +411,7 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         >
           <LogOutIcon className="h-5 w-5 shrink-0 text-destructive" aria-hidden="true" />
           <span className="menu-drawer-logout__label text-sm font-medium text-destructive">
-            ออกจากระบบ
+            {tAuth("logout")}
           </span>
         </button>
       ) : (
@@ -430,11 +432,11 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         >
           <div className="menu-shell">
             <Dialog.Title id="menu-title" className="sr-only">
-              เมนู
+              {t("drawer.title")}
             </Dialog.Title>
 
             <Dialog.Close asChild>
-              <button type="button" className="menu-close-btn" aria-label="ปิดเมนู">
+              <button type="button" className="menu-close-btn" aria-label={t("drawer.close")}>
                 <CloseIcon className="h-3.5 w-3.5" />
               </button>
             </Dialog.Close>

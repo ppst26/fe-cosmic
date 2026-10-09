@@ -16,15 +16,17 @@ import {
 } from "../ui/cosmicDataTableClasses";
 import { cn } from "@/lib/utils";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
+import type { CashbackMessageKey } from "@/app/types/cashback";
 
 /** ช่วงเวลาสรุปยอด — layout แบบ dashboard (ยังไม่ผูก API รายละเอียดทุกแท็บ) */
 export type CashbackInsightPeriodId = "all" | "today" | "last_week" | "last_month";
 
-export const CASHBACK_INSIGHT_PERIODS: { id: CashbackInsightPeriodId; label: string }[] = [
-  { id: "all", label: "ทั้งหมด" },
-  { id: "today", label: "วันนี้" },
-  { id: "last_week", label: "สัปดาห์ที่แล้ว" },
-  { id: "last_month", label: "เดือนที่แล้ว" },
+export const CASHBACK_INSIGHT_PERIODS: { id: CashbackInsightPeriodId; labelKey: CashbackMessageKey }[] = [
+  { id: "all", labelKey: "periods.all" },
+  { id: "today", labelKey: "periods.today" },
+  { id: "last_week", labelKey: "periods.lastWeek" },
+  { id: "last_month", labelKey: "periods.lastMonth" },
 ];
 
 type CashbackPanelShellProps = {
@@ -83,6 +85,7 @@ export function CashbackClaimRow({
   onRefresh,
   refreshing = false,
 }: CashbackClaimRowProps) {
+  const t = useT("cashback");
   const claimDisabled = !canClaim;
 
   return (
@@ -97,7 +100,7 @@ export function CashbackClaimRow({
               onClick={onRefresh}
               disabled={refreshing}
               className="inline-flex shrink-0 items-center justify-center text-[var(--icon-default)] transition-colors hover:text-[var(--text-primary)] disabled:opacity-50"
-              aria-label="รีเฟรชยอดคืน"
+              aria-label={t("panel.refresh")}
             >
               <RefreshIcon className={cn("h-4 w-4", refreshing && "animate-spin")} />
             </button>
@@ -124,11 +127,12 @@ type CashbackInsightPeriodTabsProps = {
 
 /** แถบเลือกช่วงเวลา 4 ช่อง */
 export function CashbackInsightPeriodTabs({ activeId, onSelect }: CashbackInsightPeriodTabsProps) {
+  const t = useT("cashback");
   return (
     <div
       className="cosmic-segment-track cosmic-segment-track--glass-white grid grid-cols-4 gap-1.5 p-1.5"
       role="group"
-      aria-label="ช่วงเวลาสรุปคืนยอด"
+      aria-label={t("periods.ariaLabel")}
     >
       {CASHBACK_INSIGHT_PERIODS.map((period) => {
         const isActive = period.id === activeId;
@@ -143,7 +147,7 @@ export function CashbackInsightPeriodTabs({ activeId, onSelect }: CashbackInsigh
               isActive ? "is-active" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]",
             )}
           >
-            {period.label}
+            {t(period.labelKey)}
           </button>
         );
       })}
@@ -195,6 +199,7 @@ type CashbackRulesTableSectionProps = {
 
 /** ตารางเงื่อนไข 2 คอลัมน์ — outline */
 export function CashbackRulesTableSection({ title, rows, action }: CashbackRulesTableSectionProps) {
+  const t = useT("cashback");
   return (
     <section className="flex flex-col gap-2.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -206,10 +211,10 @@ export function CashbackRulesTableSection({ title, rows, action }: CashbackRules
           <TableHeader>
             <TableRow className="hover:bg-transparent">
               <TableHead className="h-10 px-3 text-xs font-medium text-[var(--text-secondary)] sm:px-4">
-                รายการ
+                {t("rules.item")}
               </TableHead>
               <TableHead className="h-10 px-3 text-right text-xs font-medium text-[var(--text-secondary)] sm:px-4">
-                ค่า
+                {t("rules.value")}
               </TableHead>
             </TableRow>
           </TableHeader>

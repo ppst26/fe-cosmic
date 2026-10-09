@@ -6,6 +6,7 @@ import {
   LotteryPriceSlipPanel,
   type LotteryPriceSlipGroup,
 } from "../LotteryPriceSlipPanel";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface YikiPricePanelProps {
   entries: YikiBetEntry[];
@@ -28,6 +29,7 @@ export function YikiPricePanel({
   onAmountChange,
   onRemove,
 }: YikiPricePanelProps) {
+  const t = useT("lottery");
   const groups = useMemo((): LotteryPriceSlipGroup[] => {
     const order: YikiSettlementTypeId[] = [];
     const map = new Map<YikiSettlementTypeId, YikiBetEntry[]>();
@@ -42,7 +44,7 @@ export function YikiPricePanel({
       const settlementType = settlementTypes[settlementTypeId];
       return {
         key: settlementTypeId,
-        label: settlementType.label,
+        label: t(settlementType.labelKey),
         entries: map.get(settlementTypeId)!.map((entry) => ({
           id: entry.id,
           number: entry.number,
@@ -51,7 +53,7 @@ export function YikiPricePanel({
         })),
       };
     });
-  }, [entries, settlementTypes]);
+  }, [entries, settlementTypes, t]);
 
   return (
     <LotteryPriceSlipPanel

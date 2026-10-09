@@ -3,8 +3,8 @@ import test from "node:test";
 import { buildSubmittedSlip, resolveBetTypeRule } from "./buildSubmittedSlip";
 
 test("payout rules come from server tables per market", () => {
-  assert.deepEqual(resolveBetTypeRule("thai-government", "three_top"), { label: "3 ตัวบน", payoutRate: 900, digits: 3 });
-  assert.deepEqual(resolveBetTypeRule("yiki-5", "two_bottom"), { label: "2 ตัวล่าง", payoutRate: 90, digits: 2 });
+  assert.deepEqual(resolveBetTypeRule("thai-government", "three_top"), { labelKey: "betTypes.threeTop", payoutRate: 900, digits: 3 });
+  assert.deepEqual(resolveBetTypeRule("yiki-5", "two_bottom"), { labelKey: "betTypes.twoBottom", payoutRate: 90, digits: 2 });
   assert.equal(resolveBetTypeRule("thai-government", "made_up"), null);
 });
 

@@ -10,18 +10,20 @@ import { useThaiLottoBoard } from "@/app/hooks/api/lottery";
 import { LoadingState } from "@/app/components/ui/StatusState";
 import { getThaiLottoDrawByRoundId } from "@/app/data/lotteryRoundsMockData";
 import { useThaiGovernmentBetSubmit } from "@/app/hooks/useLotteryBetSubmit";
+import { useLotteryI18n } from "@/app/components/lottery/useLotteryI18n";
 
 /**
  * Step 3 — แทงหวยรัฐบาลไทยตามรอบที่เลือก
  */
 export default function ThaiGovernmentLotteryPlayPage() {
+  const { t, roundLabel } = useLotteryI18n();
   const thaiBoard = useThaiLottoBoard().data;
   const urlParams = useParams();
   const roundId = (urlParams?.roundId as string) || "";
   const draw = useMemo(() => getThaiLottoDrawByRoundId(roundId), [roundId]);
   const betMeta = draw
     ? {
-        drawLabel: draw.drawLabel,
+        drawLabel: roundLabel(draw.drawLabel),
         drawCloseAt: draw.closeAt,
         continuePlayHref: `/lottery/thai-government/${roundId}`,
       }
@@ -33,13 +35,13 @@ export default function ThaiGovernmentLotteryPlayPage() {
 
   return (
     <LotteryPlayPageShell
-      title="หวยรัฐบาลไทย"
+      title={t("markets.thaiGovernment")}
       backHref="/lottery/thai-government"
       mainClassName="mx-auto max-w-[var(--content-max)] lg:mx-0 lg:max-w-none"
     >
       {({ onStepChange }) =>
         draw && !thaiBoard ? (
-          <LoadingState label="กำลังโหลดกระดานแทง…" />
+          <LoadingState label={t("board.loading")} />
         ) : draw && thaiBoard ? (
           <>
             <ThaiLottoBetBoard
@@ -57,9 +59,9 @@ export default function ThaiGovernmentLotteryPlayPage() {
           <EmptyState
             className="mt-4"
             variant="card"
-            title="ไม่พบรอบที่เลือก"
-            description="รอบนี้อาจปิดรับแทงแล้ว เลือกรอบอื่นได้จากรายการรอบ"
-            primaryAction={{ label: "ดูรอบทั้งหมด", href: "/lottery/thai-government" }}
+            title={t("board.roundNotFoundTitle")}
+            description={t("board.roundNotFoundOther")}
+            primaryAction={{ label: t("board.viewAllRounds"), href: "/lottery/thai-government" }}
           />
         )
       }

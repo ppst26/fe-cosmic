@@ -17,12 +17,12 @@ export const DAILY_CHECKIN_TERMS: string[] = [
 ];
 
 export const DAILY_CHECKIN_INITIAL: DailyCheckInDayReward[] = [
-  { day: 1, label: "จ.", credits: 5, status: "claimed" },
-  { day: 2, label: "อ.", credits: 5, status: "today" },
-  { day: 3, label: "พ.", credits: 5, status: "locked" },
-  { day: 4, label: "พฤ.", credits: 5, status: "locked" },
-  { day: 5, label: "ศ.", credits: 5, status: "locked" },
-  { day: 6, label: "ส.", credits: 5, status: "locked" },
-  { day: 7, label: "อา.", credits: 20, status: "locked", isBigReward: true },
+  { day: 1, labelKey: "checkIn.weekdays.mon", credits: 5, status: "claimed" },
+  { day: 2, labelKey: "checkIn.weekdays.tue", credits: 5, status: "today" },
+  { day: 3, labelKey: "checkIn.weekdays.wed", credits: 5, status: "locked" },
+  { day: 4, labelKey: "checkIn.weekdays.thu", credits: 5, status: "locked" },
+  { day: 5, labelKey: "checkIn.weekdays.fri", credits: 5, status: "locked" },
+  { day: 6, labelKey: "checkIn.weekdays.sat", credits: 5, status: "locked" },
+  { day: 7, labelKey: "checkIn.weekdays.sun", credits: 20, status: "locked", isBigReward: true },
 ];
 

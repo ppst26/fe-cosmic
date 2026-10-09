@@ -1,3 +1,5 @@
+import type { MessageKey } from "@/lib/i18n/messages";
+
 /* ── จาก app/data/cardsProvidersData.ts ── */
 
 export interface CardsCardItem {
@@ -16,7 +18,7 @@ export interface CardsCardItem {
 
 export interface CasinoFilterTabItem {
   id: string;
-  label: string;
+  labelKey: MessageKey<"games">;
   iconId: "gift" | "gamepad" | "cards" | "roulette" | "game-shows" | "dice";
 }
 
@@ -37,7 +39,7 @@ export interface CasinoCardItem {
 
 export interface FishingFilterTabItem {
   id: string;
-  label: string;
+  labelKey: MessageKey<"games">;
   iconId: "gift" | "gamepad" | "water-drop" | "flame" | "trophy";
 }
 
@@ -57,7 +59,7 @@ export interface FishingCardItem {
 
 export interface SportFilterTabItem {
   id: string;
-  label: string;
+  labelKey: MessageKey<"games">;
   iconId: "gift" | "gamepad" | "football" | "basketball" | "esports" | "boxing" | "tennis";
 }
 
@@ -78,7 +80,7 @@ export interface SportCardItem {
 
 export interface SlotFilterTabItem {
   id: string;
-  label: string;
+  labelKey: MessageKey<"games">;
   iconId: "gift" | "gamepad" | "water-drop" | "chicken" | "flame" | "trophy" | "sparkle";
 }
 

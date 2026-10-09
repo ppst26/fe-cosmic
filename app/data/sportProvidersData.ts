@@ -9,13 +9,13 @@ import type { SportFilterTabItem, SportCardItem } from "@/app/types/providers";
  * แถบตัวกรองสำหรับหน้ากีฬา
  */
 export const SPORT_FILTER_TABS: SportFilterTabItem[] = [
-  { id: "all-in-one", label: "ศูนย์รวม", iconId: "gift" },
-  { id: "all-providers", label: "ค่ายทั้งหมด", iconId: "gamepad" },
-  { id: "football", label: "ฟุตบอล", iconId: "football" },
-  { id: "basketball", label: "บาสเกตบอล", iconId: "basketball" },
-  { id: "esports", label: "อีสปอร์ต", iconId: "esports" },
-  { id: "boxing", label: "มวยไทย", iconId: "boxing" },
-  { id: "tennis", label: "เทนนิส", iconId: "tennis" },
+  { id: "all-in-one", labelKey: "filters.allInOne", iconId: "gift" },
+  { id: "all-providers", labelKey: "filters.allProviders", iconId: "gamepad" },
+  { id: "football", labelKey: "filters.football", iconId: "football" },
+  { id: "basketball", labelKey: "filters.basketball", iconId: "basketball" },
+  { id: "esports", labelKey: "filters.esports", iconId: "esports" },
+  { id: "boxing", labelKey: "filters.boxing", iconId: "boxing" },
+  { id: "tennis", labelKey: "filters.tennis", iconId: "tennis" },
 ];
 
 const SPORT_DEFAULT_TAGS = ["all-in-one", "all-providers", "football"] as const;

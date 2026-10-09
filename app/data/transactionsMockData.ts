@@ -2,10 +2,10 @@ import type { TransactionItem, TransactionKindTab } from "../types/transaction";
 
 /** แท็บเลือกประเภท */
 export const TRANSACTION_KIND_TABS: TransactionKindTab[] = [
-  { id: "deposit", label: "ฝาก" },
-  { id: "withdraw", label: "ถอน" },
-  { id: "promotion", label: "โปรโมชัน" },
-  { id: "bet", label: "เดิมพัน" },
+  { id: "deposit", labelKey: "kindTabs.deposit" },
+  { id: "withdraw", labelKey: "kindTabs.withdraw" },
+  { id: "promotion", labelKey: "kindTabs.promotion" },
+  { id: "bet", labelKey: "kindTabs.bet" },
 ];
 
 /** Mock รายการฝาก */

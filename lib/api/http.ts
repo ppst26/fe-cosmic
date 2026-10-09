@@ -16,6 +16,21 @@ export const API_ERROR_MESSAGES = {
   generic: "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
 } as const;
 
+/** key ของข้อความ default ฝั่ง client — ตรงกับ errors.api.<key> ใน dictionary */
+export type ApiErrorMessageKey = keyof typeof API_ERROR_MESSAGES;
+
+/**
+ * ข้อความ error เป็นค่า default ของ apiFetch หรือไม่ (ไม่ใช่ข้อความจาก server)
+ * → คืน key ให้ UI แปลด้วย useApiErrorText() · ข้อความจาก server คืน null (แสดงตามเดิม)
+ */
+export function apiErrorMessageKey(message: string | null | undefined): ApiErrorMessageKey | null {
+  if (!message) return null;
+  for (const key of Object.keys(API_ERROR_MESSAGES) as ApiErrorMessageKey[]) {
+    if (API_ERROR_MESSAGES[key] === message) return key;
+  }
+  return null;
+}
+
 /** ประเภท error ที่ UI ใช้ตัดสินใจได้ (เช่น 401 → เปิด login) */
 export type ApiErrorCode = "NETWORK" | "PARSE" | "UNAUTHORIZED" | "HTTP" | "ABORTED";
 

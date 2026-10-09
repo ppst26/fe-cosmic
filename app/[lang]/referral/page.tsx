@@ -9,12 +9,14 @@ import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { ReferralPageContent } from "@/app/components/referral/ReferralPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * หน้าแนะนำเพื่อน (/referral)
  */
 export default function ReferralPage() {
   const { isAuthenticated, isLoading } = useAuth();
+  const t = useT("referral");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: profile } = useProfile();
   /** รหัสชวนเพื่อน = memberId ของผู้ใช้ที่ login · ไม่มีให้ ReferralPageContent ใช้ refCode จาก overview */
@@ -30,7 +32,7 @@ export default function ReferralPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="แนะนำเพื่อน" backHref="/" />
+      <SlotProvidersHeader title={t("pageTitle")} backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <ReferralPageContent refCode={refCode} />

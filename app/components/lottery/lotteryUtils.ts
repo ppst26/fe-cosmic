@@ -27,20 +27,7 @@ export function formatBaht(value: number): string {
   });
 }
 
-/** วันเวลาแบบสรุปโพย — เช่น 20 ก.ย. 2569 08:52 */
-export function formatLotterySlipDateTime(iso: string): string {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "—";
-  return date.toLocaleString("th-TH", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Asia/Bangkok",
-  });
-}
+/** วันเวลาแบบสรุปโพย / countdown ที่ขึ้นกับภาษา — ใช้ผ่าน useLotteryI18n (lib/lottery/labels.ts) */
 
 export {
   BANGKOK_OFFSET_MS,
@@ -48,15 +35,3 @@ export {
   formatBangkokTimeHHmm,
   getBangkokWallParts,
 } from "@/app/lib/bangkokTime";
-
-/** แปลงมิลลิวินาทีคงเหลือเป็น "3 วัน 04:12:09" — ใช้ใน ThaiLottoDrawCard / YikiRoundCard */
-export function formatCountdown(ms: number): string {
-  if (ms <= 0) return "ปิดรับแทงแล้ว";
-  const totalSec = Math.floor(ms / 1000);
-  const days = Math.floor(totalSec / 86400);
-  const h = Math.floor((totalSec % 86400) / 3600);
-  const m = Math.floor((totalSec % 3600) / 60);
-  const s = totalSec % 60;
-  const hms = [h, m, s].map((n) => String(n).padStart(2, "0")).join(":");
-  return days > 0 ? `${days} วัน ${hms}` : hms;
-}

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { formatGemsBalance } from "@/lib/format";
 import type { GemsStorePackage } from "@/app/types/reward";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 function formatCreditAmount(value: number): string {
   return new Intl.NumberFormat("th-TH").format(value);
@@ -33,6 +34,7 @@ export function GemsRedeemConfirmDialog({
   loading = false,
   onConfirm,
 }: GemsRedeemConfirmDialogProps) {
+  const t = useT("rewards");
   const gemAsset = GEMS_STORE_GEM_ASSET;
   const credits = pkg?.credits ?? 0;
   const gemsCost = pkg?.gemsCost ?? 0;
@@ -65,17 +67,20 @@ export function GemsRedeemConfirmDialog({
                   <div className="gems-redeem-confirm-dialog__head">
                     <div className="gems-redeem-confirm-dialog__head-copy min-w-0">
                       <Dialog.Title className="gems-redeem-confirm-dialog__title">
-                        เครดิต {formatCreditAmount(credits)}
+                        {t("gemsStore.confirm.title", { amount: formatCreditAmount(credits) })}
                       </Dialog.Title>
                       <p className="gems-redeem-confirm-dialog__subtitle">
-                        ใช้ {formatGemsBalance(gemsCost)} เพชร แลกเป็น เครดิต {formatCreditAmount(credits)}
+                        {t("gemsStore.confirm.subtitle", {
+                          gems: formatGemsBalance(gemsCost),
+                          credits: formatCreditAmount(credits),
+                        })}
                       </p>
                     </div>
                     <div className="gems-redeem-confirm-dialog__reward shrink-0 text-right">
                       <p className={valueClass("reward", "gems-redeem-confirm-dialog__reward-amount")}>
                         +{formatCreditAmount(credits)}
                       </p>
-                      <p className="gems-redeem-confirm-dialog__reward-label">เครดิต</p>
+                      <p className="gems-redeem-confirm-dialog__reward-label">{t("gemsStore.confirm.creditsLabel")}</p>
                     </div>
                   </div>
 
@@ -87,7 +92,7 @@ export function GemsRedeemConfirmDialog({
                         <span className="gems-redeem-confirm-dialog__gem-icon" aria-hidden="true">
                           <Image src={gemAsset} alt="" fill sizes="18px" className="object-contain" />
                         </span>
-                        เพชรที่ใช้
+                        {t("gemsStore.confirm.gemsUsed")}
                       </dt>
                       <dd className={valueClass("accent", "gems-redeem-confirm-dialog__row-value")}>
                         {formatGemsBalance(gemsCost)}
@@ -98,7 +103,7 @@ export function GemsRedeemConfirmDialog({
                         <span className="gems-redeem-confirm-dialog__gem-icon" aria-hidden="true">
                           <Image src={gemAsset} alt="" fill sizes="18px" className="object-contain" />
                         </span>
-                        คงเหลือหลังแลก
+                        {t("gemsStore.confirm.balanceAfter")}
                       </dt>
                       <dd className={valueClass("accent", "gems-redeem-confirm-dialog__row-value")}>
                         {formatGemsBalance(balanceAfter)}
@@ -115,7 +120,7 @@ export function GemsRedeemConfirmDialog({
                     disabled={loading}
                     className="cosmic-confirm-dialog__btn cosmic-confirm-dialog__btn-cancel"
                   >
-                    ยกเลิก
+                    {t("gemsStore.confirm.cancel")}
                   </button>
                 </Dialog.Close>
                 <button
@@ -124,7 +129,7 @@ export function GemsRedeemConfirmDialog({
                   onClick={handleConfirm}
                   className="cosmic-confirm-dialog__btn cosmic-confirm-dialog__btn-confirm"
                 >
-                  {loading ? "กำลังดำเนินการ…" : "ยืนยัน"}
+                  {loading ? t("gemsStore.confirm.processing") : t("gemsStore.confirm.confirm")}
                 </button>
               </div>
             </>

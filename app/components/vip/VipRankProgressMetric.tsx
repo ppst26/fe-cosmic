@@ -2,8 +2,10 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { formatVipAmount, formatVipCompactAmount } from "@/lib/format";
+import { formatVipAmount } from "@/lib/format";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
 
 export interface VipRankProgressMetricProps {
   label: string;
@@ -26,7 +28,9 @@ export function VipRankProgressMetric({
   locked = false,
   amountFormat = "full",
 }: VipRankProgressMetricProps) {
-  const formatAmount = amountFormat === "compact" ? formatVipCompactAmount : formatVipAmount;
+  const t = useT("vip");
+  const fmt = useFormat();
+  const formatAmount = amountFormat === "compact" ? fmt.compactAmount : formatVipAmount;
   const pct = target > 0 ? Math.min(100, (progress / target) * 100) : 0;
   const complete = !locked && progress >= target;
   const remaining = Math.max(0, target - progress);
@@ -66,7 +70,7 @@ export function VipRankProgressMetric({
       </div>
       <div className="vip-rank-metric__foot mt-1.5 text-right text-[0.65rem] leading-snug sm:text-xs">
         {locked ? (
-          <span className="text-[var(--text-secondary)]">เป้า {formatAmount(target)}</span>
+          <span className="text-[var(--text-secondary)]">{t("progress.target", { amount: formatAmount(target) })}</span>
         ) : complete ? (
           <span
             className={valueClass(
@@ -75,10 +79,10 @@ export function VipRankProgressMetric({
             )}
           >
             <CheckMiniIcon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            ครบแล้ว
+            {t("progress.complete")}
           </span>
         ) : (
-          <span className="text-[var(--text-secondary)]">ขาดอีก {formatAmount(remaining)}</span>
+          <span className="text-[var(--text-secondary)]">{t("progress.remaining", { amount: formatAmount(remaining) })}</span>
         )}
       </div>
     </div>

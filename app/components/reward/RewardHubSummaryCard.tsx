@@ -8,6 +8,7 @@ import { HeaderWalletAssetIcon } from "@/app/components/layout/HeaderWalletAsset
 import { cn } from "@/lib/utils";
 import { formatRewardPoints, formatHeaderWalletBalance } from "@/lib/format";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * การ์ดยอดเครดิต · พอยท์ — หัวหน้า /reward
@@ -19,16 +20,17 @@ export function RewardHubSummaryCard({
   pointsBalance: number;
   className?: string;
 }) {
+  const t = useT("rewards");
   const wallet = useWallet();
 
   return (
     <aside
       className={cn("reward-hub-summary mx-3 rounded-2xl px-4 py-3.5 sm:mx-4", className)}
-      aria-label="ยอดเครดิตและพอยท์"
+      aria-label={t("hub.summaryAria")}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs text-[var(--text-secondary)]">เครดิตทั้งหมด</p>
+          <p className="text-xs text-[var(--text-secondary)]">{t("hub.totalCredits")}</p>
           <p className={valueClass("emphasis", "mt-0.5 flex items-center gap-1.5 text-xl sm:text-2xl")}>
             <HeaderWalletAssetIcon className="h-6 w-6 shrink-0 object-contain" />
             {wallet.data ? formatHeaderWalletBalance(wallet.data.amount) : "—"}

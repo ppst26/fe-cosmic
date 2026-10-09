@@ -9,6 +9,7 @@ import {
   responsiveSheetOverlayClass,
 } from "../ui/responsiveSheetDialog";
 import { NotificationCenterPanel } from "./NotificationCenterPanel";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface NotificationMobileSheetProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ interface NotificationMobileSheetProps {
  * Sheet แจ้งเตือนมือถือ — เปิดจากไอคอนกระดิ่งใน Header
  */
 export function NotificationMobileSheet({ isOpen, onClose }: NotificationMobileSheetProps) {
+  const t = useT("common");
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Portal>
@@ -32,10 +34,10 @@ export function NotificationMobileSheet({ isOpen, onClose }: NotificationMobileS
         >
           <div className={RESPONSIVE_SHEET_HANDLE_CLASS} aria-hidden />
           <ResponsiveSheetHeader
-            closeAriaLabel="ปิดการแจ้งเตือน"
+            closeAriaLabel={t("notifications.close")}
             title={
               <Dialog.Title className="cosmic-type-sheet-title text-xl sm:text-2xl">
-                การแจ้งเตือน
+                {t("notifications.title")}
               </Dialog.Title>
             }
           />

@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { HubNavLink } from "@/app/components/hub/HubNavLink";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 interface QuickBannerItem {
   id: string;
-  title: string;
-  subtitle: string;
+  titleKey: MessageKey<"home">;
+  subtitleKey: MessageKey<"home">;
   href: string;
   visualSrc: string;
   isModel?: boolean;
@@ -15,22 +17,22 @@ interface QuickBannerItem {
 const DESKTOP_QUICK_BANNERS: QuickBannerItem[] = [
   {
     id: "quick-promo",
-    title: "โปรโมชั่นพิเศษ",
-    subtitle: "โปรโมชั่นพิเศษเฉพาะคุณ",
+    titleKey: "quickBanners.promo.title",
+    subtitleKey: "quickBanners.promo.subtitle",
     href: "/promotions",
     visualSrc: "/assets/3d/โปรโมชั่น.webp",
   },
   {
     id: "quick-event",
-    title: "กิจกรรม",
-    subtitle: "กิจกรรมตลอด 24 ชั่วโมง",
+    titleKey: "quickBanners.event.title",
+    subtitleKey: "quickBanners.event.subtitle",
     href: "/event",
     visualSrc: "/assets/3d/event.webp",
   },
   {
     id: "quick-news",
-    title: "ข่าวสาร",
-    subtitle: "ข่าวสารที่คุณไม่ควรพลาด",
+    titleKey: "quickBanners.news.title",
+    subtitleKey: "quickBanners.news.subtitle",
     href: "/promotions",
     visualSrc: "/assets/model/girl2.webp",
     isModel: true,
@@ -42,9 +44,10 @@ const DESKTOP_QUICK_BANNERS: QuickBannerItem[] = [
  * สไตล์ Cosmic glass theme เชื่อมต่อ Hub modal เมื่อคลิก
  */
 export function LobbyDesktopQuickBanners() {
+  const t = useT("home");
   return (
     <nav
-      aria-label="เมนูไฮไลต์ด่วน"
+      aria-label={t("quickBanners.ariaLabel")}
       className="hidden lg:grid grid-cols-3 gap-3 w-full min-w-0"
     >
       {DESKTOP_QUICK_BANNERS.map((banner) => (
@@ -83,10 +86,10 @@ export function LobbyDesktopQuickBanners() {
           {/* Text block */}
           <div className="relative z-10 flex min-w-0 max-w-[62%] flex-col justify-center px-4 py-2">
             <span className="truncate text-[16px] xl:text-[17px] font-medium tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
-              {banner.title}
+              {t(banner.titleKey)}
             </span>
             <span className="mt-0.5 truncate text-[12px] xl:text-[13px] font-normal text-[var(--text-secondary)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-              {banner.subtitle}
+              {t(banner.subtitleKey)}
             </span>
           </div>
         </HubNavLink>

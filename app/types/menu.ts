@@ -1,10 +1,13 @@
 /* ── จาก app/data/menuMockData.ts ── */
 
+import type { MessageKey } from "@/lib/i18n/messages";
+
 export type MenuDialogAction = "vip-rank" | "coupon" | "language";
 
 export interface MenuDialogTile {
   id: string;
-  label: string;
+  /** key ใน dictionary nav — render ด้วย useT("nav")(labelKey) */
+  labelKey: MessageKey<"nav">;
   href?: string;
   action?: MenuDialogAction;
   iconId: string;
@@ -16,7 +19,7 @@ export interface MenuDialogTile {
 
 export interface MenuDialogSection {
   id: string;
-  sectionLabel: string;
+  sectionLabelKey: MessageKey<"nav">;
   columns: 2 | 3 | 4;
   layout?: "vertical" | "horizontal";
   items: MenuDialogTile[];

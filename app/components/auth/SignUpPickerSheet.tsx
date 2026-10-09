@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { signUpCoverToneClass } from "../../data/signupMockData";
 import { COSMIC_SHEET_SOFT_GLASS_INTERACTIVE } from "../ui/cosmicButtonClasses";
 import type { SignUpCoverTone } from "@/app/types/signup";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface SignUpPickerSheetProps {
   isOpen: boolean;
@@ -23,6 +24,7 @@ export function SignUpPickerSheet({
   ariaLabel,
   children,
 }: SignUpPickerSheetProps) {
+  const t = useT("auth");
   useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -43,7 +45,7 @@ export function SignUpPickerSheet({
       <button
         type="button"
         className="cosmic-dialog-overlay absolute inset-0 animate-in fade-in-0"
-        aria-label="ปิดตัวเลือก"
+        aria-label={t("signUpSheet.pickerClose")}
         onClick={onClose}
       />
       <div

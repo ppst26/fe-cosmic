@@ -5,6 +5,7 @@ import type { ProfileUser } from "@/app/types/auth";
 import { UserAvatar } from "./UserAvatar";
 import { ProfileAvatarPicker } from "./ProfileAvatarPicker";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ProfileAccountAvatarSectionProps {
   profile: ProfileUser;
@@ -19,6 +20,7 @@ export function ProfileAccountAvatarSection({
   onProfileUpdated,
 }: ProfileAccountAvatarSectionProps) {
   const [pickerOpen, setPickerOpen] = useState(false);
+  const t = useT("profile");
 
   return (
     <>
@@ -29,7 +31,7 @@ export function ProfileAccountAvatarSection({
           className={cn(
             "group rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)]",
           )}
-          aria-label="เปลี่ยนรูปโปรไฟล์"
+          aria-label={t("avatar.change")}
         >
           <span className="menu-drawer-avatar__ring inline-flex">
             <UserAvatar
@@ -40,7 +42,7 @@ export function ProfileAccountAvatarSection({
             />
           </span>
         </button>
-        <p className="text-xs text-[var(--text-muted)]">แตะรูปเพื่อเปลี่ยนโปรไฟล์</p>
+        <p className="text-xs text-[var(--text-muted)]">{t("avatar.tapToChange")}</p>
       </section>
 
       <ProfileAvatarPicker

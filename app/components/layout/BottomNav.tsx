@@ -7,6 +7,7 @@ import { createPortal } from "react-dom";
 import { useIsClient } from "@/app/hooks/useIsClient";
 import type { BottomNavItem } from "@/app/types/lobby";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 import { useDeposit } from "../deposit/DepositProvider";
 import { useWithdraw } from "../withdraw/WithdrawProvider";
@@ -25,13 +26,8 @@ export interface BottomNavProps {
   isMenuOpen?: boolean;
 }
 
-const DEFAULT_ITEMS: ReadonlyArray<{ id: NavId; label: string }> = [
-  { id: "withdraw", label: "ถอนเงิน" },
-  { id: "deposit", label: "ฝากเงิน" },
-  { id: "menu", label: "เมนู" },
-  { id: "cashback", label: "คืนยอด" },
-  { id: "contact", label: "ติดต่อ" },
-];
+/** ป้ายแท็บจาก dictionary nav — bottomNav.<id> */
+const DEFAULT_ITEM_IDS: ReadonlyArray<NavId> = ["withdraw", "deposit", "menu", "cashback", "contact"];
 
 const ICON_TO_NAV: Record<BottomNavItem["icon"], NavId> = {
   withdraw: "withdraw",
@@ -127,6 +123,7 @@ function NavTabButton({
       aria-controls={isMenu ? menuDialogId : undefined}
       aria-current={selected && !isMenu ? "page" : undefined}
       aria-label={isMenu ? label : undefined}
+      data-bottom-nav-menu={isMenu ? "" : undefined}
     >
       <span className={styles.icon}>
         <BottomNavIcon id={id} />
@@ -163,13 +160,17 @@ export function BottomNav({
   const { openDeposit } = useDeposit();
   const { openWithdraw } = useWithdraw();
 
+  const t = useT("nav");
+
   const navItems = useMemo(() => {
-    if (!items?.length) return [...DEFAULT_ITEMS];
+    if (!items?.length) {
+      return DEFAULT_ITEM_IDS.map((id) => ({ id, label: t(`bottomNav.${id}`) }));
+    }
     return items.map((item) => ({
       id: ICON_TO_NAV[item.icon],
-      label: item.label,
+      label: t(item.labelKey),
     }));
-  }, [items]);
+  }, [items, t]);
 
   const menuOpenResolved = menuOpen ?? isMenuOpen ?? false;
   const resolvedActive =
@@ -202,7 +203,7 @@ export function BottomNav({
   const navTree = (
     <>
       {showSpacer ? <div className={styles.spacer} aria-hidden="true" /> : null}
-      <nav className={styles.nav} aria-label="เมนูหลัก">
+      <nav className={styles.nav} aria-label={t("bottomNav.label")}>
         <div className={styles.surface} aria-hidden="true" />
         <div className={styles.items}>
           {navItems.map(({ id, label }) => {

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { GameSectionData } from "../../types/lobby";
 import { Carousel } from "../ui/Carousel";
@@ -5,6 +7,7 @@ import { GameCard } from "../ui/GameCard";
 import { SectionIcon } from "../ui/SectionIcon";
 import { HOME_LOBBY_GAME_CAROUSEL_MAX } from "@/lib/uiConstants";
 import { GameCardStaggerShell } from "@/app/lib/gameCardEnterMotion";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface GameSectionProps {
   section: GameSectionData;
@@ -17,19 +20,21 @@ interface GameSectionProps {
  * Render จาก GAME_SECTIONS_DATA ใน app/page.tsx — ไม่คัดลอก markup ทีละหมวด
  */
 export function GameSection({ section, className = "mt-6 sm:mt-8" }: GameSectionProps) {
-  const { id, title, icon, viewAllHref, games, carouselMax } = section;
+  const t = useT("home");
+  const { id, title, titleKey, icon, viewAllHref, games, carouselMax } = section;
   const limit = carouselMax ?? HOME_LOBBY_GAME_CAROUSEL_MAX;
   const carouselGames = games.slice(0, limit);
 
   return (
     <Carousel
-      title={title}
+      title={titleKey ? t(titleKey) : title}
       icon={<SectionIcon id={icon} className="h-[1.35rem] w-[1.35rem] text-[var(--icon-default)] sm:h-6 sm:w-6" />}
       viewAllHref={viewAllHref}
       trackClassName="carousel-games"
       className={className}
+      sectionId={id}
       isEmpty={carouselGames.length === 0}
-      emptyMessage="ยังไม่มีเกมในหมวดนี้"
+      emptyMessage={t("sections.empty")}
     >
       {carouselGames.map((game, index) => (
         <GameCardStaggerShell key={`${id}-${game.id}`} index={index} className="min-w-0">

@@ -3,6 +3,7 @@
 import React, { useMemo } from "react";
 import { LotterySlipToolbar } from "./LotterySlipToolbar";
 import { formatLotteryDigitsDisplay } from "./lotteryUtils";
+import { useLotteryI18n } from "./useLotteryI18n";
 
 /** รายการในโพยขั้นเลือกเลข — ใช้ร่วมทุกตลาดหวย */
 export interface LotteryBetSlipPickEntry {
@@ -42,6 +43,7 @@ export function LotteryBetSlip({
   canUndo = false,
   onUndo,
 }: LotteryBetSlipProps) {
+  const { t } = useLotteryI18n();
   const grouped = useMemo(() => {
     const order: string[] = [];
     const map = new Map<string, LotteryBetSlipPickEntry[]>();
@@ -62,7 +64,7 @@ export function LotteryBetSlip({
     >
       <div className="lottery-bet-slip__head shrink-0">
         <h2 id={titleId} className="lottery-bet-slip__head-count">
-          {entries.length} รายการ
+          {t("slip.itemCount", { count: entries.length })}
         </h2>
         <div className="lottery-slip-toolbar--head hidden lg:block">
           <LotterySlipToolbar
@@ -92,7 +94,7 @@ export function LotteryBetSlip({
               >
                 <div className="lottery-bet-slip__group-head flex items-center justify-between px-2 py-[0.35rem]">
                   <span>{label}</span>
-                  <span>{groupEntries.length} รายการ</span>
+                  <span>{t("slip.itemCount", { count: groupEntries.length })}</span>
                 </div>
                 <ul className="lottery-bet-slip__rows flex flex-col gap-1 m-0 p-0">
                   {groupEntries.map((entry) => (
@@ -108,7 +110,7 @@ export function LotteryBetSlip({
                         type="button"
                         className="lottery-bet-slip__remove grid shrink-0 place-items-center w-[1.75rem] h-[1.75rem]"
                         onClick={() => onRemove(entry.id)}
-                        aria-label={`ลบ ${label} ${entry.number}`}
+                        aria-label={t("slip.removeAria", { label, number: entry.number })}
                       >
                         <TrashIcon />
                       </button>

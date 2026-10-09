@@ -20,6 +20,7 @@ import {
 import { COSMIC_BTN_LOGOUT } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ProfileHubBodyProps {
   profile: ProfileUser;
@@ -59,6 +60,7 @@ export function ProfileHubBody({
   onProfileUpdated,
 }: ProfileHubBodyProps) {
   /** สถิติ / ระดับ VIP — แสดง "—" ระหว่างโหลด (แถวคงความสูงเดิม) */
+  const t = useT("profile");
   const stats = useProfileHubStats().data;
   const vipPlayer = useVipPlayer().data;
   const vipRankLabel = vipPlayer ? getVipRankTier(vipPlayer.currentRankId).label : "—";
@@ -70,18 +72,18 @@ export function ProfileHubBody({
         <ProfileHubHeader profile={profile} onProfileUpdated={onProfileUpdated} />
       ) : null}
 
-      <nav className="profile-hub-nav flex flex-col gap-0.5" aria-label="เมนูโปรไฟล์">
+      <nav className="profile-hub-nav flex flex-col gap-0.5" aria-label={t("hub.navAriaLabel")}>
         <ProfileHubRow
           layout={rowLayout}
           icon={<ProfileNavIcon className="h-5 w-5" />}
-          title="ข้อมูลบัญชี"
+          title={t("account.title")}
           showChevron
           onClick={onOpenAccountDetail}
         />
         <ProfileHubRow
           layout={rowLayout}
           icon={<CrownIcon className="h-5 w-5 text-[#ffe66d]" />}
-          title="ระดับชั้น VIP"
+          title={t("hub.vipLevel")}
           showChevron
           onClick={onOpenVip}
           trailing={
@@ -91,14 +93,14 @@ export function ProfileHubBody({
         <ProfileHubRow
           layout={rowLayout}
           icon={<HistoryIcon className="h-5 w-5" />}
-          title="รายการฝากถอน"
+          title={t("hub.transactions")}
           showChevron
           onClick={onOpenTransactions}
         />
         <ProfileHubRow
           layout={rowLayout}
           icon={<DiamondGemIcon className="h-5 w-5" />}
-          title="เพชรของฉัน"
+          title={t("hub.myDiamonds")}
           trailing={
             <span className={valueClass("accent")}>
               {stats ? formatDiamonds(stats.diamonds) : "—"}
@@ -108,7 +110,7 @@ export function ProfileHubBody({
         <ProfileHubRow
           layout={rowLayout}
           icon={<RefundIcon className="h-5 w-5" />}
-          title="โบนัสยอดเสีย"
+          title={t("hub.lossRebate")}
           showChevron
           onClick={onOpenLossRebate}
           trailing={
@@ -120,7 +122,7 @@ export function ProfileHubBody({
         <ProfileHubRow
           layout={rowLayout}
           icon={<UsersGroupIcon className="h-5 w-5" />}
-          title="ยอด Affiliate"
+          title={t("hub.affiliate")}
           trailing={
             <span className={valueClass("reward")}>
               {stats ? formatThb(stats.affiliateBalanceThb) : "—"}
@@ -130,7 +132,7 @@ export function ProfileHubBody({
         <ProfileHubRow
           layout={rowLayout}
           icon={<PromoTagIcon className="h-5 w-5" />}
-          title="โปรโมชั่นที่ใช้อยู่"
+          title={t("hub.activePromotion")}
           trailing={
             <span className="max-w-[46%] truncate text-[var(--text-secondary)]">
               {stats ? stats.activePromotionLabel : "—"}
@@ -145,7 +147,7 @@ export function ProfileHubBody({
         className={cn(COSMIC_BTN_LOGOUT, "profile-hub-logout mt-3")}
       >
         <LogOutIcon className="h-5 w-5 shrink-0" />
-        ออกจากระบบ
+        {t("logout")}
       </button>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { REWARD_POINTS_LABEL } from "@/app/data/rewardFeaturesMockData";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
 import { COSMIC_PANEL_GLASS } from "@/app/components/ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,7 @@ export function RewardPointsBar({
   pointsBalance: number;
   className?: string;
 }) {
+  const t = useT("rewards");
   return (
     <div
       className={cn(
@@ -26,9 +27,9 @@ export function RewardPointsBar({
         COSMIC_PANEL_GLASS,
         className,
       )}
-      aria-label={`${REWARD_POINTS_LABEL}คงเหลือ`}
+      aria-label={t("hub.pointsBalance")}
     >
-      <p className="text-sm text-[var(--text-secondary)]">{REWARD_POINTS_LABEL}คงเหลือ</p>
+      <p className="text-sm text-[var(--text-secondary)]">{t("hub.pointsBalance")}</p>
       <p className={valueClass("accent", "flex items-center gap-2 text-lg")}>
         <Image src={GEMS_STORE_GEM_ASSET} alt="" width={24} height={24} className="h-6 w-6 object-contain" />
         {formatRewardPoints(pointsBalance)}

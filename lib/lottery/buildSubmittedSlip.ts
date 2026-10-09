@@ -1,11 +1,12 @@
 import type { LotteryBetMarketId } from "@/app/types/lotteryBetApi";
 import type { LotterySubmittedSlip, LotterySlipLine } from "@/app/types/lotterySlip";
+import type { LotteryMessageKey } from "@/app/types/lottery";
 import { THAI_LOTTO_BET_TYPES } from "@/app/data/thaiLottoMockData";
 import { YIKI_SETTLEMENT_TYPES } from "@/app/data/yikiMockData";
 
 /** ประเภทแทงที่ server รู้จัก — ป้ายชื่อและอัตราจ่ายมาจากที่นี่เท่านั้น (ไม่เชื่อค่าจาก client) */
 export interface BetTypeRule {
-  label: string;
+  labelKey: LotteryMessageKey;
   payoutRate: number;
   /** จำนวนหลักที่ต้องแทง */
   digits: number;
@@ -25,11 +26,11 @@ function digitsFromTypeKey(typeKey: string): number {
 export function resolveBetTypeRule(market: LotteryBetMarketId, typeKey: string): BetTypeRule | null {
   if (market === "thai-government") {
     const type = THAI_LOTTO_BET_TYPES.find((item) => item.id === typeKey);
-    return type ? { label: type.label, payoutRate: type.payoutRate, digits: type.digits } : null;
+    return type ? { labelKey: type.labelKey, payoutRate: type.payoutRate, digits: type.digits } : null;
   }
   const settlement = YIKI_SETTLEMENT_TYPES[typeKey as keyof typeof YIKI_SETTLEMENT_TYPES];
   return settlement
-    ? { label: settlement.label, payoutRate: settlement.payoutRate, digits: digitsFromTypeKey(typeKey) }
+    ? { labelKey: settlement.labelKey, payoutRate: settlement.payoutRate, digits: digitsFromTypeKey(typeKey) }
     : null;
 }
 
@@ -58,7 +59,7 @@ export function buildSubmittedSlip(
 ): LotterySubmittedSlip {
   const lines: LotterySlipLine[] = input.lines.map((line) => ({
     typeKey: line.typeKey,
-    typeLabel: line.rule.label,
+    typeLabelKey: line.rule.labelKey,
     number: line.number,
     amount: line.amount,
     payoutRate: line.rule.payoutRate,
@@ -71,7 +72,8 @@ export function buildSubmittedSlip(
     reference: ids.reference,
     market: input.market,
     roundId: input.roundId,
-    drawLabel: input.drawLabel || "งวดปัจจุบัน",
+    /** ว่าง = ไม่ระบุงวด — หน้าโพยแสดง "งวดปัจจุบัน" ตามภาษาเอง */
+    drawLabel: input.drawLabel || "",
     drawAt: input.drawCloseAt || ids.purchasedAt,
     purchasedAt: ids.purchasedAt,
     status: "submitted",

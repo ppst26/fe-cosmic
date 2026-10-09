@@ -1,4 +1,5 @@
 import type { WheelSegmentStyle } from "./wheelTheme";
+import type { MessageKey } from "@/lib/i18n/messages";
 /* ── จาก app/data/gemsStoreMockData.ts ── */
 
 export interface GemsStorePackage {
@@ -15,7 +16,8 @@ export type RewardHubShortcutId = "lucky-box" | "random-card" | "freespins";
 
 export interface RewardHubShortcut {
   id: RewardHubShortcutId;
-  label: string;
+  /** key ใน namespace rewards — แปลตอน render */
+  labelKey: MessageKey<"rewards">;
   href: string;
   iconId: string;
   /** ปิดใช้งานชั่วคราว — แสดง Coming soon */
@@ -25,10 +27,10 @@ export interface RewardHubShortcut {
 export interface RewardPromoBanner {
   id: string;
   title: string;
-  subtitle: string;
+  subtitleKey: MessageKey<"rewards">;
   href: string;
   imageSrc: string;
-  termsLabel: string;
+  termsLabelKey: MessageKey<"rewards">;
 }
 
 /** การ์ดรางวัลแสดงผล — 3 บน · 2 ล่าง (อ้างอิง Redeem Card) */

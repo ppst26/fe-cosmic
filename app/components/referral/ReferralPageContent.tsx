@@ -14,13 +14,14 @@ import { valueClass } from "@/lib/semanticValue";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { COSMIC_PANEL_GLASS_ICON } from "../ui/cosmicButtonClasses";
-import type { ReferralStatsMock } from "@/app/types/referral";
+import type { ReferralMessageKey, ReferralStatsMock } from "@/app/types/referral";
+import { useT } from "@/lib/i18n/I18nProvider";
 type ReferralTabId = "overview" | "users" | "earning";
 
-const TABS: { id: ReferralTabId; label: string }[] = [
-  { id: "overview", label: "ภาพรวม" },
-  { id: "users", label: "เพื่อนที่แนะนำ" },
-  { id: "earning", label: "รายได้" },
+const TABS: { id: ReferralTabId; labelKey: ReferralMessageKey }[] = [
+  { id: "overview", labelKey: "tabs.overview" },
+  { id: "users", labelKey: "tabs.users" },
+  { id: "earning", labelKey: "tabs.earning" },
 ];
 
 function TabIcon({ tab }: { tab: ReferralTabId }) {
@@ -54,15 +55,16 @@ export function ReferralPageContent({
   embedded?: boolean;
 }) {
   const overview = useReferralOverview();
+  const t = useT("referral");
   return (
     <ResourceGate
       resource={overview}
-      loadingLabel="กำลังโหลดข้อมูลแนะนำเพื่อน…"
-      errorTitle="โหลดข้อมูลแนะนำเพื่อนไม่สำเร็จ"
+      loadingLabel={t("status.overviewLoading")}
+      errorTitle={t("status.overviewError")}
       idleFallback={
         <LoginPrompt
-          title="เข้าสู่ระบบเพื่อดูลิงก์แนะนำเพื่อน"
-          description="ลิงก์และรายได้จากการแนะนำจะแสดงหลังเข้าสู่ระบบ"
+          title={t("loginPrompt.title")}
+          description={t("loginPrompt.description")}
         />
       }
     >
@@ -132,6 +134,7 @@ function ReferralMobileTabs({
   stats: ReferralStatsMock;
   overview: ReferralOverviewData;
 }) {
+  const t = useT("referral");
   return (
     <div className="referral-mobile flex flex-col gap-5 pb-4">
       <CosmicLineTabs
@@ -140,13 +143,13 @@ function ReferralMobileTabs({
           label: (
             <>
               <TabIcon tab={item.id} />
-              {item.label}
+              {t(item.labelKey)}
             </>
           ),
         }))}
         activeId={tab}
         onSelect={setTab}
-        ariaLabel="เมนูแนะนำเพื่อน"
+        ariaLabel={t("tabs.ariaLabel")}
         columns={3}
         withIcons
       />
@@ -158,9 +161,9 @@ function ReferralMobileTabs({
           <ReferralStatsSection stats={stats} />
 
           <section className="surface-solid-stack px-4 py-4">
-            <h2 className="text-sm font-medium text-[var(--text-primary)]">รับรายได้ 2 ต่อ</h2>
+            <h2 className="text-sm font-medium text-[var(--text-primary)]">{t("tiers.title")}</h2>
             <p className="mt-0.5 text-xs text-[var(--text-secondary)]">
-              แชร์ลิงก์แล้วรับส่วนแบ่งจากยอดเทิร์นของเครือข่าย
+              {t("tiers.description")}
             </p>
             <div className="mt-4 flex flex-col gap-3">
               {overview.tiers.map((tier) => (
@@ -173,10 +176,10 @@ function ReferralMobileTabs({
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-medium text-[var(--text-primary)] sm:text-[13px]">
-                      {tier.title}
+                      {t(tier.titleKey)}
                     </p>
                     <p className="mt-0.5 text-[11px] text-[var(--text-secondary)] sm:text-xs">
-                      {tier.subtitle}
+                      {t(tier.subtitleKey)}
                     </p>
                   </div>
                   <div className="shrink-0 text-right">
@@ -184,7 +187,7 @@ function ReferralMobileTabs({
                       {tier.rateLabel}
                     </p>
                     <p className="mt-1 text-[10px] text-[var(--text-secondary)] sm:text-xs">
-                      {tier.rateHint}
+                      {t(tier.rateHintKey)}
                     </p>
                   </div>
                 </div>
@@ -197,7 +200,7 @@ function ReferralMobileTabs({
                   className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]"
                 >
                   <span className="text-[var(--success)]" aria-hidden="true">✓</span>
-                  {line}
+                  {t(line)}
                 </li>
               ))}
             </ul>
@@ -205,7 +208,7 @@ function ReferralMobileTabs({
 
           <section>
             <h2 className="mb-3 text-sm font-medium text-[var(--text-primary)]">
-              เริ่มต้นง่าย ๆ ใน 3 ขั้นตอน
+              {t("steps.title")}
             </h2>
             <ol className="flex list-none items-start gap-0 p-0">
               {overview.steps.map((step, index) => (
@@ -215,7 +218,7 @@ function ReferralMobileTabs({
                       {String(index + 1).padStart(2, "0")}
                     </div>
                     <p className="mt-2 text-xs font-medium text-[var(--text-primary)] sm:text-[13px]">
-                      {step.label}
+                      {t(step.labelKey)}
                     </p>
                   </li>
                   {index < overview.steps.length - 1 ? (

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import type { GemsStoreData } from "@/lib/api/gemsStore";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { HistoryIcon } from "@/app/components/ui/Icons";
 import { cn } from "@/lib/utils";
 import { formatGemsBalance } from "@/lib/format";
@@ -17,13 +20,14 @@ interface GemsStoreSummaryCardProps {
  * ใช้ใน GemsStorePageContent.tsx
  */
 export function GemsStoreSummaryCard({ gemsBalance, store, className }: GemsStoreSummaryCardProps) {
+  const t = useT("rewards");
   const { quota, resetNotice, rateLabel } = store;
   const { dailyUsed, dailyLimit, weeklyUsed, weeklyLimit } = quota;
 
   return (
     <aside
       className={cn("gems-store-summary flex flex-col gap-2 px-0.5 py-1 sm:px-1 sm:py-1.5", className)}
-      aria-label="เพชรคงเหลือ"
+      aria-label={t("gemsStore.summary.balanceLabel")}
     >
       <div className="flex flex-col items-center gap-1 px-1 pt-0.5 text-center sm:gap-1.5">
         <div
@@ -40,11 +44,11 @@ export function GemsStoreSummaryCard({ gemsBalance, store, className }: GemsStor
         </div>
         <p
           className={valueClass("accent", "text-[1.75rem] leading-none sm:text-[2rem]")}
-          aria-label={`เพชรคงเหลือ ${formatGemsBalance(gemsBalance)}`}
+          aria-label={t("gemsStore.summary.balanceAria", { amount: formatGemsBalance(gemsBalance) })}
         >
           {formatGemsBalance(gemsBalance)}
         </p>
-        <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">เพชรคงเหลือ</p>
+        <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">{t("gemsStore.summary.balanceLabel")}</p>
 
         <div
           className="gems-store-summary__quota mt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-[var(--text-primary)] sm:gap-x-5 sm:text-[13px]"
@@ -52,14 +56,14 @@ export function GemsStoreSummaryCard({ gemsBalance, store, className }: GemsStor
           <p className="flex items-center gap-1.5">
             <GemsQuotaCalendarIcon className="h-3.5 w-3.5 shrink-0 text-[var(--icon-active)]" />
             <span>
-              วันนี้{" "}
+              {t("gemsStore.summary.today")}{" "}
               <span className="font-medium tabular-nums">{dailyUsed}/{dailyLimit}</span>
             </span>
           </p>
           <p className="flex items-center gap-1.5">
             <HistoryIcon className="h-3.5 w-3.5 shrink-0 text-[var(--icon-active)]" />
             <span>
-              สัปดาห์นี้{" "}
+              {t("gemsStore.summary.thisWeek")}{" "}
               <span className="font-medium tabular-nums">{weeklyUsed}/{weeklyLimit}</span>
             </span>
           </p>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Link from "@/lib/i18n/navigation";
 import Image from "next/image";
 import { ChevronRightIcon, SwipeBetEmblem } from "../ui/Icons";
@@ -22,23 +23,24 @@ interface PopularHighlightsProps {
 export function PopularHighlights({
   items,
 }: PopularHighlightsProps) {
+  const t = useT("home");
   if (items.length === 0) {
     return (
-      <section className="mt-6 w-full sm:mt-8" aria-label="ยอดนิยม">
+      <section className="mt-6 w-full sm:mt-8" aria-label={t("popular.title")}>
         <SectionHeader
           icon={<SectionIcon id="sparkle" className="h-6 w-6" />}
-          title="ยอดนิยม"
+          title={t("popular.title")}
         />
-        <p className="py-6 text-center text-sm text-[var(--text-muted)]">ยังไม่มีรายการในหมวดนี้</p>
+        <p className="py-6 text-center text-sm text-[var(--text-muted)]">{t("popular.empty")}</p>
       </section>
     );
   }
 
   return (
-    <section className="mt-6 w-full sm:mt-8" aria-label="ยอดนิยม">
+    <section className="mt-6 w-full sm:mt-8" aria-label={t("popular.title")}>
       <SectionHeader
         icon={<SectionIcon id="sparkle" className="h-6 w-6" />}
-        title="ยอดนิยม"
+        title={t("popular.title")}
       />
 
       <div className="grid grid-cols-2 gap-2">

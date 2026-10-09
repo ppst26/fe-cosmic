@@ -11,6 +11,7 @@ import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader"
 import { CashbackPageContent } from "@/app/components/cashback/CashbackPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 import type { CashbackTabId } from "@/app/types/cashback";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * อ่าน query ?tab=loss สำหรับแท็บเริ่มต้น
@@ -19,6 +20,7 @@ function CashbackPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isAuthenticated, isLoading } = useAuth();
+  const t = useT("cashback");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const tabParam = searchParams.get("tab");
@@ -41,7 +43,7 @@ function CashbackPageInner() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="คืนยอด" backHref="/" />
+      <SlotProvidersHeader title={t("pageTitle")} backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <CashbackPageContent initialTab={initialTab} />

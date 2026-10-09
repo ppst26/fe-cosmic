@@ -7,18 +7,20 @@ import { VipMaintainRankPanel } from "./VipMaintainRankPanel";
 import { VipMyLevelBenefitsCard } from "./VipMyLevelBenefitsCard";
 import { VipRankEmblem } from "./VipRankEmblem";
 import { VipRankLevelUpCard } from "./VipRankLevelUpCard";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * แท็บระดับของฉัน — ฮีโร่ · สิทธิประโยชน์ · เลื่อนระดับ · รักษาระดับ
  */
 export function VipMyLevelPanel({ player }: { player: VipPlayerState }) {
+  const t = useT("vip");
   const currentTier = getVipRankTier(player.currentRankId);
   const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
 
   return (
     <div className="flex w-full flex-col items-center gap-4">
       <div className="flex flex-col items-center text-center">
-        <p className="text-sm font-medium text-[var(--text-secondary)]">ระดับของฉัน</p>
+        <p className="text-sm font-medium text-[var(--text-secondary)]">{t("tabs.myLevel")}</p>
         <div className="my-2">
           <VipRankEmblem rankId={player.currentRankId} size="lg" />
         </div>
@@ -30,7 +32,7 @@ export function VipMyLevelPanel({ player }: { player: VipPlayerState }) {
         </p>
         {nextTier ? (
           <p className="mt-1 text-sm text-[var(--text-secondary)]">
-            ระดับถัดไป{" "}
+            {t("level.next")}{" "}
             <span className="font-medium text-[var(--text-primary)]">{nextTier.label}</span>
           </p>
         ) : null}

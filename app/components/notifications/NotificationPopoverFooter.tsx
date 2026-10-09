@@ -2,15 +2,17 @@
 
 import Link from "@/lib/i18n/navigation";
 import { NOTIFICATION_POPOVER_SOCIAL } from "@/app/data/notificationsMockData";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * แถบล่างกล่องแจ้งเตือน desktop — ลิงก์ติดต่อ (NotificationCenterPanel popover)
  */
 export function NotificationPopoverFooter() {
+  const t = useT("common");
   return (
     <footer
       className="notification-center__footer"
-      aria-label="ช่องทางติดต่อ"
+      aria-label={t("notifications.contactChannels")}
     >
       {NOTIFICATION_POPOVER_SOCIAL.map((item) => (
         <Link

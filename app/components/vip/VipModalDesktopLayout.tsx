@@ -9,6 +9,7 @@ import { VipMyLevelBenefitsCard } from "./VipMyLevelBenefitsCard";
 import { VipRankCarousel } from "./VipRankCarousel";
 import { VipRankEmblem } from "./VipRankEmblem";
 import { VipRankLevelUpCard } from "./VipRankLevelUpCard";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface VipModalDesktopLayoutProps {
   tab: VipModalTabId;
@@ -29,6 +30,7 @@ export function VipModalDesktopLayout({
   rankFocusIndex,
   onRankFocusChange,
 }: VipModalDesktopLayoutProps) {
+  const t = useT("vip");
   const currentTier = getVipRankTier(player.currentRankId);
   const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
   const focusRankId = vipRankTiers[rankFocusIndex]?.id ?? player.currentRankId;
@@ -73,10 +75,10 @@ export function VipModalDesktopLayout({
       <div className="vip-modal-desktop__split grid min-h-0 grid-cols-1 gap-4 lg:min-h-0 lg:flex-1 lg:gap-0">
         <section
           className="vip-modal-desktop__panel vip-modal-desktop__level min-w-0 flex flex-col items-stretch justify-start py-4 text-center lg:min-h-0 lg:flex-1 lg:py-0 lg:pr-5"
-          aria-label="ระดับ VIP ปัจจุบัน"
+          aria-label={t("level.currentAriaLabel")}
         >
           <div className="flex flex-col items-center">
-            <p className="text-sm font-medium text-[var(--text-secondary)]">ระดับ</p>
+            <p className="text-sm font-medium text-[var(--text-secondary)]">{t("level.label")}</p>
             <div className="my-3 sm:my-4">
               <VipRankEmblem rankId={player.currentRankId} size="xl" />
             </div>
@@ -88,7 +90,7 @@ export function VipModalDesktopLayout({
             </p>
             {nextTier ? (
               <p className="mt-1.5 text-sm text-[var(--text-secondary)]">
-                ระดับถัดไป{" "}
+                {t("level.next")}{" "}
                 <span className="font-medium text-[var(--text-primary)]">{nextTier.label}</span>
               </p>
             ) : null}
@@ -109,7 +111,7 @@ export function VipModalDesktopLayout({
 
         <section
           className="vip-modal-desktop__panel vip-modal-desktop__missions min-w-0 flex min-h-0 flex-col gap-3 py-4 lg:min-h-0 lg:flex-1 lg:py-0 lg:pl-5"
-          aria-label="สิทธิประโยชน์และรักษาระดับ"
+          aria-label={t("level.benefitsAndMaintainAriaLabel")}
         >
           <div className="vip-rank-stack min-h-0 flex-1">
             <VipMyLevelBenefitsCard player={player} rankSurface />

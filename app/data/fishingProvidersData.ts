@@ -7,11 +7,11 @@ import type { FishingFilterTabItem, FishingCardItem } from "@/app/types/provider
 
 /** แถบตัวกรองหน้ายิงปลา */
 export const FISHING_FILTER_TABS: FishingFilterTabItem[] = [
-  { id: "all-in-one", label: "ศูนย์รวม", iconId: "gift" },
-  { id: "all-providers", label: "ค่ายทั้งหมด", iconId: "gamepad" },
-  { id: "arcade", label: "อาร์เคด", iconId: "water-drop" },
-  { id: "multiplayer", label: "ห้องรวม", iconId: "trophy" },
-  { id: "hot", label: "มาแรง", iconId: "flame" },
+  { id: "all-in-one", labelKey: "filters.allInOne", iconId: "gift" },
+  { id: "all-providers", labelKey: "filters.allProviders", iconId: "gamepad" },
+  { id: "arcade", labelKey: "filters.arcade", iconId: "water-drop" },
+  { id: "multiplayer", labelKey: "filters.multiplayer", iconId: "trophy" },
+  { id: "hot", labelKey: "filters.hot", iconId: "flame" },
 ];
 
 const FISHING_DEFAULT_TAGS = ["all-in-one", "all-providers", "arcade"] as const;

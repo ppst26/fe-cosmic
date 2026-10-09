@@ -7,11 +7,13 @@ import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { PromotionsHubPageContent } from "@/app/components/promotions/PromotionsHubPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * หน้าโปรโมชั่น (/promotions)
  */
 export default function PromotionsPage() {
+  const t = useT("promotions");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -20,7 +22,7 @@ export default function PromotionsPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="โปรโมชั่น" backHref="/" />
+      <SlotProvidersHeader title={t("title")} backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <PromotionsHubPageContent />

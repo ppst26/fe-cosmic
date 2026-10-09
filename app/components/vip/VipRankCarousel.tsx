@@ -11,6 +11,7 @@ import { VipRankEmblem } from "./VipRankEmblem";
 import { formatVipAmount } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface VipRankCarouselProps {
   focusIndex: number;
@@ -29,6 +30,7 @@ export function VipRankCarousel({
   playerRankId,
   vipRankTiers,
 }: VipRankCarouselProps) {
+  const t = useT("vip");
   const safeIndex = Math.max(0, Math.min(focusIndex, vipRankTiers.length - 1));
   const focused = vipRankTiers[safeIndex];
   const focusStatus = getVipRankViewStatus(focused.id, playerRankId);
@@ -45,10 +47,10 @@ export function VipRankCarousel({
   };
 
   const statusLabel = isActive
-    ? "ระดับปัจจุบัน"
+    ? t("rankStatus.current")
     : isCleared
-      ? "ผ่านแล้ว"
-      : "ยังไม่ถึง";
+      ? t("rankStatus.cleared")
+      : t("rankStatus.locked");
 
   const canPrev = safeIndex > 0;
   const canNext = safeIndex < vipRankTiers.length - 1;
@@ -60,7 +62,7 @@ export function VipRankCarousel({
         onClick={goPrev}
         disabled={!canPrev}
         className="absolute left-0 top-[42%] z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)]/80 hover:text-[var(--icon-active)] disabled:pointer-events-none disabled:opacity-0"
-        aria-label="แรงค์ก่อนหน้า"
+        aria-label={t("carousel.previous")}
       >
         <ChevronLeftIcon className="h-5 w-5" />
       </button>
@@ -69,7 +71,7 @@ export function VipRankCarousel({
         onClick={goNext}
         disabled={!canNext}
         className="absolute right-0 top-[42%] z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)]/80 hover:text-[var(--icon-active)] disabled:pointer-events-none disabled:opacity-0"
-        aria-label="แรงค์ถัดไป"
+        aria-label={t("carousel.next")}
       >
         <ChevronRightIcon className="h-5 w-5" />
       </button>
@@ -103,7 +105,7 @@ export function VipRankCarousel({
         </p>
         {!isActive && focused.id !== "silver" && (
           <p className="text-xs text-[var(--text-muted)]">
-            เทิร์น {formatVipAmount(getVipTurnoverTarget(focused.id))}
+            {t("carousel.turnoverTarget", { amount: formatVipAmount(getVipTurnoverTarget(focused.id)) })}
           </p>
         )}
       </div>

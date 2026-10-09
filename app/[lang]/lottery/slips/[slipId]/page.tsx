@@ -7,6 +7,7 @@ import { LotterySlipSummary } from "@/app/components/lottery/LotterySlipSummary"
 import { fetchLotterySlip } from "@/lib/lottery/fetchLotterySlip";
 import type { LotterySubmittedSlip } from "@/app/types/lotterySlip";
 import { EmptyState, LoadingState } from "@/app/components/ui/StatusState";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /** รับเฉพาะ path ภายในเว็บ — กัน open redirect เช่น ?continue=https://evil.com หรือ //evil.com */
 function toSafeInternalHref(href: string | null): string | null {
@@ -20,6 +21,7 @@ function toSafeInternalHref(href: string | null): string | null {
  * หน้าสรุปโพยหลังส่งแทง — /lottery/slips/[slipId]
  */
 export default function LotterySlipSummaryPage() {
+  const t = useT("lottery");
   const urlParams = useParams();
   const searchParams = useSearchParams();
   const slipId = (urlParams?.slipId as string) || "";
@@ -49,20 +51,20 @@ export default function LotterySlipSummaryPage() {
   return (
     <LobbyDesktopPageShell
       activeCategoryId="lottery"
-      subHeader={{ title: "สรุปโพย", backHref: "/lottery/slips" }}
+      subHeader={{ title: t("slips.summaryTitle"), backHref: "/lottery/slips" }}
       mainClassName="lottery-slips-page mx-auto max-w-[var(--content-max)] pb-8 lg:mx-0 lg:max-w-none"
     >
       {loading ? (
-        <LoadingState label="กำลังโหลดโพย…" />
+        <LoadingState label={t("slips.loading")} />
       ) : slip ? (
         <LotterySlipSummary slip={slip} continuePlayHref={continuePlayHref ?? undefined} />
       ) : (
         <EmptyState
           className="mt-4"
           variant="card"
-          title="ไม่พบโพยนี้"
-          description="โพยอาจถูกลบหรือลิงก์ไม่ถูกต้อง"
-          primaryAction={{ label: "ดูโพยทั้งหมด", href: "/lottery/slips" }}
+          title={t("slips.notFoundTitle")}
+          description={t("slips.notFoundDescription")}
+          primaryAction={{ label: t("slips.viewAll"), href: "/lottery/slips" }}
         />
       )}
     </LobbyDesktopPageShell>

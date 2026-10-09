@@ -5,6 +5,7 @@ import { useWheel } from "@/app/hooks/api/member";
 import type { WheelPrizeHistoryRow, WheelPrizeKind, WheelSpinMethod } from "@/app/types/reward";
 import { valueClass, type ValueRole } from "@/lib/semanticValue";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface LuckyWheelPrizeHistoryProps {
   extraRows?: WheelPrizeHistoryRow[];
@@ -16,6 +17,7 @@ interface LuckyWheelPrizeHistoryProps {
  * ตารางประวัติการหมุนของฉัน — ดีไซน์การ์ดมนตามภาพตัวอย่าง
  */
 export function LuckyWheelPrizeHistory({ extraRows = [], variant = "default" }: LuckyWheelPrizeHistoryProps) {
+  const t = useT("rewards");
   const isSidebar = variant === "sidebar";
   /** ใช้ cache เดียวกับ LuckyWheelPageContent (SWR) */
   const wheel = useWheel().data;
@@ -55,7 +57,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [], variant = "default" }: 
             isSidebar ? "text-[11px] lg:text-xs" : "text-sm",
           )}
         >
-          ประวัติการหมุนของฉัน
+          {t("wheel.history.title")}
         </h2>
       </header>
 
@@ -79,7 +81,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [], variant = "default" }: 
                     +{row.amount} {row.prizeName}
                   </span>
                   <span className={valueClass(wheelSpinCostRole(row.method), "tabular-nums")}>
-                    {row.method === "gems" ? "ใช้เพชร" : "ใช้ตั๋ว"}
+                    {row.method === "gems" ? t("wheel.history.usedGems") : t("wheel.history.usedTicket")}
                   </span>
                 </div>
               </div>
@@ -96,7 +98,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [], variant = "default" }: 
                 </div>
                 <div className="flex w-20 shrink-0 items-center justify-end gap-1 text-xs text-[var(--text-secondary)]">
                   <DiamondOutlineSmallIcon />
-                  <span>{row.method === "gems" ? "ใช้เพชร" : "ใช้ตั๋ว"}</span>
+                  <span>{row.method === "gems" ? t("wheel.history.usedGems") : t("wheel.history.usedTicket")}</span>
                 </div>
               </>
             )}
@@ -109,7 +111,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [], variant = "default" }: 
         <button
           type="button"
           className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm text-white/80 transition-all hover:bg-white/20 disabled:opacity-30 cursor-pointer"
-          aria-label="หน้าก่อน"
+          aria-label={t("wheel.history.prevPage")}
           disabled={safePage <= 1}
           onClick={() => setPage((p) => Math.max(1, p - 1))}
         >
@@ -121,7 +123,7 @@ export function LuckyWheelPrizeHistory({ extraRows = [], variant = "default" }: 
         <button
           type="button"
           className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-sm text-white/80 transition-all hover:bg-white/20 disabled:opacity-30 cursor-pointer"
-          aria-label="หน้าถัดไป"
+          aria-label={t("wheel.history.nextPage")}
           disabled={safePage >= totalPages}
           onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
         >

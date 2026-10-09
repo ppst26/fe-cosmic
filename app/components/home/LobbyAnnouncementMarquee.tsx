@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { cn } from "@/lib/utils";
 
 interface LobbyAnnouncementMarqueeProps {
@@ -17,6 +18,7 @@ export function LobbyAnnouncementMarquee({
   className,
   variant = "default",
 }: LobbyAnnouncementMarqueeProps) {
+  const t = useT("home");
   if (messages.length === 0) return null;
 
   const renderGroup = (groupKey: string, ariaHidden?: boolean) => (
@@ -47,11 +49,11 @@ export function LobbyAnnouncementMarquee({
           : "px-3 py-2 sm:gap-3 sm:px-3.5 sm:py-2.5",
         className,
       )}
-      aria-label="ประกาศจากระบบ"
+      aria-label={t("announcement.ariaLabel")}
     >
       <div className="lobby-announcement-marquee__lead flex shrink-0 items-center gap-2">
         <span className="lobby-announcement-marquee__label cosmic-type-marquee-label shrink-0">
-          ประกาศ
+          {t("announcement.label")}
         </span>
         <MegaphoneGlyph className="lobby-announcement-marquee__icon h-4 w-4 shrink-0 text-[var(--icon-default)]" />
       </div>

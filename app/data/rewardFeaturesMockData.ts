@@ -10,17 +10,15 @@ import type {
 
 export const REWARD_POINTS_BALANCE_MOCK = 3_365;
 
-export const REWARD_POINTS_LABEL = "พอยท์";
-
 export const REWARD_FREESPINS_COMING_SOON_LABEL = "Coming soon";
 
 /** แถบไอคอน 3 ช่องบนหน้า reward */
 export const REWARD_HUB_SHORTCUTS: RewardHubShortcut[] = [
-  { id: "lucky-box", label: "แลกกล่องสุ่ม", href: "/reward/lucky-box", iconId: "lucky-box" },
-  { id: "random-card", label: "แลกการ์ดสุ่ม", href: "/reward/random-card", iconId: "random-card" },
+  { id: "lucky-box", labelKey: "shortcuts.luckyBox", href: "/reward/lucky-box", iconId: "lucky-box" },
+  { id: "random-card", labelKey: "shortcuts.randomCard", href: "/reward/random-card", iconId: "random-card" },
   {
     id: "freespins",
-    label: "แลกรับฟรีสปิน/ชิป",
+    labelKey: "shortcuts.freespins",
     href: "/reward/freespins",
     iconId: "freespins",
     comingSoon: true,
@@ -31,18 +29,18 @@ export const REWARD_HUB_PROMO_BANNERS: RewardPromoBanner[] = [
   {
     id: "banner-lucky-box",
     title: "Lucky Box",
-    subtitle: "แลกกล่องสุ่มด้วยพอยท์",
+    subtitleKey: "banners.luckyBoxSubtitle",
     href: "/reward/lucky-box",
     imageSrc: "/assets/3d/card-1-mobile.avif",
-    termsLabel: "เงื่อนไขเพิ่มเติม",
+    termsLabelKey: "banners.termsLabel",
   },
   {
     id: "banner-random-card",
     title: "Redeem Card",
-    subtitle: "เปิดการ์ดลุ้นรางวัล",
+    subtitleKey: "banners.randomCardSubtitle",
     href: "/reward/random-card",
     imageSrc: "/assets/3d/card-2-mobile.avif",
-    termsLabel: "เงื่อนไขเพิ่มเติม",
+    termsLabelKey: "banners.termsLabel",
   },
 ];
 

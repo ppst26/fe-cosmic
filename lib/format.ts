@@ -27,10 +27,7 @@ export function formatPercent(value: number): string {
   return `${formatNumber(value, { maximumFractionDigits: 2 })}%`;
 }
 
-/** ตัวเลข + หน่วย เช่น 12 คน · 1,000 เครดิต */
-export function formatWithUnit(value: number, unit: string): string {
-  return `${formatNumber(value)} ${unit}`;
-}
+/* ตัวเลข + หน่วย (คน / รายการ / เครดิต / เพชร) → useFormat() ใน lib/i18n/useFormat.ts (หน่วยตามภาษา) */
 
 /** วันที่-เวลาแบบสั้น dd/mm/yyyy{separator}HH:mm (ปี ค.ศ. 24 ชม.) */
 export function formatDateTimeShort(iso: string, separator: string): string {
@@ -70,14 +67,11 @@ export function formatCashbackCurrency(amountThb: number): string {
 export const formatCashbackPercent = formatPercent;
 export const formatLossRebateCurrency = formatBaht;
 export const formatLossRebatePercent = formatPercent;
-export const formatLossRebateRecordCount = (value: number) => formatWithUnit(value, "รายการ");
 export const formatLossRebateDateTime = (iso: string) => formatDateTimeShort(iso, " • ");
 
 /* ── แนะนำเพื่อน ── */
 
 export const formatReferralCurrency = formatBaht;
-export const formatReferralCount = (value: number) => formatWithUnit(value, "คน");
-export const formatReferralRecordCount = (value: number) => formatWithUnit(value, "รายการ");
 export const formatReferralRegisteredAt = (iso: string) => formatDateTimeShort(iso, " · ");
 export const formatReferralEarningDateTime = (iso: string) => formatDateTimeShort(iso, " • ");
 
@@ -86,29 +80,28 @@ export const formatReferralEarningDateTime = (iso: string) => formatDateTimeShor
 export const formatRewardPoints = formatMoney;
 export const formatGemsBalance = (value: number) => formatNumber(value);
 export const formatGemsAmount = (value: number) => `${formatNumber(value)} Gems`;
-export const formatGemsCredits = (value: number) => formatWithUnit(value, "เครดิต");
-export const formatCheckInCredits = (value: number) => formatWithUnit(value, "เพชร");
 export const formatActivityNumber = (value: number) => formatNumber(value);
-export const formatActivityCredits = (value: number) => formatWithUnit(value, "เครดิต");
 
 /* ── VIP ── */
 
 export const formatVipAmount = (value: number) => formatNumber(value);
 export const formatVipExp = formatVipAmount;
 
-/** ยอดย่อหน่วยล้าน เช่น 1.5 ล้าน · ต่ำกว่าล้านแสดงเต็ม */
-export function formatVipCompactAmount(value: number): string {
+/**
+ * ยอดย่อหน่วยล้าน เช่น 1.5 ล้าน / 1.5M · ต่ำกว่าล้านแสดงเต็ม
+ * million = หน่วยที่แปลแล้วจากผู้เรียก (useFormat → common.units.million)
+ */
+export function formatVipCompactAmount(value: number, million: (n: string) => string): string {
   if (value >= 1_000_000) {
     const millions = value / 1_000_000;
-    const text = formatNumber(millions, { maximumFractionDigits: millions >= 10 ? 0 : 1 });
-    return `${text} ล้าน`;
+    return million(formatNumber(millions, { maximumFractionDigits: millions >= 10 ? 0 : 1 }));
   }
   return formatVipAmount(value);
 }
 
-/** ความคืบหน้าภารกิจ เช่น 1,200 / 5,000 เทิร์น */
-export function formatVipMissionStatus(mission: VipMission): string {
-  return `${formatVipAmount(mission.progress)} / ${formatVipAmount(mission.target)} ${mission.unit}`;
+/** ความคืบหน้าภารกิจ เช่น 1,200 / 5,000 เทิร์น — unit แปลแล้วจากผู้เรียก: t(mission.unitKey) */
+export function formatVipMissionStatus(mission: Pick<VipMission, "progress" | "target">, unit: string): string {
+  return `${formatVipAmount(mission.progress)} / ${formatVipAmount(mission.target)} ${unit}`;
 }
 
 /* ── Hall of Fame ── */

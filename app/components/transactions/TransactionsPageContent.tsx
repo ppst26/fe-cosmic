@@ -22,6 +22,7 @@ import {
   sumCompletedWithdrawAmount,
 } from "@/lib/domain/transactions";
 import { TRANSACTION_BET_PAGE_SIZE } from "@/lib/uiConstants";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface TransactionsPageContentProps {
   activeKind: TransactionKind;
@@ -39,6 +40,7 @@ export function TransactionsPageContent({
   isAuthenticated,
   embedded = false,
 }: TransactionsPageContentProps) {
+  const t = useT("transactions");
   const defaultRange = useMemo(() => getDefaultTransactionDateRange(), []);
 
   const [draftFrom, setDraftFrom] = useState(defaultRange.from);
@@ -114,16 +116,16 @@ export function TransactionsPageContent({
 
         {!isAuthenticated ? (
           <p className="py-10 text-center text-sm text-[var(--text-muted)]">
-            กรุณาเข้าสู่ระบบเพื่อดูรายการธุรกรรม
+            {t("loginRequired")}
           </p>
         ) : transactions.status === "error" && !transactions.data ? (
           <ErrorState
-            title="โหลดรายการธุรกรรมไม่สำเร็จ"
+            title={t("loadError")}
             description={transactions.error?.message}
-            primaryAction={{ label: "ลองใหม่", onClick: transactions.refresh }}
+            primaryAction={{ label: t("retry"), onClick: transactions.refresh }}
           />
         ) : !transactions.data ? (
-          <LoadingState label="กำลังโหลดรายการ…" />
+          <LoadingState label={t("loading")} />
         ) : (
           <TabPanelTransition
             tabKey={activeKind}
@@ -141,7 +143,7 @@ export function TransactionsPageContent({
 
             {activeKind === "deposit" ? (
               <div className="tx-history-summary">
-                <span>ยอดฝากทั้งหมด :</span>
+                <span>{t("summary.depositTotal")}</span>
                 <span className={valueClass("success", "font-medium")}>
                   {formatMoney(sumCompletedDepositAmount(items))} ฿
                 </span>
@@ -150,7 +152,7 @@ export function TransactionsPageContent({
 
             {activeKind === "withdraw" ? (
               <div className="tx-history-summary">
-                <span>ยอดถอนทั้งหมด :</span>
+                <span>{t("summary.withdrawTotal")}</span>
                 <span className={valueClass("success", "font-medium")}>
                   {formatMoney(sumCompletedWithdrawAmount(items))} ฿
                 </span>
@@ -159,7 +161,7 @@ export function TransactionsPageContent({
 
             {activeKind === "promotion" ? (
               <div className="tx-history-summary">
-                <span>จำนวนการรับโปรโมชั่น :</span>
+                <span>{t("summary.promotionClaims")}</span>
                 <span className={valueClass("emphasis", "font-medium")}>
                   {countPromotionClaims(items)}
                 </span>
@@ -169,13 +171,13 @@ export function TransactionsPageContent({
             {activeKind === "bet" ? (
               <div className="flex flex-col gap-2 pt-1">
                 <div className="tx-history-summary">
-                  <span>ยอดวิน/ลอสรวม :</span>
+                  <span>{t("summary.winLossTotal")}</span>
                   <span className={signedMoneyValueClass(sumBetWinLossTotal(items), "font-medium")}>
                     {formatMoney(sumBetWinLossTotal(items))} ฿
                   </span>
                 </div>
                 <div className="tx-history-summary">
-                  <span>ยอดเดิมพันรวม :</span>
+                  <span>{t("summary.stakeTotal")}</span>
                   <span className={valueClass("neutral", "font-medium")}>
                     {formatMoney(sumBetStakeTotal(items))} ฿
                   </span>

@@ -3,6 +3,7 @@
 import type { ProfileUser } from "@/app/types/auth";
 import { avatarPresetImageUrl, resolveAvatarPresetId } from "@/app/data/avatarPresets";
 import { ProfileAvatarIcon } from "../ui/Icons";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { cn } from "@/lib/utils";
 
 type UserAvatarSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -42,6 +43,7 @@ export function UserAvatar({
   imageClassName,
   eager = false,
 }: UserAvatarProps) {
+  const t = useT("profile");
   const px = SIZE_PX[size];
   const presetId = resolveAvatarPresetId(profile.avatarPresetId, profile.id);
   const src = avatarPresetImageUrl(presetId, px * 2);
@@ -64,7 +66,7 @@ export function UserAvatar({
         fetchPriority={eager ? "high" : undefined}
         decoding="async"
       />
-      <span className="sr-only">รูปโปรไฟล์ {profile.displayName}</span>
+      <span className="sr-only">{t("avatar.srLabel", { name: profile.displayName })}</span>
     </span>
   );
 }

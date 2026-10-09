@@ -13,7 +13,7 @@ function parseCountdownToMinutes(label?: string): number {
 /** สร้างจาก LOTTERY_GRID_ITEMS โดยตรง — แก้ข้อมูลหวยที่จุดเดียวใน lotteryHubMockData.ts */
 export const LOTTERY_MARKETS: LotteryMarketConfig[] = LOTTERY_GRID_ITEMS.map((item) => ({
   slug: item.href.replace("/lottery/", ""),
-  title: item.title,
+  titleKey: item.titleKey,
   flagLabel: item.flagLabel,
   flagTone: item.flagTone,
   status: item.status,

@@ -27,9 +27,10 @@ import { REFERRAL_EARNING_PAGE_SIZE } from "@/lib/uiConstants";
 import {
   formatReferralCurrency,
   formatReferralEarningDateTime,
-  formatReferralRecordCount,
 } from "@/lib/format";
 import type { ReferralEarningHistoryRow, ReferralEarningSummaryMock } from "@/app/types/referral";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
 
 type ReferralEarningPanelProps = {
   summary?: ReferralEarningSummaryMock;
@@ -49,11 +50,12 @@ type ReferralEarningPanelProps = {
  */
 export function ReferralEarningPanel(props: ReferralEarningPanelProps) {
   const earnings = useReferralEarnings();
+  const t = useT("referral");
   if (props.summary && props.history) {
     return <ReferralEarningPanelContent {...props} summary={props.summary} history={props.history} />;
   }
   return (
-    <ResourceGate resource={earnings} loadingLabel="กำลังโหลดรายได้…" errorTitle="โหลดรายได้ไม่สำเร็จ">
+    <ResourceGate resource={earnings} loadingLabel={t("status.earningsLoading")} errorTitle={t("status.earningsError")}>
       {(data) => (
         <ReferralEarningPanelContent
           {...props}
@@ -69,7 +71,7 @@ function ReferralEarningPanelContent({
   summary,
   history,
   showSummary = true,
-  sectionTitle = "ประวัติรับโบนัส",
+  sectionTitle,
   received: receivedProp,
   claimable: claimableProp,
   onClaim,
@@ -78,6 +80,8 @@ function ReferralEarningPanelContent({
   summary: ReferralEarningSummaryMock;
   history: ReferralEarningHistoryRow[];
 }) {
+  const t = useT("referral");
+  const fmt = useFormat();
   const [page, setPage] = useState(1);
   const [claimableInternal, setClaimableInternal] = useState(summary.bonusClaimableThb);
   const [receivedInternal, setReceivedInternal] = useState(summary.bonusReceivedThb);
@@ -120,13 +124,13 @@ function ReferralEarningPanelContent({
       {showSummary ? (
         <section
           className="referral-earning-claim surface-solid-stack flex items-center justify-between gap-3 px-3.5 py-3.5 sm:gap-4 sm:px-4 sm:py-4"
-          aria-label="โบนัสที่รับได้"
+          aria-label={t("earning.claimableBonus")}
         >
           <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
             <Menu3DIcon iconId="cashback" size={40} className="h-10 w-10 shrink-0" />
             <div className="min-w-0">
               <p className="text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]">
-                โบนัสที่รับได้
+                {t("earning.claimableBonus")}
               </p>
               <p className={valueClass("reward", "mt-0.5 text-xl leading-tight sm:text-2xl")}>
                 {formatReferralCurrency(claimable)}
@@ -139,7 +143,7 @@ function ReferralEarningPanelContent({
             onClick={handleClaimBonus}
             className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm flex h-10 shrink-0 items-center justify-center px-4 text-xs disabled:opacity-45 sm:h-11 sm:px-5 sm:text-sm`}
           >
-            รับโบนัส
+            {t("earning.claim")}
           </button>
         </section>
       ) : (
@@ -147,10 +151,10 @@ function ReferralEarningPanelContent({
           <h2
             className={`font-medium text-[var(--text-primary)] ${flat ? "text-base" : "text-sm"}`}
           >
-            {sectionTitle}
+            {sectionTitle ?? t("earning.historyTitle")}
           </h2>
           <p className={`text-[var(--text-secondary)] ${flat ? "text-sm" : "text-xs"}`}>
-            รับสะสม {formatReferralCurrency(received)}
+            {t("earning.received", { amount: formatReferralCurrency(received) })}
           </p>
         </div>
       )}
@@ -171,14 +175,14 @@ function ReferralEarningPanelContent({
                   flat ? "h-12 text-sm" : "h-11 text-xs"
                 }`}
               >
-                จำนวนโบนัส
+                {t("earning.bonusAmount")}
               </TableHead>
               <TableHead
                 className={`px-4 text-right font-medium text-[var(--text-secondary)] sm:px-5 ${
                   flat ? "h-12 text-sm" : "h-11 text-xs"
                 }`}
               >
-                วันที่
+                {t("earning.date")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -189,7 +193,7 @@ function ReferralEarningPanelContent({
                   colSpan={2}
                   className="px-4 py-10 text-center text-xs text-[var(--text-muted)] sm:px-5"
                 >
-                  ยังไม่มีประวัติการรับโบนัส
+                  {t("earning.empty")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -227,13 +231,13 @@ function ReferralEarningPanelContent({
             )}
           >
             <p className={`text-[var(--text-muted)] ${flat ? "text-sm" : "text-xs"}`}>
-              แสดง {rangeStart}–{rangeEnd} จาก {formatReferralRecordCount(total)}
+              {t("pagination.showing", { start: rangeStart, end: rangeEnd, total: fmt.records(total) })}
             </p>
             <CosmicDataTablePagination
               page={currentPage}
               totalPages={totalPages}
               onPageChange={setPage}
-              aria-label="เปลี่ยนหน้าประวัติโบนัส"
+              aria-label={t("earning.paginationAriaLabel")}
             />
           </div>
         )}

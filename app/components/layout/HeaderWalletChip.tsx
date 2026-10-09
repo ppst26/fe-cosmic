@@ -1,6 +1,9 @@
+"use client";
+
 import { HeaderWalletAssetIcon } from "./HeaderWalletAssetIcon";
 import { cn } from "@/lib/utils";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 type HeaderWalletChipProps = {
   balanceLabel: string;
@@ -19,6 +22,7 @@ export function HeaderWalletChip({
   variant = "mobile",
   className,
 }: HeaderWalletChipProps) {
+  const t = useT("nav");
   const rootClass = cn(
     "header-wallet-chip",
     variant === "desktop" && "header-wallet-chip--desktop",
@@ -50,7 +54,7 @@ export function HeaderWalletChip({
         type="button"
         onClick={onClick}
         className={rootClass}
-        aria-label="ฝากเงินและดูยอดเครดิต"
+        aria-label={t("header.walletDeposit")}
       >
         {chipInner}
       </button>
@@ -58,7 +62,7 @@ export function HeaderWalletChip({
   }
 
   return (
-    <div className={rootClass} aria-live="polite" aria-label="ยอดเครดิต">
+    <div className={rootClass} aria-live="polite" aria-label={t("header.walletBalance")}>
       {chipInner}
     </div>
   );

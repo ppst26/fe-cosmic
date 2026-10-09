@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Link from "@/lib/i18n/navigation";
 import Image from "next/image";
 import type { CasinoCardItem } from "@/app/types/providers";
@@ -235,8 +236,10 @@ export function CasinoProviderCards({
   items,
   totalCount,
   hideTitleRow = false,
-  sectionTitle = "คาสิโนสด",
+  sectionTitle: sectionTitleProp,
 }: CasinoProviderCardsProps) {
+  const t = useT("games");
+  const sectionTitle = sectionTitleProp ?? t("casino.title");
   return (
     <div className="space-y-3.5">
       {!hideTitleRow ? (
@@ -245,7 +248,7 @@ export function CasinoProviderCards({
           {sectionTitle}
         </h2>
         <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
-          ({totalCount} โต๊ะ/ค่ายเกม)
+          {t("casino.count", { count: totalCount })}
         </span>
       </div>
       ) : null}

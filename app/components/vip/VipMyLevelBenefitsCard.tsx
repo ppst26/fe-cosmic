@@ -8,14 +8,16 @@ import {
 } from "@/app/data/vipMockData";
 import { cn } from "@/lib/utils";
 import { vipBenefitValueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 /** สิทธิ์ในแท็บระดับของฉัน — ตรงตารางสิทธิประโยชน์ */
-const MY_LEVEL_BENEFIT_ROWS: { id: string; label: string }[] = [
-  { id: "cashback", label: "Cashback" },
-  { id: "rolling", label: "Rolling" },
-  { id: "diamond-deposit", label: "เพชรจากฝาก" },
-  { id: "fast-withdraw", label: "ถอนด่วน" },
-  { id: "vip-manager", label: "VIP Manager" },
+const MY_LEVEL_BENEFIT_ROWS: { id: string; labelKey: MessageKey<"vip"> }[] = [
+  { id: "cashback", labelKey: "myLevelBenefits.cashback" },
+  { id: "rolling", labelKey: "myLevelBenefits.rolling" },
+  { id: "diamond-deposit", labelKey: "myLevelBenefits.diamondDeposit" },
+  { id: "fast-withdraw", labelKey: "benefitRows.fastWithdraw" },
+  { id: "vip-manager", labelKey: "benefitRows.vipManager" },
 ];
 
 interface VipMyLevelBenefitsCardProps {
@@ -33,6 +35,7 @@ export function VipMyLevelBenefitsCard({
   variant = "standalone",
   rankSurface = false,
 }: VipMyLevelBenefitsCardProps) {
+  const t = useT("vip");
   const compactCells = variant === "in-rank-card" || rankSurface;
   const flatCells = rankSurface || variant === "in-rank-card";
   const gridGapClass = compactCells ? "gap-1" : "gap-1.5 sm:gap-2";
@@ -40,11 +43,12 @@ export function VipMyLevelBenefitsCard({
   const grid = (
         <ul className={cn("grid grid-cols-2", gridGapClass)}>
           {MY_LEVEL_BENEFIT_ROWS.map((row, index) => {
-            const value = getVipBenefitCellValue(
+            const cell = getVipBenefitCellValue(
               row.id,
               player.currentRankId,
               VIP_BENEFIT_COMPARISON_VALUES,
             );
+            const value = typeof cell === "string" ? cell : t(cell.labelKey);
             return (
               <li
                 key={row.id}
@@ -60,7 +64,7 @@ export function VipMyLevelBenefitsCard({
               >
                 <BenefitRowIcon rowId={row.id} />
                 <span className="min-w-0 flex-1 truncate text-sm text-[var(--text-secondary)] sm:text-base">
-                  {row.label}
+                  {t(row.labelKey)}
                 </span>
                 <p
                   className={vipBenefitValueClass(
@@ -87,7 +91,7 @@ export function VipMyLevelBenefitsCard({
             : "text-center text-lg tracking-wide sm:text-xl",
         )}
       >
-        สิทธิประโยชน์
+        {t("tabs.benefits")}
       </h3>
     );
 
@@ -117,7 +121,7 @@ export function VipMyLevelBenefitsCard({
     <section className="vip-my-level-benefits w-full">
       <div className="vip-panel-card vip-my-level-benefits__group">
         <h3 className="mb-2.5 text-center text-lg font-medium tracking-wide text-[var(--text-primary)] sm:mb-3 sm:text-xl">
-          สิทธิประโยชน์
+          {t("tabs.benefits")}
         </h3>
         {grid}
       </div>

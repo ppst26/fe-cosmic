@@ -3,6 +3,7 @@
 import React, { useId } from "react";
 import { Dialog } from "radix-ui";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 export type CosmicConfirmVariant = "neutral" | "warning" | "destructive";
 
@@ -36,8 +37,8 @@ export function CosmicConfirmDialog({
   description,
   intentIcon,
   summary,
-  confirmLabel = "ยืนยัน",
-  cancelLabel = "ยกเลิก",
+  confirmLabel: confirmLabelProp,
+  cancelLabel: cancelLabelProp,
   loading = false,
   confirmDisabled = false,
   dismissible = true,
@@ -45,6 +46,9 @@ export function CosmicConfirmDialog({
   onCancel,
 }: CosmicConfirmDialogProps) {
   const descriptionId = useId();
+  const t = useT("common");
+  const confirmLabel = confirmLabelProp ?? t("confirm");
+  const cancelLabel = cancelLabelProp ?? t("cancel");
 
   const handleOpenChange = (next: boolean) => {
     if (!next && !dismissible && loading) return;
@@ -118,7 +122,7 @@ export function CosmicConfirmDialog({
                 variant === "destructive" && "cosmic-confirm-dialog__btn-confirm--destructive",
               )}
             >
-              {loading ? "กำลังดำเนินการ…" : confirmLabel}
+              {loading ? t("processing") : confirmLabel}
             </button>
           </div>
         </Dialog.Content>

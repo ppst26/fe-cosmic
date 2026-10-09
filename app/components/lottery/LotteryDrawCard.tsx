@@ -1,8 +1,10 @@
+"use client";
+
 import React from "react";
 import type { LotteryFlagTone } from "@/app/types/lottery";
 import { LotteryCountdown } from "./LotteryFlagOrb";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
-import { formatCountdown } from "./lotteryUtils";
+import { useLotteryI18n } from "./useLotteryI18n";
 
 interface LotteryDrawCardProps {
   title: string;
@@ -25,10 +27,11 @@ export function LotteryDrawCard({
   flagTone = "th",
   marketSlug,
 }: LotteryDrawCardProps) {
+  const { t, countdown } = useLotteryI18n();
   return (
     <section
       className="thai-lotto-draw flex flex-wrap items-center gap-3 p-4"
-      aria-label="ข้อมูลงวด"
+      aria-label={t("draw.aria")}
     >
       <LotteryMarketIcon
         marketSlug={marketSlug}
@@ -41,9 +44,9 @@ export function LotteryDrawCard({
         <p className="thai-lotto-draw__meta m-0">{drawLabel}</p>
       </div>
       <div className="thai-lotto-draw__close flex flex-col items-end gap-[0.2rem]">
-        <span className="thai-lotto-draw__close-label">ปิดรับใน</span>
+        <span className="thai-lotto-draw__close-label">{t("status.closesIn")}</span>
         <LotteryCountdown
-          label={remainingMs === null ? "--:--:--" : formatCountdown(remainingMs)}
+          label={remainingMs === null ? "--:--:--" : countdown(remainingMs)}
         />
       </div>
     </section>

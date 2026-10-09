@@ -17,14 +17,16 @@ import { formatGemsBalance } from "@/lib/format";
 import type { WheelPrizeHistoryRow, WheelSegment, WheelSpinMethod } from "@/app/types/reward";
 import { valueClass } from "@/lib/semanticValue";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * หน้าเล่นวงล้อพารวย — โหลดข้อมูลวงล้อแล้วส่งให้ LuckyWheelPlay (state เริ่มต้นมาจากข้อมูลที่โหลดแล้ว)
  */
 export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean }) {
+  const t = useT("rewards");
   const wheel = useWheel();
   return (
-    <ResourceGate resource={wheel} loadingLabel="กำลังโหลดวงล้อ…" errorTitle="โหลดวงล้อไม่สำเร็จ">
+    <ResourceGate resource={wheel} loadingLabel={t("wheel.loading")} errorTitle={t("wheel.loadError")}>
       {(data) => <LuckyWheelPlay wheel={data} embedded={embedded} />}
     </ResourceGate>
   );
@@ -34,6 +36,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
  * ตัวเล่นวงล้อพารวย — รองรับ Mobile-first layout ตรงตาม mockup
  */
 function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boolean }) {
+  const t = useT("rewards");
   const segmentDeg = 360 / wheel.segments.length;
   /** เวลาหมุนจากธีม — ใช้ทั้ง transition ของวงและจังหวะประกาศผล */
   const spinDurationMs = resolveWheelTheme(wheel.theme).spinDurationMs;
@@ -75,18 +78,18 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
 
     window.setTimeout(() => {
       setSpinning(false);
-      setLastWin(`ยินดีด้วย! คุณได้รับ ${segment.label}`);
+      setLastWin(t("wheel.winMessage", { prize: segment.label }));
       const row: WheelPrizeHistoryRow = {
         id: `ph-${Date.now()}`,
-        atLabel: "เมื่อสักครู่",
+        atLabel: t("wheel.justNow"),
         prizeKind: segment.kind,
-        prizeName: segment.kind === "gems" ? "เพชร" : "เครดิต",
+        prizeName: t(`wheel.prizeKind.${segment.kind}`),
         amount: segment.label.replace(/[^\d.]/g, "") || "—",
         method: spinMethod,
       };
       setRecentHistoryRows((prev) => [row, ...prev].slice(0, 5));
     }, spinDurationMs);
-  }, [spinDurationMs, canAfford, currentGemsCost, currentTicketCost, rotation, segmentDeg, spinMethod, spinning, wheel.segments]);
+  }, [t, spinDurationMs, canAfford, currentGemsCost, currentTicketCost, rotation, segmentDeg, spinMethod, spinning, wheel.segments]);
 
   return (
     <div className={`lucky-wheel-page ${embedded ? "lucky-wheel-page--embedded" : ""}`}>
@@ -96,14 +99,14 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
           <Link
             href="/"
             className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
-            aria-label="ย้อนกลับไปหน้าแรก"
+            aria-label={t("wheel.backHome")}
           >
             <ArrowLeftIcon className="h-6 w-6 text-white" />
           </Link>
           <div className="pointer-events-none absolute left-1/2 flex -translate-x-1/2 flex-col items-center text-center">
-            <h1 className="text-base font-medium leading-tight text-white sm:text-lg">วงล้อพารวย</h1>
+            <h1 className="text-base font-medium leading-tight text-white sm:text-lg">{t("wheel.title")}</h1>
             <p className="hidden text-xs text-[var(--text-secondary)] sm:block sm:text-[13px]">
-              หมุนลุ้นรับรางวัลใหญ่ทุกวัน
+              {t("wheel.subtitle")}
             </p>
           </div>
           <div className="h-10 w-10 shrink-0" aria-hidden="true" />
@@ -128,7 +131,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
             <Link
               href="/gems-store"
               className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white shadow-[0_0_12px_rgba(168,85,247,0.15)] transition-all hover:border-purple-400/60 hover:bg-[#1d123d] active:scale-95"
-              aria-label="ยอดเพชรของคุณ"
+              aria-label={t("wheel.gemsBalanceAria")}
             >
               <GoldGemIcon className="h-3.5 w-3.5 shrink-0 text-sky-400" />
               <span className={valueClass("accent", "text-xs tracking-tight text-white")}>
@@ -137,7 +140,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
             </Link>
             <div
               className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white shadow-[0_0_12px_rgba(168,85,247,0.15)]"
-              aria-label="จำนวนตั๋วของคุณ"
+              aria-label={t("wheel.ticketsAria")}
             >
               <GoldTicketIcon className="h-3.5 w-3.5 shrink-0 text-purple-400" />
               <span className="text-xs font-medium tabular-nums tracking-tight text-white">{ticketCount}</span>
@@ -162,7 +165,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
         {/* 3. แท็บเลือกวิธีหมุน — surface solid เทา + segment แบบคืนยอด */}
         <div
           role="tablist"
-          aria-label="เลือกวิธีหมุนวงล้อ"
+          aria-label={t("wheel.methodTabsAria")}
           className={cn(
             "cosmic-segment-track cosmic-segment-track--glass-white my-3.5 grid w-full max-w-[380px] grid-cols-2 gap-1.5 p-1.5 sm:max-w-[420px]",
             "border-[var(--border-subtle)] bg-[var(--surface-solid-inner)] shadow-none [backdrop-filter:none] [-webkit-backdrop-filter:none]",
@@ -170,8 +173,8 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
         >
           {(
             [
-              { id: "gems" as const, label: `เพชร ×${wheel.gemsPerSpin.toFixed(2)}` },
-              { id: "ticket" as const, label: `ตั๋ว ×${wheel.ticketsPerSpin}` },
+              { id: "gems" as const, label: t("wheel.methodGems", { cost: wheel.gemsPerSpin.toFixed(2) }) },
+              { id: "ticket" as const, label: t("wheel.methodTicket", { cost: wheel.ticketsPerSpin }) },
             ] as const
           ).map((tab) => {
             const isActive = spinMethod === tab.id;
@@ -200,11 +203,11 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
             disabled={spinning}
             dimmed={!canAfford}
             className="w-full"
-            title={spinning ? "กำลังหมุน…" : "หมุนเลย"}
+            title={spinning ? t("wheel.spinning") : t("wheel.spinNow")}
             subtitle={
               spinMethod === "ticket"
-                ? `ใช้ตั๋ว ${wheel.ticketsPerSpin} ใบ`
-                : `ใช้ ${wheel.gemsPerSpin.toFixed(2)} เพชร`
+                ? t("wheel.useTickets", { count: wheel.ticketsPerSpin })
+                : t("wheel.useGems", { amount: wheel.gemsPerSpin.toFixed(2) })
             }
             onClick={() => {
               if (!canAfford) {
@@ -222,17 +225,17 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
               onClick={() => setSpinMethod("gems")}
               className="mt-2.5 text-xs font-medium text-purple-300 underline decoration-purple-400/40 underline-offset-4 transition-colors hover:text-purple-200 hover:decoration-purple-300 cursor-pointer"
             >
-              ไม่มีตั๋ว ลองหมุนด้วยเพชร
+              {t("wheel.noTickets")}
             </button>
           ) : spinMethod === "gems" && gemsBalance < currentGemsCost ? (
             <Link
               href="/gems-store"
               className="mt-2.5 text-xs font-medium text-purple-300 underline decoration-purple-400/40 underline-offset-4 transition-colors hover:text-purple-200 hover:decoration-purple-300"
             >
-              เพชรไม่เพียงพอ ลองเติมเพชร
+              {t("wheel.notEnoughGems")}
             </Link>
           ) : (
-            <span className="mt-2.5 text-xs text-[var(--text-secondary)]">หมุนสนุก ลุ้นรับของรางวัลได้ทุกวัน</span>
+            <span className="mt-2.5 text-xs text-[var(--text-secondary)]">{t("wheel.hint")}</span>
           )}
 
           {lastWin ? (
@@ -255,7 +258,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
       </div>
 
       <p className="pt-2 text-center text-xs text-[var(--text-secondary)]">
-        ตัวอย่างรางวัลและยอดกระเป๋า
+        {t("wheel.sampleNote")}
       </p>
     </div>
   );

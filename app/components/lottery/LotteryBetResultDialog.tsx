@@ -6,6 +6,7 @@ import type { LotteryBetDialogState } from "@/app/hooks/useLotteryBetSubmit";
 import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 import { CloseIcon } from "../ui/Icons";
 import { responsiveSheetCloseButtonClass } from "../ui/responsiveSheetDialog";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface LotteryBetResultDialogProps {
   state: LotteryBetDialogState | null;
@@ -16,6 +17,7 @@ interface LotteryBetResultDialogProps {
  * Dialog แจ้งส่งโพยไม่สำเร็จ — สำเร็จไปหน้าสรุปโพยแทน
  */
 export function LotteryBetResultDialog({ state, onClose }: LotteryBetResultDialogProps) {
+  const t = useT("lottery");
   const open = state !== null;
 
   const handleOpenChange = (next: boolean) => {
@@ -40,7 +42,7 @@ export function LotteryBetResultDialog({ state, onClose }: LotteryBetResultDialo
             <button
               type="button"
               className={responsiveSheetCloseButtonClass("absolute right-3 top-3")}
-              aria-label="ปิด"
+              aria-label={t("submit.close")}
             >
               <CloseIcon className="h-4 w-4" />
             </button>
@@ -53,7 +55,7 @@ export function LotteryBetResultDialog({ state, onClose }: LotteryBetResultDialo
             >
               <CloseIcon className="h-6 w-6" />
             </span>
-            <Dialog.Title className="mt-3 text-lg font-medium">ส่งโพยไม่สำเร็จ</Dialog.Title>
+            <Dialog.Title className="mt-3 text-lg font-medium">{t("submit.failedTitle")}</Dialog.Title>
             <p id="lottery-bet-result-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
               {state.message}
             </p>
@@ -64,7 +66,7 @@ export function LotteryBetResultDialog({ state, onClose }: LotteryBetResultDialo
               type="button"
               className={`${COSMIC_BTN_PRIMARY} mt-6 flex h-12 w-full items-center justify-center text-base`}
             >
-              เรียบร้อย
+              {t("submit.done")}
             </button>
           </Dialog.Close>
         </Dialog.Content>

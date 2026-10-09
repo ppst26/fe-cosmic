@@ -3,19 +3,21 @@
 import React from "react";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { StatusState } from "./StatusState";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * การ์ดชวนเข้าสู่ระบบ — แสดงแทนข้อมูลที่ต้อง login (ResourceGate ตอน status = idle)
  */
 export function LoginPrompt({
-  title = "เข้าสู่ระบบเพื่อดูข้อมูลนี้",
-  description = "ข้อมูลส่วนนี้แสดงเฉพาะสมาชิก",
+  title,
+  description,
   className,
 }: {
   title?: string;
   description?: string;
   className?: string;
 }) {
+  const t = useT("auth");
   const { open: openLogin } = useOverlayLayer("login");
   const { open: openSignUp } = useOverlayLayer("signup");
   return (
@@ -23,10 +25,10 @@ export function LoginPrompt({
       variant="card"
       className={className}
       icon={<LockIcon />}
-      title={title}
-      description={description}
-      primaryAction={{ label: "เข้าสู่ระบบ", onClick: () => openLogin() }}
-      secondaryAction={{ label: "สมัครสมาชิก", onClick: () => openSignUp() }}
+      title={title ?? t("loginPrompt.title")}
+      description={description ?? t("loginPrompt.description")}
+      primaryAction={{ label: t("login"), onClick: () => openLogin() }}
+      secondaryAction={{ label: t("signUp"), onClick: () => openSignUp() }}
     />
   );
 }

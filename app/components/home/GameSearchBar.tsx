@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { SearchIcon, ClearIcon } from "../ui/Icons";
 
 interface GameSearchBarProps {
@@ -18,6 +19,7 @@ export function GameSearchBar({
   placeholder = "Game | Provider",
   onSearch,
 }: GameSearchBarProps) {
+  const t = useT("home");
   const [query, setQuery] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,12 +49,12 @@ export function GameSearchBar({
       onSubmit={handleSubmit}
       className="w-full my-2.5"
       role="search"
-      aria-label="แบบฟอร์มค้นหาเกมและผู้ให้บริการ"
+      aria-label={t("search.formAriaLabel")}
     >
       <div className="relative flex h-[46px] w-full items-center rounded-[var(--radius-filter)] bg-[#121127] px-3.5 transition-all duration-150 border-none shadow-none outline-none ring-0 focus-within:outline-none focus-within:ring-0 hover:outline-none hover:ring-0">
         {/* Label สำหรับ Screen Reader เท่านั้น */}
         <label htmlFor="game-search-input" className="sr-only">
-          ค้นหาเกมหรือผู้ให้บริการ
+          {t("search.label")}
         </label>
 
         {/* ไอคอนแว่นขยายด้านซ้าย */}
@@ -79,7 +81,7 @@ export function GameSearchBar({
             type="button"
             onClick={handleClear}
             className="p-1 rounded-full text-[var(--text-muted)] hover:text-white hover:bg-white/10 transition-colors"
-            aria-label="ล้างคำค้นหา"
+            aria-label={t("search.clear")}
           >
             <ClearIcon className="w-4 h-4" />
           </button>

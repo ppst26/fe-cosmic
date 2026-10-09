@@ -6,8 +6,10 @@ import Image from "next/image";
 import { COSMIC_BTN_PRIMARY } from "@/app/components/ui/cosmicButtonClasses";
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { responsiveSheetCloseButtonClass } from "@/app/components/ui/responsiveSheetDialog";
-import { formatCheckInCredits } from "@/lib/format";
+
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
 
 export interface DailyCheckInClaimSuccessDialogProps {
   open: boolean;
@@ -23,7 +25,10 @@ export function DailyCheckInClaimSuccessDialog({
   credits,
   onOpenChange,
 }: DailyCheckInClaimSuccessDialogProps) {
-  const rewardLabel = formatCheckInCredits(credits);
+  const t = useT("rewards");
+  const fmt = useFormat();
+  const rewardLabel = fmt.gems(credits);
+  const descAfter = t("checkIn.success.descAfter");
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -39,7 +44,7 @@ export function DailyCheckInClaimSuccessDialog({
             <button
               type="button"
               className={responsiveSheetCloseButtonClass("absolute right-3 top-3")}
-              aria-label="ปิด"
+              aria-label={t("actions.close")}
             >
               <CloseIcon className="h-4 w-4" />
             </button>
@@ -62,13 +67,14 @@ export function DailyCheckInClaimSuccessDialog({
             </div>
 
             <Dialog.Title className="mt-4 text-lg font-medium text-[var(--text-primary)]">
-              รับรางวัลเรียบร้อยแล้ว
+              {t("checkIn.success.title")}
             </Dialog.Title>
             <p
               id="daily-check-in-claim-success-desc"
               className="mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)]"
             >
-              คุณได้รับ <span className={valueClass("accent")}>{rewardLabel}</span> แล้ว
+              {t("checkIn.success.descBefore")} <span className={valueClass("accent")}>{rewardLabel}</span>
+              {descAfter ? ` ${descAfter}` : null}
             </p>
           </div>
 
@@ -77,7 +83,7 @@ export function DailyCheckInClaimSuccessDialog({
               type="button"
               className={`${COSMIC_BTN_PRIMARY} mt-6 flex h-12 w-full items-center justify-center text-base`}
             >
-              ตกลง
+              {t("actions.ok")}
             </button>
           </Dialog.Close>
         </Dialog.Content>

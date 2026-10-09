@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "@/lib/i18n/navigation";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { ArrowLeftIcon } from "../ui/Icons";
 
 /**
@@ -7,13 +10,14 @@ import { ArrowLeftIcon } from "../ui/Icons";
  * ถูกเรียกใช้ใน app/profile/page.tsx
  */
 export function ProfilePageHeader({ title }: { title: string }) {
+  const t = useT("profile");
   return (
     <header className="profile-page-header standalone-sub-header page-sub-header w-full min-w-0">
       <div className="relative mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
         <Link
           href="/"
           className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
-          aria-label="กลับหน้าแรก"
+          aria-label={t("backHome")}
         >
           <ArrowLeftIcon className="h-6 w-6 text-white" />
         </Link>

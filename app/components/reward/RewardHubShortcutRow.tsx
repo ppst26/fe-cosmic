@@ -14,6 +14,7 @@ import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 
 import { cn } from "@/lib/utils";
 import type { RewardHubShortcut } from "@/app/types/reward";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
 
@@ -22,6 +23,8 @@ import type { RewardHubShortcut } from "@/app/types/reward";
  */
 
 export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortcut[] }) {
+
+  const t = useT("rewards");
 
   const pathname = usePathname();
 
@@ -35,7 +38,7 @@ export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortc
 
       className="reward-hub-shortcuts mx-3 grid grid-cols-3 gap-2 sm:mx-4 sm:gap-2.5"
 
-      aria-label="เมนูรางวัล"
+      aria-label={t("hub.shortcutsAria")}
 
     >
 
@@ -77,7 +80,7 @@ export function RewardHubShortcutRow({ shortcuts }: { shortcuts: RewardHubShortc
 
             >
 
-              {item.label}
+              {t(item.labelKey)}
 
             </span>
 

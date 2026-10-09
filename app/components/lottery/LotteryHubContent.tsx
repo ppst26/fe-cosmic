@@ -11,6 +11,7 @@ import { lotteryHrefToSlug } from "@/app/data/lotteryIconAssets";
 import { gameCardEnterListKey, GameCardStaggerShell } from "@/app/lib/gameCardEnterMotion";
 import { LotteryHubMarketLink } from "./LotteryHubMarketLink";
 import { LotteryLatestResultsTable } from "./LotteryLatestResultsTable";
+import { useLotteryI18n } from "./useLotteryI18n";
 
 interface LotteryHubContentProps {
   /** ซ่อนหัวข้อเมื่อหน้ามี SlotProvidersHeader แล้ว */
@@ -30,6 +31,7 @@ export function LotteryHubContent({
   gridItems,
   results,
 }: LotteryHubContentProps) {
+  const { t, label } = useLotteryI18n();
   const hub = useLotteryHub();
   const resolvedFeatured = featured ?? hub.data?.featured ?? [];
   const resolvedGridItems = gridItems ?? hub.data?.grid ?? [];
@@ -40,15 +42,15 @@ export function LotteryHubContent({
       {showPageHeading ? (
         <header className="lottery-hub__head min-w-0">
           <h2 className="text-lg font-medium tracking-tight text-[var(--text-primary)] sm:text-xl">
-            แทงหวย
+            {t("hub.title")}
           </h2>
           <p className="mt-1 text-sm text-[var(--text-secondary)]">
-            เลือกประเภทหวยที่ต้องการแทง
+            {t("hub.subtitle")}
           </p>
         </header>
       ) : null}
 
-      <section className="lottery-hub__featured" aria-label="หวยแนะนำ">
+      <section className="lottery-hub__featured" aria-label={t("hub.featuredAria")}>
         <div
           key={gameCardEnterListKey(resolvedFeatured.map((item) => item.id))}
           className="lottery-feature-grid grid grid-cols-1 gap-3 sm:grid-cols-3"
@@ -59,8 +61,8 @@ export function LotteryHubContent({
                 href={item.href}
                 marketSlug={lotteryHrefToSlug(item.href)}
                 variant="feature"
-                title={item.title}
-                countdownLabel={item.countdownLabel}
+                title={t(item.titleKey)}
+                countdownLabel={label(item.countdownLabel)}
                 fallbackLabel={item.visual === "thai-gov" ? "TH" : "YK"}
                 fallbackTone={item.visual === "thai-gov" ? "th" : "gold"}
               />
@@ -69,7 +71,7 @@ export function LotteryHubContent({
         </div>
       </section>
 
-      <section className="lottery-hub__markets min-w-0" aria-label="ประเภทหวยทั้งหมด">
+      <section className="lottery-hub__markets min-w-0" aria-label={t("hub.allMarketsAria")}>
         <div
           key={gameCardEnterListKey(resolvedGridItems.map((item) => item.id))}
           className="lottery-type-grid grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6"
@@ -80,7 +82,7 @@ export function LotteryHubContent({
                 href={item.href}
                 marketSlug={lotteryHrefToSlug(item.href)}
                 variant="type"
-                title={item.title}
+                title={t(item.titleKey)}
                 countdownLabel={item.countdownLabel}
                 isClosed={item.status === "closed"}
                 fallbackLabel={item.flagLabel}

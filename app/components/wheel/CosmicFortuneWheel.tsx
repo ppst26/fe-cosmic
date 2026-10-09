@@ -11,6 +11,7 @@ import {
   wheelThemeCssVars,
 } from "@/lib/domain/wheelTheme";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface CosmicFortuneWheelProps {
   segments: WheelSegment[];
@@ -57,6 +58,7 @@ export function CosmicFortuneWheel({
   centerDisabled,
   theme,
 }: CosmicFortuneWheelProps) {
+  const tr = useT("rewards");
   const uid = useId().replace(/:/g, "");
   const hubGradId = `wheelHub-${uid}`;
   const cx = 200;
@@ -198,7 +200,7 @@ export function CosmicFortuneWheel({
         className="lucky-wheel__hub-btn"
         disabled={centerDisabled || spinning}
         onClick={onCenterClick}
-        aria-label="หมุนวงล้อ"
+        aria-label={tr("wheel.spinAria")}
         /** letter-spacing ของ "SPIN" ทำให้ภาษาไทยห่างเกิน — ปิดเมื่อข้อความไม่ใช่ตัวอักษรละติน */
         style={/[^\x20-\x7e]/.test(t.hubLabel) ? { letterSpacing: 0 } : undefined}
       >

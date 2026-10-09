@@ -1,5 +1,23 @@
+import type { MessageKey } from "@/lib/i18n/messages";
+import type { MessageVars } from "@/lib/i18n/translate";
+
 /** สถานะตลาดหวย — เปิดรับ / ปิดรับ */
 export type LotteryMarketStatus = "open" | "closed";
+
+/** key ข้อความใน namespace lottery — แปลตอน render ด้วย useT("lottery") */
+export type LotteryMessageKey = MessageKey<"lottery">;
+
+/** ข้อความที่แสดงตรง (เช่น countdown "03:29:01") หรือ key + ตัวแปรที่ต้องแปลตอน render */
+export type LotteryLabel = string | { key: LotteryMessageKey; vars?: MessageVars };
+
+/**
+ * ป้ายงวด/รอบแบบโครงสร้าง — จัดรูปแบบตามภาษาตอน render (lib/lottery/labels.ts)
+ * time = รอบยี่กี "HH:MM" · draw = งวดตามวันที่ (ISO) · market = ชื่อตลาด + วันที่
+ */
+export type LotteryRoundLabel =
+  | { kind: "time"; time: string }
+  | { kind: "draw"; date: string }
+  | { kind: "market"; titleKey: LotteryMessageKey; date: string };
 
 /** โทนสีไอคอนธงของตลาดหวย — map กับ class .lottery-flag--{tone} ใน globals.css */
 export type LotteryFlagTone =
@@ -9,8 +27,8 @@ export type LotteryFlagTone =
 /** การ์ด feature แถวบน (หวยไทย · ยี่กี) */
 export interface LotteryFeaturedItem {
   id: string;
-  title: string;
-  countdownLabel: string;
+  titleKey: LotteryMessageKey;
+  countdownLabel: LotteryLabel;
   href: string;
   visual: "thai-gov" | "yiki";
   yikiMinutes?: 5 | 15 | 30;
@@ -19,7 +37,7 @@ export interface LotteryFeaturedItem {
 /** รายการหวยในกริด */
 export interface LotteryGridItem {
   id: string;
-  title: string;
+  titleKey: LotteryMessageKey;
   status: LotteryMarketStatus;
   countdownLabel?: string;
   flagLabel: string;
@@ -30,10 +48,11 @@ export interface LotteryGridItem {
 /** แถวผลหวยล่าสุด */
 export interface LotteryResultRow {
   id: string;
-  title: string;
+  titleKey: LotteryMessageKey;
   top3: string;
   bottom2: string;
-  dateLabel: string;
+  /** ISO วันออกผล · null = วันนี้ */
+  drawDate: string | null;
   flagLabel: string;
   flagTone: LotteryFlagTone;
 }
@@ -56,7 +75,7 @@ export type ThaiLottoBetTypeId =
 
 export interface ThaiLottoBetType {
   id: ThaiLottoBetTypeId;
-  label: string;
+  labelKey: LotteryMessageKey;
   group: ThaiLottoDigitGroup;
   digits: 1 | 2 | 3;
   /** อัตราจ่ายต่อ 1 บาท */
@@ -66,7 +85,7 @@ export interface ThaiLottoBetType {
 /** ข้อมูลงวดที่เปิดรับแทง */
 export interface ThaiLottoDraw {
   id: string;
-  drawLabel: string;
+  drawLabel: LotteryRoundLabel;
   /** ISO datetime เวลาปิดรับแทง */
   closeAt: string;
   minBet: number;
@@ -75,7 +94,7 @@ export interface ThaiLottoDraw {
 
 /** ผลรางวัลงวดก่อน */
 export interface ThaiLottoResult {
-  drawLabel: string;
+  drawLabel: LotteryRoundLabel;
   firstPrize: string;
   front3: string[];
   back3: string[];
@@ -95,14 +114,14 @@ export interface ThaiLottoBetEntry {
 /** รายการใน sidebar เลือกประเภทหวย */
 export interface LotteryCatalogEntry {
   slug: string;
-  title: string;
+  titleKey: LotteryMessageKey;
   flagLabel: string;
   flagTone: LotteryFlagTone;
   /** path หน้ารายการรอบ เช่น /lottery/thai-government */
   roundsHref: string;
   status: LotteryMarketStatus;
   /** ข้อความใต้ชื่อใน sidebar — countdown หรือสถานะ */
-  statusLabel: string;
+  statusLabel: LotteryLabel;
 }
 
 /** รอบการเล่น — mock จากตารางจริง (หวยไทย 1/16 · ยี่กี · หวยรายวัน) */
@@ -110,9 +129,7 @@ export type LotteryPlayRoundStatus = "open" | "upcoming" | "closed";
 
 export interface LotteryPlayRound {
   id: string;
-  drawLabel: string;
-  /** ข้อความยาวบนการ์ดรอบ */
-  scheduleLabel: string;
+  drawLabel: LotteryRoundLabel;
   drawAt: string;
   closeAt: string;
   openAt: string;
@@ -127,7 +144,7 @@ export interface LotteryPlayRound {
 export interface LotteryMarketConfig {
   /** ตรงกับ segment ท้าย href ใน LOTTERY_GRID_ITEMS เช่น "baac", "laos" */
   slug: string;
-  title: string;
+  titleKey: LotteryMessageKey;
   flagLabel: string;
   flagTone: LotteryFlagTone;
   status: LotteryMarketStatus;

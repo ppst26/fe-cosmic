@@ -13,6 +13,7 @@ import { submitCoupon } from "@/lib/api/coupon";
 import { COUPON_CODE_MAX_LENGTH, sanitizeCouponCode } from "@/lib/fieldInput";
 import { useToast } from "@/context/ToastContext";
 import { useWallet } from "@/app/hooks/api/account";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface CouponRedeemBottomSheetProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ interface CouponRedeemBottomSheetProps {
  */
 export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomSheetProps) {
   const { showToast } = useToast();
+  const t = useT("common");
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const wallet = useWallet();
@@ -44,7 +46,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
     event.preventDefault();
     const normalized = sanitizeCouponCode(code);
     if (!normalized) {
-      showToast("กรุณากรอกรหัสคูปอง", "error");
+      showToast(t("coupon.codeRequired"), "error");
       return;
     }
 
@@ -70,13 +72,13 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
         >
           <ResponsiveSheetTitleNotch>
             <ResponsiveSheetHeader
-              closeAriaLabel="ปิดหน้าแลกคูปอง"
+              closeAriaLabel={t("coupon.close")}
               titleIconId="coupon"
               titleIconDesktopOnly
-              title={<Dialog.Title className="cosmic-type-sheet-title text-xl sm:text-2xl">แลกคูปอง</Dialog.Title>}
+              title={<Dialog.Title className="cosmic-type-sheet-title text-xl sm:text-2xl">{t("coupon.title")}</Dialog.Title>}
               subtitle={
                 <p id="coupon-redeem-desc" className="cosmic-type-sheet-desc mt-1">
-                  โค้ดสำหรับแลกเครดิตฟรี
+                  {t("coupon.description")}
                 </p>
               }
             />
@@ -89,7 +91,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
           <form className="mt-6 flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="space-y-1.5">
               <label htmlFor="coupon-code" className="cosmic-type-sheet-label">
-                รหัสคูปอง
+                {t("coupon.codeLabel")}
               </label>
               <div className={COSMIC_SHEET_FIELD_ROW}>
                 <PromoTicketIcon className="h-5 w-5 shrink-0 text-[var(--border-active)]" />
@@ -100,7 +102,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
                   value={code}
                   maxLength={COUPON_CODE_MAX_LENGTH}
                   onChange={(event) => setCode(sanitizeCouponCode(event.target.value))}
-                  placeholder="กรอกโค้ดคูปอง"
+                  placeholder={t("coupon.codePlaceholder")}
                   className="min-w-0 flex-1 bg-transparent text-sm uppercase outline-none placeholder:normal-case placeholder:text-[var(--text-muted)]"
                 />
               </div>
@@ -111,7 +113,7 @@ export function CouponRedeemBottomSheet({ isOpen, onClose }: CouponRedeemBottomS
               disabled={submitting}
               className={COSMIC_BTN_PRIMARY}
             >
-              {submitting ? "กำลังตรวจสอบ..." : "แลกเครดิตฟรี"}
+              {submitting ? t("coupon.submitting") : t("coupon.submit")}
             </button>
           </form>
         </Dialog.Content>

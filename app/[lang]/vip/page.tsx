@@ -3,6 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/lib/i18n/navigation";
+import { useT } from "@/lib/i18n/I18nProvider";
 import type { VipModalTabId } from "@/app/types/vip";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { Header } from "@/app/components/layout/Header";
@@ -74,11 +75,12 @@ function VipPageInner() {
 }
 
 export default function VipPage() {
+  const t = useT("vip");
   return (
     <Suspense
       fallback={
         <div className="mobile-standalone-page mobile-standalone-main py-16 text-center text-sm text-[var(--text-muted)]">
-          กำลังโหลด...
+          {t("status.loading")}
         </div>
       }
     >

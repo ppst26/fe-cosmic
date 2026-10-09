@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import {
-  NOTIFICATION_EMPTY_MESSAGE,
+  NOTIFICATION_EMPTY_MESSAGE_KEY,
   NOTIFICATION_TABS,
 } from "@/app/data/notificationsMockData";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { NotificationEmptyState } from "./NotificationEmptyState";
 import { NotificationPopoverFooter } from "./NotificationPopoverFooter";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,7 @@ interface NotificationCenterPanelProps {
  */
 export function NotificationCenterPanel({ variant = "popover" }: NotificationCenterPanelProps) {
   const [activeTab, setActiveTab] = useState<NotificationTabId>("all");
+  const t = useT("common");
 
   return (
     <div
@@ -36,7 +38,7 @@ export function NotificationCenterPanel({ variant = "popover" }: NotificationCen
           "grid grid-cols-3 gap-1",
         )}
         role="tablist"
-        aria-label="ประเภทการแจ้งเตือน"
+        aria-label={t("notifications.tabsLabel")}
       >
         {NOTIFICATION_TABS.map((tab) => {
           const selected = tab.id === activeTab;
@@ -52,7 +54,7 @@ export function NotificationCenterPanel({ variant = "popover" }: NotificationCen
               )}
               onClick={() => setActiveTab(tab.id)}
             >
-              {tab.label}
+              {t(tab.labelKey)}
             </button>
           );
         })}
@@ -63,7 +65,7 @@ export function NotificationCenterPanel({ variant = "popover" }: NotificationCen
         role="tabpanel"
         aria-live="polite"
       >
-        <NotificationEmptyState message={NOTIFICATION_EMPTY_MESSAGE} />
+        <NotificationEmptyState message={t(NOTIFICATION_EMPTY_MESSAGE_KEY)} />
       </div>
     </div>
   );

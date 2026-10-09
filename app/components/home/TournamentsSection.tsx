@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import Link from "@/lib/i18n/navigation";
 import type { LobbyTournamentSectionItem } from "@/app/types/lobby";
@@ -20,8 +21,10 @@ interface TournamentsSectionProps {
  */
 export function TournamentsSection({
   items,
-  title = "กิจกรรม",
+  title: titleProp,
 }: TournamentsSectionProps) {
+  const t = useT("home");
+  const title = titleProp ?? t("events.title");
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
@@ -149,7 +152,7 @@ export function TournamentsSection({
         })}
       </div>
 
-      <div className="mt-3 flex items-center justify-center gap-1.5" role="tablist" aria-label={`สไลด์${title}`}>
+      <div className="mt-3 flex items-center justify-center gap-1.5" role="tablist" aria-label={t("events.slidesAriaLabel", { title })}>
         {items.map((item, idx) => {
           const isActive = idx === activeIndex;
           return (
@@ -158,7 +161,7 @@ export function TournamentsSection({
               type="button"
               role="tab"
               aria-selected={isActive}
-              aria-label={`ไปยัง${item.brandLabel}`}
+              aria-label={t("events.goTo", { name: item.brandLabel })}
               onClick={() => scrollToIndex(idx)}
               className={`rounded-full transition-all duration-200 ${
                 isActive

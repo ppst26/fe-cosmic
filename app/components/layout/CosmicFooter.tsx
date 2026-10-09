@@ -6,13 +6,14 @@ import {
   FOOTER_COPYRIGHT,
   FOOTER_DESKTOP_COLUMNS,
   FOOTER_DESKTOP_SOCIAL,
-  FOOTER_DISCLAIMER,
+  FOOTER_DISCLAIMER_KEY,
   FOOTER_PAYMENT_BANKS,
   FOOTER_TRUST_BADGES,
 } from "@/app/data/footerMockData";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_SHEET_SOFT_GLASS } from "@/app/components/ui/cosmicButtonClasses";
 import { CosmicbetLogo } from "@/app/components/ui/Icons";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 import type { FooterSocialIcon } from "@/app/types/footer";
 
 interface CosmicFooterProps {
@@ -23,8 +24,9 @@ interface CosmicFooterProps {
  * ส่วนท้ายเว็บ cosmicbet — มือถือแบบเดิม · desktop อิง Dexsport (คอลัมน์ลิงก์ + trust + legal)
  */
 export function CosmicFooter({ className = "" }: CosmicFooterProps) {
+  const t = useT("nav");
   return (
-    <footer className={`cosmic-footer ${className}`.trim()} aria-label="ส่วนท้ายเว็บไซต์ cosmicbet">
+    <footer className={`cosmic-footer ${className}`.trim()} aria-label={t("footer.label")}>
       <div className="cosmic-footer__container">
         <CosmicFooterMobile />
         <CosmicFooterDesktop />
@@ -35,9 +37,10 @@ export function CosmicFooter({ className = "" }: CosmicFooterProps) {
 
 /** Footer มือถือ — layout อิง Dexsport (CTA · social · trust · legal) */
 function CosmicFooterMobile() {
+  const t = useT("nav");
   return (
     <div className="cosmic-footer__dex-mobile lg:hidden">
-      <Link href="/" className="cosmic-footer__logo-link" aria-label="cosmicbet หน้าหลัก">
+      <Link href="/" className="cosmic-footer__logo-link" aria-label={t("footer.home")}>
         <CosmicbetLogo className="h-8 max-w-[148px] sm:h-9 sm:max-w-[168px]" />
       </Link>
 
@@ -47,13 +50,13 @@ function CosmicFooterMobile() {
 
       <ul
         className="cosmic-footer__trust-grid cosmic-footer__trust-grid--three m-0 w-full max-w-md list-none p-0"
-        aria-label="การรับรอง"
+        aria-label={t("footer.certifications")}
       >
         {FOOTER_TRUST_BADGES.map((badge) => (
           <li key={badge.name} className={`cosmic-footer__trust-card ${COSMIC_SHEET_SOFT_GLASS}`}>
             <span className="cosmic-footer__trust-check" aria-hidden>✓</span>
             <span className="cosmic-footer__trust-copy">
-              <span className="cosmic-footer__trust-label">{badge.label}</span>
+              <span className="cosmic-footer__trust-label">{t(badge.labelKey)}</span>
               <strong className="cosmic-footer__trust-name">{badge.name}</strong>
             </span>
           </li>
@@ -61,12 +64,12 @@ function CosmicFooterMobile() {
       </ul>
 
       <p className="cosmic-footer__disclaimer max-w-md text-center text-xs leading-relaxed text-[var(--text-secondary)]">
-        {FOOTER_DISCLAIMER}
+        {t(FOOTER_DISCLAIMER_KEY)}
       </p>
 
-      <div className="cosmic-footer__compliance" aria-label="เล่นอย่างมีสติ">
-        <span className="cosmic-footer__compliance-badge">เล่นอย่างมีสติ</span>
-        <span className="cosmic-footer__compliance-age" aria-label="อายุ 18 ปีขึ้นไป">
+      <div className="cosmic-footer__compliance" aria-label={t("footer.playResponsibly")}>
+        <span className="cosmic-footer__compliance-badge">{t("footer.playResponsibly")}</span>
+        <span className="cosmic-footer__compliance-age" aria-label={t("footer.ageRestriction")}>
           18+
         </span>
         <span className="cosmic-footer__compliance-seal" aria-hidden />
@@ -81,6 +84,7 @@ function CosmicFooterMobile() {
 
 /** ช่องทางการชำระเงิน — โลโก้ธนาคาร (footer mobile + desktop) */
 function FooterPaymentMethodsBand({ variant = "desktop" }: { variant?: "desktop" | "mobile" }) {
+  const t = useT("nav");
   const isMobile = variant === "mobile";
   const titleId = isMobile ? "cosmic-footer-payment-title-mobile" : "cosmic-footer-payment-title";
 
@@ -93,7 +97,7 @@ function FooterPaymentMethodsBand({ variant = "desktop" }: { variant?: "desktop"
       aria-labelledby={titleId}
     >
       <h3 id={titleId} className="cosmic-footer__payment-title">
-        วิธีการชำระเงิน
+        {t("footer.paymentMethods")}
       </h3>
       <ul className="cosmic-footer__payment-grid m-0 list-none p-0">
         {FOOTER_PAYMENT_BANKS.map((bank) => (
@@ -116,6 +120,7 @@ function FooterPaymentMethodsBand({ variant = "desktop" }: { variant?: "desktop"
 
 /** ปุ่มชุมชน + แชทออนไลน์ — มือถือ Dexsport footer */
 function FooterCommunityChatCta({ className }: { className?: string }) {
+  const t = useT("nav");
   return (
     <div className={cn("grid grid-cols-2 gap-2.5", className)}>
       <Link
@@ -125,7 +130,7 @@ function FooterCommunityChatCta({ className }: { className?: string }) {
           "cosmic-footer__cta-community inline-flex min-h-11 items-center justify-center rounded-full px-3 text-sm font-medium text-[var(--text-primary)]",
         )}
       >
-        ชุมชน
+        {t("footer.community")}
       </Link>
       <Link
         href="/support"
@@ -138,7 +143,7 @@ function FooterCommunityChatCta({ className }: { className?: string }) {
           <HeadsetIcon className="text-[var(--icon-default)]" />
           <span className="cosmic-footer__chat-online" aria-hidden />
         </span>
-        แชทออนไลน์
+        {t("footer.liveChat")}
       </Link>
     </div>
   );
@@ -146,6 +151,7 @@ function FooterCommunityChatCta({ className }: { className?: string }) {
 
 /** Footer desktop — โลโก้ + social · 6 คอลัมน์ · trust · CTA · copyright */
 function CosmicFooterDesktop() {
+  const t = useT("nav");
   return (
     <div className="cosmic-footer__dex hidden lg:flex lg:flex-col lg:gap-8 lg:px-0 lg:py-0">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -153,7 +159,7 @@ function CosmicFooterDesktop() {
           <Link
             href="/"
             className="cosmic-footer__brandmark text-2xl font-medium tracking-tight"
-            aria-label="cosmicbet หน้าหลัก"
+            aria-label={t("footer.home")}
           >
             cosmic<span>bet</span>
           </Link>
@@ -163,7 +169,7 @@ function CosmicFooterDesktop() {
             Web3
           </span>
         </div>
-        <nav className="flex flex-wrap items-center gap-2" aria-label="โซเชียล">
+        <nav className="flex flex-wrap items-center gap-2" aria-label={t("footer.social")}>
           {FOOTER_DESKTOP_SOCIAL.map((item) => (
             <Link
               key={item.label}
@@ -183,19 +189,19 @@ function CosmicFooterDesktop() {
 
       <nav
         className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3 xl:grid-cols-6"
-        aria-label="ลิงก์ส่วนท้ายเว็บ"
+        aria-label={t("footer.links")}
       >
         {FOOTER_DESKTOP_COLUMNS.map((column) => (
-          <div key={column.title} className="min-w-0">
-            <h3 className="mb-3 text-base font-medium text-[var(--text-primary)]">{column.title}</h3>
+          <div key={column.titleKey} className="min-w-0">
+            <h3 className="mb-3 text-base font-medium text-[var(--text-primary)]">{t(column.titleKey)}</h3>
             <ul className="m-0 flex list-none flex-col gap-0.5 p-0">
               {column.links.map((link) => (
-                <li key={`${column.title}-${link.label}`}>
+                <li key={`${column.titleKey}-${link.labelKey}`}>
                   <Link
                     href={link.href}
                     className="inline-flex min-h-9 items-center py-0.5 text-sm leading-snug text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}

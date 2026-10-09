@@ -10,6 +10,7 @@ import { getLotteryIconSrc } from "@/app/data/lotteryIconAssets";
 import { LotteryCountdown } from "./LotteryFlagOrb";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
 import { cn } from "@/lib/utils";
+import { useLotteryI18n } from "./useLotteryI18n";
 
 interface LotteryMarketShellProps {
   activeEntry: LotteryCatalogEntry;
@@ -22,6 +23,7 @@ interface LotteryMarketShellProps {
  * โครง layout มือถือ/เดสก์ท็อปใช้ Tailwind — สไตล์การ์ด/สถานะอยู่ใน lottery.css
  */
 export function LotteryMarketShell({ activeEntry, roundCount, children }: LotteryMarketShellProps) {
+  const { t } = useLotteryI18n();
   const catalog = useLotteryCatalog();
   const sidebarScrollRef = useRef<HTMLDivElement>(null);
   const roundsScrollRef = useRef<HTMLDivElement>(null);
@@ -51,7 +53,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
           "max-lg:h-full max-lg:max-h-full max-lg:overflow-hidden",
           "lg:h-full",
         )}
-        aria-label="ประเภทหวย"
+        aria-label={t("market.sidebarAria")}
       >
         <div
           ref={sidebarScrollRef}
@@ -136,7 +138,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               )}
               style={{ fontFamily: "var(--font-heading)" }}
             >
-              {activeEntry.title}
+              {t(activeEntry.titleKey)}
             </h1>
             <Link
               href="/promotions"
@@ -146,15 +148,15 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
                 "lg:mt-1 lg:inline-block lg:text-xs",
               )}
             >
-              กติกา / อัตราการจ่าย
+              {t("market.rules")}
             </Link>
           </div>
         </header>
 
         <p className="lottery-market-round-count mb-3 text-[var(--text-secondary)] max-lg:hidden">
-          รอบที่เปิดให้เล่น{" "}
+          {t("rounds.openCountPrefix")}{" "}
           <span className="lottery-market-round-count__n text-[var(--text-primary)]">{roundCount}</span>{" "}
-          รอบ
+          {t("rounds.openCountSuffix")}
         </p>
 
         <div
@@ -180,6 +182,7 @@ function LotteryMarketSidebarLink({
   entry: LotteryCatalogEntry;
   isActive: boolean;
 }) {
+  const { t, label } = useLotteryI18n();
   const iconSrc = getLotteryIconSrc(entry.slug);
 
   return (
@@ -223,13 +226,13 @@ function LotteryMarketSidebarLink({
             "line-clamp-2 max-w-full leading-tight lg:leading-snug",
           )}
         >
-          {entry.title}
+          {t(entry.titleKey)}
         </span>
         {entry.status === "closed" ? (
-          <span className="lottery-market-sidebar__meta text-[var(--text-secondary)]">ปิดรับแทง</span>
+          <span className="lottery-market-sidebar__meta text-[var(--text-secondary)]">{t("status.closed")}</span>
         ) : (
           <LotteryCountdown
-            label={entry.statusLabel}
+            label={label(entry.statusLabel)}
             className="justify-end gap-0.5 [&_svg]:size-3"
           />
         )}

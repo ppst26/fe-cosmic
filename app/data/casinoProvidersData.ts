@@ -11,13 +11,13 @@ import type { CasinoFilterTabItem, CasinoCardItem } from "@/app/types/providers"
  * แถบตัวกรองสำหรับหน้าคาสิโนสด
  */
 export const CASINO_FILTER_TABS: CasinoFilterTabItem[] = [
-  { id: "all-in-one", label: "ศูนย์รวม", iconId: "gift" },
-  { id: "all-providers", label: "ค่ายทั้งหมด", iconId: "gamepad" },
-  { id: "baccarat", label: "บาคาร่า", iconId: "cards" },
-  { id: "roulette", label: "รูเล็ต", iconId: "roulette" },
-  { id: "blackjack", label: "แบล็คแจ็ค", iconId: "cards" },
-  { id: "game-shows", label: "เกมโชว์", iconId: "game-shows" },
-  { id: "sicbo", label: "ไฮโล/เสือมังกร", iconId: "dice" },
+  { id: "all-in-one", labelKey: "filters.allInOne", iconId: "gift" },
+  { id: "all-providers", labelKey: "filters.allProviders", iconId: "gamepad" },
+  { id: "baccarat", labelKey: "filters.baccarat", iconId: "cards" },
+  { id: "roulette", labelKey: "filters.roulette", iconId: "roulette" },
+  { id: "blackjack", labelKey: "filters.blackjack", iconId: "cards" },
+  { id: "game-shows", labelKey: "filters.gameShows", iconId: "game-shows" },
+  { id: "sicbo", labelKey: "filters.sicbo", iconId: "dice" },
 ];
 
 /** ชื่อค่ายตามไฟล์ใน public/casino (ครบทุก .webp) */

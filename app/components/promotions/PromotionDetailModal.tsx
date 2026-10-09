@@ -8,6 +8,7 @@ import { responsiveSheetCloseButtonClass } from "../ui/responsiveSheetDialog";
 import { PromotionDetailPanel } from "./PromotionDetailPanel";
 import { EmptyState, LoadingState } from "../ui/StatusState";
 import { usePromotionsCatalog } from "./PromotionsCatalogProvider";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface PromotionDetailModalProps {
   detailId: PromotionDetailId | null;
@@ -18,6 +19,7 @@ interface PromotionDetailModalProps {
  * Modal รายละเอียดโปรโมชั่น — โหลดจาก GET /api/promotions/[id]
  */
 export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModalProps) {
+  const t = useT("promotions");
   const open = detailId !== null;
   const { fetchDetail, getCachedDetail } = usePromotionsCatalog();
   /** ผลโหลดล่าสุดผูกกับ id — content / loading คำนวณตอน render ไม่ต้อง sync state ใน effect */
@@ -66,13 +68,13 @@ export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModal
           >
             <div className="promo-detail-modal__header">
               <Dialog.Title className="sr-only">
-                {content?.bannerTitle ?? "รายละเอียดโปรโมชั่น"}
+                {content?.bannerTitle ?? t("detail.title")}
               </Dialog.Title>
               <Dialog.Close asChild>
                 <button
                   type="button"
                   className={responsiveSheetCloseButtonClass()}
-                  aria-label="ปิดรายละเอียดโปรโมชั่น"
+                  aria-label={t("detail.close")}
                 >
                   <CloseIcon className="h-4 w-4" />
                 </button>
@@ -80,12 +82,12 @@ export function PromotionDetailModal({ detailId, onClose }: PromotionDetailModal
             </div>
 
             <div className="promo-detail-modal__scroll">
-              {loading && !content ? <LoadingState label="กำลังโหลดรายละเอียด…" /> : null}
+              {loading && !content ? <LoadingState label={t("detail.loading")} /> : null}
               {showPanel ? <PromotionDetailPanel content={content} variant="modal" /> : null}
               {!loading && !content ? (
                 <EmptyState
-                  title="ไม่พบรายละเอียดโปรโมชั่น"
-                  description="โปรโมชั่นนี้อาจหมดเวลาแล้ว หรือโหลดไม่สำเร็จ"
+                  title={t("detail.notFound")}
+                  description={t("detail.notFoundDesc")}
                 />
               ) : null}
             </div>

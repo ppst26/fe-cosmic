@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "@/lib/i18n/navigation";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 
 interface CarouselControlsProps {
@@ -31,6 +34,7 @@ export function CarouselControls({
   onNext,
 }: CarouselControlsProps) {
   const arrowClass = "glass-control glass-icon-btn";
+  const t = useT("common");
 
   return (
     <div className="flex items-center gap-2">
@@ -46,7 +50,7 @@ export function CarouselControls({
         className={arrowClass}
         onClick={onPrev}
         disabled={!canPrev}
-        aria-label={`เลื่อน ${sectionTitle} ไปกลุ่มก่อนหน้า`}
+        aria-label={t("carousel.prev", { title: sectionTitle })}
       >
         <ChevronLeftIcon className="w-4 h-4" />
       </button>
@@ -57,7 +61,7 @@ export function CarouselControls({
         className={arrowClass}
         onClick={onNext}
         disabled={!canNext}
-        aria-label={`เลื่อน ${sectionTitle} ไปกลุ่มถัดไป`}
+        aria-label={t("carousel.next", { title: sectionTitle })}
       >
         <ChevronRightIcon className="w-4 h-4" />
       </button>

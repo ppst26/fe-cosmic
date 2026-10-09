@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { useParams } from "next/navigation";
 import { Header } from "@/app/components/layout/Header";
 import { RightMenuDrawer } from "@/app/components/layout/RightMenuDrawer";
@@ -29,6 +30,7 @@ export function CategoryProviderGamesPage({
   categoryLabel,
   backHref,
 }: CategoryProviderGamesPageProps) {
+  const t = useT("games");
   const urlParams = useParams();
   const rawSlug = (urlParams?.provider as string) || "unknown";
   const providerId = resolveCategoryProviderId(category, rawSlug);
@@ -66,7 +68,7 @@ export function CategoryProviderGamesPage({
 
       <main className="mobile-standalone-main pt-2">
         <GameSearchBar
-          placeholder="ค้นหาเกมในค่ายนี้"
+          placeholder={t("providerGames.searchPlaceholder")}
           onSearch={setSearchQuery}
         />
 

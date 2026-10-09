@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * แถบล่างโพย — ย้อนรายการล่าสุด · ล้างทั้งหมด (โทนเดียวกับตัวอย่างยี่กี)
@@ -17,20 +18,21 @@ export function LotterySlipToolbar({
   onUndo: () => void;
   onClearAll: () => void;
 }) {
+  const t = useT("lottery");
   if (!visible) return null;
 
   return (
     <div
       className="lottery-slip-toolbar grid grid-cols-[1fr_1px_1fr] items-stretch overflow-hidden"
       role="toolbar"
-      aria-label="เครื่องมือโพย"
+      aria-label={t("slip.toolbarAria")}
     >
       <button
         type="button"
         className="lottery-slip-toolbar__btn grid place-items-center min-h-10"
         onClick={onUndo}
         disabled={!canUndo}
-        aria-label="ย้อนกลับรายการล่าสุด"
+        aria-label={t("slip.undo")}
       >
         <UndoIcon />
       </button>
@@ -39,7 +41,7 @@ export function LotterySlipToolbar({
         type="button"
         className="lottery-slip-toolbar__btn grid place-items-center min-h-10"
         onClick={onClearAll}
-        aria-label="ล้างโพยทั้งหมด"
+        aria-label={t("slip.clearAll")}
       >
         <TrashIcon />
       </button>

@@ -1,12 +1,21 @@
 /* ── จาก app/data/footerMockData.ts ── */
 
+import type { MessageKey } from "@/lib/i18n/messages";
+
+/** ลิงก์ที่ป้ายแปลตาม dictionary nav — render ด้วย useT("nav")(labelKey) */
 export interface FooterNavLink {
+  labelKey: MessageKey<"nav">;
+  href: string;
+}
+
+/** ลิงก์ชื่อแบรนด์ภายนอก — ไม่แปล */
+export interface FooterBrandLink {
   label: string;
   href: string;
 }
 
 export interface FooterLinkColumn {
-  title: string;
+  titleKey: MessageKey<"nav">;
   links: FooterNavLink[];
 }
 

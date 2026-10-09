@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Link from "@/lib/i18n/navigation";
 import { ArrowLeftIcon } from "../ui/Icons";
 
@@ -17,19 +18,21 @@ interface ProviderBreadcrumbProps {
 export function ProviderBreadcrumb({
   providerName,
   backHref = "/slots",
-  categoryLabel = "สล็อต",
+  categoryLabel: categoryLabelProp,
 }: ProviderBreadcrumbProps) {
+  const t = useT("games");
+  const categoryLabel = categoryLabelProp ?? t("slots.title");
   return (
     <nav
       className="provider-breadcrumb-nav standalone-sub-header page-sub-header w-full min-w-0"
-      aria-label="การนำทางตามลำดับขั้น"
+      aria-label={t("breadcrumb.ariaLabel")}
     >
       <div className="mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center gap-2 px-[var(--page-gutter)] text-sm sm:text-base">
         {/* ปุ่มย้อนกลับ arrow back */}
         <Link
           href={backHref}
           className="flex h-8 w-8 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform shrink-0 cursor-pointer"
-          aria-label={`ย้อนกลับไปหน้ารวม${categoryLabel}`}
+          aria-label={t("breadcrumb.backToCategory", { category: categoryLabel })}
         >
           <ArrowLeftIcon className="h-5.5 w-5.5 text-white" />
         </Link>

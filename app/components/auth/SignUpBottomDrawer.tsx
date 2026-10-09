@@ -38,6 +38,7 @@ import {
   sanitizePassword,
   sanitizePhone,
 } from "@/lib/fieldInput";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface SignUpBottomDrawerProps {
   isOpen: boolean;
@@ -64,6 +65,7 @@ const EMPTY_STEP_TWO: SignUpStepTwoData = {
  * แบนเนอร์ด้านบน drawer — ข้อความต้อนรับ + ภาพประกอบ (decorative)
  */
 function SignUpDrawerHero() {
+  const t = useT("auth");
   return (
     <div className="relative min-h-[148px] overflow-hidden rounded-t-[var(--radius-panel)] sm:min-h-[160px]">
       <div
@@ -79,10 +81,10 @@ function SignUpDrawerHero() {
       <div className="relative z-10 flex flex-col gap-2 px-4 pb-4 pt-10 sm:px-5">
         <CosmicbetLogo className="h-5 max-w-[90px] sm:h-6 sm:max-w-[100px]" />
         <p className="text-lg font-medium leading-tight text-[var(--text-primary)] sm:text-xl">
-          ยินดีต้อนรับสู่ cosmicbet
+          {t("signUpSheet.welcome")}
         </p>
         <p className="cosmic-type-sheet-desc">
-          เริ่มต้นความสนุกในแบบคุณ
+          {t("signUpSheet.tagline")}
         </p>
       </div>
     </div>
@@ -157,6 +159,8 @@ function SignUpStepOne({
   onSubmit: () => void;
   onLoginClick?: () => void;
 }) {
+  const t = useT("auth");
+  const tCommon = useT("common");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -172,31 +176,31 @@ function SignUpStepOne({
       <ModalDesktopTitleBlock
         titleIconId="profile"
         title={
-          <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">สมัครสมาชิก</Dialog.Title>
+          <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">{t("signUp")}</Dialog.Title>
         }
       />
 
       <SignUpField
         id="signup-phone"
-        label="เบอร์โทรศัพท์"
+        label={t("fields.phone")}
         type="tel"
         inputMode="tel"
         autoComplete="tel"
         value={data.phone}
         onChange={(phone) => onChange({ phone: sanitizePhone(phone) })}
-        placeholder="กรอกเบอร์โทรศัพท์"
+        placeholder={t("fields.phonePlaceholder")}
         maxLength={PHONE_DIGIT_LENGTH}
         leadingIcon={<PhoneIcon className="h-5 w-5" />}
       />
 
       <SignUpField
         id="signup-password"
-        label="รหัสผ่าน"
+        label={t("fields.password")}
         type={showPassword ? "text" : "password"}
         autoComplete="new-password"
         value={data.password}
         onChange={(password) => onChange({ password: sanitizePassword(password) })}
-        placeholder="กรอกรหัสผ่าน"
+        placeholder={t("fields.passwordPlaceholder")}
         maxLength={PASSWORD_MAX_LENGTH}
         leadingIcon={<LockIcon className="h-5 w-5" />}
         trailing={
@@ -204,7 +208,7 @@ function SignUpStepOne({
             type="button"
             className="shrink-0 text-[var(--icon-default)] hover:text-[var(--icon-active)]"
             onClick={() => setShowPassword((v) => !v)}
-            aria-label={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+            aria-label={showPassword ? t("fields.hidePassword") : t("fields.showPassword")}
           >
             {showPassword ? <EyeOffIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
           </button>
@@ -213,12 +217,12 @@ function SignUpStepOne({
 
       <SignUpField
         id="signup-confirm"
-        label="ยืนยันรหัสผ่าน"
+        label={t("fields.confirmPassword")}
         type={showConfirm ? "text" : "password"}
         autoComplete="new-password"
         value={data.confirmPassword}
         onChange={(confirmPassword) => onChange({ confirmPassword: sanitizePassword(confirmPassword) })}
-        placeholder="กรอกรหัสผ่านอีกครั้ง"
+        placeholder={t("fields.confirmPasswordPlaceholder")}
         maxLength={PASSWORD_MAX_LENGTH}
         leadingIcon={<LockIcon className="h-5 w-5" />}
         trailing={
@@ -226,23 +230,23 @@ function SignUpStepOne({
             type="button"
             className="shrink-0 text-[var(--icon-default)] hover:text-[var(--icon-active)]"
             onClick={() => setShowConfirm((v) => !v)}
-            aria-label={showConfirm ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+            aria-label={showConfirm ? t("fields.hidePassword") : t("fields.showPassword")}
           >
             {showConfirm ? <EyeOffIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
           </button>
         }
       />
 
-      <CosmicStackedActionButton type="submit" className="mt-1" title="ถัดไป" />
+      <CosmicStackedActionButton type="submit" className="mt-1" title={tCommon("next")} />
 
       <p className="text-center text-sm text-[var(--text-secondary)]">
-        มีบัญชีอยู่แล้ว?{" "}
+        {t("signUpSheet.haveAccount")}{" "}
         <button
           type="button"
           className="font-medium text-[var(--border-active)] hover:text-[var(--icon-active)]"
           onClick={onLoginClick}
         >
-          เข้าสู่ระบบ
+          {t("login")}
         </button>
       </p>
     </form>
@@ -259,6 +263,7 @@ export function SignUpBottomDrawer({
   onLoginClick,
 }: SignUpBottomDrawerProps) {
   const formId = useId();
+  const t = useT("auth");
   const { register } = useAuth();
   const { showToast } = useToast();
   const [step, setStep] = useState<SignUpStep>(1);
@@ -285,15 +290,15 @@ export function SignUpBottomDrawer({
   const handleStepOneSubmit = () => {
     const phone = sanitizePhone(stepOne.phone);
     if (!isThaiMobilePhone(phone)) {
-      showToast("เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0", "error");
+      showToast(t("validation.phone"), "error");
       return;
     }
     if (!isPasswordLengthOk(stepOne.password)) {
-      showToast("รหัสผ่านต้องมี 6–32 ตัวอักษร", "error");
+      showToast(t("validation.passwordLength"), "error");
       return;
     }
     if (stepOne.password !== stepOne.confirmPassword) {
-      showToast("รหัสผ่านไม่ตรงกัน", "error");
+      showToast(t("validation.passwordMismatch"), "error");
       return;
     }
     setStep(2);
@@ -301,23 +306,23 @@ export function SignUpBottomDrawer({
 
   const handleStepTwoSubmit = async () => {
     if (!isPersonName(stepTwo.firstName)) {
-      showToast("กรุณากรอกชื่อจริงเป็นตัวอักษร", "error");
+      showToast(t("validation.firstName"), "error");
       return;
     }
     if (!isPersonName(stepTwo.lastName)) {
-      showToast("กรุณากรอกนามสกุลเป็นตัวอักษร", "error");
+      showToast(t("validation.lastName"), "error");
       return;
     }
     if (!isBankAccountNumber(stepTwo.bankAccountNumber)) {
-      showToast("เลขบัญชีต้องเป็นตัวเลข 10–12 หลัก", "error");
+      showToast(t("validation.bankAccount"), "error");
       return;
     }
     if (!stepTwo.bankId) {
-      showToast("กรุณาเลือกธนาคาร", "error");
+      showToast(t("validation.bankRequired"), "error");
       return;
     }
     if (!stepTwo.channelId) {
-      showToast("กรุณาเลือกช่องทาง", "error");
+      showToast(t("validation.channelRequired"), "error");
       return;
     }
 
@@ -334,11 +339,11 @@ export function SignUpBottomDrawer({
     setIsSubmitting(false);
 
     if (!result.ok) {
-      showToast(result.error ?? "สมัครไม่สำเร็จ", "error");
+      showToast(result.error ?? t("signUpSheet.failed"), "error");
       return;
     }
 
-    showToast("สมัครสมาชิกสำเร็จ ยินดีต้อนรับ!", "success");
+    showToast(t("signUpSheet.success"), "success");
     resetForm();
     onClose();
   };
@@ -373,7 +378,7 @@ export function SignUpBottomDrawer({
               className={responsiveSheetCloseButtonClass(
                 `absolute right-3 z-20 backdrop-blur-sm ${step === 1 ? "top-3" : "top-4"}`,
               )}
-              aria-label="ปิดหน้าสมัครสมาชิก"
+              aria-label={t("signUpSheet.close")}
             >
               <CloseIcon className="h-4 w-4" />
             </button>
@@ -409,9 +414,9 @@ export function SignUpBottomDrawer({
           <SignUpPickerSheet
             isOpen={signUpPicker === "bank"}
             onClose={() => setSignUpPicker(null)}
-            ariaLabel="เลือกธนาคาร"
+            ariaLabel={t("fields.bankPlaceholder")}
           >
-            <ResourceGate resource={signUpOptions} loadingLabel="กำลังโหลดรายชื่อธนาคาร…" errorTitle="โหลดรายชื่อธนาคารไม่สำเร็จ">
+            <ResourceGate resource={signUpOptions} loadingLabel={t("signUpSheet.loadingBanks")} errorTitle={t("signUpSheet.banksFailed")}>
               {({ banks }) => (
             <div className="grid grid-cols-4 gap-2 px-1">
               {banks.map((bank) => (
@@ -434,9 +439,9 @@ export function SignUpBottomDrawer({
           <SignUpPickerSheet
             isOpen={signUpPicker === "channel"}
             onClose={() => setSignUpPicker(null)}
-            ariaLabel="เลือกช่องทาง"
+            ariaLabel={t("fields.channelPlaceholder")}
           >
-            <ResourceGate resource={signUpOptions} loadingLabel="กำลังโหลดช่องทาง…" errorTitle="โหลดช่องทางไม่สำเร็จ">
+            <ResourceGate resource={signUpOptions} loadingLabel={t("signUpSheet.loadingChannels")} errorTitle={t("signUpSheet.channelsFailed")}>
               {({ channels }) => (
             <div className="grid grid-cols-4 gap-2 px-1">
               {channels.map((channel) => (

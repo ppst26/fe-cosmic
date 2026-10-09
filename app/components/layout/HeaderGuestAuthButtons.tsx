@@ -2,6 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 type HeaderGuestAuthButtonsProps = {
   onLoginClick?: () => void;
@@ -24,13 +25,14 @@ export function HeaderGuestAuthButtons({
   signUpClassName,
   className,
 }: HeaderGuestAuthButtonsProps) {
+  const t = useT("auth");
   const signUpLabel = signUpLabelCompact ? (
     <>
-      <span className="sm:hidden">สมัคร</span>
-      <span className="hidden sm:inline">สมัครสมาชิก</span>
+      <span className="sm:hidden">{t("signUpShort")}</span>
+      <span className="hidden sm:inline">{t("signUp")}</span>
     </>
   ) : (
-    "สมัครสมาชิก"
+    t("signUp")
   );
 
   return (
@@ -43,7 +45,7 @@ export function HeaderGuestAuthButtons({
           "inline-flex items-center justify-center whitespace-nowrap text-xs font-medium",
         )}
       >
-        เข้าสู่ระบบ
+        {t("login")}
       </button>
       <button
         type="button"

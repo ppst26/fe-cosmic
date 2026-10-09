@@ -7,7 +7,8 @@ import {
   LOTTERY_LOW_FREQ_MAX_ROUNDS,
   lotteryMarketUsesRoundGrid,
 } from "@/app/data/lotteryRoundsMockData";
-import { formatBangkokTimeHHmm, formatCountdown } from "./lotteryUtils";
+import { formatBangkokTimeHHmm } from "./lotteryUtils";
+import { useLotteryI18n } from "./useLotteryI18n";
 
 const GRID_INITIAL_VISIBLE = 24;
 
@@ -26,6 +27,7 @@ function formatRoundClock(iso: string): string {
  * รายการรอบ step 2 — แบบการ์ด (รอบน้อย) หรือกริด + ขยาย (ยี่กี)
  */
 export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPlayRoundListProps) {
+  const { t, roundLabel, countdown: formatCountdown } = useLotteryI18n();
   const [nowMs, setNowMs] = useState<number | null>(null);
   const [showAllGrid, setShowAllGrid] = useState(false);
 
@@ -53,13 +55,13 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
 
   if (cardRounds.length === 0 && !useGridLayout) {
     return (
-      <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ยังไม่มีรอบที่เปิดรับแทง</p>
+      <p className="py-10 text-center text-sm text-[var(--text-secondary)]">{t("rounds.empty")}</p>
     );
   }
 
   if (rounds.length === 0 && useGridLayout) {
     return (
-      <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ยังไม่มีรอบที่เปิดรับแทง</p>
+      <p className="py-10 text-center text-sm text-[var(--text-secondary)]">{t("rounds.empty")}</p>
     );
   }
 
@@ -68,7 +70,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
       <div className="lottery-play-rounds lottery-play-rounds--grid-mode gap-2">
         <ul
           className="lottery-play-round-grid grid grid-cols-2 gap-2 m-0 p-0 list-none min-[480px]:grid-cols-3 md:grid-cols-4 md:gap-3"
-          aria-label="รายการรอบ"
+          aria-label={t("rounds.listAria")}
         >
           {visibleGridRounds.map((round, index) => {
             const playable = round.status === "open";
@@ -83,7 +85,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
             const inner = (
               <>
                 <span className="lottery-play-round-grid__round">
-                  {round.drawLabel.replace(/^รอบ\s*/, "รอบ ") || `รอบ ${index + 1}`}
+                  {roundLabel(round.drawLabel) || t("round.numbered", { n: index + 1 })}
                 </span>
                 <span className="lottery-play-round-grid__time">{formatRoundClock(round.closeAt)}</span>
                 <span className="lottery-play-round-grid__countdown inline-flex min-w-[4.5rem] justify-center px-[0.45rem] py-[0.2rem] tabular-nums">
@@ -114,7 +116,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
             className="lottery-play-rounds__expand glass-pill flex w-full min-h-11 items-center justify-center gap-[0.35rem] mt-3"
             onClick={() => setShowAllGrid(true)}
           >
-            แสดงรอบทั้งหมด ({rounds.length} รอบ)
+            {t("rounds.showAll", { count: rounds.length })}
             <span className="lottery-play-rounds__expand-chevron" aria-hidden="true">▼</span>
           </button>
         ) : null}
@@ -127,7 +129,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
   return (
     <div className="lottery-play-rounds flex flex-col gap-4">
       {openRounds.length === 0 ? (
-        <p className="py-10 text-center text-sm text-[var(--text-secondary)]">ยังไม่มีรอบที่เปิดรับแทง</p>
+        <p className="py-10 text-center text-sm text-[var(--text-secondary)]">{t("rounds.empty")}</p>
       ) : null}
       {openRounds.map((round) => (
         <article
@@ -135,10 +137,10 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
           className="lottery-play-round-card lottery-play-round-card--open flex flex-col items-center gap-3 p-3 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left"
         >
           <div className="lottery-play-round-card__content flex w-full flex-col items-center gap-1 sm:items-start">
-            <p className="lottery-play-round-card__title m-0">{round.drawLabel}</p>
+            <p className="lottery-play-round-card__title m-0">{roundLabel(round.drawLabel)}</p>
             {nowMs !== null ? (
               <p className="lottery-play-round-card__countdown m-0">
-                ปิดรับใน {formatCountdown(new Date(round.closeAt).getTime() - nowMs)}
+                {t("status.closesInTime", { time: formatCountdown(new Date(round.closeAt).getTime() - nowMs) })}
               </p>
             ) : null}
           </div>
@@ -146,7 +148,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
             href={`${basePath}/${round.id}`}
             className="cosmic-btn-nav cosmic-btn-nav--lg lottery-play-round-card__cta w-full max-w-[12rem] shrink-0 sm:w-auto"
           >
-            แทงหวย
+            {t("rounds.play")}
           </Link>
         </article>
       ))}

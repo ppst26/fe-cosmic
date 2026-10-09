@@ -13,6 +13,7 @@ import { MenuItemIcon } from "./MenuItemIcon";
 import { cn } from "@/lib/utils";
 import { formatCashbackCurrency } from "@/lib/format";
 import { buildReferralLink } from "@/lib/domain/referral";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface MenuDrawerMobileToolbarProps {
   className?: string;
@@ -29,6 +30,7 @@ export function MenuDrawerMobileToolbar({
   onRequireLogin,
 }: MenuDrawerMobileToolbarProps) {
   const router = useRouter();
+  const t = useT("nav");
   const { isAuthenticated, isLoading } = useAuth();
   const { openDeposit } = useDeposit();
   const { openWithdraw } = useWithdraw();
@@ -80,9 +82,9 @@ export function MenuDrawerMobileToolbar({
     if (!referralLink) return;
     try {
       await navigator.clipboard.writeText(referralLink);
-      showToast("คัดลอกลิงก์แล้ว", "success", 2500);
+      showToast(t("drawer.linkCopied"), "success", 2500);
     } catch {
-      showToast("ไม่สามารถคัดลอกลิงก์ได้", "error");
+      showToast(t("drawer.linkCopyFailed"), "error");
     }
   };
 
@@ -96,7 +98,7 @@ export function MenuDrawerMobileToolbar({
           onClick={() => runAuthed(() => openDeposit())}
         >
           <DepositNavIcon className="menu-drawer-quick-actions__icon" aria-hidden />
-          <span className="menu-drawer-quick-actions__label">ฝากเงิน</span>
+          <span className="menu-drawer-quick-actions__label">{t("drawer.deposit")}</span>
         </button>
         <button
           type="button"
@@ -105,7 +107,7 @@ export function MenuDrawerMobileToolbar({
           onClick={() => runAuthed(() => openWithdraw())}
         >
           <WithdrawNavIcon className="menu-drawer-quick-actions__icon" aria-hidden />
-          <span className="menu-drawer-quick-actions__label">ถอนเงิน</span>
+          <span className="menu-drawer-quick-actions__label">{t("drawer.withdraw")}</span>
         </button>
       </div>
 
@@ -119,7 +121,7 @@ export function MenuDrawerMobileToolbar({
             goCashback("play");
           }}
         >
-          <span className="menu-drawer-income-card__label">โบนัสยอดเล่น</span>
+          <span className="menu-drawer-income-card__label">{t("drawer.playBonus")}</span>
           <span className="menu-drawer-income-card__value">{playBonusLabel}</span>
           <span className="menu-drawer-income-card__chevron" aria-hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
@@ -136,7 +138,7 @@ export function MenuDrawerMobileToolbar({
             goCashback("loss");
           }}
         >
-          <span className="menu-drawer-income-card__label">โบนัสยอดเสีย</span>
+          <span className="menu-drawer-income-card__label">{t("drawer.lossBonus")}</span>
           <span className="menu-drawer-income-card__value">{lossBonusLabel}</span>
           <span className="menu-drawer-income-card__chevron" aria-hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
@@ -156,15 +158,15 @@ export function MenuDrawerMobileToolbar({
           className="menu-drawer-referral-bar__icon shrink-0 object-contain"
         />
         <div className="min-w-0 flex-1">
-          <p className="font-medium text-[var(--text-secondary)]">ลิงก์แนะนำเพื่อน</p>
+          <p className="font-medium text-[var(--text-secondary)]">{t("drawer.referralLink")}</p>
           <p className="truncate font-medium text-[var(--text-primary)] tabular-nums">
-            {isAuthenticated ? (referralLink ?? "—") : "เข้าสู่ระบบเพื่อดูลิงก์"}
+            {isAuthenticated ? (referralLink ?? "—") : t("drawer.referralLinkLoginHint")}
           </p>
         </div>
         <button
           type="button"
           className="menu-drawer-referral-bar__copy"
-          aria-label="คัดลอกลิงก์แนะนำเพื่อน"
+          aria-label={t("drawer.copyReferralLink")}
           onClick={() => void copyReferralLink()}
         >
           <CopyIcon className="shrink-0" aria-hidden />

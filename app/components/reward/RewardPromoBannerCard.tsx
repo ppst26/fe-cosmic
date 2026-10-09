@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "@/lib/i18n/navigation";
 import { cn } from "@/lib/utils";
 import type { RewardPromoBanner } from "@/app/types/reward";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * แบนเนอร์โปรโมใต้ shortcut — ลิงก์ไป lucky-box / random-card
@@ -18,6 +19,7 @@ export function RewardPromoBannerCard({
   termsText: string;
   className?: string;
 }) {
+  const t = useT("rewards");
   const [termsOpen, setTermsOpen] = useState(false);
 
   return (
@@ -31,7 +33,7 @@ export function RewardPromoBannerCard({
             <p className="text-lg font-medium uppercase tracking-wide text-[var(--accent-highlight)] sm:text-xl">
               {banner.title}
             </p>
-            <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-[13px]">{banner.subtitle}</p>
+            <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-[13px]">{t(banner.subtitleKey)}</p>
           </div>
           <Image
             src={banner.imageSrc}
@@ -49,7 +51,7 @@ export function RewardPromoBannerCard({
           onClick={() => setTermsOpen((v) => !v)}
           className="text-xs text-[var(--accent-primary)] underline-offset-2 hover:underline"
         >
-          {banner.termsLabel}
+          {t(banner.termsLabelKey)}
         </button>
       </div>
       {termsOpen ? (

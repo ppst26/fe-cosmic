@@ -5,18 +5,18 @@ import type { DepositMethodOption, DepositBankAccountMock } from "@/app/types/wa
 export const DEPOSIT_METHOD_OPTIONS: DepositMethodOption[] = [
   {
     id: "bank",
-    title: "บัญชีธนาคาร",
-    subtitle: "โอนเงินผ่านบัญชีธนาคาร",
+    titleKey: "deposit.methods.bank.title",
+    subtitleKey: "deposit.methods.bank.subtitle",
   },
   {
     id: "gateway",
-    title: "Payment Gateway",
-    subtitle: "ฝากเงินผ่านระบบชำระเงิน",
+    titleKey: "deposit.methods.gateway.title",
+    subtitleKey: "deposit.methods.gateway.subtitle",
   },
   {
     id: "truemoney",
-    title: "ทรูวอลเล็ท",
-    subtitle: "ฝากเงินผ่าน TrueMoney Wallet",
+    titleKey: "deposit.methods.truemoney.title",
+    subtitleKey: "deposit.methods.truemoney.subtitle",
   },
 ];
 

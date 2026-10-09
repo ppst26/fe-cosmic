@@ -35,26 +35,33 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useT } from "@/lib/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
 
-const kpis = [
-  { label: "ยอดฝากรวม", value: "726,180.00", unit: "THB", delta: "+12.5%", icon: CircleDollarSign, accent: "purple" },
-  { label: "ยอดถอนรวม", value: "484,120.00", unit: "THB", delta: "-8.3%", icon: WalletCards, accent: "white" },
-  { label: "กำไรสุทธิ", value: "1,210,300.00", unit: "THB", delta: "+6.9%", icon: BarChart3, accent: "purple" },
-  { label: "ยอดเดิมพัน", value: "4,527,891.20", unit: "THB", delta: "+15.2%", icon: Gamepad2, accent: "white" },
-  { label: "สมาชิกใหม่", value: "31", unit: "บัญชี", delta: "+47.6%", icon: UserRound, accent: "purple" },
-  { label: "First Deposit", value: "17", unit: "บัญชี", delta: "-54.8%", icon: UsersRound, accent: "white" },
+type DashboardKey = MessageKey<"profile">;
+
+/** unit: null = THB (ไม่แปล) */
+const kpis: { labelKey: DashboardKey; value: string; unitKey: DashboardKey | null; delta: string; icon: typeof Home; accent: string }[] = [
+  { labelKey: "dashboard.kpi.totalDeposit", value: "726,180.00", unitKey: null, delta: "+12.5%", icon: CircleDollarSign, accent: "purple" },
+  { labelKey: "dashboard.kpi.totalWithdraw", value: "484,120.00", unitKey: null, delta: "-8.3%", icon: WalletCards, accent: "white" },
+  { labelKey: "dashboard.kpi.netProfit", value: "1,210,300.00", unitKey: null, delta: "+6.9%", icon: BarChart3, accent: "purple" },
+  { labelKey: "dashboard.kpi.totalBets", value: "4,527,891.20", unitKey: null, delta: "+15.2%", icon: Gamepad2, accent: "white" },
+  { labelKey: "dashboard.kpi.newMembers", value: "31", unitKey: "dashboard.unitAccounts", delta: "+47.6%", icon: UserRound, accent: "purple" },
+  { labelKey: "dashboard.kpi.firstDeposit", value: "17", unitKey: "dashboard.unitAccounts", delta: "-54.8%", icon: UsersRound, accent: "white" },
 ];
 
-const navItems = [
-  { label: "ภาพรวมระบบ", icon: Home, active: true },
-  { label: "รายงานการเดิมพัน", icon: LineChart },
-  { label: "สมาชิก", icon: UserRound },
-  { label: "การตลาด", icon: Megaphone },
-  { label: "โปรโมชั่น", icon: Trophy },
-  { label: "ธุรกรรม", icon: WalletCards },
-  { label: "รายงาน", icon: BarChart3 },
-  { label: "ตั้งค่า", icon: Settings },
+const navItems: { labelKey: DashboardKey; icon: typeof Home; active?: boolean }[] = [
+  { labelKey: "dashboard.nav.overview", icon: Home, active: true },
+  { labelKey: "dashboard.nav.betReports", icon: LineChart },
+  { labelKey: "dashboard.nav.members", icon: UserRound },
+  { labelKey: "dashboard.nav.marketing", icon: Megaphone },
+  { labelKey: "dashboard.nav.promotions", icon: Trophy },
+  { labelKey: "dashboard.nav.transactions", icon: WalletCards },
+  { labelKey: "dashboard.nav.reports", icon: BarChart3 },
+  { labelKey: "dashboard.nav.settings", icon: Settings },
 ];
+
+const PERIOD_KEYS: DashboardKey[] = ["dashboard.period.today", "dashboard.period.week", "dashboard.period.month", "dashboard.period.year"];
 
 const channels = [
   ["Facebook", "252", "37.6%", "฿839,445.10", 92],
@@ -94,16 +101,18 @@ const transactionTrendData = [
   { time: "23:59", deposit: 60480, withdraw: 37420 },
 ];
 
-const transactionChartConfig = {
+type DashboardT = (key: DashboardKey) => string;
+
+const transactionChartConfig = (t: DashboardT) => ({
   deposit: {
-    label: "ยอดฝาก (THB)",
+    label: t("dashboard.chart.deposit"),
     color: "#a855f7",
   },
   withdraw: {
-    label: "ยอดถอน (THB)",
+    label: t("dashboard.chart.withdraw"),
     color: "#ffffff",
   },
-} satisfies ChartConfig;
+}) satisfies ChartConfig;
 
 // Deposit Distribution Data
 const depositDistributionData = [
@@ -117,12 +126,12 @@ const depositDistributionData = [
   { range: "10K+", count: 5, highlight: false },
 ];
 
-const depositDistConfig = {
+const depositDistConfig = (t: DashboardT) => ({
   count: {
-    label: "จำนวนรายการ",
+    label: t("dashboard.chart.transactionCount"),
     color: "#a855f7",
   },
-} satisfies ChartConfig;
+}) satisfies ChartConfig;
 
 // Hourly Registration Data
 const hourlyMembersData = [
@@ -152,19 +161,19 @@ const hourlyMembersData = [
   { hour: "23", count: 1 },
 ];
 
-const hourlyMembersConfig = {
+const hourlyMembersConfig = (t: DashboardT) => ({
   count: {
-    label: "สมาชิกใหม่",
+    label: t("dashboard.kpi.newMembers"),
     color: "#a855f7",
   },
-} satisfies ChartConfig;
+}) satisfies ChartConfig;
 
-const bankChartConfig = {
+const bankChartConfig = (t: DashboardT) => ({
   count: {
-    label: "จำนวนบัญชี",
+    label: t("dashboard.chart.accountCount"),
     color: "#a855f7",
   },
-} satisfies ChartConfig;
+}) satisfies ChartConfig;
 
 function Sparkline({ white = false }: { white?: boolean }) {
   return (
@@ -190,20 +199,21 @@ function Sparkline({ white = false }: { white?: boolean }) {
 }
 
 function CustomerJourney() {
+  const t = useT("profile");
   const rows = [
-    ["1", "สมัครใหม่", "31", "100%", 100],
-    ["2", "ทำฝากครั้งแรก", "17", "54.8%", 54.8],
-    ["3", "Active (เดิมพันครั้งแรก)", "14", "45.2%", 45.2],
+    ["1", t("dashboard.journey.signUp"), "31", "100%", 100],
+    ["2", t("dashboard.journey.firstDeposit"), "17", "54.8%", 54.8],
+    ["3", t("dashboard.journey.firstBet"), "14", "45.2%", 45.2],
   ] as const;
 
   return (
     <section className="surface-card h-full p-4">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-sm font-semibold text-white">เส้นทางลูกค้า</p>
+          <p className="text-sm font-semibold text-white">{t("dashboard.journey.title")}</p>
           <p className="text-xs text-white/45">Customer Journey</p>
         </div>
-        <button className="surface-control">วันนี้</button>
+        <button className="surface-control">{t("dashboard.period.today")}</button>
       </div>
       <div className="space-y-3">
         {rows.map(([step, label, value, rate, width], index) => (
@@ -234,6 +244,8 @@ function CustomerJourney() {
 }
 
 export function DashboardShell() {
+  const t = useT("profile");
+  const today = t("dashboard.period.today");
   return (
     <main className="dashboard-bg min-h-screen text-white">
       <div className="mx-auto grid min-h-screen max-w-[1920px] grid-cols-[240px_1fr] gap-4 p-4">
@@ -247,10 +259,10 @@ export function DashboardShell() {
             </div>
           </div>
           <nav className="space-y-1.5">
-            {navItems.map(({ label, icon: Icon, active }) => (
-              <button key={label} className={active ? "nav-item nav-item--active" : "nav-item"}>
+            {navItems.map(({ labelKey, icon: Icon, active }) => (
+              <button key={labelKey} className={active ? "nav-item nav-item--active" : "nav-item"}>
                 <Icon className="h-4 w-4" />
-                <span>{label}</span>
+                <span>{t(labelKey)}</span>
               </button>
             ))}
           </nav>
@@ -274,19 +286,19 @@ export function DashboardShell() {
                 <Home className="h-4 w-4" />
               </div>
               <div>
-                <h1 className="text-2xl font-semibold tracking-tight">ภาพรวมระบบ / Dashboard</h1>
-                <p className="text-sm text-white/45">สรุปข้อมูลสำคัญของระบบ แบบเรียลไทม์</p>
+                <h1 className="text-2xl font-semibold tracking-tight">{t("dashboard.title")}</h1>
+                <p className="text-sm text-white/45">{t("dashboard.subtitle")}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <button className="surface-control flex items-center gap-2 px-4">
                 <CalendarDays className="h-4 w-4" />
-                12 ธ.ค. 2023, 00:00 - 23:59
+                {t("dashboard.dateRange")}
               </button>
               <div className="surface-segmented">
-                {["วันนี้", "สัปดาห์", "เดือน", "ปี"].map((x, i) => (
+                {PERIOD_KEYS.map((x, i) => (
                   <button key={x} className={i === 0 ? "segment segment--active" : "segment"}>
-                    {x}
+                    {t(x)}
                   </button>
                 ))}
               </div>
@@ -299,25 +311,25 @@ export function DashboardShell() {
               const Icon = item.icon;
               const white = item.accent === "white";
               return (
-                <article key={item.label} className="surface-card p-4">
+                <article key={item.labelKey} className="surface-card p-4">
                   <div className="mb-4 flex items-start justify-between gap-2">
                     <div className={white ? "icon-tile icon-tile--white" : "icon-tile"}>
                       <Icon className="h-5 w-5" />
                     </div>
                     <Sparkline white={white} />
                   </div>
-                  <p className="text-sm text-white/55">{item.label}</p>
+                  <p className="text-sm text-white/55">{t(item.labelKey)}</p>
                   <div className="mt-1 flex items-baseline gap-2">
                     <p className={white ? "text-2xl font-semibold text-white" : "text-2xl font-semibold text-violet-300"}>
                       {item.value}
                     </p>
-                    <span className="text-xs text-white/45">{item.unit}</span>
+                    <span className="text-xs text-white/45">{item.unitKey ? t(item.unitKey) : "THB"}</span>
                   </div>
                   <div className="mt-2 text-xs">
                     <span className={item.delta.startsWith("-") ? "text-rose-400" : "text-violet-300"}>
                       {item.delta}
                     </span>
-                    <span className="ml-2 text-white/35">จากเมื่อวาน</span>
+                    <span className="ml-2 text-white/35">{t("dashboard.vsYesterday")}</span>
                   </div>
                 </article>
               );
@@ -329,26 +341,26 @@ export function DashboardShell() {
             <section className="surface-card p-4">
               <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-semibold">ฝาก - ถอน ตลอดทั้งวัน</h2>
-                  <p className="text-xs text-white/40">ภาพรวมธุรกรรมตามช่วงเวลา (Shadcn Chart)</p>
+                  <h2 className="text-lg font-semibold">{t("dashboard.trend.title")}</h2>
+                  <p className="text-xs text-white/40">{t("dashboard.trend.subtitle")}</p>
                 </div>
                 <div className="flex gap-2 text-xs">
                   <div className="metric-chip">
                     <span className="dot dot--purple" />
-                    ยอดฝากรวม <strong>726,180.00 THB</strong>
+                    {t("dashboard.kpi.totalDeposit")} <strong>726,180.00 THB</strong>
                   </div>
                   <div className="metric-chip">
                     <span className="dot dot--white" />
-                    ยอดถอนรวม <strong>484,120.00 THB</strong>
+                    {t("dashboard.kpi.totalWithdraw")} <strong>484,120.00 THB</strong>
                   </div>
                   <div className="metric-chip">
                     <span className="dot dot--purple" />
-                    ยอดสุทธิ <strong>242,060.00 THB</strong>
+                    {t("dashboard.trend.net")} <strong>242,060.00 THB</strong>
                   </div>
                 </div>
               </div>
               <div className="h-[300px] w-full pt-2">
-                <ChartContainer config={transactionChartConfig} className="h-full w-full">
+                <ChartContainer config={transactionChartConfig(t)} className="h-full w-full">
                   <AreaChart data={transactionTrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="areaDeposit" x1="0" y1="0" x2="0" y2="1">
@@ -403,14 +415,14 @@ export function DashboardShell() {
             <section className="surface-card p-4">
               <div className="mb-3 flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">สัดส่วนธนาคารที่ลูกค้าใช้งาน</h3>
+                  <h3 className="font-semibold">{t("dashboard.banks.title")}</h3>
                   <p className="text-xs text-white/40">Shadcn Donut Chart</p>
                 </div>
-                <button className="surface-control">วันนี้</button>
+                <button className="surface-control">{today}</button>
               </div>
               <div className="grid grid-cols-[200px_1fr] items-center gap-4">
                 <div className="relative h-[180px] w-[180px] mx-auto">
-                  <ChartContainer config={bankChartConfig} className="h-full w-full">
+                  <ChartContainer config={bankChartConfig(t)} className="h-full w-full">
                     <PieChart>
                       <ChartTooltip content={<ChartTooltipContent nameKey="name" />} />
                       <Pie
@@ -429,7 +441,7 @@ export function DashboardShell() {
                   </ChartContainer>
                   <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
                     <span className="text-2xl font-bold tracking-tight text-white">31</span>
-                    <span className="text-xs text-white/45">บัญชีทั้งหมด</span>
+                    <span className="text-xs text-white/45">{t("dashboard.banks.totalAccounts")}</span>
                   </div>
                 </div>
                 <div className="space-y-2 text-sm">
@@ -449,14 +461,14 @@ export function DashboardShell() {
 
             <section className="surface-card p-4">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="font-semibold">ช่องทางที่ลูกค้ารู้จักเว็บเรา</h3>
-                <button className="surface-control">วันนี้</button>
+                <h3 className="font-semibold">{t("dashboard.channels.title")}</h3>
+                <button className="surface-control">{today}</button>
               </div>
               <div className="grid grid-cols-[1.2fr_90px_90px_1.4fr_120px] gap-3 border-b border-white/8 pb-2 text-xs text-white/35">
-                <span>ช่องทาง</span>
-                <span>จำนวนลูกค้า</span>
-                <span>สัดส่วน</span>
-                <span>ยอดฝากรวม</span>
+                <span>{t("dashboard.channels.channel")}</span>
+                <span>{t("dashboard.channels.customers")}</span>
+                <span>{t("dashboard.channels.share")}</span>
+                <span>{t("dashboard.kpi.totalDeposit")}</span>
                 <span></span>
               </div>
               <div className="divide-y divide-white/[.045]">
@@ -485,8 +497,8 @@ export function DashboardShell() {
           <div className="grid grid-cols-3 gap-3 pb-4">
             <section className="surface-card p-4">
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="font-semibold">ช่วงเวลาที่ลูกค้าใช้งาน</h3>
-                <button className="surface-control">วันนี้</button>
+                <h3 className="font-semibold">{t("dashboard.activeHours.title")}</h3>
+                <button className="surface-control">{today}</button>
               </div>
               <div className="heatmap">
                 {Array.from({ length: 7 * 24 }).map((_, i) => (
@@ -497,11 +509,11 @@ export function DashboardShell() {
 
             <section className="surface-card p-4">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="font-semibold">การกระจายยอดฝากของลูกค้า</h3>
-                <button className="surface-control">วันนี้</button>
+                <h3 className="font-semibold">{t("dashboard.depositDistribution.title")}</h3>
+                <button className="surface-control">{today}</button>
               </div>
               <div className="h-[180px] w-full">
-                <ChartContainer config={depositDistConfig} className="h-full w-full">
+                <ChartContainer config={depositDistConfig(t)} className="h-full w-full">
                   <BarChart data={depositDistributionData} margin={{ top: 10, right: 5, left: -25, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
                     <XAxis
@@ -531,11 +543,11 @@ export function DashboardShell() {
 
             <section className="surface-card p-4">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="font-semibold">สมาชิกใหม่ รายชั่วโมง</h3>
-                <button className="surface-control">วันนี้</button>
+                <h3 className="font-semibold">{t("dashboard.hourlyMembers.title")}</h3>
+                <button className="surface-control">{today}</button>
               </div>
               <div className="h-[180px] w-full">
-                <ChartContainer config={hourlyMembersConfig} className="h-full w-full">
+                <ChartContainer config={hourlyMembersConfig(t)} className="h-full w-full">
                   <BarChart data={hourlyMembersData} margin={{ top: 10, right: 5, left: -25, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
                     <XAxis

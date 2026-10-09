@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import type { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
 import { SectionIcon } from "../ui/SectionIcon";
@@ -64,6 +65,7 @@ const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
  * ถูกเรียกใช้ใน app/page.tsx (โฮม lobby มือถือ + desktop)
  */
 export function HallOfFame({ datasets }: HallOfFameProps) {
+  const t = useT("home");
   const [activeTab, setActiveTab] = useState<HallOfFameTabId>("latest-winner");
   const panelId = useId();
   const isLatestWinner = activeTab === "latest-winner";
@@ -187,7 +189,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
         <div
           className="hall-of-fame__tabs inline-flex max-w-full flex-wrap items-center gap-2"
           role="tablist"
-          aria-label="เลือกตาราง Top Performance"
+          aria-label={t("hallOfFame.tabsAriaLabel")}
         >
           {TAB_LABELS.map((tab) => {
             const selected = activeTab === tab.id;
@@ -255,7 +257,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                     className="hall-of-fame-table__empty py-8 text-center text-sm text-[var(--text-muted)]"
                     style={{ gridColumn: "1 / -1" }}
                   >
-                    ยังไม่มีรายการ
+                    {t("hallOfFame.empty")}
                   </td>
                 </tr>
               ) : (

@@ -12,6 +12,7 @@ import { ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
 import { cn } from "@/lib/utils";
 import { valueClass, vipBenefitValueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface VipBenefitsComparisonTableProps {
   currentRankId: VipRankId;
@@ -28,6 +29,7 @@ export function VipBenefitsComparisonTable({
   currentRankId,
   variant = "default",
 }: VipBenefitsComparisonTableProps) {
+  const t = useT("vip");
   const benefits = useVipBenefits();
   const ranks = useVipRanks();
   /** ตารางโผล่หลังโหลดเสร็จ — ใช้เป็น dependency ให้เลื่อนไปคอลัมน์ระดับปัจจุบันอีกครั้ง */
@@ -49,12 +51,12 @@ export function VipBenefitsComparisonTable({
     const failed = benefits.status === "error" ? benefits : ranks.status === "error" ? ranks : null;
     return failed ? (
       <ErrorState
-        title="โหลดสิทธิประโยชน์ไม่สำเร็จ"
+        title={t("status.benefitsError")}
         description={failed.error?.message}
-        primaryAction={{ label: "ลองใหม่", onClick: failed.refresh }}
+        primaryAction={{ label: t("status.retry"), onClick: failed.refresh }}
       />
     ) : (
-      <LoadingState label="กำลังโหลดสิทธิประโยชน์…" />
+      <LoadingState label={t("status.benefitsLoading")} />
     );
   }
 
@@ -67,10 +69,10 @@ export function VipBenefitsComparisonTable({
     >
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-[var(--text-primary)] sm:text-[0.9375rem]">
-          สิทธิประโยชน์แต่ละระดับ
+          {t("benefitsTable.title")}
         </h3>
         <p className="max-w-[9rem] text-right text-xs leading-snug text-[var(--text-muted)]">
-          เลื่อนเพื่อดูระดับเพิ่มเติม
+          {t("benefitsTable.scrollHint")}
         </p>
       </div>
 
@@ -94,7 +96,7 @@ export function VipBenefitsComparisonTable({
                 <th
                   className="vip-benefits-table__label-head min-w-[8.25rem] px-3 py-3 text-left sm:min-w-[9rem] sm:px-4"
                 >
-                  สิทธิประโยชน์
+                  {t("tabs.benefits")}
                 </th>
                 {vipRankTiers.map((tier) => {
                   const isCurrent = tier.id === currentRankId;
@@ -116,7 +118,7 @@ export function VipBenefitsComparisonTable({
                         </span>
                         {isCurrent && (
                           <span className="rounded-full bg-[var(--cta-white-bg)] px-2 py-0.5 text-xs font-medium text-[var(--cta-white-fg)]">
-                            ระดับของฉัน
+                            {t("tabs.myLevel")}
                           </span>
                         )}
                       </div>
@@ -136,12 +138,13 @@ export function VipBenefitsComparisonTable({
                   <td
                     className="vip-benefits-table__label min-w-[8.25rem] px-3 py-3 sm:min-w-[9rem] sm:px-4"
                   >
-                    {row.label}
+                    {t(row.labelKey)}
                   </td>
                   {vipRankTiers.map((tier) => {
                     const isCurrent = tier.id === currentRankId;
                     const locked = getVipRankIndex(tier.id) > getVipRankIndex(currentRankId);
-                    const display = getVipBenefitCellValue(row.id, tier.id, benefitValues);
+                    const cell = getVipBenefitCellValue(row.id, tier.id, benefitValues);
+                    const display = typeof cell === "string" ? cell : t(cell.labelKey);
                     return (
                       <td
                         key={tier.id}

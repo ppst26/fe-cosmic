@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { cn } from "@/lib/utils";
 
 interface MockGameViewportProps {
@@ -60,6 +61,7 @@ export function MockGameViewport({
   provider,
   className,
 }: MockGameViewportProps) {
+  const t = useT("games");
   const rootRef = useRef<HTMLElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -89,13 +91,13 @@ export function MockGameViewport({
     <section
       ref={rootRef}
       className={cn("mock-game-viewport", className)}
-      aria-label={`กำลังเล่น ${title}`}
+      aria-label={t("play.playingAriaLabel", { title })}
     >
       <button
         type="button"
         className="mock-game-viewport__fullscreen"
         onClick={() => void toggleFullscreen()}
-        aria-label={isFullscreen ? "ออกจากโหมดเต็มจอ" : "เต็มจอ"}
+        aria-label={isFullscreen ? t("play.exitFullscreen") : t("play.fullscreen")}
         aria-pressed={isFullscreen}
       >
         <FullscreenToggleIcon active={isFullscreen} />
@@ -108,7 +110,7 @@ export function MockGameViewport({
           <p className="mock-game-viewport__meta">{provider}</p>
         ) : null}
         <p className="mock-game-viewport__hint">
-          พื้นที่ iframe เกม (prototype)
+          {t("play.iframePlaceholder")}
         </p>
         <p className="mock-game-viewport__id">gameId: {gameId}</p>
       </div>

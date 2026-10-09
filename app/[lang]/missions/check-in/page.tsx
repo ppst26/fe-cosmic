@@ -7,11 +7,13 @@ import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { DailyCheckInPageContent } from "@/app/components/missions/DailyCheckInPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * หน้าเช็คอินรายวัน (/missions/check-in)
  */
 export default function DailyCheckInPage() {
+  const t = useT("rewards");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -20,7 +22,7 @@ export default function DailyCheckInPage() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="เช็คอินรายวัน" backHref="/" />
+      <SlotProvidersHeader title={t("checkIn.title")} backHref="/" />
 
       <main className="mobile-standalone-main pt-2">
         <DailyCheckInPageContent />

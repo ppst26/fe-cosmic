@@ -4,23 +4,24 @@ import { WITHDRAW_USER_BANK_MOCK } from "@/app/data/withdrawMockData";
 import { formatDepositTransferAmount } from "@/lib/format";
 import type { PendingTransactionPayload } from "@/app/types/transaction";
 
-const PENDING_TRANSACTION_AT_DEPOSIT = "15 ก.ย. 2569 • 14:30";
-const PENDING_TRANSACTION_AT_WITHDRAW = "15 ก.ย. 2569 • 14:35";
+/** เวลา mock (Bangkok) — format ตาม locale ตอน render */
+const PENDING_TRANSACTION_AT_DEPOSIT = "2026-09-15T14:30:00+07:00";
+const PENDING_TRANSACTION_AT_WITHDRAW = "2026-09-15T14:35:00+07:00";
 
 export function buildPendingDepositPayload(amount: number): PendingTransactionPayload {
   return {
     kind: "deposit",
     amount,
-    title: "ฝากเงินรอดำเนินการ",
-    subtitle: "รอจับคู่ยอดทำรายการ",
+    titleKey: "pending.deposit.title",
+    subtitleKey: "pending.deposit.subtitle",
     amountDisplay: formatDepositTransferAmount(amount),
     referenceId: "DEP-DEMO-001",
     referenceCopyValue: "DEP-DEMO-001",
-    transactionAtLabel: PENDING_TRANSACTION_AT_DEPOSIT,
+    transactionAt: PENDING_TRANSACTION_AT_DEPOSIT,
     rows: [
-      { label: "ช่องทาง", value: "บัญชีธนาคาร" },
-      { label: "เลขอ้างอิง", value: "DEP-DEMO-001" },
-      { label: "วันที่ทำรายการ", value: PENDING_TRANSACTION_AT_DEPOSIT },
+      { labelKey: "pending.rows.channel", valueKey: "deposit.methods.bank.title" },
+      { labelKey: "pending.rows.reference", value: "DEP-DEMO-001" },
+      { labelKey: "pending.rows.transactionAt", dateTime: PENDING_TRANSACTION_AT_DEPOSIT },
     ],
     historyHref: "/transactions",
   };
@@ -31,16 +32,16 @@ export function buildPendingWithdrawPayload(amount: number): PendingTransactionP
   return {
     kind: "withdraw",
     amount,
-    title: "ถอนเงินรอดำเนินการ",
-    subtitle: "ระบบกำลังรอทำรายการ",
+    titleKey: "pending.withdraw.title",
+    subtitleKey: "pending.withdraw.subtitle",
     amountDisplay: formatDepositTransferAmount(amount),
     referenceId: "WTH-DEMO-001",
     referenceCopyValue: "WTH-DEMO-001",
-    transactionAtLabel: PENDING_TRANSACTION_AT_WITHDRAW,
+    transactionAt: PENDING_TRANSACTION_AT_WITHDRAW,
     rows: [
-      { label: "บัญชีรับเงิน", value: accountLabel },
-      { label: "เลขอ้างอิง", value: "WTH-DEMO-001" },
-      { label: "วันที่ทำรายการ", value: PENDING_TRANSACTION_AT_WITHDRAW },
+      { labelKey: "pending.rows.receivingAccount", value: accountLabel },
+      { labelKey: "pending.rows.reference", value: "WTH-DEMO-001" },
+      { labelKey: "pending.rows.transactionAt", dateTime: PENDING_TRANSACTION_AT_WITHDRAW },
     ],
     historyHref: "/transactions?kind=withdraw",
   };

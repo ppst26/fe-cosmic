@@ -6,6 +6,7 @@ import {
   LotteryPriceSlipPanel,
   type LotteryPriceSlipGroup,
 } from "../LotteryPriceSlipPanel";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ThaiLottoPricePanelProps {
   entries: ThaiLottoBetEntry[];
@@ -28,6 +29,7 @@ export function ThaiLottoPricePanel({
   onAmountChange,
   onRemove,
 }: ThaiLottoPricePanelProps) {
+  const t = useT("lottery");
   const typeById = useMemo(
     () => new Map<ThaiLottoBetTypeId, ThaiLottoBetType>(betTypes.map((type) => [type.id, type])),
     [betTypes],
@@ -47,7 +49,7 @@ export function ThaiLottoPricePanel({
       const type = typeById.get(typeId);
       return {
         key: typeId,
-        label: type?.label ?? typeId,
+        label: type ? t(type.labelKey) : typeId,
         entries: map.get(typeId)!.map((entry) => ({
           id: entry.id,
           number: entry.number,
@@ -56,7 +58,7 @@ export function ThaiLottoPricePanel({
         })),
       };
     });
-  }, [entries, typeById]);
+  }, [entries, typeById, t]);
 
   return (
     <LotteryPriceSlipPanel

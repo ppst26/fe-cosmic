@@ -4,6 +4,7 @@ import React from "react";
 import { Dialog } from "radix-ui";
 import { ChevronLeftIcon, CloseIcon } from "./Icons";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 import {
   RESPONSIVE_SHEET_HANDLE_CLASS,
   RESPONSIVE_SHEET_HEADER_ROW_CLASS,
@@ -76,7 +77,7 @@ export function ResponsiveSheetHeader({
   subtitle,
   closeAriaLabel,
   onBack,
-  backAriaLabel = "กลับขั้นตอนก่อนหน้า",
+  backAriaLabel: backAriaLabelProp,
   titleAlign = "center",
   className,
   leadingSlot,
@@ -87,6 +88,8 @@ export function ResponsiveSheetHeader({
   titleCapsule,
   titleCapsuleVariant = "deep",
 }: ResponsiveSheetHeaderProps) {
+  const tCommon = useT("common");
+  const backAriaLabel = backAriaLabelProp ?? tCommon("backStep");
   const showTitleCapsule = titleCapsule ?? titleAlign === "center";
   const titleCapsuleClass =
     titleCapsuleVariant === "accent"

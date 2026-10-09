@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface LotteryNumberGridProps {
   digits: number;
@@ -22,6 +23,7 @@ export function LotteryNumberGrid({
   disabled = false,
   onToggle,
 }: LotteryNumberGridProps) {
+  const t = useT("lottery");
   const [hundred, setHundred] = useState("0");
   const prefix = digits === 3 ? hundred : "";
   const numbers =
@@ -36,7 +38,7 @@ export function LotteryNumberGrid({
       {digits === 3 ? (
         <div className="flex flex-col gap-2">
           <span className="thai-lotto-grid__caption" id="thai-lotto-hundred-label">
-            หลักร้อย
+            {t("pad.hundreds")}
           </span>
           <div
             className="thai-lotto-hundreds grid grid-cols-5 gap-1 sm:grid-cols-10"
@@ -51,7 +53,7 @@ export function LotteryNumberGrid({
                   key={value}
                   type="button"
                   aria-pressed={isActive}
-                  aria-label={`${value}00–${value}99${count ? ` เลือกแล้ว ${count}` : ""}`}
+                  aria-label={`${value}00–${value}99${count ? ` ${t("pad.selectedCount", { count })}` : ""}`}
                   onClick={() => setHundred(value)}
                   className={`thai-lotto-hundreds__btn relative min-h-[1.875rem] px-1 py-[0.15rem]${isActive ? " is-active" : ""}`}
                 >
@@ -72,7 +74,7 @@ export function LotteryNumberGrid({
       <div
         className={`thai-lotto-grid grid grid-cols-5 gap-1${digits === 1 ? " thai-lotto-grid--run" : " sm:grid-cols-10"}`}
         role="group"
-        aria-label="แผงเลข"
+        aria-label={t("pad.gridAria")}
       >
         {numbers.map((number) => {
           const isSelected = selectedNumbers.has(number);

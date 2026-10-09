@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { formatTransactionDateRangeLabel } from "@/app/lib/transactionDateUtils";
 import { TransactionDateRangeDialog } from "./TransactionDateRangeDialog";
 import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useLocale } from "@/lib/i18n/navigation";
 
 interface TransactionDateFilterProps {
   draftFrom: Date;
@@ -24,10 +26,12 @@ export function TransactionDateFilter({
   onClear,
 }: TransactionDateFilterProps) {
   const [pickerOpen, setPickerOpen] = useState(false);
+  const t = useT("transactions");
+  const locale = useLocale();
 
   return (
     <div className="flex flex-col gap-2.5">
-      <label className="text-sm text-[var(--text-secondary)]">เลือกวันที่</label>
+      <label className="text-sm text-[var(--text-secondary)]">{t("filter.label")}</label>
 
       <div className="tx-date-filter__toolbar">
         <button
@@ -36,14 +40,14 @@ export function TransactionDateFilter({
           className="tx-date-field tx-date-field--range min-w-0"
         >
           <span className="min-w-0 flex-1 truncate text-left text-sm tabular-nums">
-            {formatTransactionDateRangeLabel(draftFrom, draftTo)}
+            {formatTransactionDateRangeLabel(draftFrom, draftTo, locale)}
           </span>
         </button>
         <button
           type="button"
           onClick={() => setPickerOpen(true)}
           className="tx-date-field tx-date-field--calendar shrink-0"
-          aria-label="เปิดปฏิทินเลือกวันที่"
+          aria-label={t("filter.openCalendar")}
         >
           <CalendarIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
         </button>
@@ -52,14 +56,14 @@ export function TransactionDateFilter({
           onClick={onClear}
           className="tx-date-filter__clear shrink-0"
         >
-          ล้าง
+          {t("filter.clear")}
         </button>
         <button
           type="button"
           onClick={onSearch}
           className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm tx-date-filter__search shrink-0 text-sm font-medium`}
         >
-          ค้นหา
+          {t("filter.search")}
         </button>
       </div>
 

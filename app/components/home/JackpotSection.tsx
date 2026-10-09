@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import Link from "@/lib/i18n/navigation";
 import { HomeLobbyTournamentItem } from "../../types/lobby";
@@ -20,10 +21,12 @@ interface JackpotSectionProps {
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx
  */
 export function JackpotSection({
-  title = "กิจกรรม",
+  title: titleProp,
   items,
   className,
 }: JackpotSectionProps) {
+  const t = useT("home");
+  const title = titleProp ?? t("events.title");
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
@@ -153,7 +156,7 @@ export function JackpotSection({
         })}
       </div>
 
-      <div className="mt-3 flex items-center justify-center gap-1.5" role="tablist" aria-label={`สไลด์${title}`}>
+      <div className="mt-3 flex items-center justify-center gap-1.5" role="tablist" aria-label={t("events.slidesAriaLabel", { title })}>
         {items.map((item, idx) => {
           const isActive = idx === activeIndex;
           return (
@@ -162,7 +165,7 @@ export function JackpotSection({
               type="button"
               role="tab"
               aria-selected={isActive}
-              aria-label={`ไปยัง${item.title}`}
+              aria-label={t("events.goTo", { name: item.title })}
               onClick={() => scrollToIndex(idx)}
               className={`rounded-full transition-all duration-200 ${
                 isActive

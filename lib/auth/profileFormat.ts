@@ -26,12 +26,12 @@ export function formatDisplayName(firstName: string, userId: string): string {
 }
 
 /**
- * วันที่สมัครภาษาไทย
+ * วันที่สมัคร — ค่าเริ่มต้นภาษาไทย · ส่ง locale (เช่น "en") เพื่อแสดงตามภาษา UI
  */
-export function formatJoinedDate(iso: string): string {
+export function formatJoinedDate(iso: string, locale = "th-TH"): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "—";
-  return new Intl.DateTimeFormat("th-TH", {
+  return new Intl.DateTimeFormat(locale, {
     day: "numeric",
     month: "short",
     year: "numeric",

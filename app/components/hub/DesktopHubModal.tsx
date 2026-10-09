@@ -13,9 +13,10 @@ import {
 import type { DesktopHubId, OpenHubOptions } from "./hubModalRegistry";
 import {
   HUB_MODAL_ICON_IDS,
-  HUB_MODAL_TITLES,
+  HUB_MODAL_TITLE_KEYS,
   getHubSheetSize,
 } from "./hubModalRegistry";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /** เนื้อหา hub โหลดแยก chunk ตอนเปิด — ไม่ลากทุกหน้า hub เข้า bundle หลักของทุก route */
 const ActivitiesHubPageContent = dynamic(() =>
@@ -107,7 +108,9 @@ function HubModalBody({
  */
 export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProps) {
   const isOpen = hubId != null;
-  const title = hubId ? HUB_MODAL_TITLES[hubId] : "";
+  const t = useT("nav");
+  const tCommon = useT("common");
+  const title = hubId ? t(HUB_MODAL_TITLE_KEYS[hubId]) : "";
 
   const handleOpenChange = (open: boolean) => {
     if (!open) onClose();
@@ -147,13 +150,13 @@ export function DesktopHubModal({ hubId, options, onClose }: DesktopHubModalProp
 
               {hubId === "check-in" ? (
                 <>
-                  <Dialog.Title className="sr-only">เช็คอินรายวัน</Dialog.Title>
+                  <Dialog.Title className="sr-only">{t("hub.checkIn")}</Dialog.Title>
                   <DailyCheckInCard onClose={onClose} />
                 </>
               ) : (
                 <>
                   <ResponsiveSheetHeader
-                    closeAriaLabel="ปิด"
+                    closeAriaLabel={tCommon("close")}
                     titleAlign="start"
                     titleSurface={false}
                     titleIconId={HUB_MODAL_ICON_IDS[hubId]}

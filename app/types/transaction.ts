@@ -1,3 +1,5 @@
+import type { MessageKey } from "@/lib/i18n/messages";
+
 /** ประเภทรายการธุรกรรมใน tab */
 export type TransactionKind = "deposit" | "withdraw" | "promotion" | "bet";
 
@@ -42,27 +44,32 @@ export interface TransactionItem {
 
 export interface TransactionKindTab {
   id: TransactionKind;
-  label: string;
+  labelKey: MessageKey<"transactions">;
 }
 
 /* ── จาก app/data/pendingTransactionMockData.ts ── */
 
 export type PendingTransactionKind = "deposit" | "withdraw";
 
+/** แถวรายละเอียด — แสดง valueKey (แปล) > dateTime (format ตาม locale) > value (ข้อมูลจาก backend) */
 export interface PendingTransactionDetailRow {
-  label: string;
-  value: string;
+  labelKey: MessageKey<"wallet">;
+  value?: string;
+  valueKey?: MessageKey<"wallet">;
+  /** ISO datetime */
+  dateTime?: string;
 }
 
 export interface PendingTransactionPayload {
   kind: PendingTransactionKind;
   amount: number;
-  title: string;
-  subtitle: string;
+  titleKey: MessageKey<"wallet">;
+  subtitleKey: MessageKey<"wallet">;
   amountDisplay: string;
   referenceId: string;
   referenceCopyValue: string;
-  transactionAtLabel: string;
+  /** ISO datetime */
+  transactionAt: string;
   rows: PendingTransactionDetailRow[];
   historyHref: string;
 }

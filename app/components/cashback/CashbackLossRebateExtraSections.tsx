@@ -31,9 +31,19 @@ import {
   formatLossRebateCurrency,
   formatLossRebateDateTime,
   formatLossRebatePercent,
-  formatLossRebateRecordCount,
 } from "@/lib/format";
 import type { LossRebateHistoryRow, LossRebateSummaryMock } from "@/app/types/cashback";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
+import { useLocale } from "@/lib/i18n/navigation";
+
+/** ชื่อเดือนจาก id "YYYY-MM" ตามภาษา — th ใช้ label จาก API ตามเดิม */
+function formatMonthOption(id: string, fallback: string, locale: string): string {
+  if (locale === "th") return fallback;
+  const [year, month] = id.split("-").map(Number);
+  if (!year || !month) return fallback;
+  return new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(new Date(year, month - 1, 1));
+}
 
 type CashbackLossRebateExtraSectionsProps = {
   summary?: LossRebateSummaryMock;
@@ -46,8 +56,9 @@ type CashbackLossRebateExtraSectionsProps = {
  */
 export function CashbackLossRebateExtraSections({ summary, history }: CashbackLossRebateExtraSectionsProps) {
   const lossRebate = useLossRebate();
+  const t = useT("cashback");
   return (
-    <ResourceGate resource={lossRebate} loadingLabel="กำลังโหลดคืนยอดเสีย…" errorTitle="โหลดข้อมูลคืนยอดเสียไม่สำเร็จ">
+    <ResourceGate resource={lossRebate} loadingLabel={t("status.lossRebateLoading")} errorTitle={t("status.lossRebateError")}>
       {(data) => (
         <LossRebateSections
           lossRebate={data}
@@ -69,6 +80,9 @@ function LossRebateSections({
   summary: LossRebateSummaryMock;
   history: LossRebateHistoryRow[];
 }) {
+  const t = useT("cashback");
+  const fmt = useFormat();
+  const locale = useLocale();
   const [monthId, setMonthId] = useState(lossRebate.months[0]?.id ?? "2026-09");
   const [historyPage, setHistoryPage] = useState(1);
   const [termsOpen, setTermsOpen] = useState(false);
@@ -103,18 +117,18 @@ function LossRebateSections({
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
-            ประวัติการรับคืนยอดเสีย
+            {t("lossRebate.historyTitle")}
           </h2>
           <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
             <CosmicSelectField
-              aria-label="เลือกเดือน"
+              aria-label={t("lossRebate.selectMonth")}
               value={monthId}
               onValueChange={handleMonthChange}
               variant="solid"
               triggerClassName="loss-rebate-page__month-select"
               options={lossRebate.months.map((option) => ({
                 value: option.id,
-                label: option.label,
+                label: formatMonthOption(option.id, option.label, locale),
               }))}
             />
           </div>
@@ -125,16 +139,16 @@ function LossRebateSections({
             <TableHeader>
               <TableRow className="hover:bg-transparent">
                 <TableHead className="h-11 px-3 text-xs font-medium text-[var(--text-secondary)] sm:px-4">
-                  รอบคำนวณ
+                  {t("lossRebate.period")}
                 </TableHead>
                 <TableHead className="h-11 px-3 text-right text-xs font-medium text-[var(--text-secondary)] sm:px-4">
-                  ยอดเสียสุทธิ
+                  {t("lossRebate.netLoss")}
                 </TableHead>
                 <TableHead className="h-11 px-3 text-right text-xs font-medium text-[var(--text-secondary)] sm:px-4">
-                  โบนัสที่ได้รับ
+                  {t("lossRebate.bonusReceived")}
                 </TableHead>
                 <TableHead className="hidden h-11 px-3 text-right text-xs font-medium text-[var(--text-secondary)] sm:table-cell sm:px-4">
-                  วันที่รับ
+                  {t("lossRebate.receivedDate")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -145,7 +159,7 @@ function LossRebateSections({
                     colSpan={4}
                     className="px-4 py-10 text-center text-xs text-[var(--text-muted)]"
                   >
-                    ไม่มีประวัติในเดือนที่เลือก
+                    {t("lossRebate.empty")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -172,13 +186,13 @@ function LossRebateSections({
           {totalHistory > 0 && (
             <div className="cosmic-data-table__footer flex flex-col gap-3 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-xs text-[var(--text-muted)]">
-                แสดง {rangeStart}–{rangeEnd} จาก {formatLossRebateRecordCount(totalHistory)}
+                {t("pagination.showing", { start: rangeStart, end: rangeEnd, total: fmt.records(totalHistory) })}
               </p>
               <CosmicDataTablePagination
                 page={currentPage}
                 totalPages={totalPages}
                 onPageChange={setHistoryPage}
-                aria-label="เปลี่ยนหน้าประวัติคืนยอดเสีย"
+                aria-label={t("lossRebate.paginationAriaLabel")}
               />
             </div>
           )}
@@ -195,7 +209,7 @@ function LossRebateSections({
           <span className="loss-rebate-page__info-well flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium text-[var(--text-muted)]">
             i
           </span>
-          <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">เงื่อนไขการคืนยอดเสีย</span>
+          <span className="flex-1 text-sm font-medium text-[var(--text-primary)]">{t("lossRebate.termsTitle")}</span>
           <ChevronDownIcon
             className={`h-4 w-4 text-[var(--icon-default)] transition-transform ${
               termsOpen ? "rotate-180" : ""
@@ -209,7 +223,7 @@ function LossRebateSections({
                 <span className="text-[var(--accent-primary)]" aria-hidden="true">
                   •
                 </span>
-                <span>{line}</span>
+                <span>{t(line)}</span>
               </li>
             ))}
           </ul>
@@ -220,26 +234,27 @@ function LossRebateSections({
 }
 
 function LossRebateFormulaSection({ summary }: { summary: LossRebateSummaryMock }) {
+  const t = useT("cashback");
   return (
     <section className="surface-solid-stack px-4 py-4 sm:px-5">
-      <h2 className="text-sm font-medium text-[var(--text-primary)]">รายละเอียดการคำนวณ</h2>
+      <h2 className="text-sm font-medium text-[var(--text-primary)]">{t("lossRebate.formula.title")}</h2>
       <CosmicFormulaRow className="mt-4">
         <CosmicFormulaCell
-          label="ยอดเสียสุทธิที่เข้าเงื่อนไข"
+          label={t("lossRebate.formula.eligibleNetLoss")}
           value={formatLossRebateCurrency(summary.eligibleNetLossThb)}
         />
         <CosmicFormulaOperator symbol="×" />
         <CosmicFormulaCell
-          label="อัตราคืนยอดเสีย"
+          label={t("lossRebate.formula.rate")}
           value={formatLossRebatePercent(summary.rebateRatePercent)}
         />
         <CosmicFormulaOperator symbol="=" />
         <CosmicFormulaCell
-          label="โบนัสคืนยอดเสีย"
+          label={t("lossRebate.formula.bonus")}
           value={formatLossRebateCurrency(summary.rebateBonusThb)}
         />
       </CosmicFormulaRow>
-      <p className="mt-3 text-xs text-[var(--text-secondary)]">ข้อมูลและอัตราในภาพเป็นตัวอย่าง</p>
+      <p className="mt-3 text-xs text-[var(--text-secondary)]">{t("lossRebate.formula.sampleNote")}</p>
     </section>
   );
 }

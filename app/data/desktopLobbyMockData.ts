@@ -1,3 +1,5 @@
+import type { MessageKey } from "@/lib/i18n/messages";
+
 /** ข้อมูล mock แถบขวา desktop lobby — ไม่ใช่ยอด live */
 export const DESKTOP_PLAYER_PANEL_MOCK = {
   gems: 1000,
@@ -59,61 +61,66 @@ export const DESKTOP_RIGHT_MENU_TILES = [
   {
     id: "menu-referral",
     variant: "cell" as const,
-    title: "แนะนำเพื่อน",
-    subtitle: "สร้างรายได้ 2 ชั้น",
     visualSrc: "/assets/3d/cashback.avif",
     isBg: true,
     href: "/referral",
-    ariaLabel: "แนะนำเพื่อน สร้างรายได้ 2 ชั้น",
+    titleKey: "desktopMenu.referral.title",
+    subtitleKey: "desktopMenu.referral.subtitle",
+    ariaLabelKey: "desktopMenu.referral.ariaLabel",
   },
   {
     id: "menu-check-in",
     variant: "cell" as const,
-    title: "เช็คอิน",
-    subtitle: "CHECK-IN",
     visualSrc: "/assets/3d/checkin.avif",
     isBg: true,
     href: "/missions/check-in",
-    ariaLabel: "เช็คอิน CHECK-IN",
+    titleKey: "desktopMenu.checkIn.title",
+    subtitleKey: "desktopMenu.checkIn.subtitle",
+    ariaLabelKey: "desktopMenu.checkIn.ariaLabel",
   },
   {
     id: "menu-wheel",
     variant: "cell" as const,
-    title: "วงล้อ",
-    subtitle: "LUCKY WHEEL",
     visualSrc: "/assets/3d/wheel.avif",
     isBg: true,
     href: "/wheel",
-    ariaLabel: "วงล้อ LUCKY WHEEL",
+    titleKey: "desktopMenu.wheel.title",
+    subtitleKey: "desktopMenu.wheel.subtitle",
+    ariaLabelKey: "desktopMenu.wheel.ariaLabel",
   },
   {
     id: "menu-gems",
     variant: "cell" as const,
-    title: "ร้านค้าเพชร",
-    subtitle: "GEMS SHOP",
     visualSrc: "/assets/3d/diamond.avif",
     isBg: true,
     href: "/gems-store",
-    ariaLabel: "ร้านค้าเพชร GEMS SHOP",
+    titleKey: "desktopMenu.gems.title",
+    subtitleKey: "desktopMenu.gems.subtitle",
+    ariaLabelKey: "desktopMenu.gems.ariaLabel",
   },
   {
     id: "menu-coupon",
     variant: "cell" as const,
-    title: "คูปอง",
-    subtitle: "COUPON",
     visualSrc: "/assets/3d/coupon.avif",
     isBg: true,
     action: "coupon" as const,
-    ariaLabel: "แลกคูปอง COUPON",
+    titleKey: "desktopMenu.coupon.title",
+    subtitleKey: "desktopMenu.coupon.subtitle",
+    ariaLabelKey: "desktopMenu.coupon.ariaLabel",
   },
   {
     id: "menu-vip",
     variant: "cell" as const,
-    title: "ยศ VIP",
-    subtitle: "สิทธิพิเศษสมาชิก",
     visualSrc: "/assets/3d/vip.avif",
     isBg: true,
     action: "vip-rank" as const,
-    ariaLabel: "ยศ VIP สิทธิพิเศษสมาชิก",
+    titleKey: "desktopMenu.vip.title",
+    subtitleKey: "desktopMenu.vip.subtitle",
+    ariaLabelKey: "desktopMenu.vip.ariaLabel",
   },
-] as const;
+] as const satisfies readonly {
+  [field: string]: unknown;
+  titleKey: MessageKey<"home">;
+  subtitleKey: MessageKey<"home">;
+  ariaLabelKey: MessageKey<"home">;
+}[];

@@ -8,26 +8,28 @@ import { BRAND_LOGO_SRC } from "@/app/components/ui/Icons";
 import { SectionHeader } from "@/app/components/ui/SectionHeader";
 import { useToast } from "@/context/ToastContext";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 /** โลโก้กลมในวง glow — public/cmb-rounded.avif */
 const HOME_A2HS_ROUND_LOGO_SRC = "/cmb-rounded.avif";
 
 type InstallPlatform = "android" | "ios";
 
-const INSTALL_STEP_LAUNCH =
-  "กดเข้า หน้าเว็ปผ่านไอคอนแอพของเราได้ทันที";
+const INSTALL_STEP_LAUNCH: MessageKey<"home"> =
+  "a2hs.steps.launch";
 
-const INSTALL_STEPS: Record<InstallPlatform, string[]> = {
+const INSTALL_STEPS: Record<InstallPlatform, MessageKey<"home">[]> = {
   android: [
-    "แตะเมนู ⋮ ที่มุมบนขวาของ Chrome",
-    "เลือก「ติดตั้งแอป」หรือ「เพิ่มไปที่หน้าจอหลัก」",
-    "กด「ติดตั้ง」หรือ「เพิ่ม」เพื่อยืนยัน",
+    "a2hs.steps.android1",
+    "a2hs.steps.android2",
+    "a2hs.steps.android3",
     INSTALL_STEP_LAUNCH,
   ],
   ios: [
-    "แตะปุ่ม「แชร์」ที่ด้านล่าง Safari",
-    "เลือก「เพิ่มที่หน้าโฮม」",
-    "กด「เพิ่ม」มุมขวาบนเพื่อยืนยัน",
+    "a2hs.steps.ios1",
+    "a2hs.steps.ios2",
+    "a2hs.steps.ios3",
     INSTALL_STEP_LAUNCH,
   ],
 };
@@ -102,6 +104,7 @@ function useIsInstalledPwa() {
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx
  */
 export function HomeScreenShortcutPromo({ className }: { className?: string }) {
+  const t = useT("home");
   const isInstalled = useIsInstalledPwa();
   const { canPrompt, promptInstall } = usePwaInstall();
   const { showToast } = useToast();
@@ -131,7 +134,7 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
     const outcome = await promptInstall();
     setInstalling(false);
     if (outcome === "accepted") {
-      showToast("ติดตั้งแอปแล้ว", "success");
+      showToast(t("a2hs.installed"), "success");
       return;
     }
     if (outcome === "unavailable") openManualSteps("android");
@@ -149,7 +152,7 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
       className={cn("home-a2hs-promo w-full min-w-0 lg:hidden", className)}
       aria-labelledby="home-a2hs-section-title"
     >
-      <SectionHeader title="เพิ่มปุ่มลัดหน้าโฮม" titleId="home-a2hs-section-title" className="mb-2" />
+      <SectionHeader title={t("a2hs.title")} titleId="home-a2hs-section-title" className="mb-2" />
 
       <div className="home-a2hs-card">
         <div className="home-a2hs-card__body">
@@ -164,14 +167,14 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
               />
             </div>
             <div className="min-w-0">
-              <p className="home-a2hs-card__title">เพิ่มปุ่มลัดได้แล้ววันนี้!</p>
+              <p className="home-a2hs-card__title">{t("a2hs.cardTitle")}</p>
               <p className="home-a2hs-card__subtitle">
-                สัมผัสประสบการณ์ที่เหนือกว่า เพิ่มปุ่มเลย
+                {t("a2hs.cardSubtitle")}
               </p>
             </div>
           </div>
 
-          <div className="home-a2hs-card__platforms" role="group" aria-label="เลือกระบบปฏิบัติการ">
+          <div className="home-a2hs-card__platforms" role="group" aria-label={t("a2hs.platformsAriaLabel")}>
             <button
               type="button"
               className="home-a2hs-platform-btn"
@@ -216,7 +219,7 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
           aria-controls={stepsPanelId}
           onClick={() => setStepsOpen((open) => !open)}
         >
-          <span>วิธีเพิ่มปุ่มลัด ({platform === "ios" ? "iOS" : "Android"})</span>
+          <span>{t("a2hs.stepsTitle", { platform: platform === "ios" ? "iOS" : "Android" })}</span>
           <AccordionChevron expanded={stepsOpen} />
         </button>
         <div
@@ -230,7 +233,7 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
                 <span className="home-a2hs-steps-list__num" aria-hidden="true">
                   {index + 1}
                 </span>
-                <span className="home-a2hs-steps-list__text">{step}</span>
+                <span className="home-a2hs-steps-list__text">{t(step)}</span>
               </li>
             ))}
           </ol>

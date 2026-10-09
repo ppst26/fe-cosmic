@@ -2,6 +2,7 @@
 
 import React from "react";
 import { formatBaht } from "./lotteryUtils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 const QUICK_AMOUNTS = [5, 10, 20, 50, 100];
 
@@ -35,8 +36,9 @@ export function LotteryPriceControls({
   total,
   selectedAmount = null,
 }: LotteryPriceControlsProps) {
+  const t = useT("lottery");
   return (
-    <div className="lottery-price-controls flex flex-col gap-3" aria-label="ใส่ราคาและส่งโพย">
+    <div className="lottery-price-controls flex flex-col gap-3" aria-label={t("price.aria")}>
       <div className="lottery-price-controls__toolbar grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2">
         <label className="lottery-price-controls__checkbox inline-flex min-w-0 items-center gap-2 text-[var(--text-secondary)]">
           <input
@@ -45,7 +47,7 @@ export function LotteryPriceControls({
             checked={sameForAll}
             onChange={(event) => onToggleSameForAll(event.target.checked)}
           />
-          <span>ราคาเท่ากันทั้งหมด</span>
+          <span>{t("price.sameForAll")}</span>
         </label>
         <button
           type="button"
@@ -53,13 +55,13 @@ export function LotteryPriceControls({
           onClick={onBack}
         >
           <PencilIcon />
-          แก้ไข
+          {t("price.edit")}
         </button>
         <div
           className="lottery-price-controls__total-badge inline-flex items-center gap-[0.35rem] py-[0.2rem] pr-[0.55rem] pl-[0.45rem]"
           aria-live="polite"
         >
-          <span className="lottery-price-controls__total-label">รวม</span>
+          <span className="lottery-price-controls__total-label">{t("price.total")}</span>
           <span className="lottery-price-controls__total-value">{formatBaht(total)}</span>
         </div>
       </div>
@@ -67,7 +69,7 @@ export function LotteryPriceControls({
       <div
         className="lottery-price-controls__chips grid grid-cols-5 gap-2"
         role="group"
-        aria-label="เลือกราคา"
+        aria-label={t("price.chipsAria")}
       >
         {QUICK_AMOUNTS.map((amount) => (
           <button
@@ -90,7 +92,7 @@ export function LotteryPriceControls({
           className="lottery-price-controls__back min-h-11"
           onClick={onBack}
         >
-          กลับแก้ไขเลข
+          {t("price.backToNumbers")}
         </button>
         <button
           type="button"
@@ -99,7 +101,7 @@ export function LotteryPriceControls({
           disabled={submitDisabled || isSubmitting}
           aria-busy={isSubmitting}
         >
-          {isSubmitting ? "กำลังส่ง…" : "ส่งโพย"}
+          {isSubmitting ? t("price.submitting") : t("price.submit")}
         </button>
       </div>
     </div>

@@ -15,7 +15,7 @@ export type AvatarAssetNumber = (typeof AVATAR_ASSET_NUMBERS)[number];
 export const AVATAR_PRESETS: readonly AvatarPreset[] = AVATAR_ASSET_NUMBERS.map(
   (n) => ({
     id: `avatar-${n}`,
-    label: `ตัวละคร ${n}`,
+    number: n,
   }),
 );
 

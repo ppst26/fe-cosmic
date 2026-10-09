@@ -3,6 +3,7 @@
 import React, { useCallback, useMemo } from "react";
 import type { ThaiLottoBetEntry, ThaiLottoBetType, ThaiLottoBetTypeId } from "@/app/types/lottery";
 import { LotteryBetSlip } from "../LotteryBetSlip";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ThaiLottoBetSlipProps {
   entries: ThaiLottoBetEntry[];
@@ -25,6 +26,7 @@ export function ThaiLottoBetSlip({
   canUndo = false,
   onUndo,
 }: ThaiLottoBetSlipProps) {
+  const t = useT("lottery");
   const typeById = useMemo(
     () => new Map<ThaiLottoBetTypeId, ThaiLottoBetType>(betTypes.map((type) => [type.id, type])),
     [betTypes],
@@ -34,9 +36,9 @@ export function ThaiLottoBetSlip({
     (groupKey: string) => {
       const type = typeById.get(groupKey as ThaiLottoBetTypeId);
       if (!type) return undefined;
-      return { label: type.label, payoutRate: type.payoutRate };
+      return { label: t(type.labelKey), payoutRate: type.payoutRate };
     },
-    [typeById],
+    [typeById, t],
   );
 
   const pickEntries = entries.map((entry) => ({
@@ -49,7 +51,7 @@ export function ThaiLottoBetSlip({
     <LotteryBetSlip
       entries={pickEntries}
       resolveGroup={resolveGroup}
-      emptyMessage="เลือกประเภทแล้วกดเลขเพื่อเพิ่มลงโพย"
+      emptyMessage={t("slip.emptyPickType")}
       titleId="thai-lotto-bet-slip-title"
       onRemove={onRemove}
       onClearAll={onClearAll}

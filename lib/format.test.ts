@@ -8,7 +8,6 @@ import {
   formatHeaderWalletBalance,
   formatMoney,
   formatPercent,
-  formatReferralCount,
   formatVipCompactAmount,
   formatVipMissionStatus,
   formatWonAt,
@@ -21,7 +20,6 @@ test("number and money formats", () => {
   assert.equal(formatCashbackCurrency(50), "฿ 50.00");
   assert.equal(formatPercent(0.5), "0.5%");
   assert.equal(formatPercent(12.345), "12.35%");
-  assert.equal(formatReferralCount(1200), "1,200 คน");
   assert.equal(formatGemsAmount(1500), "1,500 Gems");
 });
 
@@ -30,12 +28,14 @@ test("header wallet balance rounds to a whole number", () => {
   assert.equal(formatHeaderWalletBalance(999), "999");
 });
 
-test("vip compact amount switches to ล้าน from one million", () => {
-  assert.equal(formatVipCompactAmount(950_000), "950,000");
-  assert.equal(formatVipCompactAmount(1_500_000), "1.5 ล้าน");
-  assert.equal(formatVipCompactAmount(25_400_000), "25 ล้าน");
+test("vip compact amount switches to the million unit from one million", () => {
+  const th = (n: string) => `${n} ล้าน`;
+  assert.equal(formatVipCompactAmount(950_000, th), "950,000");
+  assert.equal(formatVipCompactAmount(1_500_000, th), "1.5 ล้าน");
+  assert.equal(formatVipCompactAmount(25_400_000, th), "25 ล้าน");
+  assert.equal(formatVipCompactAmount(1_500_000, (n) => `${n}M`), "1.5M");
   assert.equal(
-    formatVipMissionStatus({ progress: 1200, target: 5000, unit: "เทิร์น" } as Parameters<typeof formatVipMissionStatus>[0]),
+    formatVipMissionStatus({ progress: 1200, target: 5000 }, "เทิร์น"),
     "1,200 / 5,000 เทิร์น",
   );
 });

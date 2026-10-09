@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import Link from "@/lib/i18n/navigation";
 import type { HomeProviderLogoItem } from "@/app/types/providers";
@@ -14,6 +15,7 @@ interface ProviderLogoMarqueeProps {
  * ถูกเรียกใช้โดย ProvidersSection.tsx
  */
 export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
+  const t = useT("home");
   if (items.length === 0) return null;
 
   const renderGroup = (groupKey: string, ariaHidden?: boolean) => (
@@ -26,7 +28,7 @@ export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
           key={`${groupKey}-${item.id}`}
           href={item.href}
           className="provider-logo-marquee__link flex h-10 w-[clamp(6.25rem,13vw,9.5rem)] shrink-0 items-center justify-center"
-          aria-label={`ผู้ให้บริการ ${item.name}`}
+          aria-label={t("providers.logoAriaLabel", { name: item.name })}
           tabIndex={ariaHidden ? -1 : undefined}
         >
           <Image
@@ -44,7 +46,7 @@ export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
   return (
     <div
       className="provider-logo-marquee relative w-full overflow-hidden py-2"
-      aria-label="ผู้ให้บริการเกม"
+      aria-label={t("providers.marqueeAriaLabel")}
     >
       <div className="provider-logo-marquee__track flex">
         {renderGroup("a")}

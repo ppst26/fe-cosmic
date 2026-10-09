@@ -24,6 +24,7 @@ import {
   sanitizeBankAccount,
   sanitizePersonName,
 } from "@/lib/fieldInput";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * ช่องกรอกแบบไม่มีไอคอน — ชื่อ / เลขบัญชี
@@ -142,6 +143,8 @@ export function SignUpStepTwo({
   onOpenChannelPicker,
   isSubmitting = false,
 }: SignUpStepTwoProps) {
+  const t = useT("auth");
+  const tCommon = useT("common");
   const selectedBank = getSignUpBankById(data.bankId);
   const selectedChannel = getSignUpChannelById(data.channelId);
 
@@ -158,7 +161,7 @@ export function SignUpStepTwo({
           titleIconId="profile"
           title={
             <Dialog.Title className="text-2xl font-medium text-[var(--text-primary)]">
-              สมัครสมาชิก
+              {t("signUp")}
             </Dialog.Title>
           }
         />
@@ -166,19 +169,19 @@ export function SignUpStepTwo({
         <div className="grid grid-cols-2 gap-3">
           <SignUpPlainInput
             id="signup-first-name"
-            label="ชื่อจริง"
+            label={t("fields.firstName")}
             value={data.firstName}
             onChange={(firstName) => onChange({ firstName: sanitizePersonName(firstName) })}
-            placeholder="ชื่อจริง"
+            placeholder={t("fields.firstName")}
             autoComplete="given-name"
             maxLength={PERSON_NAME_MAX_LENGTH}
           />
           <SignUpPlainInput
             id="signup-last-name"
-            label="นามสกุล"
+            label={t("fields.lastName")}
             value={data.lastName}
             onChange={(lastName) => onChange({ lastName: sanitizePersonName(lastName) })}
-            placeholder="นามสกุล"
+            placeholder={t("fields.lastName")}
             autoComplete="family-name"
             maxLength={PERSON_NAME_MAX_LENGTH}
           />
@@ -186,12 +189,12 @@ export function SignUpStepTwo({
 
         <SignUpPlainInput
           id="signup-bank-account"
-          label="เลขที่บัญชีธนาคาร"
+          label={t("fields.bankAccount")}
           value={data.bankAccountNumber}
           onChange={(bankAccountNumber) =>
             onChange({ bankAccountNumber: sanitizeBankAccount(bankAccountNumber) })
           }
-          placeholder="เลขที่บัญชี"
+          placeholder={t("fields.bankAccountPlaceholder")}
           inputMode="numeric"
           maxLength={BANK_ACCOUNT_MAX_DIGITS}
           autoComplete="off"
@@ -199,8 +202,8 @@ export function SignUpStepTwo({
 
         <SignUpPickerTrigger
           id="signup-bank"
-          label="ธนาคาร"
-          placeholder="เลือกธนาคาร"
+          label={t("fields.bank")}
+          placeholder={t("fields.bankPlaceholder")}
           valueLabel={selectedBank?.label}
           icon={<BankBuildingIcon className="h-4 w-4" />}
           onClick={() => onOpenBankPicker()}
@@ -208,8 +211,8 @@ export function SignUpStepTwo({
 
         <SignUpPickerTrigger
           id="signup-channel"
-          label="รู้จักจากช่องทาง"
-          placeholder="เลือกช่องทาง"
+          label={t("fields.channel")}
+          placeholder={t("fields.channelPlaceholder")}
           valueLabel={selectedChannel?.label}
           icon={<BroadcastChannelIcon className="h-4 w-4" />}
           onClick={() => onOpenChannelPicker()}
@@ -221,14 +224,14 @@ export function SignUpStepTwo({
             onClick={onBack}
             className="glass-control glass-pill !min-h-12 w-full text-sm font-medium text-[var(--text-secondary)]"
           >
-            ย้อนกลับ
+            {tCommon("back")}
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
             className={`${COSMIC_BTN_PRIMARY} !h-12 !min-h-12 text-sm`}
           >
-            {isSubmitting ? "กำลังสมัคร..." : "สมัครสมาชิก"}
+            {isSubmitting ? t("signUpSheet.submitting") : t("signUp")}
           </button>
         </div>
       </form>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface LotteryNumberPadProps {
   digits: number;
@@ -23,12 +24,13 @@ export function LotteryNumberPad({
   onBackspace,
   onClear,
 }: LotteryNumberPadProps) {
+  const t = useT("lottery");
   return (
     <div className="lottery-number-pad flex flex-col gap-1.5">
       <div
         className="thai-lotto-slots flex justify-center gap-1.5"
         aria-live="polite"
-        aria-label={`เลขที่กรอก ${value || "ว่าง"}`}
+        aria-label={t("pad.enteredAria", { value: value || t("pad.empty") })}
       >
         {Array.from({ length: digits }, (_, index) => {
           const char = value[index];
@@ -62,7 +64,7 @@ export function LotteryNumberPad({
           onClick={onClear}
           disabled={!value}
         >
-          ล้าง
+          {t("pad.clear")}
         </button>
         <button
           type="button"
@@ -76,7 +78,7 @@ export function LotteryNumberPad({
           className="thai-lotto-pad__key thai-lotto-pad__key--muted grid place-items-center min-h-[1.875rem]"
           onClick={onBackspace}
           disabled={!value}
-          aria-label="ลบตัวเลขล่าสุด"
+          aria-label={t("pad.backspace")}
         >
           <BackspaceIcon />
         </button>

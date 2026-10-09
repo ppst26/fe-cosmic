@@ -9,6 +9,7 @@ import { useWallet } from "@/app/hooks/api/account";
 import { HeaderGuestAuthButtons } from "./HeaderGuestAuthButtons";
 import { NotificationDesktopPopover } from "../notifications/NotificationDesktopPopover";
 import { formatHeaderWalletBalance } from "@/lib/format";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface LobbyDesktopTopBarProps {
   onLoginClick?: () => void;
@@ -23,6 +24,7 @@ export function LobbyDesktopTopBar({
   onLoginClick,
   onSignUpClick,
 }: LobbyDesktopTopBarProps) {
+  const t = useT("nav");
   const { isAuthenticated, isLoading, openProfile } = useAuth();
   const wallet = useWallet();
   const balanceLabel = wallet.data ? formatHeaderWalletBalance(wallet.data.amount) : "—";
@@ -38,15 +40,15 @@ export function LobbyDesktopTopBar({
   return (
     <header
       className="lobby-desktop-topbar hidden w-full min-w-0 items-center gap-4 lg:flex"
-      aria-label="แถบค้นหาและบัญชี"
+      aria-label={t("desktop.topBar")}
     >
       <div className="lobby-desktop-topbar__search flex min-w-0 flex-1">
         <label className="lobby-desktop-topbar__search-field w-full">
-          <span className="sr-only">ค้นหาเกม</span>
+          <span className="sr-only">{t("desktop.searchGames")}</span>
           <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[var(--text-muted)]" aria-hidden />
           <input
             type="search"
-            placeholder="ค้นหาเกม, ค่ายเกม หรือชื่อเกมที่คุณชอบ..."
+            placeholder={t("desktop.searchGamesPlaceholder")}
             className="lobby-desktop-topbar__search-input"
           />
         </label>
@@ -72,7 +74,7 @@ export function LobbyDesktopTopBar({
           type="button"
           onClick={handleProfile}
           className="lobby-desktop-topbar__avatar"
-          aria-label="โปรไฟล์"
+          aria-label={t("header.profile")}
         >
           {isAuthenticated ? (
             <HeaderUserAvatar size="sm" className="h-9 w-9 rounded-full" />

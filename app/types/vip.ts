@@ -1,3 +1,5 @@
+import type { MessageKey } from "@/lib/i18n/messages";
+
 /** ชื่อแรงค์ VIP — ลำดับจากต่ำไปสูง (วิดีโอใน public/rank) */
 export type VipRankId =
   | "base"
@@ -16,10 +18,11 @@ export type VipMissionIconKind = "login" | "deposit" | "play";
 /** ภารกิจเลื่อนระดับ */
 export interface VipMission {
   id: string;
-  label: string;
+  /** แปลตอน render: useT("vip")(labelKey) */
+  labelKey: MessageKey<"vip">;
   progress: number;
   target: number;
-  unit: string;
+  unitKey: MessageKey<"vip">;
   icon: VipMissionIconKind;
 }
 
@@ -34,8 +37,11 @@ export interface VipRankTier {
 /** แถวในตารางเปรียบเทียบสิทธิประโยชน์ */
 export interface VipBenefitComparisonRow {
   id: string;
-  label: string;
+  labelKey: MessageKey<"vip">;
 }
+
+/** ค่าในช่องตารางสิทธิ — ข้อความดิบ (ตัวเลข / % / ✓) หรือ key ที่ต้องแปล */
+export type VipBenefitCellValue = string | { labelKey: MessageKey<"vip"> };
 
 /** @deprecated ใช้ตาราง VIP_BENEFIT_COMPARISON_* แทน */
 export interface VipBenefitRow {

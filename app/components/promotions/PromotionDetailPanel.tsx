@@ -7,6 +7,7 @@ import type {
   PromotionDetailBlockIcon,
   PromotionDetailContent,
 } from "@/app/types/promotions";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 export type PromotionDetailPanelVariant = "modal" | "hub";
 
@@ -147,12 +148,13 @@ function PromotionDetailBanner({
 
 /** บล็อกรายละเอียดใน modal — แสดงเต็ม ไม่มี accordion */
 function PromotionDetailDetailsSection({ body }: { body: PromotionDetailContent }) {
+  const t = useT("promotions");
   return (
     <section
       className="promotion-detail-panel__details promotion-detail-panel__details--solid"
-      aria-label="รายละเอียดโปรโมชั่น"
+      aria-label={t("detail.title")}
     >
-      <h3 className="promotion-detail-panel__details-heading">รายละเอียด</h3>
+      <h3 className="promotion-detail-panel__details-heading">{t("detail.heading")}</h3>
       <hr
         className="cosmic-divider-subtle promotion-detail-panel__divider promotion-detail-panel__details-heading-divider"
       />
@@ -170,6 +172,7 @@ function PromotionDetailBodyExpanded({
   body: PromotionDetailContent;
   isHub: boolean;
 }) {
+  const t = useT("promotions");
   return (
     <section
       className={
@@ -177,10 +180,10 @@ function PromotionDetailBodyExpanded({
           ? "promotion-detail-panel__body mt-4 space-y-4"
           : "promotion-detail-panel__accordion-body"
       }
-      aria-label="รายละเอียดโปรโมชั่น"
+      aria-label={t("detail.title")}
     >
       {isHub ? (
-        <h3 className="text-base font-medium text-[var(--text-primary)] sm:text-lg">รายละเอียด</h3>
+        <h3 className="text-base font-medium text-[var(--text-primary)] sm:text-lg">{t("detail.heading")}</h3>
       ) : null}
       <div className={isHub ? "space-y-4" : "promotion-detail-panel__blocks"}>
         {body.blocks.map((block, index) => (

@@ -4,9 +4,11 @@ import React from "react";
 import { useCheckIn } from "@/app/hooks/api/member";
 import { CheckInCoinGraphic, DailyCheckInCalendarGraphic } from "./DailyCheckInGraphics";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
-import { formatCheckInCredits } from "@/lib/format";
+
 import type { DailyCheckInDayReward } from "@/app/types/checkIn";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
 
 interface DailyCheckInDesktopLayoutProps {
   days: DailyCheckInDayReward[];
@@ -24,6 +26,7 @@ export function DailyCheckInDesktopLayout({
   claimMessage,
   onClaimDay,
 }: DailyCheckInDesktopLayoutProps) {
+  const t = useT("rewards");
   /** ข้อความเงื่อนไข — cache เดียวกับ DailyCheckInCard (โหลดแล้วก่อน render ส่วนนี้) */
   const checkInTerms = useCheckIn().data?.terms ?? [];
   const todayReward = days.find((d) => d.status === "today");
@@ -34,14 +37,14 @@ export function DailyCheckInDesktopLayout({
     >
       <aside
         className="daily-check-in-desktop__banner flex min-w-0 flex-col gap-4"
-        aria-label="สรุปเช็คอิน"
+        aria-label={t("checkIn.desktop.summaryAria")}
       >
         <section
           className="referral-hub-block flex flex-col items-center gap-3 py-2"
-          aria-label="ความคืบหน้าเช็คอิน"
+          aria-label={t("checkIn.desktop.progressAria")}
         >
           <p className="m-0 text-xs font-medium text-[var(--text-secondary)]">
-            ความคืบหน้าสัปดาห์นี้
+            {t("checkIn.desktop.weekProgress")}
           </p>
           <DailyCheckInCalendarGraphic className="daily-check-in-desktop__banner-art h-auto w-28 sm:w-30" />
           <div className="text-center">
@@ -53,12 +56,12 @@ export function DailyCheckInDesktopLayout({
                 /
               </span>
               <span className="tabular-nums">7</span>
-              <span className="daily-check-in-desktop__banner-stat-label ml-1">วัน</span>
+              <span className="daily-check-in-desktop__banner-stat-label ml-1">{t("checkIn.desktop.daysUnit")}</span>
             </p>
           </div>
         </section>
 
-        <section className="referral-hub-block flex flex-col gap-3 py-2" aria-label="รับรางวัลวันนี้">
+        <section className="referral-hub-block flex flex-col gap-3 py-2" aria-label={t("checkIn.desktop.claimTodayAria")}>
           <button
             type="button"
             disabled={!todayReward}
@@ -67,13 +70,13 @@ export function DailyCheckInDesktopLayout({
               todayReward ? "is-active" : ""
             }`}
           >
-            {todayReward ? "รับรางวัลวันนี้" : "รับรางวัลแล้ว"}
+            {todayReward ? t("checkIn.desktop.claimToday") : t("checkIn.desktop.claimedToday")}
           </button>
         </section>
 
         <ol
           className="daily-check-in-desktop__streak m-0 grid list-none grid-cols-7 gap-1.5 p-0"
-          aria-label="ความคืบหน้า 7 วัน"
+          aria-label={t("checkIn.desktop.streakAria")}
         >
           {days.map((day) => {
             const claimed = day.status === "claimed";
@@ -91,7 +94,7 @@ export function DailyCheckInDesktopLayout({
                   {claimed ? "✓" : day.day}
                 </span>
                 <span className="daily-check-in-desktop__streak-label whitespace-nowrap">
-                  วัน {day.day}
+                  {t("checkIn.desktop.streakDay", { day: day.day })}
                 </span>
               </li>
             );
@@ -105,7 +108,7 @@ export function DailyCheckInDesktopLayout({
 
       <div className="daily-check-in-desktop__main flex min-h-0 min-w-0 flex-col gap-3">
         <header className="daily-check-in-desktop__main-head flex flex-wrap items-baseline justify-between gap-2">
-          <h3 className="daily-check-in-desktop__main-title m-0">รายการเช็คอิน</h3>
+          <h3 className="daily-check-in-desktop__main-title m-0">{t("checkIn.desktop.listTitle")}</h3>
           {claimMessage ? (
             <p className="daily-check-in-desktop__claim-msg m-0" role="status">
               {claimMessage}
@@ -130,6 +133,8 @@ function DailyCheckInDayRow({
   day: DailyCheckInDayReward;
   onClaim: () => void;
 }) {
+  const t = useT("rewards");
+  const fmt = useFormat();
   const isClaimed = day.status === "claimed";
   const isToday = day.status === "today";
   const isBonusDay = day.day === 7;
@@ -152,14 +157,14 @@ function DailyCheckInDayRow({
 
       <div className="daily-check-in-desktop__day-body flex min-w-0 flex-col gap-1">
         <p className="daily-check-in-desktop__day-title m-0">
-          วันที่ {day.day}
-          {isBonusDay ? " · รางวัลพิเศษ" : ""}
+          {t("checkIn.desktop.dayTitle", { day: day.day })}
+          {isBonusDay ? ` · ${t("checkIn.desktop.specialReward")}` : ""}
         </p>
         <p className="daily-check-in-desktop__day-reward m-0 tabular-nums">
-          {formatCheckInCredits(day.credits)}
+          {fmt.gems(day.credits)}
         </p>
         <p className="daily-check-in-desktop__day-desc m-0">
-          {isBonusDay ? "เช็คอินครบสัปดาห์ รับเครดิตโบนัส" : "รางวัลเช็คอินประจำวัน"}
+          {isBonusDay ? t("checkIn.desktop.bonusDayDesc") : t("checkIn.desktop.dailyDesc")}
         </p>
       </div>
 
@@ -172,7 +177,7 @@ function DailyCheckInDayRow({
           <span
             className={`${COSMIC_BTN_GLASS_PILL_SM} daily-check-in-desktop__claim-pill min-w-[5.25rem] whitespace-nowrap !w-full ${valueClass("success")}`}
           >
-            รับแล้ว
+            {t("status.claimed")}
           </span>
         ) : isToday ? (
           <button
@@ -180,13 +185,13 @@ function DailyCheckInDayRow({
             className={`${COSMIC_BTN_GLASS_PILL} daily-check-in-desktop__claim-btn min-w-[5.25rem] whitespace-nowrap !min-h-9 !px-3 !text-xs is-active`}
             onClick={onClaim}
           >
-            รับรางวัล
+            {t("actions.claim")}
           </button>
         ) : (
           <span
             className={`${COSMIC_BTN_GLASS_PILL_SM} daily-check-in-desktop__claim-pill min-w-[5.25rem] whitespace-nowrap !w-full text-[var(--text-muted)]`}
           >
-            ล็อค
+            {t("checkIn.desktop.locked")}
           </span>
         )}
       </div>

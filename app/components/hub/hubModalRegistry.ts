@@ -1,6 +1,7 @@
 import type { TransactionKind } from "@/app/types/transaction";
 import type { VipModalTabId } from "@/app/types/vip";
 import type { CashbackTabId } from "@/app/types/cashback";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 /** หมวด hub ที่เปิดเป็น modal บน desktop (lg+) */
 export type DesktopHubId =
@@ -20,16 +21,17 @@ export interface OpenHubOptions {
   vipTab?: VipModalTabId;
 }
 
-export const HUB_MODAL_TITLES: Record<DesktopHubId, string> = {
-  promotions: "Promotions",
-  activities: "กิจกรรม",
-  cashback: "คืนยอด",
-  "gems-store": "ร้านค้า Gems",
-  account: "ข้อมูลบัญชี",
-  referral: "ชวนเพื่อน",
-  transactions: "ธุรกรรม",
-  "check-in": "เช็คอินรายวัน",
-  vip: "VIP",
+/** หัวข้อ hub modal — key ใน dictionary nav (render ด้วย useT("nav")) */
+export const HUB_MODAL_TITLE_KEYS: Record<DesktopHubId, MessageKey<"nav">> = {
+  promotions: "hub.promotions",
+  activities: "hub.activities",
+  cashback: "hub.cashback",
+  "gems-store": "hub.gemsStore",
+  account: "hub.account",
+  referral: "hub.referral",
+  transactions: "hub.transactions",
+  "check-in": "hub.checkIn",
+  vip: "hub.vip",
 };
 
 /** ไอคอน 3D นำหน้าหัวข้อ hub modal บน desktop — อ้าง menuIconAssets */
@@ -110,7 +112,7 @@ export function hrefToHubId(href: string): DesktopHubId | null {
 }
 
 export function isDesktopHubId(value: string | null): value is DesktopHubId {
-  return value !== null && value in HUB_MODAL_TITLES;
+  return value !== null && value in HUB_MODAL_TITLE_KEYS;
 }
 
 /** hub ที่ต้องล็อกอินก่อนเปิด modal */

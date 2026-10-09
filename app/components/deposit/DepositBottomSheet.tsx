@@ -32,6 +32,8 @@ import type { DepositMethodId } from "@/app/types/wallet";
 import { useWallet } from "@/app/hooks/api/account";
 import { valueClass } from "@/lib/semanticValue";
 import { useToast } from "@/context/ToastContext";
+import { useT } from "@/lib/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 type DepositSheetStep = "methods" | "bank" | "confirm";
 
@@ -45,6 +47,7 @@ interface DepositBottomSheetProps {
  * Bottom sheet ฝากเงิน — step 1 ช่องทาง · step 2 ยอด · step 3 ยืนยัน
  */
 export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBottomSheetProps) {
+  const t = useT("wallet");
   /** โหลดตั้งแต่ mount (sheet ถูก mount ไว้ใน DepositProvider) — ถึง step บัญชีข้อมูลพร้อมแล้ว */
   const quick = useDepositQuickAmounts();
   const bankAccount = useDepositBankAccount();
@@ -190,7 +193,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
         >
           {step === "methods" && <DepositMethodsStep onSelectMethod={handleSelectMethod} />}
           {step === "bank" && (
-            <ResourceGate resource={bankAccount} loadingLabel="กำลังโหลดบัญชีรับโอน…" errorTitle="โหลดบัญชีรับโอนไม่สำเร็จ">
+            <ResourceGate resource={bankAccount} loadingLabel={t("deposit.bankAccountLoading")} errorTitle={t("deposit.bankAccountError")}>
               {(bank) => (
             <DepositBankStep
               bank={bank}
@@ -209,7 +212,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
             </ResourceGate>
           )}
           {step === "confirm" && (
-            <ResourceGate resource={bankAccount} loadingLabel="กำลังโหลดบัญชีรับโอน…" errorTitle="โหลดบัญชีรับโอนไม่สำเร็จ">
+            <ResourceGate resource={bankAccount} loadingLabel={t("deposit.bankAccountLoading")} errorTitle={t("deposit.bankAccountError")}>
               {(bank) => (
             <DepositConfirmStep
               bank={bank}
@@ -236,13 +239,13 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
         open={finalConfirmOpen}
         onOpenChange={setFinalConfirmOpen}
         variant="neutral"
-        title="ยืนยันส่งคำขอฝากเงิน?"
-        description="ตรวจสอบยอดและสลิปก่อนส่งคำขอให้ระบบตรวจสอบ"
-        confirmLabel="ส่งคำขอฝาก"
+        title={t("deposit.finalConfirm.title")}
+        description={t("deposit.finalConfirm.description")}
+        confirmLabel={t("deposit.finalConfirm.confirm")}
         loading={submitting}
         summary={
           <p className="text-center text-sm font-medium text-[var(--text-primary)]">
-            ยอดฝาก{" "}
+            {t("deposit.finalConfirm.amountLabel")}{" "}
             <span className={valueClass("emphasis")}>฿ {formatDepositTransferAmount(amount)}</span>
           </p>
         }
@@ -253,26 +256,27 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
 }
 
 function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMethodId) => void }) {
+  const t = useT("wallet");
   const methods = useDepositMethods();
   return (
     <>
       <ResponsiveSheetTitleNotch>
         <ResponsiveSheetHeader
-          closeAriaLabel="ปิดหน้าฝากเงิน"
+          closeAriaLabel={t("deposit.close")}
           titleIconSrc="/assets/deposit/Wallet2.avif"
           titleIconDesktopOnly={false}
-          title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ฝากเงิน</Dialog.Title>}
+          title={<Dialog.Title className="text-xl font-medium sm:text-2xl">{t("deposit.title")}</Dialog.Title>}
           subtitle={
             <p id="deposit-sheet-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
-              เลือกช่องทางการฝากเงิน
+              {t("deposit.selectMethod")}
             </p>
           }
         />
       </ResponsiveSheetTitleNotch>
 
-      <ResourceGate resource={methods} loadingLabel="กำลังโหลดช่องทางฝาก…" errorTitle="โหลดช่องทางฝากไม่สำเร็จ">
+      <ResourceGate resource={methods} loadingLabel={t("deposit.methodsLoading")} errorTitle={t("deposit.methodsError")}>
         {(methodList) => (
-      <ul className="mt-6 flex flex-col gap-3 overflow-y-auto pb-2" aria-label="ช่องทางฝากเงิน">
+      <ul className="mt-6 flex flex-col gap-3 overflow-y-auto pb-2" aria-label={t("deposit.methodsAria")}>
         {methodList.map((method) => (
           <li key={method.id}>
             <button
@@ -282,7 +286,7 @@ function DepositMethodsStep({ onSelectMethod }: { onSelectMethod: (id: DepositMe
             >
               <DepositMethodIcon methodId={method.id} className="h-8 w-8 shrink-0 sm:h-9 sm:w-9" />
               <span className="min-w-0 flex-1 text-sm font-medium text-[var(--text-primary)] sm:text-base">
-                {method.title}
+                {t(method.titleKey)}
               </span>
               <ChevronRightIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
             </button>
@@ -320,17 +324,18 @@ function DepositBankStep({
   onEdit: () => void;
   onNext: () => void;
 }) {
+  const t = useT("wallet");
   const canProceed = amount > 0;
 
   return (
     <>
       <ResponsiveSheetTitleNotch>
         <ResponsiveSheetHeader
-          closeAriaLabel="ปิดหน้าฝากเงิน"
+          closeAriaLabel={t("deposit.close")}
           onBack={onBack}
-          backAriaLabel="กลับเลือกช่องทางฝาก"
+          backAriaLabel={t("deposit.bank.back")}
           title={
-            <Dialog.Title className="cosmic-type-sheet-title">ฝากผ่านบัญชีธนาคาร</Dialog.Title>
+            <Dialog.Title className="cosmic-type-sheet-title">{t("deposit.bank.title")}</Dialog.Title>
           }
         />
       </ResponsiveSheetTitleNotch>
@@ -352,13 +357,13 @@ function DepositBankStep({
             <div className="min-w-0 flex-1 flex flex-col justify-center gap-2.5">
               <div className="space-y-1">
                 <div className="flex items-baseline gap-2">
-                  <span className="cosmic-type-sheet-meta shrink-0">ธนาคาร</span>
+                  <span className="cosmic-type-sheet-meta shrink-0">{t("deposit.bank.bankLabel")}</span>
                   <span className="text-sm font-medium text-[var(--text-primary)] sm:text-base truncate">
                     {bank.bankName}
                   </span>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="cosmic-type-sheet-meta shrink-0">ชื่อบัญชี</span>
+                  <span className="cosmic-type-sheet-meta shrink-0">{t("deposit.bank.accountName")}</span>
                   <span className="text-sm font-medium text-[var(--text-primary)] truncate">
                     {bank.accountName}
                   </span>
@@ -366,7 +371,7 @@ function DepositBankStep({
               </div>
 
               <div>
-                <span className="cosmic-type-sheet-meta">เลขที่บัญชี</span>
+                <span className="cosmic-type-sheet-meta">{t("deposit.bank.accountNumber")}</span>
                 <div className="mt-0.5 flex items-center justify-between gap-2">
                   <span className="min-w-0 text-base font-medium tracking-wider text-[var(--text-primary)] sm:text-lg select-all">
                     {bank.accountNumberDisplay}
@@ -375,14 +380,14 @@ function DepositBankStep({
                     type="button"
                     onClick={onCopyAccount}
                     className="glass-control glass-icon-btn !h-8 !w-8 shrink-0 text-[var(--icon-default)] hover:text-white cursor-pointer active:scale-95 transition-all"
-                    aria-label="คัดลอกเลขบัญชี"
+                    aria-label={t("shared.copyAccountNumber")}
                   >
                     <CopyIcon className="h-4 w-4" />
                   </button>
                 </div>
                 {copied && (
                   <p className="mt-1 text-xs text-[var(--success)]" role="status">
-                    คัดลอกแล้ว
+                    {t("shared.copied")}
                   </p>
                 )}
               </div>
@@ -392,7 +397,7 @@ function DepositBankStep({
 
         <div className="mt-4">
           <label htmlFor="deposit-amount" className="cosmic-type-sheet-label">
-            จำนวนเงินที่ต้องการฝาก
+            {t("deposit.bank.amountLabel")}
           </label>
           <div className={`${COSMIC_SHEET_FIELD_AMOUNT} mt-2`}>
             <span className="cosmic-sheet-field__addon px-3 text-lg font-medium text-[var(--text-secondary)]">
@@ -406,14 +411,14 @@ function DepositBankStep({
               maxLength={MONEY_AMOUNT_MAX_DIGITS}
               onChange={(event) => onAmountChange(event.target.value)}
               className="input-keep-size min-w-0 flex-1 bg-transparent px-3 text-2xl font-medium text-[var(--text-primary)] outline-none"
-              aria-label="จำนวนเงินที่ต้องการฝาก"
+              aria-label={t("deposit.bank.amountLabel")}
             />
-            <span className="shrink-0 px-3 text-sm text-[var(--text-muted)]">บาท</span>
+            <span className="shrink-0 px-3 text-sm text-[var(--text-muted)]">{t("shared.currencyUnit")}</span>
           </div>
         </div>
 
         <div className="mt-4">
-          <p className="cosmic-type-sheet-label">เลือกยอดเงินด่วน</p>
+          <p className="cosmic-type-sheet-label">{t("deposit.bank.quickAmount")}</p>
           <div className="mt-2 grid grid-cols-3 gap-2">
             {quickAmounts.map((value) => {
               const active = amount === value;
@@ -430,7 +435,7 @@ function DepositBankStep({
             })}
           </div>
           <p className="cosmic-type-sheet-desc mt-2 text-center">
-            เลือกยอดเงินหรือกรอกจำนวนที่ต้องการ
+            {t("deposit.bank.quickAmountHint")}
           </p>
         </div>
       </div>
@@ -442,7 +447,7 @@ function DepositBankStep({
           onClick={onNext}
           className={COSMIC_BTN_PRIMARY}
         >
-          ถัดไป
+          {t("deposit.bank.next")}
         </button>
       </div>
     </>
@@ -476,15 +481,16 @@ function DepositConfirmStep({
   onPickSlip: () => void;
   onConfirm: () => void;
 }) {
+  const t = useT("wallet");
   return (
     <>
       <ResponsiveSheetTitleNotch>
         <ResponsiveSheetHeader
-          closeAriaLabel="ปิดหน้าฝากเงิน"
+          closeAriaLabel={t("deposit.close")}
           onBack={onBack}
-          backAriaLabel="กลับแก้ไขยอดฝาก"
-          title={<Dialog.Title className="cosmic-type-sheet-title">ยืนยันการฝากเงิน</Dialog.Title>}
-          subtitle={<p className="cosmic-type-sheet-meta mt-0.5">ขั้นตอน 3 จาก 3</p>}
+          backAriaLabel={t("deposit.confirm.back")}
+          title={<Dialog.Title className="cosmic-type-sheet-title">{t("deposit.confirm.title")}</Dialog.Title>}
+          subtitle={<p className="cosmic-type-sheet-meta mt-0.5">{t("deposit.confirm.step", { current: 3, total: 3 })}</p>}
         />
       </ResponsiveSheetTitleNotch>
 
@@ -493,7 +499,7 @@ function DepositConfirmStep({
         className="min-h-0 flex-1 overflow-y-auto pb-3"
       >
         <section className={`${COSMIC_SHEET_SOFT_GLASS} px-3 py-3.5 text-center sm:px-4`}>
-          <p className="cosmic-type-sheet-desc">ยอดเงินที่ต้องโอน</p>
+          <p className="cosmic-type-sheet-desc">{t("deposit.confirm.transferAmount")}</p>
           <p className={valueClass("emphasis", "mt-1 text-3xl sm:text-4xl")}>
             ฿ {formatDepositTransferAmount(amount)}
           </p>
@@ -509,35 +515,35 @@ function DepositConfirmStep({
             <div className="min-w-0 flex-1 space-y-1.5 text-sm">
               <p className="font-medium text-[var(--text-primary)]">{bank.bankName}</p>
               <p className="text-[var(--text-secondary)]">
-                <span className="text-[var(--text-muted)]">ชื่อบัญชี: </span>
+                <span className="text-[var(--text-muted)]">{t("deposit.confirm.accountNameLabel")}</span>
                 {bank.accountName}
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 <p className="text-[var(--text-secondary)]">
-                  <span className="text-[var(--text-muted)]">เลขบัญชี: </span>
+                  <span className="text-[var(--text-muted)]">{t("deposit.confirm.accountNumberLabel")}</span>
                   <span className="font-medium text-[var(--text-primary)]">{bank.accountNumberDisplay}</span>
                 </p>
                 <button
                   type="button"
                   onClick={onCopyAccount}
                   className="glass-control glass-icon-btn !h-8 !w-8 text-[var(--icon-default)]"
-                  aria-label="คัดลอกเลขบัญชี"
+                  aria-label={t("shared.copyAccountNumber")}
                 >
                   <CopyIcon className="h-3.5 w-3.5" />
                 </button>
               </div>
               {copied && (
                 <p className="text-xs text-[var(--success)]" role="status">
-                  คัดลอกแล้ว
+                  {t("shared.copied")}
                 </p>
               )}
             </div>
           </div>
-          <p className="cosmic-type-sheet-desc mt-3 text-center">ข้อมูลบัญชีเป็นตัวอย่าง</p>
+          <p className="cosmic-type-sheet-desc mt-3 text-center">{t("deposit.confirm.sampleNote")}</p>
         </section>
 
         <section className="mt-4">
-          <p className="text-sm font-medium text-[var(--text-primary)]">แนบสลิปการโอน</p>
+          <p className="text-sm font-medium text-[var(--text-primary)]">{t("deposit.confirm.slipTitle")}</p>
           <input
             ref={slipInputRef}
             type="file"
@@ -553,17 +559,17 @@ function DepositConfirmStep({
             <SlipPlaceholderIcon className="h-10 w-10 shrink-0 text-[var(--icon-default)]" />
             <span className="min-w-0 flex-1">
               <span className="block text-sm font-medium text-[var(--text-primary)]">
-                {slipFileName ?? "แตะเพื่อแนบสลิป"}
+                {slipFileName ?? t("deposit.confirm.slipPick")}
               </span>
               <span className="cosmic-type-sheet-meta mt-0.5 block">
-                {slipFileName ? "เปลี่ยนรูปได้โดยแตะอีกครั้ง" : "เลือกรูปภาพจากอุปกรณ์"}
+                {slipFileName ? t("deposit.confirm.slipChange") : t("deposit.confirm.slipFromDevice")}
               </span>
             </span>
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--surface-mid)]/60 text-lg font-medium text-[var(--text-primary)]">
               +
             </span>
           </button>
-          <p className="cosmic-type-sheet-desc mt-2">แนบสลิปหลังโอนเงินเรียบร้อยแล้ว</p>
+          <p className="cosmic-type-sheet-desc mt-2">{t("deposit.confirm.slipHint")}</p>
         </section>
 
         {submitMessage && (
@@ -583,7 +589,7 @@ function DepositConfirmStep({
           onClick={onConfirm}
           className={COSMIC_BTN_PRIMARY}
         >
-          {submitting ? "กำลังส่ง..." : "ยืนยันการฝากเงิน"}
+          {submitting ? t("shared.submitting") : t("deposit.confirm.submit")}
         </button>
       </div>
     </>
@@ -600,29 +606,30 @@ function SlipPlaceholderIcon({ className }: { className?: string }) {
   );
 }
 
-const DEPOSIT_METHOD_ASSETS: Record<DepositMethodId, { src: string; alt: string }> = {
+const DEPOSIT_METHOD_ASSETS: Record<DepositMethodId, { src: string; altKey: MessageKey<"wallet"> }> = {
   bank: {
     src: "/assets/deposit/bank.avif",
-    alt: "บัญชีธนาคาร",
+    altKey: "deposit.methods.bank.title",
   },
   gateway: {
     src: "/assets/deposit/payment.avif",
-    alt: "Payment Gateway",
+    altKey: "deposit.methods.gateway.title",
   },
   truemoney: {
     src: "/assets/deposit/trueWallet.avif",
-    alt: "ทรูวอลเล็ท",
+    altKey: "deposit.methods.truemoney.title",
   },
 };
 
 function DepositMethodIcon({ methodId, className }: { methodId: DepositMethodId; className?: string }) {
+  const t = useT("wallet");
   const asset = DEPOSIT_METHOD_ASSETS[methodId];
   if (!asset) return null;
 
   return (
     <img
       src={asset.src}
-      alt={asset.alt}
+      alt={t(asset.altKey)}
       className={cn(
         "h-8 w-8 shrink-0 object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] sm:h-9 sm:w-9",
         className,

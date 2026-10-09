@@ -3,15 +3,17 @@
 import React, { useMemo, useState } from "react";
 import { Dialog } from "radix-ui";
 import {
-  THAI_MONTH_OPTIONS,
-  THAI_WEEKDAY_SHORT,
   getCalendarMonthCells,
+  getMonthOptionLabels,
+  getWeekdayShortLabels,
   isSameDay,
   startOfDay,
 } from "@/app/lib/transactionDateUtils";
 import { CloseIcon } from "../ui/Icons";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useLocale } from "@/lib/i18n/navigation";
 
 interface TransactionDateRangeDialogProps {
   open: boolean;
@@ -34,6 +36,10 @@ export function TransactionDateRangeDialog({
   const [viewMonth, setViewMonth] = useState(() => startOfDay(from));
   const [rangeStart, setRangeStart] = useState<Date | null>(from);
   const [rangeEnd, setRangeEnd] = useState<Date | null>(to);
+  const t = useT("transactions");
+  const locale = useLocale();
+  const monthLabels = useMemo(() => getMonthOptionLabels(locale), [locale]);
+  const weekdayLabels = useMemo(() => getWeekdayShortLabels(locale), [locale]);
 
   /** เปิด dialog หรือช่วงจากภายนอกเปลี่ยนขณะเปิด → เริ่มจากช่วงปัจจุบัน (ปรับระหว่าง render) */
   const [synced, setSynced] = useState({ open, from, to });
@@ -85,13 +91,13 @@ export function TransactionDateRangeDialog({
         >
           <div className="mb-3 flex items-center justify-between gap-2">
             <Dialog.Title className="text-sm font-medium text-[var(--text-primary)]">
-              เลือกช่วงวันที่
+              {t("calendar.title")}
             </Dialog.Title>
             <Dialog.Close asChild>
               <button
                 type="button"
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[var(--icon-default)] hover:bg-white/[0.06]"
-                aria-label="ปิด"
+                aria-label={t("calendar.close")}
               >
                 <CloseIcon className="h-4 w-4" />
               </button>
@@ -107,7 +113,7 @@ export function TransactionDateRangeDialog({
                 setViewMonth(new Date(viewMonth.getFullYear(), month, 1));
               }}
             >
-              {THAI_MONTH_OPTIONS.map((label, index) => (
+              {monthLabels.map((label, index) => (
                 <option key={label} value={index}>{label}</option>
               ))}
             </select>
@@ -126,9 +132,9 @@ export function TransactionDateRangeDialog({
           </div>
 
           <div className="tx-calendar-grid mb-1">
-            {THAI_WEEKDAY_SHORT.map((day) => (
+            {weekdayLabels.map((day, index) => (
               <span
-                key={day}
+                key={index}
                 className="py-1 text-center text-xs font-medium text-[var(--text-muted)]"
               >
                 {day}
@@ -168,7 +174,7 @@ export function TransactionDateRangeDialog({
           <div className="mt-4 grid grid-cols-2 gap-2">
             <Dialog.Close asChild>
               <button type="button" className={`${COSMIC_BTN_GLASS_PILL} !min-h-11 w-full text-sm`}>
-                ยกเลิก
+                {t("calendar.cancel")}
               </button>
             </Dialog.Close>
             <button
@@ -177,7 +183,7 @@ export function TransactionDateRangeDialog({
               disabled={!rangeStart}
               className={`${COSMIC_BTN_PRIMARY} cosmic-cta-primary--sm !min-h-11 w-full text-sm disabled:opacity-45`}
             >
-              ยืนยัน
+              {t("calendar.confirm")}
             </button>
           </div>
         </Dialog.Content>

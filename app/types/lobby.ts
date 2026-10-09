@@ -3,6 +3,8 @@
  * ถูกนำไปใช้ร่วมกับ Component ใน app/components/home และ app/data/lobbyMockData.ts
  */
 
+import type { MessageKey } from "@/lib/i18n/messages";
+
 export type CategoryId =
   | "home"
   | "casino"
@@ -14,7 +16,8 @@ export type CategoryId =
 
 export interface CategoryItem {
   id: CategoryId;
-  label: string;
+  /** key แปลชื่อหมวด — render ด้วย useT("home")(labelKey) */
+  labelKey: MessageKey<"home">;
   href: string;
 }
 
@@ -104,6 +107,8 @@ export interface GameItem {
 export interface GameSectionData {
   id: string;
   title: string;
+  /** key แปลหัวข้อ section (mock) — ไม่มีใช้ title จาก backend */
+  titleKey?: MessageKey<"home">;
   icon: SectionIconId;
   viewAllHref: string;
   games: GameItem[];
@@ -200,7 +205,8 @@ export interface HallOfFameRow {
 
 export interface BottomNavItem {
   id: string;
-  label: string;
+  /** key ใน dictionary nav — render ด้วย useT("nav")(labelKey) */
+  labelKey: MessageKey<"nav">;
   href: string;
   icon: "menu" | "deposit" | "withdraw" | "cashback" | "contact";
 }

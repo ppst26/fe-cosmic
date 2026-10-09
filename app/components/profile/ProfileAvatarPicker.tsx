@@ -6,6 +6,7 @@ import type { ProfileUser } from "@/app/types/auth";
 import { AVATAR_PRESETS, avatarPresetImageUrl } from "@/app/data/avatarPresets";
 import { updateProfileAvatarPreset } from "@/lib/auth/client";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 import {
   responsiveSheetCloseButtonClass,
   responsiveSheetContentClass,
@@ -32,6 +33,7 @@ export function ProfileAvatarPicker({
 }: ProfileAvatarPickerProps) {
   const [savingId, setSavingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const t = useT("profile");
 
   const handleSelect = async (presetId: string) => {
     if (presetId === currentPresetId || savingId) return;
@@ -40,7 +42,7 @@ export function ProfileAvatarPicker({
     const profile = await updateProfileAvatarPreset(presetId);
     setSavingId(null);
     if (!profile) {
-      setError("บันทึกไม่สำเร็จ ลองอีกครั้ง");
+      setError(t("avatar.saveFailed"));
       return;
     }
     onSaved(profile);
@@ -60,13 +62,13 @@ export function ProfileAvatarPicker({
         >
           <div className="flex items-start justify-between gap-2">
             <Dialog.Title className="text-lg font-medium text-[var(--text-primary)]">
-              เลือกรูปโปรไฟล์
+              {t("avatar.pickerTitle")}
             </Dialog.Title>
             <Dialog.Close asChild>
               <button
                 type="button"
                 className={responsiveSheetCloseButtonClass()}
-                aria-label="ปิด"
+                aria-label={t("avatar.close")}
               >
                 <CloseIcon className="h-4 w-4" />
               </button>
@@ -74,7 +76,7 @@ export function ProfileAvatarPicker({
           </div>
 
           <p className="text-xs text-[var(--text-secondary)]">
-            เลือกรูปจากชุดตัวละคร — บันทึกทันทีเมื่อแตะ
+            {t("avatar.pickerDescription")}
           </p>
 
           {error ? (
@@ -113,7 +115,7 @@ export function ProfileAvatarPicker({
                       loading="lazy"
                     />
                     <span className="text-[11px] font-medium text-[var(--text-secondary)]">
-                      {preset.label}
+                      {t("avatar.presetName", { n: preset.number })}
                     </span>
                   </button>
                 </li>

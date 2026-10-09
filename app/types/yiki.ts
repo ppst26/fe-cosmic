@@ -1,3 +1,5 @@
+import type { LotteryMessageKey, LotteryRoundLabel } from "./lottery";
+
 /** กลุ่มจำนวนหลักของหวยยี่กี — ไม่มี "อื่นๆ" ตามที่ผู้ใช้ระบุ */
 export type YikiDigitGroup = "three" | "two" | "run";
 
@@ -12,14 +14,14 @@ export type YikiSettlementTypeId =
 
 export interface YikiSettlementType {
   id: YikiSettlementTypeId;
-  label: string;
+  labelKey: LotteryMessageKey;
   payoutRate: number;
 }
 
 /** ปุ่มเลือกประเภทการแทง (เลือกได้ทีละปุ่มต่อกลุ่ม) — บางปุ่มกลับเลขหรือรวมสองผลการจ่ายในปุ่มเดียว */
 export interface YikiBetType {
   id: string;
-  label: string;
+  labelKey: LotteryMessageKey;
   group: YikiDigitGroup;
   digits: 1 | 2 | 3;
   /** ผลการจ่ายที่ปุ่มนี้ครอบคลุม — ปุ่มรวม (เช่น "บน/ล่าง") มีมากกว่า 1 */
@@ -31,7 +33,7 @@ export interface YikiBetType {
 /** งวดแทงหวยยี่กี — ออกทุก 15 นาที */
 export interface YikiRound {
   id: string;
-  label: string;
+  label: LotteryRoundLabel;
   closeAt: string;
 }
 

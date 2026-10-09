@@ -7,6 +7,7 @@ import { ActivityDetailBody, ActivityHubThumb } from "./ActivityHubShared";
 import { PromoHubPillLabel, promoCardButtonClass } from "../promotions/promoHubCardPrimitives";
 import { CloseIcon } from "../ui/Icons";
 import type { ActivityHubItem } from "@/app/types/activities";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 type MobileView = "list" | "detail";
 
@@ -15,6 +16,7 @@ type MobileView = "list" | "detail";
  * ใช้ใน ActivitiesHubPageContent (ไม่ embedded หรือ embedded แต่ < lg)
  */
 export function ActivitiesMobileHub() {
+  const t = useT("rewards");
   const activitiesResource = useActivities();
   const [view, setView] = useState<MobileView>("list");
   const [selected, setSelected] = useState<ActivityHubItem | null>(null);
@@ -40,7 +42,7 @@ export function ActivitiesMobileHub() {
             type="button"
             onClick={backToList}
             className="relative z-10 flex h-10 w-10 shrink-0 cursor-pointer items-center justify-end text-white transition-transform hover:text-white/80 active:scale-90"
-            aria-label="ปิดรายละเอียดกิจกรรม"
+            aria-label={t("activities.closeDetail")}
           >
             <CloseIcon className="h-6 w-6 text-white" />
           </button>
@@ -53,9 +55,9 @@ export function ActivitiesMobileHub() {
   }
 
   return (
-    <ResourceGate resource={activitiesResource} loadingLabel="กำลังโหลดกิจกรรม…" errorTitle="โหลดกิจกรรมไม่สำเร็จ">
+    <ResourceGate resource={activitiesResource} loadingLabel={t("activities.loading")} errorTitle={t("activities.loadError")}>
       {(activities) => (
-    <ul className="activities-mobile-hub flex flex-col gap-3" aria-label="รายการกิจกรรม">
+    <ul className="activities-mobile-hub flex flex-col gap-3" aria-label={t("activities.listAria")}>
       {activities.map((item) => (
         <li key={item.id}>
           <button
@@ -77,7 +79,7 @@ export function ActivitiesMobileHub() {
                 <span className="text-xs text-[var(--text-muted)]">{item.listMeta}</span>
               ) : null}
               <span className="mt-1 inline-flex">
-                <PromoHubPillLabel label="ดูรายละเอียด" />
+                <PromoHubPillLabel label={t("activities.viewDetails")} />
               </span>
             </div>
           </button>

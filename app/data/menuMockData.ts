@@ -45,44 +45,44 @@ export function menuHrefRequiresAuth(href: string): boolean {
 export const MENU_DIALOG_SECTIONS: MenuDialogSection[] = [
   {
     id: "personal",
-    sectionLabel: "ข้อมูลส่วนตัว",
+    sectionLabelKey: "menuSections.personal",
     columns: 3,
     layout: "vertical",
     items: [
-      { id: "profile", label: "โปรไฟล์", href: "/profile/account", iconId: "profile", requiresAuth: true },
-      { id: "transactions", label: "ธุรกรรม", href: "/transactions", iconId: "transactions", requiresAuth: true },
-      { id: "rank", label: "แรงค์", action: "vip-rank", iconId: "rank", requiresAuth: true },
+      { id: "profile", labelKey: "menu.profile", href: "/profile/account", iconId: "profile", requiresAuth: true },
+      { id: "transactions", labelKey: "menu.transactions", href: "/transactions", iconId: "transactions", requiresAuth: true },
+      { id: "rank", labelKey: "menu.rank", action: "vip-rank", iconId: "rank", requiresAuth: true },
     ],
   },
   {
     id: "privileges",
-    sectionLabel: "สิทธิพิเศษ",
+    sectionLabelKey: "menuSections.privileges",
     columns: 4,
     layout: "horizontal",
     items: [
-      { id: "promotions", label: "โปรโมชั่น", href: "/promotions", iconId: "promotions" },
-      { id: "cashback", label: "คืนยอด", href: "/cashback", iconId: "cashback", requiresAuth: true },
-      { id: "check-in", label: "เช็คอิน", href: "/missions/check-in", iconId: "check-in", requiresAuth: true },
-      { id: "referral", label: "ชวนเพื่อน", href: "/referral", iconId: "referral", requiresAuth: true },
+      { id: "promotions", labelKey: "menu.promotions", href: "/promotions", iconId: "promotions" },
+      { id: "cashback", labelKey: "menu.cashback", href: "/cashback", iconId: "cashback", requiresAuth: true },
+      { id: "check-in", labelKey: "menu.checkIn", href: "/missions/check-in", iconId: "check-in", requiresAuth: true },
+      { id: "referral", labelKey: "menu.referral", href: "/referral", iconId: "referral", requiresAuth: true },
     ],
   },
   {
     id: "rewards",
-    sectionLabel: "ลุ้นรางวัล",
+    sectionLabelKey: "menuSections.rewards",
     columns: 4,
     layout: "horizontal",
     items: [
       {
         id: "reward-hub",
-        label: "สุ่มของรางวัล",
+        labelKey: "menu.rewardHub",
         href: "/reward",
         iconId: "reward-hub",
         requiresAuth: true,
       },
-      { id: "wheel", label: "วงล้อ", href: "/wheel", iconId: "wheel", requiresAuth: true },
-      { id: "gems-shop", label: "ร้านค้า Gems", href: "/gems-store", iconId: "gems", requiresAuth: true },
-      { id: "activities", label: "กิจกรรม", href: "/event", iconId: "activities" },
-      { id: "coupon", label: "คูปอง", action: "coupon", iconId: "coupon", requiresAuth: true },
+      { id: "wheel", labelKey: "menu.wheel", href: "/wheel", iconId: "wheel", requiresAuth: true },
+      { id: "gems-shop", labelKey: "menu.gemsShop", href: "/gems-store", iconId: "gems", requiresAuth: true },
+      { id: "activities", labelKey: "menu.activities", href: "/event", iconId: "activities" },
+      { id: "coupon", labelKey: "menu.coupon", action: "coupon", iconId: "coupon", requiresAuth: true },
     ],
   },
 ];
@@ -96,19 +96,19 @@ export const MENU_DIALOG_ALL_TILES: MenuDialogTile[] = MENU_DIALOG_SECTIONS.flat
  * เมนูมือถือเต็มจอ — แถวรายการ (RightMenuDrawer mobile)
  */
 export const MENU_DIALOG_MOBILE_LIST_ITEMS: MenuDialogTile[] = [
-  { id: "rank", label: "ระดับสมาชิก VIP", action: "vip-rank", iconId: "rank", requiresAuth: true },
+  { id: "rank", labelKey: "menu.vipRank", action: "vip-rank", iconId: "rank", requiresAuth: true },
   {
     id: "referral-earnings",
-    label: "รายได้คอมมิชชั่น",
+    labelKey: "menu.referralEarnings",
     href: "/referral",
     iconId: "referral",
     requiresAuth: true,
   },
-  { id: "referral", label: "แนะนำเพื่อน", href: "/referral", iconId: "referral", requiresAuth: true },
-  { id: "coupon", label: "คูปอง", action: "coupon", iconId: "coupon", requiresAuth: true },
+  { id: "referral", labelKey: "menu.referFriend", href: "/referral", iconId: "referral", requiresAuth: true },
+  { id: "coupon", labelKey: "menu.coupon", action: "coupon", iconId: "coupon", requiresAuth: true },
   {
     id: "reward-hub",
-    label: "โบนัสพิเศษ",
+    labelKey: "menu.specialBonus",
     href: "/reward",
     iconId: "reward-hub",
     requiresAuth: true,
@@ -117,14 +117,14 @@ export const MENU_DIALOG_MOBILE_LIST_ITEMS: MenuDialogTile[] = [
 
 /** เมนูมือถือ — กริด 3 คอลัมน์ใต้รายการหลัก */
 export const MENU_DIALOG_MOBILE_GRID_ITEMS: MenuDialogTile[] = [
-  { id: "promotions", label: "โปรโมชั่น", href: "/promotions", iconId: "promotions" },
-  { id: "activities", label: "กิจกรรม", href: "/event", iconId: "activities" },
-  { id: "transactions", label: "ประวัติ", href: "/transactions", iconId: "transactions", requiresAuth: true },
-  { id: "profile", label: "โปรไฟล์", href: "/profile/account", iconId: "profile", requiresAuth: true },
-  { id: "cashback", label: "คืนยอด", href: "/cashback", iconId: "cashback", requiresAuth: true },
-  { id: "check-in", label: "เช็คอิน", href: "/missions/check-in", iconId: "check-in", requiresAuth: true },
-  { id: "gems-shop", label: "ร้านค้า Gems", href: "/gems-store", iconId: "gems", requiresAuth: true },
-  { id: "wheel", label: "วงล้อ", href: "/wheel", iconId: "wheel", requiresAuth: true },
+  { id: "promotions", labelKey: "menu.promotions", href: "/promotions", iconId: "promotions" },
+  { id: "activities", labelKey: "menu.activities", href: "/event", iconId: "activities" },
+  { id: "transactions", labelKey: "menu.history", href: "/transactions", iconId: "transactions", requiresAuth: true },
+  { id: "profile", labelKey: "menu.profile", href: "/profile/account", iconId: "profile", requiresAuth: true },
+  { id: "cashback", labelKey: "menu.cashback", href: "/cashback", iconId: "cashback", requiresAuth: true },
+  { id: "check-in", labelKey: "menu.checkIn", href: "/missions/check-in", iconId: "check-in", requiresAuth: true },
+  { id: "gems-shop", labelKey: "menu.gemsShop", href: "/gems-store", iconId: "gems", requiresAuth: true },
+  { id: "wheel", labelKey: "menu.wheel", href: "/wheel", iconId: "wheel", requiresAuth: true },
   /** ไอคอนเป็นธงภาษาปัจจุบัน (RightMenuDrawer) · ไม่ต้องล็อกอิน */
-  { id: "language", label: "ภาษา", action: "language", iconId: "language" },
+  { id: "language", labelKey: "menu.language", action: "language", iconId: "language" },
 ];

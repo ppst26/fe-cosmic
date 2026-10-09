@@ -4,11 +4,13 @@ import React from "react";
 import { useWheel } from "@/app/hooks/api/member";
 import { valueClass } from "@/lib/semanticValue";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * รายการผู้เล่นคนอื่นได้รับรางวัล — ดีไซน์การ์ดมนตามภาพตัวอย่าง
  */
 export function LuckyWheelLiveWinners({ variant = "default" }: { variant?: "default" | "sidebar" }) {
+  const t = useT("rewards");
   const isSidebar = variant === "sidebar";
   /** ใช้ cache เดียวกับ LuckyWheelPageContent (SWR) — ยังไม่มีข้อมูลแสดงรายการว่าง */
   const liveWinners = useWheel().data?.liveWinners ?? [];
@@ -32,7 +34,7 @@ export function LuckyWheelLiveWinners({ variant = "default" }: { variant?: "defa
             isSidebar ? "text-[11px] lg:text-xs" : "text-sm",
           )}
         >
-          ผู้เล่นคนอื่นได้รับรางวัล
+          {t("wheel.liveWinners.title")}
         </h2>
       </header>
 
@@ -64,7 +66,7 @@ export function LuckyWheelLiveWinners({ variant = "default" }: { variant?: "defa
                 </div>
                 <div className="shrink-0 text-right leading-snug">
                   <span className={valueClass("success", "block font-medium tabular-nums")}>
-                    +{entry.gemsAmount.toFixed(2)} เพชร
+                    {t("wheel.liveWinners.gemsWon", { amount: entry.gemsAmount.toFixed(2) })}
                   </span>
                 </div>
               </div>
@@ -83,8 +85,10 @@ export function LuckyWheelLiveWinners({ variant = "default" }: { variant?: "defa
                     <DiamondSmallIcon />
                   </span>
                   <span>
-                    ได้รับ{" "}
-                    <span className={valueClass("accent")}>{entry.gemsAmount.toFixed(2)} เพชร</span>
+                    {t("wheel.liveWinners.received")}{" "}
+                    <span className={valueClass("accent")}>
+                      {t("wheel.liveWinners.gemsAmount", { amount: entry.gemsAmount.toFixed(2) })}
+                    </span>
                   </span>
                 </div>
                 <span className="w-20 shrink-0 text-right text-xs tabular-nums text-[var(--text-secondary)]">

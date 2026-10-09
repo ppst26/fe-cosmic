@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import type { WelcomeBannerSlide } from "@/app/types/lobby";
 import { buildLoopedTrack, useInfiniteSnapCarousel } from "@/app/hooks/useInfiniteSnapCarousel";
@@ -15,6 +16,7 @@ interface WelcomeBannerProps {
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx (มือถือ — carousel บนสุด)
  */
 export function WelcomeBanner({ items }: WelcomeBannerProps) {
+  const t = useT("home");
   const trackSlides = buildLoopedTrack(items);
   const { scrollContainerRef, logicalIndex, loopEnabled, pauseFor, scrollToLogicalIndex } =
     useInfiniteSnapCarousel(items.length);
@@ -26,14 +28,14 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
   return (
     <section
       className="welcome-banner lobby-carousel-bleed relative my-0 w-full min-w-0 sm:my-2"
-      aria-label="แบนเนอร์ต้อนรับและโปรโมชัน"
+      aria-label={t("welcomeBanner.ariaLabel")}
     >
       <div className="relative">
         <div
           ref={scrollContainerRef}
           className="welcome-banner__track lobby-carousel-bleed__track flex overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory max-lg:gap-3 lg:gap-2 lg:px-0"
           tabIndex={0}
-          aria-label="สไลด์แบนเนอร์ต้อนรับ"
+          aria-label={t("welcomeBanner.slidesAriaLabel")}
         >
           {trackSlides.map((entry, index) => {
             /** สไลด์จริงใบแรก = LCP ของมือถือ — eager + fetchPriority high แทน preload (ดู next/image § preload) */
@@ -67,7 +69,7 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
           <div
             className="welcome-banner__dots pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center sm:bottom-2.5"
             role="tablist"
-            aria-label="เลือกสไลด์แบนเนอร์"
+            aria-label={t("carousel.pickSlide")}
           >
             <div className="welcome-banner__dots-pill pointer-events-auto">
               {items.map((slide, idx) => {
@@ -83,7 +85,7 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
                       scrollToLogicalIndex(idx);
                     }}
                     className={`welcome-banner__dot ${isDotActive ? "is-active" : ""}`}
-                    aria-label={`ไปยังสไลด์ที่ ${idx + 1}`}
+                    aria-label={t("carousel.goToSlide", { index: idx + 1 })}
                   />
                 );
               })}

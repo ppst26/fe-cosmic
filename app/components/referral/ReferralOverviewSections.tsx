@@ -6,8 +6,10 @@ import { COSMIC_BTN_PRIMARY, COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonCl
 import { Menu3DIcon } from "../ui/Menu3DIcon";
 import { useToast } from "@/context/ToastContext";
 import { buildReferralLink } from "@/lib/domain/referral";
-import { formatReferralCount, formatReferralCurrency } from "@/lib/format";
+import { formatReferralCurrency } from "@/lib/format";
 import type { ReferralStatsMock } from "@/app/types/referral";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useFormat } from "@/lib/i18n/useFormat";
 
 /**
  * แบนเนอร์โปรโมชันแนะนำเพื่อน — ใช้ใน overview / desktop hub
@@ -20,6 +22,7 @@ export function ReferralPromoBanner({
   /** desktop hub sheet — ไม่ใช้การ์ดทึบ */
   flat?: boolean;
 }) {
+  const t = useT("referral");
   return (
     <section
       className={`referral-promo-banner relative overflow-hidden py-5 sm:py-6 ${
@@ -27,7 +30,7 @@ export function ReferralPromoBanner({
           ? "referral-promo-banner--flat px-0"
           : "glass-card--soft rounded-[var(--radius-panel)] px-4 sm:px-5"
       }`}
-      aria-label="โปรโมชันแนะนำเพื่อน"
+      aria-label={t("promo.ariaLabel")}
     >
       <div
         className="referral-promo-banner__glow pointer-events-none absolute inset-0 opacity-95"
@@ -43,10 +46,10 @@ export function ReferralPromoBanner({
               compact ? "text-base sm:text-lg" : "text-lg sm:text-xl"
             }`}
           >
-            ชวนเพื่อน รับรายได้ 2 ต่อ
+            {t("promo.title")}
           </h2>
           <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
-            แชร์ลิงก์ให้เพื่อน แล้วรับส่วนแบ่งจากยอดเล่น
+            {t("promo.description")}
           </p>
           {!compact ? (
             <>
@@ -100,15 +103,16 @@ export function ReferralLinkSection({
   variant?: "default" | "hub";
 }) {
   const { showToast } = useToast();
+  const t = useT("referral");
   const referralLink = buildReferralLink(refCode);
   const isHub = variant === "hub";
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(referralLink);
-      showToast("คัดลอกลิงก์แล้ว", "success", 2500);
+      showToast(t("link.copied"), "success", 2500);
     } catch {
-      showToast("ไม่สามารถคัดลอกลิงก์ได้", "error");
+      showToast(t("link.copyFailed"), "error");
     }
   };
 
@@ -117,7 +121,7 @@ export function ReferralLinkSection({
       <p
         className={`mb-2.5 font-medium text-[var(--text-primary)] ${isHub ? "text-base" : "text-sm"}`}
       >
-        ลิงก์แนะนำของคุณ
+        {t("link.title")}
       </p>
       <div className="flex gap-2.5">
         <div
@@ -156,6 +160,8 @@ export function ReferralStatsSection({
   flat?: boolean;
   variant?: "default" | "hub";
 }) {
+  const t = useT("referral");
+  const fmt = useFormat();
   const isStack = layout === "stack";
   const gridClass = isStack ? "grid grid-cols-1 gap-2" : "grid grid-cols-3 gap-2 sm:gap-2.5";
   const cardOrientation = isStack ? "row" : "column";
@@ -167,7 +173,7 @@ export function ReferralStatsSection({
           variant === "hub" ? "text-base" : "text-sm"
         }`}
       >
-        สถิติของคุณ
+        {t("stats.title")}
       </h2>
       <div className={gridClass}>
         <StatCard
@@ -175,15 +181,15 @@ export function ReferralStatsSection({
           emphasized={variant === "hub"}
           orientation={cardOrientation}
           iconId="referral"
-          label="เพื่อนที่สมัคร"
-          value={formatReferralCount(stats.friendsCount)}
+          label={t("stats.friends")}
+          value={fmt.people(stats.friendsCount)}
         />
         <StatCard
           flat={flat}
           emphasized={variant === "hub"}
           orientation={cardOrientation}
           iconId="transactions"
-          label="ยอดเล่นรวม"
+          label={t("stats.totalTurnover")}
           value={formatReferralCurrency(stats.totalTurnoverThb)}
           valueClassName="cosmic-value cosmic-value--emphasis"
         />
@@ -192,7 +198,7 @@ export function ReferralStatsSection({
           emphasized={variant === "hub"}
           orientation={cardOrientation}
           iconId="cashback"
-          label="รายได้สะสม"
+          label={t("stats.totalEarnings")}
           value={formatReferralCurrency(stats.totalEarningsThb)}
           valueClassName="cosmic-value cosmic-value--reward"
         />

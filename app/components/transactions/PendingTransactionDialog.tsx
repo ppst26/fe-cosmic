@@ -10,6 +10,9 @@ import { responsiveSheetCloseButtonClass } from "../ui/responsiveSheetDialog";
 import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 import type { PendingTransactionPayload } from "@/app/types/transaction";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useLocale } from "@/lib/i18n/navigation";
+import { formatTransactionDateTimeMedium } from "@/app/lib/transactionDateUtils";
 
 interface PendingTransactionDialogProps {
   payload: PendingTransactionPayload | null;
@@ -22,6 +25,8 @@ interface PendingTransactionDialogProps {
 export function PendingTransactionDialog({ payload, onClose }: PendingTransactionDialogProps) {
   const open = payload !== null;
   const { showToast } = useToast();
+  const t = useT("wallet");
+  const locale = useLocale();
 
   const handleOpenChange = (next: boolean) => {
     if (!next) onClose();
@@ -31,9 +36,9 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
     if (!payload) return;
     try {
       await navigator.clipboard.writeText(payload.referenceCopyValue);
-      showToast("คัดลอกเลขอ้างอิงแล้ว", "success", 2500);
+      showToast(t("pending.referenceCopied"), "success", 2500);
     } catch {
-      showToast("ไม่สามารถคัดลอกเลขอ้างอิงได้", "error");
+      showToast(t("pending.referenceCopyFailed"), "error");
     }
   };
 
@@ -55,7 +60,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
             <button
               type="button"
               className={responsiveSheetCloseButtonClass("absolute right-3 top-3")}
-              aria-label="ปิด"
+              aria-label={t("pending.close")}
             >
               <CloseIcon className="h-4 w-4" />
             </button>
@@ -71,11 +76,11 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
               titleIconId="transactions"
               className="items-center justify-center"
               title={
-                <Dialog.Title className="text-lg font-medium sm:text-xl">{payload.title}</Dialog.Title>
+                <Dialog.Title className="text-lg font-medium sm:text-xl">{t(payload.titleKey)}</Dialog.Title>
               }
               subtitle={
                 <p id="pending-tx-desc" className="mt-1 text-sm text-[var(--text-secondary)]">
-                  {payload.subtitle}
+                  {t(payload.subtitleKey)}
                 </p>
               }
             />
@@ -89,18 +94,23 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
 
           <dl className="space-y-3 text-sm">
             {payload.rows.map((row) => {
-              const isRef = row.label === "เลขอ้างอิง";
+              const isRef = row.labelKey === "pending.rows.reference";
+              const value = row.valueKey
+                ? t(row.valueKey)
+                : row.dateTime
+                  ? formatTransactionDateTimeMedium(row.dateTime, locale)
+                  : row.value;
               return (
-                <div key={row.label} className="flex items-start justify-between gap-3">
-                  <dt className="shrink-0 text-[var(--text-muted)]">{row.label}</dt>
+                <div key={row.labelKey} className="flex items-start justify-between gap-3">
+                  <dt className="shrink-0 text-[var(--text-muted)]">{t(row.labelKey)}</dt>
                   <dd className="flex min-w-0 items-center justify-end gap-1.5 text-right font-medium text-[var(--text-primary)]">
-                    <span className="truncate">{row.value}</span>
+                    <span className="truncate">{value}</span>
                     {isRef && (
                       <button
                         type="button"
                         onClick={handleCopyRef}
                         className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border-subtle)]/50 text-[var(--icon-default)] hover:border-[var(--border-active)]/50 hover:text-[var(--icon-active)]"
-                        aria-label="คัดลอกเลขอ้างอิง"
+                        aria-label={t("pending.copyReference")}
                       >
                         <CopyIcon className="h-3.5 w-3.5" />
                       </button>
@@ -115,7 +125,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
               type="button"
               className={`${COSMIC_BTN_PRIMARY} mt-6 flex h-12 w-full items-center justify-center text-base`}
             >
-              เรียบร้อย
+              {t("pending.done")}
             </button>
           </Dialog.Close>
 
@@ -124,7 +134,7 @@ export function PendingTransactionDialog({ payload, onClose }: PendingTransactio
             onClick={onClose}
             className="mt-4 block text-center text-sm font-medium text-[var(--text-primary)] underline underline-offset-4"
           >
-            ดูประวัติรายการ
+            {t("pending.viewHistory")}
           </Link>
         </Dialog.Content>
       </Dialog.Portal>

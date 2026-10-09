@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Link from "@/lib/i18n/navigation";
 import { useRouter } from "@/lib/i18n/navigation";
 import { ArrowLeftIcon } from "../ui/Icons";
@@ -20,11 +21,13 @@ export type SlotProvidersHeaderProps = PageSubHeaderProps;
  * ปุ่มย้อนกลับ arrow back ไร้ card ครอบ + ชื่อหัวข้อจัดกึ่งกลาง
  */
 export function StandaloneSubHeader({
-  title = "สล็อต",
+  title: titleProp,
   backHref = "/",
   onBackClick,
   className = "",
 }: PageSubHeaderProps) {
+  const t = useT("games");
+  const title = titleProp ?? t("slots.title");
   const router = useRouter();
 
   const handleBack = (e: React.MouseEvent) => {
@@ -44,7 +47,7 @@ export function StandaloneSubHeader({
           href={backHref}
           onClick={handleBack}
           className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
-          aria-label="ย้อนกลับ"
+          aria-label={t("subHeader.back")}
         >
           <ArrowLeftIcon className="h-6 w-6 text-white" />
         </Link>

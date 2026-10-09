@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import Link from "@/lib/i18n/navigation";
 import { Heart, Users } from "lucide-react";
@@ -20,6 +21,7 @@ interface MostOnlineProviderCardProps {
  * ถูกเรียกใช้ใน MostOnlineProvidersSection.tsx
  */
 export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCardProps) {
+  const t = useT("home");
   const [favorited, setFavorited] = useState(false);
   const displayCount = useFluctuatingOnlineCount({ id: item.id, onlineCount: item.onlineCount });
   const onlineLabel = displayCount.toLocaleString("en-US");
@@ -68,7 +70,7 @@ export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCa
         <button
           type="button"
           className="absolute bottom-1 right-1 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-white/12 bg-[var(--surface-deep)]/75 text-white/85 transition hover:border-white/25 hover:text-white sm:bottom-2 sm:right-2 sm:h-8 sm:w-8"
-          aria-label={favorited ? "เอาออกจากรายการโปรด" : "เพิ่มในรายการโปรด"}
+          aria-label={favorited ? t("mostOnline.favoriteRemove") : t("mostOnline.favoriteAdd")}
           aria-pressed={favorited}
           onClick={(event) => {
             event.preventDefault();
@@ -82,7 +84,7 @@ export function MostOnlineProviderCard({ item, className }: MostOnlineProviderCa
 
       <div className="most-online-card__live-bar flex items-center justify-between gap-2 px-2 py-2 sm:px-2.5 sm:py-2.5">
         <span className="most-online-live-dot" aria-hidden />
-        <span className="sr-only">กำลังเล่นอยู่ {onlineLabel} คน</span>
+        <span className="sr-only">{t("mostOnline.playingNow", { count: onlineLabel })}</span>
         <span
           className={cn(
             "most-online-card__count-cluster inline-flex min-w-0 items-center gap-1.5 sm:gap-2",

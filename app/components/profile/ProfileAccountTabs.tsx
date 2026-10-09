@@ -14,10 +14,12 @@ import { COSMIC_BTN_LOGOUT } from "../ui/cosmicButtonClasses";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
 
-const PROFILE_ACCOUNT_TABS: { id: ProfileAccountTab; label: string }[] = [
-  { id: "personal", label: "ข้อมูลส่วนตัว" },
-  { id: "bank", label: "บัญชีธนาคาร" },
+const PROFILE_ACCOUNT_TABS: { id: ProfileAccountTab; labelKey: MessageKey<"profile"> }[] = [
+  { id: "personal", labelKey: "account.tabs.personal" },
+  { id: "bank", labelKey: "account.tabs.bank" },
 ];
 
 type ProfileAccountTab = "personal" | "bank";
@@ -45,6 +47,8 @@ export function ProfileAccountTabs({
 }: ProfileAccountTabsProps) {
   const [activeTab, setActiveTab] = useState<ProfileAccountTab>("personal");
   const { showToast } = useToast();
+  const t = useT("profile");
+  const tabs = PROFILE_ACCOUNT_TABS.map((tab) => ({ id: tab.id, label: t(tab.labelKey) }));
   const vipPlayer = useVipPlayer();
   /** ระดับ VIP — "—" ระหว่างโหลด */
   const vipRankLabel = vipPlayer.data ? getVipRankTier(vipPlayer.data.currentRankId).label : "—";
@@ -52,9 +56,9 @@ export function ProfileAccountTabs({
   const copyMemberId = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      showToast("คัดลอกยูสเซอร์เข้าเกมแล้ว", "success", 2500);
+      showToast(t("account.gameUserCopied"), "success", 2500);
     } catch {
-      showToast("ไม่สามารถคัดลอกได้", "error");
+      showToast(t("account.copyFailed"), "error");
     }
   };
 
@@ -74,10 +78,10 @@ export function ProfileAccountTabs({
 
       <div className="profile-account-tabs__main flex flex-col gap-3">
         <CosmicLineTabs
-          tabs={PROFILE_ACCOUNT_TABS}
+          tabs={tabs}
           activeId={activeTab}
           onSelect={setActiveTab}
-          ariaLabel="ข้อมูลบัญชี"
+          ariaLabel={t("account.title")}
           columns={2}
         />
 
@@ -89,23 +93,27 @@ export function ProfileAccountTabs({
         {activeTab === "personal" ? (
           <div role="tabpanel" className="flex flex-col gap-2">
             <ProfileAccountFieldRow
-              label="ยูสเซอร์เข้าเกม"
+              label={t("account.gameUser")}
               value={profile.memberId}
               valueRole="emphasis"
               onCopy={() => void copyMemberId(profile.memberId)}
-              copyLabel="คัดลอกยูสเซอร์เข้าเกม"
+              copyLabel={t("account.copyGameUser")}
             />
             <ProfileAccountFieldRow
-              label="รหัสผ่าน"
+              label={t("account.password")}
               value="••••••"
               onEdit={() => {
                 /* TODO: เปลี่ยนรหัสผ่าน */
               }}
-              editLabel="เปลี่ยนรหัสผ่าน"
+              editLabel={t("account.changePassword")}
             />
             <ProfileAccountFieldRow label="LINE" value="—" valueRole="muted" />
             {onOpenTransactions ? (
-              <ProfileAccountNavRow label="ประวัติธุรกรรม" value="ฝาก · ถอน · เดิมพัน" onClick={onOpenTransactions} />
+              <ProfileAccountNavRow
+                label={t("account.transactionHistory")}
+                value={t("account.transactionHistoryHint")}
+                onClick={onOpenTransactions}
+              />
             ) : null}
             {onOpenVip ? (
               <ProfileAccountNavRow
@@ -138,7 +146,7 @@ export function ProfileAccountTabs({
         }
       >
         <LogOutIcon className={compact ? "h-3.5 w-3.5" : "h-5 w-5"} />
-        ออกจากระบบ
+        {t("logout")}
       </button>
     </div>
   );

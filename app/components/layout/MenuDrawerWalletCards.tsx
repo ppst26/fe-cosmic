@@ -10,6 +10,7 @@ import { getMenuIconSrc } from "@/app/data/menuIconAssets";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { formatGemsBalance, formatHeaderWalletBalance, formatNumber } from "@/lib/format";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 const MENU_TICKET_ICON_SRC = getMenuIconSrc("ticket") ?? "/assets/3d/menuicon/lottery.avif";
 
@@ -21,6 +22,7 @@ interface MenuDrawerWalletCardsProps {
  * ยอดเครดิต · เพชร · ตั๋วบนเมนูมือถือ — ไอคอน · ชื่อ · ตัวเลข (RightMenuDrawer)
  */
 export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps) {
+  const t = useT("nav");
   const { isAuthenticated, isLoading } = useAuth();
   const showAmounts = isAuthenticated && !isLoading;
   const wallet = useWallet();
@@ -39,7 +41,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
       <div className="menu-drawer-balance flex flex-col items-center justify-center px-1 text-center">
         <HeaderWalletAssetIcon className="h-9 w-9 shrink-0 object-contain" />
         <span className="text-[11px] font-medium leading-tight text-[var(--text-secondary)] sm:text-xs">
-          ยอดเงินในเกม
+          {t("drawer.gameBalance")}
         </span>
         <p className={valueClass("emphasis", "text-2xl leading-none sm:text-[1.75rem]")}>
           {balanceLabel}
@@ -55,7 +57,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
           className="h-9 w-9 shrink-0 object-contain"
         />
         <span className="text-[11px] font-medium leading-tight text-[var(--text-secondary)] sm:text-xs">
-          เพชร
+          {t("drawer.gems")}
         </span>
         <p className={valueClass("accent", "text-2xl leading-none sm:text-[1.75rem]")}>
           {gemsLabel}
@@ -71,7 +73,7 @@ export function MenuDrawerWalletCards({ className }: MenuDrawerWalletCardsProps)
           className="h-9 w-9 shrink-0 object-contain"
         />
         <span className="text-[11px] font-medium leading-tight text-[var(--text-secondary)] sm:text-xs">
-          ตั๋ว
+          {t("drawer.tickets")}
         </span>
         <p className={valueClass("emphasis", "text-2xl leading-none sm:text-[1.75rem]")}>
           {ticketLabel}

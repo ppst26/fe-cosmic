@@ -6,6 +6,7 @@ import { CategoryItem, CategoryId } from "../../types/lobby";
 import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /** จำตำแหน่งเลื่อนแนวนอนของแถบมือถือ — สำรองกรณี remount (เช่น กลับจากหน้านอกกลุ่ม (lobby)) */
 let persistedMobileTrackScrollLeft = 0;
@@ -36,6 +37,7 @@ export function CategoryNav({
   className = "",
   variant = "desktop",
 }: CategoryNavProps) {
+  const t = useT("home");
   const router = useRouter();
   const pathname = usePathname();
   const routeActiveId = useMemo(
@@ -177,7 +179,7 @@ export function CategoryNav({
     return (
       <nav
         className={cn("category-nav relative w-full min-w-0 my-1 overflow-hidden", className)}
-        aria-label="แถบเลือกหมวดหมู่เกม"
+        aria-label={t("categoryNav.ariaLabel")}
       >
         <div
           ref={trackRef}
@@ -197,7 +199,7 @@ export function CategoryNav({
                   isActive && "is-active",
                 )}
                 aria-pressed={isActive}
-                aria-label={category.label}
+                aria-label={t(category.labelKey)}
               >
                 <span className="category-nav__icon flex items-center justify-center shrink-0" aria-hidden="true">
                   <Menu3DIcon
@@ -206,7 +208,7 @@ export function CategoryNav({
                     className="h-9 w-9 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-transform duration-200 group-hover:scale-105 xl:h-10 xl:w-10"
                   />
                 </span>
-                <span className="category-nav__label whitespace-nowrap tracking-tight">{category.label}</span>
+                <span className="category-nav__label whitespace-nowrap tracking-tight">{t(category.labelKey)}</span>
               </button>
             );
           })}
@@ -218,7 +220,7 @@ export function CategoryNav({
   return (
     <nav
       className={cn("category-nav category-nav--mobile relative w-full min-w-0 overflow-visible", className)}
-      aria-label="แถบเลือกหมวดหมู่เกม"
+      aria-label={t("categoryNav.ariaLabel")}
     >
       <div
         ref={trackRef}
@@ -240,7 +242,7 @@ export function CategoryNav({
                   : "bg-transparent text-[#bab5d6] hover:text-white hover:bg-white/5",
               )}
               aria-pressed={isActive}
-              aria-label={category.label}
+              aria-label={t(category.labelKey)}
             >
               <span
                 className={cn(
@@ -256,7 +258,7 @@ export function CategoryNav({
                   size={30}
                 />
               </span>
-              <span className="category-nav__label whitespace-nowrap tracking-tight">{category.label}</span>
+              <span className="category-nav__label whitespace-nowrap tracking-tight">{t(category.labelKey)}</span>
             </button>
           );
         })}

@@ -20,6 +20,7 @@ import { useNotifications } from "../notifications/NotificationProvider";
 import { useDesktopHubModal } from "../hub/DesktopHubModalProvider";
 import { parseHubFromHref } from "../hub/hubModalRegistry";
 import { formatHeaderWalletBalance } from "@/lib/format";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface HeaderProps {
   onLoginClick?: () => void;
@@ -43,6 +44,7 @@ export function Header({
   mobileSticky = true,
 }: HeaderProps) {
   const pathname = usePathname();
+  const t = useT("nav");
   const { isAuthenticated, isLoading, openProfile, closeProfile, isProfileOpen } =
     useAuth();
   const { openDeposit } = useDeposit();
@@ -76,7 +78,7 @@ export function Header({
     }
     window.dispatchEvent(new CustomEvent("cosmic:open-menu"));
     const bottomNavMenu = document.querySelector<HTMLButtonElement>(
-      'button[aria-label="เมนู"], nav[aria-label="เมนูหลัก"] button:nth-child(3)'
+      "button[data-bottom-nav-menu]"
     );
     bottomNavMenu?.click();
   };
@@ -109,7 +111,7 @@ export function Header({
                 type="button"
                 onClick={handleMenuClick}
                 className="flex h-9.5 w-9.5 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
-                aria-label="เปิดเมนู"
+                aria-label={t("header.openMenu")}
               >
                 <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
               </button>
@@ -120,7 +122,7 @@ export function Header({
                     "cosmic-nav__profile-in-cluster flex h-8 w-8 shrink-0 items-center justify-center rounded-full p-0",
                     isProfileRoute && "is-active",
                   )}
-                  aria-label="โปรไฟล์"
+                  aria-label={t("header.profile")}
                   aria-current={isProfileRoute ? "page" : undefined}
                 >
                   <HeaderUserAvatar
@@ -140,7 +142,7 @@ export function Header({
               <Link
                 href="/"
                 className="inline-flex items-center justify-center outline-none transition-transform hover:scale-102"
-                aria-label="Cosmicbet หน้าแรก"
+                aria-label={t("header.home")}
               >
                 <CosmicbetLogo className="h-[21px] w-auto max-w-[115px] object-contain sm:h-6 sm:max-w-[130px]" />
               </Link>
@@ -180,7 +182,7 @@ export function Header({
             <Link
               href="/"
               className="flex min-w-0 items-center outline-none transition-transform hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-focus-ring"
-              aria-label="Cosmicbet หน้าแรก"
+              aria-label={t("header.home")}
             >
               <CosmicbetLogo className="h-7 w-auto max-w-[min(100%,200px)]" />
             </Link>
@@ -193,7 +195,7 @@ export function Header({
                   sidebarHidden && "is-active",
                 )}
                 aria-expanded={!sidebarHidden}
-                aria-label={sidebarHidden ? "แสดงเมนูด้านซ้าย" : "ซ่อนเมนูด้านซ้าย"}
+                aria-label={sidebarHidden ? t("header.showSidebar") : t("header.hideSidebar")}
                 onClick={lobbySidebar.toggleSidebarHidden}
               >
                 <HeaderSidebarToggleIcon hidden={sidebarHidden} />
@@ -202,7 +204,7 @@ export function Header({
 
             <nav
               className="ms-[0.35rem] hidden items-center gap-[0.35rem] xl:flex"
-              aria-label="หมวดหลัก"
+              aria-label={t("header.mainCategories")}
             >
               {HEADER_DESKTOP_NAV.map((item) => {
                 const isActive =
@@ -224,7 +226,7 @@ export function Header({
                       isActive && "is-active",
                     )}
                   >
-                    {item.label}
+                    {t(item.labelKey)}
                     {showBadge ? (
                       <span
                         className="header-desktop-bar__nav-badge absolute top-1.5 right-2 h-1.5 w-1.5 rounded-full"
@@ -237,12 +239,12 @@ export function Header({
             </nav>
 
             <label className="header-desktop-bar__search--compact glass-card--soft flex min-h-(--header-control-height) w-[min(10.5rem,28vw)] max-w-42 min-w-27 flex-[0_1_auto] items-center gap-[0.65rem] rounded-(--header-chip-radius) pr-3 pl-[0.65rem] focus-within:w-[min(14rem,36vw)] focus-within:max-w-56">
-              <span className="sr-only">ค้นหาเกมหรือค่าย</span>
+              <span className="sr-only">{t("header.searchLabel")}</span>
               <SearchIcon className="h-4.5 w-4.5 shrink-0 text-text-muted" aria-hidden />
               <input
                 type="search"
                 className="header-desktop-bar__search-input w-full min-w-0 border-0 text-sm font-medium shadow-none outline-none focus:shadow-none focus:outline-none"
-                placeholder="ค้นหา"
+                placeholder={t("header.searchPlaceholder")}
                 autoComplete="off"
               />
             </label>
@@ -266,10 +268,10 @@ export function Header({
                     type="button"
                     onClick={openDeposit}
                     className="btn-primary btn-primary--sm header-wallet-capsule__deposit !w-auto !px-4 !py-0 text-sm tracking-[0.04em]"
-                    aria-label="ฝากเงิน"
+                    aria-label={t("header.depositAria")}
                     aria-haspopup="dialog"
                   >
-                    ฝาก
+                    {t("header.deposit")}
                   </button>
                 </div>
 
@@ -279,7 +281,7 @@ export function Header({
                   type="button"
                   onClick={() => openHub("transactions")}
                   className="header-desktop-bar__icon-btn glass-card--soft glass-icon-btn inline-flex h-(--header-control-height) w-(--header-control-height) shrink-0 items-center justify-center rounded-(--header-chip-radius) border-0"
-                  aria-label="ประวัติธุรกรรม"
+                  aria-label={t("header.transactionHistory")}
                   aria-haspopup="dialog"
                 >
                   <HistoryIcon className="h-5 w-5" />
@@ -292,7 +294,7 @@ export function Header({
                     "header-desktop-bar__rank-btn glass-card--soft inline-grid min-h-(--header-control-height) min-w-(--header-control-height) place-items-center rounded-(--header-chip-radius) border-0 p-[0.2rem]",
                     isProfileOpen && "is-active",
                   )}
-                  aria-label="โปรไฟล์"
+                  aria-label={t("header.profile")}
                   aria-expanded={isProfileOpen}
                   aria-haspopup="dialog"
                 >

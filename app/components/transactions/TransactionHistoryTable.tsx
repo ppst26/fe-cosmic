@@ -7,23 +7,30 @@ import {
   transactionStatusValueClass,
   valueClass,
 } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useLocale } from "@/lib/i18n/navigation";
+import type { Locale } from "@/lib/i18n/config";
+import type { MessageKey } from "@/lib/i18n/messages";
+import { intlDateLocale } from "@/app/lib/transactionDateUtils";
 
-function formatDateOnly(iso: string | null | undefined): string {
+type TxT = (key: MessageKey<"transactions">) => string;
+
+function formatDateOnly(iso: string | null | undefined, locale: Locale): string {
   if (!iso) return "—";
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "—";
-  return new Intl.DateTimeFormat("th-TH", {
+  return new Intl.DateTimeFormat(intlDateLocale(locale), {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   }).format(date);
 }
 
-function formatTimeOnly(iso: string | null | undefined): string {
+function formatTimeOnly(iso: string | null | undefined, locale: Locale): string {
   if (!iso) return "—";
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "—";
-  return new Intl.DateTimeFormat("th-TH", {
+  return new Intl.DateTimeFormat(intlDateLocale(locale), {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
@@ -31,11 +38,11 @@ function formatTimeOnly(iso: string | null | undefined): string {
   }).format(date);
 }
 
-function formatDateTime(iso: string | null | undefined): string {
+function formatDateTime(iso: string | null | undefined, locale: Locale): string {
   if (!iso) return "—";
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "—";
-  return new Intl.DateTimeFormat("th-TH", {
+  return new Intl.DateTimeFormat(intlDateLocale(locale), {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
@@ -51,58 +58,50 @@ function formatAmount(value: number): string {
   }).format(value);
 }
 
-function statusLabel(status: TransactionStatus): string {
-  switch (status) {
-    case "completed":
-      return "สำเร็จ";
-    case "pending":
-      return "รอดำเนินการ";
-    case "failed":
-      return "ไม่สำเร็จ";
-  }
+function statusLabel(status: TransactionStatus, t: TxT): string {
+  return t(`status.${status}`);
 }
 
-function betTypeLabel(type: BetRowType | undefined): string {
-  if (type === "result") return "ผลลัพธ์";
-  if (type === "bet") return "เดิมพัน";
+function betTypeLabel(type: BetRowType | undefined, t: TxT): string {
+  if (type === "result" || type === "bet") return t(`betType.${type}`);
   return "—";
 }
 
-type Column = { key: string; label: string; render: (item: TransactionItem) => React.ReactNode };
+type Column = { key: string; labelKey: MessageKey<"transactions">; render: (item: TransactionItem) => React.ReactNode };
 
-function columnsForKind(kind: TransactionKind): Column[] {
+function columnsForKind(kind: TransactionKind, t: TxT, locale: Locale): Column[] {
   if (kind === "withdraw") {
     return [
       {
         key: "amount",
-        label: "จำนวนเงิน",
+        labelKey: "columns.amount",
         render: (item) => (
           <span className={valueClass("emphasis", "font-medium")}>
             {formatAmount(item.amount)} ฿
           </span>
         ),
       },
-      { key: "channel", label: "ช่องทาง", render: (item) => item.channel ?? "—" },
+      { key: "channel", labelKey: "columns.channel", render: (item) => item.channel ?? "—" },
       {
         key: "account",
-        label: "บัญชีที่ทำรายการ",
+        labelKey: "columns.account",
         render: (item) => (
           <span className="whitespace-nowrap tabular-nums">{item.accountLabel ?? "—"}</span>
         ),
       },
       {
         key: "created",
-        label: "วัน-เวลา ที่ทำรายการ",
+        labelKey: "columns.createdAt",
         render: (item) => (
-          <span className="whitespace-nowrap tabular-nums">{formatDateTime(item.createdAt)}</span>
+          <span className="whitespace-nowrap tabular-nums">{formatDateTime(item.createdAt, locale)}</span>
         ),
       },
       {
         key: "status",
-        label: "สถานะ",
+        labelKey: "columns.status",
         render: (item) => (
           <span className={transactionStatusValueClass(item.status, "font-medium")}>
-            {statusLabel(item.status)}
+            {statusLabel(item.status, t)}
           </span>
         ),
       },
@@ -111,28 +110,28 @@ function columnsForKind(kind: TransactionKind): Column[] {
 
   if (kind === "deposit") {
     return [
-      { key: "detail", label: "ทำรายการ", render: (item) => item.title },
+      { key: "detail", labelKey: "columns.detail", render: (item) => item.title },
       {
         key: "created",
-        label: "วัน-เวลา ที่ทำรายการ",
+        labelKey: "columns.createdAt",
         render: (item) => (
-          <span className="whitespace-nowrap tabular-nums">{formatDateTime(item.createdAt)}</span>
+          <span className="whitespace-nowrap tabular-nums">{formatDateTime(item.createdAt, locale)}</span>
         ),
       },
       {
         key: "status",
-        label: "สถานะ",
+        labelKey: "columns.status",
         render: (item) => (
           <span className={transactionStatusValueClass(item.status, "font-medium")}>
-            {statusLabel(item.status)}
+            {statusLabel(item.status, t)}
           </span>
         ),
       },
       {
         key: "completed",
-        label: "วัน-เวลา ที่ทำรายการสำเร็จ",
+        labelKey: "columns.completedAt",
         render: (item) => (
-          <span className="whitespace-nowrap tabular-nums">{formatDateTime(item.completedAt)}</span>
+          <span className="whitespace-nowrap tabular-nums">{formatDateTime(item.completedAt, locale)}</span>
         ),
       },
     ];
@@ -142,33 +141,33 @@ function columnsForKind(kind: TransactionKind): Column[] {
     return [
       {
         key: "name",
-        label: "ชื่อโปรโมชั่น",
+        labelKey: "columns.promotionName",
         render: (item) => item.promotionName ?? item.title,
       },
       {
         key: "playStart",
-        label: "วันที่เริ่มเล่น",
+        labelKey: "columns.playStart",
         render: (item) => (
-          <span className="whitespace-nowrap tabular-nums">{formatDateOnly(item.playStartAt)}</span>
+          <span className="whitespace-nowrap tabular-nums">{formatDateOnly(item.playStartAt, locale)}</span>
         ),
       },
       {
         key: "playEnd",
-        label: "วันที่สิ้นสุด",
+        labelKey: "columns.playEnd",
         render: (item) => (
-          <span className="whitespace-nowrap tabular-nums">{formatDateOnly(item.playEndAt)}</span>
+          <span className="whitespace-nowrap tabular-nums">{formatDateOnly(item.playEndAt, locale)}</span>
         ),
       },
       {
         key: "freeSpins",
-        label: "ฟรีสปิน",
+        labelKey: "columns.freeSpins",
         render: (item) => (
           <span className="tabular-nums">{item.freeSpins != null ? item.freeSpins : "—"}</span>
         ),
       },
       {
         key: "perRound",
-        label: "จำนวนต่อรอบ",
+        labelKey: "columns.perRound",
         render: (item) => (
           <span className="tabular-nums">
             {item.amountPerRound != null ? formatAmount(item.amountPerRound) : "—"}
@@ -177,25 +176,25 @@ function columnsForKind(kind: TransactionKind): Column[] {
       },
       {
         key: "provider",
-        label: "ค่ายเกม",
+        labelKey: "columns.provider",
         render: (item) => item.gameProvider ?? "—",
       },
       {
         key: "game",
-        label: "ชื่อเกม",
+        labelKey: "columns.gameName",
         render: (item) => item.gameName ?? "—",
       },
       {
         key: "expires",
-        label: "หมดอายุภายใน",
+        labelKey: "columns.expiresWithin",
         render: (item) => item.expiresWithinLabel ?? "—",
       },
       {
         key: "status",
-        label: "สถานะ",
+        labelKey: "columns.status",
         render: (item) => (
           <span className={transactionStatusValueClass(item.status, "font-medium")}>
-            {statusLabel(item.status)}
+            {statusLabel(item.status, t)}
           </span>
         ),
       },
@@ -206,31 +205,31 @@ function columnsForKind(kind: TransactionKind): Column[] {
     return [
       {
         key: "game",
-        label: "เกม",
+        labelKey: "columns.game",
         render: (item) => item.gameName ?? item.title,
       },
       {
         key: "date",
-        label: "วันที่",
+        labelKey: "columns.date",
         render: (item) => (
-          <span className="whitespace-nowrap tabular-nums">{formatDateOnly(item.createdAt)}</span>
+          <span className="whitespace-nowrap tabular-nums">{formatDateOnly(item.createdAt, locale)}</span>
         ),
       },
       {
         key: "time",
-        label: "เวลา",
+        labelKey: "columns.time",
         render: (item) => (
-          <span className="whitespace-nowrap tabular-nums">{formatTimeOnly(item.createdAt)}</span>
+          <span className="whitespace-nowrap tabular-nums">{formatTimeOnly(item.createdAt, locale)}</span>
         ),
       },
       {
         key: "type",
-        label: "ประเภท",
-        render: (item) => betTypeLabel(item.betRowType),
+        labelKey: "columns.type",
+        render: (item) => betTypeLabel(item.betRowType, t),
       },
       {
         key: "amount",
-        label: "ยอดเงิน",
+        labelKey: "columns.betAmount",
         render: (item) => (
           <span className={signedMoneyValueClass(item.amount, "font-medium")}>
             {formatAmount(item.amount)}
@@ -239,7 +238,7 @@ function columnsForKind(kind: TransactionKind): Column[] {
       },
       {
         key: "open",
-        label: "ยอดเงินเริ่มต้น",
+        labelKey: "columns.openingBalance",
         render: (item) => (
           <span className="tabular-nums">
             {item.openingBalance != null ? formatAmount(item.openingBalance) : "—"}
@@ -248,7 +247,7 @@ function columnsForKind(kind: TransactionKind): Column[] {
       },
       {
         key: "close",
-        label: "ยอดเงินสิ้นสุด",
+        labelKey: "columns.closingBalance",
         render: (item) => (
           <span className="tabular-nums">
             {item.closingBalance != null ? formatAmount(item.closingBalance) : "—"}
@@ -277,7 +276,9 @@ export function TransactionHistoryTable({
   kind: TransactionKind;
   items: TransactionItem[];
 }) {
-  const columns = columnsForKind(kind);
+  const t = useT("transactions");
+  const locale = useLocale();
+  const columns = columnsForKind(kind, t, locale);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [edges, setEdges] = useState({ start: false, end: false });
 
@@ -310,7 +311,7 @@ export function TransactionHistoryTable({
           <thead>
             <tr>
               {columns.map((col) => (
-                <th key={col.key}>{col.label}</th>
+                <th key={col.key}>{t(col.labelKey)}</th>
               ))}
             </tr>
           </thead>
@@ -318,7 +319,7 @@ export function TransactionHistoryTable({
             {items.length === 0 ? (
               <tr>
                 <td colSpan={columns.length}>
-                  <p className="tx-history-empty">ไม่พบข้อมูล</p>
+                  <p className="tx-history-empty">{t("empty")}</p>
                 </td>
               </tr>
             ) : (

@@ -1,11 +1,11 @@
 /** ข้อมูล mock หน้าคืนยอด (/cashback) */
 
 import { getMenuIconSrc } from "@/app/data/menuIconAssets";
-import type { CashbackTabId, CashbackPanelMock } from "@/app/types/cashback";
+import type { CashbackTabId, CashbackPanelMock, CashbackMessageKey } from "@/app/types/cashback";
 
-export const CASHBACK_TABS: { id: CashbackTabId; label: string }[] = [
-  { id: "play", label: "คืนยอดเล่น" },
-  { id: "loss", label: "คืนยอดเสีย" },
+export const CASHBACK_TABS: { id: CashbackTabId; labelKey: CashbackMessageKey }[] = [
+  { id: "play", labelKey: "tabs.play" },
+  { id: "loss", labelKey: "tabs.loss" },
 ];
 
 /** ไอคอน hero ยอดคืนที่รับได้ — public/assets/3d/menuicon/cashback.avif */
@@ -14,29 +14,29 @@ export const CASHBACK_PAGE_ICON_SRC =
 
 /** แท็บคืนยอดเล่น — สถานะว่างตาม mock */
 export const CASHBACK_PLAY_PANEL_MOCK: CashbackPanelMock = {
-  title: "คืนยอดเล่น",
-  subtitle: "คืนจากยอดหมุนที่เล่น",
+  titleKey: "tabs.play",
+  subtitleKey: "panel.playSubtitle",
   claimableThb: 0,
-  statusHint: "ยังไม่มียอดให้รับ",
+  statusHintKey: "panel.nothingToClaim",
   ratePercent: 0.5,
   minThb: 50,
   maxPerClaimThb: 0,
-  cycleLabel: "ทุกวัน 00:00",
+  cycleLabelKey: "panel.cycleDaily",
   canClaim: false,
-  claimButtonLabel: "ยังไม่มียอดให้รับ",
+  claimButtonLabelKey: "panel.nothingToClaim",
 };
 
 /** แท็บคืนยอดเสีย — mock เริ่มต้นยังไม่มียอด (สลับ UI ได้เมื่อมี API) */
 export const CASHBACK_LOSS_PANEL_MOCK: CashbackPanelMock = {
-  title: "คืนยอดเสีย",
-  subtitle: "คืนจากยอดเสียสุทธิ",
+  titleKey: "tabs.loss",
+  subtitleKey: "panel.lossSubtitle",
   claimableThb: 0,
-  statusHint: "ยังไม่มียอดให้รับ",
+  statusHintKey: "panel.nothingToClaim",
   ratePercent: 8,
   minThb: 50,
   maxPerClaimThb: 0,
-  cycleLabel: "ทุกวัน 00:00",
+  cycleLabelKey: "panel.cycleDaily",
   canClaim: false,
-  claimButtonLabel: "ยังไม่มียอดให้รับ",
+  claimButtonLabelKey: "panel.nothingToClaim",
 };
 

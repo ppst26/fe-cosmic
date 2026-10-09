@@ -20,6 +20,7 @@ import {
   sanitizePassword,
   sanitizePhone,
 } from "@/lib/fieldInput";
+import { useT } from "@/lib/i18n/I18nProvider";
 interface LoginBottomDrawerProps {
   isOpen: boolean;
   onClose: () => void;
@@ -35,6 +36,7 @@ export function LoginBottomDrawer({
   onClose,
   onSignUpClick,
 }: LoginBottomDrawerProps) {
+  const t = useT("auth");
   const { login } = useAuth();
   const { showToast } = useToast();
   const [phone, setPhone] = useState("");
@@ -58,21 +60,21 @@ export function LoginBottomDrawer({
     e.preventDefault();
     const normalizedPhone = sanitizePhone(phone);
     if (!isThaiMobilePhone(normalizedPhone)) {
-      showToast("เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0", "error");
+      showToast(t("validation.phone"), "error");
       return;
     }
     if (!password) {
-      showToast("กรุณากรอกรหัสผ่าน", "error");
+      showToast(t("validation.passwordRequired"), "error");
       return;
     }
     setSubmitting(true);
     const result = await login({ phone: normalizedPhone, password });
     setSubmitting(false);
     if (!result.ok) {
-      showToast(result.error ?? "เข้าสู่ระบบไม่สำเร็จ", "error");
+      showToast(result.error ?? t("loginSheet.failed"), "error");
       return;
     }
-    showToast("เข้าสู่ระบบสำเร็จ", "success");
+    showToast(t("loginSheet.success"), "success");
     reset();
     onClose();
   };
@@ -92,7 +94,7 @@ export function LoginBottomDrawer({
             <button
               type="button"
               className={responsiveSheetCloseButtonClass("absolute right-3 top-4 z-20")}
-              aria-label="ปิดหน้าเข้าสู่ระบบ"
+              aria-label={t("loginSheet.close")}
             >
               <CloseIcon className="h-4 w-4" />
             </button>
@@ -100,14 +102,14 @@ export function LoginBottomDrawer({
 
           <ModalDesktopTitleBlock
             titleIconId="profile"
-            title={<Dialog.Title className="text-2xl font-medium">เข้าสู่ระบบ</Dialog.Title>}
-            subtitle={<p className="cosmic-type-sheet-desc mt-1">ใช้เบอร์และรหัสผ่านที่สมัครไว้</p>}
+            title={<Dialog.Title className="text-2xl font-medium">{t("login")}</Dialog.Title>}
+            subtitle={<p className="cosmic-type-sheet-desc mt-1">{t("loginSheet.subtitle")}</p>}
           />
 
           <form className="mt-5 flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="space-y-1.5">
               <label htmlFor="login-phone" className="text-sm font-medium text-[var(--text-secondary)]">
-                เบอร์โทรศัพท์
+                {t("fields.phone")}
               </label>
               <div className={COSMIC_SHEET_FIELD_ROW}>
                 <PhoneIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
@@ -119,7 +121,7 @@ export function LoginBottomDrawer({
                   value={phone}
                   maxLength={PHONE_DIGIT_LENGTH}
                   onChange={(e) => setPhone(sanitizePhone(e.target.value))}
-                  placeholder="กรอกเบอร์โทรศัพท์"
+                  placeholder={t("fields.phonePlaceholder")}
                   className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
                 />
               </div>
@@ -127,7 +129,7 @@ export function LoginBottomDrawer({
 
             <div className="space-y-1.5">
               <label htmlFor="login-password" className="text-sm font-medium text-[var(--text-secondary)]">
-                รหัสผ่าน
+                {t("fields.password")}
               </label>
               <div className={COSMIC_SHEET_FIELD_ROW}>
                 <LockIcon className="h-5 w-5 shrink-0 text-[var(--icon-default)]" />
@@ -138,7 +140,7 @@ export function LoginBottomDrawer({
                   value={password}
                   maxLength={PASSWORD_MAX_LENGTH}
                   onChange={(e) => setPassword(sanitizePassword(e.target.value))}
-                  placeholder="กรอกรหัสผ่าน"
+                  placeholder={t("fields.passwordPlaceholder")}
                   className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
                 />
               </div>
@@ -148,11 +150,11 @@ export function LoginBottomDrawer({
               type="submit"
               disabled={submitting}
               className="mt-1"
-              title={submitting ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
+              title={submitting ? t("loginSheet.submitting") : t("login")}
             />
 
             <p className="text-center text-sm text-[var(--text-secondary)]">
-              ยังไม่มีบัญชี?{" "}
+              {t("loginSheet.noAccount")}{" "}
               <button
                 type="button"
                 className="font-medium text-[var(--border-active)] hover:text-[var(--icon-active)]"
@@ -162,7 +164,7 @@ export function LoginBottomDrawer({
                   onSignUpClick?.();
                 }}
               >
-                สมัครสมาชิก
+                {t("signUp")}
               </button>
             </p>
           </form>

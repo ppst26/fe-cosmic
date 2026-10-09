@@ -1,3 +1,4 @@
+import type { LotteryMessageKey } from "@/app/types/lottery";
 import type {
   YikiBetType,
   YikiDigitGroup,
@@ -12,20 +13,20 @@ import {
 } from "@/app/lib/bangkokTime";
 
 /** แท็บกลุ่มจำนวนหลัก — ตามที่ผู้ใช้ระบุ ไม่มี "อื่นๆ" */
-export const YIKI_GROUPS: { id: YikiDigitGroup; label: string }[] = [
-  { id: "three", label: "3 ตัว" },
-  { id: "two", label: "2 ตัว" },
-  { id: "run", label: "เลขวิ่ง" },
+export const YIKI_GROUPS: { id: YikiDigitGroup; labelKey: LotteryMessageKey }[] = [
+  { id: "three", labelKey: "groups.three" },
+  { id: "two", labelKey: "groups.two" },
+  { id: "run", labelKey: "groups.run" },
 ];
 
 /** ผลการจ่ายจริง — ใช้จัดกลุ่มหัวข้อในโพยและคำนวณเงินรางวัล (mock — รอค่าจริงจาก API) */
 export const YIKI_SETTLEMENT_TYPES: Record<YikiSettlementTypeId, YikiSettlementType> = {
-  three_top: { id: "three_top", label: "3 ตัวบน", payoutRate: 1000 },
-  three_top_tod: { id: "three_top_tod", label: "3 ตัวบนโต๊ด", payoutRate: 150 },
-  two_top: { id: "two_top", label: "2 ตัวบน", payoutRate: 90 },
-  two_bottom: { id: "two_bottom", label: "2 ตัวล่าง", payoutRate: 90 },
-  run_top: { id: "run_top", label: "วิ่งบน", payoutRate: 3.2 },
-  run_bottom: { id: "run_bottom", label: "วิ่งล่าง", payoutRate: 4.2 },
+  three_top: { id: "three_top", labelKey: "betTypes.threeTop", payoutRate: 1000 },
+  three_top_tod: { id: "three_top_tod", labelKey: "betTypes.threeTopTod", payoutRate: 150 },
+  two_top: { id: "two_top", labelKey: "betTypes.twoTop", payoutRate: 90 },
+  two_bottom: { id: "two_bottom", labelKey: "betTypes.twoBottom", payoutRate: 90 },
+  run_top: { id: "run_top", labelKey: "betTypes.runTop", payoutRate: 3.2 },
+  run_bottom: { id: "run_bottom", labelKey: "betTypes.runBottom", payoutRate: 4.2 },
 };
 
 /**
@@ -33,36 +34,36 @@ export const YIKI_SETTLEMENT_TYPES: Record<YikiSettlementTypeId, YikiSettlementT
  * ปุ่ม "กลับ" และปุ่มรวม (+ โต๊ด, บน/ล่าง) ยุบตัวเลือกเดิม (กลับเลข/หลายประเภทพร้อมกัน) ไว้ในปุ่มเดียวตามดีไซน์อ้างอิง
  */
 export const YIKI_BET_TYPES: YikiBetType[] = [
-  { id: "three_top", label: "3 ตัวบน", group: "three", digits: 3, settlementTypeIds: ["three_top"] },
+  { id: "three_top", labelKey: "betTypes.threeTop", group: "three", digits: 3, settlementTypeIds: ["three_top"] },
   {
     id: "three_top_reverse",
-    label: "3 ตัวบนกลับ",
+    labelKey: "betTypes.threeTopReverse",
     group: "three",
     digits: 3,
     settlementTypeIds: ["three_top"],
     reverse: true,
   },
-  { id: "three_top_tod", label: "3 ตัวบนโต๊ด", group: "three", digits: 3, settlementTypeIds: ["three_top_tod"] },
+  { id: "three_top_tod", labelKey: "betTypes.threeTopTod", group: "three", digits: 3, settlementTypeIds: ["three_top_tod"] },
   {
     id: "three_top_combo_tod",
-    label: "3 ตัวบน + โต๊ด",
+    labelKey: "betTypes.threeTopComboTod",
     group: "three",
     digits: 3,
     settlementTypeIds: ["three_top", "three_top_tod"],
   },
-  { id: "two_top", label: "2 ตัวบน", group: "two", digits: 2, settlementTypeIds: ["two_top"] },
+  { id: "two_top", labelKey: "betTypes.twoTop", group: "two", digits: 2, settlementTypeIds: ["two_top"] },
   {
     id: "two_top_reverse",
-    label: "2 ตัวบนกลับ",
+    labelKey: "betTypes.twoTopReverse",
     group: "two",
     digits: 2,
     settlementTypeIds: ["two_top"],
     reverse: true,
   },
-  { id: "two_bottom", label: "2 ตัวล่าง", group: "two", digits: 2, settlementTypeIds: ["two_bottom"] },
+  { id: "two_bottom", labelKey: "betTypes.twoBottom", group: "two", digits: 2, settlementTypeIds: ["two_bottom"] },
   {
     id: "two_bottom_reverse",
-    label: "2 ตัวล่างกลับ",
+    labelKey: "betTypes.twoBottomReverse",
     group: "two",
     digits: 2,
     settlementTypeIds: ["two_bottom"],
@@ -70,21 +71,21 @@ export const YIKI_BET_TYPES: YikiBetType[] = [
   },
   {
     id: "two_top_bottom",
-    label: "2 ตัวบน/ล่าง",
+    labelKey: "betTypes.twoTopBottom",
     group: "two",
     digits: 2,
     settlementTypeIds: ["two_top", "two_bottom"],
   },
   {
     id: "two_top_bottom_reverse",
-    label: "2 ตัวบน/ล่างกลับ",
+    labelKey: "betTypes.twoTopBottomReverse",
     group: "two",
     digits: 2,
     settlementTypeIds: ["two_top", "two_bottom"],
     reverse: true,
   },
-  { id: "run_top", label: "วิ่งบน", group: "run", digits: 1, settlementTypeIds: ["run_top"] },
-  { id: "run_bottom", label: "วิ่งล่าง", group: "run", digits: 1, settlementTypeIds: ["run_bottom"] },
+  { id: "run_top", labelKey: "betTypes.runTop", group: "run", digits: 1, settlementTypeIds: ["run_top"] },
+  { id: "run_bottom", labelKey: "betTypes.runBottom", group: "run", digits: 1, settlementTypeIds: ["run_bottom"] },
 ];
 
 /** ปิดรับก่อนงวดออกผล — mock */
@@ -108,7 +109,7 @@ export function generateYikiRounds(count = 8, intervalMin = 15, from = new Date(
     const mm = String(minute).padStart(2, "0");
     return {
       id: `${year}${String(month).padStart(2, "0")}${String(day).padStart(2, "0")}${hh}${mm}`,
-      label: `รอบ ${hh}:${mm} น.`,
+      label: { kind: "time", time: `${hh}:${mm}` },
       closeAt: closeAt.toISOString(),
     };
   });
@@ -135,7 +136,7 @@ export function getYikiRoundById(roundId: string): YikiRound | null {
   const closeAt = new Date(drawAt.getTime() - CLOSE_BEFORE_DRAW_MS);
   return {
     id: roundId,
-    label: `รอบ ${hour}:${minute} น.`,
+    label: { kind: "time", time: `${hour}:${minute}` },
     closeAt: closeAt.toISOString(),
   };
 }

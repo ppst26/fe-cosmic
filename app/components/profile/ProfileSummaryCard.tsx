@@ -9,19 +9,21 @@ import {
   COSMIC_BTN_GLASS_ICON,
   COSMIC_PANEL_GLASS,
 } from "../ui/cosmicButtonClasses";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
  * สรุปโปรไฟล์ — avatar, เบอร์, ID, badge ยืนยัน
  */
 export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
   const { showToast } = useToast();
+  const t = useT("profile");
 
   const handleCopyId = async () => {
     try {
       await navigator.clipboard.writeText(profile.memberId);
-      showToast("คัดลอก ID แล้ว", "success", 2500);
+      showToast(t("summary.idCopied"), "success", 2500);
     } catch {
-      showToast("ไม่สามารถคัดลอก ID ได้", "error");
+      showToast(t("summary.copyIdFailed"), "error");
     }
   };
 
@@ -41,14 +43,14 @@ export function ProfileSummaryCard({ profile }: { profile: ProfileUser }) {
             type="button"
             onClick={() => void handleCopyId()}
             className={`${COSMIC_BTN_GLASS_ICON} !h-7 !w-7 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]`}
-            aria-label="คัดลอก ID"
+            aria-label={t("summary.copyId")}
           >
             <CopyIcon className="h-4 w-4" />
           </button>
         </div>
         <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success)]/15 px-2.5 py-0.5 text-xs font-medium text-[var(--success)]">
           <VerifiedCheckIcon className="h-3 w-3" />
-          ยืนยันเบอร์แล้ว
+          {t("summary.phoneVerified")}
         </span>
       </div>
     </section>

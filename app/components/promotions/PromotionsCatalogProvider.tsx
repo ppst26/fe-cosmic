@@ -3,6 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useToast } from "@/context/ToastContext";
 import { fetchPromotionDetail, fetchPromotionsCatalog } from "@/lib/api/promotions";
+import { useT } from "@/lib/i18n/I18nProvider";
 import type {
   PromotionDetailContent,
   PromotionDetailId,
@@ -24,9 +25,9 @@ const PromotionsCatalogContext = createContext<PromotionsCatalogContextValue | n
 /**
  * โหลด catalog จาก /api/promotions — ใช้ห่อ PromotionsHubPageContent
  */
-const PROMOTIONS_LOAD_ERROR = "โหลดโปรโมชั่นไม่สำเร็จ";
-
 export function PromotionsCatalogProvider({ children }: { children: React.ReactNode }) {
+  const t = useT("promotions");
+  const loadErrorMessage = t("loadError");
   const { showToast } = useToast();
   const [catalog, setCatalog] = useState<PromotionsCatalogResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -49,10 +50,10 @@ export function PromotionsCatalogProvider({ children }: { children: React.ReactN
       if (res.ok) {
         setCatalog(res.data);
       } else {
-        setError(PROMOTIONS_LOAD_ERROR);
+        setError(loadErrorMessage);
         if (!loadErrorToastedRef.current) {
           loadErrorToastedRef.current = true;
-          showToast(PROMOTIONS_LOAD_ERROR, "error");
+          showToast(loadErrorMessage, "error");
         }
       }
       setLoading(false);
@@ -60,7 +61,7 @@ export function PromotionsCatalogProvider({ children }: { children: React.ReactN
     return () => {
       cancelled = true;
     };
-  }, [showToast, reloadKey]);
+  }, [showToast, reloadKey, loadErrorMessage]);
 
   const getCachedDetail = useCallback((id: PromotionDetailId) => detailCacheRef.current[id] ?? null, []);
 

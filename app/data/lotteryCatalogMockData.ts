@@ -8,7 +8,7 @@ import { LOTTERY_FEATURED_ITEMS, LOTTERY_GRID_ITEMS } from "./lotteryHubMockData
 export const LOTTERY_CATALOG_ENTRIES: LotteryCatalogEntry[] = [
   ...LOTTERY_FEATURED_ITEMS.map((item) => ({
     slug: item.href.replace(/^\/lottery\//, ""),
-    title: item.title,
+    titleKey: item.titleKey,
     flagLabel: item.visual === "thai-gov" ? "TH" : "YK",
     flagTone: item.visual === "thai-gov" ? "th" as const : "gold" as const,
     roundsHref: item.href,
@@ -17,13 +17,15 @@ export const LOTTERY_CATALOG_ENTRIES: LotteryCatalogEntry[] = [
   })),
   ...LOTTERY_GRID_ITEMS.map((item) => ({
     slug: item.href.replace(/^\/lottery\//, ""),
-    title: item.title,
+    titleKey: item.titleKey,
     flagLabel: item.flagLabel,
     flagTone: item.flagTone,
     roundsHref: item.href,
     status: item.status,
     statusLabel:
-      item.status === "closed" ? "ปิดรับแทง" : (item.countdownLabel ?? "เปิดรับแทง"),
+      item.status === "closed"
+        ? { key: "status.closed" as const }
+        : (item.countdownLabel ?? { key: "status.open" as const }),
   })),
 ];
 

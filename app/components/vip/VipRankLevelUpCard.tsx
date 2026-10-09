@@ -24,6 +24,7 @@ import {
 
 import { VipRankProgressMetric } from "@/app/components/vip/VipRankProgressMetric";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 
 
@@ -68,6 +69,8 @@ export function VipRankLevelUpCard({
   rankSurface = false,
 
 }: VipRankLevelUpCardProps) {
+
+  const t = useT("vip");
 
   const status = getVipRankViewStatus(focusRankId, player.currentRankId);
 
@@ -131,7 +134,7 @@ export function VipRankLevelUpCard({
 
       ? `VIP ${targetVipNumber}`
 
-      : `เลื่อนขึ้นสู่ VIP ${targetVipNumber}`;
+      : t("progress.levelUpTo", { level: targetVipNumber });
 
 
 
@@ -159,7 +162,7 @@ export function VipRankLevelUpCard({
 
           <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">
 
-            ต้องครบทั้งสองเงื่อนไข
+            {t("progress.bothRequired")}
 
           </p>
 
@@ -170,7 +173,7 @@ export function VipRankLevelUpCard({
             "emphasis",
             "vip-level-up-card__percent shrink-0 text-2xl sm:text-[1.75rem]",
           )}
-          aria-label={`ความคืบหน้ารวม ${Math.round(overallPct)} เปอร์เซ็นต์`}
+          aria-label={t("progress.overallAriaLabel", { percent: Math.round(overallPct) })}
         >
 
           {Math.round(overallPct)}%
@@ -185,7 +188,7 @@ export function VipRankLevelUpCard({
 
         <VipRankProgressMetric
 
-          label="ฝาก"
+          label={t("progress.deposit")}
 
           iconKind="deposit"
 
@@ -201,7 +204,7 @@ export function VipRankLevelUpCard({
 
         <VipRankProgressMetric
 
-          label="เทิร์น"
+          label={t("progress.turnover")}
 
           iconKind="turnover"
 

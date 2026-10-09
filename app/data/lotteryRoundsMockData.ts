@@ -4,29 +4,6 @@ import { getLotteryMarketBySlug } from "./lotteryMarketsMockData";
 
 const BKK_OFFSET_MS = 7 * 60 * 60 * 1000;
 
-/** จัดรูปแบบวันออกรางวัลแบบยาว (พ.ศ.) */
-function formatScheduleLabel(date: Date): string {
-  return new Intl.DateTimeFormat("th-TH", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Asia/Bangkok",
-  }).format(date);
-}
-
-function formatDrawLabel(date: Date): string {
-  return new Intl.DateTimeFormat("th-TH", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "Asia/Bangkok",
-  }).format(date);
-}
-
 function bkkDate(year: number, month: number, day: number, hour: number, minute: number): Date {
   const utc = Date.UTC(year, month - 1, day, hour - 7, minute, 0, 0);
   return new Date(utc);
@@ -82,8 +59,7 @@ export function generateThaiGovernmentPlayRounds(count = 6, from = new Date()): 
 
     return {
       id,
-      drawLabel: `งวด ${formatDrawLabel(drawAt)}`,
-      scheduleLabel: formatScheduleLabel(drawAt),
+      drawLabel: { kind: "draw" as const, date: drawAt.toISOString() },
       drawAt: drawAt.toISOString(),
       closeAt: closeAt.toISOString(),
       openAt: openAt.toISOString(),
@@ -104,7 +80,7 @@ export function generateThaiGovernmentPlayRounds(count = 6, from = new Date()): 
 /** หวยต่างประเทศ/ธ.ก.ส. — mock รอบรายวัน (เปิดวันนี้ + คิวถัดไป) */
 function generateDailyMarketPlayRounds(slug: string, from = new Date()): LotteryPlayRound[] {
   const market = getLotteryMarketBySlug(slug);
-  const title = market?.title ?? "หวย";
+  const titleKey = market?.titleKey ?? "markets.generic";
   const now = from.getTime();
 
   return [0, 1, 2].map((dayOffset) => {
@@ -124,8 +100,7 @@ function generateDailyMarketPlayRounds(slug: string, from = new Date()): Lottery
 
     return {
       id,
-      drawLabel: `${title} ${formatDrawLabel(drawAt)}`,
-      scheduleLabel: formatScheduleLabel(drawAt),
+      drawLabel: { kind: "market" as const, titleKey, date: drawAt.toISOString() },
       drawAt: drawAt.toISOString(),
       closeAt: closeAt.toISOString(),
       openAt: openAt.toISOString(),
@@ -157,7 +132,6 @@ function yikiPlayRounds(intervalMin: number, count: number, from = new Date()): 
     return {
       id: round.id,
       drawLabel: round.label,
-      scheduleLabel: round.label,
       drawAt: drawAt.toISOString(),
       closeAt: round.closeAt,
       openAt: openAt.toISOString(),
@@ -207,7 +181,7 @@ export function getThaiLottoDrawByRoundId(roundId: string): ThaiLottoDraw | unde
   const closeAt = bkkDate(year, month, day, 15, 0);
   return {
     id: roundId,
-    drawLabel: `งวด ${formatDrawLabel(drawAt)}`,
+    drawLabel: { kind: "draw", date: drawAt.toISOString() },
     closeAt: closeAt.toISOString(),
     minBet: 1,
     maxBet: 5000,
@@ -224,7 +198,6 @@ export function getLotteryPlayRoundById(slug: string, roundId: string): LotteryP
     return {
       id: yiki.id,
       drawLabel: yiki.label,
-      scheduleLabel: yiki.label,
       drawAt: drawAt.toISOString(),
       closeAt: yiki.closeAt,
       openAt: new Date(drawAt.getTime() - interval * 60 * 1000).toISOString(),
@@ -240,7 +213,6 @@ export function getLotteryPlayRoundById(slug: string, roundId: string): LotteryP
     return {
       id: draw.id,
       drawLabel: draw.drawLabel,
-      scheduleLabel: draw.drawLabel,
       drawAt: draw.closeAt,
       closeAt: draw.closeAt,
       openAt: draw.closeAt,

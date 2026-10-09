@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
 import Link from "@/lib/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -34,6 +35,7 @@ export function HomeDesktopPeekCarousel({
   placement = "default",
   usePlaceholderSlides = false,
 }: HomeDesktopPeekCarouselProps) {
+  const t = useT("home");
   const imageSlides = useMemo(() => items.filter((item) => Boolean(item.bannerSrc)), [items]);
 
   const slides = useMemo(() => {
@@ -254,7 +256,7 @@ export function HomeDesktopPeekCarousel({
         isShellBand && "home-desktop-peek-carousel--shell-band",
         isMock && "home-desktop-peek-carousel--mock",
       )}
-      aria-label="แบนเนอร์โปรโมชันและกิจกรรม"
+      aria-label={t("peekCarousel.ariaLabel")}
     >
       <div ref={viewportRef} className="home-desktop-peek-carousel__viewport">
         {showNav ? (
@@ -267,7 +269,7 @@ export function HomeDesktopPeekCarousel({
                 scrollToTrackIndex(trackIndex - 1);
               }}
               disabled={!loopEnabled && !canPrev}
-              aria-label="สไลด์ก่อนหน้า"
+              aria-label={t("carousel.prev")}
             >
               <ChevronLeftIcon className="h-5 w-5" />
             </button>
@@ -279,7 +281,7 @@ export function HomeDesktopPeekCarousel({
                 scrollToTrackIndex(trackIndex + 1);
               }}
               disabled={!loopEnabled && !canNext}
-              aria-label="สไลด์ถัดไป"
+              aria-label={t("carousel.next")}
             >
               <ChevronRightIcon className="h-5 w-5" />
             </button>
@@ -290,7 +292,7 @@ export function HomeDesktopPeekCarousel({
           ref={scrollContainerRef}
           className="home-desktop-peek-carousel__track"
           tabIndex={0}
-          aria-label="เลื่อนดูแบนเนอร์"
+          aria-label={t("carousel.scroll")}
         >
           {trackSlides.map((entry, index) => {
             const item = entry.slide;
@@ -357,7 +359,7 @@ export function HomeDesktopPeekCarousel({
           <div
             className="home-desktop-peek-carousel__dots"
             role="tablist"
-            aria-label="เลือกสไลด์แบนเนอร์"
+            aria-label={t("carousel.pickSlide")}
           >
             <div className="home-desktop-peek-carousel__dots-pill">
               {slides.map((item, idx) => {
@@ -371,7 +373,7 @@ export function HomeDesktopPeekCarousel({
                       scrollToLogicalIndex(idx);
                     }}
                     className={`home-desktop-peek-carousel__dot${isActive ? " is-active" : ""}`}
-                    aria-label={`ไปยังสไลด์ที่ ${idx + 1}`}
+                    aria-label={t("carousel.goToSlide", { index: idx + 1 })}
                   />
                 );
               })}

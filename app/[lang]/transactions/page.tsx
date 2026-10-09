@@ -11,6 +11,7 @@ import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { TransactionsPageContent } from "@/app/components/transactions/TransactionsPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 function kindFromSearchParam(value: string | null): TransactionKind {
   if (value === "withdraw" || value === "promotion" || value === "bet") {
@@ -32,6 +33,7 @@ function TransactionsPageInner() {
   const searchParams = useSearchParams();
   const { isAuthenticated, isLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const t = useT("transactions");
 
   const kindParam = searchParams.get("kind");
   const activeKind = kindFromSearchParam(kindParam);
@@ -57,7 +59,7 @@ function TransactionsPageInner() {
 
       <RightMenuDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SlotProvidersHeader title="ประวัติการทำรายการ" backHref="/" />
+      <SlotProvidersHeader title={t("title")} backHref="/" />
 
       <main className="mobile-standalone-main pt-4">
         <TransactionsPageContent
@@ -77,11 +79,12 @@ function TransactionsPageInner() {
 }
 
 export default function TransactionsPage() {
+  const t = useT("transactions");
   return (
     <Suspense
       fallback={
         <div className="mobile-standalone-page mobile-standalone-main py-16 text-center text-sm text-[var(--text-muted)]">
-          กำลังโหลด...
+          {t("pageLoading")}
         </div>
       }
     >

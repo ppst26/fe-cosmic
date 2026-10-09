@@ -25,6 +25,7 @@ import {
 import { formatWithdrawAmount, formatWithdrawMoney } from "@/lib/format";
 import { useWallet } from "@/app/hooks/api/account";
 import { valueClass } from "@/lib/semanticValue";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface WithdrawBottomSheetProps {
   isOpen: boolean;
@@ -36,6 +37,7 @@ interface WithdrawBottomSheetProps {
  * Bottom sheet ถอนเงิน step 1 — เลือกบัญชี + กรอกยอด (mock)
  */
 export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBottomSheetProps) {
+  const t = useT("wallet");
   /** โหลดตั้งแต่ mount (sheet ถูก mount ไว้ใน WithdrawProvider) */
   const quick = useWithdrawQuickAmounts();
   const account = useWithdrawAccount();
@@ -134,10 +136,10 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
         >
           <ResponsiveSheetTitleNotch>
             <ResponsiveSheetHeader
-              closeAriaLabel="ปิดหน้าถอนเงิน"
+              closeAriaLabel={t("withdraw.close")}
               titleIconSrc="/assets/deposit/Wallet2.avif"
               titleIconDesktopOnly
-              title={<Dialog.Title className="text-xl font-medium sm:text-2xl">ถอนเงิน</Dialog.Title>}
+              title={<Dialog.Title className="text-xl font-medium sm:text-2xl">{t("withdraw.title")}</Dialog.Title>}
             />
           </ResponsiveSheetTitleNotch>
 
@@ -145,16 +147,16 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
             id="withdraw-sheet-desc"
             className="min-h-0 flex-1 overflow-y-auto pb-3"
           >
-            <ResourceGate resource={account} loadingLabel="กำลังโหลดบัญชีรับเงิน…" errorTitle="โหลดบัญชีรับเงินไม่สำเร็จ">
+            <ResourceGate resource={account} loadingLabel={t("withdraw.accountLoading")} errorTitle={t("withdraw.accountError")}>
               {(bank) => (
             <button
               type="button"
               className={`${COSMIC_SHEET_SOFT_GLASS_INTERACTIVE} flex w-full items-center gap-3 px-3 py-3.5 sm:px-4 sm:py-4`}
-              aria-label="เปลี่ยนบัญชีรับเงิน"
+              aria-label={t("withdraw.changeAccount")}
             >
               <KbankLogoGraphic className="h-11 w-11 shrink-0" />
               <span className="min-w-0 flex-1">
-                <span className="cosmic-type-sheet-desc block">โอนเข้าบัญชีของคุณ</span>
+                <span className="cosmic-type-sheet-desc block">{t("withdraw.transferToYourAccount")}</span>
                 <span className="mt-0.5 block text-sm font-medium text-[var(--text-primary)] sm:text-base">
                   {bank.bankShortName}
                 </span>
@@ -171,7 +173,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
             </ResourceGate>
 
             <div className="mt-5">
-              <p className="cosmic-type-sheet-label text-center">จำนวนเงินที่ต้องการถอน</p>
+              <p className="cosmic-type-sheet-label text-center">{t("withdraw.amountLabel")}</p>
               <div className="mt-4 pb-3">
                 <div className="flex items-baseline justify-center gap-0.5">
                   <span
@@ -188,20 +190,20 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                     onChange={(event) => handleAmountChange(event.target.value)}
                     className="input-keep-size min-w-[2ch] max-w-[min(72vw,320px)] bg-transparent text-5xl font-medium leading-none tracking-tight text-[var(--text-primary)] outline-none sm:text-6xl"
                     style={{ width: `${Math.max(2, amountInput.length || 1)}.5ch` }}
-                    aria-label="จำนวนเงินที่ต้องการถอน"
+                    aria-label={t("withdraw.amountLabel")}
                   />
                 </div>
               </div>
               <div className="cosmic-type-sheet-desc mt-2 flex flex-wrap items-center justify-between gap-2">
                 <p>
-                  ถอนได้ ฿{formatWithdrawMoney(available)}
+                  {t("withdraw.available", { amount: formatWithdrawMoney(available) })}
                 </p>
                 <button
                   type="button"
                   onClick={handleWithdrawAll}
                   className="font-medium text-[var(--accent-muted)] underline-offset-2 hover:underline"
                 >
-                  ถอนทั้งหมด
+                  {t("withdraw.withdrawAll")}
                 </button>
               </div>
             </div>
@@ -222,7 +224,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
                   );
                 })}
               </div>
-              <p className="cosmic-type-sheet-desc mt-2 text-center">แตะยอดเงินเพื่อแก้ไข</p>
+              <p className="cosmic-type-sheet-desc mt-2 text-center">{t("withdraw.quickAmountHint")}</p>
             </div>
 
             {submitMessage && (
@@ -242,7 +244,7 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
               onClick={handleRequestConfirm}
               className={COSMIC_BTN_PRIMARY}
             >
-              {submitting ? "กำลังส่ง..." : "ยืนยันถอนเงิน"}
+              {submitting ? t("shared.submitting") : t("withdraw.submit")}
             </button>
           </div>
         </Dialog.Content>
@@ -252,17 +254,20 @@ export function WithdrawBottomSheet({ isOpen, onClose, onCompleted }: WithdrawBo
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
         variant="warning"
-        title="ยืนยันส่งคำขอถอนเงิน?"
+        title={t("withdraw.confirm.title")}
         description={
           account.data
-            ? `โอนเข้า ${account.data.bankShortName} ${account.data.accountNumberDisplay}`
+            ? t("withdraw.confirm.description", {
+                bank: account.data.bankShortName,
+                account: account.data.accountNumberDisplay,
+              })
             : undefined
         }
-        confirmLabel="ยืนยันถอน"
+        confirmLabel={t("withdraw.confirm.confirm")}
         loading={submitting}
         summary={
           <p className="text-center text-sm font-medium text-[var(--text-primary)]">
-            ยอดถอน{" "}
+            {t("withdraw.confirm.amountLabel")}{" "}
             <span className={valueClass("emphasis")}>฿ {formatWithdrawAmount(amount)}</span>
           </p>
         }

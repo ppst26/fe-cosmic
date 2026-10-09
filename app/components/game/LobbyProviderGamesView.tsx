@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { CategorySectionHead } from "@/app/components/home/CategorySectionHead";
 import { GameSearchBar } from "@/app/components/home/GameSearchBar";
 import { ProviderGameGrid } from "@/app/components/slots/ProviderGameGrid";
@@ -26,6 +27,7 @@ export function LobbyProviderGamesView({
   resolveCategory,
   onBack,
 }: LobbyProviderGamesViewProps) {
+  const t = useT("games");
   const [searchQuery, setSearchQuery] = useState("");
 
   const providerId = useMemo(() => {
@@ -59,7 +61,7 @@ export function LobbyProviderGamesView({
               type="button"
               onClick={onBack}
               className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[var(--icon-active)] transition-colors hover:bg-[var(--surface-hover)] active:scale-95"
-              aria-label={`กลับไปหน้ารวม${categoryLabel}`}
+              aria-label={t("providerGames.backToCategory", { category: categoryLabel })}
             >
               <ChevronLeftIcon className="h-5 w-5" />
             </button>
@@ -87,12 +89,12 @@ export function LobbyProviderGamesView({
         }
         meta={
           <span className="font-medium text-[var(--text-muted)]">
-            ({filteredGames.length} เกม)
+            {t("providerGames.gameCount", { count: filteredGames.length })}
           </span>
         }
       />
 
-      <GameSearchBar placeholder="ค้นหาเกมในค่ายนี้" onSearch={setSearchQuery} />
+      <GameSearchBar placeholder={t("providerGames.searchPlaceholder")} onSearch={setSearchQuery} />
 
       <ProviderGameGrid key={providerId} games={filteredGames} />
     </div>

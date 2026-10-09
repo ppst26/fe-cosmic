@@ -27,6 +27,11 @@ export interface StatusStateProps {
   secondaryAction?: StatusAction;
   /** รหัสอ้างอิงเล็ก ๆ ใต้ปุ่ม เช่น error digest */
   code?: string;
+  /**
+   * บรรทัดรหัสอ้างอิงที่แปลแล้ว เช่น useT("common")("refCode", { code })
+   * ไม่ส่ง = ข้อความไทยเดิม (ใช้ใน global-error ที่อยู่นอก I18nProvider)
+   */
+  codeLabel?: string;
   className?: string;
 }
 
@@ -59,6 +64,7 @@ export function StatusState({
   primaryAction,
   secondaryAction,
   code,
+  codeLabel,
   className,
 }: StatusStateProps) {
   return (
@@ -88,7 +94,9 @@ export function StatusState({
           {secondaryAction ? <ActionButton action={secondaryAction} kind="secondary" /> : null}
         </div>
       ) : null}
-      {code ? <p className="status-state__code font-mono text-xs">รหัสอ้างอิง: {code}</p> : null}
+      {code ? (
+        <p className="status-state__code font-mono text-xs">{codeLabel ?? `รหัสอ้างอิง: ${code}`}</p>
+      ) : null}
     </div>
   );
 }
@@ -105,10 +113,11 @@ export function ErrorState(props: Omit<StatusStateProps, "tone">) {
 
 /** กำลังโหลด — spinner + ข้อความ (ใช้ใน loading.tsx และส่วนที่รอ API) */
 export function LoadingState({
-  label = "กำลังโหลด…",
+  label,
   className,
 }: {
-  label?: string;
+  /** ข้อความที่แปลแล้ว — ค่าทั่วไป useT("common")("loading") / getT("common") */
+  label: string;
   className?: string;
 }) {
   return (

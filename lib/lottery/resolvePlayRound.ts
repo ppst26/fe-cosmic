@@ -1,19 +1,19 @@
 import { getLotteryPlayRoundById } from "@/app/data/lotteryRoundsMockData";
-import type { LotteryFlagTone } from "@/app/types/lottery";
+import type { LotteryFlagTone, LotteryMessageKey, LotteryRoundLabel } from "@/app/types/lottery";
 import { getLotteryMarketBySlug } from "@/app/data/lotteryMarketsMockData";
 
 export interface LotteryPlayRoundView {
   id: string;
-  label: string;
+  label: LotteryRoundLabel;
   closeAt: string;
   minBet: number;
   maxBet: number;
 }
 
-const YIKI_MARKET_TITLES: Record<string, string> = {
-  "yiki-5": "หวยยี่กี 5 นาที",
-  "yiki-15": "หวยยี่กี 15 นาที",
-  "yiki-30": "หวยยี่กี 30 นาที",
+const YIKI_MARKET_TITLE_KEYS: Record<string, LotteryMessageKey> = {
+  "yiki-5": "markets.yiki5",
+  "yiki-15": "markets.yiki15",
+  "yiki-30": "markets.yiki30",
 };
 
 /**
@@ -34,22 +34,22 @@ export function resolveLotteryPlayRound(
   };
 }
 
-/** ชื่อ + ธงสำหรับการ์ดหัวงวด */
+/** key ชื่อ + ธงสำหรับการ์ดหัวงวด */
 export function lotteryPlayMarketMeta(marketSlug: string): {
-  title: string;
+  titleKey: LotteryMessageKey;
   flagLabel: string;
   flagTone: LotteryFlagTone;
 } {
   if (marketSlug === "thai-government") {
-    return { title: "หวยรัฐบาลไทย", flagLabel: "TH", flagTone: "th" };
+    return { titleKey: "markets.thaiGovernment", flagLabel: "TH", flagTone: "th" };
   }
-  const yikiTitle = YIKI_MARKET_TITLES[marketSlug];
-  if (yikiTitle) {
-    return { title: yikiTitle, flagLabel: "YK", flagTone: "gold" };
+  const yikiTitleKey = YIKI_MARKET_TITLE_KEYS[marketSlug];
+  if (yikiTitleKey) {
+    return { titleKey: yikiTitleKey, flagLabel: "YK", flagTone: "gold" };
   }
   const market = getLotteryMarketBySlug(marketSlug);
   if (market) {
-    return { title: market.title, flagLabel: market.flagLabel, flagTone: market.flagTone };
+    return { titleKey: market.titleKey, flagLabel: market.flagLabel, flagTone: market.flagTone };
   }
-  return { title: "แทงหวย", flagLabel: "TH", flagTone: "th" };
+  return { titleKey: "hub.title", flagLabel: "TH", flagTone: "th" };
 }

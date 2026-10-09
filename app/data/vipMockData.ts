@@ -1,4 +1,5 @@
 import type {
+  VipBenefitCellValue,
   VipBenefitComparisonRow,
   VipMaintainState,
   VipMission,
@@ -93,9 +94,9 @@ export const VIP_PLAYER_MOCK: VipPlayerState = {
   depositProgress: 24_500_000,
   turnoverProgress: 21_800_000,
   missions: [
-    { id: "login", label: "ล็อกอิน", progress: 5, target: 28, unit: "วัน", icon: "login" },
-    { id: "deposit", label: "ฝากเงิน", progress: 3, target: 20, unit: "ครั้ง", icon: "deposit" },
-    { id: "play", label: "เข้าเล่น", progress: 8, target: 40, unit: "ครั้ง", icon: "play" },
+    { id: "login", labelKey: "missions.login", progress: 5, target: 28, unitKey: "missions.unitDays", icon: "login" },
+    { id: "deposit", labelKey: "missions.deposit", progress: 3, target: 20, unitKey: "missions.unitTimes", icon: "deposit" },
+    { id: "play", labelKey: "missions.play", progress: 8, target: 40, unitKey: "missions.unitTimes", icon: "play" },
   ],
 };
 
@@ -112,20 +113,20 @@ export const VIP_MAINTAIN_BY_RANK: Partial<Record<VipRankId, VipMaintainState>> 
 
 /** แถวชื่อสิทธิ — คอลัมน์แรกของตารางสิทธิประโยชน์ */
 export const VIP_BENEFIT_COMPARISON_ROWS: VipBenefitComparisonRow[] = [
-  { id: "cashback", label: "Cashback พิเศษ" },
-  { id: "rolling", label: "Rolling พิเศษ" },
-  { id: "diamond-deposit", label: "Diamond จากฝาก" },
-  { id: "fast-withdraw", label: "ถอนด่วน" },
-  { id: "vip-manager", label: "VIP Manager" },
-  { id: "upgrade-bonus", label: "โบนัสอัปเกรด" },
-  { id: "deposit-condition", label: "เงื่อนไขฝาก" },
-  { id: "turnover-condition", label: "เงื่อนไขเทิร์น" },
+  { id: "cashback", labelKey: "benefitRows.cashback" },
+  { id: "rolling", labelKey: "benefitRows.rolling" },
+  { id: "diamond-deposit", labelKey: "benefitRows.diamondDeposit" },
+  { id: "fast-withdraw", labelKey: "benefitRows.fastWithdraw" },
+  { id: "vip-manager", labelKey: "benefitRows.vipManager" },
+  { id: "upgrade-bonus", labelKey: "benefitRows.upgradeBonus" },
+  { id: "deposit-condition", labelKey: "benefitRows.depositCondition" },
+  { id: "turnover-condition", labelKey: "benefitRows.turnoverCondition" },
 ];
 
 /** ค่า mock ต่อช่อง [rowId][rankId] */
 export const VIP_BENEFIT_COMPARISON_VALUES: Record<
   string,
-  Partial<Record<VipRankId, string>>
+  Partial<Record<VipRankId, VipBenefitCellValue>>
 > = {
   cashback: {
     base: "0.1%",
@@ -163,9 +164,9 @@ export const VIP_BENEFIT_COMPARISON_VALUES: Record<
     silver: "—",
     gold: "✓",
     platinum: "✓",
-    emerald: "✓ เร็วขึ้น",
-    diamond: "✓ สูงสุด",
-    obsidian: "✓ สูงสุด",
+    emerald: { labelKey: "benefitValues.faster" },
+    diamond: { labelKey: "benefitValues.max" },
+    obsidian: { labelKey: "benefitValues.max" },
   },
   "vip-manager": {
     base: "—",
@@ -188,7 +189,7 @@ export const VIP_BENEFIT_COMPARISON_VALUES: Record<
     obsidian: "2,500",
   },
   "deposit-condition": {
-    base: "ไม่กำหนด",
+    base: { labelKey: "benefitValues.notRequired" },
     bronze: "300+",
     silver: "500+",
     gold: "1,000+",
@@ -202,8 +203,8 @@ export const VIP_BENEFIT_COMPARISON_VALUES: Record<
 export function getVipBenefitCellValue(
   rowId: string,
   rankId: VipRankId,
-  values: Record<string, Partial<Record<VipRankId, string>>>,
-): string {
+  values: Record<string, Partial<Record<VipRankId, VipBenefitCellValue>>>,
+): VipBenefitCellValue {
   if (rowId === "turnover-condition") {
     return formatVipAmount(getVipTurnoverTarget(rankId));
   }
@@ -313,26 +314,26 @@ export function getVipScaledMissions(
   return [
     {
       id: "login",
-      label: "ล็อกอิน",
+      labelKey: "missions.login",
       progress: byId.login?.progress ?? 0,
       target: req.loginDays,
-      unit: "วัน",
+      unitKey: "missions.unitDays",
       icon: "login",
     },
     {
       id: "deposit",
-      label: "ฝากเงิน",
+      labelKey: "missions.deposit",
       progress: byId.deposit?.progress ?? 0,
       target: req.depositCount,
-      unit: "ครั้ง",
+      unitKey: "missions.unitTimes",
       icon: "deposit",
     },
     {
       id: "play",
-      label: "เข้าเล่น",
+      labelKey: "missions.play",
       progress: byId.play?.progress ?? 0,
       target: req.playCount,
-      unit: "ครั้ง",
+      unitKey: "missions.unitTimes",
       icon: "play",
     },
   ];

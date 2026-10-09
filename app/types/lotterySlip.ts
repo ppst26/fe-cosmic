@@ -1,10 +1,12 @@
 import type { LotteryBetMarketId } from "./lotteryBetApi";
+import type { LotteryMessageKey } from "./lottery";
 
 export type LotterySlipStatus = "submitted" | "won" | "lost" | "void";
 
 export interface LotterySlipLine {
   typeKey: string;
-  typeLabel: string;
+  /** key ชื่อประเภทแทงใน namespace lottery — แปลตอน render */
+  typeLabelKey: LotteryMessageKey;
   number: string;
   amount: number;
   payoutRate: number;
@@ -17,6 +19,7 @@ export interface LotterySubmittedSlip {
   reference: string;
   market: LotteryBetMarketId;
   roundId: string;
+  /** ป้ายงวดที่ client ส่งมาตอนแทง · ว่าง = ไม่ระบุ (แสดง "งวดปัจจุบัน") */
   drawLabel: string;
   /** ISO — วันเวลาปิดรับ / ออกรางวัล (แสดงเป็นงวด) */
   drawAt: string;

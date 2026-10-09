@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { usePathname, useRouter } from "@/lib/i18n/navigation";
 import {
   categoryProviderMatchesLobbyCategory,
@@ -130,6 +131,7 @@ export function LobbyCategoryProviders({ categoryId }: LobbyCategoryProvidersPro
 const LOBBY_PROVIDER_FILTER_ID = "all-in-one";
 
 function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersProps) {
+  const t = useT("home");
   const router = useRouter();
   const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState("");
@@ -225,7 +227,7 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
 
   if (categoryId === "lottery") {
     return (
-      <section className="lobby-category-providers mt-1 min-w-0" aria-label="หวย">
+      <section className="lobby-category-providers mt-1 min-w-0" aria-label={t("categories.lottery")}>
         <div key={categoryId} className="lobby-category-providers__swap min-w-0">
           <LotteryHubContent />
         </div>
@@ -246,23 +248,23 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
         className="lobby-category-providers mt-1 rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-8 text-center text-sm text-[var(--text-secondary)]"
         aria-live="polite"
       >
-        กำลังเตรียมค่ายเกมในหมวดนี้ — ลองเลือกคาสิโน สล็อต ยิงปลา หรือกีฬาก่อนนะ
+        {t("categoryProviders.comingSoon")}
       </section>
     );
   }
 
   const sectionTitle =
     categoryId === "casino"
-      ? "ไลฟ์คาสิโน"
+      ? t("categoryProviders.liveCasino")
       : categoryId === "slots"
-        ? "สล็อต"
+        ? t("categories.slots")
         : categoryId === "fishing"
-          ? "ยิงปลา"
+          ? t("categories.fishing")
           : categoryId === "cards"
-            ? "เกมไพ่"
+            ? t("categories.cards")
             : categoryId === "sports"
-              ? "กีฬา"
-              : "ค่ายเกม";
+              ? t("categories.sports")
+              : t("categoryProviders.providersFallback");
 
   const providerTotal =
     categoryId === "slots"
@@ -287,11 +289,11 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
   ) {
     const categoryLabel =
       categoryId === "slots"
-        ? "สล็อต"
+        ? t("categories.slots")
         : categoryId === "fishing"
-          ? "ยิงปลา"
+          ? t("categories.fishing")
           : categoryId === "cards"
-            ? "เกมไพ่"
+            ? t("categories.cards")
             : "";
     const resolveCategory =
       categoryId === "fishing" || categoryId === "cards" ? categoryId : undefined;
@@ -299,7 +301,7 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
     return (
       <section
         className="lobby-category-providers flex min-w-0 flex-col gap-3"
-        aria-label={`รายการเกม${categoryLabel}ตามค่ายที่เลือก`}
+        aria-label={t("categoryProviders.gamesByProviderAriaLabel", { category: categoryLabel })}
       >
         <LobbyProviderGamesView
           key={`${categoryId}-${categoryProviderRoute.slug}`}
@@ -315,21 +317,21 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
   return (
     <section
       className="lobby-category-providers flex min-w-0 flex-col gap-3"
-      aria-label="รายการค่ายเกมตามหมวดที่เลือก"
+      aria-label={t("categoryProviders.listAriaLabel")}
     >
       <ProviderCategoryToolbar
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         searchPlaceholder={
           categoryId === "casino"
-            ? "ค้นหาคาสิโนสด | ค่าย"
+            ? t("categoryProviders.searchPlaceholder.casino")
             : categoryId === "fishing"
-              ? "ค้นหายิงปลา | ค่าย"
+              ? t("categoryProviders.searchPlaceholder.fishing")
               : categoryId === "cards"
-                ? "ค้นหาเกมไพ่ | ค่าย"
+                ? t("categoryProviders.searchPlaceholder.cards")
                 : categoryId === "sports"
-                  ? "ค้นหากีฬา | ค่าย"
-                  : "ค้นหาเกม | ค่าย"
+                  ? t("categoryProviders.searchPlaceholder.sports")
+                  : t("categoryProviders.searchPlaceholder.default")
         }
       />
 
@@ -345,7 +347,7 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
           }
           meta={
             <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
-              ({providerTotal} ค่ายเกม)
+              {t("categoryProviders.providerCount", { count: providerTotal })}
             </span>
           }
         />
@@ -381,7 +383,7 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
             items={fishingContent.list}
             totalCount={fishingContent.totalCount}
             hideTitleRow
-            sectionTitle="ยิงปลา"
+            sectionTitle={t("categories.fishing")}
           />
         ) : null}
 
@@ -390,7 +392,7 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
             items={cardsContent.list}
             totalCount={cardsContent.totalCount}
             hideTitleRow
-            sectionTitle="เกมไพ่"
+            sectionTitle={t("categories.cards")}
           />
         ) : null}
       </div>

@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { SectionHeader } from "./SectionHeader";
 import { CarouselControls } from "./CarouselControls";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface CarouselProps {
   title: string;
@@ -12,6 +13,8 @@ interface CarouselProps {
   /** preset ของ track: carousel-games | carousel-popular | carousel-providers (นิยามใน globals.css) */
   trackClassName: string;
   className?: string;
+  /** data-section-id บน <section> — ให้ CSS อ้างหมวดได้โดยไม่ผูกกับ aria-label ที่เปลี่ยนตามภาษา */
+  sectionId?: string;
   /** แสดงเมื่อไม่มีรายการ — ห้ามเติมรายการซ้ำเพื่อให้แถวเต็ม */
   emptyMessage?: string;
   isEmpty?: boolean;
@@ -69,14 +72,16 @@ export function Carousel({
   viewAllLabel,
   trackClassName,
   className = "",
-  emptyMessage = "ยังไม่มีรายการในหมวดนี้",
+  sectionId,
+  emptyMessage,
   isEmpty = false,
   children,
 }: CarouselProps) {
   const { trackRef, canPrev, canNext, scrollByPage } = useCarouselScroll();
+  const tCommon = useT("common");
 
   return (
-    <section className={`w-full min-w-0 max-w-full ${className}`} aria-label={title}>
+    <section className={`w-full min-w-0 max-w-full ${className}`} aria-label={title} data-section-id={sectionId}>
       <SectionHeader
         className="lobby-section-header-band mb-0"
         icon={icon}
@@ -95,7 +100,7 @@ export function Carousel({
       />
 
       {isEmpty ? (
-        <p className="py-6 text-center text-sm text-[var(--text-muted)]">{emptyMessage}</p>
+        <p className="py-6 text-center text-sm text-[var(--text-muted)]">{emptyMessage ?? tCommon("emptyCategory")}</p>
       ) : (
         <div ref={trackRef} className={`carousel-track ${trackClassName}`}>
           {children}

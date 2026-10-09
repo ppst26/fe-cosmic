@@ -1,11 +1,14 @@
+import type { MessageKey } from "@/lib/i18n/messages";
+
 /* ── จาก app/data/depositMockData.ts ── */
 
 export type DepositMethodId = "bank" | "gateway" | "truemoney";
 
 export interface DepositMethodOption {
   id: DepositMethodId;
-  title: string;
-  subtitle: string;
+  /** แปลตอน render: useT("wallet")(titleKey) */
+  titleKey: MessageKey<"wallet">;
+  subtitleKey: MessageKey<"wallet">;
 }
 
 /** บัญชีรับโอน mock — step 2 ฝากธนาคาร */

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useT } from "@/lib/i18n/I18nProvider";
 import { useLobbyMobileHeaderHeight } from "@/app/hooks/useLobbyMobileHeaderHeight";
 import { usePathname } from "@/lib/i18n/navigation";
 import { Header } from "../layout/Header";
@@ -42,6 +43,7 @@ import type { LobbyContent } from "@/lib/api/lobby";
  * เนื้อหา (แบนเนอร์ · เกม · ทัวร์นาเมนต์ · ประกาศ · Hall of Fame) โหลดฝั่ง server ใน app/(lobby)/layout.tsx แล้วส่งมาเป็น props
  */
 export function HomeLobbyPage({ content }: { content: LobbyContent }) {
+  const t = useT("home");
   const homeBanners = content.banners;
   const homeGames = content.games;
   const homeTournaments = content.tournaments;
@@ -188,14 +190,14 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                             onClick={() => openLogin()}
                             className="auth-btn auth-btn--login"
                           >
-                            เข้าสู่ระบบ
+                            {t("auth.login")}
                           </button>
                           <button
                             type="button"
                             onClick={() => openSignUp()}
                             className="auth-btn auth-btn--register"
                           >
-                            สมัครสมาชิก
+                            {t("auth.signUp")}
                           </button>
                         </div>
                       )}
@@ -295,7 +297,7 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                               fallback={
                                 <section className="mt-5 w-full sm:mt-6 lg:hidden">
                                   <p className="rounded-[var(--radius-panel)] bg-[var(--surface-hover)] px-4 py-6 text-center text-sm text-[var(--text-secondary)]">
-                                    เข้าสู่ระบบหรือสมัครสมาชิกเพื่อดูกิจกรรม
+                                    {t("auth.loginToSeeEvents")}
                                   </p>
                                 </section>
                               }

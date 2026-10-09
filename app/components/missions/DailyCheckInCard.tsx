@@ -14,6 +14,7 @@ import { MODAL_TITLE_LEADING_ICON_CLASS } from "@/app/components/ui/ModalTitleLe
 import { DailyCheckInClaimSuccessDialog } from "./DailyCheckInClaimSuccessDialog";
 import { countCheckedInDays } from "@/lib/domain/checkIn";
 import type { DailyCheckInDayReward } from "@/app/types/checkIn";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface DailyCheckInCardProps {
   onClose?: () => void;
@@ -23,9 +24,10 @@ interface DailyCheckInCardProps {
 
 /** การ์ดเช็คอินรายวัน — โหลดผ่าน useCheckIn แล้วส่งให้ DailyCheckInCardView */
 export function DailyCheckInCard(props: DailyCheckInCardProps) {
+  const t = useT("rewards");
   const checkIn = useCheckIn();
   return (
-    <ResourceGate resource={checkIn} loadingLabel="กำลังโหลดเช็คอิน…" errorTitle="โหลดข้อมูลเช็คอินไม่สำเร็จ">
+    <ResourceGate resource={checkIn} loadingLabel={t("checkIn.loading")} errorTitle={t("checkIn.loadError")}>
       {(data) => <DailyCheckInCardView {...props} checkIn={data} />}
     </ResourceGate>
   );
@@ -38,6 +40,7 @@ function DailyCheckInCardView({
   isStandalone = false,
   checkIn,
 }: DailyCheckInCardProps & { checkIn: CheckInData }) {
+  const t = useT("rewards");
   const [days, setDays] = useState<DailyCheckInDayReward[]>(checkIn.days);
   const [justClaimed, setJustClaimed] = useState<number | null>(null);
   const [claimSuccessCredits, setClaimSuccessCredits] = useState<number | null>(
@@ -131,7 +134,7 @@ function DailyCheckInCardView({
             isClaimed ? "text-[#c4b5fd]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
           )}
         >
-          {item.label}
+          {t(item.labelKey)}
         </span>
 
         <div
@@ -193,7 +196,7 @@ function DailyCheckInCardView({
             isLocked && "bg-white/6 text-[var(--text-muted)]",
           )}
         >
-          {isClaimed ? "รับแล้ว" : isToday ? "กดรับ" : "รอรับ"}
+          {t(`checkIn.dayStatus.${item.status}`)}
         </div>
       </div>
     );
@@ -222,7 +225,7 @@ function DailyCheckInCardView({
             responsiveSheetCloseButtonClass(),
             "absolute right-4 top-4 z-20 cursor-pointer text-[var(--icon-default)] hover:text-white sm:right-5 sm:top-5",
           )}
-          aria-label="ปิด"
+          aria-label={t("actions.close")}
         >
           <CloseIcon className="h-4 w-4" />
         </button>
@@ -247,7 +250,7 @@ function DailyCheckInCardView({
                 isHubSurface ? "text-2xl sm:text-[1.75rem]" : "text-xl sm:text-2xl",
               )}
             >
-              เช็คอินรายวัน
+              {t("checkIn.title")}
             </h2>
           </div>
 
@@ -257,7 +260,7 @@ function DailyCheckInCardView({
               isHubSurface ? "text-sm sm:text-base" : "mt-1.5 text-xs sm:text-sm",
             )}
           >
-            เช็คอินต่อเนื่องรับเพชรโบนัสพิเศษ
+            {t("checkIn.subtitle")}
           </p>
           <p
             className={cn(
@@ -265,8 +268,12 @@ function DailyCheckInCardView({
               isHubSurface ? "mt-1 text-sm sm:text-base" : "mt-0.5 text-xs sm:text-sm",
             )}
           >
-            อีก <span className="font-medium text-white">{daysRemainingForBonus} วัน</span> ได้โบนัส{" "}
-            <span className="font-medium text-[#a78bfa]">เพชร 20</span>
+            {t("checkIn.bonusBefore")}{" "}
+            <span className="font-medium text-white">
+              {t("checkIn.bonusDays", { count: daysRemainingForBonus })}
+            </span>{" "}
+            {t("checkIn.bonusAfter")}{" "}
+            <span className="font-medium text-[#a78bfa]">{t("checkIn.bonusGems", { amount: 20 })}</span>
           </p>
         </div>
 
@@ -315,7 +322,7 @@ function DailyCheckInCardView({
           )}
         >
           <span className="text-white">{checkedInCount}</span>
-          <span className="text-[var(--text-muted)] font-medium"> / 7 วัน</span>
+          <span className="text-[var(--text-muted)] font-medium"> {t("checkIn.progressTotal", { total: 7 })}</span>
         </span>
       </div>
 
@@ -347,7 +354,7 @@ function DailyCheckInCardView({
                 isHubSurface ? "text-base sm:text-lg" : "text-sm sm:text-base",
               )}
             >
-              รางวัลเช็คอินสะสม
+              {t("checkIn.cumulativeTitle")}
             </h3>
             <span className="text-[#7747e5] text-xs">✦</span>
           </div>
@@ -357,7 +364,7 @@ function DailyCheckInCardView({
               isHubSurface ? "text-sm sm:text-base" : "mt-0.5 text-xs sm:text-[13px]",
             )}
           >
-            เช็คอินครบตามกำหนด รับเพชรโบนัสใหญ่
+            {t("checkIn.cumulativeDesc")}
           </p>
         </div>
 
@@ -389,7 +396,7 @@ function DailyCheckInCardView({
                       : "border border-white/8 bg-[#14121a] text-[var(--text-muted)]",
                   )}
                 >
-                  เพชร {m.gemsReward}
+                  {t("checkIn.milestoneGems", { amount: m.gemsReward })}
                 </div>
 
                 {/* Milestone Node Circle */}
@@ -438,7 +445,7 @@ function DailyCheckInCardView({
                     isReached ? "text-white" : "text-[var(--text-muted)]",
                   )}
                 >
-                  เช็คอิน {m.milestoneDay} วัน
+                  {t("checkIn.milestoneDays", { days: m.milestoneDay })}
                 </span>
               </div>
             );
@@ -458,7 +465,7 @@ function DailyCheckInCardView({
             "!border-white/8 !bg-[var(--surface-elevated)] !text-[var(--text-muted)] !shadow-none",
         )}
       >
-        {isTodayClaimed ? "เช็คอินแล้ววันนี้" : "กดรับรางวัลวันนี้"}
+        {isTodayClaimed ? t("checkIn.claimedToday") : t("checkIn.claimToday")}
       </button>
 
       <DailyCheckInClaimSuccessDialog

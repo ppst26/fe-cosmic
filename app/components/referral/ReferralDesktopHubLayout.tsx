@@ -16,6 +16,7 @@ import { formatReferralCurrency } from "@/lib/format";
 import { valueClass } from "@/lib/semanticValue";
 import { filterReferralEarningHistoryByPeriod } from "@/lib/domain/referral";
 import type { ReferralEarningPeriodId } from "@/app/types/referral";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ReferralDesktopHubLayoutProps {
   refCode: string;
@@ -28,10 +29,11 @@ interface ReferralDesktopHubLayoutProps {
 export function ReferralDesktopHubLayout({ refCode }: ReferralDesktopHubLayoutProps) {
   const earnings = useReferralEarnings();
   const overview = useReferralOverview();
+  const t = useT("referral");
   return (
-    <ResourceGate resource={earnings} loadingLabel="กำลังโหลดรายได้…" errorTitle="โหลดรายได้ไม่สำเร็จ">
+    <ResourceGate resource={earnings} loadingLabel={t("status.earningsLoading")} errorTitle={t("status.earningsError")}>
       {(referralEarnings) => (
-        <ResourceGate resource={overview} loadingLabel="กำลังโหลดข้อมูลแนะนำเพื่อน…" errorTitle="โหลดข้อมูลแนะนำเพื่อนไม่สำเร็จ">
+        <ResourceGate resource={overview} loadingLabel={t("status.overviewLoading")} errorTitle={t("status.overviewError")}>
           {(referralOverview) => (
             <ReferralDesktopHubContent
               refCode={refCode}
@@ -54,6 +56,7 @@ function ReferralDesktopHubContent({
   referralEarnings: ReferralEarningsData;
   referralOverview: ReferralOverviewData;
 }) {
+  const t = useT("referral");
   const [period, setPeriod] = useState<ReferralEarningPeriodId>("all");
   const [claimable, setClaimable] = useState(referralEarnings.summary.bonusClaimableThb);
   const [received, setReceived] = useState(referralEarnings.summary.bonusReceivedThb);
@@ -85,10 +88,10 @@ function ReferralDesktopHubContent({
 
         <section
           className="referral-hub-block flex flex-col gap-3 py-4"
-          aria-label="รายได้ที่รับได้"
+          aria-label={t("earning.claimableIncome")}
         >
           <div>
-            <p className="text-sm font-medium text-[var(--text-secondary)]">รายได้ที่รับได้</p>
+            <p className="text-sm font-medium text-[var(--text-secondary)]">{t("earning.claimableIncome")}</p>
             <p className={valueClass("reward", "mt-1.5 text-3xl")}>
               {formatReferralCurrency(claimable)}
             </p>
@@ -99,10 +102,10 @@ function ReferralDesktopHubContent({
             onClick={handleClaim}
             className={COSMIC_BTN_PRIMARY}
           >
-            รับโบนัส
+            {t("earning.claim")}
           </button>
           <p className="text-sm text-[var(--text-secondary)]">
-            รับสะสมแล้ว {formatReferralCurrency(received)}
+            {t("earning.receivedTotal", { amount: formatReferralCurrency(received) })}
           </p>
         </section>
       </div>
@@ -112,22 +115,22 @@ function ReferralDesktopHubContent({
           className="referral-desktop-hub__period-tabs"
           tabs={referralEarnings.periods.map((option) => ({
             id: option.id,
-            label: option.label,
+            label: t(option.labelKey),
           }))}
           activeId={period}
           onSelect={setPeriod}
-          ariaLabel="ช่วงเวลารายได้"
+          ariaLabel={t("periods.ariaLabel")}
           columns={4}
         />
 
-        <section className="referral-hub-block py-4" aria-label="สรุปรายได้ช่วงที่เลือก">
-          <p className="text-sm text-[var(--text-secondary)]">รายได้จากเครือข่าย (ช่วงที่เลือก)</p>
+        <section className="referral-hub-block py-4" aria-label={t("earning.periodSummaryAriaLabel")}>
+          <p className="text-sm text-[var(--text-secondary)]">{t("earning.networkIncomePeriod")}</p>
           <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
             <p className="text-3xl font-medium tabular-nums text-[var(--text-primary)]">
               {formatReferralCurrency(periodEarningsTotal)}
             </p>
             <p className="text-sm text-[var(--text-muted)]">
-              สะสมทั้งหมด {formatReferralCurrency(stats.totalEarningsThb)}
+              {t("earning.totalAccumulated", { amount: formatReferralCurrency(stats.totalEarningsThb) })}
             </p>
           </div>
         </section>
@@ -139,7 +142,7 @@ function ReferralDesktopHubContent({
           received={received}
           claimable={claimable}
           onClaim={handleClaim}
-          sectionTitle="รายละเอียดการทำรายได้"
+          sectionTitle={t("earning.detailsTitle")}
         />
       </div>
     </div>

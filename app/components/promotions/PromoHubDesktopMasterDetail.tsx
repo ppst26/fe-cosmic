@@ -11,6 +11,7 @@ import { PromotionDetailPanel } from "./PromotionDetailPanel";
 import { LoadingState } from "../ui/StatusState";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
 import { usePromotionsCatalog } from "./PromotionsCatalogProvider";
+import { useT } from "@/lib/i18n/I18nProvider";
 
 export type PromoHubDesktopKind = "promotions" | "activities";
 
@@ -26,6 +27,7 @@ interface PromoMasterListItem {
  * ใช้ใน PromotionsHubPageContent (embedded + lg+)
  */
 export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKind }) {
+  const t = useT("promotions");
   const { catalog, fetchDetail, getCachedDetail } = usePromotionsCatalog();
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
   const [pickedItemId, setSelectedItemId] = useState<string | null>(null);
@@ -101,10 +103,10 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
 
   const emptyMessage =
     kind === "promotions"
-      ? "ยังไม่มีโปรโมชั่นในหมวดนี้ — ลองเลือก All Promotions"
-      : "ยังไม่มีกิจกรรมในหมวดนี้ — ลองเลือก All Promotions";
+      ? t("empty.categoryHint")
+      : t("empty.activitiesHint");
 
-  const listAriaLabel = kind === "promotions" ? "รายการโปรโมชั่น" : "รายการกิจกรรม";
+  const listAriaLabel = kind === "promotions" ? t("hub.promotionsListAria") : t("hub.activitiesListAria");
   const hubTabs = catalog?.hubCategoryTabs ?? [];
 
   if (!catalog) return null;
@@ -159,12 +161,12 @@ export function PromoHubDesktopMasterDetail({ kind }: { kind: PromoHubDesktopKin
           <div
             className="promotions-desktop-hub__detail min-h-0 overflow-y-auto [scrollbar-width:thin]"
             aria-live="polite"
-            aria-label="รายละเอียดที่เลือก"
+            aria-label={t("hub.selectedDetailAria")}
           >
             {detailContent ? (
               <PromotionDetailPanel key={detailContent.id} content={detailContent} variant="hub" />
             ) : (
-              <LoadingState label="กำลังโหลดรายละเอียด…" />
+              <LoadingState label={t("detail.loading")} />
             )}
           </div>
         </div>
