@@ -45,7 +45,7 @@ export function ActivitiesMobileHub() {
             <CloseIcon className="h-6 w-6 text-white" />
           </button>
         </div>
-        <div className="activity-hub-detail-panel px-3 py-4 sm:px-4">
+        <div className="min-w-0 px-0 py-1">
           <ActivityDetailBody item={selected} showTitle={false} flat />
         </div>
       </div>

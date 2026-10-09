@@ -138,7 +138,7 @@ export function ActivityTurnProgressCard({
     <section
       className={`activity-hub-progress py-3 sm:py-4 ${
         flat
-          ? "activity-hub-progress--flat activity-hub-detail-panel px-4 sm:px-5"
+          ? "activity-hub-progress--flat px-0"
           : "glass-card--soft rounded-[var(--radius-panel)] px-4 sm:px-5"
       }`}
     >
@@ -255,13 +255,19 @@ function ActivityClaimButton({
   );
 }
 
-export function ActivityInfoDetail({ item }: { item: ActivityHubItem }) {
+export function ActivityInfoDetail({ item, flat = false }: { item: ActivityHubItem; flat?: boolean }) {
   const hasSummary = Boolean(item.infoSummary);
   const hasBullets = Boolean(item.infoBullets && item.infoBullets.length > 0);
   if (!hasSummary && !hasBullets) return null;
 
   return (
-    <div className="activity-hub-description-panel flex flex-col gap-3 text-sm leading-relaxed">
+    <div
+      className={
+        flat
+          ? "flex flex-col gap-3 text-sm leading-relaxed text-[var(--text-secondary)]"
+          : "activity-hub-description-panel flex flex-col gap-3 text-sm leading-relaxed"
+      }
+    >
       {hasSummary ? <p>{item.infoSummary}</p> : null}
       {hasBullets ? (
         <ul className="space-y-2">
@@ -281,16 +287,22 @@ export function ActivityRulesSection({
   rules,
   period,
   className = "",
+  flat = false,
 }: {
   rules?: string[];
   period?: string;
   className?: string;
+  flat?: boolean;
 }) {
   if (!rules || rules.length === 0) return null;
 
   return (
     <section
-      className={`activity-hub-rules-card rounded-[var(--radius-panel)] p-4 sm:p-5 ${className}`}
+      className={
+        flat
+          ? `activity-hub-rules-section--flat pt-2 ${className}`
+          : `activity-hub-rules-card rounded-[var(--radius-panel)] p-4 sm:p-5 ${className}`
+      }
       aria-label="กติกาและเงื่อนไขกิจกรรม"
     >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)]/30 pb-3">
@@ -380,11 +392,11 @@ export function ActivityDetailBody({
           <ActivityTierTable rows={tiers} flat={flat} />
         </TabPanelTransition>
       ) : (
-        <ActivityInfoDetail item={item} />
+        <ActivityInfoDetail item={item} flat={flat} />
       )}
 
       {/* กติกาและเงื่อนไขกิจกรรม */}
-      <ActivityRulesSection rules={item.rules} period={item.period} />
+      <ActivityRulesSection rules={item.rules} period={item.period} flat={flat} />
     </div>
   );
 }

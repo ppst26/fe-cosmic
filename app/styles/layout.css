@@ -209,14 +209,12 @@
   box-shadow: 0 10px 28px rgb(0 0 0 / 0.22);
 }
 
-/** กิจกรรมมือถือ — panel รายละเอียด (ActivitiesMobileHub) พื้นเทากราไฟทึบ */
-.activity-hub-detail-panel {
+/** กิจกรรม — รายละเอียดแบบ flat (ไม่ห่อการ์ด) */
+.activity-hub-rules-section--flat {
   border: 0;
-  border-radius: var(--radius-panel);
-  background: var(--inner-card-fill);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-secondary);
 }
 
 .activities-hub-cat-tabs .glass-card--soft {
@@ -235,11 +233,11 @@
  */
 .promo-detail-modal {
   --promo-detail-title-gold: linear-gradient(180deg, #fff8e7 0%, #fde047 72%, #f59e0b 100%);
-  /** การ์ด «รายละเอียด» modal มือถือ — โทนเทา + หัวข้อบล็อกส้ม (อ้างอิง PIXXYBET) */
+  /** การ์ด «รายละเอียด» modal มือถือ — โทนเทา Cosmicbet */
   --promo-detail-accord-header-bg: #45454d;
   --promo-detail-accord-body-bg: #1f1f24;
   --promo-detail-accord-border: #56565f;
-  --promo-detail-block-heading: #ff5c3a;
+  --promo-detail-block-heading: var(--text-primary);
   width: min(calc(100vw - 2 * var(--layout-inline-gutter)), 27.5rem);
   height: min(38rem, 90dvh);
   max-height: min(38rem, 90dvh);

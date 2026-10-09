@@ -10,6 +10,11 @@ import type {
 
 export type PromotionDetailPanelVariant = "modal" | "hub";
 
+/** ตัด emoji ออกจากข้อความรายละเอียดโปร — ห้ามแสดง emoji ในเนื้อหา */
+function withoutEmoji(text: string): string {
+  return text.replace(/\p{Extended_Pictographic}/gu, "").replace(/\s{2,}/g, " ").trim();
+}
+
 interface PromotionDetailPanelProps {
   content: PromotionDetailContent;
   variant?: PromotionDetailPanelVariant;
@@ -182,7 +187,7 @@ function PromotionDetailBodyExpanded({
           <PromotionDetailBlockRow key={`${block.title}-${index}`} block={block} isHub={isHub} />
         ))}
       </div>
-      <p className="promotion-detail-panel__footer">{body.footerNote}</p>
+      <p className="promotion-detail-panel__footer">{withoutEmoji(body.footerNote)}</p>
     </section>
   );
 }
@@ -194,49 +199,50 @@ function PromotionDetailBlockRow({
   block: PromotionDetailBlock;
   isHub: boolean;
 }) {
+  const title = withoutEmoji(block.title);
+  const description = block.description ? withoutEmoji(block.description) : undefined;
+  const bullets = block.bullets?.map((line) => withoutEmoji(line)).filter(Boolean);
+
   return (
     <>
       {block.showDividerBefore && <hr className="cosmic-divider-subtle promotion-detail-panel__divider" />}
-      <div className="flex gap-3">
-        <PromotionDetailBlockIcon icon={block.icon} className="mt-0.5 h-9 w-9 shrink-0" isHub={isHub} />
-        <div className="min-w-0 flex-1">
-          <h3
+      <div className="min-w-0">
+        <h3
+          className={
+            isHub
+              ? "text-base font-medium text-[var(--text-primary)]"
+              : "promotion-detail-panel__block-title text-sm font-medium"
+          }
+        >
+          {title}
+        </h3>
+        {description ? (
+          <p
             className={
               isHub
-                ? "text-base font-medium text-[var(--text-primary)]"
-                : "promotion-detail-panel__block-title text-sm font-medium"
+                ? "mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.9375rem]"
+                : "mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)]"
             }
           >
-            {block.title}
-          </h3>
-          {block.description && (
-            <p
-              className={
-                isHub
-                  ? "mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.9375rem]"
-                  : "mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)]"
-              }
-            >
-              {block.description}
-            </p>
-          )}
-          {block.bullets && block.bullets.length > 0 && (
-            <ul
-              className={
-                isHub
-                  ? "mt-2 space-y-2 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.9375rem]"
-                  : "mt-2 space-y-1.5 text-xs leading-relaxed text-[var(--text-secondary)]"
-              }
-            >
-              {block.bullets.map((line) => (
-                <li key={line} className="flex gap-2">
-                  <span className="text-[var(--accent-primary)]" aria-hidden="true">•</span>
-                  <span>{line}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+            {description}
+          </p>
+        ) : null}
+        {bullets && bullets.length > 0 ? (
+          <ul
+            className={
+              isHub
+                ? "mt-2 space-y-2 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.9375rem]"
+                : "mt-2 space-y-1.5 text-xs leading-relaxed text-[var(--text-secondary)]"
+            }
+          >
+            {bullets.map((line) => (
+              <li key={line} className="flex gap-2">
+                <span className="text-[var(--accent-primary)]" aria-hidden="true">•</span>
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </>
   );
