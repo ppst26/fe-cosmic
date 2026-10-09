@@ -25,6 +25,8 @@
   --lottery-control-border: color-mix(in srgb, var(--border-subtle) 62%, rgb(255 255 255 / 0.05));
   /* แผงเลข 00–99 / แถวร้อย — มุมน้อย ให้ดูเป็นสี่เหลี่ยม */
   --lottery-grid-cell-radius: var(--radius-card);
+  /* หัวกลุ่มประเภท (โพยหน้าแทง · ขั้นใส่ราคา · สรุปโพย) — พื้นทึบเข้มชุดเดียวกัน */
+  --lottery-group-head-fill: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
 }
 
 /*
@@ -731,7 +733,7 @@
 
 :is(.lottery-price-slip__group-head, .lottery-bet-slip__group-head) {
   border-radius: calc(var(--radius-panel) - 14px);
-  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #000);
+  background: var(--lottery-group-head-fill);
   color: var(--text-primary);
 }
 
@@ -1731,10 +1733,10 @@ main.page-shell.lottery-page-main.lottery-slips-page {
   background: var(--surface-solid-inner);
 }
 
-/* หัวกลุ่มประเภท — พื้นทึบ --inner-card-fill (สว่างกว่าพื้นรายการ --surface-solid-inner) แทน gradient nebula เดิม */
-.lottery-slip-summary__group-head {
+/* หัวกลุ่มประเภท — พื้นเดียวกับหัวกลุ่มในโพยหน้าแทง (--lottery-group-head-fill) แทน gradient nebula เดิม */
+.lottery-slip-summary .lottery-slip-summary__group-head {
   color: #f3eeff;
-  background: var(--inner-card-fill);
+  background: var(--lottery-group-head-fill);
   border-bottom: 1px solid rgb(255 255 255 / 0.06);
 }
 
@@ -1796,12 +1798,12 @@ main.page-shell.lottery-page-main.lottery-slips-page {
   width: 100%;
 }
 
-/* ปุ่มรอง "โพยทั้งหมด" — ทรง rounded-full สูง 54px เท่าปุ่ม "แทงต่อ" */
+/* ปุ่มรอง "โพยทั้งหมด" — outline ทรง rounded-full สูง 54px เท่าปุ่ม "แทงต่อ" */
 .lottery-slip-summary__back {
   min-height: 54px;
-  border: 0;
+  border: 1px solid rgb(255 255 255 / 0.3);
   border-radius: var(--radius-pill);
-  background: var(--lottery-glass-fill, var(--inner-card-fill));
+  background: transparent;
   color: var(--text-primary);
   font-size: 0.9375rem;
   font-weight: 500;
@@ -1809,7 +1811,12 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 }
 
 .lottery-slip-summary__back:hover {
-  background: var(--lottery-glass-fill-hover, var(--inner-card-fill-hover));
+  border-color: rgb(255 255 255 / 0.5);
+  background: rgb(255 255 255 / 0.06);
+}
+
+.lottery-slip-summary__back:active {
+  transform: scale(0.98);
 }
 
 /* รายการโพยทั้งหมด — /lottery/slips */
