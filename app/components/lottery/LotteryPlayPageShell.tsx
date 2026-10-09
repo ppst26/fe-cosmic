@@ -14,7 +14,7 @@ interface LotteryPlayPageShellProps {
 
 /**
  * กรอบหน้าแทง (step 3) — bottom nav บนมือถือตอนเลือกเลข · ซ่อนเมื่อเข้าขั้นใส่ราคา
- * ขั้นเลือกเลข (pick) บนมือถือล็อก viewport: หน้าเลื่อนลงไปถึง footer ไม่ได้ · เลื่อนได้เฉพาะในแผงเลือกเลข/โพย
+ * ขั้นเลือกเลข (pick) บนมือถือซ่อน footer — เลื่อนหน้าลงไปเจอ footer ไม่ได้ ขนาด UI คงเดิม
  * (class is-viewport-locked บน <html> — ดู lottery.css) · ใช้ใน lottery .../[roundId]/page.tsx ทุกประเภท
  */
 export function LotteryPlayPageShell({

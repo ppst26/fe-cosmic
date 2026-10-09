@@ -260,30 +260,16 @@
 }
 
 /*
- * ขั้นเลือกเลข (มือถือ) — ล็อก viewport: เอกสารไม่เลื่อน เห็น footer ไม่ได้
- * main สูงเท่าพื้นที่ที่เหลือพอดี (viewport − header band − แถบย่อย 3rem − ที่เว้นให้ bottom nav
- * ซึ่งเป็นค่าเดียวกับ padding-bottom ของ body) · แผงเลือกเลข/โพยเลื่อนภายในเอง (.thai-lotto-layout__input-body)
- * เปิด/ปิด class โดย LotteryPlayPageShell
+ * ขั้นเลือกเลข (มือถือ) — เหมือนไม่มี footer อยู่ข้างล่าง: ซ่อน footer ไม่ให้เลื่อนลงไปเจอ
+ * ขนาด/ตำแหน่ง UI ทั้งหมดคงเดิม (ไม่ขยายกรอบให้เต็มจอ) · เปิด/ปิด class โดย LotteryPlayPageShell
  */
 @media (max-width: 1023px) {
-  html.is-viewport-locked,
-  html.is-viewport-locked body {
-    height: 100dvh;
-    overflow: hidden;
-    overscroll-behavior: none;
+  html.is-viewport-locked {
+    overscroll-behavior-y: none;
   }
 
   html.is-viewport-locked .cosmic-footer {
     display: none;
-  }
-
-  html.is-viewport-locked main.page-shell.lottery-page-main {
-    height: calc(
-      100dvh - var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 68px)) - 3rem -
-        (var(--nav-height) + var(--nav-float-offset) + var(--nav-safe) + var(--nav-scroll-gap))
-    );
-    padding-bottom: 0;
-    overflow: hidden;
   }
 }
 
