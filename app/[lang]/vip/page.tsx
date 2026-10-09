@@ -1,7 +1,6 @@
 "use client";
 
 import React, { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/lib/i18n/navigation";
 import { useT } from "@/lib/i18n/I18nProvider";
 import type { VipModalTabId } from "@/app/types/vip";
@@ -12,7 +11,8 @@ import { FloatingBottomNav } from "@/app/components/layout/FloatingBottomNav";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { VipPageContent } from "@/app/components/vip/VipPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
-import { parseVipPageTab, vipPageHref, VIP_PAGE_TAB_QUERY_KEY } from "@/lib/vipRoutes";
+import { parseVipPageTab, VIP_PAGE_TAB_QUERY_KEY } from "@/lib/vipRoutes";
+import { useUrlTab } from "@/app/hooks/useUrlTab";
 import { getIsDesktopViewport } from "@/app/components/hub/useIsDesktop";
 import { OVERLAY_HUB_KEY, OVERLAY_LAYER_KEY, OVERLAY_VIP_TAB_KEY } from "@/lib/overlayUrl";
 
@@ -21,11 +21,11 @@ import { OVERLAY_HUB_KEY, OVERLAY_LAYER_KEY, OVERLAY_VIP_TAB_KEY } from "@/lib/o
  */
 function VipPageInner() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { isAuthenticated, isLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const activeTab = parseVipPageTab(searchParams.get(VIP_PAGE_TAB_QUERY_KEY));
+  /** สลับแท็บทันที (state) แล้วค่อยสะท้อนลง URL ด้วย history.replaceState — ไม่รอ navigation */
+  const [activeTab, handleSelectTab] = useUrlTab<VipModalTabId>(VIP_PAGE_TAB_QUERY_KEY, parseVipPageTab, "my-level");
 
   useEffect(() => {
     if (isLoading) return;
@@ -44,10 +44,6 @@ function VipPageInner() {
     if (activeTab !== "my-level") params.set(OVERLAY_VIP_TAB_KEY, activeTab);
     router.replace(`/?${params.toString()}`, { scroll: false });
   }, [activeTab, isAuthenticated, isLoading, router]);
-
-  const handleSelectTab = (tab: VipModalTabId) => {
-    router.replace(vipPageHref(tab), { scroll: false });
-  };
 
   if (isLoading || !isAuthenticated) {
     return null;

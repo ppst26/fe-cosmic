@@ -2,25 +2,20 @@
 
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "@/lib/i18n/navigation";
 import { matchesPromoHubMobileCategory } from "@/lib/promotions/promotionFilters";
-import type {
-  PromoHubMobileListItem,
-  PromoHubMobileCategoryFilterId,
-  PromotionDetailId,
-} from "@/app/types/promotions";
+import type { PromoHubMobileListItem, PromoHubMobileCategoryFilterId } from "@/app/types/promotions";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
 import { usePromotionsCatalog } from "./PromotionsCatalogProvider";
+import { promotionDetailHref } from "./promotionDetailHref";
 import { cn } from "@/lib/utils";
 import { useT } from "@/lib/i18n/I18nProvider";
 
-interface PromotionsMobileFeedProps {
-  onOpenDetail: (id: PromotionDetailId) => void;
-}
-
 /**
  * หน้าโปรโมชั่นมือถือ — แท็บหมวด + รายการแนวตั้ง (รูป · ชื่อ · หมดเขต · อ่านเงื่อนไข)
+ * กดการ์ด → หน้ารายละเอียด /promotions/[id]
  */
-export function PromotionsMobileFeed({ onOpenDetail }: PromotionsMobileFeedProps) {
+export function PromotionsMobileFeed() {
   const t = useT("promotions");
   const { catalog } = usePromotionsCatalog();
   const [categoryFilter, setCategoryFilter] = useState<PromoHubMobileCategoryFilterId>("all");
@@ -55,7 +50,7 @@ export function PromotionsMobileFeed({ onOpenDetail }: PromotionsMobileFeedProps
         <ul className="m-0 flex list-none flex-col gap-4 p-0 pt-1">
           {items.map((item) => (
             <li key={item.id}>
-              <PromotionsMobileListCard item={item} onOpenDetail={onOpenDetail} />
+              <PromotionsMobileListCard item={item} />
             </li>
           ))}
         </ul>
@@ -64,17 +59,11 @@ export function PromotionsMobileFeed({ onOpenDetail }: PromotionsMobileFeedProps
   );
 }
 
-function PromotionsMobileListCard({
-  item,
-  onOpenDetail,
-}: {
-  item: PromoHubMobileListItem;
-  onOpenDetail: (id: PromotionDetailId) => void;
-}) {
+function PromotionsMobileListCard({ item }: { item: PromoHubMobileListItem }) {
   const t = useT("promotions");
   return (
-    <button
-      type="button"
+    <Link
+      href={promotionDetailHref(item.detailId)}
       className={cn(
         "promotions-mobile-feed__card group flex w-full flex-col overflow-hidden text-left",
         "glass-card--soft rounded-[var(--radius-panel)]",
@@ -82,7 +71,6 @@ function PromotionsMobileListCard({
         "transition-[transform,opacity,box-shadow] duration-[var(--motion-fast)]",
         "active:scale-[0.995] active:opacity-95",
       )}
-      onClick={() => onOpenDetail(item.detailId)}
       aria-label={t("mobile.readTermsAria", { title: item.title })}
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--surface-hover)]">
@@ -112,6 +100,6 @@ function PromotionsMobileListCard({
           </span>
         </div>
       </div>
-    </button>
+    </Link>
   );
 }

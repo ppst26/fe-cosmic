@@ -1,6 +1,7 @@
 "use client";
 
-import useSWR, { type SWRConfiguration } from "swr";
+import { useEffect } from "react";
+import useSWR, { unstable_serialize, useSWRConfig, preload, type SWRConfiguration } from "swr";
 import type { ApiError, ApiResult } from "@/lib/api/http";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { resolveApiStatus, type ResourceStatus } from "./apiStatus";
@@ -79,4 +80,45 @@ export function useApi<T>(
       void mutate(next, { revalidate: false });
     },
   };
+}
+
+/** resource ที่โหลดล่วงหน้า — key/load/auth ต้องตรงกับ hook ที่ใช้จริง (นิยามร่วมกันเป็นค่าคงที่) */
+export interface PrefetchTarget {
+  key: readonly unknown[];
+  load: () => Promise<ApiResult<unknown>>;
+  auth?: boolean;
+}
+
+/**
+ * อุ่น cache ของข้อมูลแท็บอื่นล่วงหน้า — เปิดหน้าแล้วแท็บข้างเคียงโหลดเบื้องหลังตอนว่าง
+ * ผู้ใช้กดสลับแท็บแล้วเห็นข้อมูลทันที ไม่ต้องรอโหลดครั้งแรก · ข้ามตัวที่มีข้อมูลใน cache แล้ว
+ * targets ต้องเป็นค่าคงที่ (นอก component) หรือ useMemo เพื่อไม่ให้ effect รันซ้ำ
+ */
+export function usePrefetchApi(targets: readonly PrefetchTarget[], enabled = true): void {
+  const { user, isLoading: authLoading } = useAuth();
+  const { cache } = useSWRConfig();
+  const userId = user?.id ?? null;
+
+  useEffect(() => {
+    if (!enabled || authLoading) return;
+
+    const run = () => {
+      for (const target of targets) {
+        const scope = target.auth ? userId : "public";
+        if (!scope) continue;
+        const swrKey = [...target.key, scope];
+        if (cache.get(unstable_serialize(swrKey))?.data !== undefined) continue;
+        preload(swrKey, () => unwrap(target.load)).catch(() => {
+          /* พลาดตอนอุ่น — ตอนเปิดแท็บ useApi จะโหลดและแสดง error เอง */
+        });
+      }
+    };
+
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(run, { timeout: 1500 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(run, 300);
+    return () => window.clearTimeout(id);
+  }, [targets, enabled, authLoading, userId, cache]);
 }

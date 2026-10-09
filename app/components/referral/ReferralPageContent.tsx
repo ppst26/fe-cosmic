@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import type { ReferralOverviewData } from "@/lib/api/referral";
-import { useReferralOverview } from "@/app/hooks/api/member";
+import { usePrefetchReferralTabs, useReferralOverview } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { LoginPrompt } from "../ui/LoginPrompt";
 import { ChevronRightIcon, UsersGroupIcon, WalletCryptoIcon } from "../ui/Icons";
@@ -55,6 +55,7 @@ export function ReferralPageContent({
   embedded?: boolean;
 }) {
   const overview = useReferralOverview();
+  usePrefetchReferralTabs();
   const t = useT("referral");
   return (
     <ResourceGate

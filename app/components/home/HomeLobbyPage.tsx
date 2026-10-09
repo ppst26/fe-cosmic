@@ -173,9 +173,7 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                         <WelcomeBanner items={homeBanners.welcomeSlides} />
                       </div>
 
-                      <div className="-mx-2 sm:-mx-2.5">
-                        <PromoCarousel items={homeBanners.promoCarousel} />
-                      </div>
+                      <PromoCarousel items={homeBanners.promoCarousel} />
 
                       <LobbyAnnouncementMarquee
                         messages={lobbyAnnouncements}

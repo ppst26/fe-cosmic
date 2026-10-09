@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import type { CashbackPanelsData } from "@/lib/api/cashback";
-import { useCashbackPanels } from "@/app/hooks/api/member";
+import { useCashbackPanels, usePrefetchCashbackTabs } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
@@ -36,6 +36,7 @@ export function CashbackPageContent({
   embedded = false,
 }: CashbackPageContentProps) {
   const cashbackPanels = useCashbackPanels();
+  usePrefetchCashbackTabs();
   const t = useT("cashback");
   return (
     <ResourceGate resource={cashbackPanels} loadingLabel={t("status.panelsLoading")} errorTitle={t("status.panelsError")}>

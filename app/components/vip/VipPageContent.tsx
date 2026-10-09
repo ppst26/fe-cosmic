@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import type { VipModalTabId, VipPlayerState, VipRankTier } from "@/app/types/vip";
-import { useVipPlayer, useVipRanks } from "@/app/hooks/api/member";
+import { usePrefetchVipTabs, useVipPlayer, useVipRanks } from "@/app/hooks/api/member";
 import { ResourceGate } from "@/app/components/ui/ResourceGate";
 import { cn } from "@/lib/utils";
 import { VipModalDesktopLayout } from "./VipModalDesktopLayout";
@@ -25,6 +25,7 @@ interface VipPageContentProps {
 export function VipPageContent(props: VipPageContentProps) {
   const player = useVipPlayer();
   const ranks = useVipRanks();
+  usePrefetchVipTabs();
   const t = useT("vip");
 
   return (

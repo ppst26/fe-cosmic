@@ -15,7 +15,7 @@ import {
 } from "@/lib/api/rewardFeatures";
 import { fetchVipBenefits, fetchVipPlayer, fetchVipRanks } from "@/lib/api/vip";
 import { fetchWheel } from "@/lib/api/wheel";
-import { useApi } from "@/app/hooks/useApi";
+import { useApi, usePrefetchApi, type PrefetchTarget } from "@/app/hooks/useApi";
 
 /**
  * hook ข้อมูลสมาชิก / รางวัล / VIP — component เรียกผ่านที่นี่ (SWR dedupe ข้ามหน้า)
@@ -53,3 +53,18 @@ export const useFreespins = () => useApi(["freespins"], fetchFreespins);
 
 /* ── กิจกรรม ── */
 export const useActivities = () => useApi(["activities"], fetchActivities);
+
+/* ── อุ่น cache ข้อมูลแท็บข้างเคียง (หน้า standalone ที่มีหลายแท็บ) — key/load ต้องตรงกับ hook ด้านบน ── */
+const VIP_TAB_TARGETS: readonly PrefetchTarget[] = [{ key: ["vip-benefits"], load: fetchVipBenefits }];
+const REFERRAL_TAB_TARGETS: readonly PrefetchTarget[] = [
+  { key: ["referral-users"], load: fetchReferralUsers, auth: true },
+  { key: ["referral-earnings"], load: fetchReferralEarnings, auth: true },
+];
+const CASHBACK_TAB_TARGETS: readonly PrefetchTarget[] = [{ key: ["loss-rebate"], load: fetchLossRebate, auth: true }];
+
+/** หน้า VIP — โหลดตารางสิทธิประโยชน์รอไว้ก่อนกดแท็บ */
+export const usePrefetchVipTabs = () => usePrefetchApi(VIP_TAB_TARGETS);
+/** หน้าแนะนำเพื่อน — โหลดรายชื่อเพื่อน + รายได้รอไว้ */
+export const usePrefetchReferralTabs = () => usePrefetchApi(REFERRAL_TAB_TARGETS);
+/** หน้าคืนยอด — โหลดแท็บคืนยอดเสียรอไว้ */
+export const usePrefetchCashbackTabs = () => usePrefetchApi(CASHBACK_TAB_TARGETS);

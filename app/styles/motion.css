@@ -347,19 +347,20 @@
   overflow: hidden;
 }
 
-/* Tab panel — เนื้อหาเปลี่ยนตามแท็บ (TabPanelTransition) · a/b สลับชื่อเพื่อเล่นซ้ำโดยไม่ remount */
+/* Tab panel — เนื้อหาเปลี่ยนตามแท็บ (TabPanelTransition) · a/b สลับชื่อเพื่อเล่นซ้ำโดยไม่ remount
+   เร็ว (--motion-fast) + เลื่อนสั้น ๆ — เนื้อหาต้องขึ้นทันทีที่กดแท็บ */
 .motion-tab-panel[data-flip="1"] {
-  animation: motion-tab-in-a var(--motion-slow) var(--ease-out) backwards;
+  animation: motion-tab-in-a var(--motion-fast) var(--ease-out) backwards;
 }
 
 .motion-tab-panel[data-flip="2"] {
-  animation: motion-tab-in-b var(--motion-slow) var(--ease-out) backwards;
+  animation: motion-tab-in-b var(--motion-fast) var(--ease-out) backwards;
 }
 
 @keyframes motion-tab-in-a {
   from {
     opacity: 0;
-    transform: translate3d(calc(var(--tab-dir, 0) * 18px), 8px, 0);
+    transform: translate3d(calc(var(--tab-dir, 0) * 10px), 4px, 0);
   }
   to {
     opacity: 1;
@@ -370,7 +371,7 @@
 @keyframes motion-tab-in-b {
   from {
     opacity: 0;
-    transform: translate3d(calc(var(--tab-dir, 0) * 18px), 8px, 0);
+    transform: translate3d(calc(var(--tab-dir, 0) * 10px), 4px, 0);
   }
   to {
     opacity: 1;

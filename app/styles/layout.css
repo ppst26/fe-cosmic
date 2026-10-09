@@ -229,58 +229,31 @@
 }
 
 /**
- * Modal รายละเอียดโปรโมชั่น — PromotionDetailModal.tsx · PromotionDetailPanel.tsx
+ * หน้ารายละเอียดโปรโมชั่น (/promotions/[id]) — PromotionDetailPageContent.tsx · PromotionDetailPanel.tsx
+ * ตัวแปรสีการ์ดอยู่ที่ .promo-detail-page · เลื่อนทั้งหน้า (ไม่มีกรอบ scroll ภายในเหมือน modal เดิม)
  */
-.promo-detail-modal {
+.promo-detail-page {
   --promo-detail-title-gold: linear-gradient(180deg, #fff8e7 0%, #fde047 72%, #f59e0b 100%);
-  /** การ์ด «รายละเอียด» modal มือถือ — โทนเทา Cosmicbet */
+  /** การ์ด «รายละเอียด» — โทนเทา Cosmicbet */
   --promo-detail-accord-header-bg: #45454d;
   --promo-detail-accord-body-bg: #1f1f24;
   --promo-detail-accord-border: #56565f;
   --promo-detail-block-heading: var(--text-primary);
-  width: min(calc(100vw - 2 * var(--layout-inline-gutter)), 27.5rem);
-  height: min(38rem, 90dvh);
-  max-height: min(38rem, 90dvh);
-  box-shadow:
-    0 22px 48px rgb(0 0 0 / 0.55),
-    inset 0 1px 0 rgb(255 255 255 / 0.04);
+  width: 100%;
+  max-width: 27.5rem;
+  margin-inline: auto;
 }
 
-.promo-detail-modal.cosmic-modal-shell {
-  background: color-mix(in srgb, var(--surface-solid-outer) 82%, #2c2c32);
-}
-
-.promo-detail-modal__header {
+.promotion-detail-panel--page {
   display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0.625rem 0.625rem 0.25rem;
-}
-
-.promo-detail-modal__scroll {
-  display: flex;
-  min-height: 0;
-  flex: 1;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 0.125rem var(--layout-inline-gutter) 0.875rem;
-}
-
-.promotion-detail-panel--modal {
-  display: flex;
-  min-height: 0;
-  flex: 1;
   flex-direction: column;
   gap: 0;
   padding-top: 0;
 }
 
-/** การ์ดเดียว — แบนเนอร์ + หัวข้อ + รายละเอียด (modal มือถือ) */
-.promo-detail-modal .promotion-detail-panel__unified-card {
+/** การ์ดเดียว — แบนเนอร์ + หัวข้อ + รายละเอียด (ความสูงตามเนื้อหา · เลื่อนทั้งหน้า) */
+.promo-detail-page .promotion-detail-panel__unified-card {
   display: flex;
-  min-height: 0;
-  flex: 1;
   flex-direction: column;
   overflow: hidden;
   border: 0;
@@ -288,7 +261,7 @@
   background: var(--promo-detail-accord-body-bg);
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__banner--modal {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__banner--page {
   flex-shrink: 0;
   border: 0;
   border-radius: 0;
@@ -304,18 +277,18 @@
   border-radius: inherit;
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__banner-media--natural {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__banner-media--natural {
   line-height: 0;
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__banner-media--natural img {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__banner-media--natural img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: var(--radius-panel) var(--radius-panel) 0 0;
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__banner-caption {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__banner-caption {
   background: var(--promo-detail-accord-body-bg);
 }
 
@@ -344,12 +317,10 @@
   color: transparent;
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__details--solid {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__details--solid {
   display: flex;
-  min-height: 0;
-  flex: 1;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -357,7 +328,7 @@
 }
 
 /** หัวข้อ «รายละเอียด» — เทากลาง */
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__details-heading {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__details-heading {
   flex-shrink: 0;
   margin: 0;
   padding: 0.7rem 0.875rem;
@@ -368,7 +339,7 @@
   border-bottom: 1px solid var(--promo-detail-accord-border);
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__details-heading-divider {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__details-heading-divider {
   display: none;
 }
 
@@ -379,33 +350,35 @@
 }
 
 /** เนื้อหาในการ์ด — เทาเข้มเกือบดำ */
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__details-scroll {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__details-scroll {
+  flex: none;
+  overflow: visible;
   background: var(--promo-detail-accord-body-bg);
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__accordion-body {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__accordion-body {
   padding: 0.75rem 0.875rem 0.875rem;
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__block-title {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__block-title {
   color: var(--promo-detail-block-heading);
   font-weight: 600;
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__blocks p,
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__blocks li {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__blocks p,
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__blocks li {
   color: rgb(255 255 255 / 0.92);
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__divider {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__divider {
   border-top-color: color-mix(in srgb, var(--promo-detail-accord-border) 75%, #000);
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__footer {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__footer {
   color: rgb(255 255 255 / 0.45);
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promo-detail-block-icon {
+.promo-detail-page .promotion-detail-panel--page .promo-detail-block-icon {
   border-color: color-mix(in srgb, var(--promo-detail-accord-border) 90%, #fff);
   background: color-mix(in srgb, var(--promo-detail-accord-header-bg) 55%, #000);
 }
@@ -469,7 +442,7 @@
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
 }
 
-.promo-detail-modal .promotion-detail-panel--modal .promotion-detail-panel__blocks li > span:first-child {
+.promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__blocks li > span:first-child {
   color: rgb(255 255 255 / 0.35);
 }
 

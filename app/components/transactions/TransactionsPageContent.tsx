@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import type { TransactionKind } from "@/app/types/transaction";
 import { TRANSACTION_KIND_TABS } from "@/app/data/transactionsMockData";
-import { useTransactions } from "@/app/hooks/api/transactions";
+import { usePrefetchTransactionKinds, useTransactions } from "@/app/hooks/api/transactions";
 import { ErrorState, LoadingState } from "../ui/StatusState";
 import { getDefaultTransactionDateRange } from "@/app/lib/transactionDateUtils";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
@@ -51,6 +51,7 @@ export function TransactionsPageContent({
 
   /** server กรองตามประเภท + ช่วงวันที่ (mock กรองใน lib/api) */
   const transactions = useTransactions(activeKind, appliedFrom, appliedTo);
+  usePrefetchTransactionKinds(activeKind, appliedFrom, appliedTo);
   const items = useMemo(() => transactions.data ?? [], [transactions.data]);
 
   /** เปลี่ยนแท็บหรือช่วงวันที่ → กลับหน้า 1 (ปรับ state ระหว่าง render แทน effect) */

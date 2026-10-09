@@ -3,7 +3,6 @@
 import React from "react";
 import { useT } from "@/lib/i18n/I18nProvider";
 import Image from "next/image";
-import Link from "@/lib/i18n/navigation";
 import { PromoItem } from "../../types/lobby";
 import { buildLoopedTrack, useInfiniteSnapCarousel } from "@/app/hooks/useInfiniteSnapCarousel";
 
@@ -13,6 +12,7 @@ interface PromoCarouselProps {
 
 /**
  * PromoCarousel — รูป HomeProBanner เต็มการ์ด · infinite autoplay (มือถือ hero)
+ * inset ซ้าย-ขวาตาม gutter ของหน้า (ไม่ชิดขอบจอ) · แบนเนอร์ไม่เป็นลิงก์
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx
  */
 export function PromoCarousel({ items }: PromoCarouselProps) {
@@ -44,13 +44,12 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
             /** สไลด์จริงใบแรก = LCP มือถือ (WelcomeBanner ถูกซ่อน) */
             const isLcpSlide = !entry.isClone && index === (loopEnabled ? 1 : 0);
             return (
-              <Link
+              <div
                 key={entry.key}
-                href={item.href}
+                role="group"
                 aria-label={[item.title, item.subtitle].filter(Boolean).join(" — ")}
                 aria-hidden={entry.isClone ? true : undefined}
-                tabIndex={entry.isClone ? -1 : undefined}
-                className="promo-carousel__slide group relative aspect-[2.35/1] w-full max-w-none shrink-0 snap-center snap-always overflow-hidden rounded-[var(--radius-panel)] border border-white/8 bg-[var(--surface-mid)] motion-press transition-[filter,transform] duration-150 hover:brightness-110 max-lg:rounded-[var(--radius-card)] sm:w-[78%] sm:snap-start sm:max-w-[420px]"
+                className="promo-carousel__slide relative aspect-[2.35/1] w-full max-w-none shrink-0 snap-center snap-always overflow-hidden rounded-[var(--radius-panel)] border border-white/8 bg-[var(--surface-mid)] max-lg:rounded-[var(--radius-card)] sm:w-[78%] sm:snap-start sm:max-w-[420px]"
                 style={
                   item.bannerSrc
                     ? undefined
@@ -87,7 +86,7 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
                     </div>
                   </>
                 )}
-              </Link>
+              </div>
             );
           })}
         </div>

@@ -19,3 +19,20 @@ export async function fetchPromotionDetail(
   );
   return res.ok ? (res.data?.detail ?? null) : null;
 }
+
+/**
+ * รายละเอียดโปรโมชันรายตัวแบบ ApiResult — ใช้กับ useApi (หน้า /promotions/[id])
+ * ไม่พบ → error 404 เพื่อให้หน้าแสดง "ไม่พบโปรโมชั่น"
+ */
+export async function fetchPromotionDetailResult(
+  id: PromotionDetailId,
+): Promise<ApiResult<PromotionDetailContent>> {
+  const res = await apiFetch<{ detail: PromotionDetailContent }>(
+    `/api/promotions/${encodeURIComponent(id)}`,
+  );
+  if (!res.ok) return res;
+  if (!res.data?.detail) {
+    return { ok: false, error: { code: "HTTP", status: 404, message: "Not found" } };
+  }
+  return { ok: true, status: res.status, data: res.data.detail };
+}

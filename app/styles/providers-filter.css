@@ -131,29 +131,6 @@
   }
 }
 
-/* WelcomeBanner + PromoCarousel — full bleed มือถือ + gap ระหว่างสไลด์ */
-@media (max-width: 1023px) {
-  .lobby-carousel-bleed {
-    margin-inline: calc(-1 * var(--layout-inline-gutter));
-    width: auto;
-  }
-
-  .lobby-carousel-bleed__track {
-    gap: 12px;
-    padding-inline: 0;
-    scroll-padding-inline: 0;
-  }
-
-  /* สไลด์เต็มความกว้างจอ — gap อยู่ระหว่างสไลด์ตอนเลื่อนเท่านั้น */
-  .lobby-carousel-bleed__slide {
-    flex: 0 0 100%;
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    box-sizing: border-box;
-  }
-}
-
 .welcome-banner__track {
   scroll-padding-inline: 0;
 }
@@ -163,14 +140,15 @@
 }
 
 @media (max-width: 1023px) {
+  /* inset ตาม gutter หน้า — การ์ดมุมโค้ง จึงเว้น gap ระหว่างสไลด์ตอนเลื่อน (hook อ่าน step จาก offsetLeft) */
   .promo-carousel__track {
-    gap: 0;
+    gap: 12px;
     padding-inline: 0;
     scroll-padding-inline: 0;
     box-sizing: border-box;
   }
 
-  /* หนึ่งสไลด์เต็มความกว้าง — ไม่ peek สไลด์ถัดไป */
+  /* หนึ่งสไลด์เต็มความกว้างของ container — ไม่ peek สไลด์ถัดไป */
   .promo-carousel__slide {
     flex: 0 0 100%;
     width: 100%;

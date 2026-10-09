@@ -12,7 +12,8 @@ interface WelcomeBannerProps {
 }
 
 /**
- * WelcomeBanner — carousel แบนเนอร์ hero เต็มความกว้าง · infinite loop · autoplay · dots
+ * WelcomeBanner — carousel แบนเนอร์ hero · inset ซ้าย-ขวาตาม gutter ของหน้า (ไม่ชิดขอบจอ) · ไม่เป็นลิงก์
+ * infinite loop · autoplay · dots
  * ถูกเรียกใช้ใน HomeLobbyPage.tsx (มือถือ — carousel บนสุด)
  */
 export function WelcomeBanner({ items }: WelcomeBannerProps) {
@@ -27,13 +28,13 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
 
   return (
     <section
-      className="welcome-banner lobby-carousel-bleed relative my-0 w-full min-w-0 sm:my-2"
+      className="welcome-banner relative my-0 w-full min-w-0 sm:my-2"
       aria-label={t("welcomeBanner.ariaLabel")}
     >
       <div className="relative">
         <div
           ref={scrollContainerRef}
-          className="welcome-banner__track lobby-carousel-bleed__track flex overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory max-lg:gap-3 lg:gap-2 lg:px-0"
+          className="welcome-banner__track flex overflow-x-auto overscroll-x-contain no-scrollbar scroll-smooth snap-x snap-mandatory max-lg:gap-3 lg:gap-2 lg:px-0"
           tabIndex={0}
           aria-label={t("welcomeBanner.slidesAriaLabel")}
         >
@@ -43,7 +44,7 @@ export function WelcomeBanner({ items }: WelcomeBannerProps) {
             return (
               <article
                 key={entry.key}
-                className="welcome-banner__slide lobby-carousel-bleed__slide relative flex aspect-[16/10] w-full shrink-0 snap-start items-center justify-center overflow-hidden rounded-none max-lg:rounded-none lg:rounded-[var(--radius-panel)]"
+                className="welcome-banner__slide relative flex aspect-[16/10] w-full shrink-0 snap-start items-center justify-center overflow-hidden rounded-[var(--radius-card)] lg:rounded-[var(--radius-panel)]"
                 aria-label={entry.item.title}
                 aria-hidden={entry.isClone ? true : undefined}
               >

@@ -9,7 +9,7 @@ import type {
 } from "@/app/types/promotions";
 import { useT } from "@/lib/i18n/I18nProvider";
 
-export type PromotionDetailPanelVariant = "modal" | "hub";
+export type PromotionDetailPanelVariant = "page" | "hub";
 
 /** ตัด emoji ออกจากข้อความรายละเอียดโปร — ห้ามแสดง emoji ในเนื้อหา */
 function withoutEmoji(text: string): string {
@@ -22,9 +22,9 @@ interface PromotionDetailPanelProps {
 }
 
 /**
- * เนื้อหารายละเอียดโปรโมชั่น — ใช้ใน PromotionDetailModal และ PromotionsDesktopHubLayout (panel ขวา)
+ * เนื้อหารายละเอียดโปรโมชั่น — ใช้ใน หน้า /promotions/[id] (variant page) และ PromoHubDesktopMasterDetail (variant hub · panel ขวา)
  */
-export function PromotionDetailPanel({ content, variant = "modal" }: PromotionDetailPanelProps) {
+export function PromotionDetailPanel({ content, variant = "page" }: PromotionDetailPanelProps) {
   const isHub = variant === "hub";
 
   if (isHub) {
@@ -37,7 +37,7 @@ export function PromotionDetailPanel({ content, variant = "modal" }: PromotionDe
   }
 
   return (
-    <div className="promotion-detail-panel promotion-detail-panel--modal">
+    <div className="promotion-detail-panel promotion-detail-panel--page">
       <article className="promotion-detail-panel__unified-card">
         <PromotionDetailBanner content={content} isHub={false} />
         <PromotionDetailDetailsSection body={content} />
@@ -62,7 +62,7 @@ function PromotionDetailBanner({
           ? `promotion-detail-panel__banner relative overflow-hidden ${
               hasBannerImage ? "promotion-detail-panel__banner--with-media p-0" : "px-4 py-4"
             }`
-          : `promotion-detail-panel__banner promotion-detail-panel__banner--modal relative overflow-hidden ${
+          : `promotion-detail-panel__banner promotion-detail-panel__banner--page relative overflow-hidden ${
               hasBannerImage ? "promotion-detail-panel__banner--with-media p-0" : "px-3.5 py-3.5 sm:px-4 sm:py-4"
             }`
       }
@@ -146,7 +146,7 @@ function PromotionDetailBanner({
   );
 }
 
-/** บล็อกรายละเอียดใน modal — แสดงเต็ม ไม่มี accordion */
+/** บล็อกรายละเอียดในหน้า — แสดงเต็ม ไม่มี accordion */
 function PromotionDetailDetailsSection({ body }: { body: PromotionDetailContent }) {
   const t = useT("promotions");
   return (

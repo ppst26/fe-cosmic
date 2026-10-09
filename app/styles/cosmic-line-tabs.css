@@ -142,8 +142,8 @@
 
 .cosmic-line-tablist[data-indicator="animated"] .cosmic-line-tab-indicator {
   transition:
-    transform var(--motion-slow) var(--ease-out),
-    width var(--motion-slow) var(--ease-out);
+    transform var(--motion-base) var(--ease-out),
+    width var(--motion-base) var(--ease-out);
 }
 
 /* มีเส้นเลื่อนแล้ว — ปิดเส้นของแท็บเอง */

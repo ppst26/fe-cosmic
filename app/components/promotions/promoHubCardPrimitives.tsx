@@ -18,7 +18,7 @@ export function PromoHubPillLabel({ label }: { label: string }) {
 /** การ์ดโปรโมชัน / กิจกรรม — soft glass + gradient ชั้นใน */
 export function promoCardButtonClass(extra?: string) {
   return [
-    "glass-card--soft relative w-full overflow-hidden rounded-[var(--radius-panel)] text-left",
+    "glass-card--soft relative block w-full overflow-hidden rounded-[var(--radius-panel)] text-left",
     "cursor-pointer transition-[transform,box-shadow] duration-[var(--motion-fast)] active:scale-[0.995]",
     extra ?? "",
   ]

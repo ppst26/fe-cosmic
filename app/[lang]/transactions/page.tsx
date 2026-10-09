@@ -1,7 +1,6 @@
 "use client";
 
 import React, { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/lib/i18n/navigation";
 import type { TransactionKind } from "@/app/types/transaction";
 import { useAuth } from "@/app/components/auth/AuthProvider";
@@ -12,6 +11,7 @@ import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader"
 import { TransactionsPageContent } from "@/app/components/transactions/TransactionsPageContent";
 import { BOTTOM_NAV_DATA } from "@/app/data/lobbyMockData";
 import { useT } from "@/lib/i18n/I18nProvider";
+import { useUrlTab } from "@/app/hooks/useUrlTab";
 
 function kindFromSearchParam(value: string | null): TransactionKind {
   if (value === "withdraw" || value === "promotion" || value === "bet") {
@@ -20,23 +20,17 @@ function kindFromSearchParam(value: string | null): TransactionKind {
   return "deposit";
 }
 
-function transactionsHref(kind: TransactionKind): string {
-  if (kind === "deposit") return "/transactions";
-  return `/transactions?kind=${kind}`;
-}
-
 /**
  * หน้ารายการธุรกรรม — แทน bottom sheet
  */
 function TransactionsPageInner() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { isAuthenticated, isLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const t = useT("transactions");
 
-  const kindParam = searchParams.get("kind");
-  const activeKind = kindFromSearchParam(kindParam);
+  /** สลับประเภททันที (state) แล้วค่อยสะท้อนลง URL ด้วย history.replaceState — ไม่รอ navigation */
+  const [activeKind, handleSelectKind] = useUrlTab<TransactionKind>("kind", kindFromSearchParam, "deposit");
 
   useEffect(() => {
     if (isLoading) return;
@@ -44,10 +38,6 @@ function TransactionsPageInner() {
       router.replace("/");
     }
   }, [isAuthenticated, isLoading, router]);
-
-  const handleSelectKind = (kind: TransactionKind) => {
-    router.replace(transactionsHref(kind), { scroll: false });
-  };
 
   if (isLoading || !isAuthenticated) {
     return null;

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import Link from "@/lib/i18n/navigation";
 import { matchesPromoHubCategory } from "@/lib/promotions/promotionFilters";
 import type {
   PromoHubCategoryFilterId,
@@ -8,7 +9,6 @@ import type {
   PromoHubHero,
   PromotionDetailId,
 } from "@/app/types/promotions";
-import { PromotionDetailModal } from "./PromotionDetailModal";
 import { PromotionsCategoryTabs } from "./PromotionsCategoryTabs";
 import { PromotionsMobileFeed } from "./PromotionsMobileFeed";
 import { PromoHubDesktopMasterDetail } from "./PromoHubDesktopMasterDetail";
@@ -16,10 +16,11 @@ import { PromotionsCatalogProvider, usePromotionsCatalog } from "./PromotionsCat
 import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { ErrorState, LoadingState } from "../ui/StatusState";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
+import { promotionDetailHref } from "./promotionDetailHref";
 import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
- * เนื้อหาหน้าโปรโมชั่น — ใช้ใน /promotions (กิจกรรมอยู่ที่ /event)
+ * เนื้อหาหน้าโปรโมชั่น — ใช้ใน /promotions (กิจกรรมอยู่ที่ /event) · กดโปรเปิดหน้ารายละเอียด /promotions/[id]
  */
 export function PromotionsHubPageContent({ embedded = false }: { embedded?: boolean }) {
   return (
@@ -32,11 +33,7 @@ export function PromotionsHubPageContent({ embedded = false }: { embedded?: bool
 function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolean }) {
   const t = useT("promotions");
   const { catalog, loading, error: loadError, reload } = usePromotionsCatalog();
-  const [detailId, setDetailId] = useState<PromotionDetailId | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
-
-  const openDetail = (id: PromotionDetailId) => setDetailId(id);
-  const closeDetail = () => setDetailId(null);
 
   const hero = catalog?.hero;
   const featured = catalog?.featured ?? [];
@@ -75,7 +72,7 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
 
       {catalog ? (
         <div className="lg:hidden">
-          <PromotionsMobileFeed onOpenDetail={openDetail} />
+          <PromotionsMobileFeed />
         </div>
       ) : null}
 
@@ -96,7 +93,7 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
           ) : null}
 
           {showHero && hero ? (
-            <PromoHubHeroBanner hero={hero} onOpenDetail={openDetail} />
+            <PromoHubHeroBanner hero={hero} />
           ) : null}
 
           {featuredItems.length > 0 ? (
@@ -107,7 +104,7 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
               <ul className="flex flex-col gap-3">
                 {featuredItems.map((item) => (
                   <li key={item.id}>
-                    <FeaturedPromoCard item={item} onOpenDetail={openDetail} />
+                    <FeaturedPromoCard item={item} />
                   </li>
                 ))}
               </ul>
@@ -116,24 +113,16 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
         </div>
       ) : null}
 
-      <PromotionDetailModal detailId={detailId} onClose={closeDetail} />
     </>
   );
 }
 
-function PromoHubHeroBanner({
-  hero,
-  onOpenDetail,
-}: {
-  hero: PromoHubHero;
-  onOpenDetail: (id: PromotionDetailId) => void;
-}) {
+function PromoHubHeroBanner({ hero }: { hero: PromoHubHero }) {
   return (
-    <button
-      type="button"
+    <Link
+      href={promotionDetailHref(hero.detailId)}
       className={promoCardButtonClass("min-h-[168px] sm:min-h-[188px]")}
       aria-label={`${hero.title} — ${hero.ctaLabel}`}
-      onClick={() => onOpenDetail(hero.detailId)}
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -154,25 +143,18 @@ function PromoHubHeroBanner({
         </div>
         <PromoHeroCharacterGraphic className="pointer-events-none w-[42%] max-w-[160px] shrink-0 self-end sm:max-w-[190px]" />
       </div>
-    </button>
+    </Link>
   );
 }
 
-function FeaturedPromoCard({
-  item,
-  onOpenDetail,
-}: {
-  item: PromoHubFeaturedItem;
-  onOpenDetail: (id: PromotionDetailId) => void;
-}) {
+function FeaturedPromoCard({ item }: { item: PromoHubFeaturedItem }) {
   const graphic = featuredGraphicForDetail(item.detailId);
 
   return (
-    <button
-      type="button"
+    <Link
+      href={promotionDetailHref(item.detailId)}
       className={promoCardButtonClass()}
       aria-label={`${item.title} — ${item.ctaLabel}`}
-      onClick={() => onOpenDetail(item.detailId)}
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-90"
@@ -191,7 +173,7 @@ function FeaturedPromoCard({
         </div>
         <div className="flex shrink-0 items-center justify-end pr-0.5">{graphic}</div>
       </div>
-    </button>
+    </Link>
   );
 }
 
