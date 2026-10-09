@@ -2,9 +2,9 @@
 
 import React from "react";
 
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/lib/i18n/navigation";
 
 import {
   REWARD_FREESPINS_COMING_SOON_LABEL,

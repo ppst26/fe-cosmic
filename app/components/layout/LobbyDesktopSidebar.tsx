@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from "@/lib/i18n/navigation";
+import { useRouter } from "@/lib/i18n/navigation";
 import type { CategoryId, CategoryItem } from "@/app/types/lobby";
 import { ContactNavIcon } from "../ui/Icons";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";

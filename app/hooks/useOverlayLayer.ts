@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/lib/i18n/navigation";
 import { useUrlSearchParams } from "@/app/hooks/useUrlSearchParams";
 import {
   OVERLAY_LAYER_KEY,

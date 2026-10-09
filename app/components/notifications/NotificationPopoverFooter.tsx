@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import { NOTIFICATION_POPOVER_SOCIAL } from "@/app/data/notificationsMockData";
 
 /**

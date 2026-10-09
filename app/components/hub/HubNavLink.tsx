@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import type { LinkProps } from "next/link";
 import { parseHubFromHref } from "./hubModalRegistry";
 import { useDesktopHubModal } from "./DesktopHubModalProvider";

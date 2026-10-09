@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import { Heart, Users } from "lucide-react";
 import type { MostOnlineLobbyItem } from "@/app/types/lobby";
 import { cn } from "@/lib/utils";

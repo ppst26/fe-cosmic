@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 // สไตล์วงล้อโหลดเฉพาะหน้า /wheel — ไม่อยู่ใน globals.css แล้ว (ใช้ที่นี่ที่เดียว)
 import "@/app/styles/lucky-wheel.css";
 import { useWheel } from "@/app/hooks/api/member";

@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import { useContainedVerticalScroll } from "./useContainedVerticalScroll";
 import type { LotteryCatalogEntry } from "@/app/types/lottery";
 import { useLotteryCatalog } from "@/app/hooks/api/lottery";

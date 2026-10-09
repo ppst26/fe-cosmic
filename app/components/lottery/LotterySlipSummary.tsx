@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useToast } from "@/context/ToastContext";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import type { LotterySlipLine, LotterySubmittedSlip } from "@/app/types/lotterySlip";
 import { formatBaht, formatLotteryDigitsDisplay, formatLotterySlipDateTime } from "./lotteryUtils";
 import { CopyIcon } from "../ui/Icons";

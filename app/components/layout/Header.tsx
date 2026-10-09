@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "@/lib/i18n/navigation";
+import { usePathname } from "@/lib/i18n/navigation";
 import { useIsClient } from "@/app/hooks/useIsClient";
 import { CosmicbetLogo, SearchIcon, HamburgerMenuIcon, HistoryIcon } from "../ui/Icons";
 import { HeaderWalletChip } from "./HeaderWalletChip";

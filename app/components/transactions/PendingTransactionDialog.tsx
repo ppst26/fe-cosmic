@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useToast } from "@/context/ToastContext";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import { Dialog } from "radix-ui";
 import { CloseIcon, CopyIcon } from "../ui/Icons";
 import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";

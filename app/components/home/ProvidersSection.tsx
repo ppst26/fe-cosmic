@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import { HOME_PROVIDER_LOGO_MARQUEE } from "../../data/homeProviderLogosData";
 import { SectionIcon } from "../ui/SectionIcon";
 import { SectionHeader } from "../ui/SectionHeader";

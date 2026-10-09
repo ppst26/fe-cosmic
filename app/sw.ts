@@ -2,6 +2,7 @@
 /// <reference lib="webworker" />
 import { defaultCache } from "@serwist/turbopack/worker";
 import { NetworkOnly, type PrecacheEntry, type SerwistGlobalConfig, Serwist } from "serwist";
+import { DEFAULT_LOCALE, LOCALES } from "../lib/i18n/config";
 
 declare global {
   interface WorkerGlobalScope extends SerwistGlobalConfig {
@@ -10,6 +11,26 @@ declare global {
 }
 
 declare const self: ServiceWorkerGlobalScope;
+
+/**
+ * entry แรกที่ match ชนะ — ภาษาอื่นเทียบ prefix ก่อน แล้วไทยรับทุก document ที่เหลือ
+ * ไทยไม่มี prefix ใน URL (/offline) — ต้องตรงกับ additionalPrecacheEntries ใน app/serwist/[path]/route.ts
+ */
+const offlineFallbacks = [
+  ...LOCALES.filter((code) => code !== DEFAULT_LOCALE).map((code) => ({
+    url: `/${code}/offline`,
+    matcher({ request }: { request: Request }) {
+      const { pathname } = new URL(request.url);
+      return request.destination === "document" && (pathname === `/${code}` || pathname.startsWith(`/${code}/`));
+    },
+  })),
+  {
+    url: "/offline",
+    matcher({ request }: { request: Request }) {
+      return request.destination === "document";
+    },
+  },
+];
 
 /**
  * Service worker ของ PWA มือถือ
@@ -32,16 +53,7 @@ const serwist = new Serwist({
     },
     ...defaultCache,
   ],
-  fallbacks: {
-    entries: [
-      {
-        url: "/offline",
-        matcher({ request }) {
-          return request.destination === "document";
-        },
-      },
-    ],
-  },
+  fallbacks: { entries: offlineFallbacks },
 });
 
 serwist.addEventListeners();

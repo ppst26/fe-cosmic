@@ -2,8 +2,8 @@
 
 import React, { useMemo } from "react";
 import { useToast } from "@/context/ToastContext";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from "@/lib/i18n/navigation";
+import { useRouter } from "@/lib/i18n/navigation";
 import { useCashbackPanels, useReferralOverview } from "@/app/hooks/api/member";
 import { useAuth } from "../auth/AuthProvider";
 import { useDeposit } from "../deposit/DepositProvider";

@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "title": "Cosmicbet — The Kingdom of Thrills",
+    "description": "Cosmicbet Front-end Gaming Lobby"
+  },
+  "common": {
+    "language": "Language"
+  },
+  "nav": {},
+  "auth": {},
+  "errors": {
+    "notFoundTitle": "Page not found",
+    "backHome": "Back to home"
+  }
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/i18n/navigation";
 import { submitLotteryBetSlip } from "@/lib/lottery/submitBetSlip";
 import type { SubmitLotteryBetRequest } from "@/app/types/lotteryBetApi";
 

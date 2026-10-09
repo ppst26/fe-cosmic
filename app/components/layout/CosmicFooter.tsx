@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import {
   FOOTER_COPYRIGHT,
   FOOTER_DESKTOP_COLUMNS,

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import type { LotteryFlagTone } from "@/app/types/lottery";
 import { getLotteryIconSrc } from "@/app/data/lotteryIconAssets";
 import { cn } from "@/lib/utils";

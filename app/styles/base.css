@@ -4,7 +4,7 @@ html {
   background-color: var(--cosmic-page-base);
 }
 
-/** โทนข้อความเมื่อใช้ร่วมกับ .cosmic-bg บน <html> (app/layout.tsx) */
+/** โทนข้อความเมื่อใช้ร่วมกับ .cosmic-bg บน <html> (app/[lang]/layout.tsx) */
 .cosmic-page {
   color: var(--text-primary);
 }
@@ -23,11 +23,17 @@ html {
 
 body {
   color: var(--text-primary);
-  font-family: var(--font-noto-sans-thai), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   background-color: transparent;
+}
+
+/** พม่า / เขมร มีสระบน-ล่างสูง — ตั้งที่ html ให้สืบทอด แต่ class leading-* ยังทับได้ */
+html:lang(my),
+html:lang(km) {
+  line-height: 1.7;
 }
 
 @media (max-width: 1023px) {

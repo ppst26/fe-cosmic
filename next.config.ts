@@ -68,6 +68,10 @@ const STATIC_IMAGE_SOURCES = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    /** root layout อยู่ใต้ app/[lang] — URL ที่ไม่ตรง route ใช้ app/global-not-found.tsx */
+    globalNotFound: true,
+  },
   images: {
     remotePatterns: imageRemotePatterns(),
     /**

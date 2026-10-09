@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/lib/i18n/navigation";
 import { CategoryItem, CategoryId } from "../../types/lobby";
 import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";

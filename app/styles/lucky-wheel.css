@@ -872,7 +872,7 @@
 }
 
 .lucky-wheel__slice-label {
-  font-family: var(--font-noto-sans-thai), sans-serif;
+  font-family: var(--font-sans);
   fill: var(--wheel-label-color, var(--text-primary));
 }
 

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLobbyMobileHeaderHeight } from "@/app/hooks/useLobbyMobileHeaderHeight";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/lib/i18n/navigation";
 import { Header } from "../layout/Header";
 import { RightMenuDrawer } from "../layout/RightMenuDrawer";
 import { useAuth, AuthGate } from "../auth/AuthProvider";

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import type { LobbyTournamentSectionItem } from "@/app/types/lobby";
 import { MenuItemIcon } from "../layout/MenuItemIcon";
 import { SectionHeader } from "../ui/SectionHeader";

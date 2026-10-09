@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import { HubNavLink } from "../hub/HubNavLink";
 import { hrefToHubId } from "../hub/hubModalRegistry";
 import { FeatureActionItem } from "../../types/lobby";

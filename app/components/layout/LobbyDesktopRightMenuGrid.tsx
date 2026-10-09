@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import { HubNavLink } from "@/app/components/hub/HubNavLink";
 import { hrefToHubId } from "@/app/components/hub/hubModalRegistry";
 import { DESKTOP_RIGHT_MENU_TILES } from "@/app/data/desktopLobbyMockData";

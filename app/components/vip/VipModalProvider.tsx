@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/i18n/navigation";
 import { useUrlSearchParams } from "@/app/hooks/useUrlSearchParams";
 import type { VipModalTabId } from "@/app/types/vip";
 import {

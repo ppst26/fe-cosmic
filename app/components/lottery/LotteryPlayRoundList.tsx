@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import type { LotteryPlayRound } from "@/app/types/lottery";
 import {
   LOTTERY_LOW_FREQ_MAX_ROUNDS,

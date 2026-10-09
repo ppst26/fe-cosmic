@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import { PromoItem } from "../../types/lobby";
 import { buildLoopedTrack, useInfiniteSnapCarousel } from "@/app/hooks/useInfiniteSnapCarousel";
 

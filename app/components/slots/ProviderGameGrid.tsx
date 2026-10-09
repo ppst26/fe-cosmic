@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/i18n/navigation";
 import { buildGamePlayHref } from "@/lib/gamePlayPaths";
 import type { ProviderGameItem } from "@/app/types/providers";
 import {

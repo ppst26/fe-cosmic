@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import type { LotteryResultRow } from "@/app/types/lottery";
 import { LOTTERY_RESULT_ROW_ICON_SLUG } from "@/app/data/lotteryIconAssets";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";

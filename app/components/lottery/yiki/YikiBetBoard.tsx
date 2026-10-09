@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/lib/i18n/navigation";
 import type { LotteryFlagTone, ThaiLottoBetTypeId } from "@/app/types/lottery";
 import type {
   YikiBetEntry,

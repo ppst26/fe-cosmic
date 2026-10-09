@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/lib/i18n/navigation";
 import { type ReactNode, useMemo } from "react";
 import { createPortal } from "react-dom";
 

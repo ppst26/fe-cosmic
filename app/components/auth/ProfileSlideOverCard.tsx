@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/i18n/navigation";
 import { Dialog } from "radix-ui";
 import { useProfile } from "@/app/hooks/api/account";
 import { useVipModal } from "../vip/VipModalProvider";

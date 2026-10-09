@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from "@/lib/i18n/navigation";
+import { useRouter } from "@/lib/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { HubNavLink } from "@/app/components/hub/HubNavLink";
 import {
