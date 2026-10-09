@@ -10,6 +10,10 @@ import { MenuItemIcon } from "./MenuItemIcon";
 import { MenuDrawerUserAvatar } from "./MenuDrawerUserAvatar";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
+import { useLanguagePicker } from "../i18n/LanguagePickerProvider";
+import { LocaleFlag } from "../i18n/LocaleFlag";
+import { useT } from "@/lib/i18n/I18nProvider";
+import { useLocale } from "@/lib/i18n/navigation";
 import {
   MENU_DIALOG_MOBILE_GRID_ITEMS,
   MENU_DIALOG_MOBILE_LIST_ITEMS,
@@ -39,6 +43,9 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
   const isDesktop = useIsDesktop();
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
+  const { openLanguagePicker } = useLanguagePicker();
+  const locale = useLocale();
+  const tCommon = useT("common");
   const { openHub } = useDesktopHubModal();
   const { isAuthenticated, isLoading } = useAuth();
   const { open: openLogin } = useOverlayLayer("login");
@@ -111,29 +118,41 @@ export function RightMenuDrawer({ isOpen, onClose }: RightMenuDrawerProps) {
         onClose();
         setTimeout(() => openCouponRedeem(), 0);
         break;
+      case "language":
+        onClose();
+        setTimeout(() => openLanguagePicker(), 0);
+        break;
     }
   };
 
   const renderGridTile = (tile: MenuDialogTile, index: number) => {
     const comingSoon = tile.comingSoon === true;
+    /** ไทล์ภาษา — ไอคอนเป็นธงภาษาปัจจุบัน · ป้ายจาก dictionary ให้หาเจอในทุกภาษา */
+    const isLanguage = tile.action === "language";
 
     const content = (
       <div className="flex flex-col items-center justify-center gap-1.5 w-full min-w-0 px-0.5 text-center">
-        <MenuItemIcon
-          iconId={tile.iconId}
-          variant="asset"
-          className={cn(
-            "menu-grid-icon object-contain shrink-0 lg:h-9 lg:w-9",
-            comingSoon && "opacity-45 grayscale-[0.35]",
-          )}
-        />
+        {isLanguage ? (
+          <span className="menu-grid-icon flex shrink-0 items-center justify-center lg:h-9 lg:w-9">
+            <LocaleFlag locale={locale} className="h-[78%] w-[78%]" />
+          </span>
+        ) : (
+          <MenuItemIcon
+            iconId={tile.iconId}
+            variant="asset"
+            className={cn(
+              "menu-grid-icon object-contain shrink-0 lg:h-9 lg:w-9",
+              comingSoon && "opacity-45 grayscale-[0.35]",
+            )}
+          />
+        )}
         <span
           className={cn(
             "menu-grid-label w-full font-medium leading-snug lg:text-[11.5px]",
             comingSoon ? "text-[var(--text-muted)]" : "text-white",
           )}
         >
-          {tile.label}
+          {isLanguage ? tCommon("language") : tile.label}
         </span>
         {comingSoon ? (
           <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--accent-muted)]">

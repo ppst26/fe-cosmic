@@ -4,7 +4,12 @@
     "description": "Cosmicbet Front-end Gaming Lobby"
   },
   "common": {
-    "language": "ภาษา"
+    "language": "ภาษา",
+    "languagePicker": {
+      "title": "เลือกภาษา",
+      "description": "เปลี่ยนภาษาที่แสดงบนเว็บไซต์",
+      "close": "ปิดหน้าเลือกภาษา"
+    }
   },
   "nav": {},
   "auth": {},

@@ -12,6 +12,7 @@ export function menuTileRequiresAuth(tile: MenuDialogTile): boolean {
 export const MENU_DIALOG_ACTION_REQUIRES_AUTH: Record<MenuDialogAction, boolean> = {
   "vip-rank": true,
   coupon: true,
+  language: false,
 };
 
 export function menuActionRequiresAuth(action: MenuDialogAction): boolean {
@@ -124,4 +125,6 @@ export const MENU_DIALOG_MOBILE_GRID_ITEMS: MenuDialogTile[] = [
   { id: "check-in", label: "เช็คอิน", href: "/missions/check-in", iconId: "check-in", requiresAuth: true },
   { id: "gems-shop", label: "ร้านค้า Gems", href: "/gems-store", iconId: "gems", requiresAuth: true },
   { id: "wheel", label: "วงล้อ", href: "/wheel", iconId: "wheel", requiresAuth: true },
+  /** ไอคอนเป็นธงภาษาปัจจุบัน (RightMenuDrawer) · ไม่ต้องล็อกอิน */
+  { id: "language", label: "ภาษา", action: "language", iconId: "language" },
 ];

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import type { CategoryId } from "@/app/types/lobby";
 import { BOTTOM_NAV_DATA, CATEGORIES_DATA } from "@/app/data/lobbyMockData";
 import { useCouponRedeem } from "@/app/components/coupon/CouponRedeemProvider";
+import { useLanguagePicker } from "@/app/components/i18n/LanguagePickerProvider";
+import type { MenuDialogAction } from "@/app/types/menu";
 import { useVipModal } from "@/app/components/vip/VipModalProvider";
 import { SlotProvidersHeader } from "@/app/components/slots/SlotProvidersHeader";
 import { cn } from "@/lib/utils";
@@ -45,9 +47,12 @@ export function LobbyDesktopPageShell({
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
 
-  const handleSidebarMenuAction = (action: "vip-rank" | "coupon") => {
+  const { openLanguagePicker } = useLanguagePicker();
+
+  const handleSidebarMenuAction = (action: MenuDialogAction) => {
     if (action === "vip-rank") openVipModal();
     if (action === "coupon") openCouponRedeem();
+    if (action === "language") openLanguagePicker();
   };
 
   const { headerMeasureRef, shellStyle } = useLobbyMobileHeaderHeight();

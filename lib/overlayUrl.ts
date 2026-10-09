@@ -13,7 +13,8 @@ export type OverlayLayer =
   | "hub"
   | "login"
   | "signup"
-  | "menu";
+  | "menu"
+  | "language";
 
 const OVERLAY_LAYERS: OverlayLayer[] = [
   "deposit",
@@ -25,6 +26,7 @@ const OVERLAY_LAYERS: OverlayLayer[] = [
   "login",
   "signup",
   "menu",
+  "language",
 ];
 
 export type VipModalTabParam = "my-level" | "rank" | "benefits";

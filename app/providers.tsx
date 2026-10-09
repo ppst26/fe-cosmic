@@ -18,6 +18,7 @@ import { GlobalAuthOverlays } from "@/app/components/auth/GlobalAuthOverlays";
 import { NotificationProvider } from "@/app/components/notifications/NotificationProvider";
 import { ToastProvider } from "@/context/ToastContext";
 import { PwaInstallProvider } from "@/app/components/pwa/PwaInstallProvider";
+import { LanguagePickerProvider } from "@/app/components/i18n/LanguagePickerProvider";
 
 /**
  * ค่าเริ่มต้น SWR ทั้งแอป — ไม่ดึงใหม่ทุกครั้งที่สลับแท็บ · 401 / 4xx ไม่ retry (retry เฉพาะ network / 5xx สูงสุด 3 ครั้ง)
@@ -38,7 +39,7 @@ const SWR_DEFAULTS = {
 };
 
 /**
- * ครอบ client providers — query string (ไม่ bailout SSR) + Auth + SWR + PWA มือถือ + แลกคูปอง + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
+ * ครอบ client providers — query string (ไม่ bailout SSR) + Auth + SWR + PWA มือถือ + แลกคูปอง + เลือกภาษา + pending tx + ฝาก/ถอน + VIP + ธุรกรรม
  */
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -48,6 +49,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
       <PwaInstallProvider>
       <AuthProvider>
         <CouponRedeemProvider>
+        <LanguagePickerProvider>
           <PendingTransactionProvider>
             <DepositProvider>
               <WithdrawProvider>
@@ -67,6 +69,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
               </WithdrawProvider>
             </DepositProvider>
           </PendingTransactionProvider>
+        </LanguagePickerProvider>
         </CouponRedeemProvider>
       </AuthProvider>
       </PwaInstallProvider>

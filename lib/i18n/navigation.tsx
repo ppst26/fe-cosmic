@@ -53,14 +53,17 @@ export default function Link({ href, ...props }: LinkProps) {
   return <NextLink href={localized} {...props} />;
 }
 
-/** สลับภาษา: ตั้ง cookie + เปลี่ยน prefix โดยคง path/query/hash */
+/**
+ * สลับภาษา: ตั้ง cookie + เปลี่ยน prefix · href = path ปลายทาง (ค่าเริ่มต้นคง path/query/hash ปัจจุบัน)
+ * root layout เปลี่ยนตาม [lang] จึงเป็นการโหลดหน้าใหม่ทั้งหน้า
+ */
 export function useSwitchLocale() {
   const router = useNextRouter();
   return useCallback(
-    (next: Locale) => {
+    (next: Locale, href?: string) => {
       document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE_SEC}; samesite=lax`;
       const { pathname, search, hash } = window.location;
-      router.replace(withLocale(`${pathname}${search}${hash}`, next), { scroll: false });
+      router.replace(withLocale(href ?? `${pathname}${search}${hash}`, next), { scroll: false });
     },
     [router],
   );

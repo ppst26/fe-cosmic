@@ -25,6 +25,8 @@ import { TournamentsSection } from "./TournamentsSection";
 import { FloatingBottomNav } from "../layout/FloatingBottomNav";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
+import { useLanguagePicker } from "../i18n/LanguagePickerProvider";
+import type { MenuDialogAction } from "@/app/types/menu";
 import { resolveLobbyCategoryFromPath } from "@/app/lib/lobbyCategoryFromPath";
 import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { cn } from "@/lib/utils";
@@ -59,9 +61,12 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
   const { openVipModal } = useVipModal();
   const { openCouponRedeem } = useCouponRedeem();
 
-  const handleSidebarMenuAction = (action: "vip-rank" | "coupon") => {
+  const { openLanguagePicker } = useLanguagePicker();
+
+  const handleSidebarMenuAction = (action: MenuDialogAction) => {
     if (action === "vip-rank") openVipModal();
     if (action === "coupon") openCouponRedeem();
+    if (action === "language") openLanguagePicker();
   };
 
   const isHomeLobby = activeCategoryId === "home";

@@ -1,6 +1,6 @@
 /* ── จาก app/data/menuMockData.ts ── */
 
-export type MenuDialogAction = "vip-rank" | "coupon";
+export type MenuDialogAction = "vip-rank" | "coupon" | "language";
 
 export interface MenuDialogTile {
   id: string;

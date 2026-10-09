@@ -171,11 +171,10 @@ interface LocalizedPayload<T> {
 
 ## 9. UI: ตัวสลับภาษา
 
-- **มือถือ**: อยู่ในเมนู slide-over และหน้า profile → "ภาษา" เปิดเป็น sheet รายการ 9 ภาษา
-- **Desktop**: ปุ่มเล็กใน header แสดงตัวย่อ (`TH`, `EN`, …) เปิดเป็น dropdown
-- แต่ละรายการแสดงชื่อในภาษานั้นเอง (`ລາວ`, `မြန်မာ`, `ខ្មែរ`) ไม่ใช้ธงชาติ
-- ใช้ shadcn primitives ที่มีอยู่ (`Sheet` / `DropdownMenu`) ตาม `design.md`
-- เมื่อเลือก: คง path, query, hash เดิม และเปลี่ยนแค่ prefix
+- **มือถือ** (ทำแล้ว 2026-10-10): ไทล์ "ภาษา" ช่องสุดท้ายของ grid 3 คอลัมน์ในเมนูมือถือ (`MENU_DIALOG_MOBILE_GRID_ITEMS`) ไอคอนเป็นธงของภาษาปัจจุบัน → เปิด bottom sheet `LanguagePickerSheet` (sync `?layer=language`) ไม่ต้องล็อกอิน
+- **Desktop**: ยังไม่มีจุดเปิด — ตัดสินใจภายหลัง (sidebar handler รองรับ action `language` แล้ว)
+- แต่ละรายการแสดง **ธงประเทศ (SVG วงกลม `LocaleFlag`)** + ชื่อในภาษานั้นเอง (`ລາວ`, `မြန်မာ`, `ខ្មែរ`) — `en` ใช้ธงสหราชอาณาจักร
+- เมื่อเลือก: ตั้ง cookie แล้วโหลดหน้าเดิมในภาษาใหม่ (ตัด `?layer=language` ออก) · เลือกภาษาเดิม = ปิด sheet
 
 ---
 
