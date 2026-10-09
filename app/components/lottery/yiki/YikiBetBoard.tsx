@@ -21,6 +21,7 @@ import { YikiSlip } from "./YikiSlip";
 import { YikiPricePanel } from "./YikiPricePanel";
 import { YikiPriceControls } from "./YikiPriceControls";
 import { LotteryPriceStepCard } from "../LotteryPriceStepCard";
+import type { LotteryPriceSlipHandle } from "../LotteryPriceSlipPanel";
 import { uniquePermutations } from "../lotteryUtils";
 import { useLotteryI18n } from "../useLotteryI18n";
 
@@ -95,6 +96,7 @@ export function YikiBetBoard({
   // ขั้นใส่ราคา: เลือก 1 รายการ (หรือติ๊ก "ราคาเท่ากันทั้งหมด") แล้วกดชิปราคา — ใส่ราคาทันทีที่กด ไม่ต้องกดยืนยันซ้ำ
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [sameForAll, setSameForAll] = useState(false);
+  const priceSlipRef = useRef<LotteryPriceSlipHandle>(null);
   const entryCounter = useRef(0);
 
   useEffect(() => {
@@ -254,11 +256,15 @@ export function YikiBetBoard({
     setStep("price");
   };
 
-  /** กดชิปราคา — ใส่ราคาทันทีให้รายการที่เลือกอยู่ หรือทุกรายการถ้าติ๊ก "ราคาเท่ากันทั้งหมด" */
+  /**
+   * กดชิปราคา — ใส่ราคาให้ครบทันทีกับรายการที่เลือกอยู่ (หรือทุกรายการถ้าติ๊ก "ราคาเท่ากันทั้งหมด")
+   * แล้วย้ายเคอร์เซอร์ไปช่องราคาของรายการถัดไปต่อเลย (ไม่ย้ายเมื่อใส่ทุกรายการพร้อมกัน)
+   */
   const handleQuickAmount = (amount: number) => {
     setEntries((prev) =>
       prev.map((entry) => (sameForAll || entry.id === selectedEntryId ? { ...entry, amount } : entry)),
     );
+    if (!sameForAll && selectedEntryId) priceSlipRef.current?.focusNextAfter(selectedEntryId);
   };
 
   const pickerBetTypes = useMemo(
@@ -404,6 +410,7 @@ export function YikiBetBoard({
               }
             >
               <YikiPricePanel
+                handleRef={priceSlipRef}
                 entries={entries}
                 settlementTypes={settlementTypes}
                 selectedEntryId={selectedEntryId}

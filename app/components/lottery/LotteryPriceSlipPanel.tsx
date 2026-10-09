@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useImperativeHandle, useRef } from "react";
 import { formatLotteryDigitsDisplay } from "./lotteryUtils";
 import { useT } from "@/lib/i18n/I18nProvider";
 
@@ -17,8 +17,18 @@ export interface LotteryPriceSlipGroup {
   entries: LotteryPriceSlipEntry[];
 }
 
+/** คำสั่งจากภายนอก — ใช้หลังกดชิปราคาเพื่อเลื่อนไปช่องราคาถัดไป */
+export interface LotteryPriceSlipHandle {
+  /**
+   * เลือก + โฟกัสช่องราคาของรายการถัดจาก entryId ตามลำดับที่แสดงบนจอ (พร้อมเลือกข้อความเดิมให้พิมพ์ทับได้)
+   * เรียกแบบ synchronous ใน event ของผู้ใช้ — iOS ถึงจะไม่ปิดคีย์บอร์ด · คืน false เมื่อเป็นรายการสุดท้าย
+   */
+  focusNextAfter: (entryId: string) => boolean;
+}
+
 interface LotteryPriceSlipPanelProps {
   groups: LotteryPriceSlipGroup[];
+  handleRef?: React.Ref<LotteryPriceSlipHandle>;
   selectedEntryId: string | null;
   onSelectEntry: (entryId: string) => void;
   onAmountChange: (entryId: string, amount: number) => void;
@@ -37,6 +47,7 @@ function parseAmount(raw: string): number {
  */
 export function LotteryPriceSlipPanel({
   groups,
+  handleRef,
   selectedEntryId,
   onSelectEntry,
   onAmountChange,
@@ -45,6 +56,24 @@ export function LotteryPriceSlipPanel({
   const t = useT("lottery");
   const totalCount = groups.reduce((sum, group) => sum + group.entries.length, 0);
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  useImperativeHandle(
+    handleRef,
+    () => ({
+      focusNextAfter(entryId) {
+        const flat = groups.flatMap((group) => group.entries);
+        const index = flat.findIndex((entry) => entry.id === entryId);
+        const next = index >= 0 ? flat[index + 1] : undefined;
+        if (!next) return false;
+        onSelectEntry(next.id);
+        const input = inputRefs.current[next.id];
+        input?.focus();
+        input?.select();
+        return true;
+      },
+    }),
+    [groups, onSelectEntry],
+  );
 
   const focusAmount = (entryId: string) => {
     onSelectEntry(entryId);

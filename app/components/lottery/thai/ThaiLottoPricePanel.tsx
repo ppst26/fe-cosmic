@@ -5,12 +5,14 @@ import type { ThaiLottoBetEntry, ThaiLottoBetType, ThaiLottoBetTypeId } from "@/
 import {
   LotteryPriceSlipPanel,
   type LotteryPriceSlipGroup,
+  type LotteryPriceSlipHandle,
 } from "../LotteryPriceSlipPanel";
 import { useT } from "@/lib/i18n/I18nProvider";
 
 interface ThaiLottoPricePanelProps {
   entries: ThaiLottoBetEntry[];
   betTypes: ThaiLottoBetType[];
+  handleRef?: React.Ref<LotteryPriceSlipHandle>;
   selectedEntryId: string | null;
   onSelectEntry: (entryId: string) => void;
   onAmountChange: (entryId: string, amount: number) => void;
@@ -24,6 +26,7 @@ interface ThaiLottoPricePanelProps {
 export function ThaiLottoPricePanel({
   entries,
   betTypes,
+  handleRef,
   selectedEntryId,
   onSelectEntry,
   onAmountChange,
@@ -63,6 +66,7 @@ export function ThaiLottoPricePanel({
   return (
     <LotteryPriceSlipPanel
       groups={groups}
+      handleRef={handleRef}
       selectedEntryId={selectedEntryId}
       onSelectEntry={onSelectEntry}
       onAmountChange={onAmountChange}

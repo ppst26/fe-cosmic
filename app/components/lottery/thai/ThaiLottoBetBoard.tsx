@@ -19,6 +19,7 @@ import { ThaiLottoBetSlip } from "./ThaiLottoBetSlip";
 import { ThaiLottoPricePanel } from "./ThaiLottoPricePanel";
 import { LotteryPriceControls } from "../LotteryPriceControls";
 import { LotteryPriceStepCard } from "../LotteryPriceStepCard";
+import type { LotteryPriceSlipHandle } from "../LotteryPriceSlipPanel";
 import { uniquePermutations } from "../lotteryUtils";
 import { useLotteryI18n } from "../useLotteryI18n";
 
@@ -81,6 +82,7 @@ export function ThaiLottoBetBoard({
   const [step, setStep] = useState<"pick" | "price">("pick");
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [sameForAll, setSameForAll] = useState(false);
+  const priceSlipRef = useRef<LotteryPriceSlipHandle>(null);
   const entryCounter = useRef(0);
 
   useEffect(() => {
@@ -229,6 +231,10 @@ export function ThaiLottoBetBoard({
     setStep("price");
   };
 
+  /**
+   * กดชิปราคา — ใส่ราคาให้ครบทันทีกับรายการที่เลือกอยู่ (หรือทุกรายการถ้าติ๊ก "ราคาเท่ากันทั้งหมด")
+   * แล้วย้ายเคอร์เซอร์ไปช่องราคาของรายการถัดไปต่อเลย (ไม่ย้ายเมื่อใส่ทุกรายการพร้อมกัน)
+   */
   const handleQuickAmount = (amount: number) => {
     const clamped = Math.min(draw.maxBet, Math.max(draw.minBet, amount));
     setEntries((prev) =>
@@ -236,6 +242,7 @@ export function ThaiLottoBetBoard({
         sameForAll || entry.id === selectedEntryId ? { ...entry, amount: clamped } : entry,
       ),
     );
+    if (!sameForAll && selectedEntryId) priceSlipRef.current?.focusNextAfter(selectedEntryId);
   };
 
   const isAmountValid = (amount: number) => amount >= draw.minBet && amount <= draw.maxBet;
@@ -387,6 +394,7 @@ export function ThaiLottoBetBoard({
               }
             >
               <ThaiLottoPricePanel
+                handleRef={priceSlipRef}
                 entries={entries}
                 betTypes={betTypes}
                 selectedEntryId={selectedEntryId}

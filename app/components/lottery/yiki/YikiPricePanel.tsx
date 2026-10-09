@@ -5,12 +5,14 @@ import type { YikiBetEntry, YikiSettlementTypeId, YikiSettlementType } from "@/a
 import {
   LotteryPriceSlipPanel,
   type LotteryPriceSlipGroup,
+  type LotteryPriceSlipHandle,
 } from "../LotteryPriceSlipPanel";
 import { useT } from "@/lib/i18n/I18nProvider";
 
 interface YikiPricePanelProps {
   entries: YikiBetEntry[];
   settlementTypes: Record<YikiSettlementTypeId, YikiSettlementType>;
+  handleRef?: React.Ref<LotteryPriceSlipHandle>;
   selectedEntryId: string | null;
   onSelectEntry: (entryId: string) => void;
   onAmountChange: (entryId: string, amount: number) => void;
@@ -24,6 +26,7 @@ interface YikiPricePanelProps {
 export function YikiPricePanel({
   entries,
   settlementTypes,
+  handleRef,
   selectedEntryId,
   onSelectEntry,
   onAmountChange,
@@ -58,6 +61,7 @@ export function YikiPricePanel({
   return (
     <LotteryPriceSlipPanel
       groups={groups}
+      handleRef={handleRef}
       selectedEntryId={selectedEntryId}
       onSelectEntry={onSelectEntry}
       onAmountChange={onAmountChange}
