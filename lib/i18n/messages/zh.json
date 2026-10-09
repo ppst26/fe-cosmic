@@ -478,6 +478,9 @@
       "subtitle": "选择要投注的彩票",
       "featuredAria": "精选彩票",
       "allMarketsAria": "全部彩票",
+      "mySlips": "我的注单",
+      "mySlipsAria": "查看我的注单",
+      "mySlipsPendingAria": "查看我的注单 — 进行中 {count} 张",
       "daysLeft": {
         "other": "{count} 天"
       }

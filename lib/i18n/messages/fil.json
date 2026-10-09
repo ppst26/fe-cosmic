@@ -487,6 +487,9 @@
       "subtitle": "Pumili ng lotto na tataya-an",
       "featuredAria": "Mga tampok na lotto",
       "allMarketsAria": "Lahat ng lotto",
+      "mySlips": "Aking mga slip",
+      "mySlipsAria": "Tingnan ang aking mga slip",
+      "mySlipsPendingAria": "Tingnan ang aking mga slip — {count} ongoing",
       "daysLeft": {
         "one": "{count} araw",
         "other": "{count} araw"

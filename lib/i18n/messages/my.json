@@ -582,6 +582,9 @@
       "subtitle": "လောင်းလိုသော ထီကို ရွေးပါ",
       "featuredAria": "အထူးပြုထီများ",
       "allMarketsAria": "ထီအားလုံး",
+      "mySlips": "ကျွန်ုပ်၏စလစ်",
+      "mySlipsAria": "ကျွန်ုပ်၏စလစ်များ ကြည့်ရန်",
+      "mySlipsPendingAria": "ကျွန်ုပ်၏စလစ်များ ကြည့်ရန် — လုပ်ဆောင်နေဆဲ {count} စောင်",
       "daysLeft": {
         "other": "{count} ရက်"
       }

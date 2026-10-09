@@ -582,6 +582,9 @@
       "subtitle": "Chọn loại xổ số để đặt cược",
       "featuredAria": "Xổ số nổi bật",
       "allMarketsAria": "Tất cả xổ số",
+      "mySlips": "Phiếu của tôi",
+      "mySlipsAria": "Xem phiếu của tôi",
+      "mySlipsPendingAria": "Xem phiếu của tôi — {count} đang xử lý",
       "daysLeft": {
         "other": "{count} ngày"
       }

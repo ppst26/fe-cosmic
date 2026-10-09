@@ -478,6 +478,9 @@
       "subtitle": "ເລືອກປະເພດຫວຍທີ່ຕ້ອງການແທງ",
       "featuredAria": "ຫວຍແນະນຳ",
       "allMarketsAria": "ປະເພດຫວຍທັງໝົດ",
+      "mySlips": "ໂພຍຂອງຂ້ອຍ",
+      "mySlipsAria": "ເບິ່ງໂພຍຂອງຂ້ອຍ",
+      "mySlipsPendingAria": "ເບິ່ງໂພຍຂອງຂ້ອຍ — ກຳລັງດຳເນີນການ {count} ໂພຍ",
       "daysLeft": {
         "other": "{count} ວັນ"
       }

@@ -4,6 +4,9 @@
     "subtitle": "เลือกประเภทหวยที่ต้องการแทง",
     "featuredAria": "หวยแนะนำ",
     "allMarketsAria": "ประเภทหวยทั้งหมด",
+    "mySlips": "โพยของฉัน",
+    "mySlipsAria": "ดูโพยของฉัน",
+    "mySlipsPendingAria": "ดูโพยของฉัน — กำลังดำเนินการ {count} โพย",
     "daysLeft": "{count} วัน"
   },
   "markets": {

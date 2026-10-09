@@ -582,6 +582,9 @@
       "subtitle": "ជ្រើសរើសឆ្នោតដើម្បីភ្នាល់",
       "featuredAria": "ឆ្នោតពិសេស",
       "allMarketsAria": "ឆ្នោតទាំងអស់",
+      "mySlips": "សន្លឹកភ្នាល់របស់ខ្ញុំ",
+      "mySlipsAria": "មើលសន្លឹកភ្នាល់របស់ខ្ញុំ",
+      "mySlipsPendingAria": "មើលសន្លឹកភ្នាល់របស់ខ្ញុំ — កំពុងដំណើរការ {count} សន្លឹក",
       "daysLeft": {
         "other": "{count} ថ្ងៃ"
       }

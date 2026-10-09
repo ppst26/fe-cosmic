@@ -4,6 +4,9 @@
     "subtitle": "Choose a lottery to bet on",
     "featuredAria": "Featured lotteries",
     "allMarketsAria": "All lotteries",
+    "mySlips": "My slips",
+    "mySlipsAria": "View my slips",
+    "mySlipsPendingAria": "View my slips — {count} in progress",
     "daysLeft": { "one": "{count} day", "other": "{count} days" }
   },
   "markets": {

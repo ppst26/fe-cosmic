@@ -11,6 +11,7 @@ import { lotteryHrefToSlug } from "@/app/data/lotteryIconAssets";
 import { gameCardEnterListKey, GameCardStaggerShell } from "@/app/lib/gameCardEnterMotion";
 import { LotteryHubMarketLink } from "./LotteryHubMarketLink";
 import { LotteryLatestResultsTable } from "./LotteryLatestResultsTable";
+import { LotterySlipsEntryButton } from "./LotterySlipsEntryButton";
 import { useLotteryI18n } from "./useLotteryI18n";
 
 interface LotteryHubContentProps {
@@ -40,13 +41,16 @@ export function LotteryHubContent({
   return (
     <div className="lottery-hub flex min-w-0 flex-col gap-6 sm:gap-8">
       {showPageHeading ? (
-        <header className="lottery-hub__head min-w-0">
-          <h2 className="text-lg font-medium tracking-tight text-[var(--text-primary)] sm:text-xl">
-            {t("hub.title")}
-          </h2>
-          <p className="mt-1 text-sm text-[var(--text-secondary)]">
-            {t("hub.subtitle")}
-          </p>
+        <header className="lottery-hub__head flex min-w-0 items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="text-lg font-medium tracking-tight text-[var(--text-primary)] sm:text-xl">
+              {t("hub.title")}
+            </h2>
+            <p className="mt-1 text-sm text-[var(--text-secondary)]">
+              {t("hub.subtitle")}
+            </p>
+          </div>
+          <LotterySlipsEntryButton className="mt-0.5" />
         </header>
       ) : null}
 
