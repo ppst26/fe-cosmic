@@ -84,6 +84,12 @@
     "viewAll": "ดูหวยทั้งหมด",
     "marketNotFound": "ไม่พบตลาดหวยนี้"
   },
+  "rules": {
+    "payoutHeading": "อัตราจ่ายต่อ 1 บาท",
+    "limitsHeading": "ยอดแทงต่อรายการ",
+    "minBet": "ขั้นต่ำ",
+    "maxBet": "สูงสุด"
+  },
   "results": {
     "title": "ผลหวยล่าสุด",
     "morePage": "หน้าผลหวย >>",

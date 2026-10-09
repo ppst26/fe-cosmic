@@ -666,6 +666,12 @@
       "viewAll": "Xem tất cả xổ số",
       "marketNotFound": "Không tìm thấy loại xổ số"
     },
+    "rules": {
+      "payoutHeading": "Tỷ lệ trả thưởng cho 1 baht",
+      "limitsHeading": "Tiền cược mỗi phiếu",
+      "minBet": "Tối thiểu",
+      "maxBet": "Tối đa"
+    },
     "results": {
       "title": "Kết quả mới nhất",
       "morePage": "Tất cả kết quả >>",
@@ -1408,6 +1414,13 @@
       "cumulativeDesc": "Đạt từng mốc điểm danh để nhận thêm nhiều Gems",
       "milestoneGems": "{amount} Gems",
       "milestoneDays": "Điểm danh {days} ngày",
+      "milestoneDialog": {
+        "title": "Thưởng điểm danh đủ {days} ngày",
+        "progress": "Đã điểm danh {done}/{total} ngày",
+        "claim": "Nhận thưởng",
+        "claimed": "Đã nhận thưởng",
+        "daysLeft": "Điểm danh thêm {count} ngày"
+      },
       "claimedToday": "Đã điểm danh hôm nay",
       "claimToday": "Nhận thưởng hôm nay",
       "success": {

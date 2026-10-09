@@ -11,6 +11,7 @@ import { LotteryCountdown } from "./LotteryFlagOrb";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
 import { cn } from "@/lib/utils";
 import { useLotteryI18n } from "./useLotteryI18n";
+import { lotteryRulesHref } from "@/lib/lottery/rules";
 
 interface LotteryMarketShellProps {
   activeEntry: LotteryCatalogEntry;
@@ -141,7 +142,7 @@ export function LotteryMarketShell({ activeEntry, roundCount, children }: Lotter
               {t(activeEntry.titleKey)}
             </h1>
             <Link
-              href="/promotions"
+              href={lotteryRulesHref(activeEntry.slug)}
               className={cn(
                 "lottery-market-banner__rules text-[var(--text-secondary)] no-underline hover:text-[var(--text-primary)] hover:underline",
                 "cosmic-type-sheet-desc max-lg:mt-1 max-lg:block max-lg:leading-snug",

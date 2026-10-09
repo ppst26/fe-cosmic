@@ -12,6 +12,7 @@ import { COSMIC_BTN_PRIMARY } from "@/app/components/ui/cosmicButtonClasses";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { MODAL_TITLE_LEADING_ICON_CLASS } from "@/app/components/ui/ModalTitleLeadingIcon";
 import { DailyCheckInClaimSuccessDialog } from "./DailyCheckInClaimSuccessDialog";
+import { DailyCheckInMilestoneDialog } from "./DailyCheckInMilestoneDialog";
 import { countCheckedInDays } from "@/lib/domain/checkIn";
 import type { DailyCheckInDayReward } from "@/app/types/checkIn";
 import { useT } from "@/lib/i18n/I18nProvider";
@@ -47,6 +48,10 @@ function DailyCheckInCardView({
     null,
   );
 
+  /** ขั้นรางวัลสะสมที่เปิด dialog อยู่ (7 / 14 / 21 / 28) · ขั้นที่รับไปแล้ว */
+  const [milestoneDialogDay, setMilestoneDialogDay] = useState<number | null>(null);
+  const [claimedMilestones, setClaimedMilestones] = useState<number[]>([]);
+
   const checkedInCount = countCheckedInDays(days);
   const todayReward = days.find((d) => d.status === "today");
   const isTodayClaimed = !todayReward && checkedInCount > 0;
@@ -74,6 +79,16 @@ function DailyCheckInCardView({
     setJustClaimed(targetDay);
     setTimeout(() => setJustClaimed(null), 1500);
     setClaimSuccessCredits(reward.credits);
+  };
+
+  const activeMilestone = checkIn.milestones.find((m) => m.milestoneDay === milestoneDialogDay);
+
+  const handleClaimMilestone = () => {
+    if (!activeMilestone) return;
+    if (claimedMilestones.includes(activeMilestone.milestoneDay) || checkedInCount < activeMilestone.milestoneDay) return;
+    setClaimedMilestones((prev) => [...prev, activeMilestone.milestoneDay]);
+    setMilestoneDialogDay(null);
+    setClaimSuccessCredits(activeMilestone.gemsReward);
   };
 
   const progressPercent = Math.min(100, Math.max(10, (checkedInCount / 7) * 100));
@@ -383,9 +398,12 @@ function DailyCheckInCardView({
             const isReached = checkedInCount >= m.milestoneDay || idx === 0;
 
             return (
-              <div
+              <button
                 key={m.milestoneDay}
-                className="relative z-10 flex flex-col items-center gap-1 sm:gap-1.5"
+                type="button"
+                onClick={() => setMilestoneDialogDay(m.milestoneDay)}
+                aria-label={t("checkIn.milestoneDialog.title", { days: m.milestoneDay })}
+                className="relative z-10 flex cursor-pointer flex-col items-center gap-1 rounded-xl border-0 bg-transparent p-0 outline-none transition-transform active:scale-95 focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] sm:gap-1.5"
               >
                 {/* Reward Badge */}
                 <div
@@ -447,7 +465,7 @@ function DailyCheckInCardView({
                 >
                   {t("checkIn.milestoneDays", { days: m.milestoneDay })}
                 </span>
-              </div>
+              </button>
             );
           })}
         </div>
@@ -467,6 +485,20 @@ function DailyCheckInCardView({
       >
         {isTodayClaimed ? t("checkIn.claimedToday") : t("checkIn.claimToday")}
       </button>
+
+      {activeMilestone ? (
+        <DailyCheckInMilestoneDialog
+          open
+          milestoneDay={activeMilestone.milestoneDay}
+          gemsReward={activeMilestone.gemsReward}
+          checkedInCount={checkedInCount}
+          claimed={claimedMilestones.includes(activeMilestone.milestoneDay)}
+          onClaim={handleClaimMilestone}
+          onOpenChange={(open) => {
+            if (!open) setMilestoneDialogDay(null);
+          }}
+        />
+      ) : null}
 
       <DailyCheckInClaimSuccessDialog
         open={claimSuccessCredits !== null}

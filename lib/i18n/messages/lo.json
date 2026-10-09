@@ -562,6 +562,12 @@
       "viewAll": "ເບິ່ງຫວຍທັງໝົດ",
       "marketNotFound": "ບໍ່ພົບຕະຫຼາດຫວຍນີ້"
     },
+    "rules": {
+      "payoutHeading": "ອັດຕາຈ່າຍຕໍ່ 1 ບາດ",
+      "limitsHeading": "ຍອດແທງຕໍ່ລາຍການ",
+      "minBet": "ຂັ້ນຕ່ຳ",
+      "maxBet": "ສູງສຸດ"
+    },
     "results": {
       "title": "ຜົນຫວຍຫຼ້າສຸດ",
       "morePage": "ໜ້າຜົນຫວຍ >>",
@@ -1195,6 +1201,13 @@
       "cumulativeDesc": "ເຊັກອິນຄົບຕາມກຳນົດ ຮັບ Gems ໂບນັດໃຫຍ່",
       "milestoneGems": "{amount} Gems",
       "milestoneDays": "ເຊັກອິນ {days} ວັນ",
+      "milestoneDialog": {
+        "title": "ລາງວັນເຊັກອິນຄົບ {days} ວັນ",
+        "progress": "ເຊັກອິນແລ້ວ {done}/{total} ວັນ",
+        "claim": "ຮັບລາງວັນ",
+        "claimed": "ຮັບລາງວັນແລ້ວ",
+        "daysLeft": "ເຊັກອິນອີກ {count} ວັນ"
+      },
       "claimedToday": "ເຊັກອິນແລ້ວມື້ນີ້",
       "claimToday": "ກົດຮັບລາງວັນມື້ນີ້",
       "success": {

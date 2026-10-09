@@ -81,6 +81,13 @@
     "cumulativeDesc": "Reach each check-in goal for big bonus Gems",
     "milestoneGems": "{amount} Gems",
     "milestoneDays": "{days}-day check-in",
+    "milestoneDialog": {
+      "title": "{days}-day check-in reward",
+      "progress": "Checked in {done}/{total} days",
+      "claim": "Claim reward",
+      "claimed": "Reward claimed",
+      "daysLeft": { "one": "Check in {count} more day", "other": "Check in {count} more days" }
+    },
     "claimedToday": "Checked in today",
     "claimToday": "Claim Today's Reward",
     "success": {

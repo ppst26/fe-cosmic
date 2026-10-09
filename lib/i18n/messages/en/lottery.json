@@ -84,6 +84,12 @@
     "viewAll": "View All Lotteries",
     "marketNotFound": "Lottery market not found"
   },
+  "rules": {
+    "payoutHeading": "Payout per 1 baht",
+    "limitsHeading": "Bet amount per entry",
+    "minBet": "Minimum",
+    "maxBet": "Maximum"
+  },
   "results": {
     "title": "Latest Results",
     "morePage": "All results >>",

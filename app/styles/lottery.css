@@ -138,6 +138,15 @@
   box-shadow: none;
 }
 
+/**
+ * ช่องแทง (โพย + แผงกรอกเลข) — พื้นเข้ม (--surface-solid-inner) ให้ปุ่ม/ช่องด้านในซึ่งใช้ --inner-card-fill ลอยขึ้นชัด
+ * และตรงกับพื้นแถบ dock ล่างที่ใช้ token เดียวกัน · ขอบปุ่มเป็นเส้นขาวโปร่งเพื่อแยกปุ่มแต่ละตัว
+ */
+:is(.thai-lotto-layout, .yiki-layout) {
+  --lottery-panel-fill: var(--surface-solid-inner);
+  --lottery-control-border: rgb(255 255 255 / 0.22);
+}
+
 .thai-lotto-layout,
 .yiki-layout {
   padding: var(--space-3);
@@ -835,7 +844,7 @@
 :is(.thai-lotto-panel, .lottery-panel) {
   border: 0;
   border-radius: var(--radius-panel);
-  background: var(--inner-card-fill);
+  background: var(--lottery-panel-fill, var(--inner-card-fill));
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
 }
 
@@ -847,7 +856,30 @@
   color: var(--text-secondary);
 }
 
-/* หัวงวด */
+/* หัวงวด — เป็นลิงก์ไปหน้ากติกา / อัตราจ่าย (LotteryDrawCard) */
+a.thai-lotto-draw {
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) ease,
+    transform var(--motion-instant) var(--ease-out);
+}
+
+a.thai-lotto-draw:hover {
+  background: var(--inner-card-fill-hover);
+}
+
+a.thai-lotto-draw:active {
+  transform: scale(0.99);
+}
+
+a.thai-lotto-draw:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
 .thai-lotto-draw {
   border: 0;
   border-radius: var(--radius-panel);
@@ -864,7 +896,7 @@
 }
 
 :is(.thai-lotto-layout, .yiki-layout) .cosmic-segment-track {
-  border: 0;
+  border: 1px solid var(--lottery-control-border);
   gap: 0.25rem;
   padding: 0.25rem;
   background: color-mix(in srgb, var(--surface-solid-outer) 88%, #000);
@@ -933,6 +965,7 @@
 }
 
 .thai-lotto-toggle__track {
+  border: 1px solid var(--lottery-control-border);
   border-radius: var(--radius-pill);
   background: var(--surface-hover);
   transition: background var(--motion-fast) ease;

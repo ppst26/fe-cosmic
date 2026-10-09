@@ -666,6 +666,12 @@
       "viewAll": "មើលឆ្នោតទាំងអស់",
       "marketNotFound": "រកមិនឃើញទីផ្សារឆ្នោត"
     },
+    "rules": {
+      "payoutHeading": "អត្រាបើកក្នុង ១ បាត",
+      "limitsHeading": "ទឹកប្រាក់ភ្នាល់ក្នុងមួយធាតុ",
+      "minBet": "អប្បបរមា",
+      "maxBet": "អតិបរមា"
+    },
     "results": {
       "title": "លទ្ធផលចុងក្រោយ",
       "morePage": "លទ្ធផលទាំងអស់ >>",
@@ -1408,6 +1414,13 @@
       "cumulativeDesc": "សម្រេចគោលដៅចុះវត្តមាននីមួយៗដើម្បីទទួល Gems ច្រើន",
       "milestoneGems": "{amount} Gems",
       "milestoneDays": "ចុះវត្តមាន {days} ថ្ងៃ",
+      "milestoneDialog": {
+        "title": "រង្វាន់ចុះវត្តមានគ្រប់ {days} ថ្ងៃ",
+        "progress": "បានចុះវត្តមាន {done}/{total} ថ្ងៃ",
+        "claim": "ទទួលរង្វាន់",
+        "claimed": "បានទទួលរង្វាន់ហើយ",
+        "daysLeft": "ចុះវត្តមានបន្ថែម {count} ថ្ងៃទៀត"
+      },
       "claimedToday": "បានចុះវត្តមានថ្ងៃនេះ",
       "claimToday": "ទាមទាររង្វាន់ថ្ងៃនេះ",
       "success": {

@@ -78,6 +78,13 @@
     "cumulativeDesc": "เช็คอินครบตามกำหนด รับเพชรโบนัสใหญ่",
     "milestoneGems": "เพชร {amount}",
     "milestoneDays": "เช็คอิน {days} วัน",
+    "milestoneDialog": {
+      "title": "รางวัลเช็คอินครบ {days} วัน",
+      "progress": "เช็คอินแล้ว {done}/{total} วัน",
+      "claim": "รับรางวัล",
+      "claimed": "รับรางวัลแล้ว",
+      "daysLeft": "เช็คอินอีก {count} วัน"
+    },
     "claimedToday": "เช็คอินแล้ววันนี้",
     "claimToday": "กดรับรางวัลวันนี้",
     "success": {

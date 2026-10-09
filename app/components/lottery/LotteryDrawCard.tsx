@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
+import Link from "@/lib/i18n/navigation";
 import type { LotteryFlagTone } from "@/app/types/lottery";
 import { LotteryCountdown } from "./LotteryFlagOrb";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
 import { useLotteryI18n } from "./useLotteryI18n";
+import { lotteryRulesHref } from "@/lib/lottery/rules";
 
 interface LotteryDrawCardProps {
   title: string;
@@ -18,6 +20,7 @@ interface LotteryDrawCardProps {
 
 /**
  * การ์ดหัวงวด — ใช้ทุกประเภทหวย (รัฐบาลไทย · ยี่กี · หวยหุ้น)
+ * มี marketSlug → กดแล้วไปหน้ากติกา / อัตราการจ่ายของตลาดนั้น (/lottery/rules/[slug])
  */
 export function LotteryDrawCard({
   title,
@@ -28,11 +31,9 @@ export function LotteryDrawCard({
   marketSlug,
 }: LotteryDrawCardProps) {
   const { t, countdown } = useLotteryI18n();
-  return (
-    <section
-      className="thai-lotto-draw flex flex-wrap items-center gap-3 p-4"
-      aria-label={t("draw.aria")}
-    >
+  const className = "thai-lotto-draw flex flex-wrap items-center gap-3 p-4";
+  const content = (
+    <>
       <LotteryMarketIcon
         marketSlug={marketSlug}
         size="lg"
@@ -49,6 +50,23 @@ export function LotteryDrawCard({
           label={remainingMs === null ? "--:--:--" : countdown(remainingMs)}
         />
       </div>
+    </>
+  );
+
+  if (marketSlug) {
+    return (
+      <Link
+        href={lotteryRulesHref(marketSlug)}
+        className={className}
+        aria-label={`${t("draw.aria")} — ${t("market.rules")}`}
+      >
+        {content}
+      </Link>
+    );
+  }
+  return (
+    <section className={className} aria-label={t("draw.aria")}>
+      {content}
     </section>
   );
 }

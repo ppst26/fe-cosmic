@@ -666,6 +666,12 @@
       "viewAll": "ထီအားလုံး ကြည့်မည်",
       "marketNotFound": "ထီအမျိုးအစား မတွေ့ပါ"
     },
+    "rules": {
+      "payoutHeading": "၁ ဘတ်လျှင် ဆပေးနှုန်း",
+      "limitsHeading": "တစ်ခုချင်း လောင်းကြေးပမာဏ",
+      "minBet": "အနည်းဆုံး",
+      "maxBet": "အများဆုံး"
+    },
     "results": {
       "title": "နောက်ဆုံးရလဒ်များ",
       "morePage": "ရလဒ်အားလုံး >>",
@@ -1408,6 +1414,13 @@
       "cumulativeDesc": "Check-in ပန်းတိုင်များ ပြည့်မီ၍ ဘောနပ်စ် Gems အများအပြား ရယူပါ",
       "milestoneGems": "{amount} Gems",
       "milestoneDays": "Check-in {days} ရက်",
+      "milestoneDialog": {
+        "title": "{days} ရက်ပြည့် Check-in ဆု",
+        "progress": "Check-in ပြီး {done}/{total} ရက်",
+        "claim": "ဆုထုတ်ယူရန်",
+        "claimed": "ဆုထုတ်ယူပြီး",
+        "daysLeft": "နောက်ထပ် {count} ရက် Check-in လုပ်ပါ"
+      },
       "claimedToday": "ယနေ့ Check-in လုပ်ပြီး",
       "claimToday": "ယနေ့ဆု ထုတ်ယူမည်",
       "success": {

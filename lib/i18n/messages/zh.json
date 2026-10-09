@@ -562,6 +562,12 @@
       "viewAll": "查看全部彩票",
       "marketNotFound": "找不到彩票市场"
     },
+    "rules": {
+      "payoutHeading": "每 1 泰铢赔率",
+      "limitsHeading": "单项投注额",
+      "minBet": "最低",
+      "maxBet": "最高"
+    },
     "results": {
       "title": "最新开奖",
       "morePage": "全部结果 >>",
@@ -1195,6 +1201,13 @@
       "cumulativeDesc": "达成签到目标，领取丰厚 Gems 奖励",
       "milestoneGems": "{amount} Gems",
       "milestoneDays": "签到 {days} 天",
+      "milestoneDialog": {
+        "title": "签到满 {days} 天奖励",
+        "progress": "已签到 {done}/{total} 天",
+        "claim": "领取奖励",
+        "claimed": "已领取",
+        "daysLeft": "再签到 {count} 天"
+      },
       "claimedToday": "今日已签到",
       "claimToday": "领取今日奖励",
       "success": {

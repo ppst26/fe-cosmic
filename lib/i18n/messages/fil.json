@@ -573,6 +573,12 @@
       "viewAll": "Tingnan ang Lahat ng Lotto",
       "marketNotFound": "Hindi nahanap ang lotto market"
     },
+    "rules": {
+      "payoutHeading": "Payout kada 1 baht",
+      "limitsHeading": "Taya kada entry",
+      "minBet": "Minimum",
+      "maxBet": "Maximum"
+    },
     "results": {
       "title": "Pinakabagong mga Resulta",
       "morePage": "Lahat ng resulta >>",
@@ -1209,6 +1215,13 @@
       "cumulativeDesc": "Abutin ang bawat check-in goal para sa malalaking bonus na Gems",
       "milestoneGems": "{amount} Gems",
       "milestoneDays": "{days}-araw na check-in",
+      "milestoneDialog": {
+        "title": "Reward sa {days}-araw na check-in",
+        "progress": "Nag-check in na {done}/{total} araw",
+        "claim": "I-claim ang reward",
+        "claimed": "Na-claim na",
+        "daysLeft": "Mag-check in pa ng {count} araw"
+      },
       "claimedToday": "Nakapag-check in na ngayon",
       "claimToday": "I-claim ang Reward Ngayon",
       "success": {

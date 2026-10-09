@@ -562,6 +562,12 @@
       "viewAll": "Lihat Semua Togel",
       "marketNotFound": "Pasaran togel tidak ditemukan"
     },
+    "rules": {
+      "payoutHeading": "Bayaran per 1 baht",
+      "limitsHeading": "Taruhan per item",
+      "minBet": "Minimum",
+      "maxBet": "Maksimum"
+    },
     "results": {
       "title": "Hasil Terbaru",
       "morePage": "Semua hasil >>",
@@ -1195,6 +1201,13 @@
       "cumulativeDesc": "Capai setiap target check-in untuk bonus Gems besar",
       "milestoneGems": "{amount} Gems",
       "milestoneDays": "Check-in {days} hari",
+      "milestoneDialog": {
+        "title": "Hadiah check-in {days} hari",
+        "progress": "Sudah check-in {done}/{total} hari",
+        "claim": "Klaim hadiah",
+        "claimed": "Hadiah sudah diklaim",
+        "daysLeft": "Check-in {count} hari lagi"
+      },
       "claimedToday": "Sudah check-in hari ini",
       "claimToday": "Klaim Hadiah Hari Ini",
       "success": {
