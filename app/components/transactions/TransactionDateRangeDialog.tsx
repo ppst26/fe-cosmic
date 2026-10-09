@@ -21,6 +21,9 @@ interface TransactionDateRangeDialogProps {
   to: Date;
   onOpenChange: (open: boolean) => void;
   onConfirm: (from: Date, to: Date) => void;
+  /** จำกัดวันที่เลือกได้ — วันนอกช่วงกดไม่ได้ (เช่น ประวัติโพยย้อนหลังไม่เกิน 30 วัน) */
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 /**
@@ -32,6 +35,8 @@ export function TransactionDateRangeDialog({
   to,
   onOpenChange,
   onConfirm,
+  minDate,
+  maxDate,
 }: TransactionDateRangeDialogProps) {
   const [viewMonth, setViewMonth] = useState(() => startOfDay(from));
   const [rangeStart, setRangeStart] = useState<Date | null>(from);
@@ -54,8 +59,13 @@ export function TransactionDateRangeDialog({
 
   const cells = useMemo(() => getCalendarMonthCells(viewMonth), [viewMonth]);
 
+  const isOutOfBounds = (day: Date) =>
+    (minDate !== undefined && day.getTime() < startOfDay(minDate).getTime()) ||
+    (maxDate !== undefined && day.getTime() > startOfDay(maxDate).getTime());
+
   const handleDayClick = (date: Date) => {
     const day = startOfDay(date);
+    if (isOutOfBounds(day)) return;
     if (!rangeStart || (rangeStart && rangeEnd)) {
       setRangeStart(day);
       setRangeEnd(null);
@@ -77,9 +87,14 @@ export function TransactionDateRangeDialog({
   };
 
   const years = useMemo(() => {
+    if (minDate || maxDate) {
+      const first = (minDate ?? new Date()).getFullYear();
+      const last = (maxDate ?? new Date()).getFullYear();
+      return Array.from({ length: Math.max(1, last - first + 1) }, (_, i) => first + i);
+    }
     const current = new Date().getFullYear();
     return Array.from({ length: 8 }, (_, i) => current - 3 + i);
-  }, []);
+  }, [minDate, maxDate]);
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -158,8 +173,9 @@ export function TransactionDateRangeDialog({
                   key={day.toISOString()}
                   type="button"
                   onClick={() => handleDayClick(day)}
+                  disabled={isOutOfBounds(day)}
                   className={cn(
-                    "tx-calendar-day",
+                    "tx-calendar-day disabled:cursor-not-allowed disabled:opacity-30",
                     !inMonth && "is-outside",
                     inRange && !isStart && !isEnd && "is-in-range",
                     (isStart || isEnd) && "is-range-start",

@@ -9,6 +9,8 @@ import { formatBaht, formatLotteryDigitsDisplay } from "./lotteryUtils";
 import { useLotteryI18n } from "./useLotteryI18n";
 import { CopyIcon } from "../ui/Icons";
 import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
+import { signedMoneyValueClass, valueClass } from "@/lib/semanticValue";
+import { formatSignedBaht, slipStatusKey } from "./LotterySlipCard";
 
 interface LotterySlipSummaryProps {
   slip: LotterySubmittedSlip;
@@ -34,6 +36,7 @@ function groupSlipLines(lines: LotterySlipLine[]) {
 
 /**
  * สรุปโพยหลังส่งแทง — อ้างอิง UI โพยทอง (หัวงวด · รายการแยกประเภท · ยอดรวม · แทงต่อ)
+ * โพยที่สรุปผลแล้ว: แสดงสถานะ · เวลาสรุปผล · ผลรายบรรทัด (เงินรางวัล) · ได้/เสียสุทธิ
  */
 export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummaryProps) {
   const { showToast } = useToast();
@@ -42,6 +45,8 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
   const playHref = continuePlayHref ?? slip.continuePlayHref;
   const drawSchedule = dateTime(slip.drawAt);
   const purchasedLabel = dateTime(slip.purchasedAt);
+  const isSettled = slip.status !== "submitted";
+  const statusKey = slipStatusKey(slip, new Date());
 
   const handleCopyId = async () => {
     try {
@@ -74,8 +79,19 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
         </div>
         <div className="lottery-slip-summary__head-row flex items-start justify-between gap-3">
           <p className="lottery-slip-summary__meta m-0">{t("summary.purchased", { date: purchasedLabel })}</p>
-          <p className="lottery-slip-summary__status m-0 whitespace-nowrap">{t("summary.submitted")}</p>
+          <p className="lottery-slip-summary__status m-0 whitespace-nowrap">
+            {slip.status === "submitted" && statusKey === "waitingDraw" ? (
+              t("summary.submitted")
+            ) : (
+              <span className={valueClass(statusKey === "won" ? "success" : statusKey === "waitingSettle" ? "warning" : "neutral")}>
+                {t(`slips.status.${statusKey}`)}
+              </span>
+            )}
+          </p>
         </div>
+        {isSettled && slip.settledAt ? (
+          <p className="lottery-slip-summary__meta m-0">{t("slips.card.settledAt", { date: dateTime(slip.settledAt) })}</p>
+        ) : null}
       </header>
 
       <p className="lottery-slip-summary__note m-0">
@@ -109,8 +125,16 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
                   <span className="lottery-slip-summary__pill min-w-[3.25rem] px-2 py-1 text-center">
                     x{line.payoutRate.toLocaleString("th-TH")}
                   </span>
-                  <span className="lottery-slip-summary__pill lottery-slip-summary__pill--win min-w-0 px-2 py-1 text-center">
-                    {formatBaht(line.potentialWin)}
+                  <span
+                    className={`lottery-slip-summary__pill lottery-slip-summary__pill--win min-w-0 px-2 py-1 text-center${
+                      line.won === false ? " opacity-60" : ""
+                    }`}
+                  >
+                    {line.won === undefined ? (
+                      formatBaht(line.potentialWin)
+                    ) : (
+                      <span className={valueClass(line.won ? "success" : "muted")}>{formatBaht(line.payout ?? 0)}</span>
+                    )}
                   </span>
                 </li>
               ))}
@@ -126,9 +150,13 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
         </div>
         <div className="lottery-slip-summary__total-cell flex flex-col items-center gap-[0.35rem] text-center">
           <span className="lottery-slip-summary__total-label">{t("summary.winLoss")}</span>
-          <span className="lottery-slip-summary__total-muted">
-            {slip.winLoss === null ? "—" : formatBaht(slip.winLoss)}
-          </span>
+          {slip.winLoss === null ? (
+            <span className="lottery-slip-summary__total-muted">—</span>
+          ) : (
+            <span className={signedMoneyValueClass(slip.winLoss, "font-medium tabular-nums")}>
+              {formatSignedBaht(slip.winLoss)}
+            </span>
+          )}
         </div>
       </footer>
 

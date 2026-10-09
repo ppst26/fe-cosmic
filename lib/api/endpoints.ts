@@ -68,7 +68,7 @@ export const ENDPOINTS = {
   fetchProfile: { method: "GET", path: "/api/auth/profile", auth: true, client: "fetchProfile" },
   updateProfileAvatarPreset: { method: "PATCH", path: "/api/auth/profile", auth: true, client: "updateProfileAvatarPreset" },
   submitLotteryBetSlip: { method: "POST", path: "/api/lottery/bets", auth: true, client: "submitLotteryBetSlip" },
-  fetchLotterySlips: { method: "GET", path: "/api/lottery/slips", auth: true, client: "fetchLotterySlips" },
+  fetchLotterySlipPage: { method: "GET", path: "/api/lottery/slips", auth: true, client: "fetchLotterySlipPage" },
   fetchLotterySlip: { method: "GET", path: "/api/lottery/slips/:slipId", auth: true, client: "fetchLotterySlip" },
   fetchPromotionsCatalog: { method: "GET", path: "/api/promotions", auth: false, client: "fetchPromotionsCatalog" },
   fetchPromotionDetail: { method: "GET", path: "/api/promotions/:id", auth: false, client: "fetchPromotionDetail" },

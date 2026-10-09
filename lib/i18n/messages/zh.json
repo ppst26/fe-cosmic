@@ -678,7 +678,55 @@
       "summaryTitle": "注单摘要",
       "notFoundTitle": "找不到该注单",
       "notFoundDescription": "注单可能已被删除，或链接无效。",
-      "viewAll": "查看全部注单"
+      "viewAll": "查看全部注单",
+      "tabs": {
+        "pending": "进行中",
+        "history": "历史记录",
+        "aria": "注单类型"
+      },
+      "filters": {
+        "aria": "注单筛选",
+        "market": "彩种",
+        "result": "结果",
+        "range": "时间范围",
+        "allMarkets": "全部彩种",
+        "allResults": "全部结果",
+        "today": "今天",
+        "days7": "7 天",
+        "days30": "30 天",
+        "custom": "自定义"
+      },
+      "status": {
+        "waitingDraw": "等待开奖",
+        "waitingSettle": "等待结算",
+        "won": "已中奖",
+        "lost": "未中奖",
+        "void": "已取消（退款）"
+      },
+      "summary": {
+        "count": "{count} 张注单",
+        "stake": "投注合计 {amount}",
+        "net": "净输赢"
+      },
+      "card": {
+        "drawAt": "开奖 {date}",
+        "settledAt": "结算 {date}"
+      },
+      "emptyPending": {
+        "title": "暂无进行中的注单",
+        "description": "已提交但尚未结算的注单会显示在这里。"
+      },
+      "emptyHistory": {
+        "title": "暂无历史注单",
+        "description": "已结算的注单保留 {days} 天。"
+      },
+      "emptyFiltered": "没有符合筛选条件的注单",
+      "clearFilters": "清除筛选",
+      "loadMore": "加载更多",
+      "loadingMore": "加载中…",
+      "loadMoreError": "加载失败，请重试。",
+      "loadError": "注单加载失败",
+      "retentionNote": "历史记录保留 {days} 天"
     }
   },
   "meta": {

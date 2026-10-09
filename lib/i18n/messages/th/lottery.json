@@ -196,6 +196,54 @@
     "summaryTitle": "สรุปโพย",
     "notFoundTitle": "ไม่พบโพยนี้",
     "notFoundDescription": "โพยอาจถูกลบหรือลิงก์ไม่ถูกต้อง",
-    "viewAll": "ดูโพยทั้งหมด"
+    "viewAll": "ดูโพยทั้งหมด",
+    "tabs": {
+      "pending": "กำลังดำเนินการ",
+      "history": "ประวัติ",
+      "aria": "ประเภทโพย"
+    },
+    "filters": {
+      "aria": "ตัวกรองโพย",
+      "market": "ตลาดหวย",
+      "result": "ผลโพย",
+      "range": "ช่วงเวลา",
+      "allMarkets": "ทุกตลาด",
+      "allResults": "ทุกผล",
+      "today": "วันนี้",
+      "days7": "7 วัน",
+      "days30": "30 วัน",
+      "custom": "กำหนดเอง"
+    },
+    "status": {
+      "waitingDraw": "รอออกผล",
+      "waitingSettle": "รอสรุปผล",
+      "won": "ถูกรางวัล",
+      "lost": "ไม่ถูกรางวัล",
+      "void": "ยกเลิก (คืนเงิน)"
+    },
+    "summary": {
+      "count": "{count} โพย",
+      "stake": "เดิมพันรวม {amount}",
+      "net": "ได้/เสียสุทธิ"
+    },
+    "card": {
+      "drawAt": "ออกผล {date}",
+      "settledAt": "สรุปผล {date}"
+    },
+    "emptyPending": {
+      "title": "ไม่มีโพยที่กำลังดำเนินการ",
+      "description": "โพยที่ส่งแล้วและยังไม่สรุปผลจะแสดงที่นี่"
+    },
+    "emptyHistory": {
+      "title": "ยังไม่มีประวัติโพย",
+      "description": "โพยที่สรุปผลแล้วจะเก็บไว้ให้ดูย้อนหลัง {days} วัน"
+    },
+    "emptyFiltered": "ไม่พบโพยตามตัวกรองนี้",
+    "clearFilters": "ล้างตัวกรอง",
+    "loadMore": "โหลดเพิ่ม",
+    "loadingMore": "กำลังโหลด…",
+    "loadMoreError": "โหลดเพิ่มไม่สำเร็จ ลองใหม่อีกครั้ง",
+    "loadError": "โหลดโพยไม่สำเร็จ",
+    "retentionNote": "เก็บประวัติย้อนหลัง {days} วัน"
   }
 }

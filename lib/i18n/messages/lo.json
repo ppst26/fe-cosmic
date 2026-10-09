@@ -678,7 +678,55 @@
       "summaryTitle": "ສະຫຼຸບໂພຍ",
       "notFoundTitle": "ບໍ່ພົບໂພຍນີ້",
       "notFoundDescription": "ໂພຍອາດຖືກລຶບ ຫຼືລິ້ງບໍ່ຖືກຕ້ອງ",
-      "viewAll": "ເບິ່ງໂພຍທັງໝົດ"
+      "viewAll": "ເບິ່ງໂພຍທັງໝົດ",
+      "tabs": {
+        "pending": "ກຳລັງດຳເນີນການ",
+        "history": "ປະຫວັດ",
+        "aria": "ປະເພດໂພຍ"
+      },
+      "filters": {
+        "aria": "ຕົວກັ່ນຕອງໂພຍ",
+        "market": "ຕະຫຼາດຫວຍ",
+        "result": "ຜົນໂພຍ",
+        "range": "ໄລຍະເວລາ",
+        "allMarkets": "ທຸກຕະຫຼາດ",
+        "allResults": "ທຸກຜົນ",
+        "today": "ມື້ນີ້",
+        "days7": "7 ວັນ",
+        "days30": "30 ວັນ",
+        "custom": "ກຳນົດເອງ"
+      },
+      "status": {
+        "waitingDraw": "ລໍຖ້າອອກຜົນ",
+        "waitingSettle": "ລໍຖ້າສະຫຼຸບຜົນ",
+        "won": "ຖືກລາງວັນ",
+        "lost": "ບໍ່ຖືກລາງວັນ",
+        "void": "ຍົກເລີກ (ຄືນເງິນ)"
+      },
+      "summary": {
+        "count": "{count} ໂພຍ",
+        "stake": "ເດີມພັນລວມ {amount}",
+        "net": "ໄດ້/ເສຍສຸດທິ"
+      },
+      "card": {
+        "drawAt": "ອອກຜົນ {date}",
+        "settledAt": "ສະຫຼຸບຜົນ {date}"
+      },
+      "emptyPending": {
+        "title": "ບໍ່ມີໂພຍທີ່ກຳລັງດຳເນີນການ",
+        "description": "ໂພຍທີ່ສົ່ງແລ້ວ ແລະ ຍັງບໍ່ສະຫຼຸບຜົນຈະສະແດງຢູ່ບ່ອນນີ້"
+      },
+      "emptyHistory": {
+        "title": "ຍັງບໍ່ມີປະຫວັດໂພຍ",
+        "description": "ໂພຍທີ່ສະຫຼຸບຜົນແລ້ວຈະເກັບໄວ້ໃຫ້ເບິ່ງຍ້ອນຫຼັງ {days} ວັນ"
+      },
+      "emptyFiltered": "ບໍ່ພົບໂພຍຕາມຕົວກັ່ນຕອງນີ້",
+      "clearFilters": "ລ້າງຕົວກັ່ນຕອງ",
+      "loadMore": "ໂຫຼດເພີ່ມ",
+      "loadingMore": "ກຳລັງໂຫຼດ…",
+      "loadMoreError": "ໂຫຼດເພີ່ມບໍ່ສຳເລັດ ລອງໃໝ່ອີກຄັ້ງ",
+      "loadError": "ໂຫຼດໂພຍບໍ່ສຳເລັດ",
+      "retentionNote": "ເກັບປະຫວັດຍ້ອນຫຼັງ {days} ວັນ"
     }
   },
   "meta": {

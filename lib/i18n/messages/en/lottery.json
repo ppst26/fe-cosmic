@@ -196,6 +196,57 @@
     "summaryTitle": "Slip Summary",
     "notFoundTitle": "Slip not found",
     "notFoundDescription": "The slip may have been removed or the link is invalid.",
-    "viewAll": "View All Slips"
+    "viewAll": "View All Slips",
+    "tabs": {
+      "pending": "In progress",
+      "history": "History",
+      "aria": "Slip type"
+    },
+    "filters": {
+      "aria": "Slip filters",
+      "market": "Market",
+      "result": "Result",
+      "range": "Date range",
+      "allMarkets": "All markets",
+      "allResults": "All results",
+      "today": "Today",
+      "days7": "7 days",
+      "days30": "30 days",
+      "custom": "Custom"
+    },
+    "status": {
+      "waitingDraw": "Awaiting draw",
+      "waitingSettle": "Awaiting result",
+      "won": "Won",
+      "lost": "Lost",
+      "void": "Cancelled (refunded)"
+    },
+    "summary": {
+      "count": {
+        "one": "{count} slip",
+        "other": "{count} slips"
+      },
+      "stake": "Total stake {amount}",
+      "net": "Net win/loss"
+    },
+    "card": {
+      "drawAt": "Draw {date}",
+      "settledAt": "Settled {date}"
+    },
+    "emptyPending": {
+      "title": "No slips in progress",
+      "description": "Submitted slips that haven't been settled yet will show up here."
+    },
+    "emptyHistory": {
+      "title": "No slip history yet",
+      "description": "Settled slips are kept for {days} days."
+    },
+    "emptyFiltered": "No slips match these filters",
+    "clearFilters": "Clear filters",
+    "loadMore": "Load more",
+    "loadingMore": "Loading…",
+    "loadMoreError": "Couldn't load more. Please try again.",
+    "loadError": "Couldn't load slips",
+    "retentionNote": "History is kept for {days} days"
   }
 }

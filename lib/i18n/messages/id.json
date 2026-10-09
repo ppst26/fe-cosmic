@@ -678,7 +678,55 @@
       "summaryTitle": "Ringkasan Slip",
       "notFoundTitle": "Slip tidak ditemukan",
       "notFoundDescription": "Slip mungkin sudah dihapus atau tautannya tidak valid.",
-      "viewAll": "Lihat Semua Slip"
+      "viewAll": "Lihat Semua Slip",
+      "tabs": {
+        "pending": "Berjalan",
+        "history": "Riwayat",
+        "aria": "Jenis slip"
+      },
+      "filters": {
+        "aria": "Filter slip",
+        "market": "Pasaran",
+        "result": "Hasil",
+        "range": "Rentang waktu",
+        "allMarkets": "Semua pasaran",
+        "allResults": "Semua hasil",
+        "today": "Hari ini",
+        "days7": "7 hari",
+        "days30": "30 hari",
+        "custom": "Kustom"
+      },
+      "status": {
+        "waitingDraw": "Menunggu undian",
+        "waitingSettle": "Menunggu hasil",
+        "won": "Menang",
+        "lost": "Kalah",
+        "void": "Dibatalkan (dana kembali)"
+      },
+      "summary": {
+        "count": "{count} slip",
+        "stake": "Total taruhan {amount}",
+        "net": "Menang/kalah bersih"
+      },
+      "card": {
+        "drawAt": "Undian {date}",
+        "settledAt": "Selesai {date}"
+      },
+      "emptyPending": {
+        "title": "Tidak ada slip yang berjalan",
+        "description": "Slip yang sudah dikirim dan belum selesai akan muncul di sini."
+      },
+      "emptyHistory": {
+        "title": "Belum ada riwayat slip",
+        "description": "Slip yang sudah selesai disimpan selama {days} hari."
+      },
+      "emptyFiltered": "Tidak ada slip yang cocok dengan filter",
+      "clearFilters": "Hapus filter",
+      "loadMore": "Muat lagi",
+      "loadingMore": "Memuat…",
+      "loadMoreError": "Gagal memuat lagi. Coba lagi.",
+      "loadError": "Gagal memuat slip",
+      "retentionNote": "Riwayat disimpan selama {days} hari"
     }
   },
   "meta": {

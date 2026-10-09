@@ -691,7 +691,55 @@
       "summaryTitle": "Buod ng Slip",
       "notFoundTitle": "Hindi nahanap ang slip",
       "notFoundDescription": "Maaaring natanggal na ang slip o hindi wasto ang link.",
-      "viewAll": "Tingnan ang Lahat ng Slip"
+      "viewAll": "Tingnan ang Lahat ng Slip",
+      "tabs": {
+        "pending": "Ongoing",
+        "history": "Kasaysayan",
+        "aria": "Uri ng slip"
+      },
+      "filters": {
+        "aria": "Mga filter ng slip",
+        "market": "Lotto",
+        "result": "Resulta",
+        "range": "Saklaw ng petsa",
+        "allMarkets": "Lahat ng lotto",
+        "allResults": "Lahat ng resulta",
+        "today": "Ngayon",
+        "days7": "7 araw",
+        "days30": "30 araw",
+        "custom": "Custom"
+      },
+      "status": {
+        "waitingDraw": "Naghihintay ng draw",
+        "waitingSettle": "Naghihintay ng resulta",
+        "won": "Panalo",
+        "lost": "Talo",
+        "void": "Kinansela (na-refund)"
+      },
+      "summary": {
+        "count": "{count} slip",
+        "stake": "Kabuuang taya {amount}",
+        "net": "Netong panalo/talo"
+      },
+      "card": {
+        "drawAt": "Draw {date}",
+        "settledAt": "Na-settle {date}"
+      },
+      "emptyPending": {
+        "title": "Walang ongoing na slip",
+        "description": "Lalabas dito ang mga naipadalang slip na hindi pa na-settle."
+      },
+      "emptyHistory": {
+        "title": "Wala pang kasaysayan ng slip",
+        "description": "Itinatago ang mga na-settle na slip nang {days} araw."
+      },
+      "emptyFiltered": "Walang slip na tumutugma sa mga filter",
+      "clearFilters": "I-clear ang mga filter",
+      "loadMore": "Mag-load pa",
+      "loadingMore": "Nilo-load…",
+      "loadMoreError": "Hindi na-load. Subukan muli.",
+      "loadError": "Hindi na-load ang mga slip",
+      "retentionNote": "Itinatago ang kasaysayan nang {days} araw"
     }
   },
   "meta": {

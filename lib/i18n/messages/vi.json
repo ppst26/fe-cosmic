@@ -782,7 +782,55 @@
       "summaryTitle": "Tóm tắt phiếu cược",
       "notFoundTitle": "Không tìm thấy phiếu cược",
       "notFoundDescription": "Phiếu cược có thể đã bị xóa hoặc liên kết không hợp lệ.",
-      "viewAll": "Xem tất cả phiếu cược"
+      "viewAll": "Xem tất cả phiếu cược",
+      "tabs": {
+        "pending": "Đang xử lý",
+        "history": "Lịch sử",
+        "aria": "Loại phiếu"
+      },
+      "filters": {
+        "aria": "Bộ lọc phiếu",
+        "market": "Thị trường",
+        "result": "Kết quả",
+        "range": "Khoảng thời gian",
+        "allMarkets": "Tất cả thị trường",
+        "allResults": "Tất cả kết quả",
+        "today": "Hôm nay",
+        "days7": "7 ngày",
+        "days30": "30 ngày",
+        "custom": "Tùy chọn"
+      },
+      "status": {
+        "waitingDraw": "Chờ quay số",
+        "waitingSettle": "Chờ tính kết quả",
+        "won": "Trúng thưởng",
+        "lost": "Không trúng",
+        "void": "Đã hủy (hoàn tiền)"
+      },
+      "summary": {
+        "count": "{count} phiếu",
+        "stake": "Tổng cược {amount}",
+        "net": "Thắng/thua ròng"
+      },
+      "card": {
+        "drawAt": "Quay số {date}",
+        "settledAt": "Có kết quả {date}"
+      },
+      "emptyPending": {
+        "title": "Không có phiếu đang xử lý",
+        "description": "Phiếu đã gửi và chưa có kết quả sẽ hiển thị ở đây."
+      },
+      "emptyHistory": {
+        "title": "Chưa có lịch sử phiếu",
+        "description": "Phiếu đã có kết quả được lưu trong {days} ngày."
+      },
+      "emptyFiltered": "Không có phiếu phù hợp bộ lọc",
+      "clearFilters": "Xóa bộ lọc",
+      "loadMore": "Tải thêm",
+      "loadingMore": "Đang tải…",
+      "loadMoreError": "Không tải thêm được. Vui lòng thử lại.",
+      "loadError": "Không tải được phiếu",
+      "retentionNote": "Lịch sử được lưu {days} ngày"
     }
   },
   "wallet": {

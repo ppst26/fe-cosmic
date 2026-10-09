@@ -77,6 +77,7 @@ export function buildSubmittedSlip(
     drawAt: input.drawCloseAt || ids.purchasedAt,
     purchasedAt: ids.purchasedAt,
     status: "submitted",
+    settledAt: null,
     note: input.note,
     lines,
     totalStake: lines.reduce((sum, line) => sum + line.amount, 0),
