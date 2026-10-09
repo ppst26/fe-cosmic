@@ -16,7 +16,7 @@ interface PromoCarouselProps {
  */
 export function PromoCarousel({ items }: PromoCarouselProps) {
   const trackSlides = buildLoopedTrack(items);
-  const { scrollContainerRef, logicalIndex, pauseFor, scrollToLogicalIndex } =
+  const { scrollContainerRef, logicalIndex, loopEnabled, pauseFor, scrollToLogicalIndex } =
     useInfiniteSnapCarousel(items.length);
 
   const dotCount = Math.min(items.length, 5);
@@ -37,8 +37,10 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
           tabIndex={0}
           aria-label="รายการโปรโมชัน"
         >
-          {trackSlides.map((entry) => {
+          {trackSlides.map((entry, index) => {
             const item = entry.item;
+            /** สไลด์จริงใบแรก = LCP มือถือ (WelcomeBanner ถูกซ่อน) */
+            const isLcpSlide = !entry.isClone && index === (loopEnabled ? 1 : 0);
             return (
               <Link
                 key={entry.key}
@@ -60,6 +62,8 @@ export function PromoCarousel({ items }: PromoCarouselProps) {
                     src={item.bannerSrc}
                     alt=""
                     fill
+                    loading={isLcpSlide ? "eager" : "lazy"}
+                    fetchPriority={isLcpSlide ? "high" : "auto"}
                     sizes="(max-width: 640px) 85vw, 420px"
                     className="object-cover object-center"
                   />

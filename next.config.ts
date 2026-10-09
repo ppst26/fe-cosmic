@@ -49,22 +49,43 @@ const SECURITY_HEADERS = [
     : []),
 ];
 
+/** ไฟล์ใน public/ เป็น avif/webp ที่บีบแล้ว — แคชยาว กันดึงซ้ำทุกครั้งที่เปิดหน้า */
+const STATIC_IMAGE_CACHE_HEADER = {
+  key: "Cache-Control",
+  value: "public, max-age=2592000, stale-while-revalidate=86400",
+};
+
+const STATIC_IMAGE_SOURCES = [
+  "/:path*.avif",
+  "/:path*.webp",
+  "/:path*.png",
+  "/:path*.jpg",
+  "/:path*.jpeg",
+  "/:path*.gif",
+  "/:path*.svg",
+  "/:path*.ico",
+] as const;
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     remotePatterns: imageRemotePatterns(),
     /**
-     * ความกว้างที่ srcset จะสร้าง — ตัดจาก default (640…3840 + 32…384) ให้เหลือเท่าที่ใช้จริง
-     * หน้า lobby มีรูปเกิน 150 ใบ/หน้า srcset ยาวทุกใบทำให้ HTML บวมเกิน 1 ใน 3
-     * เพดาน 1920 พอสำหรับจอ desktop ที่กว้างสุดใน design.md (--lobby-desktop-center-width)
+     * ข้าม /_next/image — รูป public/ เป็น avif/webp อยู่แล้ว
+     * optimizer encode ใหม่ทุกใบตอน first hit (โดยเฉพาะ AVIF ไอคอนเมนู) ทำให้ทั้งหน้าช้า
      */
+    unoptimized: true,
     deviceSizes: [360, 640, 828, 1080, 1920],
     imageSizes: [48, 96, 160, 256],
-    /** รูปใน public/ เป็น avif/webp นิ่งแล้ว — ยืดอายุ cache จาก default 4 ชม. เป็น 31 วัน ไม่ต้อง re-encode ซ้ำ */
-    minimumCacheTTL: 2678400,
   },
   async headers() {
-    return [{ source: "/:path*", headers: SECURITY_HEADERS }];
+    return [
+      { source: "/:path*", headers: SECURITY_HEADERS },
+      ...STATIC_IMAGE_SOURCES.map((source) => ({
+        source,
+        headers: [STATIC_IMAGE_CACHE_HEADER],
+      })),
+    ];
   },
 };
 

@@ -202,6 +202,7 @@ export function CategoryNav({
                 <span className="category-nav__icon flex items-center justify-center shrink-0" aria-hidden="true">
                   <Menu3DIcon
                     iconId={category.id}
+                    priority
                     className="h-9 w-9 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-transform duration-200 group-hover:scale-105 xl:h-10 xl:w-10"
                   />
                 </span>
@@ -250,6 +251,7 @@ export function CategoryNav({
               >
                 <Menu3DIcon
                   iconId={category.id}
+                  priority
                   className="h-full w-full drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]"
                   size={30}
                 />
