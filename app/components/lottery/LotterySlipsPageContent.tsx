@@ -39,6 +39,8 @@ type ParamKey = keyof typeof DEFAULTS;
 const TAB_ORDER = ["pending", "history"] as const;
 const RESULTS: readonly LotterySlipResult[] = ["won", "lost", "void"];
 const PAGE_SIZE = 20;
+/** ค่าของตัวเลือก "ทั้งหมด" ใน dropdown — Select ของ Radix ใช้ค่าว่าง "" เป็นตัวเลือกไม่ได้ (จะแสดงช่องว่าง) · ใน URL/state ยังเป็น "" */
+const ALL = "all";
 
 /** ค่าจาก URL ที่ไม่รู้จัก → default (กัน ?market=… ที่แต่งมา) */
 function sanitize(key: ParamKey, raw: string): string {
@@ -142,14 +144,14 @@ export function LotterySlipsPageContent() {
     const slugs = new Set(first.data?.summary.markets ?? []);
     if (params.market) slugs.add(params.market);
     return [
-      { value: "", label: t("slips.filters.allMarkets") },
+      { value: ALL, label: t("slips.filters.allMarkets") },
       ...[...slugs].map((slug) => ({ value: slug, label: t(lotteryPlayMarketMeta(slug).titleKey) })),
     ];
   }, [first.data?.summary.markets, params.market, t]);
 
   const resultOptions = useMemo(
     () => [
-      { value: "", label: t("slips.filters.allResults") },
+      { value: ALL, label: t("slips.filters.allResults") },
       ...RESULTS.map((value) => ({ value, label: t(`slips.status.${value}`) })),
     ],
     [t],
@@ -193,11 +195,12 @@ export function LotterySlipsPageContent() {
 
       {/* ตัวกรอง */}
       <div className="flex flex-col gap-2" role="group" aria-label={t("slips.filters.aria")}>
-        <div className={cn("grid gap-2", scope === "history" ? "grid-cols-2" : "grid-cols-1")}>
+        {/* dropdown กว้างครึ่งเดียว (แท็บกำลังดำเนินการมีแค่ "ตลาด" อยู่คอลัมน์ซ้าย) */}
+        <div className="grid grid-cols-2 gap-2">
           <CosmicSelectField
             variant="solid"
-            value={params.market}
-            onValueChange={(value) => setParams({ market: value })}
+            value={params.market || ALL}
+            onValueChange={(value) => setParams({ market: value === ALL ? "" : value })}
             options={marketOptions}
             aria-label={t("slips.filters.market")}
             triggerClassName="w-full"
@@ -205,8 +208,8 @@ export function LotterySlipsPageContent() {
           {scope === "history" ? (
             <CosmicSelectField
               variant="solid"
-              value={result}
-              onValueChange={(value) => setParams({ result: value })}
+              value={result || ALL}
+              onValueChange={(value) => setParams({ result: value === ALL ? "" : value })}
               options={resultOptions}
               aria-label={t("slips.filters.result")}
               triggerClassName="w-full"
