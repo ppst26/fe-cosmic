@@ -73,10 +73,13 @@ export function getVipRankVideoSrc(rankId: VipRankId): string | null {
   return VIP_RANK_VIDEO[rankId] ?? null;
 }
 
-/** MP4 แบบ stacked-alpha (สี+mask) สำหรับ Safari/iOS — ชื่อไฟล์ = webm ตัด hash เป็น .stacked.mp4 */
+/**
+ * MP4 แบบ stacked-alpha (สี+mask) สำหรับ Safari/iOS — ชื่อไฟล์ = webm ตัด hash เป็น .stacked.mp4
+ * ไฟล์ปัจจุบันเป็น 60 fps — ต่อ ?v=60fps เพื่อทิ้งแคชของไฟล์ 24 fps เดิม (เปลี่ยนค่าเมื่อเข้ารหัสใหม่)
+ */
 export function getVipRankStackedSrc(rankId: VipRankId): string | null {
   const webm = VIP_RANK_VIDEO[rankId];
-  return webm ? webm.replace(/.[A-Za-z0-9_-]{8}.webm$/, ".stacked.mp4") : null;
+  return webm ? webm.replace(/.[A-Za-z0-9_-]{8}.webm$/, ".stacked.mp4?v=60fps") : null;
 }
 
 /** เป้าเทิร์นอ้างอิงตาราง (fallback) */
