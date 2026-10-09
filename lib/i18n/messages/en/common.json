@@ -1,0 +1,8 @@
+{
+  "language": "Language",
+  "languagePicker": {
+    "title": "Choose language",
+    "description": "Change the language shown on the site",
+    "close": "Close language picker"
+  }
+}

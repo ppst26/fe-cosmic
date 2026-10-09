@@ -7,6 +7,7 @@ import { CosmicFooterGate } from "@/app/components/layout/CosmicFooterGate";
 import { LOCALES, hasLocale } from "@/lib/i18n/config";
 import { localeFontClass } from "@/lib/i18n/fonts";
 import { MessagesBoundary } from "@/lib/i18n/MessagesBoundary";
+import { NAMESPACES } from "@/lib/i18n/messages";
 import { getT } from "@/lib/i18n/server";
 import "@/app/globals.css";
 
@@ -65,7 +66,8 @@ export default async function RootLayout({
       className={`${notoSansThai.variable} ${geistMono.variable} ${localeFontClass(locale)} dark cosmic-page cosmic-bg h-full antialiased`}
     >
       <body className="flex min-h-dvh min-w-0 flex-col text-[var(--text-primary)]">
-        <MessagesBoundary namespaces={["common", "nav", "auth", "errors"]}>
+        {/* ส่งทุก namespace — hub modal เปิดได้ทุกโดเมนจากทุกหน้า · ตัดต่อ segment ภายหลังถ้าขนาดเป็นปัญหา */}
+        <MessagesBoundary namespaces={NAMESPACES}>
           <AppProviders>
             <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
               <div className="flex min-h-0 min-w-0 flex-1 flex-col">{children}</div>

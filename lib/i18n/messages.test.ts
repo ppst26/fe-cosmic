@@ -1,15 +1,33 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { LOCALES, type Locale } from "./config";
+import { NAMESPACES } from "./messages";
 import type { MessageTree } from "./translate";
 
-/** อ่าน JSON ตรงจากไฟล์ — เลี่ยง JSON import ใน tsx --test */
+const DIR = path.join(process.cwd(), "lib/i18n/messages");
+
+/** อ่าน JSON ตรงจากไฟล์ — โฟลเดอร์ (หนึ่งไฟล์ต่อ namespace) หรือ <locale>.json ไฟล์เดียว */
 function read(locale: Locale): MessageTree {
-  const file = path.join(process.cwd(), "lib/i18n/messages", `${locale}.json`);
-  return JSON.parse(readFileSync(file, "utf8")) as MessageTree;
+  const folder = path.join(DIR, locale);
+  if (existsSync(folder)) {
+    return Object.fromEntries(
+      readdirSync(folder)
+        .filter((name) => name.endsWith(".json"))
+        .map((name) => [name.replace(/\.json$/, ""), JSON.parse(readFileSync(path.join(folder, name), "utf8"))]),
+    );
+  }
+  return JSON.parse(readFileSync(path.join(DIR, `${locale}.json`), "utf8")) as MessageTree;
 }
+
+test("th folder has exactly the namespaces listed in NAMESPACES and index.ts", () => {
+  assert.deepEqual(Object.keys(read("th")).sort(), [...NAMESPACES].sort());
+  for (const locale of ["th", "en"] as const) {
+    const index = readFileSync(path.join(DIR, locale, "index.ts"), "utf8");
+    for (const ns of NAMESPACES) assert.match(index, new RegExp(`import ${ns} from "\\./${ns}\\.json"`), `${locale}/index.ts: ${ns}`);
+  }
+});
 
 /** leaf key → ข้อความ (plural object ที่มี other นับเป็น leaf เดียว รวมทุก form) */
 function leaves(tree: MessageTree, prefix = ""): Map<string, string> {
@@ -29,7 +47,7 @@ function placeholders(text: string): string {
 
 const th = leaves(read("th"));
 
-test("every locale file exists and has no keys missing from th", () => {
+test("every locale has no keys missing from th", () => {
   for (const locale of LOCALES) {
     const extra = [...leaves(read(locale)).keys()].filter((key) => !th.has(key));
     assert.deepEqual(extra, [], `${locale}.json has keys not in th.json`);
