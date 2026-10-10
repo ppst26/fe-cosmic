@@ -52,8 +52,24 @@ function FullscreenToggleIcon({ active }: { active: boolean }) {
   );
 }
 
+/** Fullscreen API ที่เบราว์เซอร์นี้ใช้ได้ (รวมแบบ webkit) — iPhone Safari ไม่มีให้ element ทั่วไป → null */
+type FullscreenCapableElement = HTMLElement & {
+  webkitRequestFullscreen?: () => Promise<void> | void;
+};
+type FullscreenCapableDocument = Document & {
+  webkitFullscreenElement?: Element | null;
+  webkitExitFullscreen?: () => Promise<void> | void;
+};
+
+function nativeFullscreenElement(): Element | null {
+  const doc = document as FullscreenCapableDocument;
+  return doc.fullscreenElement ?? doc.webkitFullscreenElement ?? null;
+}
+
 /**
  * พื้นที่ mock เกมกลางจอ — แนว iframe สำหรับ prototype (หน้า /play/[gameId])
+ * ปุ่มเต็มจอ: ใช้ Fullscreen API ก่อน · ถ้าไม่รองรับหรือเข้าไม่สำเร็จ (iPhone Safari / บาง webview)
+ * → โหมดเต็มจอแบบ CSS (.is-pseudo-fullscreen: fixed คลุมทั้ง viewport รวม header) · ออกด้วยปุ่มเดิมหรือ Esc
  */
 export function MockGameViewport({
   gameId,
@@ -63,34 +79,72 @@ export function MockGameViewport({
 }: MockGameViewportProps) {
   const t = useT("games");
   const rootRef = useRef<HTMLElement>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
+  const [isPseudoFullscreen, setIsPseudoFullscreen] = useState(false);
+  const isFullscreen = isNativeFullscreen || isPseudoFullscreen;
 
   useEffect(() => {
     const onFullscreenChange = () => {
-      setIsFullscreen(document.fullscreenElement === rootRef.current);
+      setIsNativeFullscreen(nativeFullscreenElement() === rootRef.current);
     };
     document.addEventListener("fullscreenchange", onFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", onFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", onFullscreenChange);
+    };
   }, []);
 
+  /** โหมดเต็มจอแบบ CSS: ล็อกการเลื่อนของหน้า + ออกด้วย Esc */
+  useEffect(() => {
+    if (!isPseudoFullscreen) return;
+    const root = document.documentElement;
+    root.classList.add("is-game-fullscreen");
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsPseudoFullscreen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      root.classList.remove("is-game-fullscreen");
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isPseudoFullscreen]);
+
   const toggleFullscreen = useCallback(async () => {
-    const el = rootRef.current;
+    const el = rootRef.current as FullscreenCapableElement | null;
     if (!el) return;
-    try {
-      if (document.fullscreenElement === el) {
-        await document.exitFullscreen();
-      } else {
-        await el.requestFullscreen();
-      }
-    } catch {
-      /* Fullscreen API ไม่พร้อมในบาง webview */
+
+    if (isPseudoFullscreen) {
+      setIsPseudoFullscreen(false);
+      return;
     }
-  }, []);
+    if (nativeFullscreenElement() === el) {
+      const doc = document as FullscreenCapableDocument;
+      try {
+        await (doc.exitFullscreen?.() ?? doc.webkitExitFullscreen?.());
+      } catch {
+        /* ปล่อยให้ผู้ใช้ออกด้วยท่าทางของเบราว์เซอร์ */
+      }
+      return;
+    }
+
+    const request = el.requestFullscreen?.bind(el) ?? el.webkitRequestFullscreen?.bind(el);
+    if (request) {
+      try {
+        await request();
+        // บาง webview ตอบรับแต่ไม่ได้เข้าโหมดจริง → ใช้แบบ CSS แทน
+        if (nativeFullscreenElement() === el) return;
+      } catch {
+        /* ถูกปฏิเสธ — ใช้แบบ CSS */
+      }
+    }
+    setIsPseudoFullscreen(true);
+  }, [isPseudoFullscreen]);
 
   return (
     <section
       ref={rootRef}
-      className={cn("mock-game-viewport", className)}
+      className={cn("mock-game-viewport", isPseudoFullscreen && "is-pseudo-fullscreen", className)}
       aria-label={t("play.playingAriaLabel", { title })}
     >
       <button

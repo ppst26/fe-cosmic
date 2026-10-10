@@ -42,6 +42,27 @@
   border: none;
 }
 
+/* เต็มจอแบบ CSS (iPhone Safari ไม่มี Fullscreen API) — คลุมทั้ง viewport รวม header และ drawer */
+.mock-game-viewport.is-pseudo-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100dvh;
+  border: none;
+}
+
+.mock-game-viewport.is-pseudo-fullscreen .mock-game-viewport__fullscreen {
+  top: calc(env(safe-area-inset-top, 0px) + 0.65rem);
+  right: calc(env(safe-area-inset-right, 0px) + 0.65rem);
+}
+
+html.is-game-fullscreen {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 .mock-game-viewport__fullscreen {
   position: absolute;
   top: 0.65rem;
