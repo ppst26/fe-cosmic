@@ -56,35 +56,37 @@ export function ProfileAvatarPicker({
         <Dialog.Content
           aria-describedby={undefined}
           className={responsiveSheetContentClass(
-            "z-[70] flex max-h-[min(85dvh,520px)] min-h-0 flex-col gap-3 px-4 pb-5 pt-3 sm:px-5",
+            "z-[70] flex max-h-[min(85dvh,520px)] min-h-0 flex-col gap-2 px-0 pb-5 pt-3",
             { variant: "default" },
           )}
         >
-          <div className="flex items-start justify-between gap-2">
-            <Dialog.Title className="text-lg font-medium text-[var(--text-primary)]">
-              {t("avatar.pickerTitle")}
-            </Dialog.Title>
-            <Dialog.Close asChild>
-              <button
-                type="button"
-                className={responsiveSheetCloseButtonClass()}
-                aria-label={t("avatar.close")}
-              >
-                <CloseIcon className="h-4 w-4" />
-              </button>
-            </Dialog.Close>
+          <div className="flex flex-col gap-2 px-4 sm:px-5">
+            <div className="flex items-start justify-between gap-2">
+              <Dialog.Title className="text-lg font-medium text-[var(--text-primary)]">
+                {t("avatar.pickerTitle")}
+              </Dialog.Title>
+              <Dialog.Close asChild>
+                <button
+                  type="button"
+                  className={responsiveSheetCloseButtonClass()}
+                  aria-label={t("avatar.close")}
+                >
+                  <CloseIcon className="h-4 w-4" />
+                </button>
+              </Dialog.Close>
+            </div>
+
+            <p className="text-xs text-[var(--text-secondary)]">
+              {t("avatar.pickerDescription")}
+            </p>
+
+            {error ? (
+              <p className="text-xs text-[var(--destructive)]" role="alert">{error}</p>
+            ) : null}
           </div>
 
-          <p className="text-xs text-[var(--text-secondary)]">
-            {t("avatar.pickerDescription")}
-          </p>
-
-          {error ? (
-            <p className="text-xs text-[var(--destructive)]" role="alert">{error}</p>
-          ) : null}
-
           <ul
-            className="grid min-h-0 flex-1 grid-cols-3 gap-3 overflow-y-auto py-1 sm:grid-cols-4"
+            className="grid min-h-0 flex-1 grid-cols-3 gap-1.5 overflow-y-auto px-2.5 pb-1 sm:grid-cols-4 sm:gap-2 sm:px-3"
             role="list"
           >
             {AVATAR_PRESETS.map((preset) => {
@@ -97,10 +99,10 @@ export function ProfileAvatarPicker({
                     disabled={Boolean(savingId)}
                     onClick={() => void handleSelect(preset.id)}
                     className={cn(
-                      "flex w-full flex-col items-center gap-1.5 rounded-[var(--radius-panel)] p-2 transition-colors",
+                      "flex w-full min-w-0 flex-col items-center gap-1 rounded-[var(--radius-panel)] p-1.5 transition-colors",
                       selected
-                        ? "bg-[var(--surface-selected)] ring-2 ring-[var(--focus-ring)]"
-                        : "bg-[var(--surface-hover)] hover:bg-[var(--surface-mid)]",
+                        ? "bg-[var(--cosmic-pagination-bg)] ring-2 ring-[var(--focus-ring)]"
+                        : "bg-[var(--cosmic-pagination-track-bg)] hover:bg-[var(--cosmic-pagination-bg)]",
                       savingId && !isSaving && "opacity-60",
                     )}
                     aria-pressed={selected}
