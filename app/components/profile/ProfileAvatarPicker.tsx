@@ -76,35 +76,32 @@ export function ProfileAvatarPicker({
               </Dialog.Close>
             </div>
 
-            <p className="text-xs text-[var(--text-secondary)]">
-              {t("avatar.pickerDescription")}
-            </p>
-
             {error ? (
               <p className="text-xs text-[var(--destructive)]" role="alert">{error}</p>
             ) : null}
           </div>
 
           <ul
-            className="grid min-h-0 flex-1 grid-cols-3 gap-1.5 overflow-y-auto px-2.5 pb-1 sm:grid-cols-4 sm:gap-2 sm:px-3"
+            className="grid min-h-0 flex-1 grid-cols-3 gap-2 overflow-y-auto px-3 pb-1 sm:grid-cols-4 sm:gap-2.5 sm:px-3.5"
             role="list"
           >
             {AVATAR_PRESETS.map((preset) => {
               const selected = preset.id === currentPresetId;
               const isSaving = savingId === preset.id;
               return (
-                <li key={preset.id}>
+                <li key={preset.id} className="min-w-0">
                   <button
                     type="button"
                     disabled={Boolean(savingId)}
                     onClick={() => void handleSelect(preset.id)}
                     className={cn(
-                      "flex w-full min-w-0 flex-col items-center gap-1 rounded-[var(--radius-panel)] p-1.5 transition-colors",
+                      "flex w-full min-w-0 items-center justify-center rounded-[var(--radius-panel)] p-2 transition-colors",
                       selected
-                        ? "bg-[var(--cosmic-pagination-bg)] ring-2 ring-[var(--focus-ring)]"
+                        ? "bg-[var(--cosmic-pagination-bg)]"
                         : "bg-[var(--cosmic-pagination-track-bg)] hover:bg-[var(--cosmic-pagination-bg)]",
                       savingId && !isSaving && "opacity-60",
                     )}
+                    aria-label={t("avatar.presetName", { n: preset.number })}
                     aria-pressed={selected}
                     aria-busy={isSaving}
                   >
@@ -113,12 +110,12 @@ export function ProfileAvatarPicker({
                       alt=""
                       width={64}
                       height={64}
-                      className="h-16 w-16 rounded-full object-cover"
+                      className={cn(
+                        "size-16 max-w-full rounded-full object-cover",
+                        selected && "ring-2 ring-[var(--focus-ring)]",
+                      )}
                       loading="lazy"
                     />
-                    <span className="text-[11px] font-medium text-[var(--text-secondary)]">
-                      {t("avatar.presetName", { n: preset.number })}
-                    </span>
                   </button>
                 </li>
               );
