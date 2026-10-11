@@ -96,9 +96,17 @@ export function VipRankLevelUpCard({
 
       : getVipRequirementRankForFocus(focusRankId, player);
 
-  const targetVipNumber = getVipRankDisplayNumber(requirementRankId);
+  const levelUpFromPlayer = mode === "current" ? player.levelUpTarget : null;
 
-  const { depositTarget, turnoverTarget } = getVipRankLevelUpAmounts(requirementRankId);
+  const fallbackAmounts = getVipRankLevelUpAmounts(requirementRankId);
+
+  const targetVipNumber =
+
+    levelUpFromPlayer?.vipLevel ?? getVipRankDisplayNumber(requirementRankId);
+
+  const depositTarget = levelUpFromPlayer?.depositTarget ?? fallbackAmounts.depositTarget;
+
+  const turnoverTarget = levelUpFromPlayer?.turnoverTarget ?? fallbackAmounts.turnoverTarget;
 
 
 

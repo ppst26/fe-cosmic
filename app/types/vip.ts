@@ -30,8 +30,17 @@ export interface VipMission {
 export interface VipRankTier {
   id: VipRankId;
   label: string;
+  /** เลข VIP ที่แสดงใน UI — จาก API / ตารางแรงค์ */
+  vipLevel: number;
   expRequired: number;
   accent: string;
+}
+
+/** เป้าเลื่อนระดับจาก API (แท็บระดับของฉัน) */
+export interface VipLevelUpTarget {
+  vipLevel: number;
+  depositTarget: number;
+  turnoverTarget: number;
 }
 
 /** แถวในตารางเปรียบเทียบสิทธิประโยชน์ */
@@ -53,6 +62,8 @@ export interface VipBenefitRow {
 export interface VipPlayerState {
   currentRankId: VipRankId;
   nextRankId: VipRankId | null;
+  /** เป้าเลื่อนระดับ — จาก GET /api/vip/player (แท็บระดับของฉัน) */
+  levelUpTarget?: VipLevelUpTarget | null;
   /** ยอดฝากสะสมเลื่อนระดับ (mock) */
   depositProgress: number;
   /** ยอดเทิร์นโอเวอร์สะสม — ใช้กับแถบ progress หลัก */

@@ -16,14 +16,14 @@ import type { VipRankRequirements, VipRankViewStatus } from "@/app/types/vip";
  * ดูเป้าเลื่อนแต่ละขั้นใน VIP_RANK_LEVEL_UP_TARGETS
  */
 export const VIP_RANK_TIERS: VipRankTier[] = [
-  { id: "base", label: "BASE", expRequired: 0, accent: "#9aa3b2" },
-  { id: "bronze", label: "BRONZE", expRequired: 500, accent: "#c98a55" },
-  { id: "silver", label: "SILVER", expRequired: 3_000, accent: "#b8c0cc" },
-  { id: "gold", label: "GOLD", expRequired: 15_000, accent: "#f5c542" },
-  { id: "platinum", label: "PLATINUM", expRequired: 75_000, accent: "#9fd4ff" },
-  { id: "emerald", label: "EMERALD", expRequired: 250_000, accent: "#5ee4a0" },
-  { id: "diamond", label: "DIAMOND", expRequired: 1_000_000, accent: "#b794ff" },
-  { id: "obsidian", label: "OBSIDIAN", expRequired: 5_000_000, accent: "#8b7fa8" },
+  { id: "base", label: "BASE", vipLevel: 6, expRequired: 0, accent: "#9aa3b2" },
+  { id: "bronze", label: "BRONZE", vipLevel: 7, expRequired: 500, accent: "#c98a55" },
+  { id: "silver", label: "SILVER", vipLevel: 8, expRequired: 3_000, accent: "#b8c0cc" },
+  { id: "gold", label: "GOLD", vipLevel: 9, expRequired: 15_000, accent: "#f5c542" },
+  { id: "platinum", label: "PLATINUM", vipLevel: 10, expRequired: 75_000, accent: "#9fd4ff" },
+  { id: "emerald", label: "EMERALD", vipLevel: 11, expRequired: 250_000, accent: "#5ee4a0" },
+  { id: "diamond", label: "DIAMOND", vipLevel: 12, expRequired: 1_000_000, accent: "#b794ff" },
+  { id: "obsidian", label: "OBSIDIAN", vipLevel: 13, expRequired: 5_000_000, accent: "#8b7fa8" },
 ];
 
 /** วิดีโอตราแรงค์ VIP — ไฟล์ใน public/rank */
@@ -94,6 +94,11 @@ export const VIP_MISSION_BASE = {
 export const VIP_PLAYER_MOCK: VipPlayerState = {
   currentRankId: "gold",
   nextRankId: "platinum",
+  levelUpTarget: {
+    vipLevel: 10,
+    depositTarget: 30_000_000,
+    turnoverTarget: 30_000_000,
+  },
   depositProgress: 24_500_000,
   turnoverProgress: 21_800_000,
   missions: [
@@ -235,9 +240,9 @@ export function getVipPreviousRankId(rankId: VipRankId): VipRankId | null {
   return VIP_RANK_TIERS[index - 1]?.id ?? null;
 }
 
-/** เลข VIP ใน UI (BASE=6 … PLATINUM=10 … OBSIDIAN=13) — mock ให้ตรง reference */
+/** เลข VIP ใน UI — อ่านจากตารางแรงค์ (API ส่ง vipLevel ต่อ tier) */
 export function getVipRankDisplayNumber(rankId: VipRankId): number {
-  return getVipRankIndex(rankId) + 6;
+  return getVipRankTier(rankId).vipLevel;
 }
 
 export function getVipRankTier(id: VipRankId): VipRankTier {
