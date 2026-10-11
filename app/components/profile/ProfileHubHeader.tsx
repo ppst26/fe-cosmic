@@ -62,10 +62,7 @@ export function ProfileHubHeader({
       <UserAvatar
         profile={profile}
         size={isSheet ? "lg" : "md"}
-        className={cn(
-          isSheet && "shadow-[0_4px_14px_rgb(0_0_0_/_0.18)]",
-          "ring-2 ring-transparent transition-[box-shadow,ring-color] group-hover:ring-[var(--border-active)]",
-        )}
+        className={cn(isSheet && "shadow-[0_4px_14px_rgb(0_0_0_/_0.18)]")}
       />
     </button>
   );

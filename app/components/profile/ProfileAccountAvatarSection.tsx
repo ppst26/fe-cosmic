@@ -37,7 +37,7 @@ export function ProfileAccountAvatarSection({
             <UserAvatar
               profile={profile}
               size="xl"
-              className="menu-drawer-avatar__img !h-full !w-full !rounded-full ring-2 ring-transparent transition-[box-shadow] group-hover:ring-[var(--border-active)]"
+              className="menu-drawer-avatar__img !h-full !w-full !rounded-full"
               imageClassName="menu-drawer-avatar__img"
             />
           </span>

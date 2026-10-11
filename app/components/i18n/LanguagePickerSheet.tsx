@@ -43,9 +43,11 @@ export function LanguagePickerSheet({ isOpen, onClose }: LanguagePickerSheetProp
         <Dialog.Overlay className={responsiveSheetOverlayClass()} />
         <Dialog.Content
           aria-describedby="language-picker-desc"
-          className={responsiveSheetContentClass("max-h-[min(85dvh,640px)] overflow-y-auto")}
+          className={responsiveSheetContentClass(
+            "flex max-h-[min(85dvh,640px)] min-h-0 flex-col overflow-hidden gap-0",
+          )}
         >
-          <ResponsiveSheetTitleNotch>
+          <ResponsiveSheetTitleNotch className="shrink-0">
             <ResponsiveSheetHeader
               closeAriaLabel={t("languagePicker.close")}
               title={
@@ -61,7 +63,8 @@ export function LanguagePickerSheet({ isOpen, onClose }: LanguagePickerSheetProp
             />
           </ResponsiveSheetTitleNotch>
 
-          <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2" role="list">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pt-3">
+          <ul className="grid grid-cols-1 gap-2 pb-1 sm:grid-cols-2" role="list">
             {LOCALES.map((code) => {
               const selected = code === current;
               return (
@@ -87,6 +90,7 @@ export function LanguagePickerSheet({ isOpen, onClose }: LanguagePickerSheetProp
               );
             })}
           </ul>
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

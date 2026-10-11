@@ -110,10 +110,7 @@ export function ProfileAvatarPicker({
                       alt=""
                       width={64}
                       height={64}
-                      className={cn(
-                        "size-16 max-w-full rounded-full object-cover",
-                        selected && "ring-2 ring-[var(--focus-ring)]",
-                      )}
+                      className="size-16 max-w-full rounded-full object-cover"
                       loading="lazy"
                     />
                   </button>
