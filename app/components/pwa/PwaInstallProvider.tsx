@@ -43,6 +43,14 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
 
     const media = window.matchMedia(MOBILE_INSTALL_QUERY);
 
+    const unregisterAllWorkers = () => {
+      void navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+          void registration.unregister();
+        }
+      });
+    };
+
     const unregisterSerwistWorkers = () => {
       void navigator.serviceWorker.getRegistrations().then((registrations) => {
         for (const registration of registrations) {
@@ -58,9 +66,9 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
 
     const syncWorker = () => {
       if (!("serviceWorker" in navigator)) return;
-      /** dev / LAN บนมือถือ — ไม่ลงทะเบียน SW เพื่อไม่ให้แคช JS เก่าค้าง */
+      /** dev — ถอด SW ทั้งหมด กันแคช chunk/CSS ค้างจน Turbopack HMR พัง */
       if (process.env.NODE_ENV !== "production") {
-        unregisterSerwistWorkers();
+        unregisterAllWorkers();
         return;
       }
       if (!media.matches) {

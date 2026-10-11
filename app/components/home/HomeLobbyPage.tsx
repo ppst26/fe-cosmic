@@ -220,7 +220,7 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                         ref={categoryBarRef}
                         className={cn(
                           "lobby-mobile-category-sticky w-full min-w-0 px-2 sm:px-2.5",
-                          "py-0.5",
+                          "py-1",
                           isCategoryNavStuck && "is-stuck",
                         )}
                       >

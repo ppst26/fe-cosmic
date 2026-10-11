@@ -255,7 +255,7 @@ export function CategoryNav({
                   iconId={category.id}
                   priority
                   className="h-full w-full drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]"
-                  size={24}
+                  size={26}
                 />
               </span>
               <span className="category-nav__label whitespace-nowrap tracking-tight">{t(category.labelKey)}</span>
