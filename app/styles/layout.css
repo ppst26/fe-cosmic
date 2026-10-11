@@ -35,15 +35,15 @@
 
 /** ชื่อหน้ากลางแถบย่อย — ตัวเล็ก น้ำหนักบาง */
 .page-sub-header__title {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 400;
   letter-spacing: 0;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 @media (min-width: 640px) {
   .page-sub-header__title {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
   }
 }
 

@@ -41,15 +41,15 @@ export function StandaloneSubHeader({
 
   return (
     <header className={`standalone-sub-header page-sub-header w-full min-w-0 ${className}`}>
-      <div className="standalone-sub-header__inner relative mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
+      <div className="standalone-sub-header__inner relative mx-auto flex h-10 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
         {/* ปุ่มย้อนกลับ arrow back (ไม่มี card ครอบ) */}
         <Link
           href={backHref}
           onClick={handleBack}
-          className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
+          className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
           aria-label={t("subHeader.back")}
         >
-          <ArrowLeftIcon className="h-6 w-6 text-white" />
+          <ArrowLeftIcon className="h-5 w-5 text-white" />
         </Link>
 
         {/* ชื่อหน้า กึ่งกลาง */}
@@ -60,7 +60,7 @@ export function StandaloneSubHeader({
         </h1>
 
         {/* กล่องรักษาสมดุลด้านขวา */}
-        <div className="w-10 h-10 shrink-0" aria-hidden="true" />
+        <div className="h-8 w-8 shrink-0" aria-hidden="true" />
       </div>
     </header>
   );

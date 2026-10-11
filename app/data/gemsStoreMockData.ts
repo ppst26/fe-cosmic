@@ -34,9 +34,6 @@ export const GEMS_STORE_PACKAGES: GemsStorePackage[] = [
   { id: "pkg-250", credits: 250, gemsCost: 5_000, coinSrc: GEMS_STORE_COIN_ASSETS.tier2 },
   { id: "pkg-500", credits: 500, gemsCost: 10_000, coinSrc: GEMS_STORE_COIN_ASSETS.tier2 },
   { id: "pkg-1000", credits: 1_000, gemsCost: 20_000, coinSrc: GEMS_STORE_COIN_ASSETS.tier3 },
-  { id: "pkg-2000", credits: 2_000, gemsCost: 40_000, coinSrc: GEMS_STORE_COIN_ASSETS.tier3 },
-  { id: "pkg-3000", credits: 3_000, gemsCost: 60_000, coinSrc: GEMS_STORE_COIN_ASSETS.tier4 },
-  { id: "pkg-5000", credits: 5_000, gemsCost: 100_000, coinSrc: GEMS_STORE_COIN_ASSETS.tier4 },
 ];
 
 export const GEMS_STORE_TERMS: string[] = [
