@@ -20,7 +20,7 @@ interface CategoryNavProps {
   className?: string;
   /** route = ไปหน้า /casino ฯลฯ · none = สลับ state บนหน้าเดียว (หน้าแรก) */
   navigationMode?: "route" | "none";
-  /** "desktop" = การ์ดชิปเต็มคอลัมน์เดิม · "mobile" = ไอคอนกล่องมน 44px + ข้อความนอก */
+  /** "desktop" = การ์ดชิปเต็มคอลัมน์เดิม · "mobile" = แถบแนวนอน สั้นกว่า header */
   variant?: "desktop" | "mobile";
 }
 
@@ -224,7 +224,7 @@ export function CategoryNav({
     >
       <div
         ref={trackRef}
-        className="category-nav__track flex flex-nowrap items-center justify-start gap-2 w-full overflow-x-auto py-1 px-0.5 no-scrollbar"
+        className="category-nav__track flex flex-nowrap items-center justify-start gap-1.5 w-full overflow-x-auto py-0 px-0.5 no-scrollbar"
       >
         {categories.map((category) => {
           const isActive = category.id === activeId;
@@ -236,7 +236,7 @@ export function CategoryNav({
               data-active={isActive}
               onClick={(e) => handleCategoryClick(category, e)}
               className={cn(
-                "category-nav__pill flex flex-none flex-row items-center text-[14px] font-medium transition-[color,background-color,box-shadow,opacity] duration-150 cursor-pointer select-none outline-none active:opacity-90",
+                "category-nav__pill flex flex-none flex-row items-center text-[13px] font-medium transition-[color,background-color,box-shadow,opacity] duration-150 cursor-pointer select-none outline-none active:opacity-90",
                 isActive
                   ? "is-active"
                   : "bg-transparent text-[#bab5d6] hover:text-white hover:bg-white/5",
@@ -255,7 +255,7 @@ export function CategoryNav({
                   iconId={category.id}
                   priority
                   className="h-full w-full drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]"
-                  size={30}
+                  size={24}
                 />
               </span>
               <span className="category-nav__label whitespace-nowrap tracking-tight">{t(category.labelKey)}</span>
@@ -265,7 +265,7 @@ export function CategoryNav({
       </div>
 
       {/* Progress bar ที่เคลื่อนตามตำแหน่ง scroll แนวนอน เหมือนในตัวอย่าง */}
-      <div className="category-nav__progress-track relative w-full h-[2.5px] bg-white/10 rounded-full mt-1.5 overflow-hidden">
+      <div className="category-nav__progress-track relative w-full h-[2px] bg-white/10 rounded-full mt-0.5 overflow-hidden">
         <div
           className="category-nav__progress-bar absolute top-0 bottom-0 rounded-full bg-gradient-to-r from-[#6366f1] via-[#7047eb] to-[#a855f7] shadow-[0_0_8px_rgba(112,71,235,0.8)]"
           style={{

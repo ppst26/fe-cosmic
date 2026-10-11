@@ -98,19 +98,19 @@ export function Header({
       <header
         data-scrolled={mobileSticky && isScrolled ? "true" : undefined}
         className={cn(
-          "w-full min-w-0 border-0 px-2 pb-2 sm:px-2.5 lg:hidden",
+          "w-full min-w-0 border-0 px-2 pb-1 sm:px-2.5 lg:hidden",
           mobileSticky
-            ? "cosmic-mobile-chrome-surface sticky top-0 z-50 pt-[calc(env(safe-area-inset-top,0px)+8px)]"
-            : "relative bg-transparent pt-2",
+            ? "cosmic-mobile-chrome-surface sticky top-0 z-50 pt-[calc(env(safe-area-inset-top,0px)+4px)]"
+            : "relative bg-transparent pt-1",
         )}
       >
-          <div className="relative mx-auto flex h-11 w-full max-w-(--content-max) items-center justify-between">
+          <div className="relative mx-auto flex h-9 w-full max-w-(--content-max) items-center justify-between">
             {/* ซ้าย: แฮมเบอร์เกอร์ (ทุกสถานะ) · โปรไฟล์เมื่อล็อกอิน */}
             <div className="relative z-10 flex shrink-0 items-center gap-0.5">
               <button
                 type="button"
                 onClick={handleMenuClick}
-                className="flex h-9.5 w-9.5 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
+                className="flex h-8 w-8 items-center justify-center text-white/90 transition-transform hover:text-white active:scale-95 cursor-pointer"
                 aria-label={t("header.openMenu")}
               >
                 <HamburgerMenuIcon className="h-5.5 w-5.5 text-white" />
@@ -119,7 +119,7 @@ export function Header({
                 <Link
                   href="/profile/account"
                   className={cn(
-                    "cosmic-nav__profile-in-cluster flex h-8 w-8 shrink-0 items-center justify-center rounded-full p-0",
+                    "cosmic-nav__profile-in-cluster flex h-7 w-7 shrink-0 items-center justify-center rounded-full p-0",
                     isProfileRoute && "is-active",
                   )}
                   aria-label={t("header.profile")}
@@ -144,7 +144,7 @@ export function Header({
                 className="inline-flex items-center justify-center outline-none transition-transform hover:scale-102"
                 aria-label={t("header.home")}
               >
-                <CosmicbetLogo className="h-[21px] w-auto max-w-[115px] object-contain sm:h-6 sm:max-w-[130px]" />
+                <CosmicbetLogo className="h-[18px] w-auto max-w-[108px] object-contain sm:h-5 sm:max-w-[120px]" />
               </Link>
             </div>
 
@@ -154,7 +154,7 @@ export function Header({
                 <NotificationBellButton
                   plain
                   onClick={openNotifications}
-                  className="h-8 w-8"
+                  className="h-7 w-7"
                   aria-haspopup="dialog"
                 />
                 <HeaderWalletChip
@@ -170,7 +170,7 @@ export function Header({
                 />
               </div>
             ) : (
-              <div className="h-9.5 w-9.5 shrink-0" aria-hidden="true" />
+              <div className="h-8 w-8 shrink-0" aria-hidden="true" />
             )}
         </div>
       </header>

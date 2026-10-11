@@ -41,7 +41,8 @@
 /** แถบ lobby fixed — safe-area อยู่ที่ band แล้ว ไม่ซ้อนใน Header */
 @media (max-width: 1023px) {
   .lobby-mobile-header-band > header {
-    padding-top: 0.5rem;
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
   }
 }
 

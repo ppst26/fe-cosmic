@@ -57,7 +57,7 @@
     width: 100%;
     height: var(
       --lobby-mobile-header-h,
-      calc(env(safe-area-inset-top, 0px) + 68px)
+      calc(env(safe-area-inset-top, 0px) + 54px)
     );
   }
 
@@ -79,7 +79,7 @@
     background: var(--standalone-page-bg);
     border: 0;
     top: calc(
-      var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 68px)) - 1px
+      var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 54px)) - 1px
     );
     margin-top: -1px;
     box-shadow: none;
@@ -101,7 +101,7 @@
     padding-inline: 0.75rem;
     box-sizing: border-box;
     top: calc(
-      var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 68px)) - 1px
+      var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 54px)) - 1px
     );
     background: color-mix(in srgb, var(--surface-start) 72%, transparent);
     -webkit-backdrop-filter: blur(14px) saturate(1.15);
@@ -192,12 +192,12 @@
 
 /* ── Mobile Category Nav: แนวนอน ไอคอนหน้า ตัวหนังสือหลัง + ปุ่ม active สีม่วง + progress bar ── */
 .category-nav--mobile {
-  padding-bottom: 2px;
+  padding-bottom: 0;
 }
 
 .category-nav--mobile .category-nav__track {
-  gap: 8px;
-  padding-block: 2px;
+  gap: 6px;
+  padding-block: 0;
   padding-inline: 2px;
   overflow-x: auto;
   scrollbar-width: none;
@@ -212,14 +212,14 @@
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
-  height: 40px;
-  padding-inline: 10px;
-  border-radius: 10px;
+  gap: 6px;
+  height: 32px;
+  padding-inline: 8px;
+  border-radius: 8px;
   border: 0;
   background: transparent;
   color: #bab5d6;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
   flex-shrink: 0;
@@ -252,8 +252,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   color: inherit;
   flex-shrink: 0;
 }
@@ -269,7 +269,7 @@
   height: 2px;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
-  margin-top: 4px;
+  margin-top: 2px;
   overflow: hidden;
 }
 
