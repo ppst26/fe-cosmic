@@ -68,8 +68,8 @@
 .cosmic-nav.glass-mobile-nav .glass-card--soft.is-active {
   background: linear-gradient(
     135deg,
-    rgb(119 71 229 / 0.28),
-    rgb(90 70 130 / 0.18)
+    var(--chip-accent-start, rgb(119 71 229 / 0.28)),
+    var(--chip-accent-end, rgb(90 70 130 / 0.18))
   );
 }
 
@@ -229,8 +229,8 @@ button.header-wallet-chip:active {
   color: var(--text-primary);
   background: linear-gradient(
     135deg,
-    rgb(119 71 229 / 0.28),
-    rgb(90 70 130 / 0.18)
+    var(--chip-accent-start, rgb(119 71 229 / 0.28)),
+    var(--chip-accent-end, rgb(90 70 130 / 0.18))
   );
 }
 
@@ -278,8 +278,8 @@ button.header-wallet-chip:active {
   color: var(--text-primary);
   background: linear-gradient(
     135deg,
-    rgb(119 71 229 / 0.28),
-    rgb(90 70 130 / 0.18)
+    var(--chip-accent-start, rgb(119 71 229 / 0.28)),
+    var(--chip-accent-end, rgb(90 70 130 / 0.18))
   );
 }
 
@@ -290,8 +290,8 @@ button.header-wallet-chip:active {
 .header-desktop-bar__rank-btn.is-active {
   background: linear-gradient(
     135deg,
-    rgb(119 71 229 / 0.28),
-    rgb(90 70 130 / 0.18)
+    var(--chip-accent-start, rgb(119 71 229 / 0.28)),
+    var(--chip-accent-end, rgb(90 70 130 / 0.18))
   );
 }
 

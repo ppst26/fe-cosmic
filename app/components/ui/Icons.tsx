@@ -6,21 +6,33 @@ import { cn } from "@/lib/utils";
 
 /** path โลโก้แบรนด์ใน public — ใช้ทั้ง Header และที่อื่นที่อ้าง CosmicbetLogo */
 export const BRAND_LOGO_SRC = "/cosmic-dark.png";
+/** โลโก้สำหรับธีมสว่าง — สลับด้วย [data-mode="light"] ใน themes.css */
+export const BRAND_LOGO_LIGHT_SRC = "/cosmic-light.png";
 
 /**
  * โลโก้แบรนด์ Cosmicbet (public/cosmic-dark.png)
  * รักษาสัดส่วน ไม่ยืด — ใช้ใน Header
  */
 export function CosmicbetLogo({ className }: { className?: string }) {
+  const cls = cn("h-[22px] w-auto max-w-[100px] object-contain sm:h-6 sm:max-w-[118px]", className);
   return (
-    <Image
-      src={BRAND_LOGO_SRC}
-      alt="Cosmicbet"
-      width={180}
-      height={52}
-      preload
-      className={cn("h-[22px] w-auto max-w-[100px] object-contain sm:h-6 sm:max-w-[118px]", className)}
-    />
+    <>
+      <Image
+        src={BRAND_LOGO_SRC}
+        alt="Cosmicbet"
+        width={180}
+        height={52}
+        preload
+        className={cn(cls, "cosmic-logo--dark")}
+      />
+      <Image
+        src={BRAND_LOGO_LIGHT_SRC}
+        alt="Cosmicbet"
+        width={180}
+        height={52}
+        className={cn(cls, "cosmic-logo--light")}
+      />
+    </>
   );
 }
 

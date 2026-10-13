@@ -203,7 +203,7 @@ export function BottomNav({
   const navTree = (
     <>
       {showSpacer ? <div className={styles.spacer} aria-hidden="true" /> : null}
-      <nav className={styles.nav} aria-label={t("bottomNav.label")}>
+      <nav className={`${styles.nav} theme-brand-surface`} aria-label={t("bottomNav.label")}>
         <div className={styles.surface} aria-hidden="true" />
         <div className={styles.items}>
           {navItems.map(({ id, label }) => {

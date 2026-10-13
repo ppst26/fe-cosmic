@@ -9,7 +9,11 @@ import { localeFontClass } from "@/lib/i18n/fonts";
 import { MessagesBoundary } from "@/lib/i18n/MessagesBoundary";
 import { NAMESPACES } from "@/lib/i18n/messages";
 import { getT } from "@/lib/i18n/server";
+import { DEFAULT_THEME, LIGHT_THEME_KEYS, THEME_KEYS, THEME_STORAGE_KEY } from "@/lib/themes";
 import "@/app/globals.css";
+
+/** ตั้ง data-theme / data-mode / class dark ก่อน paint ครั้งแรก (ดู guides/preventing-flash-before-hydration) */
+const THEME_INIT_SCRIPT = `try{var k=localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});var d=document.documentElement;if(!(k&&${JSON.stringify(THEME_KEYS)}.indexOf(k)>-1))k=${JSON.stringify(DEFAULT_THEME)};var l=${JSON.stringify(LIGHT_THEME_KEYS)}.indexOf(k)>-1;d.dataset.theme=k;d.dataset.mode=l?"light":"dark";d.classList.toggle("dark",!l)}catch(e){}`;
 
 /** ฟอนต์หลักไทย/ลatin — โหลด self-host ผ่าน next/font จาก Google Fonts */
 const notoSansThai = Noto_Sans_Thai({
@@ -63,8 +67,12 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
+      suppressHydrationWarning
       className={`${notoSansThai.variable} ${geistMono.variable} ${localeFontClass(locale)} dark cosmic-page cosmic-bg h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="flex min-h-dvh min-w-0 flex-col text-[var(--text-primary)]">
         {/* ส่งทุก namespace — hub modal เปิดได้ทุกโดเมนจากทุกหน้า · ตัดต่อ segment ภายหลังถ้าขนาดเป็นปัญหา */}
         <MessagesBoundary namespaces={NAMESPACES}>

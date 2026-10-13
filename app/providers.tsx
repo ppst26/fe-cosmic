@@ -15,6 +15,7 @@ import { WithdrawProvider } from "@/app/components/withdraw/WithdrawProvider";
 import { PendingTransactionProvider } from "@/app/components/transactions/PendingTransactionProvider";
 import { LobbyShellSidebarProvider } from "@/app/components/layout/LobbyShellSidebarContext";
 import { GlobalAuthOverlays } from "@/app/components/auth/GlobalAuthOverlays";
+import { FloatingActions } from "@/app/components/layout/FloatingActions";
 import { NotificationProvider } from "@/app/components/notifications/NotificationProvider";
 import { ToastProvider } from "@/context/ToastContext";
 import { PwaInstallProvider } from "@/app/components/pwa/PwaInstallProvider";
@@ -60,6 +61,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
                         <LobbyShellSidebarProvider>
                           {children}
                           <GlobalAuthOverlays />
+                          <FloatingActions />
                           <ProfileAvatarPrefetch />
                         </LobbyShellSidebarProvider>
                       </TransactionsProvider>

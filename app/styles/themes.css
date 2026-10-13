@@ -1,0 +1,1549 @@
+/**
+ * Themes — สลับด้วย <html data-theme="key"> (ดู lib/theme.ts)
+ * ไฟล์นี้สร้างจาก scripts/themes/gen-themes.js (อย่าแก้มือ) — ธีมเริ่มต้น (cosmic) อยู่ใน tokens.css
+ * มืด: เปลี่ยนพื้นผิว + สีปุ่มหลัก · สว่าง: กลับสเกลตัวอักษร/เส้น และกลับสเกล --color-white/zinc ของ Tailwind
+ */
+[data-theme="thunder-x"] {
+  color-scheme: dark;
+  --cosmic-page-base: #06070a;
+  --surface-start: #17181b;
+  --surface-mid: #121316;
+  --surface-end: #06070a;
+  --surface-hover: color-mix(in srgb, #121316 88%, white);
+  --surface-selected: color-mix(in srgb, #121316 78%, #ffd600);
+  --surface-solid-outer: #121316;
+  --surface-solid-inner: #202020;
+  --sheet-row-fill: color-mix(in srgb, #202020 94%, white);
+  --sheet-row-fill-hover: color-mix(in srgb, #202020 88%, white);
+  --sheet-icon-well-fill: color-mix(in srgb, #202020 90%, white);
+  --sheet-field-fill: color-mix(in srgb, #202020 92%, white);
+  --sheet-field-fill-focus: color-mix(in srgb, #202020 86%, white);
+  --sheet-field-addon-bg: color-mix(in srgb, #202020 90%, black);
+  --cosmic-chrome-surface-bg: #0b0d11;
+  --cosmic-dialog-shell-bg: linear-gradient(168deg, #17181b 0%, #121316 52%, #06070a 100%);
+  --cosmic-mobile-sheet-bg: linear-gradient(168deg, color-mix(in srgb, #17181b 92%, white) 0%, #17181b 46%, #121316 100%);
+  --cosmic-sheet-title-notch-bg: linear-gradient(180deg, color-mix(in srgb, #17181b 90%, white) 0%, #121316 100%);
+  --cosmic-sheet-title-capsule-deep-bg: linear-gradient(to bottom, #17181b, #06070a);
+  --hub-lobby-shell-bg: #121316;
+  --hub-lobby-chrome: #202020;
+  --hub-dialog-card-bg: color-mix(in srgb, #17181b 78%, transparent);
+  --vip-panel-bg: #17181b;
+  --border-subtle: color-mix(in srgb, #17181b 82%, white);
+  --t-ga: #202020;
+  --t-gb: #0b0d11;
+  --t-icon: #ffd600;
+  --t-action: #ffd600;
+  --t-action-text: #111111;
+  --t-active: #ffd600;
+  --t-active-text: #111111;
+  --t-accent: #ffd600;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="dark-mix-berry"] {
+  color-scheme: dark;
+  --cosmic-page-base: #0b0b0e;
+  --surface-start: #17131a;
+  --surface-mid: #130f16;
+  --surface-end: #0b0b0e;
+  --surface-hover: color-mix(in srgb, #130f16 88%, white);
+  --surface-selected: color-mix(in srgb, #130f16 78%, #ff7ac3);
+  --surface-solid-outer: #130f16;
+  --surface-solid-inner: #1d1722;
+  --sheet-row-fill: color-mix(in srgb, #1d1722 94%, white);
+  --sheet-row-fill-hover: color-mix(in srgb, #1d1722 88%, white);
+  --sheet-icon-well-fill: color-mix(in srgb, #1d1722 90%, white);
+  --sheet-field-fill: color-mix(in srgb, #1d1722 92%, white);
+  --sheet-field-fill-focus: color-mix(in srgb, #1d1722 86%, white);
+  --sheet-field-addon-bg: color-mix(in srgb, #1d1722 90%, black);
+  --cosmic-chrome-surface-bg: #101015;
+  --cosmic-dialog-shell-bg: linear-gradient(168deg, #17131a 0%, #130f16 52%, #0b0b0e 100%);
+  --cosmic-mobile-sheet-bg: linear-gradient(168deg, color-mix(in srgb, #17131a 92%, white) 0%, #17131a 46%, #130f16 100%);
+  --cosmic-sheet-title-notch-bg: linear-gradient(180deg, color-mix(in srgb, #17131a 90%, white) 0%, #130f16 100%);
+  --cosmic-sheet-title-capsule-deep-bg: linear-gradient(to bottom, #17131a, #0b0b0e);
+  --hub-lobby-shell-bg: #130f16;
+  --hub-lobby-chrome: #1d1722;
+  --hub-dialog-card-bg: color-mix(in srgb, #17131a 78%, transparent);
+  --vip-panel-bg: #17131a;
+  --border-subtle: color-mix(in srgb, #17131a 82%, white);
+  --t-ga: #ff2d95;
+  --t-gb: #b5179e;
+  --t-icon: #ff7ac3;
+  --t-action: #ff7ac3;
+  --t-action-text: #2a0a1c;
+  --t-active: #ff2d95;
+  --t-active-text: #ffffff;
+  --t-accent: #ff7ac3;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="tron"] {
+  color-scheme: dark;
+  --cosmic-page-base: #030821;
+  --surface-start: #081348;
+  --surface-mid: #061038;
+  --surface-end: #030821;
+  --surface-hover: color-mix(in srgb, #061038 88%, white);
+  --surface-selected: color-mix(in srgb, #061038 78%, #51b0ff);
+  --surface-solid-outer: #061038;
+  --surface-solid-inner: #0a1a62;
+  --sheet-row-fill: color-mix(in srgb, #0a1a62 94%, white);
+  --sheet-row-fill-hover: color-mix(in srgb, #0a1a62 88%, white);
+  --sheet-icon-well-fill: color-mix(in srgb, #0a1a62 90%, white);
+  --sheet-field-fill: color-mix(in srgb, #0a1a62 92%, white);
+  --sheet-field-fill-focus: color-mix(in srgb, #0a1a62 86%, white);
+  --sheet-field-addon-bg: color-mix(in srgb, #0a1a62 90%, black);
+  --cosmic-chrome-surface-bg: #040b30;
+  --cosmic-dialog-shell-bg: linear-gradient(168deg, #081348 0%, #061038 52%, #030821 100%);
+  --cosmic-mobile-sheet-bg: linear-gradient(168deg, color-mix(in srgb, #081348 92%, white) 0%, #081348 46%, #061038 100%);
+  --cosmic-sheet-title-notch-bg: linear-gradient(180deg, color-mix(in srgb, #081348 90%, white) 0%, #061038 100%);
+  --cosmic-sheet-title-capsule-deep-bg: linear-gradient(to bottom, #081348, #030821);
+  --hub-lobby-shell-bg: #061038;
+  --hub-lobby-chrome: #0a1a62;
+  --hub-dialog-card-bg: color-mix(in srgb, #081348 78%, transparent);
+  --vip-panel-bg: #081348;
+  --border-subtle: color-mix(in srgb, #081348 82%, white);
+  --t-ga: #102993;
+  --t-gb: #050f3b;
+  --t-icon: #51b0ff;
+  --t-action: #51b0ff;
+  --t-action-text: #04123a;
+  --t-active: #102993;
+  --t-active-text: #ffffff;
+  --t-accent: #51b0ff;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="sanim"] {
+  color-scheme: dark;
+  --cosmic-page-base: #06070a;
+  --surface-start: #17181b;
+  --surface-mid: #121316;
+  --surface-end: #06070a;
+  --surface-hover: color-mix(in srgb, #121316 88%, white);
+  --surface-selected: color-mix(in srgb, #121316 78%, #df6709);
+  --surface-solid-outer: #121316;
+  --surface-solid-inner: #202020;
+  --sheet-row-fill: color-mix(in srgb, #202020 94%, white);
+  --sheet-row-fill-hover: color-mix(in srgb, #202020 88%, white);
+  --sheet-icon-well-fill: color-mix(in srgb, #202020 90%, white);
+  --sheet-field-fill: color-mix(in srgb, #202020 92%, white);
+  --sheet-field-fill-focus: color-mix(in srgb, #202020 86%, white);
+  --sheet-field-addon-bg: color-mix(in srgb, #202020 90%, black);
+  --cosmic-chrome-surface-bg: #0b0d11;
+  --cosmic-dialog-shell-bg: linear-gradient(168deg, #17181b 0%, #121316 52%, #06070a 100%);
+  --cosmic-mobile-sheet-bg: linear-gradient(168deg, color-mix(in srgb, #17181b 92%, white) 0%, #17181b 46%, #121316 100%);
+  --cosmic-sheet-title-notch-bg: linear-gradient(180deg, color-mix(in srgb, #17181b 90%, white) 0%, #121316 100%);
+  --cosmic-sheet-title-capsule-deep-bg: linear-gradient(to bottom, #17181b, #06070a);
+  --hub-lobby-shell-bg: #121316;
+  --hub-lobby-chrome: #202020;
+  --hub-dialog-card-bg: color-mix(in srgb, #17181b 78%, transparent);
+  --vip-panel-bg: #17181b;
+  --border-subtle: color-mix(in srgb, #17181b 82%, white);
+  --t-ga: #202020;
+  --t-gb: #0b0d11;
+  --t-icon: #df6709;
+  --t-action: #df6709;
+  --t-action-text: #ffffff;
+  --t-active: #df6709;
+  --t-active-text: #ffffff;
+  --t-accent: #df6709;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="gatsby"] {
+  color-scheme: dark;
+  --cosmic-page-base: #04060b;
+  --surface-start: #101421;
+  --surface-mid: #0c101b;
+  --surface-end: #04060b;
+  --surface-hover: color-mix(in srgb, #0c101b 88%, white);
+  --surface-selected: color-mix(in srgb, #0c101b 78%, #fef1cf);
+  --surface-solid-outer: #0c101b;
+  --surface-solid-inner: #0b2229;
+  --sheet-row-fill: color-mix(in srgb, #0b2229 94%, white);
+  --sheet-row-fill-hover: color-mix(in srgb, #0b2229 88%, white);
+  --sheet-icon-well-fill: color-mix(in srgb, #0b2229 90%, white);
+  --sheet-field-fill: color-mix(in srgb, #0b2229 92%, white);
+  --sheet-field-fill-focus: color-mix(in srgb, #0b2229 86%, white);
+  --sheet-field-addon-bg: color-mix(in srgb, #0b2229 90%, black);
+  --cosmic-chrome-surface-bg: #0a0d18;
+  --cosmic-dialog-shell-bg: linear-gradient(168deg, #101421 0%, #0c101b 52%, #04060b 100%);
+  --cosmic-mobile-sheet-bg: linear-gradient(168deg, color-mix(in srgb, #101421 92%, white) 0%, #101421 46%, #0c101b 100%);
+  --cosmic-sheet-title-notch-bg: linear-gradient(180deg, color-mix(in srgb, #101421 90%, white) 0%, #0c101b 100%);
+  --cosmic-sheet-title-capsule-deep-bg: linear-gradient(to bottom, #101421, #04060b);
+  --hub-lobby-shell-bg: #0c101b;
+  --hub-lobby-chrome: #0b2229;
+  --hub-dialog-card-bg: color-mix(in srgb, #101421 78%, transparent);
+  --vip-panel-bg: #101421;
+  --border-subtle: color-mix(in srgb, #101421 82%, white);
+  --t-ga: #101421;
+  --t-gb: #002830;
+  --t-icon: #fef1cf;
+  --t-action: #fef1cf;
+  --t-action-text: #1a1405;
+  --t-active: #fef1cf;
+  --t-active-text: #1a1405;
+  --t-accent: #fef1cf;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="wisdom"] {
+  color-scheme: dark;
+  --cosmic-page-base: #12040a;
+  --surface-start: #300d1b;
+  --surface-mid: #260a15;
+  --surface-end: #12040a;
+  --surface-hover: color-mix(in srgb, #260a15 88%, white);
+  --surface-selected: color-mix(in srgb, #260a15 78%, #e6e6e6);
+  --surface-solid-outer: #260a15;
+  --surface-solid-inner: #400a1a;
+  --sheet-row-fill: color-mix(in srgb, #400a1a 94%, white);
+  --sheet-row-fill-hover: color-mix(in srgb, #400a1a 88%, white);
+  --sheet-icon-well-fill: color-mix(in srgb, #400a1a 90%, white);
+  --sheet-field-fill: color-mix(in srgb, #400a1a 92%, white);
+  --sheet-field-fill-focus: color-mix(in srgb, #400a1a 86%, white);
+  --sheet-field-addon-bg: color-mix(in srgb, #400a1a 90%, black);
+  --cosmic-chrome-surface-bg: #2a0a14;
+  --cosmic-dialog-shell-bg: linear-gradient(168deg, #300d1b 0%, #260a15 52%, #12040a 100%);
+  --cosmic-mobile-sheet-bg: linear-gradient(168deg, color-mix(in srgb, #300d1b 92%, white) 0%, #300d1b 46%, #260a15 100%);
+  --cosmic-sheet-title-notch-bg: linear-gradient(180deg, color-mix(in srgb, #300d1b 90%, white) 0%, #260a15 100%);
+  --cosmic-sheet-title-capsule-deep-bg: linear-gradient(to bottom, #300d1b, #12040a);
+  --hub-lobby-shell-bg: #260a15;
+  --hub-lobby-chrome: #400a1a;
+  --hub-dialog-card-bg: color-mix(in srgb, #300d1b 78%, transparent);
+  --vip-panel-bg: #300d1b;
+  --border-subtle: color-mix(in srgb, #300d1b 82%, white);
+  --t-ga: #772639;
+  --t-gb: #400a1a;
+  --t-icon: #e6e6e6;
+  --t-action: #e6e6e6;
+  --t-action-text: #2a0a14;
+  --t-active: #772639;
+  --t-active-text: #ffffff;
+  --t-accent: #e6e6e6;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="sunfire"] {
+  color-scheme: light;
+  --cosmic-page-base: #ebebee;
+  --surface-start: #f4f4f6;
+  --surface-mid: #ffffff;
+  --surface-end: #e2e2e6;
+  --surface-hover: #ebebf0;
+  --surface-selected: #e3e3ea;
+  --surface-solid-outer: #ffffff;
+  --surface-solid-inner: #f0f0f3;
+  --sheet-row-fill: #f0f0f3;
+  --sheet-row-fill-hover: #e6e6ec;
+  --sheet-icon-well-fill: #e4e4ea;
+  --sheet-field-fill: #ececf1;
+  --sheet-field-fill-focus: #e2e2e9;
+  --sheet-field-addon-bg: #e0e0e7;
+  --cosmic-chrome-surface-bg: #ffffff;
+  --cosmic-dialog-shell-bg: #ffffff;
+  --cosmic-mobile-sheet-bg: #ffffff;
+  --cosmic-mobile-sheet-shadow: 0 -16px 40px rgb(20 24 33 / 0.18);
+  --cosmic-mobile-sheet-handle: rgb(20 24 33 / 0.18);
+  --cosmic-sheet-title-notch-bg: #f4f4f6;
+  --cosmic-sheet-title-notch-highlight: none;
+  --cosmic-sheet-title-capsule-deep-bg: #e9e9ee;
+  --dialog-overlay-bg: rgb(20 24 33 / 0.55);
+  --hub-lobby-shell-bg: #f4f4f6;
+  --hub-lobby-chrome: #ffffff;
+  --hub-dialog-card-bg: rgb(255 255 255 / 0.9);
+  --glass-border: rgb(20 24 33 / 0.1);
+  --glass-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), 0 12px 32px rgb(20 24 33 / 0.12);
+  --vip-panel-bg: #ffffff;
+  --vip-panel-border: rgb(20 24 33 / 0.1);
+  --vip-progress-track-bg: #dcdce3;
+  --toast-bg: #ffffff;
+  --toast-border: rgb(20 24 33 / 0.1);
+  --text-primary: #1b2230;
+  --text-secondary: #4a5265;
+  --text-muted: #6b7385;
+  --icon-default: #4a5265;
+  --icon-active: #1b2230;
+  --border-subtle: #dcdce3;
+  --line-tab-track: rgb(20 24 33 / 0.12);
+  --value-reward-fg: #b7791f;
+  --success: #15803d;
+  --warning: #b45309;
+  --destructive: #dc2626;
+  --scrollbar-thumb: rgb(20 24 33 / 0.28);
+  --color-white: #111827;
+  --color-zinc-50: #09090b;
+  --color-zinc-100: #18181b;
+  --color-zinc-200: #27272a;
+  --color-zinc-300: #3f3f47;
+  --color-zinc-400: #52525c;
+  --color-zinc-500: #71717b;
+  --color-zinc-600: #9f9fa9;
+  --color-zinc-700: #d4d4d8;
+  --color-zinc-800: #e4e4e7;
+  --color-zinc-900: #f4f4f5;
+  --color-zinc-950: #fafafa;
+  --color-emerald-300: #15803d;
+  --color-emerald-400: #16a34a;
+  --color-emerald-500: #15803d;
+  --color-green-300: #15803d;
+  --color-green-400: #16a34a;
+  --color-green-500: #15803d;
+  --color-rose-300: #b91c1c;
+  --color-rose-400: #dc2626;
+  --color-rose-500: #b91c1c;
+  --color-red-300: #b91c1c;
+  --color-red-400: #dc2626;
+  --color-red-500: #b91c1c;
+  --color-amber-300: #b45309;
+  --color-amber-400: #d97706;
+  --color-amber-500: #b45309;
+  --color-yellow-300: #b45309;
+  --color-yellow-400: #d97706;
+  --color-yellow-500: #b45309;
+  --t-ga: #d9202e;
+  --t-gb: #99121d;
+  --t-icon: #99121d;
+  --t-action: #ffd864;
+  --t-action-text: #3a2a00;
+  --t-active: #d9202e;
+  --t-active-text: #ffffff;
+  --t-accent: #d9202e;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="blue-syrah"] {
+  color-scheme: light;
+  --cosmic-page-base: #ebebee;
+  --surface-start: #f4f4f6;
+  --surface-mid: #ffffff;
+  --surface-end: #e2e2e6;
+  --surface-hover: #ebebf0;
+  --surface-selected: #e3e3ea;
+  --surface-solid-outer: #ffffff;
+  --surface-solid-inner: #f0f0f3;
+  --sheet-row-fill: #f0f0f3;
+  --sheet-row-fill-hover: #e6e6ec;
+  --sheet-icon-well-fill: #e4e4ea;
+  --sheet-field-fill: #ececf1;
+  --sheet-field-fill-focus: #e2e2e9;
+  --sheet-field-addon-bg: #e0e0e7;
+  --cosmic-chrome-surface-bg: #ffffff;
+  --cosmic-dialog-shell-bg: #ffffff;
+  --cosmic-mobile-sheet-bg: #ffffff;
+  --cosmic-mobile-sheet-shadow: 0 -16px 40px rgb(20 24 33 / 0.18);
+  --cosmic-mobile-sheet-handle: rgb(20 24 33 / 0.18);
+  --cosmic-sheet-title-notch-bg: #f4f4f6;
+  --cosmic-sheet-title-notch-highlight: none;
+  --cosmic-sheet-title-capsule-deep-bg: #e9e9ee;
+  --dialog-overlay-bg: rgb(20 24 33 / 0.55);
+  --hub-lobby-shell-bg: #f4f4f6;
+  --hub-lobby-chrome: #ffffff;
+  --hub-dialog-card-bg: rgb(255 255 255 / 0.9);
+  --glass-border: rgb(20 24 33 / 0.1);
+  --glass-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), 0 12px 32px rgb(20 24 33 / 0.12);
+  --vip-panel-bg: #ffffff;
+  --vip-panel-border: rgb(20 24 33 / 0.1);
+  --vip-progress-track-bg: #dcdce3;
+  --toast-bg: #ffffff;
+  --toast-border: rgb(20 24 33 / 0.1);
+  --text-primary: #1b2230;
+  --text-secondary: #4a5265;
+  --text-muted: #6b7385;
+  --icon-default: #4a5265;
+  --icon-active: #1b2230;
+  --border-subtle: #dcdce3;
+  --line-tab-track: rgb(20 24 33 / 0.12);
+  --value-reward-fg: #b7791f;
+  --success: #15803d;
+  --warning: #b45309;
+  --destructive: #dc2626;
+  --scrollbar-thumb: rgb(20 24 33 / 0.28);
+  --color-white: #111827;
+  --color-zinc-50: #09090b;
+  --color-zinc-100: #18181b;
+  --color-zinc-200: #27272a;
+  --color-zinc-300: #3f3f47;
+  --color-zinc-400: #52525c;
+  --color-zinc-500: #71717b;
+  --color-zinc-600: #9f9fa9;
+  --color-zinc-700: #d4d4d8;
+  --color-zinc-800: #e4e4e7;
+  --color-zinc-900: #f4f4f5;
+  --color-zinc-950: #fafafa;
+  --color-emerald-300: #15803d;
+  --color-emerald-400: #16a34a;
+  --color-emerald-500: #15803d;
+  --color-green-300: #15803d;
+  --color-green-400: #16a34a;
+  --color-green-500: #15803d;
+  --color-rose-300: #b91c1c;
+  --color-rose-400: #dc2626;
+  --color-rose-500: #b91c1c;
+  --color-red-300: #b91c1c;
+  --color-red-400: #dc2626;
+  --color-red-500: #b91c1c;
+  --color-amber-300: #b45309;
+  --color-amber-400: #d97706;
+  --color-amber-500: #b45309;
+  --color-yellow-300: #b45309;
+  --color-yellow-400: #d97706;
+  --color-yellow-500: #b45309;
+  --t-ga: #4ea8ff;
+  --t-gb: #0078ab;
+  --t-icon: #0078ab;
+  --t-action: #ffd864;
+  --t-action-text: #3a2a00;
+  --t-active: #4ea8ff;
+  --t-active-text: #08233d;
+  --t-accent: #0078ab;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="good-witch"] {
+  color-scheme: light;
+  --cosmic-page-base: #ebebee;
+  --surface-start: #f4f4f6;
+  --surface-mid: #ffffff;
+  --surface-end: #e2e2e6;
+  --surface-hover: #ebebf0;
+  --surface-selected: #e3e3ea;
+  --surface-solid-outer: #ffffff;
+  --surface-solid-inner: #f0f0f3;
+  --sheet-row-fill: #f0f0f3;
+  --sheet-row-fill-hover: #e6e6ec;
+  --sheet-icon-well-fill: #e4e4ea;
+  --sheet-field-fill: #ececf1;
+  --sheet-field-fill-focus: #e2e2e9;
+  --sheet-field-addon-bg: #e0e0e7;
+  --cosmic-chrome-surface-bg: #ffffff;
+  --cosmic-dialog-shell-bg: #ffffff;
+  --cosmic-mobile-sheet-bg: #ffffff;
+  --cosmic-mobile-sheet-shadow: 0 -16px 40px rgb(20 24 33 / 0.18);
+  --cosmic-mobile-sheet-handle: rgb(20 24 33 / 0.18);
+  --cosmic-sheet-title-notch-bg: #f4f4f6;
+  --cosmic-sheet-title-notch-highlight: none;
+  --cosmic-sheet-title-capsule-deep-bg: #e9e9ee;
+  --dialog-overlay-bg: rgb(20 24 33 / 0.55);
+  --hub-lobby-shell-bg: #f4f4f6;
+  --hub-lobby-chrome: #ffffff;
+  --hub-dialog-card-bg: rgb(255 255 255 / 0.9);
+  --glass-border: rgb(20 24 33 / 0.1);
+  --glass-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), 0 12px 32px rgb(20 24 33 / 0.12);
+  --vip-panel-bg: #ffffff;
+  --vip-panel-border: rgb(20 24 33 / 0.1);
+  --vip-progress-track-bg: #dcdce3;
+  --toast-bg: #ffffff;
+  --toast-border: rgb(20 24 33 / 0.1);
+  --text-primary: #1b2230;
+  --text-secondary: #4a5265;
+  --text-muted: #6b7385;
+  --icon-default: #4a5265;
+  --icon-active: #1b2230;
+  --border-subtle: #dcdce3;
+  --line-tab-track: rgb(20 24 33 / 0.12);
+  --value-reward-fg: #b7791f;
+  --success: #15803d;
+  --warning: #b45309;
+  --destructive: #dc2626;
+  --scrollbar-thumb: rgb(20 24 33 / 0.28);
+  --color-white: #111827;
+  --color-zinc-50: #09090b;
+  --color-zinc-100: #18181b;
+  --color-zinc-200: #27272a;
+  --color-zinc-300: #3f3f47;
+  --color-zinc-400: #52525c;
+  --color-zinc-500: #71717b;
+  --color-zinc-600: #9f9fa9;
+  --color-zinc-700: #d4d4d8;
+  --color-zinc-800: #e4e4e7;
+  --color-zinc-900: #f4f4f5;
+  --color-zinc-950: #fafafa;
+  --color-emerald-300: #15803d;
+  --color-emerald-400: #16a34a;
+  --color-emerald-500: #15803d;
+  --color-green-300: #15803d;
+  --color-green-400: #16a34a;
+  --color-green-500: #15803d;
+  --color-rose-300: #b91c1c;
+  --color-rose-400: #dc2626;
+  --color-rose-500: #b91c1c;
+  --color-red-300: #b91c1c;
+  --color-red-400: #dc2626;
+  --color-red-500: #b91c1c;
+  --color-amber-300: #b45309;
+  --color-amber-400: #d97706;
+  --color-amber-500: #b45309;
+  --color-yellow-300: #b45309;
+  --color-yellow-400: #d97706;
+  --color-yellow-500: #b45309;
+  --t-ga: #5ed076;
+  --t-gb: #10943e;
+  --t-icon: #10943e;
+  --t-action: #ffd864;
+  --t-action-text: #3a2a00;
+  --t-active: #5ed076;
+  --t-active-text: #0a2a14;
+  --t-accent: #10943e;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="mix-berry"] {
+  color-scheme: light;
+  --cosmic-page-base: #ebebee;
+  --surface-start: #f4f4f6;
+  --surface-mid: #ffffff;
+  --surface-end: #e2e2e6;
+  --surface-hover: #ebebf0;
+  --surface-selected: #e3e3ea;
+  --surface-solid-outer: #ffffff;
+  --surface-solid-inner: #f0f0f3;
+  --sheet-row-fill: #f0f0f3;
+  --sheet-row-fill-hover: #e6e6ec;
+  --sheet-icon-well-fill: #e4e4ea;
+  --sheet-field-fill: #ececf1;
+  --sheet-field-fill-focus: #e2e2e9;
+  --sheet-field-addon-bg: #e0e0e7;
+  --cosmic-chrome-surface-bg: #ffffff;
+  --cosmic-dialog-shell-bg: #ffffff;
+  --cosmic-mobile-sheet-bg: #ffffff;
+  --cosmic-mobile-sheet-shadow: 0 -16px 40px rgb(20 24 33 / 0.18);
+  --cosmic-mobile-sheet-handle: rgb(20 24 33 / 0.18);
+  --cosmic-sheet-title-notch-bg: #f4f4f6;
+  --cosmic-sheet-title-notch-highlight: none;
+  --cosmic-sheet-title-capsule-deep-bg: #e9e9ee;
+  --dialog-overlay-bg: rgb(20 24 33 / 0.55);
+  --hub-lobby-shell-bg: #f4f4f6;
+  --hub-lobby-chrome: #ffffff;
+  --hub-dialog-card-bg: rgb(255 255 255 / 0.9);
+  --glass-border: rgb(20 24 33 / 0.1);
+  --glass-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), 0 12px 32px rgb(20 24 33 / 0.12);
+  --vip-panel-bg: #ffffff;
+  --vip-panel-border: rgb(20 24 33 / 0.1);
+  --vip-progress-track-bg: #dcdce3;
+  --toast-bg: #ffffff;
+  --toast-border: rgb(20 24 33 / 0.1);
+  --text-primary: #1b2230;
+  --text-secondary: #4a5265;
+  --text-muted: #6b7385;
+  --icon-default: #4a5265;
+  --icon-active: #1b2230;
+  --border-subtle: #dcdce3;
+  --line-tab-track: rgb(20 24 33 / 0.12);
+  --value-reward-fg: #b7791f;
+  --success: #15803d;
+  --warning: #b45309;
+  --destructive: #dc2626;
+  --scrollbar-thumb: rgb(20 24 33 / 0.28);
+  --color-white: #111827;
+  --color-zinc-50: #09090b;
+  --color-zinc-100: #18181b;
+  --color-zinc-200: #27272a;
+  --color-zinc-300: #3f3f47;
+  --color-zinc-400: #52525c;
+  --color-zinc-500: #71717b;
+  --color-zinc-600: #9f9fa9;
+  --color-zinc-700: #d4d4d8;
+  --color-zinc-800: #e4e4e7;
+  --color-zinc-900: #f4f4f5;
+  --color-zinc-950: #fafafa;
+  --color-emerald-300: #15803d;
+  --color-emerald-400: #16a34a;
+  --color-emerald-500: #15803d;
+  --color-green-300: #15803d;
+  --color-green-400: #16a34a;
+  --color-green-500: #15803d;
+  --color-rose-300: #b91c1c;
+  --color-rose-400: #dc2626;
+  --color-rose-500: #b91c1c;
+  --color-red-300: #b91c1c;
+  --color-red-400: #dc2626;
+  --color-red-500: #b91c1c;
+  --color-amber-300: #b45309;
+  --color-amber-400: #d97706;
+  --color-amber-500: #b45309;
+  --color-yellow-300: #b45309;
+  --color-yellow-400: #d97706;
+  --color-yellow-500: #b45309;
+  --t-ga: #df5c90;
+  --t-gb: #741a61;
+  --t-icon: #741a61;
+  --t-action: #ffd864;
+  --t-action-text: #3a2a00;
+  --t-active: #df5c90;
+  --t-active-text: #ffffff;
+  --t-accent: #741a61;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+[data-theme="mr-bond"] {
+  color-scheme: light;
+  --cosmic-page-base: #ebebee;
+  --surface-start: #f4f4f6;
+  --surface-mid: #ffffff;
+  --surface-end: #e2e2e6;
+  --surface-hover: #ebebf0;
+  --surface-selected: #e3e3ea;
+  --surface-solid-outer: #ffffff;
+  --surface-solid-inner: #f0f0f3;
+  --sheet-row-fill: #f0f0f3;
+  --sheet-row-fill-hover: #e6e6ec;
+  --sheet-icon-well-fill: #e4e4ea;
+  --sheet-field-fill: #ececf1;
+  --sheet-field-fill-focus: #e2e2e9;
+  --sheet-field-addon-bg: #e0e0e7;
+  --cosmic-chrome-surface-bg: #ffffff;
+  --cosmic-dialog-shell-bg: #ffffff;
+  --cosmic-mobile-sheet-bg: #ffffff;
+  --cosmic-mobile-sheet-shadow: 0 -16px 40px rgb(20 24 33 / 0.18);
+  --cosmic-mobile-sheet-handle: rgb(20 24 33 / 0.18);
+  --cosmic-sheet-title-notch-bg: #f4f4f6;
+  --cosmic-sheet-title-notch-highlight: none;
+  --cosmic-sheet-title-capsule-deep-bg: #e9e9ee;
+  --dialog-overlay-bg: rgb(20 24 33 / 0.55);
+  --hub-lobby-shell-bg: #f4f4f6;
+  --hub-lobby-chrome: #ffffff;
+  --hub-dialog-card-bg: rgb(255 255 255 / 0.9);
+  --glass-border: rgb(20 24 33 / 0.1);
+  --glass-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), 0 12px 32px rgb(20 24 33 / 0.12);
+  --vip-panel-bg: #ffffff;
+  --vip-panel-border: rgb(20 24 33 / 0.1);
+  --vip-progress-track-bg: #dcdce3;
+  --toast-bg: #ffffff;
+  --toast-border: rgb(20 24 33 / 0.1);
+  --text-primary: #1b2230;
+  --text-secondary: #4a5265;
+  --text-muted: #6b7385;
+  --icon-default: #4a5265;
+  --icon-active: #1b2230;
+  --border-subtle: #dcdce3;
+  --line-tab-track: rgb(20 24 33 / 0.12);
+  --value-reward-fg: #b7791f;
+  --success: #15803d;
+  --warning: #b45309;
+  --destructive: #dc2626;
+  --scrollbar-thumb: rgb(20 24 33 / 0.28);
+  --color-white: #111827;
+  --color-zinc-50: #09090b;
+  --color-zinc-100: #18181b;
+  --color-zinc-200: #27272a;
+  --color-zinc-300: #3f3f47;
+  --color-zinc-400: #52525c;
+  --color-zinc-500: #71717b;
+  --color-zinc-600: #9f9fa9;
+  --color-zinc-700: #d4d4d8;
+  --color-zinc-800: #e4e4e7;
+  --color-zinc-900: #f4f4f5;
+  --color-zinc-950: #fafafa;
+  --color-emerald-300: #15803d;
+  --color-emerald-400: #16a34a;
+  --color-emerald-500: #15803d;
+  --color-green-300: #15803d;
+  --color-green-400: #16a34a;
+  --color-green-500: #15803d;
+  --color-rose-300: #b91c1c;
+  --color-rose-400: #dc2626;
+  --color-rose-500: #b91c1c;
+  --color-red-300: #b91c1c;
+  --color-red-400: #dc2626;
+  --color-red-500: #b91c1c;
+  --color-amber-300: #b45309;
+  --color-amber-400: #d97706;
+  --color-amber-500: #b45309;
+  --color-yellow-300: #b45309;
+  --color-yellow-400: #d97706;
+  --color-yellow-500: #b45309;
+  --t-ga: #1f2735;
+  --t-gb: #0e131c;
+  --t-icon: #0e131c;
+  --t-action: #72a3f9;
+  --t-action-text: #0b1530;
+  --t-active: #1f2735;
+  --t-active-text: #ffffff;
+  --t-accent: #2f5fc4;
+  --t-chrome-bg: linear-gradient(180deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --header-desktop-chrome-start: var(--t-ga);
+  --header-desktop-chrome-end: var(--t-gb);
+  --header-desktop-chrome-bg: var(--t-gb);
+  --header-desktop-chrome-gradient: var(--t-chrome-bg);
+  --bottom-nav-bg: var(--t-gb);
+  --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, color-mix(in srgb, var(--t-ga) 55%, var(--t-gb)) 0%, var(--t-gb) 70%);
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+  --nav-top-line: rgba(255, 255, 255, 0.14);
+  --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-section-title-band-start: color-mix(in srgb, var(--t-ga) 94%, transparent);
+  --lobby-section-title-band-mid: color-mix(in srgb, var(--t-ga) 70%, var(--t-gb));
+  --lobby-section-title-band-fade: color-mix(in srgb, var(--t-gb) 38%, transparent);
+  --lobby-section-title-band-tail: color-mix(in srgb, var(--t-gb) 10%, transparent);
+  --menu-drawer-scrim: radial-gradient(ellipse 110% 56% at 50% -4%, color-mix(in srgb, var(--t-ga) 60%, var(--t-gb)) 0%, transparent 74%), linear-gradient(180deg, var(--t-gb) 0%, color-mix(in srgb, var(--t-gb) 55%, black) 100%);
+  --menu-bottom: color-mix(in srgb, var(--t-gb) 60%, black);
+  --menu-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --accent-primary: var(--t-accent);
+  --accent-highlight: var(--focus-ring);
+  --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
+  --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
+  --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
+  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
+  --action-solid: var(--t-action);
+  --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
+  --action-gradient: linear-gradient(90deg, var(--t-action), color-mix(in srgb, var(--t-action) 78%, black));
+  --cta-primary-gradient: var(--action-gradient);
+  --cta-primary-fg: var(--t-action-text);
+  --btn-primary-gradient: var(--action-gradient);
+  --btn-primary-fg: var(--t-action-text);
+  --confirm-btn-gradient: linear-gradient(135deg, var(--t-action) 0%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --confirm-btn-fg: var(--t-action-text);
+  --confirm-btn-shadow: 0 6px 18px color-mix(in srgb, var(--t-action) 35%, transparent);
+  --auth-register-gradient: linear-gradient(180deg, color-mix(in srgb, var(--t-action) 100%, white) 0%, var(--t-action) 34%, color-mix(in srgb, var(--t-action) 78%, black) 100%);
+  --auth-register-border: color-mix(in srgb, var(--t-action) 80%, white);
+  --primary: var(--t-action);
+  --primary-foreground: var(--t-action-text);
+  --sidebar-primary: var(--t-action);
+  --chart-1: var(--t-action);
+  --chart-2: var(--t-accent);
+  --value-accent: var(--t-accent);
+  --toast-icon-info: var(--t-accent);
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / 0.1), color-mix(in srgb, var(--t-accent) 16%, transparent));
+  --glass-fill-subtle: linear-gradient(135deg, rgb(255 255 255 / 0.07), color-mix(in srgb, var(--t-accent) 10%, transparent));
+  --chip-accent-start: color-mix(in srgb, var(--t-accent) 28%, transparent);
+  --chip-accent-end: color-mix(in srgb, var(--t-ga) 18%, transparent);
+  --nebula-violet: color-mix(in srgb, var(--t-accent) 30%, transparent);
+  --nebula-blue: color-mix(in srgb, var(--t-ga) 28%, transparent);
+  --cosmic-nebula-bg-image: radial-gradient(ellipse 55% 38% at 42% 0%, color-mix(in srgb, var(--t-accent) 20%, transparent), transparent 75%), radial-gradient(ellipse 42% 32% at 75% 0%, color-mix(in srgb, var(--t-ga) 18%, transparent), transparent 78%), radial-gradient(ellipse 30% 32% at 29% 55%, color-mix(in srgb, var(--t-gb) 26%, transparent), transparent 78%), radial-gradient(ellipse 32% 34% at 65% 54%, color-mix(in srgb, var(--t-accent) 12%, transparent), transparent 80%);
+}
+
+/* =========================================================
+   กฎร่วมของทุกธีม — ธีมเริ่มต้น (cosmic) ไม่โดน: ใช้ :not([data-theme="cosmic"])
+   บทบาทสี: ga→gb ไล่สี header/footer(desktop)/bottom nav/หัวแถวเกม · icon = ไอคอน · action = ปุ่มหลัก · active = ชิป/แท็บ
+   ต่อท้าย app/styles/themes.css อัตโนมัติ (scripts/themes/gen-themes.js)
+========================================================= */
+
+/* โลโก้: ธีมมืดใช้ cosmic-dark.png · ธีมสว่างใช้ cosmic-light.png (CosmicbetLogo เรนเดอร์ทั้งสองรูป) */
+.cosmic-logo--light {
+  display: none;
+}
+
+[data-mode="light"] .cosmic-logo--dark {
+  display: none;
+}
+
+[data-mode="light"] .cosmic-logo--light {
+  display: inline-block;
+}
+
+/* ข้อความทับรูป/overlay ดำ (ไล่ from-black) ต้องคงสีขาวแม้ในธีมสว่าง */
+[data-mode="light"] [class*="from-black"],
+[data-mode="light"] .game-media-thumb {
+  --color-white: #ffffff;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+}
+
+/* ---- พื้นไล่สี ga→gb: header มือถือ/desktop · bottom nav · หัวแถวเกม — ตัวหนังสือขาวเสมอ ---- */
+[data-theme]:not([data-theme="cosmic"]) .cosmic-mobile-chrome-surface {
+  background-color: var(--t-gb);
+  background-image: var(--t-chrome-bg);
+  background-size: 100% 100%;
+}
+
+[data-theme]:not([data-theme="cosmic"]) section > .lobby-section-header-band {
+  background: var(--t-chrome-bg);
+}
+
+[data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .lobby-section-header-band, .theme-brand-surface) {
+  color: #ffffff;
+  --text: #ffffff;
+  --color-white: #ffffff;
+  --color-zinc-100: #ffffff;
+  --color-zinc-200: rgba(255, 255, 255, 0.92);
+  --color-zinc-300: rgba(255, 255, 255, 0.88);
+  --color-zinc-400: rgba(255, 255, 255, 0.82);
+  --color-zinc-500: rgba(255, 255, 255, 0.7);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.88);
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --icon-default: rgba(255, 255, 255, 0.92);
+  --icon-active: #ffffff;
+  --value-emphasis: #ffffff;
+  --value-neutral: rgba(255, 255, 255, 0.88);
+  --value-muted: rgba(255, 255, 255, 0.72);
+  --inner-card-fill: rgba(0, 0, 0, 0.24);
+  --inner-card-fill-hover: rgba(0, 0, 0, 0.34);
+  --vip-panel-border: rgba(255, 255, 255, 0.16);
+}
+
+/* ช่อง/ปุ่มที่ใช้พื้น surface ภายในแถบไล่สี → โปร่งเข้มบางๆ ให้ข้อความขาวอ่านได้ */
+[data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .lobby-section-header-band) :is(.glass-card--soft, .glass-pill, .glass-icon-btn) {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+/* โลโก้บนพื้นไล่สี = ขาวล้วน */
+[data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .theme-brand-surface) .cosmic-logo--dark {
+  display: inline-block;
+  filter: brightness(0) invert(1);
+}
+
+[data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .theme-brand-surface) .cosmic-logo--light {
+  display: none;
+}
+
+/* footer desktop = พื้น chrome ไล่สี (token --header-desktop-chrome-* จาก themes) → ข้อความ/โลโก้ขาว */
+@media (min-width: 1024px) {
+  [data-theme]:not([data-theme="cosmic"]) .cosmic-footer {
+    color: #ffffff;
+    --color-white: #ffffff;
+    --color-zinc-100: #ffffff;
+    --color-zinc-200: rgba(255, 255, 255, 0.92);
+    --color-zinc-300: rgba(255, 255, 255, 0.88);
+    --color-zinc-400: rgba(255, 255, 255, 0.82);
+    --color-zinc-500: rgba(255, 255, 255, 0.7);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.88);
+    --text-muted: rgba(255, 255, 255, 0.72);
+    --icon-default: rgba(255, 255, 255, 0.92);
+    --icon-active: #ffffff;
+    --border-subtle: rgba(255, 255, 255, 0.18);
+  }
+
+  [data-theme]:not([data-theme="cosmic"]) .cosmic-footer .cosmic-logo--dark {
+    display: inline-block;
+    filter: brightness(0) invert(1);
+  }
+
+  [data-theme]:not([data-theme="cosmic"]) .cosmic-footer .cosmic-logo--light {
+    display: none;
+  }
+}
+
+/* ---- ชิปหมวดเกม active / แถบ progress = สี active ของธีม ---- */
+[data-theme]:not([data-theme="cosmic"]) .category-nav__chip.is-active,
+[data-theme]:not([data-theme="cosmic"]) .category-nav__chip.is-active .category-nav__icon,
+[data-theme]:not([data-theme="cosmic"]) .category-nav__chip.is-active .category-nav__label {
+  color: var(--t-active-text) !important;
+}
+
+[data-theme]:not([data-theme="cosmic"]) .category-nav--mobile .category-nav__progress-bar {
+  background: var(--line-tab-neon-gradient);
+  box-shadow: var(--line-tab-neon-glow);
+}
+
+[data-mode="light"] .category-nav--mobile .category-nav__track {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ---- ปุ่มลอย (FloatingActions) ---- */
+[data-mode="light"] .floating-actions__btn {
+  box-shadow: 0 4px 14px rgba(20, 24, 33, 0.22);
+}
+
+/**
+ * พื้นที่ที่ออกแบบเป็นกราไฟต์เข้มเสมอ (hub modal ฝาก/ถอน ฯลฯ · เมนูเต็มจอ · การ์ดแรงค์ VIP)
+ * ธีมสว่างต้อง "คืนค่า" token ฝั่งมืดภายใน subtree นี้ ไม่งั้น text-white ที่ถูกกลับสเกลจะเป็นสีเข้มบนพื้นเข้ม
+ */
+[data-mode="light"] :is(.hub-modal-shell, .vip-rank-stack) {
+  color-scheme: dark;
+  --color-white: #ffffff;
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #9f9fa9;
+  --color-zinc-500: #71717b;
+  --color-zinc-600: #52525c;
+  --color-zinc-700: #3f3f47;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-rose-300: #fda4af;
+  --color-rose-400: #fb7185;
+  --color-rose-500: #f43f5e;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-yellow-300: #fde047;
+  --color-yellow-400: #facc15;
+  --color-yellow-500: #eab308;
+  --cosmic-page-base: #0d0814;
+  --text-primary: #f5f4fc;
+  --text-secondary: #b9b5cf;
+  --text-muted: #a8a3c5;
+  --icon-default: #b9b5df;
+  --icon-active: #efedff;
+  --border-subtle: #34304e;
+  --line-tab-track: rgb(255 255 255 / 0.1);
+  --surface-start: #19183b;
+  --surface-mid: #121127;
+  --surface-end: #090810;
+  --surface-hover: #232145;
+  --surface-selected: #29264f;
+  --surface-solid-outer: #131216;
+  --surface-solid-inner: #1d1a22;
+  --sheet-row-fill: #2f2f34;
+  --sheet-row-fill-hover: #37373c;
+  --inner-card-fill: #2f2f34;
+  --inner-card-fill-hover: #37373c;
+  --sheet-soft-fill: #2f2f34;
+  --sheet-soft-fill-hover: #37373c;
+  --vip-panel-inner-bg: #2f2f34;
+  --value-emphasis: #f5f4fc;
+  --value-neutral: #b9b5cf;
+  --value-muted: #a8a3c5;
+  --sheet-icon-well-fill: #383840;
+  --sheet-field-fill: #35333b;
+  --sheet-field-fill-focus: #3d3b43;
+  --sheet-field-addon-bg: #28262d;
+  --vip-panel-bg: #1e1e21;
+  --vip-panel-border: rgb(255 255 255 / 0.08);
+  --hub-dialog-card-bg: rgb(22 22 30 / 0.78);
+  --glass-border: rgb(255 255 255 / 0.11);
+  --value-reward-fg: #f0c14b;
+  --success: #41d995;
+  --warning: #e8b339;
+}
+
+/* ---- ธีมสว่าง: category nav มือถือ — ตัวอักษรเทาดำ ไม่กลืนพื้น ---- */
+[data-mode="light"] .category-nav--mobile .category-nav__pill {
+  color: #33353d !important;
+}
+
+[data-mode="light"] .category-nav--mobile .category-nav__pill:hover {
+  color: #111827 !important;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-mode="light"] .category-nav--mobile .category-nav__pill.is-active {
+  color: #111827 !important;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(20, 24, 33, 0.18);
+}
+
+/* ---- ธีมสว่าง: เมนูเต็มจอ — พื้นนอกเทาอ่อนเกือบขาว · กล่อง/การ์ดด้านในขาว · แถวในรายการเทาจางแยกชั้น ---- */
+[data-mode="light"] :is(.menu-shell, .menu-panel) {
+  --cosmic-page-base: #f3f3f6;
+  --menu-top: #f3f3f6;
+  --menu-panel-bg: #f3f3f6;
+  --menu-drawer-scrim: none;
+  --menu-text: #1b2230;
+  --menu-muted: #6b7385;
+  --menu-border: #d2d2db;
+  box-shadow: 0 24px 64px rgba(20, 24, 33, 0.16);
+}
+
+[data-mode="light"] .menu-content--mobile-stack {
+  --menu-drawer-grid-shell: #ffffff;
+  --menu-drawer-list-row-solid: var(--t-gb);
+  --menu-drawer-shell: #ffffff;
+  --menu-drawer-row-a: #f4f4f7;
+  --menu-drawer-row-b: #f4f4f7;
+  --menu-drawer-grad-accent: #ececf1;
+  --menu-drawer-grad-press: #e6e6ec;
+  --menu-drawer-grad-purple-play: var(--t-gb);
+  --menu-drawer-grad-purple-loss: var(--t-gb);
+  --menu-drawer-grad-purple-referral: var(--t-gb);
+  --menu-drawer-stroke: #dcdce3;
+  --menu-drawer-stroke-purple: rgba(20, 24, 33, 0.1);
+  --menu-drawer-purple-glow: rgba(20, 24, 33, 0.08);
+  --menu-drawer-chip-border: rgba(20, 24, 33, 0.2);
+  --menu-drawer-chip-border-hover: rgba(20, 24, 33, 0.34);
+}
+
+[data-mode="light"] .menu-close-btn {
+  background: rgba(20, 24, 33, 0.08);
+  color: rgba(20, 24, 33, 0.7);
+}
+
+[data-mode="light"] .menu-close-btn:hover {
+  background: rgba(20, 24, 33, 0.14);
+  color: #111827;
+}
+
+[data-mode="light"] .menu-section h3 {
+  color: #6b7385;
+}
+
+[data-mode="light"] .menu-item__icon-box {
+  background: #ececf1;
+  box-shadow: none;
+  color: #1b2230;
+}
+
+/* ---- ปุ่มใน footer = พื้นเดียวกับ bottom nav (ga→gb ตัวหนังสือขาว) ทุกธีมที่ไม่ใช่ cosmic ---- */
+[data-theme]:not([data-theme="cosmic"]) .cosmic-footer :is(.glass-pill, .glass-control, nav a) {
+  border: 0;
+  background-color: var(--bottom-nav-bg);
+  background-image: var(--bottom-nav-radial);
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --icon-default: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme]:not([data-theme="cosmic"]) .cosmic-footer :is(.glass-pill, .glass-control, nav a):hover {
+  filter: brightness(1.12);
+}
+
+/* footer desktop: พื้นเป็น chrome ไล่สีอยู่แล้ว → ปุ่มโซเชียลใช้ดำโปร่งให้แยกจากพื้น */
+@media (min-width: 1024px) {
+  [data-theme]:not([data-theme="cosmic"]) .cosmic-footer nav a {
+    background-color: rgba(0, 0, 0, 0.25);
+    background-image: none;
+  }
+}
+
+/* แถวรายการเมนู (VIP Level … Special Bonus) ใช้สีธีม ga→gb ตัวหนังสือขาว บนกล่องขาว */
+[data-mode="light"] .menu-content--mobile-stack .menu-drawer-list-card .menu-list-label {
+  color: #ffffff;
+}
+
+[data-mode="light"] .menu-content--mobile-stack .menu-drawer-list-card .menu-list-chevron {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* การ์ดโบนัส (Turnover / Loss) และลิงก์แนะนำ ใช้สีธีม ga→gb ตัวหนังสือขาว */
+[data-mode="light"] .menu-content--mobile-stack :is(.menu-drawer-income-card, .menu-drawer-referral-bar) {
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.86);
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --value-emphasis: #ffffff;
+  --value-neutral: rgba(255, 255, 255, 0.86);
+  --value-muted: rgba(255, 255, 255, 0.72);
+  --menu-drawer-grad-press: rgba(255, 255, 255, 0.22);
+  --menu-drawer-grad-accent: rgba(255, 255, 255, 0.34);
+}
+
+[data-mode="light"] .menu-content--mobile-stack :is(.menu-drawer-income-card__chevron, .menu-drawer-referral-bar__copy) {
+  color: #ffffff;
+}
+
+/* การ์ดโบนัส/ลิงก์แนะนำ ถูกตั้ง background ด้วย !important จากกล่องขาว (--menu-drawer-grid-shell) → ทับด้วยสีธีม */
+[data-mode="light"] .menu-content--mobile-stack .menu-drawer-income-duo .menu-drawer-income-card,
+[data-mode="light"] .menu-content--mobile-stack .menu-drawer-referral-bar {
+  background: var(--t-gb) !important;
+}

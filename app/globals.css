@@ -58,3 +58,7 @@
 /* ── Utilities ── */
 @import "./styles/focus-input.css";
 @import "./styles/input-zoom.css";
+@import "./styles/floating-actions.css";
+
+/* ── Themes (ต้องเป็นลำดับสุดท้าย — override token ของธีมเริ่มต้น) ── */
+@import "./styles/themes.css";

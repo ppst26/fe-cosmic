@@ -149,14 +149,12 @@
 
 .cosmic-confirm-dialog__btn-confirm {
   border: 0;
-  color: #fff;
-  background: linear-gradient(
-    135deg,
-    rgb(130 95 220) 0%,
-    rgb(88 62 175) 48%,
-    rgb(62 42 128) 100%
+  color: var(--confirm-btn-fg, #fff);
+  background: var(
+    --confirm-btn-gradient,
+    linear-gradient(135deg, rgb(130 95 220) 0%, rgb(88 62 175) 48%, rgb(62 42 128) 100%)
   );
-  box-shadow: 0 6px 18px rgb(70 45 160 / 0.35);
+  box-shadow: var(--confirm-btn-shadow, 0 6px 18px rgb(70 45 160 / 0.35));
 }
 
 .cosmic-confirm-dialog__btn-confirm:hover:not(:disabled) {
@@ -164,6 +162,7 @@
 }
 
 .cosmic-confirm-dialog__btn-confirm--destructive {
+  color: #fff;
   background: linear-gradient(
     135deg,
     rgb(220 90 110) 0%,

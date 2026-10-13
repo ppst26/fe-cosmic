@@ -1,0 +1,65 @@
+/**
+ * ปุ่มลอยมุมล่างขวา — ธีมสี + live chat (FloatingActions.tsx)
+ * mobile: เหนือ bottom nav · desktop: ชิดล่างขวา · พื้นทึบใช้ token พื้นผิวของธีม
+ */
+.floating-actions {
+  position: fixed;
+  z-index: 40;
+  right: max(0.75rem, env(safe-area-inset-right, 0px));
+  bottom: calc(var(--nav-height) + var(--nav-float-offset) + var(--nav-safe) + 0.875rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .floating-actions {
+    right: 1.5rem;
+    bottom: 1.5rem;
+  }
+}
+
+.floating-actions__btn {
+  position: relative;
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface-solid-inner);
+  color: var(--text-primary);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.38);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    background var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.floating-actions__btn:hover {
+  background: var(--surface-hover);
+  transform: scale(1.06);
+}
+
+.floating-actions__btn:active {
+  transform: scale(0.95);
+}
+
+.floating-actions__btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.floating-actions__dot {
+  position: absolute;
+  top: -0.125rem;
+  right: -0.125rem;
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 2px solid var(--surface-solid-inner);
+  border-radius: var(--radius-pill);
+  background: var(--success);
+}
