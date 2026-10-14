@@ -125,7 +125,7 @@ export function ReferralLinkSection({
       </p>
       <div className="flex gap-2.5">
         <div
-          className={`${COSMIC_SHEET_FIELD_ROW} min-w-0 flex-1 truncate text-[var(--text-secondary)] ${
+          className={`referral-link-field ${COSMIC_SHEET_FIELD_ROW} min-w-0 flex-1 truncate text-[var(--text-secondary)] ${
             isHub ? "py-3 text-sm sm:text-base" : "text-xs sm:text-sm"
           }`}
         >
@@ -256,7 +256,7 @@ function StatCard({
           {label}
         </p>
         <p
-          className={`mt-0.5 tabular-nums ${emphasized ? "text-lg" : isColumn ? "text-xs sm:text-sm" : "text-sm"} ${valueClassName}`}
+          className={`mt-0.5 tabular-nums ${emphasized ? "text-lg" : isColumn ? "text-[15px] font-semibold sm:text-lg" : "text-base font-semibold"} ${valueClassName}`}
         >
           {value}
         </p>

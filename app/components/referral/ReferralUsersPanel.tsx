@@ -65,7 +65,7 @@ function ReferralUsersTable({ users }: { users: ReferralUserRow[] }) {
         >
           {t("tabs.users")}
         </h2>
-        <span className="cosmic-inset-card rounded-[var(--radius-pill)] px-2.5 py-0.5 text-xs font-medium text-[var(--text-secondary)]">
+        <span className="cosmic-inset-card rounded-[var(--radius-pill)] px-3 py-1 text-sm font-semibold text-[var(--text-primary)]">
           {fmt.people(total)}
         </span>
       </div>

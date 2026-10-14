@@ -132,7 +132,7 @@ function ReferralEarningPanelContent({
               <p className="text-xs font-medium text-[var(--text-secondary)] sm:text-[13px]">
                 {t("earning.claimableBonus")}
               </p>
-              <p className={valueClass("reward", "mt-0.5 text-xl leading-tight sm:text-2xl")}>
+              <p className={valueClass("reward", "mt-0.5 text-2xl font-semibold leading-tight sm:text-3xl")}>
                 {formatReferralCurrency(claimable)}
               </p>
             </div>

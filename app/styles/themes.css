@@ -2278,3 +2278,67 @@ html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not
   background: rgba(20, 24, 33, 0.1);
   border-color: transparent;
 }
+
+/* ---- ช่องลิงก์แนะนำเพื่อน: อ่านชัด — ตัวอักษรหลัก + ขอบสีธีม ---- */
+[data-theme]:not([data-theme="cosmic"]) .referral-link-field {
+  color: var(--text-primary);
+  font-weight: 600;
+  border: 1.5px solid color-mix(in srgb, var(--t-action) 70%, transparent);
+}
+
+[data-mode="light"] .referral-link-field {
+  background: #ffffff;
+  color: #1b2230;
+  border: 1.5px solid var(--t-gb);
+  box-shadow: none;
+}
+
+/* ---- ธีมสว่าง: หน้าแนะนำเพื่อน — ไอคอน/ติ๊กบนพื้นสีธีมเป็นขาว · ยอดโบนัสที่รับได้เป็นขาว ---- */
+[data-mode="light"] .referral-earn-card .referral-tier-icon {
+  --icon-default: #ffffff;
+  color: #ffffff;
+}
+
+[data-mode="light"] .referral-earn-card .referral-tier-icon svg {
+  color: #ffffff;
+}
+
+[data-mode="light"] .referral-earn-card > ul li > span[aria-hidden="true"] {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+[data-mode="light"] .referral-earning-claim {
+  --value-reward: #ffffff;
+  --value-reward-fg: #ffffff;
+}
+
+/* ---- ธีมสว่าง: การ์ด VIP (สิทธิประโยชน์ / เลื่อนระดับ / รักษาระดับ / แร็งค์) — ไล่สีธีม ga→gb ตัวอักษรขาว ---- */
+[data-mode="light"] .vip-rank-stack {
+  --vip-rank-card-top-radial: none;
+  --vip-rank-card-face-gradient: linear-gradient(135deg, var(--t-ga), var(--t-gb));
+  --vip-rank-card-accent: #ffffff;
+  --vip-panel-border: rgba(255, 255, 255, 0.22);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --text-muted: rgba(255, 255, 255, 0.78);
+  --icon-default: #ffffff;
+  --value-reward: #ffe08a;
+  --value-reward-fg: #ffe08a;
+  --vip-benefit-value: #ffe08a;
+  --value-success: #bbf7d0;
+  --vip-benefit-value-success: #bbf7d0;
+  --vip-rank-metric-complete: #bbf7d0;
+  --value-accent: #ffffff;
+  --value-emphasis: #ffffff;
+  --value-neutral: #ffffff;
+  --color-white: #ffffff;
+}
+
+[data-mode="light"] .vip-page .vip-rank-stack .vip-rank-surface-card,
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-rank-stack .vip-rank-surface-card {
+  background-color: var(--t-gb);
+  background-image: var(--vip-rank-card-face-gradient);
+  color: #ffffff;
+  border-color: transparent;
+}

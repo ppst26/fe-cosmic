@@ -172,7 +172,7 @@ function ReferralMobileTabs({
                   key={tier.id}
                   className="surface-solid-inner flex items-center gap-3 p-3 sm:gap-4"
                 >
-                  <div className={COSMIC_PANEL_GLASS_ICON}>
+                  <div className={`referral-tier-icon ${COSMIC_PANEL_GLASS_ICON}`}>
                     <UsersGroupIcon className="h-5 w-5 text-[var(--icon-default)]" />
                   </div>
                   <div className="min-w-0 flex-1">
