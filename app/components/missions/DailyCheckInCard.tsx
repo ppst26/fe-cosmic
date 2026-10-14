@@ -107,25 +107,25 @@ function DailyCheckInCardView({
         key={item.day}
         onClick={() => isToday && handleClaim(item.day)}
         className={cn(
-          "group relative flex flex-col items-center justify-between rounded-xl text-center transition-all duration-200",
+          "daily-check-in-day group relative flex flex-col items-center justify-between rounded-xl text-center transition-all duration-200",
           isHubSurface ? "min-h-[8rem] py-2.5 px-1 sm:min-h-[8.5rem] sm:py-3" : "min-h-[7.5rem] py-2 px-1 sm:min-h-[8rem]",
           isClaimed && [
-            "border border-[#7747e5]/30 bg-gradient-to-b from-[#1c162b] to-[#110e1a]",
-            "shadow-[inset_0_1px_0_rgba(119,71,229,0.1)]",
+            "border border-[color:var(--ci-accent,#7747e5)]/30 bg-gradient-to-b from-[var(--ci-claimed-from,#1c162b)] to-[var(--ci-claimed-to,#110e1a)]",
+            "shadow-[inset_0_1px_0_color-mix(in_srgb,var(--ci-accent,#7747e5)_10%,transparent)]",
           ],
           isToday && [
-            "border-1.5 border-[#7747e5] bg-gradient-to-b from-[#261c3e] to-[#14101e] cursor-pointer",
-            "shadow-[0_0_16px_rgba(119,71,229,0.45),inset_0_1px_0_rgba(255,255,255,0.12)] scale-[1.02] ring-1 ring-[#7747e5]/50",
+            "border-1.5 border-[color:var(--ci-accent,#7747e5)] bg-gradient-to-b from-[var(--ci-today-from,#261c3e)] to-[var(--ci-today-to,#14101e)] cursor-pointer",
+            "shadow-[0_0_16px_color-mix(in_srgb,var(--ci-accent,#7747e5)_45%,transparent),inset_0_1px_0_rgba(255,255,255,0.12)] scale-[1.02] ring-1 ring-[color:var(--ci-accent,#7747e5)]/50",
           ],
           isLocked && [
-            "border border-white/8 bg-gradient-to-b from-[#1c1a24] to-[#121017] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] opacity-85 hover:border-white/15",
+            "border border-white/8 bg-gradient-to-b from-[var(--ci-locked-from,#1c1a24)] to-[var(--ci-locked-to,#121017)] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] opacity-85 hover:border-white/15",
           ],
-          justClaimed === item.day && "scale-105 ring-2 ring-[#7747e5]",
+          justClaimed === item.day && "scale-105 ring-2 ring-[color:var(--ci-accent,#7747e5)]",
         )}
       >
         {isClaimed ? (
           <div
-            className="absolute -top-1.5 -right-1 z-20 flex h-4 w-4 sm:h-4.5 sm:w-4.5 items-center justify-center rounded-full border border-[#7747e5] bg-[#1a1230] text-[#c4b5fd] shadow-[0_0_8px_rgba(119,71,229,0.4)]"
+            className="absolute -top-1.5 -right-1 z-20 flex h-4 w-4 sm:h-4.5 sm:w-4.5 items-center justify-center rounded-full border border-[color:var(--ci-accent,#7747e5)] bg-[color:var(--ci-badge,#1a1230)] text-[color:var(--ci-soft,#c4b5fd)] shadow-[0_0_8px_color-mix(in_srgb,var(--ci-accent,#7747e5)_40%,transparent)]"
             aria-hidden="true"
           >
             <svg
@@ -146,7 +146,7 @@ function DailyCheckInCardView({
           className={cn(
             "font-medium leading-tight",
             isHubSurface ? "text-sm sm:text-[0.9375rem]" : "text-xs sm:text-[13px]",
-            isClaimed ? "text-[#c4b5fd]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
+            isClaimed ? "text-[color:var(--ci-soft,#c4b5fd)]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
           )}
         >
           {t(item.labelKey)}
@@ -167,9 +167,9 @@ function DailyCheckInCardView({
           <div
             className={cn(
               "pointer-events-none absolute inset-[8%] rounded-full blur-[2px]",
-              isClaimed && "bg-[radial-gradient(circle,rgb(119_71_229/0.42)_0%,transparent_72%)]",
+              isClaimed && "bg-[radial-gradient(circle,color-mix(in_srgb,var(--ci-accent,#7747e5)_42%,transparent)_0%,transparent_72%)]",
               isToday &&
-                "bg-[radial-gradient(circle,rgb(91_140_255/0.5)_0%,rgb(119_71_229/0.35)_45%,transparent_75%)]",
+                "bg-[radial-gradient(circle,color-mix(in_srgb,var(--ci-accent-2,#5b8cff)_50%,transparent)_0%,color-mix(in_srgb,var(--ci-accent,#7747e5)_35%,transparent)_45%,transparent_75%)]",
               isLocked && "bg-[radial-gradient(circle,rgb(255_255_255/0.12)_0%,transparent_70%)]",
             )}
             aria-hidden
@@ -182,11 +182,11 @@ function DailyCheckInCardView({
             className={cn(
               "relative z-[1] object-contain transition-transform duration-200",
               isClaimed &&
-                "drop-shadow-[0_0_14px_rgba(119,71,229,0.75)] drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]",
+                "drop-shadow-[0_0_14px_color-mix(in_srgb,var(--ci-accent,#7747e5)_75%,transparent)] drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]",
               isToday &&
-                "scale-[1.12] drop-shadow-[0_0_20px_rgba(119,71,229,0.95)] drop-shadow-[0_0_28px_rgba(91,140,255,0.45)]",
+                "scale-[1.12] drop-shadow-[0_0_20px_color-mix(in_srgb,var(--ci-accent,#7747e5)_95%,transparent)] drop-shadow-[0_0_28px_color-mix(in_srgb,var(--ci-accent-2,#5b8cff)_45%,transparent)]",
               isLocked &&
-                "opacity-90 drop-shadow-[0_0_10px_rgba(119,71,229,0.25)] drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]",
+                "opacity-90 drop-shadow-[0_0_10px_color-mix(in_srgb,var(--ci-accent,#7747e5)_25%,transparent)] drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]",
             )}
           />
         </div>
@@ -195,7 +195,7 @@ function DailyCheckInCardView({
           className={cn(
             "font-medium leading-tight mb-1 tabular-nums",
             isHubSurface ? "text-sm sm:text-[0.9375rem]" : "text-xs sm:text-[13px]",
-            isClaimed ? "text-[#d8b4fe]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
+            isClaimed ? "text-[color:var(--ci-soft,#d8b4fe)]" : isToday ? "text-white" : "text-[var(--text-secondary)]",
           )}
         >
           +{item.credits}
@@ -205,9 +205,9 @@ function DailyCheckInCardView({
           className={cn(
             "w-full rounded text-center font-medium transition-all whitespace-nowrap",
             isHubSurface ? "py-1 text-xs sm:text-sm" : "py-0.5 text-xs",
-            isClaimed && "border border-[#7747e5]/30 bg-[#7747e5]/15 text-[#c4b5fd]",
+            isClaimed && "border border-[color:var(--ci-accent,#7747e5)]/30 bg-[color:var(--ci-accent,#7747e5)]/15 text-[color:var(--ci-soft,#c4b5fd)]",
             isToday &&
-              "bg-gradient-to-r from-[#7747e5] to-[#5b8cff] text-white shadow-[0_0_10px_rgba(119,71,229,0.5)] group-hover:brightness-110 font-medium",
+              "bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] text-[color:var(--ci-on-accent,#fff)] shadow-[0_0_10px_color-mix(in_srgb,var(--ci-accent,#7747e5)_50%,transparent)] group-hover:brightness-110 font-medium",
             isLocked && "bg-white/6 text-[var(--text-muted)]",
           )}
         >
@@ -288,7 +288,7 @@ function DailyCheckInCardView({
               {t("checkIn.bonusDays", { count: daysRemainingForBonus })}
             </span>{" "}
             {t("checkIn.bonusAfter")}{" "}
-            <span className="font-medium text-[#a78bfa]">{t("checkIn.bonusGems", { amount: 20 })}</span>
+            <span className="font-medium text-[color:var(--ci-soft,#a78bfa)]">{t("checkIn.bonusGems", { amount: 20 })}</span>
           </p>
         </div>
 
@@ -307,7 +307,7 @@ function DailyCheckInCardView({
             fill
             sizes="120px"
             preload
-            className="object-contain drop-shadow-[0_4px_16px_rgba(119,71,229,0.35)]"
+            className="object-contain drop-shadow-[0_4px_16px_color-mix(in_srgb,var(--ci-accent,#7747e5)_35%,transparent)]"
           />
         </div>
       </div>
@@ -321,12 +321,12 @@ function DailyCheckInCardView({
       >
         <div
           className={cn(
-            "relative flex-1 overflow-hidden rounded-full bg-black/40 border border-white/8",
+            "daily-check-in-track relative flex-1 overflow-hidden rounded-full bg-black/40 border border-white/8",
             isHubSurface ? "h-2.5 sm:h-3" : "h-2 sm:h-2.5",
           )}
         >
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#7747e5] to-[#5b8cff] shadow-[0_0_10px_rgba(119,71,229,0.5)] transition-all duration-500 ease-out"
+            className="h-full rounded-full bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] shadow-[0_0_10px_color-mix(in_srgb,var(--ci-accent,#7747e5)_50%,transparent)] transition-all duration-500 ease-out"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -354,14 +354,14 @@ function DailyCheckInCardView({
       {/* ── Cumulative Rewards Box (รางวัลเช็คอินสะสม) ── */}
       <div
         className={cn(
-          "hub-modal-card relative z-10 rounded-2xl border border-white/8 bg-gradient-to-b from-[#1a1824]/90 to-[#121018]/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_10px_28px_rgba(0,0,0,0.28)]",
+          "daily-check-in-cumulative hub-modal-card relative z-10 rounded-2xl border border-white/8 bg-gradient-to-b from-[#1a1824]/90 to-[#121018]/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_10px_28px_rgba(0,0,0,0.28)]",
           isHubSurface ? "my-4 p-4 sm:my-5 sm:p-5" : "my-3 p-3 sm:my-3.5 sm:p-3.5",
         )}
       >
         {/* Header */}
         <div className="text-center">
           <div className="flex items-center justify-center gap-1.5">
-            <span className="text-[#7747e5] text-xs">✦</span>
+            <span className="text-[color:var(--ci-accent,#7747e5)] text-xs">✦</span>
             <span className="text-base">🎁</span>
             <h3
               className={cn(
@@ -371,7 +371,7 @@ function DailyCheckInCardView({
             >
               {t("checkIn.cumulativeTitle")}
             </h3>
-            <span className="text-[#7747e5] text-xs">✦</span>
+            <span className="text-[color:var(--ci-accent,#7747e5)] text-xs">✦</span>
           </div>
           <p
             className={cn(
@@ -388,7 +388,7 @@ function DailyCheckInCardView({
           {/* Horizontal Connecting Track */}
           <div className="absolute left-6 right-6 top-[34px] sm:top-[38px] h-0.5 bg-white/10" />
           <div
-            className="absolute left-6 top-[34px] sm:top-[38px] h-0.5 bg-gradient-to-r from-[#7747e5] to-[#5b8cff] shadow-[0_0_8px_rgba(119,71,229,0.6)] transition-all duration-500"
+            className="absolute left-6 top-[34px] sm:top-[38px] h-0.5 bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] shadow-[0_0_8px_color-mix(in_srgb,var(--ci-accent,#7747e5)_60%,transparent)] transition-all duration-500"
             style={{
               width: checkedInCount >= 7 ? "30%" : "8%",
             }}
@@ -410,8 +410,8 @@ function DailyCheckInCardView({
                   className={cn(
                     "rounded-md px-2 py-0.5 text-xs sm:text-sm font-medium tabular-nums transition-all whitespace-nowrap",
                     isReached
-                      ? "border border-[#7747e5]/40 bg-[#7747e5]/20 text-[#e9d5ff] shadow-[0_0_8px_rgba(119,71,229,0.25)]"
-                      : "border border-white/8 bg-[#14121a] text-[var(--text-muted)]",
+                      ? "border border-[color:var(--ci-accent,#7747e5)]/40 bg-[color:var(--ci-accent,#7747e5)]/20 text-[color:var(--ci-soft,#e9d5ff)] shadow-[0_0_8px_color-mix(in_srgb,var(--ci-accent,#7747e5)_25%,transparent)]"
+                      : "border border-white/8 bg-[color:var(--ci-locked-to,#14121a)] text-[var(--text-muted)]",
                   )}
                 >
                   {t("checkIn.milestoneGems", { amount: m.gemsReward })}
@@ -422,8 +422,8 @@ function DailyCheckInCardView({
                   className={cn(
                     "flex h-8.5 w-8.5 sm:h-9.5 sm:w-9.5 items-center justify-center rounded-full transition-all overflow-hidden p-1",
                     isReached
-                      ? "border-2 border-[#7747e5] bg-gradient-to-b from-[#251842] to-[#120e20] shadow-[0_0_12px_rgba(119,71,229,0.5)]"
-                      : "border border-white/10 bg-[#14121a]",
+                      ? "border-2 border-[color:var(--ci-accent,#7747e5)] bg-gradient-to-b from-[var(--ci-claimed-from,#251842)] to-[var(--ci-claimed-to,#120e20)] shadow-[0_0_12px_color-mix(in_srgb,var(--ci-accent,#7747e5)_50%,transparent)]"
+                      : "border border-white/10 bg-[color:var(--ci-locked-to,#14121a)]",
                   )}
                 >
                   {isReached ? (
@@ -433,7 +433,7 @@ function DailyCheckInCardView({
                         alt="Gift Box"
                         fill
                         sizes="32px"
-                        className="object-contain drop-shadow-[0_0_6px_rgba(119,71,229,0.5)]"
+                        className="object-contain drop-shadow-[0_0_6px_color-mix(in_srgb,var(--ci-accent,#7747e5)_50%,transparent)]"
                       />
                     </div>
                   ) : (

@@ -39,7 +39,7 @@
   background: var(--t-chrome-bg);
 }
 
-[data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .lobby-section-header-band, .theme-brand-surface) {
+[data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .lobby-section-header-band, .lobby-announcement-marquee, .theme-brand-surface) {
   color: #ffffff;
   --text: #ffffff;
   --color-white: #ffffff;
@@ -129,7 +129,7 @@
  * พื้นที่ที่ออกแบบเป็นกราไฟต์เข้มเสมอ (hub modal ฝาก/ถอน ฯลฯ · เมนูเต็มจอ · การ์ดแรงค์ VIP)
  * ธีมสว่างต้อง "คืนค่า" token ฝั่งมืดภายใน subtree นี้ ไม่งั้น text-white ที่ถูกกลับสเกลจะเป็นสีเข้มบนพื้นเข้ม
  */
-[data-mode="light"] :is(.hub-modal-shell, .vip-rank-stack) {
+[data-mode="light"] .hub-modal-shell {
   color-scheme: dark;
   --color-white: #ffffff;
   --color-zinc-50: #fafafa;
@@ -176,6 +176,23 @@
   --surface-selected: #29264f;
   --surface-solid-outer: #131216;
   --surface-solid-inner: #1d1a22;
+  --vip-level-up-percent: #f5f4fc;
+  --vip-level-up-label: #b9b5cf;
+  --vip-benefit-value: #f0c14b;
+  --vip-benefit-value-muted: #a8a3c5;
+  --vip-benefit-value-success: #41d995;
+  --vip-rank-metric-complete: #41d995;
+  --vip-benefit-cell-a: #2f2f34;
+  --vip-benefit-cell-b: #37373c;
+  --value-success: #41d995;
+  --value-danger: #ef4444;
+  --value-warning: #e8b339;
+  --value-reward: #f0c14b;
+  --destructive: #ef4444;
+  --cosmic-pagination-bg: #26252b;
+  --cosmic-pagination-bg-hover: #303037;
+  --cosmic-pagination-border: #3a3844;
+  --cosmic-pagination-track-bg: #1c1b20;
   --sheet-row-fill: #2f2f34;
   --sheet-row-fill-hover: #37373c;
   --inner-card-fill: #2f2f34;
@@ -266,7 +283,7 @@
 }
 
 /* ---- ปุ่มใน footer = พื้นเดียวกับ bottom nav (ga→gb ตัวหนังสือขาว) ทุกธีมที่ไม่ใช่ cosmic ---- */
-[data-theme]:not([data-theme="cosmic"]) .cosmic-footer :is(.glass-pill, .glass-control, nav a) {
+[data-theme]:not([data-theme="cosmic"]) .cosmic-footer :is(.glass-pill, .glass-control, nav > a) {
   border: 0;
   background-color: var(--bottom-nav-bg);
   background-image: var(--bottom-nav-radial);
@@ -276,13 +293,13 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-[data-theme]:not([data-theme="cosmic"]) .cosmic-footer :is(.glass-pill, .glass-control, nav a):hover {
+[data-theme]:not([data-theme="cosmic"]) .cosmic-footer :is(.glass-pill, .glass-control, nav > a):hover {
   filter: brightness(1.12);
 }
 
 /* footer desktop: พื้นเป็น chrome ไล่สีอยู่แล้ว → ปุ่มโซเชียลใช้ดำโปร่งให้แยกจากพื้น */
 @media (min-width: 1024px) {
-  [data-theme]:not([data-theme="cosmic"]) .cosmic-footer nav a {
+  [data-theme]:not([data-theme="cosmic"]) .cosmic-footer nav > a {
     background-color: rgba(0, 0, 0, 0.25);
     background-image: none;
   }
@@ -319,4 +336,533 @@
 [data-mode="light"] .menu-content--mobile-stack .menu-drawer-income-duo .menu-drawer-income-card,
 [data-mode="light"] .menu-content--mobile-stack .menu-drawer-referral-bar {
   background: var(--t-gb) !important;
+}
+
+/* ประกาศ (marquee): พื้นสีธีม ตัวหนังสือขาว — มือถือใช้ token lead/marquee-fill · desktop ใช้พื้นไล่สี */
+[data-theme]:not([data-theme="cosmic"]) .lobby-announcement-marquee:not(.lobby-announcement-marquee--mobile) {
+  background: var(--t-chrome-bg);
+  border-color: transparent;
+}
+
+[data-theme]:not([data-theme="cosmic"]) .lobby-announcement-marquee--mobile {
+  border-color: transparent;
+}
+
+/* ธีมสว่าง: ช่องค้นหาเกม/ค่าย — พื้นเทาเข้ม ตัวอักษรขาวอ่านง่าย */
+[data-mode="light"] .provider-category-toolbar__search-field.glass-card--soft {
+  background: #3b3e47;
+  border-color: transparent;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --icon-default: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
+}
+
+[data-mode="light"] .provider-category-toolbar__search-input {
+  color: #ffffff;
+}
+
+[data-mode="light"] .provider-category-toolbar__search-input::placeholder {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+/* ธีมสว่าง: ช่องข้อมูลหน้า standalone (โปรไฟล์ ฯลฯ) ใช้สีธีม ตัวหนังสือขาว */
+[data-mode="light"] .profile-account-inner-card {
+  background: var(--t-gb);
+  border-color: transparent;
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.82);
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --icon-active: #ffffff;
+  --icon-default: rgba(255, 255, 255, 0.85);
+  --value-emphasis: #ffffff;
+  --value-neutral: rgba(255, 255, 255, 0.88);
+  --value-muted: rgba(255, 255, 255, 0.72);
+  --value-reward: #ffe08a;
+}
+
+/* ---- ธีมสว่าง: ประกาศ — เฉพาะป้ายหน้าเป็นสีธีม ส่วน marquee พื้นขาว ตัวหนังสือเทาเข้ม ---- */
+[data-mode="light"] .lobby-announcement-marquee--mobile {
+  --lobby-announcement-mobile-marquee-fill: #ffffff;
+  --lobby-announcement-mobile-fade-edge: #ffffff;
+  border: 1px solid rgba(20, 24, 33, 0.1);
+}
+
+[data-mode="light"] .lobby-announcement-marquee--mobile .lobby-announcement-marquee__viewport {
+  color: #3f3f46;
+  --text-primary: #3f3f46;
+  --text-secondary: #52525c;
+  --text-muted: #6b7385;
+  --color-white: #3f3f46;
+  --color-zinc-200: #3f3f46;
+  --color-zinc-300: #3f3f46;
+  --color-zinc-400: #52525c;
+}
+
+/* ---- ธีมสว่าง: category nav มือถือ — พื้นขาว · active = ตัวอักษรสีธีมเท่านั้น (ไม่มีพื้นใน/เงา) ---- */
+[data-mode="light"] .lobby-mobile-category-sticky,
+[data-mode="light"] .lobby-mobile-category-sticky.is-stuck {
+  background: #ffffff;
+  box-shadow: none;
+}
+
+[data-mode="light"] .category-nav--mobile .category-nav__track {
+  background: #ffffff;
+}
+
+[data-mode="light"] .category-nav--mobile .category-nav__pill.is-active {
+  background: transparent;
+  box-shadow: none;
+  color: var(--t-gb) !important;
+  font-weight: 600;
+}
+
+/* ธีมสว่าง: segment track (ฝาก/ถอน/คืนยอด) — เงาเบา ไม่ใช้เงาดำหนัก */
+@media (max-width: 1023px) {
+  [data-mode="light"] .mobile-standalone-page .cosmic-segment-track {
+    border-color: rgba(20, 24, 33, 0.08);
+    box-shadow: 0 1px 4px rgba(20, 24, 33, 0.1);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* bottom nav อยู่บนพื้นไล่สี ga→gb → ตัวหนังสือ nav ขาว (ตั้งเฉพาะที่นี่ ไม่ใช่ทั้งหน้า) */
+[data-theme]:not([data-theme="cosmic"]) .theme-brand-surface {
+  --nav-text: rgba(255, 255, 255, 0.68);
+  --nav-hover: rgba(255, 255, 255, 0.9);
+  --nav-active: #ffffff;
+}
+
+/* ---- ธีมสว่าง desktop: sidebar lobby + ชิปหมวดเกม — ตัวหนังสือเข้ม ไม่มีเงา · active = ตัวอักษรสีธีม ---- */
+@media (min-width: 1024px) {
+  [data-mode="light"] .glass-sidebar.lobby-desktop-sidebar--borderless {
+    box-shadow: none;
+    background: #ffffff;
+  }
+
+  [data-mode="light"] .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link {
+    color: #2b2d33;
+  }
+
+  [data-mode="light"] .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--services .lobby-desktop-sidebar__link {
+    color: #4a5265;
+  }
+
+  [data-mode="light"] .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #111827;
+  }
+
+  [data-mode="light"] .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link.is-active {
+    background: transparent;
+    color: var(--t-gb);
+    font-weight: 600;
+  }
+
+  [data-mode="light"] .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-icon-wrap img {
+    filter: none;
+  }
+
+  [data-mode="light"] .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--services::before {
+    background: rgba(20, 24, 33, 0.08);
+  }
+}
+
+[data-mode="light"] .category-nav:not(.category-nav--mobile) .category-nav__chip {
+  background: #ffffff;
+  color: #2b2d33;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+[data-mode="light"] .category-nav:not(.category-nav--mobile) .category-nav__chip:hover:not(.is-active) {
+  background: #f4f4f7;
+  box-shadow: none;
+}
+
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not(.category-nav--mobile) .category-nav__chip.is-active,
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not(.category-nav--mobile) .category-nav__chip.is-active :is(.category-nav__icon, .category-nav__label) {
+  color: var(--t-gb) !important;
+  font-weight: 600;
+}
+
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not(.category-nav--mobile) .category-nav__chip.is-active {
+  background: #ffffff;
+  box-shadow: none;
+}
+
+[data-mode="light"] .category-nav__icon > * {
+  filter: none !important;
+}
+
+/* ธีมสว่าง: การ์ดที่วางบนพื้นไล่สีเข้ม (from-[#...]) เช่น quick banners — คงตัวหนังสือขาว */
+[data-mode="light"] [class*="from-["] {
+  --color-white: #ffffff;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --text-primary: #f5f4fc;
+  --text-secondary: #d6d3e6;
+  --text-muted: #b9b5cf;
+}
+
+/* ธีมสว่าง: hub menu การ์ดด้านซ้าย (แนะนำเพื่อน/เช็คอิน/วงล้อ/…) — ไม่มีเงา ทั้งการ์ดและรูป */
+@media (min-width: 1024px) {
+  [data-mode="light"] .lobby-hub-menu-card,
+  [data-mode="light"] .lobby-hub-menu-card.glass-card--soft,
+  [data-mode="light"] .lobby-hub-menu-card.glass-card--soft:hover {
+    box-shadow: none;
+  }
+
+  [data-mode="light"] .lobby-hub-menu-card__visual,
+  [data-mode="light"] .lobby-hub-menu-card__visual-img,
+  [data-mode="light"] .lobby-hub-menu-card__bg {
+    filter: none;
+  }
+}
+
+/* ---- ธีมสว่าง: Hall of fame — แท็บ (active = สีธีม · ที่เหลือขาว) · แถว = สีธีม ตัวหนังสือขาว ---- */
+[data-mode="light"] .hall-of-fame__tab-btn {
+  background: #ffffff;
+  color: #2b2d33;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+[data-mode="light"] .hall-of-fame__tab-btn:hover:not(.is-active) {
+  background: #f4f4f7;
+  color: #111827;
+  box-shadow: none;
+}
+
+[data-mode="light"] .hall-of-fame__tab-btn.is-active {
+  background: var(--t-gb);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+[data-mode="light"] .hall-of-fame-table__row:not(.hall-of-fame-table__row--empty) {
+  background: var(--t-gb);
+  box-shadow: none;
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.86);
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --color-white: #ffffff;
+  --color-zinc-300: rgba(255, 255, 255, 0.88);
+  --color-zinc-400: rgba(255, 255, 255, 0.8);
+  --value-reward: #ffffff;
+  --value-success: #ffffff;
+}
+
+[data-mode="light"] .hall-of-fame-table__avatar {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+[data-mode="light"] .hall-of-fame-table__payout {
+  color: #ffffff;
+}
+
+/* ---- ธีมสว่าง: ปุ่มลูกศร carousel = สีธีม ไอคอนขาว (ในแถบหัวไล่สีใช้ดำโปร่งตามเดิม) ---- */
+[data-mode="light"] .glass-control.glass-icon-btn {
+  background: var(--t-gb);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+[data-mode="light"] .glass-control.glass-icon-btn:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+/* ลิงก์คอลัมน์ใน footer (ทุกธีม) — ไม่มีพื้น/เงา/blur ให้โปร่งใสเห็นพื้น footer */
+.cosmic-footer nav li > a {
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+  border: 0 !important;
+}
+
+/* การ์ดกิจกรรม: พื้นรอง (--surface-mid) โผล่ตามมุมมนของรูป → โปร่งใสในทุกธีมที่ไม่ใช่ cosmic */
+[data-theme]:not([data-theme="cosmic"]) .tournament-feature-card {
+  background: transparent;
+}
+
+/* การ์ด PWA "เพิ่มปุ่มลัดหน้าโฮม": พื้นไล่สีธีม ga→gb ตัวหนังสือขาว · accordion วิธีเพิ่ม = สีธีมทึบ */
+[data-theme]:not([data-theme="cosmic"]) .home-a2hs-promo {
+  --home-a2hs-surface: linear-gradient(102deg, var(--t-ga) 0%, var(--t-gb) 100%);
+  --home-a2hs-glow: var(--t-accent);
+  --home-a2hs-border: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.86);
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --icon-default: rgba(255, 255, 255, 0.9);
+  --color-white: #ffffff;
+}
+
+[data-theme]:not([data-theme="cosmic"]) .home-a2hs-promo .home-a2hs-card {
+  box-shadow: none;
+}
+
+[data-theme]:not([data-theme="cosmic"]) .home-a2hs-promo .home-a2hs-accordion {
+  background: var(--t-gb);
+  border-color: transparent;
+}
+
+/* ---- แท็บหมวดโปรโมชัน: ปุ่ม active ใช้ token สี active ของธีม (--t-active / --t-active-text) ---- */
+[data-theme]:not([data-theme="cosmic"]) .cosmic-segment-track--promo-cta .cosmic-segment-btn.is-active {
+  border-color: transparent;
+  background: var(--t-active);
+  color: var(--t-active-text);
+  box-shadow: none;
+}
+
+[data-mode="light"] .cosmic-segment-track--promo-cta {
+  background: #ffffff;
+  box-shadow: none;
+}
+
+/* ---- ธีมสว่าง: รายละเอียดโปรโมชั่น — หัวข้อสีธีม ตัวหนังสือขาว · เนื้อหาพื้นขาว ตัวอักษรเข้ม ---- */
+[data-mode="light"] .promo-detail-page {
+  --promo-detail-accord-header-bg: var(--t-gb);
+  --promo-detail-accord-body-bg: #ffffff;
+  --promo-detail-accord-border: #dcdce3;
+  --promo-detail-block-heading: var(--t-gb);
+}
+
+[data-mode="light"] .promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__details-heading {
+  color: #ffffff;
+}
+
+[data-mode="light"] .promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__blocks p,
+[data-mode="light"] .promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__blocks li {
+  color: #2b2d33;
+}
+
+[data-mode="light"] .promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__footer {
+  color: #6b7385;
+}
+
+[data-mode="light"] .promo-detail-page .promotion-detail-panel--page .promotion-detail-panel__divider {
+  border-top-color: #dcdce3;
+}
+
+/* ---- ธีมสว่าง: การ์ดแรงค์ VIP — เทาไล่สี + สีธีมจาง ๆ ตัวอักษรเทาเข้ม พร้อม semantic color ---- */
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-rank-stack {
+  --vip-rank-card-bg: #f1f1f5;
+  --vip-rank-card-top-radial: radial-gradient(ellipse 88% 68% at 50% -6%, color-mix(in srgb, var(--t-ga) 20%, transparent) 0%, transparent 58%);
+  --vip-rank-card-face-gradient: linear-gradient(165deg, #f8f8fb 0%, color-mix(in srgb, var(--t-ga) 8%, #ececf1) 55%, color-mix(in srgb, var(--t-ga) 14%, #e4e4ea) 100%);
+  --vip-panel-border: rgba(20, 24, 33, 0.1);
+  --text-primary: #2b2d33;
+  --text-secondary: #4a5265;
+  --text-muted: #6b7385;
+  --value-reward: #b7791f;
+  --value-reward-fg: #b7791f;
+  --vip-benefit-value: #b7791f;
+  --value-success: #15803d;
+  --vip-benefit-value-success: #15803d;
+  --vip-rank-metric-complete: #15803d;
+  --value-danger: #dc2626;
+  --value-accent: #4a5265;
+}
+
+[data-mode="light"] .vip-page .vip-rank-stack .vip-rank-surface-card,
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-rank-stack .vip-rank-surface-card {
+  background-image: var(--vip-rank-card-top-radial), var(--vip-rank-card-face-gradient);
+  box-shadow: none;
+}
+
+/* ---- ธีมสว่าง: ตารางสิทธิประโยชน์ VIP — หัวคอลัมน์สีธีม · แถวสลับสี · คอลัมน์ป้ายเอียงสีธีม ---- */
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) {
+  --vip-benefits-row-base: #ffffff;
+  --vip-benefits-row-alt: color-mix(in srgb, var(--t-ga) 9%, #ffffff);
+  --vip-benefits-label-base: color-mix(in srgb, var(--t-ga) 15%, #ffffff);
+  --vip-benefits-label-alt: color-mix(in srgb, var(--t-ga) 24%, #ffffff);
+  --vip-benefits-label-head-bg: var(--t-gb);
+  --vip-benefits-fade-base: #ffffff;
+}
+
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-benefits-table__label-head {
+  color: #ffffff;
+  box-shadow: 4px 0 8px rgba(20, 24, 33, 0.1);
+}
+
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-benefits-table__label {
+  color: #2b2d33;
+  box-shadow: 4px 0 8px rgba(20, 24, 33, 0.06);
+}
+
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-benefits-table__value {
+  color: #2b2d33;
+}
+
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-benefits-table__rank-head--current,
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-benefits-table__value--current,
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-benefits-table__row--alt .vip-benefits-table__value--current {
+  background: color-mix(in srgb, var(--t-ga) 26%, #ffffff);
+}
+
+/* ---- ธีมสว่าง: การ์ด/ปุ่ม/ตารางที่เน้น = สีธีม ตัวอักษรขาว (inner card คงสีเดิม) ---- */
+[data-mode="light"] .referral-earn-card,
+[data-mode="light"] .referral-earning-claim {
+  background: var(--t-gb);
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.86);
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --value-emphasis: #ffffff;
+  --value-neutral: rgba(255, 255, 255, 0.86);
+  --value-muted: rgba(255, 255, 255, 0.72);
+  --color-white: #ffffff;
+  --color-zinc-300: rgba(255, 255, 255, 0.88);
+  --color-zinc-400: rgba(255, 255, 255, 0.8);
+  --icon-default: rgba(255, 255, 255, 0.9);
+}
+
+/* inner card ในการ์ดสีธีม — คืนตัวอักษรเข้มตามธีมสว่างเดิม */
+[data-mode="light"] .referral-earn-card .surface-solid-inner {
+  color: #2b2d33;
+  --text-primary: #2b2d33;
+  --text-secondary: #4a5265;
+  --text-muted: #6b7385;
+  --value-emphasis: #1b2230;
+  --value-neutral: #4a5265;
+  --value-muted: #6b7385;
+  --color-white: #111827;
+  --color-zinc-300: #3f3f47;
+  --color-zinc-400: #52525c;
+  --icon-default: #4a5265;
+}
+
+[data-mode="light"] .referral-earning-claim .btn-primary,
+[data-mode="light"] .referral-earning-claim .cosmic-cta-primary {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+}
+
+[data-mode="light"] .referral-step-dot {
+  background: var(--t-gb);
+  color: #ffffff;
+  --text-primary: #ffffff;
+  box-shadow: none;
+  border: 0;
+}
+
+[data-mode="light"] .cosmic-data-table thead tr,
+[data-mode="light"] .cosmic-data-table thead th {
+  background: var(--t-gb);
+  color: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.92);
+  --text-muted: rgba(255, 255, 255, 0.8);
+}
+
+/* ---- ธีมสว่าง: หน้าสุ่มของรางวัล — การ์ดยอดเครดิต = สีธีม ตัวอักษรขาว · ชื่อแบนเนอร์ = สีธีม ---- */
+[data-mode="light"] .reward-hub-summary {
+  background: var(--t-gb);
+  border-color: transparent;
+  box-shadow: none;
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.86);
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --value-emphasis: #ffffff;
+  --value-accent: #ffffff;
+  --value-neutral: rgba(255, 255, 255, 0.86);
+}
+
+[data-mode="light"] .reward-hub-summary > div > div:last-child {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-mode="light"] .reward-hub-banner__title {
+  color: var(--t-gb);
+}
+
+/* ---- ธีมสว่าง: ร้านค้า Gems — inner การ์ดยังเป็นพื้นเข้ม → คืนตัวอักษรสว่าง · ปุ่มแลก = สีที่ 3 ของธีม (action) ---- */
+[data-mode="light"] .gems-store-redeem-card__inner {
+  color: #f5f4fc;
+  --text-primary: #ffffff;
+  --text-secondary: #e4e1f2;
+  --text-muted: #c9c5dc;
+  --value-accent: var(--t-action);
+  --value-emphasis: #ffffff;
+}
+
+[data-mode="light"] .gems-store-redeem-card__title {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+[data-mode="light"] .gems-store-redeem-card__cost,
+[data-mode="light"] .gems-store-redeem-card__cost-value {
+  color: var(--t-action);
+  font-weight: 600;
+}
+
+[data-mode="light"] .gems-store-redeem-card .btn-primary {
+  background: var(--t-action);
+  color: var(--t-action-text);
+  border-color: transparent;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+/* ---- เช็คอินรายวัน: สี accent ของการ์ด/กริดวัน/แถบความคืบหน้า/รางวัลสะสม ตามธีม (ธีมเริ่มต้น cosmic คงม่วงเดิมผ่าน fallback) ---- */
+[data-theme]:not([data-theme="cosmic"]) .daily-check-in-card {
+  --ci-accent: var(--t-action);
+  --ci-accent-2: color-mix(in srgb, var(--t-action) 70%, #ffffff);
+  --ci-on-accent: var(--t-action-text);
+  --ci-soft: color-mix(in srgb, var(--t-action) 55%, #ffffff);
+  --ci-claimed-from: color-mix(in srgb, var(--t-action) 14%, #121216);
+  --ci-claimed-to: color-mix(in srgb, var(--t-action) 5%, #0a0a0d);
+  --ci-today-from: color-mix(in srgb, var(--t-action) 24%, #16161b);
+  --ci-today-to: color-mix(in srgb, var(--t-action) 8%, #0b0b0e);
+  --ci-locked-from: #1b1b20;
+  --ci-locked-to: #121216;
+  --ci-badge: color-mix(in srgb, var(--t-action) 14%, #0b0b0e);
+}
+
+/* ธีมสว่าง (หน้าเต็ม): พื้นการ์ดสว่าง · accent = สีธีม · hub modal ยังเป็นชุดมืดด้านบน */
+[data-mode="light"] .daily-check-in-card:not(.daily-check-in-card--hub) {
+  --ci-accent: var(--t-gb);
+  --ci-accent-2: var(--t-ga);
+  --ci-on-accent: #ffffff;
+  --ci-soft: var(--t-gb);
+  --ci-claimed-from: color-mix(in srgb, var(--t-gb) 14%, #ffffff);
+  --ci-claimed-to: color-mix(in srgb, var(--t-gb) 7%, #ffffff);
+  --ci-today-from: color-mix(in srgb, var(--t-gb) 26%, #ffffff);
+  --ci-today-to: color-mix(in srgb, var(--t-gb) 12%, #ffffff);
+  --ci-locked-from: #f4f4f7;
+  --ci-locked-to: #e9e9ee;
+  --ci-badge: #ffffff;
+}
+
+[data-mode="light"] .daily-check-in-card:not(.daily-check-in-card--hub) :is(.daily-check-in-day, .daily-check-in-cumulative) {
+  color: #2b2d33;
+  --text-primary: #2b2d33;
+  --text-secondary: #4a5265;
+  --text-muted: #6b7385;
+  --color-white: #111827;
+}
+
+[data-mode="light"] .daily-check-in-card:not(.daily-check-in-card--hub) .daily-check-in-cumulative {
+  background: #ffffff;
+  border-color: rgba(20, 24, 33, 0.1);
+  box-shadow: none;
+}
+
+[data-mode="light"] .daily-check-in-card:not(.daily-check-in-card--hub) .daily-check-in-track {
+  background: rgba(20, 24, 33, 0.1);
+  border-color: transparent;
 }

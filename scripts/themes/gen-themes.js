@@ -62,11 +62,11 @@ function common(t) {
   --header-desktop-chrome-gradient: var(--t-chrome-bg);
   --bottom-nav-bg: var(--t-gb);
   --bottom-nav-radial: radial-gradient(ellipse 92% 150% at 50% 100%, ${mix("var(--t-ga)", 55, "var(--t-gb)")} 0%, var(--t-gb) 70%);
-  --nav-text: rgba(255, 255, 255, 0.68);
-  --nav-hover: rgba(255, 255, 255, 0.9);
-  --nav-active: #ffffff;
   --nav-top-line: rgba(255, 255, 255, 0.14);
   --cosmic-chrome-border: rgba(255, 255, 255, 0.12);
+  --lobby-announcement-mobile-lead-fill: var(--t-gb);
+  --lobby-announcement-mobile-marquee-fill: var(--t-ga);
+  --lobby-announcement-mobile-fade-edge: var(--t-ga);
   --lobby-section-title-band-start: ${mix("var(--t-ga)", 94, "transparent")};
   --lobby-section-title-band-mid: ${mix("var(--t-ga)", 70, "var(--t-gb)")};
   --lobby-section-title-band-fade: ${mix("var(--t-gb)", 38, "transparent")};
@@ -217,10 +217,53 @@ const LIGHT_BASE = `  color-scheme: light;
   --color-yellow-400: #d97706;
   --color-yellow-500: #b45309;`;
 
+/** ธีมสว่าง: พื้นผิวย่อย/ช่อง/ตาราง/pagination เอียงเข้าหาสีธีม (แทนเทากลาง) */
+function lightTint(t) {
+  const tint = (p) => mix("var(--t-ga)", p, "#ffffff");
+  return `  --sheet-row-fill: ${tint(18)};
+  --sheet-row-fill-hover: ${tint(25)};
+  --inner-card-fill: ${tint(18)};
+  --inner-card-fill-hover: ${tint(25)};
+  --sheet-field-fill: ${tint(12)};
+  --sheet-field-fill-focus: ${tint(18)};
+  --sheet-soft-fill: ${tint(18)};
+  --sheet-soft-fill-hover: ${tint(25)};
+  --surface-solid-inner: ${tint(14)};
+  --surface-hover: ${tint(12)};
+  --surface-selected: ${tint(18)};
+  --border-subtle: ${mix("var(--t-ga)", 16, "#d6d6de")};
+  --glass-fill-subtle: ${tint(8)};
+  --cosmic-nested-surface: ${tint(14)};
+  --cosmic-formula-cell-bg: ${tint(14)};
+  --value-reward-fg: var(--t-gb);
+  --value-reward: var(--t-gb);
+  --value-accent: var(--t-gb);
+  --vip-benefit-value: var(--t-gb);
+  --text-gold: var(--t-gb);
+  --cosmic-pagination-track-bg: ${tint(6)};
+  --cosmic-pagination-bg: #ffffff;
+  --cosmic-pagination-bg-hover: ${tint(14)};
+  --cosmic-pagination-border: ${mix("var(--t-ga)", 25, "#d6d6de")};
+  --cosmic-pagination-active-bg: var(--t-gb);
+  --cosmic-pagination-active-fg: #ffffff;
+  --btn-primary-gradient: linear-gradient(90deg, var(--t-ga), var(--t-gb));
+  --btn-primary-fg: #ffffff;
+  --cta-primary-gradient: var(--btn-primary-gradient);
+  --cta-primary-fg: #ffffff;
+  --confirm-btn-gradient: var(--btn-primary-gradient);
+  --confirm-btn-fg: #ffffff;
+  --auth-register-gradient: var(--btn-primary-gradient);
+  --auth-register-border: transparent;`;
+}
+
 function lightBlock(t) {
   return `[data-theme="${t.key}"] {
 ${LIGHT_BASE}
+  --standalone-page-bg: #f1f1f5;
+  --standalone-page-bg-radial: radial-gradient(ellipse 95% 62% at 50% 0%, ${mix(t.accent, 18, "transparent")} 0%, transparent 72%), linear-gradient(180deg, #f8f8fb 0%, #ebebf0 100%);
+  --page-sub-header-bg: #f8f8fb;
 ${common(t)}
+${lightTint(t)}
 }`;
 }
 

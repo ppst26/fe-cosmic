@@ -161,7 +161,7 @@ function ReferralMobileTabs({
           <ReferralLinkSection refCode={refCode} />
           <ReferralStatsSection stats={stats} />
 
-          <section className="surface-solid-stack px-4 py-4">
+          <section className="referral-earn-card surface-solid-stack px-4 py-4">
             <h2 className="text-sm font-medium text-[var(--text-primary)]">{t("tiers.title")}</h2>
             <p className="mt-0.5 text-xs text-[var(--text-secondary)]">
               {t("tiers.description")}
@@ -215,7 +215,7 @@ function ReferralMobileTabs({
               {overview.steps.map((step, index) => (
                 <React.Fragment key={step.id}>
                   <li className="flex min-w-0 flex-1 flex-col items-center text-center">
-                    <div className="glass-control flex h-12 w-12 items-center justify-center rounded-full text-xs font-medium text-[var(--text-primary)]">
+                    <div className="referral-step-dot glass-control flex h-12 w-12 items-center justify-center rounded-full text-xs font-medium text-[var(--text-primary)]">
                       {String(index + 1).padStart(2, "0")}
                     </div>
                     <p className="mt-2 text-xs font-medium text-[var(--text-primary)] sm:text-[13px]">
