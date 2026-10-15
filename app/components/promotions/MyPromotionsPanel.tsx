@@ -46,9 +46,9 @@ export function MyPromotionsPanel() {
         <h2 className="text-base font-medium text-[var(--text-primary)] sm:text-lg">{t("my.title")}</h2>
         <span className="text-xs text-[var(--text-muted)]">{t("my.count", { n: items.length })}</span>
       </div>
-      <ul className="flex flex-col gap-3">
+      <ul className="grid grid-cols-1 gap-3 lg:grid-cols-3">
         {items.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className="min-w-0">
             <MyPromotionCard item={item} />
           </li>
         ))}
@@ -67,7 +67,7 @@ function MyPromotionCard({ item }: { item: ClaimedPromotion }) {
   const expires = new Date(new Date(item.claimedAt).getTime() + targets.validDays * DAY_MS).toISOString();
 
   return (
-    <article className="my-promo-card glass-card--soft rounded-[var(--radius-panel)] p-3.5 sm:p-4">
+    <article className="my-promo-card glass-card--soft h-full rounded-[var(--radius-panel)] p-3.5 sm:p-4">
       <header className="flex items-start justify-between gap-2">
         <h3 className="min-w-0 text-sm font-medium leading-snug text-[var(--text-primary)] sm:text-base">
           {item.title}
