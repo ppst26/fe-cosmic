@@ -2455,3 +2455,252 @@ html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not
   --text-primary: #ffffff;
   --icon-default: #ffffff;
 }
+
+/* ---- ธีมสว่าง desktop: เมนูด้านข้าง + hub cards = สีธีม (ga→gb) ตัวอักษรขาว ---- */
+@media (min-width: 1024px) {
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .glass-sidebar.lobby-desktop-sidebar--borderless {
+    background: linear-gradient(160deg, var(--t-ga), var(--t-gb));
+    border-radius: 16px;
+  }
+
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link,
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--services .lobby-desktop-sidebar__link {
+    color: #ffffff;
+  }
+
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+  }
+
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link.is-active {
+    background: rgba(255, 255, 255, 0.24);
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--services::before {
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link--danger {
+    color: #ffe0e0;
+  }
+
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .lobby-hub-menu-card,
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .lobby-hub-menu-card.glass-card--soft,
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .lobby-hub-menu-card.glass-card--soft:hover {
+    background: linear-gradient(90deg, var(--t-ga), var(--t-gb));
+    color: #ffffff;
+  }
+
+  html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .lobby-hub-menu-card .lobby-hub-menu-card__title {
+    color: #ffffff;
+    --text-primary: #ffffff;
+  }
+}
+
+/* ---- ธีมสว่าง: ตารางเทียบสิทธิประโยชน์ VIP — พื้นเทาให้เห็นเป็น component ---- */
+html[data-mode="light"] .vip-modal {
+  --vip-benefits-row-base: #ececf1;
+  --vip-benefits-row-alt: #e1e1e8;
+  --vip-benefits-label-base: #e6e6ec;
+  --vip-benefits-label-alt: #dbdbe3;
+  --vip-benefits-fade-base: #efeff3;
+}
+
+html[data-mode="light"] .vip-modal .vip-benefits-table__scroll-wrap,
+html[data-mode="light"] .vip-modal .vip-benefits-table__scroll-wrap.cosmic-inset-card {
+  background: #efeff3;
+  border: 1px solid #d3d3dc;
+  border-radius: var(--radius-control);
+  overflow: hidden;
+}
+
+html[data-mode="light"] .vip-modal .vip-benefits-table__label,
+html[data-mode="light"] .vip-modal .vip-benefits-table__label-head {
+  box-shadow: none;
+}
+
+html[data-mode="light"] .vip-modal .vip-benefits-table__label-head {
+  background-color: var(--t-gb);
+  color: #ffffff;
+}
+
+/* ---- ธีมสว่าง desktop: ชิปหมวดเกม (category nav) = สีธีม ตัวอักษรขาว · active = พื้นขาว ตัวอักษรสีธีม ---- */
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not(.category-nav--mobile) .category-nav__chip:not(.is-active) {
+  background: linear-gradient(90deg, var(--t-ga), var(--t-gb));
+  color: #ffffff;
+}
+
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not(.category-nav--mobile) .category-nav__chip:not(.is-active) :is(.category-nav__icon, .category-nav__label) {
+  color: #ffffff !important;
+}
+
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not(.category-nav--mobile) .category-nav__chip:hover:not(.is-active) {
+  background: linear-gradient(90deg, var(--t-ga), var(--t-gb));
+  filter: brightness(1.08);
+}
+
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not(.category-nav--mobile) .category-nav__chip.is-active {
+  background: #ffffff;
+  box-shadow: inset 0 0 0 2px var(--t-gb);
+}
+
+/* ---- ธีมมืด desktop: เมนูข้าง · hub cards · ชิปหมวดเกม = สีธีม (เหมือนธีมสว่าง) ---- */
+@media (min-width: 1024px) {
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .glass-sidebar.lobby-desktop-sidebar--borderless {
+    background: linear-gradient(160deg, var(--t-ga), var(--t-gb));
+    border-radius: 16px;
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link,
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--services .lobby-desktop-sidebar__link {
+    color: #ffffff;
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link.is-active {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__nav--services::before {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .lobby-hub-menu-card,
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .lobby-hub-menu-card.glass-card--soft,
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .lobby-hub-menu-card.glass-card--soft:hover {
+    background: linear-gradient(90deg, var(--t-ga), var(--t-gb));
+    color: #ffffff;
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .category-nav:not(.category-nav--mobile) .category-nav__chip:not(.is-active) {
+    background: linear-gradient(90deg, var(--t-ga), var(--t-gb));
+    color: #ffffff;
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .category-nav:not(.category-nav--mobile) .category-nav__chip:not(.is-active) :is(.category-nav__icon, .category-nav__label) {
+    color: #ffffff !important;
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .category-nav:not(.category-nav--mobile) .category-nav__chip.is-active {
+    background: var(--action-solid);
+    box-shadow: none;
+  }
+
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .category-nav:not(.category-nav--mobile) .category-nav__chip.is-active,
+  html[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .category-nav:not(.category-nav--mobile) .category-nav__chip.is-active :is(.category-nav__icon, .category-nav__label) {
+    color: var(--t-action-text) !important;
+    font-weight: 600;
+  }
+}
+
+/* ---- ปุ่ม View All = สีธีม (ในแถบหัวไล่สี/footer ใช้กฎเดิมของตัวเอง) ---- */
+[data-theme]:not([data-theme="cosmic"]) .glass-control.glass-pill {
+  background: linear-gradient(90deg, var(--t-ga), var(--t-gb));
+  color: #ffffff;
+  box-shadow: none;
+}
+
+[data-theme]:not([data-theme="cosmic"]) .glass-control.glass-pill:hover {
+  filter: brightness(1.1);
+}
+
+/* ---- Hall of fame: แท็บที่ไม่ active = outline สีธีม ---- */
+[data-theme]:not([data-theme="cosmic"]) .hall-of-fame__tab-btn:not(.is-active),
+[data-theme]:not([data-theme="cosmic"]) .hall-of-fame__tab-btn:hover:not(.is-active) {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--t-action);
+  color: var(--t-action);
+}
+
+[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .hall-of-fame__tab-btn:not(.is-active),
+[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .hall-of-fame__tab-btn:hover:not(.is-active) {
+  box-shadow: inset 0 0 0 1.5px var(--t-gb);
+  color: var(--t-gb);
+}
+
+[data-theme]:not([data-theme="cosmic"]) .hall-of-fame__tab-btn:hover:not(.is-active) {
+  filter: brightness(1.15);
+}
+
+/* ---- ธีมสว่าง: ช่องค้นหาเกม — พื้นอ่อน ตัวอักษรเข้มอ่านชัดตอนพิมพ์ ---- */
+html[data-mode="light"] form[role="search"] > div {
+  background: #ececf1;
+  box-shadow: inset 0 0 0 1px #d3d3dc;
+}
+
+html[data-mode="light"] form[role="search"] input {
+  color: #1c1d22;
+  caret-color: var(--t-gb);
+  --text-primary: #1c1d22;
+  --text-muted: #6b6f7b;
+}
+
+html[data-mode="light"] form[role="search"] input::placeholder {
+  color: #6b6f7b;
+}
+
+html[data-mode="light"] form[role="search"] > div > span,
+html[data-mode="light"] form[role="search"] > div > button {
+  color: #5a5e6a;
+}
+
+/* ---- ธีมสว่าง: ช่องค้นหาหน้าหมวดเกม/ค่าย (provider-category-toolbar) ---- */
+html[data-mode="light"] .provider-category-toolbar .provider-category-toolbar__search-field.glass-card--soft {
+  background: #ececf1;
+  box-shadow: inset 0 0 0 1px #d3d3dc;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  --text-primary: #1c1d22;
+  --text-muted: #6b6f7b;
+}
+
+html[data-mode="light"] .provider-category-toolbar .provider-category-toolbar__search-input {
+  color: #1c1d22;
+  caret-color: var(--t-gb);
+}
+
+html[data-mode="light"] .provider-category-toolbar .provider-category-toolbar__search-input::placeholder {
+  color: #6b6f7b;
+}
+
+html[data-mode="light"] .provider-category-toolbar .provider-category-toolbar__search-field > span {
+  color: #5a5e6a;
+}
+
+/* ---- header desktop: ปุ่มโปรโมชัน/ช่องค้นหาบนพื้นสีธีม = ตัวอักษร/ไอคอนขาว ---- */
+[data-theme]:not([data-theme="cosmic"]) .header-desktop-bar__nav-link,
+[data-theme]:not([data-theme="cosmic"]) .header-desktop-bar__search--compact {
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.82);
+}
+
+[data-theme]:not([data-theme="cosmic"]) .header-desktop-bar__search-input {
+  color: #ffffff;
+  caret-color: #ffffff;
+}
+
+[data-theme]:not([data-theme="cosmic"]) .header-desktop-bar__search-input::placeholder {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* ---- แถบหัวหมวด (lobby-section-header-band): View All + ลูกศร = สีที่ 3 (--t-action) ไอคอน/ตัวอักษรสีคู่ตรงข้าม ---- */
+[data-theme]:not([data-theme="cosmic"]) .lobby-section-header-band .glass-control.glass-pill,
+[data-theme]:not([data-theme="cosmic"]) .lobby-section-header-band .glass-control.glass-icon-btn {
+  background: var(--t-action);
+  color: var(--t-action-text);
+  box-shadow: none;
+}
+
+[data-theme]:not([data-theme="cosmic"]) .lobby-section-header-band .glass-control.glass-icon-btn svg {
+  color: var(--t-action-text);
+}
