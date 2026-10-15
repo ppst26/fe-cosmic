@@ -43,7 +43,7 @@
 )
   :is(
     .glass-card--soft,
-    .lottery-slips-list__card.glass-card--soft,
+    .lottery-slips-list__card,
     .lottery-market-sidebar__item,
     .lottery-hub-market-card,
     .lottery-results-board__row
@@ -68,7 +68,7 @@
 )
   :is(
     .glass-card--soft,
-    .lottery-slips-list__card.glass-card--soft,
+    .lottery-slips-list__card,
     .lottery-market-sidebar__item,
     .lottery-hub-market-card,
     .lottery-results-board__row
@@ -87,7 +87,7 @@
   .yiki-page-main,
   main.lottery-slips-page
 )
-  .lottery-market-sidebar__item.glass-card--soft.is-active {
+  .lottery-market-sidebar__item.is-active {
   background: color-mix(in srgb, var(--action-solid) 18%, var(--lottery-glass-fill));
 }
 
@@ -1847,3 +1847,34 @@ main.page-shell.lottery-page-main.lottery-slips-page {
 }
 
 
+
+/* ปุ่มโพยของฉัน — พื้นทึบ ไม่ใช้ glass */
+.lottery-slips-entry {
+  background: var(--lottery-glass-fill, var(--surface-solid-inner));
+  color: var(--text-primary);
+}
+
+/* ปุ่มประเภทเลขแทง — ใหญ่ขึ้น · ชื่อประเภทหนา/ใหญ่ · อัตราจ่ายเล็กลง */
+.thai-lotto-type-grid .thai-lotto-type-chip {
+  min-height: 3.5rem;
+  padding: 0.6rem 0.75rem;
+  gap: 0.15rem;
+}
+
+.thai-lotto-type-grid .thai-lotto-type-chip__label {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.thai-lotto-type-grid .thai-lotto-type-chip__rate {
+  font-size: 0.6875rem;
+  font-weight: 400;
+}
+
+/* ปุ่มใส่ราคา (มือถือ) — ลด padding บน/ล่าง ความกว้างเต็มเหมือนเดิม */
+@media (max-width: 1023px) {
+  .yiki-pick-actions .yiki-pick-actions__primary {
+    min-height: 2.5rem;
+    padding-block: 0.35rem;
+  }
+}

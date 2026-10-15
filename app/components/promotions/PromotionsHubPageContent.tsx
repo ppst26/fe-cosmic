@@ -17,7 +17,12 @@ import { COSMIC_PANEL_GLASS } from "../ui/cosmicButtonClasses";
 import { ErrorState, LoadingState } from "../ui/StatusState";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
 import { promotionDetailHref } from "./promotionDetailHref";
+import { CosmicLineTabs } from "../ui/CosmicLineTabs";
+import { MyPromotionsPanel } from "./MyPromotionsPanel";
 import { useT } from "@/lib/i18n/I18nProvider";
+import { useSearchParams } from "next/navigation";
+
+type PromoViewId = "all" | "mine";
 
 /**
  * เนื้อหาหน้าโปรโมชั่น — ใช้ใน /promotions (กิจกรรมอยู่ที่ /event) · กดโปรเปิดหน้ารายละเอียด /promotions/[id]
@@ -34,6 +39,8 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
   const t = useT("promotions");
   const { catalog, loading, error: loadError, reload } = usePromotionsCatalog();
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
+  const searchParams = useSearchParams();
+  const [view, setView] = useState<PromoViewId>(searchParams.get("tab") === "mine" ? "mine" : "all");
 
   const hero = catalog?.hero;
   const featured = catalog?.featured ?? [];
@@ -52,8 +59,32 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
   const showDesktopHub = embedded;
   const hubTabs = catalog?.hubCategoryTabs ?? [];
 
+  const viewTabs = (
+    <CosmicLineTabs
+      tabs={[
+        { id: "all" as const, label: t("my.all") },
+        { id: "mine" as const, label: t("my.tab") },
+      ]}
+      activeId={view}
+      onSelect={setView}
+      ariaLabel={t("my.tabsAria")}
+      columns={2}
+      className="mb-3"
+    />
+  );
+
+  if (view === "mine") {
+    return (
+      <>
+        {viewTabs}
+        <MyPromotionsPanel />
+      </>
+    );
+  }
+
   return (
     <>
+      {viewTabs}
       {loading ? <LoadingState label={t("loading")} /> : null}
       {!loading && loadError && !catalog ? (
         <ErrorState

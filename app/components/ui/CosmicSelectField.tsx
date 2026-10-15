@@ -25,13 +25,13 @@ type CosmicSelectFieldProps = {
   triggerClassName?: string;
   size?: "sm" | "default";
   disabled?: boolean;
-  /** glass = ค่าเดิม · solid = ทึบไม่ blur (ตาราง / standalone) */
+  /** คงไว้เพื่อ compat — ทุก dropdown ใช้สไตล์ shadcn เดียวกันแล้ว */
   variant?: "glass" | "solid";
 };
 
 /**
- * Select แบบ Radix + glass theme — ใช้แทน <select> native (Windows ไม่รองรับธีม list)
- * ใช้ใน CashbackLossRebateExtraSections และหน้าอื่นที่ต้องเลือกค่าจากรายการ
+ * Select แบบ shadcn (Radix) — ใช้แทน <select> native ทุกที่ (list ของ native ไม่รองรับธีม)
+ * สไตล์ตาม components/ui/select.tsx · สีมาจาก token (--popover / --accent / --input) ตามธีม
  */
 export function CosmicSelectField({
   value,
@@ -41,46 +41,27 @@ export function CosmicSelectField({
   "aria-label": ariaLabel,
   className,
   triggerClassName,
-  size = "sm",
+  size = "default",
   disabled,
-  variant = "glass",
 }: CosmicSelectFieldProps) {
-  const isSolid = variant === "solid";
-
   return (
     <Select value={value} onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger
         id={id}
         size={size}
         aria-label={ariaLabel}
-        className={cn(
-          "cosmic-select__trigger !h-auto min-w-[8.5rem] gap-2 rounded-[var(--radius-filter)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-primary)] shadow-none focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-0 data-[size=sm]:h-auto",
-          isSolid
-            ? "cosmic-select__trigger--solid border"
-            : "glass-card--soft border-0",
-          triggerClassName,
-          className,
-        )}
+        className={cn("min-w-[8.5rem] text-[var(--text-primary)]", triggerClassName, className)}
       >
         <SelectValue />
       </SelectTrigger>
       <SelectContent
-        className={cn(
-          "cosmic-select__content z-[var(--z-overlay,80)] min-w-[var(--radix-select-trigger-width)] rounded-[var(--radius-filter)] text-[var(--text-primary)] ring-0",
-          isSolid
-            ? "cosmic-select__content--solid"
-            : "border border-[var(--glass-border)] bg-[var(--glass-fill-modal)] shadow-[0_16px_40px_rgb(0_0_0_/_0.45)]",
-        )}
+        className="z-[100] max-h-72 min-w-[var(--radix-select-trigger-width)]"
         position="popper"
-        align="end"
-        sideOffset={6}
+        align="start"
+        sideOffset={4}
       >
         {options.map((option) => (
-          <SelectItem
-            key={option.value}
-            value={option.value}
-            className="cosmic-select__item rounded-[var(--radius-control)] py-2 pl-2.5 pr-8 text-xs text-[var(--text-secondary)] focus:bg-transparent focus:text-[var(--text-primary)] data-[state=checked]:text-[var(--text-primary)]"
-          >
+          <SelectItem key={option.value} value={option.value}>
             {option.label}
           </SelectItem>
         ))}

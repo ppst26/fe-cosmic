@@ -156,13 +156,38 @@
 }
 
 .tx-calendar-day.is-in-range {
-  background: color-mix(in srgb, var(--accent-primary) 22%, transparent);
+  background: rgb(150 152 165 / 0.3);
 }
 
 .tx-calendar-day.is-range-start,
 .tx-calendar-day.is-range-end {
-  background: var(--action-solid);
-  color: var(--text-primary);
+  background: #e4e4ea;
+  color: #1c1d22;
+  font-weight: 600;
+}
+
+/* date picker ไม่ใช้สีธีม — เทาเข้ม/เทาอ่อนให้เห็นช่วงที่เลือก */
+html[data-mode] .tx-calendar-dialog .cosmic-cta-primary,
+html[data-mode] .tx-calendar-dialog .btn-primary {
+  background: #e4e4ea;
+  color: #1c1d22;
+  box-shadow: none;
+}
+
+[data-mode="light"] .tx-calendar-day.is-in-range {
+  background: rgb(110 112 125 / 0.2);
+}
+
+[data-mode="light"] .tx-calendar-day.is-range-start,
+[data-mode="light"] .tx-calendar-day.is-range-end {
+  background: #3a3c45;
+  color: #ffffff;
+}
+
+html[data-mode="light"] .tx-calendar-dialog .cosmic-cta-primary,
+html[data-mode="light"] .tx-calendar-dialog .btn-primary {
+  background: #3a3c45;
+  color: #ffffff;
 }
 
 /** เงาขอบตารางเมื่อเลื่อนแนวนอนได้ — ซ้าย/ขวาแสดงตามตำแหน่ง scroll */

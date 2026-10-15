@@ -741,3 +741,18 @@
 }
 
 
+
+/* โปรโมชั่นของฉัน — progress + ป้ายสถานะ (ใช้ token ธีม) */
+.my-promo-progress__fill {
+  background: var(--btn-primary-gradient, linear-gradient(90deg, var(--accent-primary), var(--accent-primary)));
+}
+
+.my-promo-card__status.is-active {
+  background: color-mix(in srgb, var(--accent-primary) 22%, transparent);
+  color: var(--text-primary);
+}
+
+.my-promo-card__status.is-completed {
+  background: color-mix(in srgb, var(--success) 22%, transparent);
+  color: var(--success);
+}

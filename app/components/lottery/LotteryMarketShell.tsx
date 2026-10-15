@@ -190,7 +190,7 @@ function LotteryMarketSidebarLink({
     <Link
       href={entry.roundsHref}
       className={cn(
-        "lottery-market-sidebar__item glass-card--soft",
+        "lottery-market-sidebar__item",
         "relative flex min-h-[4.35rem] items-center justify-end overflow-hidden rounded-[var(--radius-panel)]",
         "no-underline text-inherit transition-[background,box-shadow] duration-[var(--motion-fast)] ease-linear",
         "px-2 py-2 lg:min-h-[3.5rem] lg:px-3 lg:py-2.5",
