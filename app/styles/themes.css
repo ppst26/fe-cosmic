@@ -2423,3 +2423,35 @@ html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not
   font-weight: 600;
   box-shadow: none;
 }
+
+/* ---- ธีมมืด (ยกเว้น cosmic): แท็บ sheet ไม่มี glow · ตัวอักษรตรงข้ามพื้นแท็บ · กล่องแจ้งเตือนเทาเข้ม ---- */
+[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .cosmic-sheet-segment-track .cosmic-segment-btn.is-active {
+  background: var(--action-solid);
+  color: var(--t-action-text);
+  font-weight: 600;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+[data-theme]:not([data-theme="cosmic"]):not([data-mode="light"]) .notification-center__body {
+  background: #23252b;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #e4e4e7;
+  --text-secondary: #e4e4e7;
+  --text-muted: #c4c4cc;
+}
+
+/* ---- ธีมสว่าง: ประกาศ — ป้าย "ประกาศ" ตัวอักษรขาว · กรอบ marquee สีธีมให้เห็นขนาด component ---- */
+[data-mode="light"] .lobby-announcement-marquee--mobile {
+  --lobby-announcement-mobile-marquee-fill: #e6e6eb;
+  --lobby-announcement-mobile-fade-edge: #e6e6eb;
+  border: 0;
+  box-shadow: none;
+}
+
+[data-mode="light"] .lobby-announcement-marquee--mobile .lobby-announcement-marquee__lead,
+[data-mode="light"] .lobby-announcement-marquee--mobile .lobby-announcement-marquee__lead * {
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --icon-default: #ffffff;
+}
