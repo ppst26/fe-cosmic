@@ -10,7 +10,6 @@ import {
   startOfDay,
 } from "@/app/lib/transactionDateUtils";
 import { CloseIcon } from "../ui/Icons";
-import { CosmicSelectField } from "../ui/CosmicSelectField";
 import { COSMIC_BTN_GLASS_PILL, COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 import { useT } from "@/lib/i18n/I18nProvider";
@@ -121,22 +120,30 @@ export function TransactionDateRangeDialog({
           </div>
 
           <div className="mb-3 flex gap-2">
-            <CosmicSelectField
-              className="min-w-0 flex-1"
-              triggerClassName="w-full"
-              value={String(viewMonth.getMonth())}
-              onValueChange={(v) => setViewMonth(new Date(viewMonth.getFullYear(), Number(v), 1))}
-              options={monthLabels.map((label, index) => ({ value: String(index), label }))}
-              aria-label={t("calendar.title")}
-            />
-            <CosmicSelectField
-              className="w-28"
-              triggerClassName="w-full min-w-0"
-              value={String(viewMonth.getFullYear())}
-              onValueChange={(v) => setViewMonth(new Date(Number(v), viewMonth.getMonth(), 1))}
-              options={years.map((year) => ({ value: String(year), label: String(year) }))}
-              aria-label={t("calendar.title")}
-            />
+            <select
+              className="cosmic-filter-control min-w-0 flex-1 border border-[var(--border-subtle)]/60 bg-[var(--inner-card-fill)] px-2 py-2 text-sm text-[var(--text-primary)]"
+              value={viewMonth.getMonth()}
+              onChange={(event) => {
+                const month = Number(event.target.value);
+                setViewMonth(new Date(viewMonth.getFullYear(), month, 1));
+              }}
+            >
+              {monthLabels.map((label, index) => (
+                <option key={label} value={index}>{label}</option>
+              ))}
+            </select>
+            <select
+              className="cosmic-filter-control w-24 border border-[var(--border-subtle)]/60 bg-[var(--inner-card-fill)] px-2 py-2 text-sm text-[var(--text-primary)]"
+              value={viewMonth.getFullYear()}
+              onChange={(event) => {
+                const year = Number(event.target.value);
+                setViewMonth(new Date(year, viewMonth.getMonth(), 1));
+              }}
+            >
+              {years.map((year) => (
+                <option key={year} value={year}>{year}</option>
+              ))}
+            </select>
           </div>
 
           <div className="tx-calendar-grid mb-1">

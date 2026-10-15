@@ -44,7 +44,7 @@ export function LotterySlipCard({ slip, now }: { slip: LotterySubmittedSlip; now
   return (
     <Link
       href={`/lottery/slips/${slip.id}`}
-      className="lottery-slips-list__card flex flex-col gap-2 px-4 py-[0.85rem]"
+      className="lottery-slips-list__card glass-card--soft flex flex-col gap-2 px-4 py-[0.85rem]"
     >
       <div className="flex items-center gap-2.5">
         <LotteryMarketIcon

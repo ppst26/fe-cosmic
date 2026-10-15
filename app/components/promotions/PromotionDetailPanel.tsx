@@ -8,7 +8,6 @@ import type {
   PromotionDetailContent,
 } from "@/app/types/promotions";
 import { useT } from "@/lib/i18n/I18nProvider";
-import { PromotionClaimFlow } from "./PromotionClaimFlow";
 
 export type PromotionDetailPanelVariant = "page" | "hub";
 
@@ -33,9 +32,6 @@ export function PromotionDetailPanel({ content, variant = "page" }: PromotionDet
       <div className="promotion-detail-panel promotion-detail-panel--hub">
         <PromotionDetailBanner content={content} isHub />
         <PromotionDetailBodyExpanded body={content} isHub />
-        <div className="mt-4">
-          <PromotionClaimFlow content={content} />
-        </div>
       </div>
     );
   }
@@ -45,9 +41,6 @@ export function PromotionDetailPanel({ content, variant = "page" }: PromotionDet
       <article className="promotion-detail-panel__unified-card">
         <PromotionDetailBanner content={content} isHub={false} />
         <PromotionDetailDetailsSection body={content} />
-        <div className="promotion-detail-panel__claim px-4 pb-3">
-          <PromotionClaimFlow content={content} />
-        </div>
       </article>
     </div>
   );

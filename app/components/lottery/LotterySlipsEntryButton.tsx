@@ -4,6 +4,7 @@ import React from "react";
 import Link from "@/lib/i18n/navigation";
 import { useLotterySlipFirstPage } from "@/app/hooks/api/lotterySlips";
 import { PromoTicketIcon } from "../ui/Icons";
+import { COSMIC_BTN_GLASS_PILL_SM } from "../ui/cosmicButtonClasses";
 import { cn } from "@/lib/utils";
 import { useLotteryI18n } from "./useLotteryI18n";
 
@@ -23,7 +24,7 @@ export function LotterySlipsEntryButton({ className }: { className?: string }) {
   return (
     <Link
       href="/lottery/slips"
-      className={cn("lottery-slips-entry relative inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium no-underline", className)}
+      className={cn(COSMIC_BTN_GLASS_PILL_SM, "relative inline-flex shrink-0 items-center gap-1.5 no-underline", className)}
       aria-label={count > 0 ? t("hub.mySlipsPendingAria", { count }) : t("hub.mySlipsAria")}
     >
       <PromoTicketIcon className="h-4 w-4" />

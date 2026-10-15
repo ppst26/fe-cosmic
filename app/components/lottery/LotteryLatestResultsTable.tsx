@@ -97,7 +97,7 @@ export function LotteryLatestResultsTable({
             results.map((row) => (
               <li
                 key={row.id}
-                className="lottery-results-board__row grid grid-cols-[var(--lottery-results-board-cols)] items-center gap-x-2 m-0 px-[0.65rem] py-[0.45rem] sm:px-3 sm:py-2"
+                className="lottery-results-board__row glass-card--soft grid grid-cols-[var(--lottery-results-board-cols)] items-center gap-x-2 m-0 px-[0.65rem] py-[0.45rem] sm:px-3 sm:py-2"
                 role="row"
               >
                 <div className="lottery-results-board__market flex min-w-0 items-center gap-2" role="cell">
