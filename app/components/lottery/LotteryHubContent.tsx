@@ -37,6 +37,8 @@ export function LotteryHubContent({
   const resolvedFeatured = featured ?? hub.data?.featured ?? [];
   const resolvedGridItems = gridItems ?? hub.data?.grid ?? [];
   const resolvedResults = results ?? hub.data?.latest ?? [];
+  /** ยังไม่มีข้อมูล — จองพื้นที่การ์ดไว้ ไม่ให้เนื้อหาด้านล่างกระโดด (CLS) */
+  const pending = !hub.data && !featured && !gridItems;
 
   return (
     <div className="lottery-hub flex min-w-0 flex-col gap-6 sm:gap-8">
@@ -54,7 +56,7 @@ export function LotteryHubContent({
         </header>
       ) : null}
 
-      <section className="lottery-hub__featured" aria-label={t("hub.featuredAria")}>
+      <section className={`lottery-hub__featured${pending ? " min-h-[21rem] sm:min-h-[7.5rem]" : ""}`} aria-label={t("hub.featuredAria")}>
         <div
           key={gameCardEnterListKey(resolvedFeatured.map((item) => item.id))}
           className="lottery-feature-grid grid grid-cols-1 gap-3 sm:grid-cols-3"
@@ -75,7 +77,7 @@ export function LotteryHubContent({
         </div>
       </section>
 
-      <section className="lottery-hub__markets min-w-0" aria-label={t("hub.allMarketsAria")}>
+      <section className={`lottery-hub__markets min-w-0${pending ? " min-h-[32rem] md:min-h-[14rem] lg:min-h-[6rem]" : ""}`} aria-label={t("hub.allMarketsAria")}>
         <div
           key={gameCardEnterListKey(resolvedGridItems.map((item) => item.id))}
           className="lottery-type-grid grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6"
@@ -97,7 +99,7 @@ export function LotteryHubContent({
         </div>
       </section>
 
-      <LotteryLatestResultsTable results={resolvedResults} />
+      {pending ? null : <LotteryLatestResultsTable results={resolvedResults} />}
     </div>
   );
 }

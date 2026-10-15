@@ -14,10 +14,12 @@ import { MODAL_TITLE_LEADING_ICON_CLASS } from "@/app/components/ui/ModalTitleLe
 import { CosmicConfirmDialog } from "@/app/components/ui/CosmicConfirmDialog";
 import { useFormat } from "@/lib/i18n/useFormat";
 import { DailyCheckInClaimSuccessDialog } from "./DailyCheckInClaimSuccessDialog";
-import { DailyCheckInMilestoneDialog } from "./DailyCheckInMilestoneDialog";
+import dynamic from "next/dynamic";
 import { countCheckedInDays } from "@/lib/domain/checkIn";
 import type { DailyCheckInDayReward } from "@/app/types/checkIn";
 import { useT } from "@/lib/i18n/I18nProvider";
+
+const DailyCheckInMilestoneDialog = dynamic(() => import("./DailyCheckInMilestoneDialog").then((m) => m.DailyCheckInMilestoneDialog), { ssr: false });
 
 interface DailyCheckInCardProps {
   onClose?: () => void;

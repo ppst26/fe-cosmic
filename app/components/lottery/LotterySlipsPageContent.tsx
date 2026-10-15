@@ -28,10 +28,12 @@ import { COSMIC_CHOICE_BTN } from "../ui/cosmicButtonClasses";
 import { ResourceGate } from "../ui/ResourceGate";
 import { EmptyState } from "../ui/StatusState";
 import { TabPanelTransition } from "../ui/TabPanelTransition";
-import { TransactionDateRangeDialog } from "../transactions/TransactionDateRangeDialog";
+import dynamic from "next/dynamic";
 import { LotterySlipCard, formatSignedBaht } from "./LotterySlipCard";
 import { formatBaht } from "./lotteryUtils";
 import { useLotteryI18n } from "./useLotteryI18n";
+
+const TransactionDateRangeDialog = dynamic(() => import("../transactions/TransactionDateRangeDialog").then((m) => m.TransactionDateRangeDialog), { ssr: false });
 
 const DEFAULTS = { tab: "pending", market: "", result: "", range: "30d", from: "", to: "" } as const;
 type ParamKey = keyof typeof DEFAULTS;

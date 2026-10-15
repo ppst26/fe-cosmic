@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import { formatTransactionDateRangeLabel } from "@/app/lib/transactionDateUtils";
-import { TransactionDateRangeDialog } from "./TransactionDateRangeDialog";
+import dynamic from "next/dynamic";
 import { COSMIC_BTN_PRIMARY } from "../ui/cosmicButtonClasses";
 import { useT } from "@/lib/i18n/I18nProvider";
 import { useLocale } from "@/lib/i18n/navigation";
+
+const TransactionDateRangeDialog = dynamic(() => import("./TransactionDateRangeDialog").then((m) => m.TransactionDateRangeDialog), { ssr: false });
 
 interface TransactionDateFilterProps {
   draftFrom: Date;

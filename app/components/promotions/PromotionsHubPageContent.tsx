@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "@/lib/i18n/navigation";
 import { matchesPromoHubCategory } from "@/lib/promotions/promotionFilters";
 import type {
@@ -18,9 +18,10 @@ import { ErrorState, LoadingState } from "../ui/StatusState";
 import { PromoHubPillLabel, promoCardButtonClass } from "./promoHubCardPrimitives";
 import { promotionDetailHref } from "./promotionDetailHref";
 import { CosmicLineTabs } from "../ui/CosmicLineTabs";
-import { MyPromotionsPanel } from "./MyPromotionsPanel";
+import dynamic from "next/dynamic";
 import { useT } from "@/lib/i18n/I18nProvider";
-import { useSearchParams } from "next/navigation";
+
+const MyPromotionsPanel = dynamic(() => import("./MyPromotionsPanel").then((m) => m.MyPromotionsPanel), { ssr: false });
 
 type PromoViewId = "all" | "mine";
 
@@ -39,8 +40,11 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
   const t = useT("promotions");
   const { catalog, loading, error: loadError, reload } = usePromotionsCatalog();
   const [categoryFilter, setCategoryFilter] = useState<PromoHubCategoryFilterId>("all");
-  const searchParams = useSearchParams();
-  const [view, setView] = useState<PromoViewId>(searchParams.get("tab") === "mine" ? "mine" : "all");
+  const [view, setView] = useState<PromoViewId>("all");
+  /** ?tab=mine จากเมนูโปรไฟล์ — อ่านหลัง mount (ไม่ใช้ useSearchParams เพราะทำให้ทั้งหน้าเป็น client-render + Loading) */
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("tab") === "mine") setView("mine");
+  }, []);
 
   const hero = catalog?.hero;
   const featured = catalog?.featured ?? [];
@@ -83,7 +87,7 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
   }
 
   return (
-    <>
+    <div className={loading ? "min-h-[130svh]" : "min-h-[70svh]"}>
       {viewTabs}
       {loading ? <LoadingState label={t("loading")} /> : null}
       {!loading && loadError && !catalog ? (
@@ -144,7 +148,7 @@ function PromotionsHubPageContentInner({ embedded = false }: { embedded?: boolea
         </div>
       ) : null}
 
-    </>
+    </div>
   );
 }
 

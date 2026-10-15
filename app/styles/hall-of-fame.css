@@ -13,8 +13,8 @@
   border: 0;
   border-radius: var(--radius-panel);
   background: var(--glass-fill-subtle);
-  -webkit-backdrop-filter: blur(12px) saturate(1.12);
-  backdrop-filter: blur(12px) saturate(1.12);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   box-shadow: 0 8px 22px rgb(0 0 0 / 0.2);
   color: var(--text-muted);
   cursor: pointer;
@@ -57,8 +57,8 @@
   border: 0;
   border-radius: var(--radius-pill);
   background: var(--glass-fill-subtle);
-  -webkit-backdrop-filter: blur(12px) saturate(1.12);
-  backdrop-filter: blur(12px) saturate(1.12);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   box-shadow: 0 8px 22px rgb(0 0 0 / 0.2);
   color: var(--text-primary);
   cursor: pointer;

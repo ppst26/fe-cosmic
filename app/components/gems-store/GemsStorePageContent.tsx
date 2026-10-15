@@ -8,7 +8,7 @@ import { useGemsStore } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
 import { GemsRedeemConfirmDialog } from "./GemsRedeemConfirmDialog";
-import { GemsRedeemSuccessDialog } from "./GemsRedeemSuccessDialog";
+import dynamic from "next/dynamic";
 import { ChevronDownIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_GLASS_PILL_SM,
@@ -21,6 +21,8 @@ import { formatGemsBalance } from "@/lib/format";
 import type { GemsStorePackage } from "@/app/types/reward";
 import { useT } from "@/lib/i18n/I18nProvider";
 import { useFormat } from "@/lib/i18n/useFormat";
+
+const GemsRedeemSuccessDialog = dynamic(() => import("./GemsRedeemSuccessDialog").then((m) => m.GemsRedeemSuccessDialog), { ssr: false });
 
 /**
  * เนื้อหาหน้าร้านค้า Gems — ใช้ใน /gems-store และ DesktopHubModal
