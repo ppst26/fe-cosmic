@@ -1271,14 +1271,20 @@ html[data-mode="light"] .provider-category-toolbar .provider-category-toolbar__s
   color: rgba(255, 255, 255, 0.82);
 }
 
-/* ---- แถบหัวหมวด (lobby-section-header-band): View All + ลูกศร = สีที่ 3 (--t-action) ไอคอน/ตัวอักษรสีคู่ตรงข้าม ---- */
+/* ---- แถบหัวหมวด (lobby-section-header-band): View All + ลูกศร ----
+   mobile = สีเดิม (โปร่งเข้มบนพื้นไล่สี ตัวอักษร/ไอคอนขาว) · desktop = outline สีที่ 3 (--t-action) ---- */
 [data-theme]:not([data-theme="cosmic"]) .lobby-section-header-band .glass-control.glass-pill,
 [data-theme]:not([data-theme="cosmic"]) .lobby-section-header-band .glass-control.glass-icon-btn {
-  background: var(--t-action);
-  color: var(--t-action-text);
+  background: rgba(0, 0, 0, 0.22);
+  color: #ffffff;
   box-shadow: none;
 }
 
-[data-theme]:not([data-theme="cosmic"]) .lobby-section-header-band .glass-control.glass-icon-btn svg {
-  color: var(--t-action-text);
+@media (min-width: 1024px) {
+  [data-theme]:not([data-theme="cosmic"]) .lobby-section-header-band .glass-control.glass-pill,
+  [data-theme]:not([data-theme="cosmic"]) .lobby-section-header-band .glass-control.glass-icon-btn {
+    background: transparent;
+    color: var(--t-action);
+    box-shadow: inset 0 0 0 1.5px var(--t-action);
+  }
 }
