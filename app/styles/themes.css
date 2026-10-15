@@ -533,7 +533,8 @@
 
 [data-theme="sunfire"] {
   color-scheme: light;
-  --cosmic-page-base: #ebebee;
+  --cosmic-page-base: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --surface-start: #f4f4f6;
   --surface-mid: #ffffff;
   --surface-end: #e2e2e6;
@@ -608,9 +609,9 @@
   --color-yellow-300: #b45309;
   --color-yellow-400: #d97706;
   --color-yellow-500: #b45309;
-  --standalone-page-bg: #f1f1f5;
-  --standalone-page-bg-radial: radial-gradient(ellipse 95% 62% at 50% 0%, color-mix(in srgb, #d9202e 18%, transparent) 0%, transparent 72%), linear-gradient(180deg, #f8f8fb 0%, #ebebf0 100%);
-  --page-sub-header-bg: #f8f8fb;
+  --standalone-page-bg: #ffffff;
+  --standalone-page-bg-radial: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+  --page-sub-header-bg: #ffffff;
   --t-ga: #d9202e;
   --t-gb: #99121d;
   --t-icon: #99121d;
@@ -697,6 +698,7 @@
   --cosmic-pagination-border: color-mix(in srgb, var(--t-ga) 25%, #d6d6de);
   --cosmic-pagination-active-bg: var(--t-gb);
   --cosmic-pagination-active-fg: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --btn-primary-gradient: linear-gradient(90deg, var(--t-ga), var(--t-gb));
   --btn-primary-fg: #ffffff;
   --cta-primary-gradient: var(--btn-primary-gradient);
@@ -709,7 +711,8 @@
 
 [data-theme="blue-syrah"] {
   color-scheme: light;
-  --cosmic-page-base: #ebebee;
+  --cosmic-page-base: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --surface-start: #f4f4f6;
   --surface-mid: #ffffff;
   --surface-end: #e2e2e6;
@@ -784,9 +787,9 @@
   --color-yellow-300: #b45309;
   --color-yellow-400: #d97706;
   --color-yellow-500: #b45309;
-  --standalone-page-bg: #f1f1f5;
-  --standalone-page-bg-radial: radial-gradient(ellipse 95% 62% at 50% 0%, color-mix(in srgb, #0078ab 18%, transparent) 0%, transparent 72%), linear-gradient(180deg, #f8f8fb 0%, #ebebf0 100%);
-  --page-sub-header-bg: #f8f8fb;
+  --standalone-page-bg: #ffffff;
+  --standalone-page-bg-radial: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+  --page-sub-header-bg: #ffffff;
   --t-ga: #4ea8ff;
   --t-gb: #0078ab;
   --t-icon: #0078ab;
@@ -873,6 +876,7 @@
   --cosmic-pagination-border: color-mix(in srgb, var(--t-ga) 25%, #d6d6de);
   --cosmic-pagination-active-bg: var(--t-gb);
   --cosmic-pagination-active-fg: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --btn-primary-gradient: linear-gradient(90deg, var(--t-ga), var(--t-gb));
   --btn-primary-fg: #ffffff;
   --cta-primary-gradient: var(--btn-primary-gradient);
@@ -885,7 +889,8 @@
 
 [data-theme="good-witch"] {
   color-scheme: light;
-  --cosmic-page-base: #ebebee;
+  --cosmic-page-base: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --surface-start: #f4f4f6;
   --surface-mid: #ffffff;
   --surface-end: #e2e2e6;
@@ -960,9 +965,9 @@
   --color-yellow-300: #b45309;
   --color-yellow-400: #d97706;
   --color-yellow-500: #b45309;
-  --standalone-page-bg: #f1f1f5;
-  --standalone-page-bg-radial: radial-gradient(ellipse 95% 62% at 50% 0%, color-mix(in srgb, #10943e 18%, transparent) 0%, transparent 72%), linear-gradient(180deg, #f8f8fb 0%, #ebebf0 100%);
-  --page-sub-header-bg: #f8f8fb;
+  --standalone-page-bg: #ffffff;
+  --standalone-page-bg-radial: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+  --page-sub-header-bg: #ffffff;
   --t-ga: #5ed076;
   --t-gb: #10943e;
   --t-icon: #10943e;
@@ -1049,6 +1054,7 @@
   --cosmic-pagination-border: color-mix(in srgb, var(--t-ga) 25%, #d6d6de);
   --cosmic-pagination-active-bg: var(--t-gb);
   --cosmic-pagination-active-fg: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --btn-primary-gradient: linear-gradient(90deg, var(--t-ga), var(--t-gb));
   --btn-primary-fg: #ffffff;
   --cta-primary-gradient: var(--btn-primary-gradient);
@@ -1061,7 +1067,8 @@
 
 [data-theme="mix-berry"] {
   color-scheme: light;
-  --cosmic-page-base: #ebebee;
+  --cosmic-page-base: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --surface-start: #f4f4f6;
   --surface-mid: #ffffff;
   --surface-end: #e2e2e6;
@@ -1136,9 +1143,9 @@
   --color-yellow-300: #b45309;
   --color-yellow-400: #d97706;
   --color-yellow-500: #b45309;
-  --standalone-page-bg: #f1f1f5;
-  --standalone-page-bg-radial: radial-gradient(ellipse 95% 62% at 50% 0%, color-mix(in srgb, #741a61 18%, transparent) 0%, transparent 72%), linear-gradient(180deg, #f8f8fb 0%, #ebebf0 100%);
-  --page-sub-header-bg: #f8f8fb;
+  --standalone-page-bg: #ffffff;
+  --standalone-page-bg-radial: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+  --page-sub-header-bg: #ffffff;
   --t-ga: #df5c90;
   --t-gb: #741a61;
   --t-icon: #741a61;
@@ -1225,6 +1232,7 @@
   --cosmic-pagination-border: color-mix(in srgb, var(--t-ga) 25%, #d6d6de);
   --cosmic-pagination-active-bg: var(--t-gb);
   --cosmic-pagination-active-fg: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --btn-primary-gradient: linear-gradient(90deg, var(--t-ga), var(--t-gb));
   --btn-primary-fg: #ffffff;
   --cta-primary-gradient: var(--btn-primary-gradient);
@@ -1237,7 +1245,8 @@
 
 [data-theme="mr-bond"] {
   color-scheme: light;
-  --cosmic-page-base: #ebebee;
+  --cosmic-page-base: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --surface-start: #f4f4f6;
   --surface-mid: #ffffff;
   --surface-end: #e2e2e6;
@@ -1312,9 +1321,9 @@
   --color-yellow-300: #b45309;
   --color-yellow-400: #d97706;
   --color-yellow-500: #b45309;
-  --standalone-page-bg: #f1f1f5;
-  --standalone-page-bg-radial: radial-gradient(ellipse 95% 62% at 50% 0%, color-mix(in srgb, #2f5fc4 18%, transparent) 0%, transparent 72%), linear-gradient(180deg, #f8f8fb 0%, #ebebf0 100%);
-  --page-sub-header-bg: #f8f8fb;
+  --standalone-page-bg: #ffffff;
+  --standalone-page-bg-radial: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+  --page-sub-header-bg: #ffffff;
   --t-ga: #1f2735;
   --t-gb: #0e131c;
   --t-icon: #0e131c;
@@ -1401,6 +1410,7 @@
   --cosmic-pagination-border: color-mix(in srgb, var(--t-ga) 25%, #d6d6de);
   --cosmic-pagination-active-bg: var(--t-gb);
   --cosmic-pagination-active-fg: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --btn-primary-gradient: linear-gradient(90deg, var(--t-ga), var(--t-gb));
   --btn-primary-fg: #ffffff;
   --cta-primary-gradient: var(--btn-primary-gradient);
@@ -2068,31 +2078,6 @@ html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not
   border-top-color: #dcdce3;
 }
 
-/* ---- ธีมสว่าง: การ์ดแรงค์ VIP — เทาไล่สี + สีธีมจาง ๆ ตัวอักษรเทาเข้ม พร้อม semantic color ---- */
-[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-rank-stack {
-  --vip-rank-card-bg: #f1f1f5;
-  --vip-rank-card-top-radial: radial-gradient(ellipse 88% 68% at 50% -6%, color-mix(in srgb, var(--t-ga) 20%, transparent) 0%, transparent 58%);
-  --vip-rank-card-face-gradient: linear-gradient(165deg, #f8f8fb 0%, color-mix(in srgb, var(--t-ga) 8%, #ececf1) 55%, color-mix(in srgb, var(--t-ga) 14%, #e4e4ea) 100%);
-  --vip-panel-border: rgba(20, 24, 33, 0.1);
-  --text-primary: #2b2d33;
-  --text-secondary: #4a5265;
-  --text-muted: #6b7385;
-  --value-reward: #b7791f;
-  --value-reward-fg: #b7791f;
-  --vip-benefit-value: #b7791f;
-  --value-success: #15803d;
-  --vip-benefit-value-success: #15803d;
-  --vip-rank-metric-complete: #15803d;
-  --value-danger: #dc2626;
-  --value-accent: #4a5265;
-}
-
-[data-mode="light"] .vip-page .vip-rank-stack .vip-rank-surface-card,
-[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-rank-stack .vip-rank-surface-card {
-  background-image: var(--vip-rank-card-top-radial), var(--vip-rank-card-face-gradient);
-  box-shadow: none;
-}
-
 /* ---- ธีมสว่าง: ตารางสิทธิประโยชน์ VIP — หัวคอลัมน์สีธีม · แถวสลับสี · คอลัมน์ป้ายเอียงสีธีม ---- */
 [data-mode="light"] .vip-modal:not(.hub-modal-shell) {
   --vip-benefits-row-base: #ffffff;
@@ -2314,7 +2299,7 @@ html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not
 }
 
 /* ---- ธีมสว่าง: การ์ด VIP (สิทธิประโยชน์ / เลื่อนระดับ / รักษาระดับ / แร็งค์) — ไล่สีธีม ga→gb ตัวอักษรขาว ---- */
-[data-mode="light"] .vip-rank-stack {
+[data-mode="light"] .vip-modal:not(.hub-modal-shell) .vip-rank-stack {
   --vip-rank-card-top-radial: none;
   --vip-rank-card-face-gradient: linear-gradient(135deg, var(--t-ga), var(--t-gb));
   --vip-rank-card-accent: #ffffff;
@@ -2341,4 +2326,100 @@ html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .category-nav:not
   background-image: var(--vip-rank-card-face-gradient);
   color: #ffffff;
   border-color: transparent;
+  box-shadow: none;
+}
+
+/* ---- ธีมสว่าง: รายละเอียดโปรโมชั่น — การ์ดครอบมีขอบ+เงา แยกจากพื้นขาว ---- */
+[data-mode="light"] .promo-detail-page .promotion-detail-panel__unified-card {
+  border: 1px solid #d7d7e0;
+  box-shadow: 0 6px 20px rgba(20, 24, 33, 0.12);
+}
+
+/* ---- ธีมสว่าง: ร้านค้า Gems — accordion เงื่อนไข = สีธีม ตัวอักษรขาว ---- */
+[data-mode="light"] .gems-store-terms {
+  background: var(--t-gb);
+  border-color: transparent;
+  box-shadow: none;
+  color: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.92);
+  --text-muted: #ffffff;
+  --icon-default: #ffffff;
+  --border-subtle: rgba(255, 255, 255, 0.3);
+  --border-active: #ffffff;
+}
+
+[data-mode="light"] .gems-store-terms > button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-mode="light"] .gems-store-terms > button > span:first-child {
+  background: rgba(255, 255, 255, 0.22);
+  border: 0;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+/* ---- ธีมสว่าง: dialog ยืนยันแลก Gems — inner card เทา ตัวอักษรเข้มอ่านชัด ---- */
+[data-mode="light"] .gems-redeem-confirm-dialog__panel {
+  background: #ebebef;
+  border-color: rgba(20, 24, 33, 0.1);
+  box-shadow: none;
+}
+
+[data-mode="light"] .gems-redeem-confirm-dialog__title,
+[data-mode="light"] .gems-redeem-confirm-dialog__row-value {
+  color: #1b2230;
+}
+
+[data-mode="light"] .gems-redeem-confirm-dialog__subtitle,
+[data-mode="light"] .gems-redeem-confirm-dialog__reward-label,
+[data-mode="light"] .gems-redeem-confirm-dialog__row-label {
+  color: #4a5265;
+}
+
+[data-mode="light"] .gems-redeem-confirm-dialog__reward-amount {
+  color: var(--t-gb);
+  font-weight: 600;
+}
+
+[data-mode="light"] .gems-redeem-confirm-dialog__divider {
+  background: rgba(20, 24, 33, 0.12);
+}
+
+/* ---- ธีมสว่าง: bottom sheet — inner card เทาอ่อน (ไม่ใช้สีธีม) · capsule หัวข้อ + แท็บ active = สีธีม ---- */
+[data-mode="light"] .cosmic-mobile-sheet:not(.hub-modal-shell) {
+  --inner-card-fill: #f0f0f4;
+  --inner-card-fill-hover: #e7e7ed;
+  --sheet-row-fill: #f0f0f4;
+  --sheet-row-fill-hover: #e7e7ed;
+  --sheet-soft-fill: #f0f0f4;
+  --sheet-soft-fill-hover: #e7e7ed;
+  --sheet-field-fill: #f4f4f7;
+  --sheet-field-fill-focus: #ececf1;
+  --surface-solid-inner: #f0f0f4;
+  --cosmic-nested-surface: #ececf1;
+  --glass-fill-subtle: #f0f0f4;
+  --vip-panel-inner-bg: #f0f0f4;
+}
+
+[data-mode="light"] .cosmic-sheet-title-capsule,
+[data-mode="light"] .cosmic-sheet-title-capsule.cosmic-sheet-title-capsule--deep {
+  background: var(--t-gb);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+[data-mode="light"] .cosmic-sheet-segment-track .cosmic-segment-btn.is-active {
+  background: var(--t-gb);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+/* ---- ธีมสว่าง: pill จำนวนเงินที่เลือก = สีธีม ตัวอักษรขาวหนา ---- */
+[data-mode="light"] .cosmic-choice-btn.is-active {
+  background: var(--t-gb);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: none;
 }

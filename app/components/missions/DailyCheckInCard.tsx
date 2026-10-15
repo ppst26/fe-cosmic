@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { COSMIC_BTN_PRIMARY } from "@/app/components/ui/cosmicButtonClasses";
 import { Menu3DIcon } from "@/app/components/ui/Menu3DIcon";
 import { MODAL_TITLE_LEADING_ICON_CLASS } from "@/app/components/ui/ModalTitleLeadingIcon";
+import { CosmicConfirmDialog } from "@/app/components/ui/CosmicConfirmDialog";
+import { useFormat } from "@/lib/i18n/useFormat";
 import { DailyCheckInClaimSuccessDialog } from "./DailyCheckInClaimSuccessDialog";
 import { DailyCheckInMilestoneDialog } from "./DailyCheckInMilestoneDialog";
 import { countCheckedInDays } from "@/lib/domain/checkIn";
@@ -42,6 +44,7 @@ function DailyCheckInCardView({
   checkIn,
 }: DailyCheckInCardProps & { checkIn: CheckInData }) {
   const t = useT("rewards");
+  const fmt = useFormat();
   const [days, setDays] = useState<DailyCheckInDayReward[]>(checkIn.days);
   const [justClaimed, setJustClaimed] = useState<number | null>(null);
   const [claimSuccessCredits, setClaimSuccessCredits] = useState<number | null>(
@@ -51,6 +54,9 @@ function DailyCheckInCardView({
   /** ขั้นรางวัลสะสมที่เปิด dialog อยู่ (7 / 14 / 21 / 28) · ขั้นที่รับไปแล้ว */
   const [milestoneDialogDay, setMilestoneDialogDay] = useState<number | null>(null);
   const [claimedMilestones, setClaimedMilestones] = useState<number[]>([]);
+
+  /** วันที่รอยืนยันก่อนรับรางวัล (ขั้นตอนยืนยัน → แจ้งรับรางวัลสำเร็จ) */
+  const [pendingClaimDay, setPendingClaimDay] = useState<number | null>(null);
 
   const checkedInCount = countCheckedInDays(days);
   const todayReward = days.find((d) => d.status === "today");
@@ -81,6 +87,16 @@ function DailyCheckInCardView({
     setClaimSuccessCredits(reward.credits);
   };
 
+  const requestClaim = (dayNum?: number) => {
+    const targetDay = dayNum ?? todayReward?.day;
+    if (!targetDay) return;
+    const reward = days.find((d) => d.day === targetDay);
+    if (!reward || reward.status !== "today") return;
+    setPendingClaimDay(targetDay);
+  };
+
+  const pendingClaimReward = days.find((d) => d.day === pendingClaimDay);
+
   const activeMilestone = checkIn.milestones.find((m) => m.milestoneDay === milestoneDialogDay);
 
   const handleClaimMilestone = () => {
@@ -105,7 +121,7 @@ function DailyCheckInCardView({
     return (
       <div
         key={item.day}
-        onClick={() => isToday && handleClaim(item.day)}
+        onClick={() => isToday && requestClaim(item.day)}
         className={cn(
           "daily-check-in-day group relative flex flex-col items-center justify-between rounded-xl text-center transition-all duration-200",
           isHubSurface ? "min-h-[8rem] py-2.5 px-1 sm:min-h-[8.5rem] sm:py-3" : "min-h-[7.5rem] py-2 px-1 sm:min-h-[8rem]",
@@ -475,7 +491,7 @@ function DailyCheckInCardView({
       <button
         type="button"
         disabled={isTodayClaimed}
-        onClick={() => todayReward && handleClaim(todayReward.day)}
+        onClick={() => todayReward && requestClaim(todayReward.day)}
         className={cn(
           COSMIC_BTN_PRIMARY,
           isHubSurface ? "text-base sm:text-lg" : "text-sm sm:text-base",
@@ -499,6 +515,20 @@ function DailyCheckInCardView({
           }}
         />
       ) : null}
+
+      <CosmicConfirmDialog
+        open={pendingClaimDay !== null && pendingClaimReward != null}
+        onOpenChange={(open) => {
+          if (!open) setPendingClaimDay(null);
+        }}
+        title={t("checkIn.confirm.title")}
+        description={t("checkIn.confirm.description", { reward: fmt.gems(pendingClaimReward?.credits ?? 0) })}
+        onConfirm={() => {
+          const day = pendingClaimDay;
+          setPendingClaimDay(null);
+          if (day !== null) handleClaim(day);
+        }}
+      />
 
       <DailyCheckInClaimSuccessDialog
         open={claimSuccessCredits !== null}

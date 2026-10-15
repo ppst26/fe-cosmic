@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { useAuth } from "@/app/components/auth/AuthProvider";
 import { CosmicConfirmDialog } from "@/app/components/ui/CosmicConfirmDialog";
 import { LogOutIcon } from "@/app/components/ui/Icons";
+import { useToast } from "@/context/ToastContext";
 import { useT } from "@/lib/i18n/I18nProvider";
 
 /**
@@ -12,6 +13,7 @@ import { useT } from "@/lib/i18n/I18nProvider";
 export function useLogoutConfirm(onSuccess?: () => void) {
   const { logout } = useAuth();
   const t = useT("auth");
+  const { showToast } = useToast();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -23,10 +25,11 @@ export function useLogoutConfirm(onSuccess?: () => void) {
       await logout();
       onSuccess?.();
       setOpen(false);
+      showToast(t("logoutConfirm.success"), "success");
     } finally {
       setLoading(false);
     }
-  }, [logout, onSuccess]);
+  }, [logout, onSuccess, showToast, t]);
 
   const LogoutConfirmDialog = useCallback(
     () => (

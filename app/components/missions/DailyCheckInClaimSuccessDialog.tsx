@@ -51,19 +51,14 @@ export function DailyCheckInClaimSuccessDialog({
           </Dialog.Close>
 
           <div className="flex flex-col items-center pt-2 text-center">
-            <div
-              className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[radial-gradient(circle_at_50%_35%,rgb(119_71_229/0.45)_0%,rgb(26_20_42/0.95)_72%)] shadow-[0_0_24px_rgba(119,71,229,0.35)]"
-              aria-hidden="true"
-            >
-              <div className="relative h-9 w-9">
-                <Image
-                  src="/assets/check-in/diamond.avif"
-                  alt=""
-                  fill
-                  sizes="36px"
-                  className="object-contain drop-shadow-[0_0_12px_rgba(119,71,229,0.65)]"
-                />
-              </div>
+            <div className="relative h-16 w-16" aria-hidden="true">
+              <Image
+                src="/assets/check-in/diamond.avif"
+                alt=""
+                fill
+                sizes="64px"
+                className="object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.25)]"
+              />
             </div>
 
             <Dialog.Title className="mt-4 text-lg font-medium text-[var(--text-primary)]">

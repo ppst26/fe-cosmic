@@ -141,7 +141,8 @@ ${common(t)}
 }
 
 const LIGHT_BASE = `  color-scheme: light;
-  --cosmic-page-base: #ebebee;
+  --cosmic-page-base: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --surface-start: #f4f4f6;
   --surface-mid: #ffffff;
   --surface-end: #e2e2e6;
@@ -246,6 +247,7 @@ function lightTint(t) {
   --cosmic-pagination-border: ${mix("var(--t-ga)", 25, "#d6d6de")};
   --cosmic-pagination-active-bg: var(--t-gb);
   --cosmic-pagination-active-fg: #ffffff;
+  --cosmic-nebula-bg-image: none;
   --btn-primary-gradient: linear-gradient(90deg, var(--t-ga), var(--t-gb));
   --btn-primary-fg: #ffffff;
   --cta-primary-gradient: var(--btn-primary-gradient);
@@ -259,9 +261,9 @@ function lightTint(t) {
 function lightBlock(t) {
   return `[data-theme="${t.key}"] {
 ${LIGHT_BASE}
-  --standalone-page-bg: #f1f1f5;
-  --standalone-page-bg-radial: radial-gradient(ellipse 95% 62% at 50% 0%, ${mix(t.accent, 18, "transparent")} 0%, transparent 72%), linear-gradient(180deg, #f8f8fb 0%, #ebebf0 100%);
-  --page-sub-header-bg: #f8f8fb;
+  --standalone-page-bg: #ffffff;
+  --standalone-page-bg-radial: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+  --page-sub-header-bg: #ffffff;
 ${common(t)}
 ${lightTint(t)}
 }`;

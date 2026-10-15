@@ -95,6 +95,10 @@
       "descBefore": "You received",
       "descAfter": ""
     },
+    "confirm": {
+      "title": "Claim check-in reward",
+      "description": "Claim {reward} now?"
+    },
     "desktop": {
       "summaryAria": "Check-in summary",
       "progressAria": "Check-in progress",
@@ -182,6 +186,11 @@
       "cancel": "Cancel",
       "confirm": "Confirm",
       "processing": "Processing…"
+    },
+    "success": {
+      "title": "Redeemed successfully",
+      "descBefore": "You received",
+      "descAfter": "credits"
     }
   },
   "activities": {

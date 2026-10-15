@@ -92,6 +92,10 @@
       "descBefore": "คุณได้รับ",
       "descAfter": "แล้ว"
     },
+    "confirm": {
+      "title": "ยืนยันรับรางวัลเช็คอิน",
+      "description": "ต้องการรับ {reward} ใช่หรือไม่"
+    },
     "desktop": {
       "summaryAria": "สรุปเช็คอิน",
       "progressAria": "ความคืบหน้าเช็คอิน",
@@ -176,6 +180,11 @@
       "cancel": "ยกเลิก",
       "confirm": "ยืนยัน",
       "processing": "กำลังดำเนินการ…"
+    },
+    "success": {
+      "title": "แลกรางวัลสำเร็จ",
+      "descBefore": "คุณได้รับเครดิต",
+      "descAfter": "เรียบร้อยแล้ว"
     }
   },
   "activities": {

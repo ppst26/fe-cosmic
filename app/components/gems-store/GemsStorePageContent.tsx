@@ -8,6 +8,7 @@ import { useGemsStore } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
 import { GemsRedeemConfirmDialog } from "./GemsRedeemConfirmDialog";
+import { GemsRedeemSuccessDialog } from "./GemsRedeemSuccessDialog";
 import { ChevronDownIcon } from "../ui/Icons";
 import {
   COSMIC_BTN_GLASS_PILL_SM,
@@ -57,6 +58,7 @@ function GemsStoreView({
   const [termsOpen, setTermsOpen] = useState(false);
   const [confirmPkg, setConfirmPkg] = useState<GemsStorePackage | null>(null);
   const [redeemLoading, setRedeemLoading] = useState(false);
+  const [successCredits, setSuccessCredits] = useState<number | null>(null);
 
   const openRedeemConfirm = (pkg: GemsStorePackage) => {
     if (gemsBalance < pkg.gemsCost) return;
@@ -68,6 +70,7 @@ function GemsStoreView({
     setRedeemLoading(true);
     try {
       setGemsBalance((prev) => prev - confirmPkg.gemsCost);
+      setSuccessCredits(confirmPkg.credits);
       setConfirmPkg(null);
     } finally {
       setRedeemLoading(false);
@@ -94,7 +97,7 @@ function GemsStoreView({
         >
           {t("gemsStore.redeemHeading")}
         </h2>
-        <div className="gems-store-redeem-grid grid grid-cols-4 gap-1.5 sm:gap-2 lg:gap-3">
+        <div className="gems-store-redeem-grid grid grid-cols-5 gap-1 sm:grid-cols-4 sm:gap-2 lg:gap-3">
           {gemsStore.packages.map((pkg) => {
             const affordable = gemsBalance >= pkg.gemsCost;
             return (
@@ -151,6 +154,14 @@ function GemsStoreView({
         loading={redeemLoading}
         onConfirm={handleConfirmRedeem}
       />
+
+      <GemsRedeemSuccessDialog
+        open={successCredits !== null}
+        credits={successCredits ?? 0}
+        onOpenChange={(next) => {
+          if (!next) setSuccessCredits(null);
+        }}
+      />
     </div>
   );
 }
@@ -177,7 +188,7 @@ function GemsRedeemCard({
   return (
     <article
       className={cn(
-        "gems-store-redeem-card flex min-h-0 flex-col gap-1.5 p-1.5 sm:gap-2 sm:p-2.5",
+        "gems-store-redeem-card flex min-h-0 flex-col gap-1 p-1 sm:gap-2 sm:p-2.5",
         flat && "gems-store-redeem-card--flat",
         affordable && "is-active",
         !affordable && "opacity-85",
