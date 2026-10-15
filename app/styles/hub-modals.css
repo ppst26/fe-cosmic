@@ -670,15 +670,6 @@
   transition: filter var(--motion-fast) ease;
 }
 
-.lottery-results-board__row.glass-card--soft {
-  box-shadow: none;
-}
-
-.lottery-results-board__row.glass-card--soft:hover {
-  filter: brightness(1.05);
-  box-shadow: none;
-}
-
 .lottery-results-board__market-name {
   line-height: 1.2;
   color: var(--text-primary);

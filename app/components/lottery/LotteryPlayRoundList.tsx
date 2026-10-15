@@ -113,7 +113,7 @@ export function LotteryPlayRoundList({ rounds, marketSlug, basePath }: LotteryPl
         {!showAllGrid && hiddenGridCount > 0 ? (
           <button
             type="button"
-            className="lottery-play-rounds__expand glass-pill flex w-full min-h-11 items-center justify-center gap-[0.35rem] mt-3"
+            className="lottery-play-rounds__expand flex rounded-full px-4 w-full min-h-11 items-center justify-center gap-[0.35rem] mt-3"
             onClick={() => setShowAllGrid(true)}
           >
             {t("rounds.showAll", { count: rounds.length })}
