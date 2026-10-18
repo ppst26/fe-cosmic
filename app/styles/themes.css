@@ -2921,3 +2921,36 @@ html[data-mode][data-theme]:not([data-theme="cosmic"]) .lottery-price-row__amoun
   caret-color: #ffffff;
   font-weight: 600;
 }
+
+/* ---- ธีมสว่าง: หน้า VIP (CSS module) — การ์ดเนื้อหา = เทาอ่อน + เส้นขอบ ตัวอักษรเข้ม · hero/แบนเนอร์ = ไล่สีธีม ga→gb ตัวอักษรขาว ---- */
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .vip-root,
+html[data-mode="light"][data-theme="cosmic"] .vip-root {
+  --vip-rank-card-bg: #eeeef3;
+  --vip-rank-card-face-gradient: linear-gradient(160deg, #ffffff 0%, #f1f1f5 45%, #dcdce4 100%);
+  --vip-rank-card-top-radial: none;
+  --vip-rank-accent-line: none;
+  --vip-panel-border: #cdcdd8;
+  --vip-panel-shade: transparent;
+  --vip-panel-shadow: inset 0 1px 0 #ffffff, 0 4px 14px rgba(20, 24, 33, 0.09);
+  --vip-progress-track-bg: #d9d9e2;
+  --vip-arrow-bg: #ffffff;
+  --vip-rank-benefit-cell-a: #e7e7ed;
+  --vip-rank-benefit-cell-b: #e1e1e8;
+  --vip-benefit-value: #b45309;
+  --vip-rank-metric-complete: #15803d;
+}
+
+html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .vip-root .vip-hero {
+  --v-ink: #ffffff;
+  --v-muted: rgba(255, 255, 255, 0.88);
+  --v-faint: rgba(255, 255, 255, 0.75);
+  --v-line: rgba(255, 255, 255, 0.28);
+  --v-glow: rgba(255, 255, 255, 0.2);
+  --v-title: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.78) 100%);
+  --v-panel-face: linear-gradient(135deg, var(--t-ga), var(--t-gb));
+  --v-panel-bg: var(--t-gb);
+  --vip-rank-card-bg: var(--t-ga);
+  --surface-end: var(--t-gb);
+  --cta-white-bg: #ffffff;
+  --cta-white-fg: var(--t-gb);
+}

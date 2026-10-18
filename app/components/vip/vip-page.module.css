@@ -210,8 +210,8 @@
   border-radius: var(--vip-rank-card-radius);
   border: 1px solid var(--v-line);
   background-color: var(--v-panel-bg);
-  background-image: linear-gradient(180deg, rgb(0 0 0 / 0.22) 0%, transparent 38%), var(--vip-rank-card-top-radial), var(--v-panel-face);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 3%, transparent);
+  background-image: linear-gradient(180deg, var(--vip-panel-shade, rgb(0 0 0 / 0.22)) 0%, transparent 38%), var(--vip-rank-card-top-radial), var(--v-panel-face);
+  box-shadow: var(--vip-panel-shadow, inset 0 1px 0 color-mix(in srgb, var(--text-primary) 3%, transparent));
   color: var(--v-ink);
 }
 
@@ -700,7 +700,7 @@
   transform: translateY(-50%);
   border-radius: 999px;
   border: 1px solid var(--v-line);
-  background: rgb(0 0 0 / 0.55);
+  background: var(--vip-arrow-bg, rgb(0 0 0 / 0.55));
   color: var(--v-ink);
   cursor: pointer;
 }

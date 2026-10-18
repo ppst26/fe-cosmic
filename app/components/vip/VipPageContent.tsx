@@ -61,8 +61,8 @@ function VipPageContentInner({
   const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
 
   return (
-    <div className={cn(s.root, embedded && s.embedded)}>
-      <section className={s.hero}>
+    <div className={cn("vip-root", s.root, embedded && s.embedded)}>
+      <section className={cn("vip-hero", s.hero)}>
         <div className={s.heroText}>
           <h2 className={s.heroVip}>VIP</h2>
           <p className={s.heroTag}>{t("hero.tagline")}</p>

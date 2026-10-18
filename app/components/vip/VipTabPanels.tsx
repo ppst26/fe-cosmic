@@ -10,6 +10,7 @@ import { VipMyLevelBenefitsCard } from "./VipMyLevelBenefitsCard";
 import { VipRankCarousel } from "./VipRankCarousel";
 import { VipRankLevelUpCard } from "./VipRankLevelUpCard";
 import { useT } from "@/lib/i18n/I18nProvider";
+import { cn } from "@/lib/utils";
 import s from "./vip-page.module.css";
 
 interface VipTabPanelsProps {
@@ -44,7 +45,7 @@ export function VipTabPanels({
         </div>
         <div className="flex min-w-0 flex-col gap-3.5">
           <VipMyLevelBenefitsCard player={player} onViewAll={onSelectTab ? () => onSelectTab("benefits") : undefined} />
-          <section className={s.cta}>
+          <section className={cn("vip-hero", s.cta)}>
             <h3 className={s.ctaTitle}>CLIMB HIGHER</h3>
             <p className={s.ctaSub}>{t("cta.sub")}</p>
             <button type="button" className={s.ctaBtn} onClick={() => onSelectTab?.("benefits")}>
