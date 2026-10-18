@@ -8,16 +8,14 @@ import {
 } from "@/app/data/vipMockData";
 import { useVipBenefits, useVipRanks } from "@/app/hooks/api/member";
 import { ErrorState, LoadingState } from "../ui/StatusState";
-import { ChevronRightIcon } from "../ui/Icons";
 import { VipRankEmblem } from "./VipRankEmblem";
 import { cn } from "@/lib/utils";
 import { valueClass, vipBenefitValueClass } from "@/lib/semanticValue";
 import { useT } from "@/lib/i18n/I18nProvider";
+import s from "./vip-page.module.css";
 
 interface VipBenefitsComparisonTableProps {
   currentRankId: VipRankId;
-  /** desktop VIP modal — ตารางเต็มความกว้างในการ์ด */
-  variant?: "default" | "desktop-full";
 }
 
 const COL_MIN = "min-w-[5.75rem] w-[5.75rem]";
@@ -25,16 +23,12 @@ const COL_MIN = "min-w-[5.75rem] w-[5.75rem]";
 /**
  * ตารางสิทธิประโยชน์ — คอลัมน์แรก sticky เลื่อนแรงค์ซ้าย–ขวาได้
  */
-export function VipBenefitsComparisonTable({
-  currentRankId,
-  variant = "default",
-}: VipBenefitsComparisonTableProps) {
+export function VipBenefitsComparisonTable({ currentRankId }: VipBenefitsComparisonTableProps) {
   const t = useT("vip");
   const benefits = useVipBenefits();
   const ranks = useVipRanks();
   /** ตารางโผล่หลังโหลดเสร็จ — ใช้เป็น dependency ให้เลื่อนไปคอลัมน์ระดับปัจจุบันอีกครั้ง */
   const tableReady = Boolean(benefits.data && ranks.data);
-  const isDesktopFull = variant === "desktop-full";
   const scrollRef = useRef<HTMLDivElement>(null);
   const currentColRef = useRef<HTMLTableCellElement>(null);
 
@@ -64,9 +58,7 @@ export function VipBenefitsComparisonTable({
   const vipRankTiers = ranks.data.tiers;
 
   return (
-    <div
-      className={`space-y-2 ${isDesktopFull ? "vip-benefits-table--desktop-full min-h-0 flex-1 pb-1" : "pb-2"}`}
-    >
+    <div className="space-y-2 pb-2">
       <div className="flex items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-[var(--text-primary)] sm:text-[0.9375rem]">
           {t("benefitsTable.title")}
@@ -76,44 +68,23 @@ export function VipBenefitsComparisonTable({
         </p>
       </div>
 
-      <div
-        className={`vip-benefits-table__scroll-wrap relative ${
-          isDesktopFull ? "vip-benefits-table__scroll-wrap--desktop-full rounded-[var(--radius-control)]" : "cosmic-inset-card"
-        }`}
-      >
-        <div
-          className="vip-benefits-table__edge-fade pointer-events-none absolute inset-y-0 right-0 z-30 w-10"
-          aria-hidden="true"
-        />
-
-        <div
-          ref={scrollRef}
-          className="vip-benefits-table__scroller overflow-x-auto overscroll-x-contain"
-        >
-          <table className="vip-benefits-table w-max min-w-full text-xs sm:text-[0.8125rem]">
+      <div className={s.benTable}>
+        <div ref={scrollRef} className="overflow-x-auto overscroll-x-contain">
+          <table className="w-max min-w-full text-xs sm:text-[0.8125rem]">
             <thead>
-              <tr>
-                <th
-                  className="vip-benefits-table__label-head min-w-[8.25rem] px-3 py-3 text-left sm:min-w-[9rem] sm:px-4"
-                >
-                  {t("tabs.benefits")}
-                </th>
+              <tr className="border-b border-[var(--vip-panel-border)]">
+                <th className={s.benStickyHead}>{t("tabs.benefits")}</th>
                 {vipRankTiers.map((tier) => {
                   const isCurrent = tier.id === currentRankId;
                   return (
                     <th
                       key={tier.id}
                       ref={isCurrent ? currentColRef : undefined}
-                      className={`vip-benefits-table__rank-head ${COL_MIN} px-1 py-2 align-bottom ${
-                        isCurrent ? "vip-benefits-table__rank-head--current" : ""
-                      }`}
+                      className={cn(COL_MIN, "px-1 py-2 align-bottom", isCurrent && s.benCurrent)}
                     >
                       <div className="flex flex-col items-center gap-1 pb-0.5">
                         <VipRankEmblem rankId={tier.id} size="sm" playing={false} />
-                        <span
-                          className="text-xs font-medium tracking-wide"
-                          style={{ color: tier.accent }}
-                        >
+                        <span className="text-xs font-medium tracking-wide" style={{ color: tier.accent }}>
                           {tier.label}
                         </span>
                         {isCurrent && (
@@ -129,17 +100,8 @@ export function VipBenefitsComparisonTable({
             </thead>
             <tbody>
               {benefitRows.map((row, rowIndex) => (
-                <tr
-                  key={row.id}
-                  className={
-                    rowIndex % 2 === 0 ? "vip-benefits-table__row--alt" : "vip-benefits-table__row"
-                  }
-                >
-                  <td
-                    className="vip-benefits-table__label min-w-[8.25rem] px-3 py-3 sm:min-w-[9rem] sm:px-4"
-                  >
-                    {t(row.labelKey)}
-                  </td>
+                <tr key={row.id} className={rowIndex % 2 === 0 ? s.benRowAlt : undefined}>
+                  <td className={s.benStickyCell}>{t(row.labelKey)}</td>
                   {vipRankTiers.map((tier) => {
                     const isCurrent = tier.id === currentRankId;
                     const locked = getVipRankIndex(tier.id) > getVipRankIndex(currentRankId);
@@ -154,12 +116,7 @@ export function VipBenefitsComparisonTable({
                             : vipBenefitValueClass(
                                 row.id,
                                 display,
-                                cn(
-                                  "vip-benefits-table__value",
-                                  COL_MIN,
-                                  "px-2 py-3 text-center",
-                                  isCurrent && "vip-benefits-table__value--current font-medium",
-                                ),
+                                cn(COL_MIN, "px-2 py-3 text-center", isCurrent && cn(s.benCurrent, "font-medium")),
                               ),
                         )}
                       >
@@ -171,10 +128,6 @@ export function VipBenefitsComparisonTable({
               ))}
             </tbody>
           </table>
-        </div>
-
-        <div className="vip-benefits-table__hint flex items-center justify-end gap-1 px-2 py-1.5 text-[var(--text-muted)]">
-          <ChevronRightIcon className="h-3.5 w-3.5 opacity-60" />
         </div>
       </div>
     </div>

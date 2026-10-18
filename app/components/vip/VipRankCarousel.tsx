@@ -1,17 +1,13 @@
 "use client";
 
 import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { VipRankId, VipRankTier } from "@/app/types/vip";
-import {
-  getVipRankViewStatus,
-  getVipTurnoverTarget,
-} from "@/app/data/vipMockData";
-import { ChevronLeftIcon, ChevronRightIcon } from "../ui/Icons";
+import { getVipRankViewStatus } from "@/app/data/vipMockData";
 import { VipRankEmblem } from "./VipRankEmblem";
-import { formatVipAmount } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { valueClass } from "@/lib/semanticValue";
 import { useT } from "@/lib/i18n/I18nProvider";
+import s from "./vip-page.module.css";
 
 interface VipRankCarouselProps {
   focusIndex: number;
@@ -21,94 +17,80 @@ interface VipRankCarouselProps {
   vipRankTiers: VipRankTier[];
 }
 
+/** เรนเดอร์ตราห่างจากตัวกลางไม่เกินเท่านี้ — ตัว ±3 ซ่อนไว้นอกจอ เป็นตัวที่จะเลื่อนเข้ามา */
+const RENDER_RANGE = 3;
+
 /**
- * แรงค์กลาง + ปุ่มเลื่อน — แท็บแร็งค์ (ไม่โชว์ขอบแรงค์ข้างเพื่อไม่โดนตัดใน modal)
+ * เวทีแรงค์ — ตรากลางใหญ่ ข้างละ 1–2 ตราจาง (กดเลื่อนได้) + ปุ่มลูกศร — แท็บแร็งค์
+ * ทุกตราเป็น element เดิม (key ตาม id) วางตำแหน่งด้วย data-offset → เปลี่ยนตัวกลางแล้ว CSS transition เลื่อน/ย่อ-ขยายให้เอง
  */
-export function VipRankCarousel({
-  focusIndex,
-  onFocusChange,
-  playerRankId,
-  vipRankTiers,
-}: VipRankCarouselProps) {
+export function VipRankCarousel({ focusIndex, onFocusChange, playerRankId, vipRankTiers }: VipRankCarouselProps) {
   const t = useT("vip");
   const safeIndex = Math.max(0, Math.min(focusIndex, vipRankTiers.length - 1));
-  const focused = vipRankTiers[safeIndex];
-  const focusStatus = getVipRankViewStatus(focused.id, playerRankId);
-  const isLocked = focusStatus === "locked";
-  const isCleared = focusStatus === "cleared";
-  const isActive = focusStatus === "active";
-
-  const goPrev = () => {
-    if (safeIndex > 0) onFocusChange(safeIndex - 1);
-  };
-
-  const goNext = () => {
-    if (safeIndex < vipRankTiers.length - 1) onFocusChange(safeIndex + 1);
-  };
-
-  const statusLabel = isActive
-    ? t("rankStatus.current")
-    : isCleared
-      ? t("rankStatus.cleared")
-      : t("rankStatus.locked");
 
   const canPrev = safeIndex > 0;
   const canNext = safeIndex < vipRankTiers.length - 1;
 
   return (
-    <div className="relative mx-auto w-full max-w-[280px] sm:max-w-xs">
+    <div className={s.rankStage}>
       <button
         type="button"
-        onClick={goPrev}
+        onClick={() => canPrev && onFocusChange(safeIndex - 1)}
         disabled={!canPrev}
-        className="absolute left-0 top-[42%] z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)]/80 hover:text-[var(--icon-active)] disabled:pointer-events-none disabled:opacity-0"
+        className={cn(s.rankArrow, s.arrowL)}
         aria-label={t("carousel.previous")}
       >
-        <ChevronLeftIcon className="h-5 w-5" />
+        <ChevronLeft className="h-5 w-5" aria-hidden />
       </button>
       <button
         type="button"
-        onClick={goNext}
+        onClick={() => canNext && onFocusChange(safeIndex + 1)}
         disabled={!canNext}
-        className="absolute right-0 top-[42%] z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-[var(--icon-default)] transition-colors hover:bg-[var(--surface-hover)]/80 hover:text-[var(--icon-active)] disabled:pointer-events-none disabled:opacity-0"
+        className={cn(s.rankArrow, s.arrowR)}
         aria-label={t("carousel.next")}
       >
-        <ChevronRightIcon className="h-5 w-5" />
+        <ChevronRight className="h-5 w-5" aria-hidden />
       </button>
 
-      <div className="flex flex-col items-center gap-2 px-11 py-2 text-center">
-        <VipRankEmblem
-          rankId={focused.id}
-          size="xl"
-          inactive={isLocked}
-          playing={!isLocked}
-        />
-        <p
-          className={`text-2xl font-medium tracking-[0.15em] sm:text-[1.65rem] ${
-            isLocked ? "text-[var(--text-muted)]" : ""
-          }`}
-          style={isLocked ? undefined : { color: focused.accent }}
-        >
-          {focused.label}
-        </p>
-        <p
-          className={cn(
-            "text-xs font-medium sm:text-sm",
-            isActive
-              ? "text-[var(--text-secondary)]"
-              : isCleared
-                ? valueClass("success")
-                : "text-[var(--text-muted)]",
-          )}
-        >
-          {statusLabel}
-        </p>
-        {!isActive && focused.id !== "silver" && (
-          <p className="text-xs text-[var(--text-muted)]">
-            {t("carousel.turnoverTarget", { amount: formatVipAmount(getVipTurnoverTarget(focused.id)) })}
-          </p>
-        )}
-      </div>
+      {vipRankTiers.map((tier, index) => {
+        const offset = index - safeIndex;
+        if (Math.abs(offset) > RENDER_RANGE) return null;
+        const status = getVipRankViewStatus(tier.id, playerRankId);
+        const locked = status === "locked";
+        const focused = offset === 0;
+        const hidden = Math.abs(offset) === RENDER_RANGE;
+        const statusLabel =
+          status === "active"
+            ? t("rankStatus.current")
+            : status === "cleared"
+              ? t("rankStatus.cleared")
+              : t("rankStatus.locked");
+
+        return (
+          <button
+            key={tier.id}
+            type="button"
+            data-offset={offset}
+            className={cn(s.rankItem, focused && s.rankItemFocus)}
+            onClick={() => !focused && onFocusChange(index)}
+            aria-label={focused ? undefined : tier.label}
+            aria-current={focused ? "true" : undefined}
+            aria-hidden={hidden || undefined}
+            tabIndex={focused || hidden ? -1 : 0}
+          >
+            <span className={s.rankEmblem}>
+              <VipRankEmblem rankId={tier.id} size="xl" inactive={locked} playing={focused && !locked} />
+            </span>
+            <span
+              className={s.rankName}
+              style={focused && !locked ? { color: tier.accent } : undefined}
+            >
+              {tier.label}
+            </span>
+            <span className={s.rankStatus}>{statusLabel}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

@@ -4,13 +4,15 @@ import React, { useState } from "react";
 import type { VipModalTabId, VipPlayerState, VipRankTier } from "@/app/types/vip";
 import { usePrefetchVipTabs, useVipPlayer, useVipRanks } from "@/app/hooks/api/member";
 import { ResourceGate } from "@/app/components/ui/ResourceGate";
-import { cn } from "@/lib/utils";
-import { VipModalDesktopLayout } from "./VipModalDesktopLayout";
-import { VipMobileTabPanels } from "./VipMobileTabPanels";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
+import { getVipRankTier } from "@/app/data/vipMockData";
+import { cn } from "@/lib/utils";
+import { VipRankEmblem } from "./VipRankEmblem";
 import { VipTabList } from "./VipTabList";
+import { VipTabPanels } from "./VipTabPanels";
 import { VIP_PAGE_TABS } from "./vipTabConfig";
 import { useT } from "@/lib/i18n/I18nProvider";
+import s from "./vip-page.module.css";
 
 interface VipPageContentProps {
   activeTab: VipModalTabId;
@@ -32,9 +34,7 @@ export function VipPageContent(props: VipPageContentProps) {
     <ResourceGate resource={player} loadingLabel={t("status.playerLoading")} errorTitle={t("status.playerError")}>
       {(playerData) => (
         <ResourceGate resource={ranks} loadingLabel={t("status.ranksLoading")} errorTitle={t("status.ranksError")}>
-          {(ranksData) => (
-            <VipPageContentInner {...props} player={playerData} vipRankTiers={ranksData.tiers} />
-          )}
+          {(ranksData) => <VipPageContentInner {...props} player={playerData} vipRankTiers={ranksData.tiers} />}
         </ResourceGate>
       )}
     </ResourceGate>
@@ -42,7 +42,7 @@ export function VipPageContent(props: VipPageContentProps) {
 }
 
 /**
- * line tabs · desktop/mobile layout — mount หลังมีข้อมูลแล้ว (useState ตั้งแรงค์เริ่มจาก player ได้ตรง)
+ * hero · แท็บ · เนื้อหา — mount หลังมีข้อมูลแล้ว (useState ตั้งแรงค์เริ่มจาก player ได้ตรง)
  */
 function VipPageContentInner({
   activeTab,
@@ -51,42 +51,50 @@ function VipPageContentInner({
   player,
   vipRankTiers,
 }: VipPageContentProps & { player: VipPlayerState; vipRankTiers: VipRankTier[] }) {
-  const currentRankIndex = vipRankTiers.findIndex((t) => t.id === player.currentRankId);
-  const [rankFocusIndex, setRankFocusIndex] = useState(
-    currentRankIndex >= 0 ? currentRankIndex : 0,
-  );
+  const t = useT("vip");
+  const currentRankIndex = vipRankTiers.findIndex((tier) => tier.id === player.currentRankId);
+  const [rankFocusIndex, setRankFocusIndex] = useState(currentRankIndex >= 0 ? currentRankIndex : 0);
   const [embeddedTab, setEmbeddedTab] = useState(activeTab);
   const tab = embedded ? embeddedTab : activeTab;
   const selectTab = embedded ? setEmbeddedTab : onSelectTab;
+  const currentTier = getVipRankTier(player.currentRankId);
+  const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
 
   return (
-    <div className={cn("flex min-h-0 flex-col gap-4", embedded && "lg:min-h-0 lg:flex-1")}>
+    <div className={cn(s.root, embedded && s.embedded)}>
+      <section className={s.hero}>
+        <div className={s.heroText}>
+          <h2 className={s.heroVip}>VIP</h2>
+          <p className={s.heroTag}>{t("hero.tagline")}</p>
+          <p className={s.heroSub}>{t("hero.sub")}</p>
+        </div>
+        <div className={s.heroEmblem} aria-label={t("level.currentAriaLabel")}>
+          <div className={s.emblemWrap}>
+            <VipRankEmblem rankId={player.currentRankId} size="xl" />
+          </div>
+          <div className={s.pedestal} aria-hidden />
+          <p className={s.heroRank} style={{ color: currentTier.accent }}>
+            {currentTier.label}
+          </p>
+          {nextTier ? (
+            <p className={s.heroNext}>
+              {t("level.next")} <b>{nextTier.label}</b>
+            </p>
+          ) : null}
+        </div>
+      </section>
+
       <VipTabList activeTab={tab} onSelect={selectTab} />
 
-      <TabPanelTransition
-        tabKey={tab}
-        order={VIP_PAGE_TABS.map((t) => t.id)}
-        className="vip-page vip-modal vip-modal-typography flex min-h-0 flex-col lg:min-h-0 lg:flex-1"
-      >
-        <div className="vip-modal__body hidden min-h-0 flex-1 lg:flex lg:flex-col">
-          <VipModalDesktopLayout
-            tab={tab}
-            player={player}
-            vipRankTiers={vipRankTiers}
-            rankFocusIndex={rankFocusIndex}
-            onRankFocusChange={setRankFocusIndex}
-          />
-        </div>
-
-        <div className="min-h-0 pb-1 lg:hidden">
-          <VipMobileTabPanels
-            tab={tab}
-            player={player}
-            vipRankTiers={vipRankTiers}
-            rankFocusIndex={rankFocusIndex}
-            onRankFocusChange={setRankFocusIndex}
-          />
-        </div>
+      <TabPanelTransition tabKey={tab} order={VIP_PAGE_TABS.map((item) => item.id)} className="min-h-0 pb-1">
+        <VipTabPanels
+          tab={tab}
+          player={player}
+          vipRankTiers={vipRankTiers}
+          rankFocusIndex={rankFocusIndex}
+          onRankFocusChange={setRankFocusIndex}
+          onSelectTab={selectTab}
+        />
       </TabPanelTransition>
     </div>
   );
