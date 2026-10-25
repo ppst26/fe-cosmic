@@ -8,9 +8,9 @@ export const CASHBACK_TABS: { id: CashbackTabId; labelKey: CashbackMessageKey }[
   { id: "loss", labelKey: "tabs.loss" },
 ];
 
-/** ไอคอน hero ยอดคืนที่รับได้ — public/assets/3d/menuicon/cashback.avif */
+/** ไอคอน hero ยอดคืนที่รับได้ — public/menu-icon/cashback.webp */
 export const CASHBACK_PAGE_ICON_SRC =
-  getMenuIconSrc("cashback") ?? "/assets/3d/menuicon/cashback.avif";
+  getMenuIconSrc("cashback") ?? "/menu-icon/cashback.webp";
 
 /** แท็บคืนยอดเล่น — สถานะว่างตาม mock */
 export const CASHBACK_PLAY_PANEL_MOCK: CashbackPanelMock = {

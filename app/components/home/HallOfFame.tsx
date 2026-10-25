@@ -8,7 +8,7 @@ import { SectionIcon } from "../ui/SectionIcon";
 import {
   createHallOfFameRow,
 } from "../../data/hallOfFameGenerator";
-import { HALL_OF_FAME_ROW_LIMIT, HALL_OF_FAME_TICK_MS } from "@/lib/uiConstants";
+import { HALL_OF_FAME_MOBILE_ROW_LIMIT, HALL_OF_FAME_ROW_LIMIT, HALL_OF_FAME_TICK_MS } from "@/lib/uiConstants";
 
 const TAB_LABELS: { id: HallOfFameTabId; label: string }[] = [
   { id: "latest-winner", label: "Latest Winner" },
@@ -125,12 +125,15 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
     };
   }, []);
 
-  /** ตรึงความสูง tbody = ความสูงของ 8 แถวแรก — แถวที่ 9 (กำลังออก) ถูกตัดซ่อน ไม่ดัน layout ด้านล่าง */
+  /** ตรึงความสูง tbody = ความสูงของแถวที่เห็น (มือถือ 4 · เดสก์ท็อป 8) — แถวที่ 9 (กำลังออก) ถูกตัดซ่อน ไม่ดัน layout ด้านล่าง */
   const syncBodyHeight = useCallback(() => {
     const body = bodyRef.current;
     if (!body) return;
     const list = body.querySelectorAll<HTMLTableRowElement>("tr[data-hof-row]");
-    const last = list[Math.min(HALL_OF_FAME_ROW_LIMIT, list.length) - 1];
+    const visible = window.matchMedia("(max-width: 1023.98px)").matches
+      ? HALL_OF_FAME_MOBILE_ROW_LIMIT
+      : HALL_OF_FAME_ROW_LIMIT;
+    const last = list[Math.min(visible, list.length) - 1];
     if (!last) return;
     body.style.height = `${last.offsetTop + last.offsetHeight}px`;
   }, []);

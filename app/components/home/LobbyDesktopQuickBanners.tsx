@@ -62,7 +62,7 @@ export function LobbyDesktopQuickBanners() {
               <img
                 src={banner.visualSrc}
                 alt=""
-                className="h-[135%] w-auto max-w-none object-contain object-bottom-right drop-shadow-[0_6px_16px_rgba(0,0,0,0.6)] transition-transform duration-300 group-hover:scale-105"
+                className="h-[135%] w-auto max-w-none object-contain object-bottom-right transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
               />
@@ -85,10 +85,10 @@ export function LobbyDesktopQuickBanners() {
 
           {/* Text block */}
           <div className="relative z-10 flex min-w-0 max-w-[62%] flex-col justify-center px-4 py-2">
-            <span className="truncate text-[16px] xl:text-[17px] font-medium tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
+            <span className="truncate text-[16px] xl:text-[17px] font-medium tracking-tight text-white">
               {t(banner.titleKey)}
             </span>
-            <span className="mt-0.5 truncate text-[12px] xl:text-[13px] font-normal text-[var(--text-secondary)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+            <span className="mt-0.5 truncate text-[12px] xl:text-[13px] font-normal text-[var(--text-secondary)]">
               {t(banner.subtitleKey)}
             </span>
           </div>

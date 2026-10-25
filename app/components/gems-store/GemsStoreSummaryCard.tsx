@@ -39,7 +39,7 @@ export function GemsStoreSummaryCard({ gemsBalance, store, className }: GemsStor
             alt=""
             fill
             sizes="(max-width: 640px) 68px, 76px"
-            className="object-contain drop-shadow-[0_0_20px_rgba(119,71,229,0.5)]"
+            className="object-contain"
           />
         </div>
         <p

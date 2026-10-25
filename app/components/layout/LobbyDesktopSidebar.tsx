@@ -26,7 +26,7 @@ interface LobbyDesktopSidebarProps {
 }
 
 const SIDEBAR_MENU_ICON_CLASS =
-  "h-7 w-7 shrink-0 object-contain drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]";
+  "h-7 w-7 shrink-0 object-contain";
 
 function renderMenuTile(
   tile: MenuDialogTile,

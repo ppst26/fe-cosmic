@@ -190,3 +190,10 @@
 .hall-of-fame-table__row {
   will-change: transform;
 }
+
+/* มือถือ/แท็บเล็ต — แสดงแค่ 4 แถว (เดสก์ท็อป 8 แถว) · ตรงกับ HALL_OF_FAME_MOBILE_ROW_LIMIT */
+@media (max-width: 1023.98px) {
+  .hall-of-fame-table__body--live > .hall-of-fame-table__row:nth-child(n + 5) {
+    display: none;
+  }
+}

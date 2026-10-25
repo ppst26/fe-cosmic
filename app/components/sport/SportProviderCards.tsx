@@ -265,10 +265,10 @@ export function SportProviderCards({
 
             {/* 4. ข้อความหัวข้อสีขาว และชื่อ Provider ด้านล่าง */}
             <div className="z-10 mt-auto flex flex-col items-center pb-2 px-1 text-center">
-              <h3 className="line-clamp-2 text-center text-xs sm:text-[13px] font-medium uppercase leading-snug tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
+              <h3 className="line-clamp-2 text-center text-xs sm:text-[13px] font-medium uppercase leading-snug tracking-tight text-white">
                 {item.title}
               </h3>
-              <p className="mt-0.5 truncate text-center text-xs font-medium text-white/80 drop-shadow sm:text-sm">
+              <p className="mt-0.5 truncate text-center text-xs font-medium text-white/80 sm:text-sm">
                 {item.provider}
               </p>
             </div>

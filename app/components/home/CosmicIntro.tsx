@@ -30,7 +30,7 @@ export function CosmicIntro({
       <div className="min-w-0 text-center">
         <h2
           id="cosmic-intro-title"
-          className="text-balance text-[20px] font-medium leading-[1.2] tracking-tight text-[var(--text-primary)] drop-shadow-[0_0_24px_rgba(129,140,248,0.35)] sm:text-[32px] lg:text-[40px]"
+          className="text-balance text-[20px] font-medium leading-[1.2] tracking-tight text-[var(--text-primary)] sm:text-[32px] lg:text-[40px]"
         >
           {title}
         </h2>

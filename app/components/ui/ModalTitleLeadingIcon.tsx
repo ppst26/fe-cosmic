@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 /** ขนาดไอคอนนำหน้าหัวข้อ modal / sheet บน desktop */
 export const MODAL_TITLE_LEADING_ICON_CLASS =
-  "h-10 w-10 shrink-0 object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] sm:h-11 sm:w-11";
+  "h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11";
 
 type LeadingWrapProps = {
   desktopOnly?: boolean;

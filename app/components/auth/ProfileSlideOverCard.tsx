@@ -117,7 +117,7 @@ export function ProfileSlideOverCard({ isOpen, onClose }: ProfileSlideOverCardPr
                 <Menu3DIcon
                   iconId="profile"
                   size={32}
-                  className="profile-hub-sheet__title-icon h-8 w-8 shrink-0 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+                  className="profile-hub-sheet__title-icon h-8 w-8 shrink-0 object-contain"
                 />
                 <p className="truncate text-base font-medium text-white">{t("account.profile")}</p>
               </div>

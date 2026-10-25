@@ -69,7 +69,7 @@ export function LobbyDesktopHubMenuStack({ onMenuAction }: LobbyDesktopHubMenuSt
             ) : null}
             <span
               className={`lobby-hub-menu-card__title cosmic-type-hub-title ${
-                isBg ? "relative z-10 max-w-[54%] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]" : ""
+                isBg ? "relative z-10 max-w-[54%]" : ""
               }`}
             >
               {tHome(tile.titleKey)}

@@ -237,7 +237,7 @@
     width: 1.75rem;
     height: 1.75rem;
     object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+    filter: none;
   }
 
   .glass-sidebar.lobby-desktop-sidebar .lobby-desktop-sidebar__link-label {
@@ -400,7 +400,7 @@
     object-position: bottom right;
     transform: scale(var(--lobby-right-menu-visual-scale));
     transform-origin: 100% 100%;
-    filter: drop-shadow(0 6px 14px rgb(0 0 0 / 0.35));
+    filter: none;
   }
 
   /** Hub การ์ดใต้แผง sidebar — แถวเดี่ยว 1 คอลัมน์ เรียงลงมา (cols 1) */
@@ -440,7 +440,7 @@
     transform: scale(1.15);
     transform-origin: center right;
     object-position: center right;
-    filter: drop-shadow(0 5px 12px rgb(0 0 0 / 0.38));
+    filter: none;
   }
 
   .lobby-desktop-shell__sidebar-hub .lobby-hub-menu-card__title.cosmic-type-hub-title {
@@ -545,6 +545,6 @@
     object-position: bottom right;
     transform: scale(1.05);
     transform-origin: 100% 100%;
-    filter: drop-shadow(0 4px 10px rgb(0 0 0 / 0.32));
+    filter: none;
   }
 

@@ -199,12 +199,10 @@ function DailyCheckInCardView({
             sizes={isBig ? "80px" : "72px"}
             className={cn(
               "relative z-[1] object-contain transition-transform duration-200",
-              isClaimed &&
-                "drop-shadow-[0_0_14px_color-mix(in_srgb,var(--ci-accent,#7747e5)_75%,transparent)] drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]",
               isToday &&
-                "scale-[1.12] drop-shadow-[0_0_20px_color-mix(in_srgb,var(--ci-accent,#7747e5)_95%,transparent)] drop-shadow-[0_0_28px_color-mix(in_srgb,var(--ci-accent-2,#5b8cff)_45%,transparent)]",
+                "scale-[1.12]",
               isLocked &&
-                "opacity-90 drop-shadow-[0_0_10px_color-mix(in_srgb,var(--ci-accent,#7747e5)_25%,transparent)] drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]",
+                "opacity-90",
             )}
           />
         </div>
@@ -325,7 +323,7 @@ function DailyCheckInCardView({
             fill
             sizes="120px"
             preload
-            className="object-contain drop-shadow-[0_4px_16px_color-mix(in_srgb,var(--ci-accent,#7747e5)_35%,transparent)]"
+            className="object-contain"
           />
         </div>
       </div>
@@ -451,7 +449,7 @@ function DailyCheckInCardView({
                         alt="Gift Box"
                         fill
                         sizes="32px"
-                        className="object-contain drop-shadow-[0_0_6px_color-mix(in_srgb,var(--ci-accent,#7747e5)_50%,transparent)]"
+                        className="object-contain"
                       />
                     </div>
                   ) : (
@@ -466,7 +464,7 @@ function DailyCheckInCardView({
                       <svg
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        className="absolute bottom-0 right-0 h-2.5 w-2.5 text-white/90 drop-shadow"
+                        className="absolute bottom-0 right-0 h-2.5 w-2.5 text-white/90"
                       >
                         <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2Zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2Zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2Z" />
                       </svg>

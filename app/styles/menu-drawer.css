@@ -655,7 +655,7 @@
 }
 
 .menu-grid-tile .menu-grid-icon {
-  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.35));
+  filter: none;
   transition:
     transform var(--motion-fast) var(--ease-out),
     filter var(--motion-fast) ease;
@@ -695,7 +695,7 @@
 
   .menu-grid-tile:is(:hover, :focus-visible) .menu-grid-icon {
     transform: translateY(-4px) scale(1.12);
-    filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--accent-primary) 35%, rgb(0 0 0 / 0.4)));
+    filter: none;
   }
 
   .menu-grid-tile:is(:hover, :focus-visible) .menu-grid-label {
@@ -717,7 +717,7 @@
 
   .menu-list-row:is(:hover, :focus-visible) .menu-list-icon {
     transform: translateX(2px) scale(1.07);
-    filter: drop-shadow(0 3px 8px color-mix(in srgb, var(--accent-primary) 28%, rgb(0 0 0 / 0.35)));
+    filter: none;
   }
 
   .menu-list-row:is(:hover, :focus-visible) .menu-list-label {
@@ -745,7 +745,7 @@
 }
 
 .menu-list-row .menu-list-icon {
-  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.3));
+  filter: none;
   transition:
     transform var(--motion-fast) var(--ease-out),
     filter var(--motion-fast) ease;
@@ -1132,14 +1132,14 @@
   position: relative;
   z-index: 1;
   color: #fff;
-  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.35));
+  filter: none;
 }
 
 .menu-drawer-quick-actions__btn--withdraw .menu-drawer-quick-actions__icon {
   position: relative;
   z-index: 1;
   color: #2a2210;
-  filter: drop-shadow(0 1px 1px rgb(255 255 255 / 0.25));
+  filter: none;
 }
 
 .menu-drawer-quick-actions__btn:active {
@@ -1633,7 +1633,7 @@
 
 .menu-drawer-grid-card .menu-grid-tile:is(:hover, :focus-visible) .menu-grid-icon {
   transform: translateY(-2px) scale(1.06);
-  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.35));
+  filter: none;
 }
 
 .menu-content--mobile-stack .menu-drawer-income-card:active {

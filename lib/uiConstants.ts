@@ -18,6 +18,8 @@ export const LUCKY_WHEEL_HISTORY_PAGE_SIZE = 5;
 
 /** Hall of Fame — จำนวนแถวที่แสดง และรอบอัปเดต (ms) */
 export const HALL_OF_FAME_ROW_LIMIT = 8;
+/** มือถือ/แท็บเล็ต (< 1024px) แสดงน้อยลง — ต้องตรงกับ media query ใน hall-of-fame.css */
+export const HALL_OF_FAME_MOBILE_ROW_LIMIT = 4;
 export const HALL_OF_FAME_TICK_MS = 2000;
 
 /** หน้าแรก — จำนวนการ์ดสูงสุดต่อ carousel เกม / carousel ทั่วไป */

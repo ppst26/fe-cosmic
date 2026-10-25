@@ -102,7 +102,7 @@ export function JackpotSection({
           <MenuItemIcon
             iconId="activities"
             variant="asset"
-            className="h-6 w-6 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+            className="h-6 w-6 object-contain"
           />
         }
         title={title}

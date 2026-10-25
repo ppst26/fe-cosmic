@@ -57,7 +57,7 @@ export function DailyCheckInClaimSuccessDialog({
                 alt=""
                 fill
                 sizes="64px"
-                className="object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.25)]"
+                className="object-contain"
               />
             </div>
 

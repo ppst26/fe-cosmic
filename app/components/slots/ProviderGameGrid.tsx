@@ -387,10 +387,10 @@ function GameThumbnailArtwork({ game }: { game: ProviderGameItem }) {
           className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-b ${game.bgGradient}`}
         >
           <div className="flex flex-col items-center justify-center p-2 text-center">
-            <span className="text-2xl drop-shadow" style={{ color: accentColor }}>
+            <span className="text-2xl" style={{ color: accentColor }}>
               🎰
             </span>
-            <span className="mt-1 line-clamp-2 text-xs font-medium text-white drop-shadow">
+            <span className="mt-1 line-clamp-2 text-xs font-medium text-white">
               {game.title}
             </span>
           </div>

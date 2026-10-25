@@ -1385,7 +1385,7 @@ html[data-mode="light"] .provider-category-toolbar .provider-category-toolbar__s
   --text-secondary: #4a4e5a;
 }
 
-[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .lottery-slip-summary :is(.lottery-slip-summary__group, .lottery-slip-summary__totals) {
+[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .lottery-slip-summary :is(.lottery-slip-summary__info, .lottery-slip-summary__group, .lottery-slip-summary__totals) {
   background: #e7e7ed;
   border: 1px solid #c9c9d4;
 }

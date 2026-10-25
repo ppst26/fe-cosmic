@@ -62,6 +62,7 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
       className="lottery-slip-summary flex flex-col gap-4 pb-3 pt-1"
       aria-label={t("summary.aria")}
     >
+      <div className="lottery-slip-summary__info flex flex-col gap-3 px-3.5 py-3.5 sm:px-4">
       <header className="lottery-slip-summary__head flex flex-col gap-2">
         <div className="lottery-slip-summary__head-row flex items-start justify-between gap-3">
           <p className="lottery-slip-summary__meta m-0">
@@ -97,6 +98,7 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
       <p className="lottery-slip-summary__note m-0">
         {t("summary.note", { note: slip.note?.trim() ? slip.note : t("summary.noNote") })}
       </p>
+      </div>
 
       <div className="lottery-slip-summary__groups flex flex-col gap-2.5">
         {groups.map((group) => (
@@ -143,7 +145,7 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
         ))}
       </div>
 
-      <footer className="lottery-slip-summary__totals mt-0.5 grid grid-cols-2 gap-3 px-3.5 py-3.5 sm:px-4">
+      <footer className="lottery-slip-summary__totals grid grid-cols-2 gap-3 px-3.5 py-3.5 sm:px-4">
         <div className="lottery-slip-summary__total-cell flex flex-col items-center gap-[0.35rem] text-center">
           <span className="lottery-slip-summary__total-label">{t("summary.stake")}</span>
           <strong className="lottery-slip-summary__total-value">{formatBaht(slip.totalStake)}</strong>
@@ -153,7 +155,7 @@ export function LotterySlipSummary({ slip, continuePlayHref }: LotterySlipSummar
           {slip.winLoss === null ? (
             <span className="lottery-slip-summary__total-muted">—</span>
           ) : (
-            <span className={signedMoneyValueClass(slip.winLoss, "font-medium tabular-nums")}>
+            <span className={signedMoneyValueClass(slip.winLoss, "lottery-slip-summary__total-signed tabular-nums")}>
               {formatSignedBaht(slip.winLoss)}
             </span>
           )}

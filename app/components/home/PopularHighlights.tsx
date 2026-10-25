@@ -100,10 +100,10 @@ export function PopularHighlights({
               )}
             >
               <div className="z-10 flex flex-col">
-                <span className="font-mono text-lg font-medium italic tracking-tighter text-white drop-shadow sm:text-xl">
+                <span className="font-mono text-lg font-medium italic tracking-tighter text-white sm:text-xl">
                   DEXY
                 </span>
-                <span className="-mt-1 font-mono text-xs font-medium italic tracking-widest text-slate-300 drop-shadow sm:text-sm">
+                <span className="-mt-1 font-mono text-xs font-medium italic tracking-widest text-slate-300 sm:text-sm">
                   RACE
                 </span>
               </div>

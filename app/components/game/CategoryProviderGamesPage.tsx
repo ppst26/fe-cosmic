@@ -73,7 +73,7 @@ export function CategoryProviderGamesPage({
         />
 
         <div className="mt-3 mb-1 flex items-center gap-2">
-          <h1 className="text-xl font-medium uppercase tracking-tight text-white drop-shadow sm:text-2xl">
+          <h1 className="text-xl font-medium uppercase tracking-tight text-white sm:text-2xl">
             {providerInfo.name}
           </h1>
         </div>

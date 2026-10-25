@@ -393,7 +393,7 @@ export function SlotProviderCards({
                 {isJili ? (
                   <div>
                     <h3
-                      className={`bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text font-medium leading-none tracking-tight text-transparent drop-shadow ${
+                      className={`bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text font-medium leading-none tracking-tight text-transparent ${
                         isPrimaryFeatured ? "text-2xl sm:text-[1.65rem]" : "text-xl sm:text-2xl"
                       }`}
                     >
@@ -415,7 +415,7 @@ export function SlotProviderCards({
                       </span>
                     </div>
                     <h3
-                      className={`font-medium leading-tight tracking-tight text-white drop-shadow ${
+                      className={`font-medium leading-tight tracking-tight text-white ${
                         isPrimaryFeatured ? "text-base sm:text-lg" : "text-sm sm:text-base"
                       }`}
                     >

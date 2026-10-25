@@ -71,7 +71,7 @@ export function DailyCheckInMilestoneDialog({
                   alt=""
                   fill
                   sizes="36px"
-                  className="object-contain drop-shadow-[0_0_12px_rgba(119,71,229,0.65)]"
+                  className="object-contain"
                 />
               </div>
             </div>

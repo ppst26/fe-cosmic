@@ -11,8 +11,8 @@ interface Menu3DIconProps {
 }
 
 /**
- * ไอคอน 3D จาก public/assets/3d/menuicon — ใช้ร่วม CategoryNav · MenuDrawer · sidebar
- * ใช้ img ตรง ไม่ผ่าน /_next/image (ไฟล์ avif พร้อมเสิร์ฟแล้ว)
+ * ไอคอน 3D จาก public/menu-icon (+ fallback assets/3d/menuicon) — ใช้ร่วม CategoryNav · MenuDrawer · sidebar
+ * ใช้ img ตรง ไม่ผ่าน /_next/image (ไฟล์ webp/avif พร้อมเสิร์ฟแล้ว)
  */
 export function Menu3DIcon({
   iconId,

@@ -151,7 +151,7 @@
   width: min(72vw, 14rem);
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 12px 28px color-mix(in srgb, var(--accent-primary) 35%, transparent));
+  filter: none;
 }
 
 .random-card-redeem__deck {

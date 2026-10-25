@@ -168,7 +168,7 @@ function PromoHubHeroBanner({ hero }: { hero: PromoHubHero }) {
       />
       <div className="relative z-[1] flex h-full min-h-[168px] items-stretch sm:min-h-[188px]">
         <div className="flex min-w-0 flex-1 flex-col justify-center px-4 py-4 sm:px-5 sm:py-5">
-          <h2 className="text-lg font-medium leading-snug text-[var(--text-primary)] drop-shadow-sm sm:text-xl">
+          <h2 className="text-lg font-medium leading-snug text-[var(--text-primary)] sm:text-xl">
             {hero.title}
           </h2>
           <p className="mt-1 text-xs text-[var(--text-secondary)] sm:text-sm">{hero.subtitle}</p>

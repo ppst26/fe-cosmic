@@ -744,7 +744,7 @@
   border-left: 11px solid transparent;
   border-right: 11px solid transparent;
   border-top: 18px solid var(--wheel-pointer-color, #8b5cf6);
-  filter: drop-shadow(0 0 8px var(--wheel-pointer-glow, rgba(139, 92, 246, 0.65))) drop-shadow(0 2px 6px rgb(0 0 0 / 0.4));
+  filter: none;
 }
 
 /* เข็มแบบรูป (theme.pointer.imageUrl) — ปลายชี้ลง จัดกลางด้านบน */
@@ -757,7 +757,7 @@
   height: auto;
   transform: translateX(-50%);
   pointer-events: none;
-  filter: drop-shadow(0 0 8px var(--wheel-pointer-glow, transparent));
+  filter: none;
 }
 
 /* กรอบทับทั้งวง (theme.rim.frameImageUrl) — ไม่หมุน */
@@ -793,7 +793,7 @@
 
 .lucky-wheel__rim {
   stroke: var(--wheel-rim-color, color-mix(in srgb, #8b5cf6 45%, var(--border-subtle)));
-  filter: drop-shadow(0 0 6px var(--wheel-rim-glow, transparent));
+  filter: none;
 }
 
 .lucky-wheel__rim-band {

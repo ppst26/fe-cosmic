@@ -350,7 +350,7 @@ function DepositBankStep({
               <img
                 src="/assets/bank-logo/KBANK.webp"
                 alt={bank.bankName}
-                className="h-16 w-16 sm:h-[72px] sm:w-[72px] object-contain rounded-xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
+                className="h-16 w-16 sm:h-[72px] sm:w-[72px] object-contain rounded-xl"
               />
             </div>
 
@@ -510,7 +510,7 @@ function DepositConfirmStep({
             <img
               src="/assets/bank-logo/KBANK.webp"
               alt={bank.bankName}
-              className="h-10 w-10 shrink-0 object-contain rounded-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+              className="h-10 w-10 shrink-0 object-contain rounded-xl"
             />
             <div className="min-w-0 flex-1 space-y-1.5 text-sm">
               <p className="font-medium text-[var(--text-primary)]">{bank.bankName}</p>
@@ -631,7 +631,7 @@ function DepositMethodIcon({ methodId, className }: { methodId: DepositMethodId;
       src={asset.src}
       alt={t(asset.altKey)}
       className={cn(
-        "h-8 w-8 shrink-0 object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] sm:h-9 sm:w-9",
+        "h-8 w-8 shrink-0 object-contain sm:h-9 sm:w-9",
         className,
       )}
     />

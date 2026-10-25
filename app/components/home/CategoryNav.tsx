@@ -205,7 +205,7 @@ export function CategoryNav({
                   <Menu3DIcon
                     iconId={category.id}
                     priority
-                    className="h-9 w-9 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-transform duration-200 group-hover:scale-105 xl:h-10 xl:w-10"
+                    className="h-9 w-9 transition-transform duration-200 group-hover:scale-105 xl:h-10 xl:w-10"
                   />
                 </span>
                 <span className="category-nav__label whitespace-nowrap tracking-tight">{t(category.labelKey)}</span>
@@ -254,7 +254,7 @@ export function CategoryNav({
                 <Menu3DIcon
                   iconId={category.id}
                   priority
-                  className="h-full w-full drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]"
+                  className="h-full w-full"
                   size={26}
                 />
               </span>
