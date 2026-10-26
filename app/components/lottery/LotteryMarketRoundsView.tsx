@@ -2,7 +2,7 @@
 
 import React from "react";
 import { getLotteryCatalogEntry } from "@/app/data/lotteryCatalogMockData";
-import { useLotteryPlayRounds, useThaiLottoBoard } from "@/app/hooks/api/lottery";
+import { useLotteryPlayRounds, usePrefetchLotteryRounds, useThaiLottoBoard } from "@/app/hooks/api/lottery";
 import { LotteryMarketShell } from "./LotteryMarketShell";
 import { LotteryPlayRoundList } from "./LotteryPlayRoundList";
 import { ThaiLottoResultPanel } from "./thai/ThaiLottoResultPanel";
@@ -24,6 +24,7 @@ export function LotteryMarketRoundsView({ marketSlug }: LotteryMarketRoundsViewP
   const roundsResource = useLotteryPlayRounds(marketSlug);
   const rounds = roundsResource.data ?? [];
   const thaiLastResult = useThaiLottoBoard().data?.lastResult ?? null;
+  usePrefetchLotteryRounds();
 
   if (!entry) {
     return (
