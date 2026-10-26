@@ -859,19 +859,24 @@
   transition: transform var(--rank-dur) var(--rank-ease);
 }
 
+/* ขนาดตัวอักษรคงที่ที่ 20px แล้วย่อด้วย transform (ไม่เปลี่ยน font-size → ไม่ reflow/กระตุก ตอนเลื่อน) */
 .rankName {
+  --label-scale: 0.55;
   margin: -4px 0 0;
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  transform: scale(var(--label-scale));
+  transform-origin: 50% 0;
   transition:
-    font-size var(--rank-dur) var(--rank-ease),
+    transform var(--rank-dur) var(--rank-ease),
     color var(--rank-dur) var(--rank-ease);
+  will-change: transform;
 }
 
 .rankItemFocus .rankName {
-  font-size: 20px;
-  letter-spacing: 0.06em;
+  --label-scale: 1;
 }
 
 .rankStatus {
