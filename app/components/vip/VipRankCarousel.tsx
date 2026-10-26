@@ -79,7 +79,7 @@ export function VipRankCarousel({ focusIndex, onFocusChange, playerRankId, vipRa
             tabIndex={focused || hidden ? -1 : 0}
           >
             <span className={s.rankEmblem}>
-              <VipRankEmblem rankId={tier.id} size="xl" inactive={locked} playing={focused && !locked} />
+              <VipRankEmblem rankId={tier.id} size="xl" inactive={locked} />
             </span>
             <span
               className={s.rankName}

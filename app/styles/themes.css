@@ -2949,6 +2949,9 @@ html[data-mode="light"][data-theme]:not([data-theme="cosmic"]) .vip-root .vip-he
   --v-title: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.78) 100%);
   --v-panel-face: linear-gradient(135deg, var(--t-ga), var(--t-gb));
   --v-panel-bg: var(--t-gb);
+  --vip-hero-nebula: none;
+  --vip-hero-face: var(--v-panel-face);
+  --vip-hero-arcs: 0;
   --vip-rank-card-bg: var(--t-ga);
   --surface-end: var(--t-gb);
   --cta-white-bg: #ffffff;

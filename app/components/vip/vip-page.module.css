@@ -27,7 +27,19 @@
   overflow: hidden;
   border-radius: var(--vip-rank-card-radius);
   border: 1px solid var(--v-line);
-  background:
+  /*
+   * พื้นหลังอวกาศวาดด้วย CSS (ไม่ใช้รูป — ตัวอักษรอ่านง่ายกว่า)
+   * เนบิวลาน้ำเงินเข้มด้านขวา + ฝุ่นดาว · วงโค้งทองใน ::before/::after
+   * ธีมสว่างปิดเนบิวลา/วงโค้งแล้วใช้ไล่สีธีมแทน (themes-static.css)
+   */
+  --vip-hero-face: linear-gradient(160deg, #02040c 0%, #040a1f 40%, #061232 75%, #0a1c4a 100%);
+  --vip-hero-nebula:
+    radial-gradient(58% 85% at 80% 28%, rgb(37 99 235 / 0.28) 0%, rgb(30 64 175 / 0.18) 38%, transparent 72%),
+    radial-gradient(36% 48% at 94% 72%, rgb(59 130 246 / 0.16) 0%, transparent 70%),
+    radial-gradient(42% 60% at 4% 100%, rgb(15 30 90 / 0.4) 0%, transparent 70%),
+    radial-gradient(70% 40% at 50% 115%, rgb(245 197 66 / 0.14) 0%, transparent 70%);
+  background-color: var(--v-panel-bg);
+  background-image:
     radial-gradient(1.5px 1.5px at 14% 30%, rgb(255 255 255 / 0.9) 50%, transparent 52%),
     radial-gradient(1.5px 1.5px at 30% 72%, rgb(255 255 255 / 0.7) 50%, transparent 52%),
     radial-gradient(2px 2px at 46% 22%, rgb(255 255 255 / 0.8) 50%, transparent 52%),
@@ -35,10 +47,60 @@
     radial-gradient(2px 2px at 70% 14%, rgb(255 255 255 / 0.9) 50%, transparent 52%),
     radial-gradient(1.5px 1.5px at 88% 24%, rgb(255 255 255 / 0.7) 50%, transparent 52%),
     radial-gradient(1.5px 1.5px at 94% 60%, rgb(255 255 255 / 0.8) 50%, transparent 52%),
-    radial-gradient(circle at 72% 42%, var(--v-glow), transparent 32%),
-    radial-gradient(45% 60% at 6% 95%, var(--v-glow), transparent 70%),
-    var(--v-panel-face),
-    var(--v-panel-bg);
+    radial-gradient(1px 1px at 22% 52%, rgb(255 255 255 / 0.55) 50%, transparent 52%),
+    radial-gradient(1px 1px at 40% 40%, rgb(255 255 255 / 0.5) 50%, transparent 52%),
+    radial-gradient(1px 1px at 78% 78%, rgb(255 236 170 / 0.7) 50%, transparent 52%),
+    radial-gradient(1px 1px at 84% 48%, rgb(255 255 255 / 0.6) 50%, transparent 52%),
+    var(--vip-hero-nebula),
+    var(--vip-hero-face);
+}
+
+/* วงโค้งทอง 2 เส้น — วงกลมใหญ่ล้นขอบ ขอบเป็น conic-gradient (เส้นสว่างเฉพาะช่วง) */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background:
+    conic-gradient(
+      from 180deg,
+      transparent 0 18%,
+      rgb(245 197 66 / 0.35) 26%,
+      rgb(253 224 130 / 0.95) 36%,
+      rgb(255 243 196 / 1) 42%,
+      rgb(245 197 66 / 0.7) 52%,
+      transparent 62% 100%
+    )
+    border-box;
+  -webkit-mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: var(--vip-hero-arcs, 1);
+  pointer-events: none;
+}
+
+.hero::before {
+  top: -78%;
+  right: -46%;
+  width: 150%;
+  border-width: 3px;
+}
+
+.hero::after {
+  top: -34%;
+  right: -22%;
+  width: 92%;
+  border-width: 1.5px;
+  opacity: calc(var(--vip-hero-arcs, 1) * 0.65);
+  transform: rotate(14deg);
 }
 
 .heroText {
@@ -78,6 +140,7 @@
 }
 
 .heroEmblem {
+  --vip-glow: var(--accent-primary);
   position: relative;
   z-index: 1;
   display: flex;
@@ -96,10 +159,88 @@
   filter: drop-shadow(0 10px 18px rgb(0 0 0 / 0.55));
 }
 
+/* แสงเรืองสีประจำระดับหลังตรา (--vip-glow ตั้งจาก tier.accent) */
+.emblemWrap::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -22%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--vip-glow) 58%, transparent) 0%,
+    color-mix(in srgb, var(--vip-glow) 22%, transparent) 38%,
+    transparent 70%
+  );
+  filter: blur(8px);
+  animation: vipGlowPulse 3.8s ease-in-out infinite;
+}
+
+/* ฝุ่นดาวลอยขึ้นหลังตราแล้วจางหาย — ค่าต่อเม็ดส่งผ่าน --x --drift --s --t --d จาก VipPageContent */
+.dust {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dust i {
+  position: absolute;
+  left: calc(50% + var(--x));
+  bottom: 34px;
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: #fff1c2;
+  box-shadow: 0 0 6px 1px rgb(255 221 140 / 0.85);
+  opacity: 0;
+  animation: vipDustRise var(--t) linear var(--d) infinite;
+}
+
+@keyframes vipGlowPulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes vipDustRise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(var(--drift), -130px, 0) scale(1.05);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .emblemWrap::before,
+  .dust i {
+    animation: none;
+  }
+
+  .dust i {
+    opacity: 0.5;
+  }
+}
+
 .pedestal {
   position: relative;
-  width: 150px;
-  height: 36px;
+  width: 160px;
+  height: 38px;
   border-radius: 50%;
   background: radial-gradient(ellipse at 50% 35%, var(--vip-rank-card-bg) 0%, var(--surface-end) 75%);
   box-shadow:
@@ -112,34 +253,99 @@
   content: "";
   position: absolute;
   z-index: -1;
-  inset: 12px -12px -14px;
+  inset: 12px -12px -15px;
   border-radius: 50%;
   background: linear-gradient(180deg, var(--vip-rank-card-bg), var(--surface-end));
   box-shadow: 0 0 0 1px var(--v-line), 0 8px 20px rgb(0 0 0 / 0.6);
 }
 
-.heroRank {
+/* ป้ายชื่อระดับใต้ตรา — แผ่นหกเหลี่ยมขอบทอง + pill "ระดับถัดไป" ซ้อนใต้ */
+.heroPlate {
   position: relative;
   z-index: 3;
-  margin: -25px 0 0;
-  font-size: clamp(20px, 5.4vw, 26px);
-  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -26px;
+}
+
+.heroRank {
+  --rank-accent: var(--value-reward);
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  min-width: 138px;
+  padding: 5px 22px 3px;
+  text-align: center;
+  font-family: "Cinzel", "Trajan Pro", Georgia, "Times New Roman", serif;
+  font-size: clamp(16px, 4.6vw, 21px);
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
+  /* ขอบทอง = พื้นของ p · พื้นดำ = ::after หดเข้า 2px · ตัวอักษรไล่เฉดอยู่ใน .heroRankText (ชั้นบนสุด) */
+  background: linear-gradient(
+    100deg,
+    #8a6a1f 0%,
+    #f6d77a 22%,
+    #fff3c4 38%,
+    #d9ad4b 55%,
+    #fff0b8 72%,
+    #9c7a2a 100%
+  );
+  clip-path: polygon(9% 0, 91% 0, 100% 50%, 91% 100%, 9% 100%, 0 50%);
+}
+
+.heroRank::after {
+  content: "";
+  position: absolute;
+  inset: 2px 3px;
+  z-index: 0;
+  clip-path: polygon(9% 0, 91% 0, 100% 50%, 91% 100%, 9% 100%, 0 50%);
+  background:
+    radial-gradient(80% 120% at 50% -20%, rgb(255 255 255 / 0.12), transparent 60%),
+    linear-gradient(180deg, #1c1626 0%, #0d0a14 100%);
+}
+
+.heroRankText {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: transparent;
+  background: linear-gradient(
+    180deg,
+    #fff8dc 0%,
+    color-mix(in srgb, var(--rank-accent) 72%, #ffffff) 30%,
+    var(--rank-accent) 55%,
+    color-mix(in srgb, var(--rank-accent) 72%, #000000) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 .heroNext {
   position: relative;
-  z-index: 3;
-  margin: 2px 0 0;
-  font-size: 12px;
-  color: var(--v-muted);
+  z-index: -1;
+  margin: -6px 0 0;
+  padding: 8px 12px 3px;
+  border-radius: 0 0 14px 14px;
+  border: 1px solid rgb(245 197 66 / 0.28);
+  border-top: 0;
+  background: linear-gradient(180deg, #17121f 0%, #0a0812 100%);
+  box-shadow: 0 6px 14px rgb(0 0 0 / 0.45);
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: rgb(255 255 255 / 0.8);
 }
 
 .heroNext b {
-  color: var(--v-ink);
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: transparent;
+  background: linear-gradient(180deg, #ffffff 0%, #d9dce6 45%, #8f95a8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 /* ── tabs (แคปซูลเดียว · แท็บละเท่ากัน · active ใช้สีปุ่มหลักของ glass) ── */

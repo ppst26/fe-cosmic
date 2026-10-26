@@ -14,6 +14,20 @@ import { VIP_PAGE_TABS } from "./vipTabConfig";
 import { useT } from "@/lib/i18n/I18nProvider";
 import s from "./vip-page.module.css";
 
+/** ฝุ่นดาวหลังตรา hero — ตำแหน่ง/ขนาด/จังหวะคงที่ (ไม่สุ่ม เพื่อให้ SSR กับ client ตรงกัน) */
+const HERO_DUST = [
+  { "--x": "-52px", "--drift": "-10px", "--s": "3px", "--t": "4.2s", "--d": "0s" },
+  { "--x": "-30px", "--drift": "8px", "--s": "2px", "--t": "5.1s", "--d": "0.9s" },
+  { "--x": "-12px", "--drift": "-6px", "--s": "2.5px", "--t": "3.8s", "--d": "1.7s" },
+  { "--x": "6px", "--drift": "12px", "--s": "2px", "--t": "4.6s", "--d": "0.4s" },
+  { "--x": "24px", "--drift": "-14px", "--s": "3px", "--t": "5.4s", "--d": "2.3s" },
+  { "--x": "42px", "--drift": "6px", "--s": "2px", "--t": "4s", "--d": "1.2s" },
+  { "--x": "58px", "--drift": "-8px", "--s": "2.5px", "--t": "4.9s", "--d": "2.9s" },
+  { "--x": "-40px", "--drift": "16px", "--s": "1.5px", "--t": "5.8s", "--d": "3.4s" },
+  { "--x": "16px", "--drift": "-18px", "--s": "1.5px", "--t": "4.4s", "--d": "2s" },
+  { "--x": "36px", "--drift": "10px", "--s": "2px", "--t": "5s", "--d": "0.2s" },
+];
+
 interface VipPageContentProps {
   activeTab: VipModalTabId;
   onSelectTab: (tab: VipModalTabId) => void;
@@ -68,19 +82,30 @@ function VipPageContentInner({
           <p className={s.heroTag}>{t("hero.tagline")}</p>
           <p className={s.heroSub}>{t("hero.sub")}</p>
         </div>
-        <div className={s.heroEmblem} aria-label={t("level.currentAriaLabel")}>
+        <div
+          className={s.heroEmblem}
+          aria-label={t("level.currentAriaLabel")}
+          style={{ "--vip-glow": currentTier.accent } as React.CSSProperties}
+        >
+          <span className={s.dust} aria-hidden>
+            {HERO_DUST.map((p, i) => (
+              <i key={i} style={p as React.CSSProperties} />
+            ))}
+          </span>
           <div className={s.emblemWrap}>
             <VipRankEmblem rankId={player.currentRankId} size="xl" />
           </div>
           <div className={s.pedestal} aria-hidden />
-          <p className={s.heroRank} style={{ color: currentTier.accent }}>
-            {currentTier.label}
-          </p>
-          {nextTier ? (
-            <p className={s.heroNext}>
-              {t("level.next")} <b>{nextTier.label}</b>
+          <div className={s.heroPlate}>
+            <p className={s.heroRank} style={{ "--rank-accent": currentTier.accent } as React.CSSProperties}>
+              <span className={s.heroRankText}>{currentTier.label}</span>
             </p>
-          ) : null}
+            {nextTier ? (
+              <p className={s.heroNext}>
+                {t("level.next")} <b>{nextTier.label}</b>
+              </p>
+            ) : null}
+          </div>
         </div>
       </section>
 
