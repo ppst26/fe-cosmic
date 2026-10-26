@@ -350,6 +350,7 @@
 
 /* ── tabs (แคปซูลเดียว · แท็บละเท่ากัน · active ใช้สีปุ่มหลักของ glass) ── */
 .tabs {
+  position: relative;
   display: flex;
   width: 100%;
   overflow: hidden;
@@ -360,6 +361,7 @@
 
 .tab {
   position: relative;
+  z-index: 1;
   display: flex;
   flex: 1 1 0;
   min-width: 0;
@@ -374,7 +376,7 @@
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.2s, background-color 0.2s;
+  transition: color 0.2s;
 }
 
 .tab.tabActive::before,
@@ -400,7 +402,21 @@
 
 .tabActive {
   color: #fff;
+}
+
+/* พื้นแท็บที่เลือก — เลื่อนไปหาแท็บใหม่ */
+.tabThumb {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 12px;
   background: linear-gradient(90deg, var(--t-ga, #4a148c), var(--t-gb, #6d28d9));
+  transition: transform var(--motion-slow) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabThumb {
+    transition: none;
+  }
 }
 
 .tab:not(.tabActive):hover {
