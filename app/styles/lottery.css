@@ -342,11 +342,12 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  /* ไล่จากสีธีมจาง ๆ หลังรูป → พื้นการ์ด — โทนใกล้กัน ไม่มีแถบดำ/เทาตัดกลาง */
   background: linear-gradient(
     95deg,
-    rgb(0 0 0 / 0.12) 0%,
-    var(--surface-solid-inner) 42%,
-    var(--lottery-glass-fill) 70%,
+    color-mix(in srgb, var(--action-solid) 24%, var(--lottery-glass-fill)) 0%,
+    color-mix(in srgb, var(--action-solid) 12%, var(--lottery-glass-fill)) 40%,
+    color-mix(in srgb, var(--action-solid) 4%, var(--lottery-glass-fill)) 70%,
     var(--lottery-glass-fill) 100%
   );
 }
@@ -386,6 +387,13 @@
 .lottery-hub-market-card--has-art .lottery-hub-market-card__text {
   max-width: 58%;
   padding-left: 0.1rem;
+}
+
+/* การ์ดแนะนำ (หวยไทย / ยี่กี) — ชื่อประเภทเด่นกว่ากริด */
+.lottery-hub-market-card--feature .lottery-feature-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .lottery-hub-market-card--type .lottery-hub-market-card__text {
