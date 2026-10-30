@@ -31,7 +31,6 @@ export function Menu3DIcon({
       height={size}
       decoding="async"
       loading={priority ? "eager" : "lazy"}
-      fetchPriority={priority ? "high" : "auto"}
       className={cn(
         "pointer-events-none shrink-0 select-none object-contain",
         className,

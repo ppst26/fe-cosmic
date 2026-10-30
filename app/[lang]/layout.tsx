@@ -3,7 +3,6 @@ import { Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import { lang } from "next/root-params";
 import { notFound } from "next/navigation";
 import { AppProviders } from "@/app/providers";
-import { AppSplash } from "@/app/components/layout/AppSplash";
 import { CosmicFooterGate } from "@/app/components/layout/CosmicFooterGate";
 import { LOCALES, hasLocale } from "@/lib/i18n/config";
 import { localeFontClass } from "@/lib/i18n/fonts";
@@ -27,6 +26,7 @@ const notoSansThai = Noto_Sans_Thai({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false, // ใช้แค่ตัวเลข/โค้ดบางจุด — ไม่แย่งโหลดก่อน paint แรก
 });
 
 export function generateStaticParams() {
@@ -75,7 +75,6 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-dvh min-w-0 flex-col text-[var(--text-primary)]">
-        <AppSplash />
         {/* ส่งทุก namespace — hub modal เปิดได้ทุกโดเมนจากทุกหน้า · ตัดต่อ segment ภายหลังถ้าขนาดเป็นปัญหา */}
         <MessagesBoundary namespaces={NAMESPACES}>
           <AppProviders>
