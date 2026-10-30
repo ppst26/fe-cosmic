@@ -1,34 +1,14 @@
-"use client";
+import { LotteryYikiPlayPage } from "@/app/components/lottery/LotteryYikiPlayPage";
 
-import React, { useMemo } from "react";
-import { useParams } from "next/navigation";
-import { LotteryPlayPageShell } from "@/app/components/lottery/LotteryPlayPageShell";
-import { LotteryYikiPlayBoard } from "@/app/components/lottery/LotteryYikiPlayBoard";
-import { getLotteryMarketBySlug } from "@/app/data/lotteryMarketsMockData";
-import { useT } from "@/lib/i18n/I18nProvider";
+/**
+ * รอบสร้างตามเวลา — ไม่ prerender ตอน build แต่ render ครั้งแรกแล้วแคชเป็นหน้า static
+ * (เดิมเป็น dynamic → <Link> ไม่ prefetch กดรอบแล้วต้องรอ server render ทุกครั้ง)
+ */
+export function generateStaticParams() {
+  return [];
+}
 
 /** Step 3 — แทงหวยตลาดรายวัน (/lottery/[marketId]/[roundId]) */
 export default function LotteryMarketPlayPage() {
-  const t = useT("lottery");
-  const urlParams = useParams();
-  const marketId = (urlParams?.marketId as string) || "";
-  const roundId = (urlParams?.roundId as string) || "";
-  const market = useMemo(() => getLotteryMarketBySlug(marketId), [marketId]);
-
-  return (
-    <LotteryPlayPageShell
-      title={t(market?.titleKey ?? "hub.title")}
-      backHref={`/lottery/${marketId}`}
-      mainClassName="yiki-page-main mx-auto max-w-[var(--content-max)] pb-0 lg:mx-0 lg:max-w-none lg:pb-4 lg:pt-0"
-    >
-      {({ onStepChange }) => (
-        <LotteryYikiPlayBoard
-          marketSlug={marketId}
-          roundId={roundId}
-          backHref={`/lottery/${marketId}`}
-          onStepChange={onStepChange}
-        />
-      )}
-    </LotteryPlayPageShell>
-  );
+  return <LotteryYikiPlayPage />;
 }

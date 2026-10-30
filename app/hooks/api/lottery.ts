@@ -17,13 +17,16 @@ export const useLotteryHub = () => useApi(["lottery-hub"], fetchLotteryHub);
 export const useLotteryPlayRounds = (slug: string) =>
   useApi(["lottery-rounds", slug], () => fetchLotteryPlayRounds(slug));
 
-/** รอบของทุกตลาดใน sidebar — key/load ต้องตรงกับ useLotteryPlayRounds */
-const LOTTERY_ROUNDS_TARGETS: readonly PrefetchTarget[] = LOTTERY_CATALOG_ENTRIES.map((entry) => ({
-  key: ["lottery-rounds", entry.slug],
-  load: () => fetchLotteryPlayRounds(entry.slug),
-}));
+/** รอบของทุกตลาดใน sidebar + กระดานแทงยี่กี (step 3) — key/load ต้องตรงกับ useLotteryPlayRounds / useYikiBoard */
+const LOTTERY_ROUNDS_TARGETS: readonly PrefetchTarget[] = [
+  ...LOTTERY_CATALOG_ENTRIES.map((entry) => ({
+    key: ["lottery-rounds", entry.slug],
+    load: () => fetchLotteryPlayRounds(entry.slug),
+  })),
+  { key: ["yiki-board"], load: fetchYikiBoard },
+];
 
-/** อุ่น cache รอบของตลาดอื่นตอนว่าง — กดเปลี่ยนตลาดใน sidebar แล้วเห็นรอบทันที ไม่ขึ้นสถานะโหลด */
+/** อุ่น cache รอบของตลาดอื่น + กระดานแทงตอนว่าง — กดเปลี่ยนตลาด / กดรอบแล้วเห็นเนื้อหาทันที ไม่ขึ้นสถานะโหลด */
 export const usePrefetchLotteryRounds = () => usePrefetchApi(LOTTERY_ROUNDS_TARGETS);
 
 export const useYikiBoard = () => useApi(["yiki-board"], fetchYikiBoard);

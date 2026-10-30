@@ -1,31 +1,14 @@
-"use client";
+import { LotteryYikiPlayPage } from "@/app/components/lottery/LotteryYikiPlayPage";
 
-import React from "react";
-import { useParams } from "next/navigation";
-import { LotteryPlayPageShell } from "@/app/components/lottery/LotteryPlayPageShell";
-import { LotteryYikiPlayBoard } from "@/app/components/lottery/LotteryYikiPlayBoard";
-import { useT } from "@/lib/i18n/I18nProvider";
+/**
+ * รอบสร้างตามเวลา — ไม่ prerender ตอน build แต่ render ครั้งแรกแล้วแคชเป็นหน้า static
+ * (เดิมเป็น dynamic → <Link> ไม่ prefetch กดรอบแล้วต้องรอ server render ทุกครั้ง)
+ */
+export function generateStaticParams() {
+  return [];
+}
 
-/** หน้าแทงหวยยี่กี 30 นาทีของรอบที่เลือก */
+/** Step 3 — แทงหวยยี่กี 30 นาที */
 export default function Yiki30PlayPage() {
-  const t = useT("lottery");
-  const urlParams = useParams();
-  const roundId = (urlParams?.roundId as string) || "";
-
-  return (
-    <LotteryPlayPageShell
-      title={t("markets.yiki30")}
-      backHref="/lottery/yiki-30"
-      mainClassName="yiki-page-main mx-auto max-w-[var(--content-max)] pb-0 lg:mx-0 lg:max-w-none lg:pb-4 lg:pt-0"
-    >
-      {({ onStepChange }) => (
-        <LotteryYikiPlayBoard
-          marketSlug="yiki-30"
-          roundId={roundId}
-          backHref="/lottery/yiki-30"
-          onStepChange={onStepChange}
-        />
-      )}
-    </LotteryPlayPageShell>
-  );
+  return <LotteryYikiPlayPage marketSlug="yiki-30" />;
 }
