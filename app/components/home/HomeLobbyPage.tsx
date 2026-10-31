@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { useT } from "@/lib/i18n/I18nProvider";
 import { useLobbyMobileHeaderHeight } from "@/app/hooks/useLobbyMobileHeaderHeight";
 import { usePathname } from "@/lib/i18n/navigation";
@@ -12,17 +13,11 @@ import { LobbyDesktopSidebarColumn } from "../layout/LobbyDesktopSidebarColumn";
 import { HomeDesktopPeekCarousel } from "./HomeDesktopPeekCarousel";
 import { WelcomeBanner } from "./WelcomeBanner";
 import { PromoCarousel } from "./PromoCarousel";
-import { HomeScreenShortcutPromo } from "./HomeScreenShortcutPromo";
 import { CategoryNav } from "./CategoryNav";
 import { LobbyAnnouncementMarquee } from "./LobbyAnnouncementMarquee";
 import { LobbyDesktopQuickBanners } from "./LobbyDesktopQuickBanners";
 import { LobbyCategoryProviders } from "./LobbyCategoryProviders";
 import { GameSection } from "./GameSection";
-import { MostOnlineProvidersSection } from "./MostOnlineProvidersSection";
-import { ProvidersSection } from "./ProvidersSection";
-import { JackpotSection } from "./JackpotSection";
-import { HallOfFame } from "./HallOfFame";
-import { TournamentsSection } from "./TournamentsSection";
 import { FloatingBottomNav } from "../layout/FloatingBottomNav";
 import { useVipModal } from "../vip/VipModalProvider";
 import { useCouponRedeem } from "../coupon/CouponRedeemProvider";
@@ -37,6 +32,20 @@ import {
   BOTTOM_NAV_DATA,
 } from "@/app/data/lobbyMockData";
 import type { LobbyContent } from "@/lib/api/lobby";
+
+/**
+ * ส่วนใต้จอแรก — แยก JS chunk (ยัง SSR ครบ ไม่กระพริบ/ไม่ CLS) ให้ bundle หลักเล็กลง ส่วนบนจอ hydrate กดได้เร็วขึ้น
+ */
+const MostOnlineProvidersSection = dynamic(() =>
+  import("./MostOnlineProvidersSection").then((m) => m.MostOnlineProvidersSection),
+);
+const ProvidersSection = dynamic(() => import("./ProvidersSection").then((m) => m.ProvidersSection));
+const JackpotSection = dynamic(() => import("./JackpotSection").then((m) => m.JackpotSection));
+const HallOfFame = dynamic(() => import("./HallOfFame").then((m) => m.HallOfFame));
+const TournamentsSection = dynamic(() => import("./TournamentsSection").then((m) => m.TournamentsSection));
+const HomeScreenShortcutPromo = dynamic(() =>
+  import("./HomeScreenShortcutPromo").then((m) => m.HomeScreenShortcutPromo),
+);
 
 /**
  * หน้า lobby หลัก — หมวดซิงก์จาก URL (/slots, /casino ฯลฯ)
@@ -265,8 +274,9 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
 
                         <div className={cn(showMobileLobbySections, isHomeLobby && "lobby-mobile-home-sections")}>
                           {homeGames.sections.map((section, index) => {
+                            /** แถวที่ 2 ลงไปอยู่ใต้จอ — lobby-defer เลื่อนการ render/โหลดรูปจนใกล้จอ (layout.css) */
                             const sectionClassName =
-                              index === 0 ? "mt-0 lg:mt-2" : "mt-4 sm:mt-5";
+                              index === 0 ? "mt-0 lg:mt-2" : "lobby-defer mt-4 sm:mt-5";
                             const gameSection = (
                               <GameSection
                                 key={section.id}

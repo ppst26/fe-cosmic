@@ -756,3 +756,18 @@
   background: color-mix(in srgb, var(--success) 22%, transparent);
   color: var(--success);
 }
+
+/*
+ * ส่วนใต้จอแรกของ lobby — ไม่ render จนเลื่อนเข้าใกล้ (content-visibility)
+ * รูป lazy ข้างในจึงไม่ถูกโหลดล่วงหน้าไปแย่ง bandwidth กับ JS/CSS ตอนเปิดหน้า (สำคัญบนเน็ตช้า)
+ * contain-intrinsic-size: auto = จำความสูงจริงหลัง render ครั้งแรก กัน scrollbar กระโดด
+ * ไม่ใส่ .hall-of-fame — วัดขนาดตาราง/ความสูงด้วย JS ตอน mount (ถ้ายังไม่ render จะวัดผิด)
+ */
+.lobby-defer,
+.providers-section,
+.most-online-section,
+.tournaments-section,
+.cosmic-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
