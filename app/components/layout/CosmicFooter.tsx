@@ -142,10 +142,11 @@ function CosmicFooterDesktop() {
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/"
-            className="cosmic-footer__brandmark text-2xl font-medium tracking-tight"
+            className="cosmic-footer__brandmark inline-flex items-center"
             aria-label={t("footer.home")}
           >
-            cosmic<span>bet</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/cosmic-dark.png" alt="cosmicbet" width={180} height={52} decoding="async" className="h-9 w-auto max-w-[200px] object-contain" />
           </Link>
           <span
             className="rounded-full bg-[color-mix(in_srgb,var(--action-solid)_35%,#2a1848)] px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider text-[var(--text-primary)]"
