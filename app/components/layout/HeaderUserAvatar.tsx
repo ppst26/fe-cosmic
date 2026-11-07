@@ -3,9 +3,11 @@
 import React from "react";
 import { ProfileNavIcon } from "../ui/Icons";
 import { cn } from "@/lib/utils";
+import { useProfile } from "@/app/hooks/api/account";
+import { UserAvatar } from "../profile/UserAvatar";
 
 interface HeaderUserAvatarProps {
-  /** คงไว้เพื่อ API เดิมกับ Header — ไม่ใช้รูป preset แล้ว */
+  /** คงไว้เพื่อ API เดิมกับ Header */
   refreshWhenProfileCloses?: boolean;
   isProfileOpen?: boolean;
   className?: string;
@@ -25,12 +27,19 @@ const ICON_CLASS: Record<NonNullable<HeaderUserAvatarProps["size"]>, string> = {
 };
 
 /**
- * ไอคอนโปรไฟล์แบบเส้นใน header — Header · LobbyDesktopTopBar
+ * รูปโปรไฟล์ (preset) ใน header — Header · LobbyDesktopTopBar
+ * ระหว่างโหลดโปรไฟล์ / ยังไม่มีข้อมูล แสดงไอคอนเส้นแทน
  */
 export function HeaderUserAvatar({
   className,
   size = "sm",
 }: HeaderUserAvatarProps) {
+  const { data: profile } = useProfile();
+
+  if (profile) {
+    return <UserAvatar profile={profile} size={size} eager className={cn("text-current", className)} />;
+  }
+
   return (
     <span
       className={cn(
