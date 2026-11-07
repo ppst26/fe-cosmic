@@ -62,31 +62,76 @@ const EMPTY_STEP_TWO: SignUpStepTwoData = {
 };
 
 /**
- * แบนเนอร์ด้านบน drawer — ข้อความต้อนรับ + ภาพประกอบ (decorative)
+ * รูปแบนเนอร์สมัครสมาชิก (ข้อความโปรโมชันอยู่ในรูป) — วางไฟล์ใน public แล้วใส่ path เช่น "/signup/banner.avif"
+ * สัดส่วนรูป 1200×491 (กรอบใช้สัดส่วนเดียวกัน) · null = แสดง placeholder ไล่สีเดิม
+ */
+const SIGN_UP_BANNER_SRC: string | null = "/signup/banner.webp";
+
+/**
+ * แบนเนอร์ด้านบน drawer — พื้นที่สัดส่วนคงที่ 1200:491 สำหรับรูปโปรโมชัน (decorative)
  */
 function SignUpDrawerHero() {
   const t = useT("auth");
   return (
-    <div className="relative min-h-[148px] overflow-hidden rounded-t-[var(--radius-panel)] sm:min-h-[160px]">
-      <div
-        className="absolute inset-0"
-        style={{ background: "var(--surface-gradient)" }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-90 cosmic-intro-bg"
-        aria-hidden="true"
-      />
+    <div className="relative aspect-[1200/491] w-full shrink-0 overflow-hidden rounded-t-[var(--radius-panel)] lg:hidden">
+      {SIGN_UP_BANNER_SRC ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={SIGN_UP_BANNER_SRC}
+          alt=""
+          aria-hidden="true"
+          width={960}
+          height={393}
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <>
+          <div
+            className="absolute inset-0"
+            style={{ background: "var(--surface-gradient)" }}
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-90 cosmic-intro-bg"
+            aria-hidden="true"
+          />
+          <div className="relative z-10 flex h-full flex-col justify-end gap-2 px-4 pb-4 sm:px-5">
+            <CosmicbetLogo className="h-5 max-w-[90px] sm:h-6 sm:max-w-[100px]" />
+            <p className="text-lg font-medium leading-tight text-[var(--text-primary)] sm:text-xl">
+              {t("signUpSheet.welcome")}
+            </p>
+            <p className="cosmic-type-sheet-desc">
+              {t("signUpSheet.tagline")}
+            </p>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
-      <div className="relative z-10 flex flex-col gap-2 px-4 pb-4 pt-10 sm:px-5">
-        <CosmicbetLogo className="h-5 max-w-[90px] sm:h-6 sm:max-w-[100px]" />
-        <p className="text-lg font-medium leading-tight text-[var(--text-primary)] sm:text-xl">
-          {t("signUpSheet.welcome")}
-        </p>
-        <p className="cosmic-type-sheet-desc">
-          {t("signUpSheet.tagline")}
-        </p>
-      </div>
+/**
+ * แบนเนอร์แนวตั้งด้านขวาของ modal บน desktop (lg+) — มือถือใช้ SignUpDrawerHero แทน
+ */
+const SIGN_UP_SIDE_BANNER_SRC: string | null = "/signup/banner-tall.webp";
+
+function SignUpSideBanner() {
+  return (
+    <div className="relative hidden w-[280px] shrink-0 self-stretch overflow-hidden lg:block" aria-hidden="true">
+      {SIGN_UP_SIDE_BANNER_SRC ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={SIGN_UP_SIDE_BANNER_SRC}
+          alt=""
+          width={640}
+          height={1137}
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 cosmic-intro-bg" style={{ background: "var(--surface-gradient)" }} />
+      )}
     </div>
   );
 }
@@ -367,16 +412,16 @@ export function SignUpBottomDrawer({
         <Dialog.Content
           aria-describedby={undefined}
           className={responsiveAuthSheetContentClass(
-            "z-[60] max-h-[min(92dvh,720px)] flex-col overflow-hidden",
+            "z-[60] max-h-[min(92dvh,720px)] flex-col overflow-hidden lg:w-[min(94vw,740px)] lg:max-h-[min(90dvh,680px)] lg:flex-row",
           )}
         >
-          {step === 1 && <SignUpDrawerHero />}
+          <SignUpDrawerHero />
 
           <Dialog.Close asChild>
             <button
               type="button"
               className={responsiveSheetCloseButtonClass(
-                `absolute right-3 z-20 backdrop-blur-sm ${step === 1 ? "top-3" : "top-4"}`,
+                "absolute right-3 top-3 z-20 backdrop-blur-sm",
               )}
               aria-label={t("signUpSheet.close")}
             >
@@ -385,9 +430,7 @@ export function SignUpBottomDrawer({
           </Dialog.Close>
 
           <div
-            className={`flex-1 overflow-y-auto px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${
-              step === 1 ? "pt-4" : "pt-14"
-            }`}
+            className={`flex-1 overflow-y-auto px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 sm:px-5 lg:px-8 lg:py-8 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden`}
           >
             {step === 1 ? (
               <SignUpStepOne
@@ -410,6 +453,8 @@ export function SignUpBottomDrawer({
               />
             )}
           </div>
+
+          <SignUpSideBanner />
 
           <SignUpPickerSheet
             isOpen={signUpPicker === "bank"}

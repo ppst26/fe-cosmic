@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Dialog } from "radix-ui";
-import { CloseIcon, LockIcon, PhoneIcon } from "../ui/Icons";
+import { CloseIcon, CosmicbetLogo, LockIcon, PhoneIcon } from "../ui/Icons";
 import { COSMIC_SHEET_FIELD_ROW } from "../ui/cosmicButtonClasses";
 import { CosmicStackedActionButton } from "../ui/CosmicStackedActionButton";
 import {
@@ -12,7 +12,6 @@ import {
 } from "../ui/responsiveSheetDialog";
 import { useAuth } from "./AuthProvider";
 import { useToast } from "@/context/ToastContext";
-import { ModalDesktopTitleBlock } from "../ui/ModalTitleLeadingIcon";
 import {
   isThaiMobilePhone,
   PASSWORD_MAX_LENGTH,
@@ -100,11 +99,10 @@ export function LoginBottomDrawer({
             </button>
           </Dialog.Close>
 
-          <ModalDesktopTitleBlock
-            titleIconId="profile"
-            title={<Dialog.Title className="text-2xl font-medium">{t("login")}</Dialog.Title>}
-            subtitle={<p className="cosmic-type-sheet-desc mt-1">{t("loginSheet.subtitle")}</p>}
-          />
+          <div className="flex justify-center pt-2">
+            <Dialog.Title className="sr-only">{t("login")}</Dialog.Title>
+            <CosmicbetLogo className="h-9 max-w-[170px] sm:h-10 sm:max-w-[190px]" />
+          </div>
 
           <form className="mt-5 flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="space-y-1.5">
