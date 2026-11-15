@@ -61,7 +61,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -149,7 +149,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -237,7 +237,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -325,7 +325,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -413,7 +413,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -501,7 +501,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -644,7 +644,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -822,7 +822,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -1000,7 +1000,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -1178,7 +1178,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);
@@ -1356,7 +1356,7 @@
   --focus-ring: color-mix(in srgb, var(--t-accent) 70%, white);
   --border-active: color-mix(in srgb, var(--t-accent) 55%, var(--border-subtle));
   --line-tab-neon-gradient: linear-gradient(90deg, var(--t-active) 0%, color-mix(in srgb, var(--t-active) 78%, white) 100%);
-  --line-tab-neon-glow: 0 0 8px color-mix(in srgb, var(--t-active) 70%, transparent), 0 0 16px color-mix(in srgb, var(--t-active) 38%, transparent);
+  --line-tab-neon-glow: none;
   --category-active-gradient: linear-gradient(110deg, var(--t-active), color-mix(in srgb, var(--t-active) 78%, black));
   --action-solid: var(--t-action);
   --action-solid-hover: color-mix(in srgb, var(--t-action) 86%, white);

@@ -294,7 +294,7 @@
 .home-desktop-peek-carousel__dot.is-active {
   width: 1.35rem;
   background: var(--accent-primary);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-primary) 55%, transparent);
+  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

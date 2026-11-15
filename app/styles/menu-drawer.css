@@ -516,7 +516,6 @@
 .menu-item:hover .menu-item__icon-box {
   background: linear-gradient(180deg, #35245f 0%, #1f143c 55%, #0d081b 100%);
   box-shadow:
-    0 0 14px rgba(119, 71, 229, 0.4),
     0 6px 16px rgba(0, 0, 0, 0.45);
   color: #ffffff;
   transform: scale(1.05);
@@ -688,9 +687,7 @@
       rgb(20 17 28 / 1) 100%
     );
     box-shadow:
-      0 14px 28px rgb(0 0 0 / 0.38),
-      0 0 0 1px rgb(255 255 255 / 0.09),
-      0 0 22px color-mix(in srgb, var(--accent-primary) 24%, transparent);
+      0 14px 28px rgb(0 0 0 / 0.38), 0 0 0 1px rgb(255 255 255 / 0.09);
   }
 
   .menu-grid-tile:is(:hover, :focus-visible) .menu-grid-icon {
@@ -875,9 +872,6 @@
     color-mix(in srgb, var(--accent-highlight) 55%, transparent),
     color-mix(in srgb, var(--accent-primary) 40%, transparent)
   );
-  box-shadow:
-    0 0 24px color-mix(in srgb, var(--accent-primary) 28%, transparent),
-    0 8px 20px rgb(0 0 0 / 0.35);
 }
 
 .menu-drawer-avatar__img {
@@ -991,9 +985,6 @@
 
 .menu-content--mobile-stack .menu-drawer-avatar__ring {
   padding: 2px;
-  box-shadow:
-    0 0 16px color-mix(in srgb, var(--accent-primary) 22%, transparent),
-    0 4px 12px rgb(0 0 0 / 0.3);
 }
 
 .menu-content--mobile-stack .menu-drawer-avatar__img {

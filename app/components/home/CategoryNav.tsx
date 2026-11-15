@@ -267,7 +267,7 @@ export function CategoryNav({
       {/* Progress bar ที่เคลื่อนตามตำแหน่ง scroll แนวนอน เหมือนในตัวอย่าง */}
       <div className="category-nav__progress-track relative w-full h-[2px] bg-white/10 rounded-full mt-0.5 overflow-hidden">
         <div
-          className="category-nav__progress-bar absolute top-0 bottom-0 rounded-full bg-gradient-to-r from-[#6366f1] via-[#7047eb] to-[#a855f7] shadow-[0_0_8px_rgba(112,71,235,0.8)]"
+          className="category-nav__progress-bar absolute top-0 bottom-0 rounded-full bg-gradient-to-r from-[#6366f1] via-[#7047eb] to-[#a855f7]"
           style={{
             width: `${thumbWidthPercent}%`,
             left: `${scrollProgress * (100 - thumbWidthPercent)}%`,

@@ -896,7 +896,6 @@
   border-radius: var(--radius-pill);
   background: var(--wheel-hub-bg, linear-gradient(135deg, #241442, #140b28));
   box-shadow:
-    0 0 16px var(--wheel-hub-glow, rgba(139, 92, 246, 0.45)),
     0 0 0 2px var(--wheel-hub-ring, rgba(139, 92, 246, 0.6));
   letter-spacing: 0.12em;
   color: var(--wheel-hub-text, #ffffff);

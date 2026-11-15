@@ -110,7 +110,7 @@
   height: 2.5px;
   border-radius: 999px;
   background: var(--line-tab-neon-gradient);
-  box-shadow: var(--line-tab-neon-glow);
+  box-shadow: none;
   content: "";
   transform-origin: center;
   animation: line-tab-underline-in var(--motion-fast) var(--ease-out) both;
@@ -136,7 +136,7 @@
   height: 2.5px;
   border-radius: 999px;
   background: var(--line-tab-neon-gradient);
-  box-shadow: var(--line-tab-neon-glow);
+  box-shadow: none;
   pointer-events: none;
 }
 

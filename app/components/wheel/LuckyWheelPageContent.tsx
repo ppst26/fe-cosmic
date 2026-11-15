@@ -130,7 +130,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
           <div className="mb-2 flex w-full items-center justify-between gap-3 px-0.5 sm:px-1">
             <Link
               href="/gems-store"
-              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white shadow-[0_0_12px_rgba(168,85,247,0.15)] transition-all hover:border-purple-400/60 hover:bg-[#1d123d] active:scale-95"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white transition-all hover:border-purple-400/60 hover:bg-[#1d123d] active:scale-95"
               aria-label={t("wheel.gemsBalanceAria")}
             >
               <GoldGemIcon className="h-3.5 w-3.5 shrink-0 text-sky-400" />
@@ -139,7 +139,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
               </span>
             </Link>
             <div
-              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white shadow-[0_0_12px_rgba(168,85,247,0.15)]"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-purple-500/30 bg-[#150d2c]/90 px-3 text-white"
               aria-label={t("wheel.ticketsAria")}
             >
               <GoldTicketIcon className="h-3.5 w-3.5 shrink-0 text-purple-400" />
@@ -158,7 +158,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
           {/* Indicator dots 2 จุด ใต้วงล้อ */}
           <div className="mt-2 flex items-center justify-center gap-1.5" aria-hidden="true">
             <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-            <span className="h-1.5 w-1.5 rounded-full bg-[#a855f7] shadow-[0_0_6px_rgba(168,85,247,0.8)]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#a855f7]" />
           </div>
         </div>
 

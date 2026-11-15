@@ -133,7 +133,7 @@ function DailyCheckInCardView({
           ],
           isToday && [
             "border-1.5 border-[color:var(--ci-accent,#7747e5)] bg-gradient-to-b from-[var(--ci-today-from,#261c3e)] to-[var(--ci-today-to,#14101e)] cursor-pointer",
-            "shadow-[0_0_16px_color-mix(in_srgb,var(--ci-accent,#7747e5)_45%,transparent),inset_0_1px_0_rgba(255,255,255,0.12)] scale-[1.02] ring-1 ring-[color:var(--ci-accent,#7747e5)]/50",
+            " scale-[1.02] ring-1 ring-[color:var(--ci-accent,#7747e5)]/50",
           ],
           isLocked && [
             "border border-white/8 bg-gradient-to-b from-[var(--ci-locked-from,#1c1a24)] to-[var(--ci-locked-to,#121017)] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] opacity-85 hover:border-white/15",
@@ -143,7 +143,7 @@ function DailyCheckInCardView({
       >
         {isClaimed ? (
           <div
-            className="absolute -top-1.5 -right-1 z-20 flex h-4 w-4 sm:h-4.5 sm:w-4.5 items-center justify-center rounded-full border border-[color:var(--ci-accent,#7747e5)] bg-[color:var(--ci-badge,#1a1230)] text-[color:var(--ci-soft,#c4b5fd)] shadow-[0_0_8px_color-mix(in_srgb,var(--ci-accent,#7747e5)_40%,transparent)]"
+            className="absolute -top-1.5 -right-1 z-20 flex h-4 w-4 sm:h-4.5 sm:w-4.5 items-center justify-center rounded-full border border-[color:var(--ci-accent,#7747e5)] bg-[color:var(--ci-badge,#1a1230)] text-[color:var(--ci-soft,#c4b5fd)]"
             aria-hidden="true"
           >
             <svg
@@ -223,7 +223,7 @@ function DailyCheckInCardView({
             isHubSurface ? "py-1 text-xs sm:text-sm" : "py-0.5 text-xs",
             isClaimed && "border border-[color:var(--ci-accent,#7747e5)]/30 bg-[color:var(--ci-accent,#7747e5)]/15 text-[color:var(--ci-soft,#c4b5fd)]",
             isToday &&
-              "bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] text-[color:var(--ci-on-accent,#fff)] shadow-[0_0_10px_color-mix(in_srgb,var(--ci-accent,#7747e5)_50%,transparent)] group-hover:brightness-110 font-medium",
+              "bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] text-[color:var(--ci-on-accent,#fff)]  group-hover:brightness-110 font-medium",
             isLocked && "bg-white/6 text-[var(--text-muted)]",
           )}
         >
@@ -342,7 +342,7 @@ function DailyCheckInCardView({
           )}
         >
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] shadow-[0_0_10px_color-mix(in_srgb,var(--ci-accent,#7747e5)_50%,transparent)] transition-all duration-500 ease-out"
+            className="h-full rounded-full bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] transition-all duration-500 ease-out"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -404,7 +404,7 @@ function DailyCheckInCardView({
           {/* Horizontal Connecting Track */}
           <div className="absolute left-6 right-6 top-[34px] sm:top-[38px] h-0.5 bg-white/10" />
           <div
-            className="absolute left-6 top-[34px] sm:top-[38px] h-0.5 bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] shadow-[0_0_8px_color-mix(in_srgb,var(--ci-accent,#7747e5)_60%,transparent)] transition-all duration-500"
+            className="absolute left-6 top-[34px] sm:top-[38px] h-0.5 bg-gradient-to-r from-[var(--ci-accent,#7747e5)] to-[var(--ci-accent-2,#5b8cff)] transition-all duration-500"
             style={{
               width: checkedInCount >= 7 ? "30%" : "8%",
             }}
@@ -426,7 +426,7 @@ function DailyCheckInCardView({
                   className={cn(
                     "rounded-md px-2 py-0.5 text-xs sm:text-sm font-medium tabular-nums transition-all whitespace-nowrap",
                     isReached
-                      ? "border border-[color:var(--ci-accent,#7747e5)]/40 bg-[color:var(--ci-accent,#7747e5)]/20 text-[color:var(--ci-soft,#e9d5ff)] shadow-[0_0_8px_color-mix(in_srgb,var(--ci-accent,#7747e5)_25%,transparent)]"
+                      ? "border border-[color:var(--ci-accent,#7747e5)]/40 bg-[color:var(--ci-accent,#7747e5)]/20 text-[color:var(--ci-soft,#e9d5ff)] "
                       : "border border-white/8 bg-[color:var(--ci-locked-to,#14121a)] text-[var(--text-muted)]",
                   )}
                 >
@@ -438,7 +438,7 @@ function DailyCheckInCardView({
                   className={cn(
                     "flex h-8.5 w-8.5 sm:h-9.5 sm:w-9.5 items-center justify-center rounded-full transition-all overflow-hidden p-1",
                     isReached
-                      ? "border-2 border-[color:var(--ci-accent,#7747e5)] bg-gradient-to-b from-[var(--ci-claimed-from,#251842)] to-[var(--ci-claimed-to,#120e20)] shadow-[0_0_12px_color-mix(in_srgb,var(--ci-accent,#7747e5)_50%,transparent)]"
+                      ? "border-2 border-[color:var(--ci-accent,#7747e5)] bg-gradient-to-b from-[var(--ci-claimed-from,#251842)] to-[var(--ci-claimed-to,#120e20)] "
                       : "border border-white/10 bg-[color:var(--ci-locked-to,#14121a)]",
                   )}
                 >
