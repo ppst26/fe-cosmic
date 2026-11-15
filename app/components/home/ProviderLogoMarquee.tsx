@@ -11,7 +11,7 @@ interface ProviderLogoMarqueeProps {
 }
 
 /**
- * แถวโลโก้ค่ายเลื่อนอัตโนมัติ — grayscale ปกติ · hover โลโก้ขาว
+ * แถวโลโก้ค่ายเลื่อนอัตโนมัติ — โลโก้สีจริง ระยะห่างกว้าง
  * ถูกเรียกใช้โดย ProvidersSection.tsx
  */
 export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
@@ -20,7 +20,7 @@ export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
 
   const renderGroup = (groupKey: string, ariaHidden?: boolean) => (
     <div
-      className="provider-logo-marquee__group flex shrink-0 items-center gap-[clamp(0.75rem,2vw,1.25rem)] px-[clamp(0.375rem,1vw,0.75rem)]"
+      className="provider-logo-marquee__group flex shrink-0 items-center gap-[clamp(3rem,9vw,4.5rem)] px-[clamp(1.5rem,4.5vw,2.25rem)]"
       aria-hidden={ariaHidden || undefined}
     >
       {items.map((item) => (

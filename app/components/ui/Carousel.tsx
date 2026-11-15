@@ -8,7 +8,8 @@ import { useT } from "@/lib/i18n/I18nProvider";
 interface CarouselProps {
   title: string;
   icon?: React.ReactNode;
-  viewAllHref: string;
+  /** ไม่ส่ง = ไม่แสดงปุ่ม View All */
+  viewAllHref?: string;
   viewAllLabel?: string;
   /** preset ของ track: carousel-games | carousel-popular | carousel-providers (นิยามใน globals.css) */
   trackClassName: string;
@@ -89,6 +90,7 @@ export function Carousel({
         actionContent={
           <CarouselControls
             viewAllHref={viewAllHref}
+            showViewAll={Boolean(viewAllHref)}
             viewAllLabel={viewAllLabel}
             sectionTitle={title}
             canPrev={canPrev}
