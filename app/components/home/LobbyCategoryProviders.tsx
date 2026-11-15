@@ -156,7 +156,7 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
     const totalCount =
       LOBBY_PROVIDER_FILTER_ID === "all-in-one" && !searchQuery.trim()
         ? 42
-        : featured.length + grid.length;
+        : grid.length; /* การ์ดใหญ่ถูกซ่อน และ JILI / Pragmatic อยู่ใน grid อยู่แล้ว */
 
     return { grid, featured, totalCount };
   }, [LOBBY_PROVIDER_FILTER_ID, searchQuery]);
@@ -356,6 +356,8 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
           <SlotProviderCards
             featuredProviders={slotsContent.featured}
             gridProviders={slotsContent.grid}
+            /* ไม่แสดงการ์ดใหญ่ JILI / Pragmatic — ทุกค่ายเรียงในตาราง 3 คอลัมน์เดียวกัน */
+            hideFeatured
             totalCount={slotsContent.totalCount}
             hideTitleRow
             onProviderSelect={handleSlotProviderSelect}
