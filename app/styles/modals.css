@@ -208,8 +208,7 @@ a.cosmic-sheet-soft-glass--interactive:hover {
   color: var(--text-primary);
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, rgb(255 255 255) 26%, transparent),
-    inset 0 -1px 0 color-mix(in srgb, #1a0a3d 35%, transparent),
-    0 6px 18px color-mix(in srgb, var(--action-solid) 40%, transparent);
+    inset 0 -1px 0 color-mix(in srgb, #1a0a3d 35%, transparent);
 }
 
 .cosmic-sheet-title-capsule :where([data-radix-dialog-title], h2, h3) {
@@ -225,8 +224,7 @@ a.cosmic-sheet-soft-glass--interactive:hover {
   color: var(--text-primary);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.1),
-    inset 0 -1px 0 rgb(0 0 0 / 0.35),
-    0 4px 12px rgb(0 0 0 / 0.38);
+    inset 0 -1px 0 rgb(0 0 0 / 0.35);
 }
 
 .cosmic-sheet-segment-track {
@@ -257,8 +255,7 @@ a.cosmic-sheet-soft-glass--interactive:hover {
   color: var(--text-primary);
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, rgb(255 255 255) 26%, transparent),
-    inset 0 -1px 0 color-mix(in srgb, #1a0a3d 35%, transparent),
-    0 6px 20px color-mix(in srgb, var(--action-solid) 44%, transparent);
+    inset 0 -1px 0 color-mix(in srgb, #1a0a3d 35%, transparent);
 }
 
 .cosmic-sheet-segment-track .cosmic-segment-btn:hover:not(.is-active) {
@@ -822,5 +819,11 @@ button.profile-account-inner-card--interactive:focus-visible {
 
 :is(.cosmic-mobile-sheet, .sign-up-picker-sheet) .cosmic-choice-btn:hover:not(.is-active) {
   background: var(--sheet-row-fill-hover);
+}
+
+/* ปุ่มปิดใน sheet — ไม่มี drop shadow */
+.cosmic-mobile-sheet button.glass-icon-btn,
+.cosmic-mobile-sheet a.glass-icon-btn {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07);
 }
 

@@ -18,6 +18,7 @@
 | เข็มชี้ | `pointer.color` · `pointer.glow` · `pointer.imageUrl` (ปลายชี้ลง) · `pointer.sizePercent` | เข็มรูปเพชร |
 | ปุ่มกลาง | `hub.label` · `hub.logoUrl` · `hub.background` · `hub.textColor` · `hub.ringColor` · `hub.glow` · `hub.sizePercent` | โลโก้แบรนด์แทนคำว่า SPIN |
 | พื้นหลัง | `background.color` · `background.imageUrl` | วงกลมพื้นหลังวงล้อ |
+| รัศมีหลังวงล้อ (rays) | `rays.enabled` (ต้อง `true` ถึงจะแสดง) · `rays.count` (4–48) · `rays.color` · `rays.opacity` (0–1) · `rays.widthPercent` (10–90) · `rays.sizePercent` (100–300) · `rays.rotateSeconds` (4–300, `0` = ไม่หมุน) · `rays.direction` (`cw` / `ccw`) | แฉกสีทอง 16 แฉกหมุนช้า |
 | เวลาหมุน | `spinDurationMs` (2000–10000) | 5000 |
 
 ## รูปแบบค่า
@@ -44,6 +45,7 @@
     "pointer": { "color": "#facc15", "glow": "rgba(250, 204, 21, 0.8)" },
     "hub": { "label": "หมุน", "background": "radial-gradient(circle, #fde68a, #b45309)", "textColor": "#2a1600", "ringColor": "#facc15", "glow": "rgba(250, 204, 21, 0.7)", "sizePercent": 20 },
     "background": { "color": "radial-gradient(circle, #3b0a0a, transparent 70%)" },
+    "rays": { "enabled": true, "count": 16, "color": "#d4a017", "opacity": 0.45, "widthPercent": 45, "sizePercent": 170, "rotateSeconds": 60, "direction": "cw" },
     "spinDurationMs": 5000
   }
 }

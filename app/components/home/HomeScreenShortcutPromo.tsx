@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { usePwaInstall } from "@/app/components/pwa/PwaInstallProvider";
-import { BRAND_LOGO_SRC } from "@/app/components/ui/Icons";
 import { SectionHeader } from "@/app/components/ui/SectionHeader";
 import { useToast } from "@/context/ToastContext";
 import { cn } from "@/lib/utils";
@@ -12,7 +11,7 @@ import { useT } from "@/lib/i18n/I18nProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 
 /** โลโก้กลมในวง glow — public/cmb-rounded.avif */
-const HOME_A2HS_ROUND_LOGO_SRC = "/cmb-rounded.avif";
+const HOME_A2HS_ROUND_LOGO_SRC = "/cosmic-dark.png";
 
 type InstallPlatform = "android" | "ios";
 
@@ -157,15 +156,6 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
       <div className="home-a2hs-card">
         <div className="home-a2hs-card__body">
           <div className="home-a2hs-card__lead">
-            <div className="home-a2hs-card__chip">
-              <Image
-                src={BRAND_LOGO_SRC}
-                alt=""
-                width={44}
-                height={44}
-                className="home-a2hs-card__chip-img"
-              />
-            </div>
             <div className="min-w-0">
               <p className="home-a2hs-card__title">{t("a2hs.cardTitle")}</p>
               <p className="home-a2hs-card__subtitle">
@@ -200,12 +190,11 @@ export function HomeScreenShortcutPromo({ className }: { className?: string }) {
         </div>
 
         <div className="home-a2hs-card__hero" aria-hidden="true">
-          <div className="home-a2hs-card__hero-aura" />
           <Image
             src={HOME_A2HS_ROUND_LOGO_SRC}
             alt=""
-            width={136}
-            height={136}
+            width={600}
+            height={116}
             className="home-a2hs-card__hero-img"
           />
         </div>

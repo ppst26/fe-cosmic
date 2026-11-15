@@ -712,7 +712,7 @@
 .cosmic-segment-btn.is-active {
   background: var(--action-solid);
   color: var(--text-primary);
-  box-shadow: 0 2px 12px rgb(73 48 223 / 35%);
+  box-shadow: none;
 }
 
 /** segment — glass track · แท็บ active white solid (คืนยอด ฯลฯ) */

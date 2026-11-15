@@ -39,7 +39,8 @@
 
   .lobby-mobile-header-band {
     position: fixed;
-    top: 0;
+    /* ต่อใต้แบนเนอร์ติดตั้งแอป (PwaInstallBanner ตั้ง --pwa-banner-h) */
+    top: var(--pwa-banner-h, 0px);
     left: 0;
     right: 0;
     z-index: 50;

@@ -9,7 +9,7 @@
   border-radius: var(--radius-panel);
   background: var(--inner-card-fill);
   padding: 0.65rem 0.65rem 0;
-  box-shadow: 0 20px 44px rgb(0 0 0 / 0.5);
+  box-shadow: none;
   outline: none;
   transform-origin: top right;
   overflow: hidden;

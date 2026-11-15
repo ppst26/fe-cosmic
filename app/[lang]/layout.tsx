@@ -7,6 +7,7 @@ import { CosmicFooterGate } from "@/app/components/layout/CosmicFooterGate";
 import { LOCALES, hasLocale } from "@/lib/i18n/config";
 import { localeFontClass } from "@/lib/i18n/fonts";
 import { MessagesBoundary } from "@/lib/i18n/MessagesBoundary";
+import { PwaInstallBanner } from "@/app/components/pwa/PwaInstallBanner";
 import { NAMESPACES } from "@/lib/i18n/messages";
 import { getT } from "@/lib/i18n/server";
 import { DEFAULT_THEME, LIGHT_THEME_KEYS, THEME_KEYS, THEME_STORAGE_KEY } from "@/lib/themes";
@@ -79,6 +80,7 @@ export default async function RootLayout({
         <MessagesBoundary namespaces={NAMESPACES}>
           <AppProviders>
             <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
+              <PwaInstallBanner />
               <div className="flex min-h-0 min-w-0 flex-1 flex-col">{children}</div>
               <CosmicFooterGate />
             </div>

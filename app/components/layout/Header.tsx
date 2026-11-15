@@ -100,7 +100,7 @@ export function Header({
         className={cn(
           "w-full min-w-0 border-0 px-2 pb-1.5 sm:px-2.5 lg:hidden",
           mobileSticky
-            ? "cosmic-mobile-chrome-surface sticky top-0 z-50 pt-[calc(env(safe-area-inset-top,0px)+6px)]"
+            ? "cosmic-mobile-chrome-surface sticky top-[var(--pwa-banner-h,0px)] z-50 pt-[calc(env(safe-area-inset-top,0px)+6px)]"
             : "relative bg-transparent pt-1.5",
         )}
       >
