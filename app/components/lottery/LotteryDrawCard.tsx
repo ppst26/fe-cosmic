@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import React from "react";
-import Link from "@/lib/i18n/navigation";
 import type { LotteryFlagTone } from "@/app/types/lottery";
 import { LotteryCountdown } from "./LotteryFlagOrb";
 import { LotteryMarketIcon } from "./LotteryMarketIcon";
 import { useLotteryI18n } from "./useLotteryI18n";
-import { lotteryRulesHref } from "@/lib/lottery/rules";
+import { LotteryRulesModal } from "./LotteryRulesModal";
 
 interface LotteryDrawCardProps {
   title: string;
@@ -20,7 +20,7 @@ interface LotteryDrawCardProps {
 
 /**
  * การ์ดหัวงวด — ใช้ทุกประเภทหวย (รัฐบาลไทย · ยี่กี · หวยหุ้น)
- * มี marketSlug → กดแล้วไปหน้ากติกา / อัตราการจ่ายของตลาดนั้น (/lottery/rules/[slug])
+ * มี marketSlug → กดแล้วเปิด modal กติกา / อัตราการจ่ายของตลาดนั้น
  */
 export function LotteryDrawCard({
   title,
@@ -31,6 +31,7 @@ export function LotteryDrawCard({
   marketSlug,
 }: LotteryDrawCardProps) {
   const { t, countdown } = useLotteryI18n();
+  const [rulesOpen, setRulesOpen] = useState(false);
   const className = "thai-lotto-draw flex flex-wrap items-center gap-3 p-4";
   const content = (
     <>
@@ -55,13 +56,18 @@ export function LotteryDrawCard({
 
   if (marketSlug) {
     return (
-      <Link
-        href={lotteryRulesHref(marketSlug)}
-        className={className}
-        aria-label={`${t("draw.aria")} — ${t("market.rules")}`}
-      >
-        {content}
-      </Link>
+      <>
+        <button
+          type="button"
+          onClick={() => setRulesOpen(true)}
+          className={`${className} w-full cursor-pointer text-left`}
+          aria-haspopup="dialog"
+          aria-label={`${t("draw.aria")} — ${t("market.rules")}`}
+        >
+          {content}
+        </button>
+        <LotteryRulesModal open={rulesOpen} onClose={() => setRulesOpen(false)} marketSlug={marketSlug} />
+      </>
     );
   }
   return (
