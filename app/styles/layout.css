@@ -120,9 +120,11 @@
     overflow: hidden;
   }
 
-  /* หน้าสรุป/รายการโพย — scroll ทั้ง main (ไม่ใช้เลย์เอาต์เต็มจอแบบแทงหวย) */
+  /* หน้าสรุป/รายการโพย/ผลรางวัล — scroll ทั้ง main (ไม่ใช้เลย์เอาต์เต็มจอแบบแทงหวย) */
   .lobby-desktop-center > main.page-shell--feature.lottery-page-main.lottery-slips-page,
-  .lobby-desktop-center--over-rail > main.page-shell--feature.lottery-page-main.lottery-slips-page {
+  .lobby-desktop-center--over-rail > main.page-shell--feature.lottery-page-main.lottery-slips-page,
+  .lobby-desktop-center > main.page-shell--feature.lottery-page-main.lottery-results-page,
+  .lobby-desktop-center--over-rail > main.page-shell--feature.lottery-page-main.lottery-results-page {
     overflow-x: clip;
     overflow-y: auto;
     overscroll-behavior: contain;
