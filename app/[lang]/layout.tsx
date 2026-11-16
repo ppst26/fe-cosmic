@@ -10,6 +10,7 @@ import { MessagesBoundary } from "@/lib/i18n/MessagesBoundary";
 import { PwaInstallBanner } from "@/app/components/pwa/PwaInstallBanner";
 import { NAMESPACES } from "@/lib/i18n/messages";
 import { getT } from "@/lib/i18n/server";
+import { loadSiteBrand } from "@/lib/api/siteBrand";
 import { DEFAULT_THEME, LIGHT_THEME_KEYS, THEME_KEYS, THEME_STORAGE_KEY } from "@/lib/themes";
 import "@/app/globals.css";
 
@@ -35,10 +36,10 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getT("meta");
+  const [t, brand] = await Promise.all([getT("meta"), loadSiteBrand()]);
   return {
     applicationName: "Cosmicbet",
-    title: t("title"),
+    title: brand.title,
     description: t("description"),
     appleWebApp: {
       capable: true,
@@ -46,7 +47,9 @@ export async function generateMetadata(): Promise<Metadata> {
       statusBarStyle: "black-translucent",
     },
     icons: {
-      apple: "/pwa/apple-touch-icon.png",
+      icon: brand.faviconUrl,
+      shortcut: brand.faviconUrl,
+      apple: brand.appleTouchIconUrl,
     },
   };
 }
