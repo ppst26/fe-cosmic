@@ -96,10 +96,10 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
         <div className="relative flex items-center justify-between gap-3">
           <Link
             href="/"
-            className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
+            className="cosmic-back-btn"
             aria-label={t("wheel.backHome")}
           >
-            <ArrowLeftIcon className="h-6 w-6 text-white" />
+            <ArrowLeftIcon className="h-5 w-5" />
           </Link>
           <div className="pointer-events-none absolute left-1/2 flex -translate-x-1/2 flex-col items-center text-center">
             <h1 className="text-base font-medium leading-tight text-white sm:text-lg">{t("wheel.title")}</h1>

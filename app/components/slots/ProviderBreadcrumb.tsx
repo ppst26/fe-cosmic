@@ -31,10 +31,10 @@ export function ProviderBreadcrumb({
         {/* ปุ่มย้อนกลับ arrow back */}
         <Link
           href={backHref}
-          className="flex h-8 w-8 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform shrink-0 cursor-pointer"
+          className="cosmic-back-btn"
           aria-label={t("breadcrumb.backToCategory", { category: categoryLabel })}
         >
-          <ArrowLeftIcon className="h-5.5 w-5.5 text-white" />
+          <ArrowLeftIcon className="h-5 w-5" />
         </Link>
 
         {/* Breadcrumb Links: สล็อต / [ค่ายเกม] */}

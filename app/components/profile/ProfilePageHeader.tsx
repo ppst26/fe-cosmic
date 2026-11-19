@@ -16,10 +16,10 @@ export function ProfilePageHeader({ title }: { title: string }) {
       <div className="relative mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
         <Link
           href="/"
-          className="flex h-10 w-10 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
+          className="cosmic-back-btn"
           aria-label={t("backHome")}
         >
-          <ArrowLeftIcon className="h-6 w-6 text-white" />
+          <ArrowLeftIcon className="h-5 w-5" />
         </Link>
         <h1
           className="page-sub-header__title absolute left-1/2 max-w-[70%] -translate-x-1/2 truncate text-center text-white select-none pointer-events-none"

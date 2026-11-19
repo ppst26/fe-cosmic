@@ -18,7 +18,7 @@ export type SlotProvidersHeaderProps = PageSubHeaderProps;
 
 /**
  * แถบ Header ย่อยสำหรับหน้า standalone มือถือ (แชร์ร่วมกันทุกหน้า)
- * ปุ่มย้อนกลับ arrow back ไร้ card ครอบ + ชื่อหัวข้อจัดกึ่งกลาง
+ * ปุ่มย้อนกลับวงกลม + ชื่อหัวข้อจัดกึ่งกลาง
  */
 export function StandaloneSubHeader({
   title: titleProp,
@@ -42,14 +42,14 @@ export function StandaloneSubHeader({
   return (
     <header className={`standalone-sub-header page-sub-header w-full min-w-0 ${className}`}>
       <div className="standalone-sub-header__inner relative mx-auto flex h-10 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
-        {/* ปุ่มย้อนกลับ arrow back (ไม่มี card ครอบ) */}
+        {/* ปุ่มย้อนกลับ — วงกลม (.cosmic-back-btn) */}
         <Link
           href={backHref}
           onClick={handleBack}
-          className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-start text-white hover:text-white/80 active:scale-90 transition-transform cursor-pointer"
+          className="cosmic-back-btn relative z-10"
           aria-label={t("subHeader.back")}
         >
-          <ArrowLeftIcon className="h-5 w-5 text-white" />
+          <ArrowLeftIcon className="h-5 w-5" />
         </Link>
 
         {/* ชื่อหน้า กึ่งกลาง */}
