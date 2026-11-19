@@ -369,7 +369,7 @@ Default `--icon-default`; active `--icon-active` หรือ `--action-solid`
 
 ### 9.11 Hall of Fame / กิจกรรม lobby
 - **HoF:** หัวข้อแยกจากตาราง · แท็บ pill solid (Latest Winner / Top Win Multiple) · แต่ละแถว **การ์ดแยก** `gap` ชัด — ห้ามแถวติดกัน · payout gold, multiple pill เข้ม · JS วัดตารางตอน mount จึง **ไม่ใส่ `content-visibility`**
-- **กิจกรรม (`JackpotSection`):** หัว 「กิจกรรม」 + ไอคอนเมนู · carousel การ์ดรูปเต็ม 3:4 จาก `public/tournament/` · dots กลาง + prev/next (ไม่มี View All) · ห้ามกลับไปการ์ดยอดผู้ชนะ mock
+- **ทายผล/กิจกรรม (`JackpotSection` มือถือ · `TournamentsSection` desktop):** หัว 「ทายผล」 + ไอคอนเมนูกิจกรรม · carousel การ์ด **thumbnail จัตุรัส (1:1)** ที่ดึงจากข้อมูลกิจกรรม (`fetchHomeTournaments` → `fetchActivities` · field `imageUrl` · รูปใน `public/event/`) — **ห้าม hardcode รูปใน component/mock แยก** · dots กลาง + prev/next (ไม่มี View All) · ห้ามกลับไปการ์ดยอดผู้ชนะ mock
 
 ### 9.12 Bottom nav / Footer
 - **Bottom nav:** พื้น `--bottom-nav-bg`, 5 ช่องเท่ากัน icon + label (`cosmic-type-nav-label`), active `--nav-active`, safe area, กว้างสูงสุด ~640px, z-index ต่ำกว่า modal/sheet · ธีมอื่นไล่สี `theme-brand-surface`
