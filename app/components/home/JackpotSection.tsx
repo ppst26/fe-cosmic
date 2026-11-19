@@ -2,10 +2,9 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useT } from "@/lib/i18n/I18nProvider";
-import Image from "next/image";
-import Link from "@/lib/i18n/navigation";
 import { HomeLobbyTournamentItem } from "../../types/lobby";
 import { MenuItemIcon } from "../layout/MenuItemIcon";
+import { ActivityThumbCard } from "./ActivityThumbCard";
 import { SectionHeader } from "../ui/SectionHeader";
 import { CarouselControls } from "../ui/CarouselControls";
 import { cn } from "@/lib/utils";
@@ -31,6 +30,8 @@ export function JackpotSection({
   const [activeIndex, setActiveIndex] = useState(0);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
+  /** จำนวนตำแหน่งที่เลื่อนไปถึงได้จริง (มองเห็นหลายการ์ดพร้อมกัน → น้อยกว่าจำนวนการ์ด) */
+  const [dotCount, setDotCount] = useState(items.length);
 
   const getSlideStride = useCallback(() => {
     const track = trackRef.current;
@@ -50,9 +51,11 @@ export function JackpotSection({
     setCanNext(track.scrollLeft < maxScroll - 1);
 
     if (stride > 0) {
-      const index = Math.round(track.scrollLeft / stride);
-      const clamped = Math.min(Math.max(index, 0), items.length - 1);
-      setActiveIndex(clamped);
+      const positions = Math.min(items.length, Math.max(1, Math.ceil((maxScroll - 1) / stride) + 1));
+      setDotCount(positions);
+      const atEnd = maxScroll > 1 && track.scrollLeft >= maxScroll - 1;
+      const index = atEnd ? positions - 1 : Math.round(track.scrollLeft / stride);
+      setActiveIndex(Math.min(Math.max(index, 0), positions - 1));
     }
   }, [getSlideStride, items.length]);
 
@@ -74,11 +77,11 @@ export function JackpotSection({
       const track = trackRef.current;
       const stride = getSlideStride();
       if (!track || stride <= 0) return;
-      const clamped = Math.min(Math.max(index, 0), items.length - 1);
+      const clamped = Math.min(Math.max(index, 0), dotCount - 1);
       track.scrollTo({ left: clamped * stride, behavior: "smooth" });
       setActiveIndex(clamped);
     },
-    [getSlideStride, items.length],
+    [getSlideStride, dotCount],
   );
 
   const scrollByStep = useCallback(
@@ -120,44 +123,13 @@ export function JackpotSection({
       />
 
       <div ref={trackRef} className="carousel-track carousel-tournaments">
-        {items.map((item) => {
-          const image = (
-            <Image
-              src={item.imageSrc}
-              alt=""
-              fill
-              sizes="(min-width: 768px) 220px, 42vw"
-              className="object-cover object-center"
-            />
-          );
-
-          if (item.href) {
-            return (
-              <Link
-                key={item.id}
-                href={item.href}
-                aria-label={item.title}
-                className="carousel-tournament-card motion-press transition-[filter,transform] duration-[var(--motion-fast)] hover:brightness-110"
-              >
-                {image}
-              </Link>
-            );
-          }
-
-          return (
-            <article
-              key={item.id}
-              className="carousel-tournament-card"
-              aria-label={item.title}
-            >
-              {image}
-            </article>
-          );
-        })}
+        {items.map((item) => (
+          <ActivityThumbCard key={item.id} item={item} sizes="(min-width: 768px) 220px, 42vw" />
+        ))}
       </div>
 
-      <div className="mt-3 flex items-center justify-center gap-1.5" role="tablist" aria-label={t("events.slidesAriaLabel", { title })}>
-        {items.map((item, idx) => {
+      <div className={`mt-2 items-center justify-center gap-1.5 ${dotCount > 1 ? "flex" : "hidden"}`} role="tablist" aria-label={t("events.slidesAriaLabel", { title })}>
+        {items.slice(0, dotCount).map((item, idx) => {
           const isActive = idx === activeIndex;
           return (
             <button

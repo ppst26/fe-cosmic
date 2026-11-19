@@ -9,8 +9,6 @@ import {
   GameItem,
   ProviderItem,
   FeatureActionItem,
-  HomeLobbyTournamentItem,
-  LobbyTournamentSectionItem,
   BottomNavItem,
 } from "../types/lobby";
 import type { MessageKey } from "@/lib/i18n/messages";
@@ -19,14 +17,6 @@ import { SPORT_FEATURED_ITEMS } from "./sportFeaturedData";
 import { FISHING_FEATURED_ITEMS } from "./fishingFeaturedData";
 import { HOT_GAMES_FEATURED_ITEMS } from "./hotGamesFeaturedData";
 import { GRID_SLOT_PROVIDERS } from "./slotProvidersData";
-
-/** รูปทัวร์นาเมนต์ใน public/tournament */
-export const TOURNAMENT_IMAGE_PATHS = {
-  esport: "/tournament/esport.webp",
-  esport2: "/tournament/esport2.webp",
-  slotWin: "/tournament/slot-win.avif",
-  sportWin: "/tournament/sport-win.avif",
-} as const;
 
 /** แถว SLOTS หน้าแรก — รูปค่ายจาก public/slots (สูงสุด 15 ใบต่อ carousel) */
 export const HOME_SLOTS_PROVIDER_ITEMS: GameItem[] = GRID_SLOT_PROVIDERS.slice(0, 15).map(
@@ -287,76 +277,6 @@ export const FEATURE_ACTIONS_DATA: FeatureActionItem[] = [
     icon: "prize-wheel",
     ctaPrimaryLabel: "หมุนเลย",
     ctaSecondaryLabel: "วิธีเล่น",
-  },
-];
-
-/**
- * กิจกรรมทัวร์นาเมนต์บน lobby — รูปจาก public/tournament
- * ถูกเรียกใช้โดย JackpotSection.tsx
- */
-export const HOME_LOBBY_TOURNAMENT_ITEMS: HomeLobbyTournamentItem[] = [
-  {
-    id: "tournament-esport",
-    title: "ทัวร์นาเมนต์อีสปอร์ต",
-    imageSrc: TOURNAMENT_IMAGE_PATHS.esport,
-    href: "/event",
-  },
-  {
-    id: "tournament-sport",
-    title: "ทัวร์นาเมนต์กีฬา",
-    imageSrc: TOURNAMENT_IMAGE_PATHS.sportWin,
-    href: "/event",
-  },
-  {
-    id: "tournament-slot",
-    title: "ทัวร์นาเมนต์สล็อต",
-    imageSrc: TOURNAMENT_IMAGE_PATHS.slotWin,
-    href: "/event",
-  },
-  {
-    id: "tournament-esport-2",
-    title: "ทัวร์นาเมนต์อีสปอร์ต",
-    imageSrc: TOURNAMENT_IMAGE_PATHS.esport2,
-    href: "/event",
-  },
-];
-
-/**
- * กิจกรรม — section หลัง Hall of Fame · รูปจาก public/tournament
- * ถูกเรียกใช้โดย TournamentsSection.tsx
- */
-export const LOBBY_TOURNAMENTS_SECTION_ITEMS: LobbyTournamentSectionItem[] = [
-  {
-    id: "tournament-endorphina",
-    brandLabel: "Endorphina",
-    badge: "9,999 ways to win",
-    description: "€100,000 Prize Pool · 9,999 Winning Places",
-    imageSrc: TOURNAMENT_IMAGE_PATHS.slotWin,
-    href: "/event",
-  },
-  {
-    id: "tournament-tennis",
-    brandLabel: "Tennis",
-    badge: "AUGUST 30 – SEPTEMBER 13",
-    description: "Place US Open Bets, GET 5% BACK!",
-    imageSrc: TOURNAMENT_IMAGE_PATHS.sportWin,
-    href: "/event",
-  },
-  {
-    id: "tournament-dota",
-    brandLabel: "Dota 2",
-    badge: "The International 2026",
-    description: "Follow the Biggest Dota 2 Event of the Year in freebets",
-    imageSrc: TOURNAMENT_IMAGE_PATHS.esport,
-    href: "/event",
-  },
-  {
-    id: "tournament-cs2",
-    brandLabel: "CS2",
-    badge: "CS2 Pick'em Challenge",
-    description: "Follow Every Match. Make Your Picks.",
-    imageSrc: TOURNAMENT_IMAGE_PATHS.esport2,
-    href: "/event",
   },
 ];
 

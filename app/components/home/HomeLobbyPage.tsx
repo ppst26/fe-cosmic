@@ -28,7 +28,6 @@ import { useOverlayLayer } from "@/app/hooks/useOverlayLayer";
 import { cn } from "@/lib/utils";
 import {
   CATEGORIES_DATA,
-  LOBBY_TOURNAMENTS_SECTION_ITEMS,
   BOTTOM_NAV_DATA,
 } from "@/app/data/lobbyMockData";
 import type { LobbyContent } from "@/lib/api/lobby";
@@ -89,13 +88,24 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
   const categoryBarRef = useRef<HTMLDivElement>(null);
   const [categoryBarHeight, setCategoryBarHeight] = useState<number>(0);
   const [isCategoryNavStuck, setIsCategoryNavStuck] = useState(false);
+  /** ความสูงแบนเนอร์ติดตั้งแอปที่ติดบนสุด (--pwa-banner-h) — header/แถบหมวด sticky ต้องเริ่มใต้แบนเนอร์ */
+  const [pwaBannerHeight, setPwaBannerHeight] = useState(0);
 
-  // CategoryNav ติด header — สลับพื้น solid → glass (IntersectionObserver ไม่ย้าย DOM)
+  useEffect(() => {
+    const root = document.documentElement;
+    const read = () => setPwaBannerHeight(parseFloat(root.style.getPropertyValue("--pwa-banner-h")) || 0);
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(root, { attributes: true, attributeFilter: ["style"] });
+    return () => mo.disconnect();
+  }, []);
+
+  // CategoryNav ติด header — สลับพื้น (ติด header แล้วเป็นเฉดทึบ + ขอบมืด) (IntersectionObserver ไม่ย้าย DOM)
   useEffect(() => {
     const sentinel = categoryStickySentinelRef.current;
     if (!sentinel) return;
 
-    const topInset = headerHeight > 0 ? headerHeight : 68;
+    const topInset = (headerHeight > 0 ? headerHeight : 68) + pwaBannerHeight;
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsCategoryNavStuck(!entry.isIntersecting);
@@ -109,7 +119,7 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
 
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [headerHeight]);
+  }, [headerHeight, pwaBannerHeight]);
 
   useEffect(() => {
     const el = categoryBarRef.current;
@@ -229,7 +239,7 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                         ref={categoryBarRef}
                         className={cn(
                           "lobby-mobile-category-sticky w-full min-w-0 px-2 sm:px-2.5",
-                          "py-1",
+                          "py-1.5",
                           isCategoryNavStuck && "is-stuck",
                         )}
                       >
@@ -324,7 +334,7 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                       <>
                         <HallOfFame datasets={content.hallOfFame} />
                         <div className="hidden lg:block">
-                          <TournamentsSection items={LOBBY_TOURNAMENTS_SECTION_ITEMS} />
+                          <TournamentsSection items={homeTournaments} />
                         </div>
                         <HomeScreenShortcutPromo className="mt-8 sm:mt-10" />
                       </>
