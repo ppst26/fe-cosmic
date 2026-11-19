@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { responsiveSheetCloseButtonClass } from "@/app/components/ui/responsiveSheetDialog";
@@ -112,7 +112,23 @@ function DailyCheckInCardView({
   const progressPercent = Math.min(100, Math.max(10, (checkedInCount / 7) * 100));
 
   const isHubSurface = !isStandalone;
-  const weekGridGap = isHubSurface ? "gap-1.5 sm:gap-2" : "gap-1 sm:gap-1.5";
+
+  /** เลื่อนแถววันให้ช่องที่กดรับได้อยู่กลางแถว (ตอนเปิด และหลังรับแล้ววันถัดไปเปิด) */
+  const weekTrackRef = useRef<HTMLDivElement>(null);
+  const todayDay = todayReward?.day;
+  useEffect(() => {
+    const track = weekTrackRef.current;
+    if (!track || todayDay == null) return;
+    const cell = track.querySelector<HTMLElement>('[data-today="true"]');
+    if (!cell) return;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const left = cell.offsetLeft + cell.offsetWidth / 2 - track.clientWidth / 2;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    track.scrollTo({
+      left: Math.max(0, Math.min(maxScroll, left)),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }, [todayDay]);
 
   const renderDayCell = (item: DailyCheckInDayReward) => {
     const isClaimed = item.status === "claimed";
@@ -123,20 +139,24 @@ function DailyCheckInCardView({
     return (
       <div
         key={item.day}
+        data-today={isToday}
         onClick={() => isToday && requestClaim(item.day)}
         className={cn(
-          "daily-check-in-day group relative flex flex-col items-center justify-between rounded-xl text-center transition-all duration-200",
-          isHubSurface ? "min-h-[8rem] py-2.5 px-1 sm:min-h-[8.5rem] sm:py-3" : "min-h-[7.5rem] py-2 px-1 sm:min-h-[8rem]",
-          isClaimed && [
+          "daily-check-in-day group relative flex flex-none snap-center flex-col items-center justify-between rounded-xl text-center transition-all duration-300 ease-out",
+          /* ช่องที่กดรับได้ใหญ่กว่าช่องอื่น (กว้าง + สูง) — ขนาดเปลี่ยนแบบ transition */
+          isToday
+            ? "w-[8rem] min-h-[10rem] px-2 py-3 sm:w-[8.5rem] sm:min-h-[10.5rem]"
+            : "w-[6.25rem] min-h-[8rem] px-1 py-2.5 sm:w-[6.75rem] sm:min-h-[8.5rem]",
+          /* มิติ 3D (bevel · ฐานหนา · เงา) อยู่ใน hub-modals.css */
+          `daily-check-in-day--${item.status}`,
+          isClaimed &&
             "border border-[color:var(--ci-accent,#7747e5)]/30 bg-gradient-to-b from-[var(--ci-claimed-from,#1c162b)] to-[var(--ci-claimed-to,#110e1a)]",
-            "shadow-[inset_0_1px_0_color-mix(in_srgb,var(--ci-accent,#7747e5)_10%,transparent)]",
-          ],
           isToday && [
             "border-1.5 border-[color:var(--ci-accent,#7747e5)] bg-gradient-to-b from-[var(--ci-today-from,#261c3e)] to-[var(--ci-today-to,#14101e)] cursor-pointer",
-            " scale-[1.02] ring-1 ring-[color:var(--ci-accent,#7747e5)]/50",
+            "ring-1 ring-[color:var(--ci-accent,#7747e5)]/50",
           ],
           isLocked && [
-            "border border-white/8 bg-gradient-to-b from-[var(--ci-locked-from,#1c1a24)] to-[var(--ci-locked-to,#121017)] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] opacity-85 hover:border-white/15",
+            "border border-white/8 bg-gradient-to-b from-[var(--ci-locked-from,#1c1a24)] to-[var(--ci-locked-to,#121017)] opacity-90 hover:border-white/15",
           ],
           justClaimed === item.day && "scale-105 ring-2 ring-[color:var(--ci-accent,#7747e5)]",
         )}
@@ -198,7 +218,7 @@ function DailyCheckInCardView({
             fill
             sizes={isBig ? "80px" : "72px"}
             className={cn(
-              "relative z-[1] object-contain transition-transform duration-200",
+              "daily-check-in-day__gem relative z-[1] object-contain transition-transform duration-200",
               isToday &&
                 "scale-[1.12]",
               isLocked &&
@@ -220,6 +240,7 @@ function DailyCheckInCardView({
         <div
           className={cn(
             "w-full rounded text-center font-medium transition-all whitespace-nowrap",
+            `daily-check-in-day__status--${item.status}`,
             isHubSurface ? "py-1 text-xs sm:text-sm" : "py-0.5 text-xs",
             isClaimed && "border border-[color:var(--ci-accent,#7747e5)]/30 bg-[color:var(--ci-accent,#7747e5)]/15 text-[color:var(--ci-soft,#c4b5fd)]",
             isToday &&
@@ -357,14 +378,12 @@ function DailyCheckInCardView({
         </span>
       </div>
 
-      {/* ── 7-Day Grid — แถวบน 3 วัน · แถวล่าง 4 วัน ── */}
-      <div className={cn("daily-check-in-week-grid relative z-10 flex flex-col", weekGridGap)}>
-        <div className={cn("grid grid-cols-3", weekGridGap)}>
-          {days.slice(0, 3).map((item) => renderDayCell(item))}
-        </div>
-        <div className={cn("grid grid-cols-4", weekGridGap)}>
-          {days.slice(3, 7).map((item) => renderDayCell(item))}
-        </div>
+      {/* ── 7 วัน — แถวเดียวเลื่อนแนวนอน · snap กลางแถว · เปิดมาเลื่อนไปที่วันที่กดรับได้ (padding ข้าง = ให้ช่องแรก/สุดท้ายมากลางได้) ── */}
+      <div
+        ref={weekTrackRef}
+        className="daily-check-in-week-track no-scrollbar relative z-10 flex snap-x snap-mandatory items-center gap-2.5 overflow-x-auto px-[calc(50%-4rem)] pb-3 pt-2 sm:gap-3"
+      >
+        {days.map((item) => renderDayCell(item))}
       </div>
 
       {/* ── Cumulative Rewards Box (รางวัลเช็คอินสะสม) ── */}

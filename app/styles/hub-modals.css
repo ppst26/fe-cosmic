@@ -1545,3 +1545,93 @@
   background: var(--vip-panel-bg);
 }
 
+
+/* ── เช็คอินรายวัน: ช่องรางวัลแบบ 3D ──
+   ขอบบนสว่าง + ขอบล่างมืด (bevel) · ฐานหนาใต้การ์ด (lip) · เงาตกพื้น · กดแล้วยุบ */
+.daily-check-in-day {
+  --ci-cell-lip: color-mix(in srgb, var(--ci-locked-to, #121017) 62%, #000);
+  --ci-cell-depth: 4px;
+  margin-bottom: var(--ci-cell-depth);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    inset 0 -10px 14px -10px rgb(0 0 0 / 0.5),
+    0 var(--ci-cell-depth) 0 var(--ci-cell-lip),
+    0 calc(var(--ci-cell-depth) + 6px) 12px rgb(0 0 0 / 0.38);
+}
+
+/* แสงตกกระทบครึ่งบนของช่อง */
+.daily-check-in-day::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 52% 0;
+  border-radius: inherit;
+  border-bottom-left-radius: 50% 18%;
+  border-bottom-right-radius: 50% 18%;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.07) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.daily-check-in-day--claimed {
+  --ci-cell-lip: color-mix(in srgb, var(--ci-accent, #7747e5) 26%, #08070c);
+}
+
+/* วันนี้ — ยกสูงกว่าช่องอื่น ฐานเป็นสี accent เข้ม */
+.daily-check-in-day--today {
+  --ci-cell-depth: 6px;
+  --ci-cell-lip: color-mix(in srgb, var(--ci-accent, #7747e5) 58%, #08070c);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.2),
+    inset 0 -10px 14px -10px rgb(0 0 0 / 0.45),
+    0 var(--ci-cell-depth) 0 var(--ci-cell-lip),
+    0 calc(var(--ci-cell-depth) + 8px) 16px color-mix(in srgb, var(--ci-accent, #7747e5) 28%, rgb(0 0 0 / 0.5));
+}
+
+.daily-check-in-day--today:active {
+  transform: translateY(4px);
+  --ci-cell-depth: 2px;
+}
+
+.daily-check-in-day--locked {
+  --ci-cell-depth: 3px;
+}
+
+/* เพชร/กล่องของขวัญ ลอยเหนือช่อง */
+.daily-check-in-day__gem {
+  filter: drop-shadow(0 5px 4px rgb(0 0 0 / 0.5));
+}
+
+/* ป้ายสถานะด้านล่าง — นูนแบบปุ่ม (today) / ยุบแบบร่อง (claimed, locked) */
+.daily-check-in-day__status--today {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    0 2px 0 color-mix(in srgb, var(--ci-accent, #7747e5) 55%, #000);
+}
+
+.daily-check-in-day__status--claimed,
+.daily-check-in-day__status--locked {
+  box-shadow:
+    inset 0 2px 3px rgb(0 0 0 / 0.4),
+    0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+[data-mode="light"] .daily-check-in-day {
+  --ci-cell-lip: color-mix(in srgb, var(--ci-locked-to, #e9e9ee) 80%, #000);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    0 var(--ci-cell-depth) 0 var(--ci-cell-lip),
+    0 calc(var(--ci-cell-depth) + 6px) 12px rgb(0 0 0 / 0.12);
+}
+
+[data-mode="light"] .daily-check-in-day--claimed,
+[data-mode="light"] .daily-check-in-day--today {
+  --ci-cell-lip: color-mix(in srgb, var(--ci-accent, #7747e5) 60%, #ffffff);
+}
+
+[data-mode="light"] .daily-check-in-day__gem {
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.22));
+}
+
+[data-mode="light"] .daily-check-in-day__status--claimed,
+[data-mode="light"] .daily-check-in-day__status--locked {
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.12);
+}
