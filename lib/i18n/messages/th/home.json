@@ -75,6 +75,8 @@
     "comingSoon": "กำลังเตรียมค่ายเกมในหมวดนี้ — ลองเลือกคาสิโน สล็อต ยิงปลา หรือกีฬาก่อนนะ",
     "liveCasino": "ไลฟ์คาสิโน",
     "providersFallback": "ค่ายเกม",
+    "backToHome": "กลับหน้าหลัก",
+    "homeLabel": "หน้าหลัก",
     "providerCount": {
       "other": "({count} ค่ายเกม)"
     },

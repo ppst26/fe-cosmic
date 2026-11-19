@@ -48,8 +48,6 @@ export function CategoryNav({
     routeActiveId ?? activeIdProp ?? defaultActiveId,
   );
   const trackRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [thumbWidthPercent, setThumbWidthPercent] = useState(28);
 
   /** เลื่อน pill เข้ากรอบเมื่อกดแล้วยังไม่เห็นครบ — ไม่รีเซ็ต scroll ทุกครั้งที่ active เปลี่ยน */
   const scrollPillIntoViewIfNeeded = useCallback((pill: HTMLElement) => {
@@ -74,14 +72,6 @@ export function CategoryNav({
     const el = trackRef.current;
     if (!el) return;
     if (variant === "mobile") persistedMobileTrackScrollLeft = el.scrollLeft;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    if (maxScroll > 0) {
-      setScrollProgress(Math.max(0, Math.min(1, el.scrollLeft / maxScroll)));
-      setThumbWidthPercent(Math.max(20, Math.min(45, (el.clientWidth / el.scrollWidth) * 100)));
-    } else {
-      setScrollProgress(0);
-      setThumbWidthPercent(100);
-    }
   }, [variant]);
 
   useEffect(() => {
@@ -262,17 +252,6 @@ export function CategoryNav({
             </button>
           );
         })}
-      </div>
-
-      {/* Progress bar ที่เคลื่อนตามตำแหน่ง scroll แนวนอน เหมือนในตัวอย่าง */}
-      <div className="category-nav__progress-track relative w-full h-[2px] bg-white/10 rounded-full mt-0.5 overflow-hidden">
-        <div
-          className="category-nav__progress-bar absolute top-0 bottom-0 rounded-full bg-gradient-to-r from-[#6366f1] via-[#7047eb] to-[#a855f7]"
-          style={{
-            width: `${thumbWidthPercent}%`,
-            left: `${scrollProgress * (100 - thumbWidthPercent)}%`,
-          }}
-        />
       </div>
     </nav>
   );

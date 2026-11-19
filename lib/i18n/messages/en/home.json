@@ -75,6 +75,8 @@
     "comingSoon": "Providers for this category are coming soon. Try Casino, Slots, Fishing or Sports for now.",
     "liveCasino": "Live Casino",
     "providersFallback": "Providers",
+    "backToHome": "Back to home",
+    "homeLabel": "Home",
     "providerCount": {
       "one": "({count} provider)",
       "other": "({count} providers)"

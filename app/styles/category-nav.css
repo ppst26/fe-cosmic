@@ -77,7 +77,9 @@
     z-index: 40;
     width: 100%;
     max-width: 100%;
-    background: var(--standalone-page-bg);
+    /* พื้นแถบเมนู = ม่วงเข้มอ่อนลงจากเดิม (ผสม hover + mid) — ช่องเมนูใช้ --surface-hover สว่างกว่าอีกขั้น */
+    --lobby-category-bar-bg: color-mix(in srgb, var(--surface-hover) 38%, var(--surface-mid));
+    background: var(--lobby-category-bar-bg);
     border: 0;
     top: calc(
       var(--pwa-banner-h, 0px) + var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 60px)) - 1px
@@ -104,7 +106,7 @@
       var(--pwa-banner-h, 0px) + var(--lobby-mobile-header-h, calc(env(safe-area-inset-top, 0px) + 60px)) - 1px
     );
     /* ทึบเฉดเดียว (ไม่ blur/โปร่ง) — ลด GPU และอ่านชัดบนทุกธีม */
-    background: var(--surface-mid);
+    background: var(--lobby-category-bar-bg);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.05),
       0 8px 22px rgb(0 0 0 / 0.14);
@@ -159,11 +161,6 @@
 
   .page-shell--lobby .lobby-mobile-category-sticky .category-nav--mobile {
     padding-bottom: 0;
-  }
-
-  .page-shell--lobby .lobby-mobile-category-sticky .category-nav__progress-track {
-    margin-top: 2px;
-    height: 2px;
   }
 }
 
@@ -238,8 +235,8 @@
   padding-inline: 12px;
   border-radius: 5px;
   border: 0;
-  /* ทุกช่องพื้นเท่ากัน สว่างกว่าแถบเมนู (--surface-mid) เล็กน้อย — active สว่างสุดด้วย --surface-selected */
-  background: color-mix(in srgb, var(--surface-hover) 38%, var(--surface-mid));
+  /* ทุกช่องพื้นเท่ากัน สว่างกว่าแถบเมนู (--lobby-category-bar-bg) เล็กน้อย — active สว่างสุดด้วย --surface-selected */
+  background: var(--surface-hover);
   color: #bab5d6;
   font-size: 13.5px;
   font-weight: 500;
@@ -288,28 +285,6 @@
 .category-nav--mobile .category-nav__pill .category-nav__icon img {
   width: 100% !important;
   height: 100% !important;
-}
-
-.category-nav--mobile .category-nav__progress-track {
-  position: relative;
-  width: 100%;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  margin-top: 3px;
-  overflow: hidden;
-}
-
-.category-nav--mobile .category-nav__progress-bar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #6366f1, #7047eb, #a855f7);
-  box-shadow: none;
-  transition:
-    left var(--motion-base) var(--ease-out),
-    width var(--motion-base) var(--ease-out);
 }
 
 @media (min-width: 1024px) {

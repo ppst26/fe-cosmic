@@ -9,7 +9,7 @@ import {
 } from "@/app/lib/categoryProviderFromPath";
 import { LobbyProviderGamesView } from "../game/LobbyProviderGamesView";
 import type { CategoryId } from "../../types/lobby";
-import { CategorySectionHead } from "./CategorySectionHead";
+import { ChevronLeftIcon } from "../ui/Icons";
 import { ProviderCategoryToolbar } from "../slots/ProviderCategoryToolbar";
 import { SlotProviderCards, type SlotProviderPick } from "../slots/SlotProviderCards";
 import { CasinoProviderCards } from "../casino/CasinoProviderCards";
@@ -339,18 +339,24 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
         key={categoryId}
         className="lobby-category-providers__swap flex min-w-0 flex-col gap-3"
       >
-        <CategorySectionHead
-          start={
-            <h2 className="text-lg font-medium text-[var(--text-primary)] sm:text-xl">
-              {sectionTitle}
-            </h2>
-          }
-          meta={
-            <span className="text-xs font-medium text-[var(--text-muted)] sm:text-sm">
-              {t("categoryProviders.providerCount", { count: providerTotal })}
-            </span>
-          }
-        />
+        {/* ปุ่มกลับหน้าหลัก · ชื่อหมวดตรงกลางจริง (คอลัมน์ซ้าย/ขวากว้างเท่ากัน) · จำนวนค่ายขวา */}
+        <div className="grid min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-2">
+          <button
+            type="button"
+            onClick={() => router.push("/")}
+            className="inline-flex h-9 min-w-0 items-center gap-1.5 justify-self-start rounded-[var(--radius-pill)] bg-[var(--surface-solid-inner)] py-0 pl-2.5 pr-4 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] active:scale-95"
+            aria-label={t("categoryProviders.backToHome")}
+          >
+            <ChevronLeftIcon className="h-5 w-5 shrink-0 text-[var(--icon-active)]" />
+            <span className="cosmic-type-body truncate">{t("categoryProviders.homeLabel")}</span>
+          </button>
+          <h2 className="min-w-0 truncate text-center text-lg font-medium leading-tight text-[var(--text-primary)] sm:text-xl">
+            {sectionTitle}
+          </h2>
+          <span className="cosmic-type-caption justify-self-end text-[var(--text-muted)]">
+            {t("categoryProviders.providerCount", { count: providerTotal })}
+          </span>
+        </div>
 
         {categoryId === "slots" ? (
           <SlotProviderCards
