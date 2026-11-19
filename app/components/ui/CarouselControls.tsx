@@ -25,7 +25,7 @@ interface CarouselControlsProps {
  */
 export function CarouselControls({
   viewAllHref = "#",
-  viewAllLabel = "View All",
+  viewAllLabel,
   showViewAll = true,
   sectionTitle,
   canPrev,
@@ -40,7 +40,7 @@ export function CarouselControls({
     <div className="flex items-center gap-2">
       {showViewAll ? (
         <Link href={viewAllHref} className="glass-control glass-pill">
-          {viewAllLabel}
+          {viewAllLabel ?? t("carousel.viewAll")}
         </Link>
       ) : null}
 

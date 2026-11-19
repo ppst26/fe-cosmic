@@ -39,7 +39,8 @@
   },
   "carousel": {
     "prev": "Scroll {title} back",
-    "next": "Scroll {title} forward"
+    "next": "Scroll {title} forward",
+    "viewAll": "View all"
   },
   "pagination": {
     "label": "Pagination",
