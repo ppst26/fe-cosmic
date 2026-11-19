@@ -58,6 +58,10 @@
       "one": "({count} game)",
       "other": "({count} games)"
     },
+    "gameCountPlain": {
+      "one": "{count} game",
+      "other": "{count} games"
+    },
     "notFoundTitle": "No games found",
     "notFoundHint": "Try a different search, or clear the search to see all games",
     "favoriteAdd": "Add to favorites",

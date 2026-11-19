@@ -54,6 +54,9 @@
     "gameCount": {
       "other": "({count} เกม)"
     },
+    "gameCountPlain": {
+      "other": "{count} เกม"
+    },
     "notFoundTitle": "ไม่พบเกมที่ค้นหา",
     "notFoundHint": "ลองค้นหาด้วยคำค้นอื่น หรือล้างช่องค้นหาเพื่อดูเกมทั้งหมด",
     "favoriteAdd": "เพิ่มเป็นรายการโปรด",

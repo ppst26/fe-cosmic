@@ -2,7 +2,6 @@
 
 import React, { useMemo, useState } from "react";
 import { useT } from "@/lib/i18n/I18nProvider";
-import { CategorySectionHead } from "@/app/components/home/CategorySectionHead";
 import { GameSearchBar } from "@/app/components/home/GameSearchBar";
 import { ProviderGameGrid } from "@/app/components/slots/ProviderGameGrid";
 import { ChevronLeftIcon } from "@/app/components/ui/Icons";
@@ -54,45 +53,24 @@ export function LobbyProviderGamesView({
 
   return (
     <div className="flex min-w-0 flex-col gap-3">
-      <CategorySectionHead
-        start={
-          <nav className="flex min-w-0 items-center gap-1.5 text-sm sm:text-base" aria-label="breadcrumb">
-            <button
-              type="button"
-              onClick={onBack}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[var(--icon-active)] transition-colors hover:bg-[var(--surface-hover)] active:scale-95"
-              aria-label={t("providerGames.backToCategory", { category: categoryLabel })}
-            >
-              <ChevronLeftIcon className="h-5 w-5" />
-            </button>
-            <ol className="flex min-w-0 items-center gap-2">
-              <li>
-                <button
-                  type="button"
-                  onClick={onBack}
-                  className="font-medium text-[var(--text-primary)] transition-colors hover:text-[var(--text-secondary)]"
-                >
-                  {categoryLabel}
-                </button>
-              </li>
-              <li className="font-light text-[var(--text-muted)]" aria-hidden="true">
-                /
-              </li>
-              <li
-                className="truncate font-medium uppercase tracking-tight text-[var(--text-primary)]"
-                aria-current="page"
-              >
-                {providerInfo.name}
-              </li>
-            </ol>
-          </nav>
-        }
-        meta={
-          <span className="font-medium text-[var(--text-muted)]">
-            {t("providerGames.gameCount", { count: filteredGames.length })}
-          </span>
-        }
-      />
+      {/* แถวเดียว: ปุ่มกลับ pill (ชื่อหมวด) · ชื่อค่ายตรงกลาง · จำนวนเกมเป็นชิปขวา */}
+      <div className="flex min-w-0 items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={onBack}
+          className="inline-flex h-9 min-w-0 items-center gap-1.5 rounded-[var(--radius-pill)] bg-[var(--surface-solid-inner)] py-0 pl-2.5 pr-4 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] active:scale-95"
+          aria-label={t("providerGames.backToCategory", { category: categoryLabel })}
+        >
+          <ChevronLeftIcon className="h-5 w-5 shrink-0 text-[var(--icon-active)]" />
+          <span className="cosmic-type-body truncate">{categoryLabel}</span>
+        </button>
+        <h1 className="min-w-0 flex-1 truncate text-center text-lg font-medium uppercase leading-tight tracking-tight text-[var(--text-primary)]">
+          {providerInfo.name}
+        </h1>
+        <span className="cosmic-type-caption shrink-0 rounded-[var(--radius-pill)] bg-[var(--surface-solid-inner)] px-3 py-1.5 text-[var(--text-secondary)]">
+          {t("providerGames.gameCountPlain", { count: filteredGames.length })}
+        </span>
+      </div>
 
       <GameSearchBar placeholder={t("providerGames.searchPlaceholder")} onSearch={setSearchQuery} />
 
