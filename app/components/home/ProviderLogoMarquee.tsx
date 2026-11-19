@@ -11,7 +11,7 @@ interface ProviderLogoMarqueeProps {
 }
 
 /**
- * แถวโลโก้ค่ายเลื่อนอัตโนมัติ — โลโก้สีจริง ระยะห่างกว้าง
+ * แถวการ์ดโลโก้ค่ายเลื่อนอัตโนมัติ — การ์ดพื้นทึบเท่ากันทุกใบ โลโก้สีจริง (ไม่ grayscale)
  * ถูกเรียกใช้โดย ProvidersSection.tsx
  */
 export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
@@ -20,14 +20,14 @@ export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
 
   const renderGroup = (groupKey: string, ariaHidden?: boolean) => (
     <div
-      className="provider-logo-marquee__group flex shrink-0 items-center gap-[clamp(3rem,9vw,4.5rem)] px-[clamp(1.5rem,4.5vw,2.25rem)]"
+      className="provider-logo-marquee__group flex shrink-0 items-center gap-3 px-1.5"
       aria-hidden={ariaHidden || undefined}
     >
       {items.map((item) => (
         <Link
           key={`${groupKey}-${item.id}`}
           href={item.href}
-          className="provider-logo-marquee__link flex h-10 w-[clamp(6.25rem,13vw,9.5rem)] shrink-0 items-center justify-center"
+          className="provider-logo-marquee__link flex shrink-0 items-center justify-center"
           aria-label={t("providers.logoAriaLabel", { name: item.name })}
           tabIndex={ariaHidden ? -1 : undefined}
         >
@@ -36,7 +36,7 @@ export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {
             alt=""
             width={152}
             height={40}
-            className="provider-logo-marquee__img w-auto h-full max-w-full object-contain"
+            className="provider-logo-marquee__img h-full w-auto max-w-full object-contain"
           />
         </Link>
       ))}
