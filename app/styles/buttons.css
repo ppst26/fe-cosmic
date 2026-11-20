@@ -568,14 +568,11 @@ a.glass-icon-btn:is(.absolute, .\!absolute) {
   );
   border-color: var(--auth-register-border, #9346ec);
   color: var(--btn-primary-fg, #fff);
+  /* เงา/ขอบล่างเป็นเทากลาง ไล่เฉดเนียนไปทางขาว — ไม่ใช้ม่วง */
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.27),
-    inset 0 2px 3px rgb(255 255 255 / 0.05),
-    inset 0 -3px 0 rgb(56 7 109 / 0.36),
-    inset 1px 0 0 rgb(255 255 255 / 0.055),
-    inset -1px 0 0 rgb(58 2 112 / 0.16),
-    inset 0 -8px 11px rgb(71 0 157 / 0.42),
-    inset 0 -2px 0 rgb(129 38 255 / 0.88);
+    inset 0 1px 0 rgb(255 255 255 / 0.5),
+    inset 0 -3px 0 rgb(0 0 0 / 0.16),
+    inset 0 -9px 12px -4px rgb(0 0 0 / 0.14);
 }
 
 .auth-btn--register::after {
@@ -587,11 +584,11 @@ a.glass-icon-btn:is(.absolute, .\!absolute) {
   background:
     linear-gradient(
       90deg,
-      rgb(103 0 255 / 0),
-      rgb(118 19 255 / 0.8) 20%,
-      rgb(124 31 255 / 1) 50%,
-      rgb(118 19 255 / 0.8) 80%,
-      rgb(103 0 255 / 0)
+      rgb(120 120 128 / 0),
+      rgb(120 120 128 / 0.35) 20%,
+      rgb(140 140 148 / 0.55) 50%,
+      rgb(120 120 128 / 0.35) 80%,
+      rgb(120 120 128 / 0)
     );
 }
 
@@ -622,9 +619,9 @@ a.glass-icon-btn:is(.absolute, .\!absolute) {
 
 .auth-btn--register:active {
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.34),
-    inset 0 7px 12px rgb(76 0 160 / 0.34),
-    inset 0 -2px 0 rgb(118 22 245 / 0.55);
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    inset 0 7px 12px rgb(0 0 0 / 0.2),
+    inset 0 -2px 0 rgb(0 0 0 / 0.12);
 }
 
 .auth-btn:active::before {
