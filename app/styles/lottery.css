@@ -1889,12 +1889,38 @@ main.page-shell.lottery-page-main.lottery-slips-page {
   font-weight: 400;
 }
 
-/* ปุ่มใส่ราคา (มือถือ) — ลด padding บน/ล่าง ความกว้างเต็มเหมือนเดิม */
+/* ปุ่มใส่ราคา (มือถือ) — เตี้ย 40px · ไม่เต็มความกว้าง (ครึ่งแถว จัดกลาง) */
 @media (max-width: 1023px) {
   .yiki-pick-actions .yiki-pick-actions__primary {
+    width: 50%;
+    min-width: 11rem;
+    height: 2.5rem;
     min-height: 2.5rem;
+    margin-inline: auto;
     padding-block: 0.35rem;
   }
+}
+
+/* ปุ่มคู่ท้ายหน้า (แก้ไขเลข/ส่งโพย · โพยทั้งหมด/แทงต่อ) — ทรง pill เดียวกัน สูง 40px padding-y น้อย */
+.lottery-price-controls__actions > .lottery-price-controls__back,
+.lottery-price-controls__actions > .lottery-price-controls__submit,
+.lottery-slip-summary__actions > .lottery-slip-summary__back,
+.lottery-slip-summary__actions > .lottery-slip-summary__continue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 2.5rem;
+  min-height: 2.5rem;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
 }
 
 /*
