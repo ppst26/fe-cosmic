@@ -16,7 +16,7 @@ interface LotteryRulesModalProps {
 const EXIT_MS = 240;
 
 /**
- * Bottom sheet กติกา / อัตราการจ่าย — เลื่อนขึ้นจากด้านล่าง ชิดขอบซ้าย-ขวา มุมล่างไม่โค้ง
+ * กติกา / อัตราการจ่าย — มือถือ: bottom sheet เลื่อนขึ้นจากล่าง ชิดขอบซ้าย-ขวา · PC (≥1024px): modal กลางจอ
  * พื้นไล่เฉดเข้มจาก token ธีม (สไตล์อยู่ใน lottery css: .lottery-rules-sheet)
  */
 export function LotteryRulesModal({ open, onClose, marketSlug }: LotteryRulesModalProps) {
