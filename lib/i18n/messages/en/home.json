@@ -36,6 +36,14 @@
     "clear": "Clear search"
   },
   "hallOfFame": {
+    "title": "Top Performance",
+    "tabLatest": "Latest Winner",
+    "tabTopMultiple": "Top Win Multiple",
+    "colGame": "Game",
+    "colPlayer": "Player",
+    "colTime": "Time",
+    "colPayout": "Payout",
+    "colMultiple": "Multiple",
     "tabsAriaLabel": "Choose Top Performance table",
     "empty": "No entries yet"
   },
@@ -117,6 +125,7 @@
     "empty": "Nothing in this category yet"
   },
   "providers": {
+    "title": "Providers",
     "empty": "No providers yet",
     "marqueeAriaLabel": "Game providers",
     "logoAriaLabel": "Provider {name}"

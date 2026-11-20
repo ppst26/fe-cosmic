@@ -13,7 +13,7 @@
   },
   "sections": {
     "hotGames": "เกมยอดฮิต",
-    "slots": "SLOTS",
+    "slots": "สล็อต",
     "casino": "คาสิโน",
     "fishing": "ยิงปลา",
     "sports": "กีฬา",
@@ -36,6 +36,14 @@
     "clear": "ล้างคำค้นหา"
   },
   "hallOfFame": {
+    "title": "อันดับผู้ชนะ",
+    "tabLatest": "ผู้ชนะล่าสุด",
+    "tabTopMultiple": "ชนะทวีคูณสูงสุด",
+    "colGame": "เกม",
+    "colPlayer": "ผู้เล่น",
+    "colTime": "เวลา",
+    "colPayout": "เงินรางวัล",
+    "colMultiple": "ตัวคูณ",
     "tabsAriaLabel": "เลือกตาราง Top Performance",
     "empty": "ยังไม่มีรายการ"
   },
@@ -116,6 +124,7 @@
     "empty": "ยังไม่มีรายการในหมวดนี้"
   },
   "providers": {
+    "title": "ค่ายเกม",
     "empty": "ยังไม่มีผู้ให้บริการ",
     "marqueeAriaLabel": "ผู้ให้บริการเกม",
     "logoAriaLabel": "ผู้ให้บริการ {name}"

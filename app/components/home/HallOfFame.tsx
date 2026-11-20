@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useT } from "@/lib/i18n/I18nProvider";
+import type { MessageKey } from "@/lib/i18n/messages";
 import Image from "next/image";
 import type { HallOfFameRow, HallOfFameTabId } from "../../types/lobby";
 import { SectionIcon } from "../ui/SectionIcon";
@@ -10,10 +11,10 @@ import {
 } from "../../data/hallOfFameGenerator";
 import { HALL_OF_FAME_MOBILE_ROW_LIMIT, HALL_OF_FAME_ROW_LIMIT, HALL_OF_FAME_TICK_MS } from "@/lib/uiConstants";
 
-const TAB_LABELS: { id: HallOfFameTabId; label: string }[] = [
-  { id: "latest-winner", label: "Latest Winner" },
-  { id: "top-win-multiple", label: "Top Win Multiple" },
-];
+const TAB_LABEL_KEYS = [
+  { id: "latest-winner", labelKey: "hallOfFame.tabLatest" },
+  { id: "top-win-multiple", labelKey: "hallOfFame.tabTopMultiple" },
+] as const satisfies readonly { id: HallOfFameTabId; labelKey: MessageKey<"home"> }[];
 
 interface HallOfFameProps {
   datasets: Record<HallOfFameTabId, HallOfFameRow[]>;
@@ -69,7 +70,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
   const [activeTab, setActiveTab] = useState<HallOfFameTabId>("latest-winner");
   const panelId = useId();
   const isLatestWinner = activeTab === "latest-winner";
-  const valueColumnLabel = isLatestWinner ? "Payout" : "Multiple";
+  const valueColumnLabel = isLatestWinner ? t("hallOfFame.colPayout") : t("hallOfFame.colMultiple");
 
   /** แถวของแต่ละแท็บ — เริ่มจาก datasets (เหมือนกันทั้ง SSR/client) แล้วสุ่มเพิ่มบนสุดทุก 5 วินาที */
   const [rowsByTab, setRowsByTab] = useState<Record<HallOfFameTabId, HallOfFameRow[]>>(() => ({
@@ -184,7 +185,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
           id="top-performance-title"
           className="text-[18px] font-medium tracking-tight text-[var(--text-primary)] leading-[1.4] sm:text-[20px]"
         >
-          Top Performance
+          {t("hallOfFame.title")}
         </h2>
       </div>
 
@@ -194,7 +195,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
           role="tablist"
           aria-label={t("hallOfFame.tabsAriaLabel")}
         >
-          {TAB_LABELS.map((tab) => {
+          {TAB_LABEL_KEYS.map((tab) => {
             const selected = activeTab === tab.id;
             return (
               <button
@@ -207,7 +208,7 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                 onClick={() => setActiveTab(tab.id)}
                 className={`hall-of-fame__tab-btn cosmic-type-chip-tab min-h-9 whitespace-nowrap px-4 py-[0.45rem] sm:min-h-10 sm:px-[1.1rem] ${selected ? "is-active" : ""}`}
               >
-                {tab.label}
+                {t(tab.labelKey)}
               </button>
             );
           })}
@@ -228,19 +229,19 @@ export function HallOfFame({ datasets }: HallOfFameProps) {
                   scope="col"
                   className="hall-of-fame-table__th hall-of-fame-table__th--game pt-[0.35rem] px-0 pb-2"
                 >
-                  Game
+                  {t("hallOfFame.colGame")}
                 </th>
                 <th
                   scope="col"
                   className="hall-of-fame-table__th hall-of-fame-table__th--player pt-[0.35rem] px-0 pb-2"
                 >
-                  Player
+                  {t("hallOfFame.colPlayer")}
                 </th>
                 <th
                   scope="col"
                   className="hall-of-fame-table__th hall-of-fame-table__th--time pt-[0.35rem] px-0 pb-2"
                 >
-                  Time
+                  {t("hallOfFame.colTime")}
                 </th>
                 <th
                   scope="col"

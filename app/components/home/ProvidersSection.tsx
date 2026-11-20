@@ -17,10 +17,10 @@ export function ProvidersSection() {
   const logos = HOME_PROVIDER_LOGO_MARQUEE;
 
   return (
-    <section className="providers-section mt-12 w-full min-w-0 max-w-full sm:mt-14" aria-label="Providers">
+    <section className="providers-section mt-12 w-full min-w-0 max-w-full sm:mt-14" aria-label={t("providers.title")}>
       <SectionHeader
         icon={<SectionIcon id="network" className="h-6 w-6 text-[var(--icon-default)]" />}
-        title="Providers"
+        title={t("providers.title")}
       />
 
       {logos.length === 0 ? (
