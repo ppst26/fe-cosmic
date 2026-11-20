@@ -56,6 +56,13 @@
     var(--vip-hero-face);
 }
 
+/* หน้า standalone: ดึง hero ให้เต็มขอบจอ ไม่เหลือช่องว่าง (บน = padding-top ของ main · ข้าง = gutter · ล่าง = gap ของ root) */
+.root:not(.embedded) .hero {
+  margin-top: -1rem;
+  margin-inline: calc(var(--layout-inline-gutter) * -1);
+  margin-bottom: -10px;
+}
+
 /* วงโค้งทอง 2 เส้น — วงกลมใหญ่ล้นขอบ ขอบเป็น conic-gradient (เส้นสว่างเฉพาะช่วง) */
 .hero::before,
 .hero::after {
