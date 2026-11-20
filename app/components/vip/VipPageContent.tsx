@@ -25,6 +25,20 @@ const HERO_DUST = [
   { "--x": "58px", "--drift": "-8px", "--s": "2.5px", "--t": "4.9s", "--d": "2.9s" },
   { "--x": "-40px", "--drift": "16px", "--s": "1.5px", "--t": "5.8s", "--d": "3.4s" },
   { "--x": "16px", "--drift": "-18px", "--s": "1.5px", "--t": "4.4s", "--d": "2s" },
+  { "--x": "-80px", "--drift": "12px", "--s": "2px", "--t": "4.7s", "--d": "0.6s" },
+  { "--x": "-68px", "--drift": "-14px", "--s": "1.5px", "--t": "5.6s", "--d": "2.6s" },
+  { "--x": "-58px", "--drift": "6px", "--s": "2.5px", "--t": "4.1s", "--d": "3.1s" },
+  { "--x": "-46px", "--drift": "-9px", "--s": "1.5px", "--t": "6s", "--d": "1.4s" },
+  { "--x": "-22px", "--drift": "14px", "--s": "2px", "--t": "5.2s", "--d": "3.7s" },
+  { "--x": "-4px", "--drift": "-12px", "--s": "3px", "--t": "4.5s", "--d": "0.8s" },
+  { "--x": "10px", "--drift": "9px", "--s": "1.5px", "--t": "5.9s", "--d": "2.2s" },
+  { "--x": "28px", "--drift": "-6px", "--s": "2px", "--t": "4.3s", "--d": "3.3s" },
+  { "--x": "48px", "--drift": "15px", "--s": "1.5px", "--t": "5.5s", "--d": "0.1s" },
+  { "--x": "64px", "--drift": "-16px", "--s": "2.5px", "--t": "4.8s", "--d": "1.9s" },
+  { "--x": "72px", "--drift": "8px", "--s": "2px", "--t": "5.3s", "--d": "3.9s" },
+  { "--x": "82px", "--drift": "-10px", "--s": "1.5px", "--t": "4.6s", "--d": "2.7s" },
+  { "--x": "-14px", "--drift": "18px", "--s": "1.5px", "--t": "6.2s", "--d": "0.5s" },
+  { "--x": "52px", "--drift": "-4px", "--s": "2px", "--t": "3.9s", "--d": "3.5s" },
   { "--x": "36px", "--drift": "10px", "--s": "2px", "--t": "5s", "--d": "0.2s" },
 ];
 
@@ -72,7 +86,6 @@ function VipPageContentInner({
   const tab = embedded ? embeddedTab : activeTab;
   const selectTab = embedded ? setEmbeddedTab : onSelectTab;
   const currentTier = getVipRankTier(player.currentRankId);
-  const nextTier = player.nextRankId ? getVipRankTier(player.nextRankId) : null;
 
   return (
     <div className={cn("vip-root", s.root, embedded && s.embedded)}>
@@ -94,17 +107,6 @@ function VipPageContentInner({
           </span>
           <div className={s.emblemWrap}>
             <VipRankEmblem rankId={player.currentRankId} size="xl" />
-          </div>
-          <div className={s.pedestal} aria-hidden />
-          <div className={s.heroPlate}>
-            <p className={s.heroRank} style={{ "--rank-accent": currentTier.accent } as React.CSSProperties}>
-              <span className={s.heroRankText}>{currentTier.label}</span>
-            </p>
-            {nextTier ? (
-              <p className={s.heroNext}>
-                {t("level.next")} <b>{nextTier.label}</b>
-              </p>
-            ) : null}
           </div>
         </div>
       </section>
