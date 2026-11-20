@@ -286,7 +286,7 @@ export function HomeLobbyPage({ content }: { content: LobbyContent }) {
                           {homeGames.sections.map((section, index) => {
                             /** แถวที่ 2 ลงไปอยู่ใต้จอ — lobby-defer เลื่อนการ render/โหลดรูปจนใกล้จอ (layout.css) */
                             const sectionClassName =
-                              index === 0 ? "mt-0 lg:mt-2" : "lobby-defer mt-4 sm:mt-5";
+                              index === 0 ? "mt-3 lg:mt-2" : "lobby-defer mt-4 sm:mt-5";
                             const gameSection = (
                               <GameSection
                                 key={section.id}
