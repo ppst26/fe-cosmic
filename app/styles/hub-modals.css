@@ -1549,7 +1549,7 @@
 /* ── เช็คอินรายวัน: ช่องรางวัลแบบ 3D ──
    ขอบบนสว่าง + ขอบล่างมืด (bevel) · ฐานหนาใต้การ์ด (lip) · เงาตกพื้น · กดแล้วยุบ */
 .daily-check-in-day {
-  --ci-cell-lip: color-mix(in srgb, var(--ci-locked-to, #121017) 62%, #000);
+  --ci-cell-lip: #0a0612; /* ม่วงเกือบดำ */
   --ci-cell-depth: 4px;
   margin-bottom: var(--ci-cell-depth);
   box-shadow:
@@ -1572,18 +1572,18 @@
 }
 
 .daily-check-in-day--claimed {
-  --ci-cell-lip: color-mix(in srgb, var(--ci-accent, #7747e5) 26%, #08070c);
+  --ci-cell-lip: #0a0612;
 }
 
 /* วันนี้ — ยกสูงกว่าช่องอื่น ฐานเป็นสี accent เข้ม */
 .daily-check-in-day--today {
   --ci-cell-depth: 6px;
-  --ci-cell-lip: color-mix(in srgb, var(--ci-accent, #7747e5) 58%, #08070c);
+  --ci-cell-lip: #07040e;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.2),
     inset 0 -10px 14px -10px rgb(0 0 0 / 0.45),
     0 var(--ci-cell-depth) 0 var(--ci-cell-lip),
-    0 calc(var(--ci-cell-depth) + 8px) 16px color-mix(in srgb, var(--ci-accent, #7747e5) 28%, rgb(0 0 0 / 0.5));
+    0 calc(var(--ci-cell-depth) + 8px) 16px rgb(6 3 14 / 0.7);
 }
 
 .daily-check-in-day--today:active {
