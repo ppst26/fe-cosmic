@@ -19,9 +19,9 @@ export const THEMES: ThemeOption[] = [
     "name": "Cosmic",
     "isDark": true,
     "colors": [
-      "#4930df",
+      "#3a22b8",
       "#121127",
-      "#0968f8"
+      "#0752c4"
     ],
     "bgColor": "#0d0814"
   },

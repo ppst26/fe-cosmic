@@ -305,7 +305,7 @@ export interface ThemeOption {
 
 export const THEMES: ThemeOption[] = ${JSON.stringify(
   [
-    { key: DEFAULT_THEME, name: "Cosmic", isDark: true, colors: ["#4930df", "#121127", "#0968f8"], bgColor: "#0d0814" },
+    { key: DEFAULT_THEME, name: "Cosmic", isDark: true, colors: ["#3a22b8", "#121127", "#0752c4"], bgColor: "#0d0814" },
     ...T.map((t) => ({ key: t.key, name: t.name, isDark: t.dark, colors: t.colors, bgColor: t.bg })),
   ],
   null,
