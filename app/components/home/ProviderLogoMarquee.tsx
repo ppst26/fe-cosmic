@@ -11,7 +11,7 @@ interface ProviderLogoMarqueeProps {
 }
 
 /**
- * แถวการ์ดโลโก้ค่ายเลื่อนอัตโนมัติ — การ์ดพื้นทึบเท่ากันทุกใบ โลโก้สีจริง (ไม่ grayscale)
+ * แถวการ์ดโลโก้ค่ายเลื่อนอัตโนมัติ — การ์ดพื้นทึบเท่ากันทุกใบ โลโก้โมโนโครมเทาอ่อน (อ่านชัดทุกค่าย)
  * ถูกเรียกใช้โดย ProvidersSection.tsx
  */
 export function ProviderLogoMarquee({ items }: ProviderLogoMarqueeProps) {

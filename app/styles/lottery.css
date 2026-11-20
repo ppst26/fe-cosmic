@@ -1611,9 +1611,21 @@ a.thai-lotto-draw:focus-visible {
 }
 
 .provider-logo-marquee__img {
-  /* โลโก้สีจริง — ไม่ทำ grayscale */
+  /* โลโก้โมโนโครม — ทุกค่ายเป็นสีเทาอ่อนเท่ากัน อ่านชัดบนการ์ดมืด (โลโก้สีเข้ม/ดำเดิมมองไม่เห็น) */
+  opacity: 0.8;
+  filter: grayscale(1) brightness(0) invert(1);
+  transition: opacity var(--motion-fast) ease;
+}
+
+.provider-logo-marquee__link:hover .provider-logo-marquee__img,
+.provider-logo-marquee__link:focus-visible .provider-logo-marquee__img {
   opacity: 1;
-  filter: none;
+}
+
+/* ธีมสว่าง: การ์ดสว่าง → โลโก้เป็นเทาเข้ม */
+[data-mode="light"] .provider-logo-marquee__img {
+  filter: grayscale(1) brightness(0);
+  opacity: 0.7;
 }
 
 @keyframes provider-logo-marquee-scroll {
