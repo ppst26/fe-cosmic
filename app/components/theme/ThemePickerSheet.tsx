@@ -144,12 +144,6 @@ export function ThemePickerSheet({ isOpen, onClose }: ThemePickerSheetProps) {
               activeTheme={theme}
               onSelect={pick}
             />
-            <ThemeGrid
-              title={t("theme.light")}
-              themes={THEMES.filter((x) => !x.isDark)}
-              activeTheme={theme}
-              onSelect={pick}
-            />
           </div>
         </Dialog.Content>
       </Dialog.Portal>
