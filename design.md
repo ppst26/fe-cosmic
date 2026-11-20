@@ -133,7 +133,7 @@ Cosmicbet คือเว็บเดิมพันแนว **Solid cosmic** �
 
 | โหมด | ธีม (key) |
 | :--- | :--- |
-| **มืด (7)** | `cosmic` (ค่าเริ่มต้น = `:root` ใน `tokens.css`), `thunder-x`, `dark-mix-berry`, `tron`, `sanim`, `gatsby`, `wisdom` |
+| **มืด (7)** | `cosmic` (ค่าเริ่มต้น = `:root` ใน `tokens.css`), `thunder-x`, `dark-navy-blue`, `tron`, `sanim`, `gatsby`, `wisdom` |
 | **สว่าง (5)** | `sunfire`, `blue-syrah`, `good-witch`, `mix-berry`, `mr-bond` |
 
 ### 4.2 Runtime
