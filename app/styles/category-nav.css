@@ -112,7 +112,7 @@
       0 8px 22px rgb(0 0 0 / 0.14);
   }
 
-  /* ขอบซ้าย–ขวาไล่เป็นเกือบดำ — บอกว่าแถบเลื่อนต่อได้ */
+  /* ขอบซ้าย–ขวาไล่เกือบดำ→จางหาย (หลายจุดหยุดให้ไล่เนียน ไม่เป็นแท่ง) — บอกว่าแถบเลื่อนต่อได้ */
   .lobby-mobile-category-sticky.is-stuck::before,
   .lobby-mobile-category-sticky.is-stuck::after {
     content: "";
@@ -120,18 +120,34 @@
     top: 0;
     bottom: 0;
     z-index: 2;
-    width: 1.25rem;
+    width: 2.5rem;
     pointer-events: none;
   }
 
   .lobby-mobile-category-sticky.is-stuck::before {
     left: 0;
-    background: linear-gradient(90deg, var(--lobby-sticky-edge, #050408) 0%, transparent 100%);
+    background: linear-gradient(
+      90deg,
+      rgb(5 4 8 / 0.92) 0%,
+      rgb(5 4 8 / 0.7) 20%,
+      rgb(5 4 8 / 0.42) 42%,
+      rgb(5 4 8 / 0.18) 66%,
+      rgb(5 4 8 / 0.05) 86%,
+      rgb(5 4 8 / 0) 100%
+    );
   }
 
   .lobby-mobile-category-sticky.is-stuck::after {
     right: 0;
-    background: linear-gradient(270deg, var(--lobby-sticky-edge, #050408) 0%, transparent 100%);
+    background: linear-gradient(
+      270deg,
+      rgb(5 4 8 / 0.92) 0%,
+      rgb(5 4 8 / 0.7) 20%,
+      rgb(5 4 8 / 0.42) 42%,
+      rgb(5 4 8 / 0.18) 66%,
+      rgb(5 4 8 / 0.05) 86%,
+      rgb(5 4 8 / 0) 100%
+    );
   }
 
   /* หน้าแรกมือถือ — ช่องใต้ CategoryNav ก่อนเกมยอดฮิต */
