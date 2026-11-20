@@ -311,8 +311,8 @@ export function Header({
                 onLoginClick={onLoginClick}
                 onSignUpClick={onSignUpClick}
                 className="max-w-full flex-nowrap justify-end gap-[0.45rem]"
-                loginClassName="header-desktop-bar__auth-login glass-card--soft min-h-(--header-control-height) rounded-(--header-chip-radius) border-0 px-[0.85rem]"
-                signUpClassName="min-h-(--header-control-height)! rounded-(--header-chip-radius)! px-3! py-0! tracking-[0.04em]!"
+                loginClassName="header-desktop-bar__auth-login glass-card--soft border-0"
+                signUpClassName=""
               />
             )}
           </div>

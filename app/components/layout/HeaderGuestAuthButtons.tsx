@@ -36,13 +36,13 @@ export function HeaderGuestAuthButtons({
   );
 
   return (
-    <div className={cn("inline-flex items-center gap-2", className)}>
+    <div className={cn("header-guest-auth inline-flex items-center gap-2", className)}>
       <button
         type="button"
         onClick={onLoginClick}
         className={cn(
           loginClassName,
-          "inline-flex items-center justify-center whitespace-nowrap text-xs font-medium",
+          "header-guest-auth__btn inline-flex items-center justify-center whitespace-nowrap text-xs font-medium",
         )}
       >
         {t("login")}
@@ -52,7 +52,7 @@ export function HeaderGuestAuthButtons({
         onClick={onSignUpClick}
         className={cn(
           signUpClassName,
-          "cosmic-cta-primary cosmic-cta-primary--sm inline-flex items-center justify-center whitespace-nowrap text-xs font-medium",
+          "header-guest-auth__btn cosmic-cta-primary cosmic-cta-primary--sm inline-flex items-center justify-center whitespace-nowrap text-xs font-medium",
         )}
       >
         {signUpLabel}

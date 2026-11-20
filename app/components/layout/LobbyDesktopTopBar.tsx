@@ -63,7 +63,7 @@ export function LobbyDesktopTopBar({
           <HeaderGuestAuthButtons
             onLoginClick={onLoginClick}
             onSignUpClick={onSignUpClick}
-            loginClassName="header-desktop-bar__auth-login glass-card--soft rounded-(--header-chip-radius) border-0 px-[0.85rem]"
+            loginClassName="header-desktop-bar__auth-login glass-card--soft border-0"
             signUpClassName=""
           />
         )}
