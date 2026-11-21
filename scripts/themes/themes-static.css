@@ -40,36 +40,37 @@
 }
 
 [data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .lobby-section-header-band, .lobby-announcement-marquee, .theme-brand-surface) {
-  color: #ffffff;
-  --text: #ffffff;
-  --color-white: #ffffff;
-  --color-zinc-100: #ffffff;
-  --color-zinc-200: rgba(255, 255, 255, 0.92);
-  --color-zinc-300: rgba(255, 255, 255, 0.88);
-  --color-zinc-400: rgba(255, 255, 255, 0.82);
-  --color-zinc-500: rgba(255, 255, 255, 0.7);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.88);
-  --text-muted: rgba(255, 255, 255, 0.72);
-  --icon-default: rgba(255, 255, 255, 0.92);
-  --icon-active: #ffffff;
-  --value-emphasis: #ffffff;
-  --value-neutral: rgba(255, 255, 255, 0.88);
-  --value-muted: rgba(255, 255, 255, 0.72);
-  --inner-card-fill: rgba(0, 0, 0, 0.24);
-  --inner-card-fill-hover: rgba(0, 0, 0, 0.34);
+  /* สีตัวอักษรบน chrome = --t-chrome-fg (preset กลางที่พื้นสว่าง/พาสเทลตั้งเป็นสีเข้ม) — ธีมเดิมไม่ตั้ง → ขาวเหมือนเดิม */
+  color: var(--t-chrome-fg, #ffffff);
+  --text: var(--t-chrome-fg, #ffffff);
+  --color-white: var(--t-chrome-fg, #ffffff);
+  --color-zinc-100: var(--t-chrome-fg, #ffffff);
+  --color-zinc-200: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.92));
+  --color-zinc-300: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.88));
+  --color-zinc-400: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.82));
+  --color-zinc-500: var(--t-chrome-fg-muted, rgba(255, 255, 255, 0.7));
+  --text-primary: var(--t-chrome-fg, #ffffff);
+  --text-secondary: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.88));
+  --text-muted: var(--t-chrome-fg-muted, rgba(255, 255, 255, 0.72));
+  --icon-default: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.92));
+  --icon-active: var(--t-chrome-fg, #ffffff);
+  --value-emphasis: var(--t-chrome-fg, #ffffff);
+  --value-neutral: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.88));
+  --value-muted: var(--t-chrome-fg-muted, rgba(255, 255, 255, 0.72));
+  --inner-card-fill: var(--t-chrome-inner-fill, rgba(0, 0, 0, 0.24));
+  --inner-card-fill-hover: var(--t-chrome-inner-fill-hover, rgba(0, 0, 0, 0.34));
   --vip-panel-border: rgba(255, 255, 255, 0.16);
 }
 
-/* ช่อง/ปุ่มที่ใช้พื้น surface ภายในแถบไล่สี → โปร่งเข้มบางๆ ให้ข้อความขาวอ่านได้ */
+/* ช่อง/ปุ่มที่ใช้พื้น surface ภายในแถบไล่สี → โปร่งเข้มบางๆ ให้ข้อความขาวอ่านได้ (chrome สว่าง = โปร่งขาว) */
 [data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .lobby-section-header-band) :is(.glass-card--soft, .glass-pill, .glass-icon-btn) {
-  background: rgba(0, 0, 0, 0.22);
+  background: var(--t-chrome-inner-fill, rgba(0, 0, 0, 0.22));
 }
 
-/* โลโก้บนพื้นไล่สี = ขาวล้วน */
+/* โลโก้บนพื้นไล่สี = สีเดียวกับตัวอักษร chrome (ขาวล้วน / ดำล้วนเมื่อพื้นสว่าง) */
 [data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .theme-brand-surface) .cosmic-logo--dark {
   display: inline-block;
-  filter: brightness(0) invert(1);
+  filter: var(--t-chrome-logo-filter, brightness(0) invert(1));
 }
 
 [data-theme]:not([data-theme="cosmic"]) :is(.cosmic-mobile-chrome-surface, .theme-brand-surface) .cosmic-logo--light {
@@ -79,24 +80,24 @@
 /* footer desktop = พื้น chrome ไล่สี (token --header-desktop-chrome-* จาก themes) → ข้อความ/โลโก้ขาว */
 @media (min-width: 1024px) {
   [data-theme]:not([data-theme="cosmic"]) .cosmic-footer {
-    color: #ffffff;
-    --color-white: #ffffff;
-    --color-zinc-100: #ffffff;
-    --color-zinc-200: rgba(255, 255, 255, 0.92);
-    --color-zinc-300: rgba(255, 255, 255, 0.88);
-    --color-zinc-400: rgba(255, 255, 255, 0.82);
-    --color-zinc-500: rgba(255, 255, 255, 0.7);
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.88);
-    --text-muted: rgba(255, 255, 255, 0.72);
-    --icon-default: rgba(255, 255, 255, 0.92);
-    --icon-active: #ffffff;
-    --border-subtle: rgba(255, 255, 255, 0.18);
+    color: var(--t-chrome-fg, #ffffff);
+    --color-white: var(--t-chrome-fg, #ffffff);
+    --color-zinc-100: var(--t-chrome-fg, #ffffff);
+    --color-zinc-200: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.92));
+    --color-zinc-300: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.88));
+    --color-zinc-400: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.82));
+    --color-zinc-500: var(--t-chrome-fg-muted, rgba(255, 255, 255, 0.7));
+    --text-primary: var(--t-chrome-fg, #ffffff);
+    --text-secondary: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.88));
+    --text-muted: var(--t-chrome-fg-muted, rgba(255, 255, 255, 0.72));
+    --icon-default: var(--t-chrome-fg-soft, rgba(255, 255, 255, 0.92));
+    --icon-active: var(--t-chrome-fg, #ffffff);
+    --border-subtle: color-mix(in srgb, var(--t-chrome-fg, #ffffff) 18%, transparent);
   }
 
   [data-theme]:not([data-theme="cosmic"]) .cosmic-footer .cosmic-logo--dark {
     display: inline-block;
-    filter: brightness(0) invert(1);
+    filter: var(--t-chrome-logo-filter, brightness(0) invert(1));
   }
 
   [data-theme]:not([data-theme="cosmic"]) .cosmic-footer .cosmic-logo--light {
@@ -104,11 +105,16 @@
   }
 }
 
+/* ป้าย "ประกาศ" ใช้ accent-highlight (สีอ่อน) — chrome พื้นสว่าง/พาสเทลต้องใช้สีตัวอักษร chrome แทน (ธีมเดิมไม่ตั้ง token → คงเดิม) */
+[data-theme]:not([data-theme="cosmic"]) .lobby-announcement-marquee .lobby-announcement-marquee__label {
+  color: var(--t-chrome-label, var(--accent-highlight));
+}
+
 /* ---- ชิปหมวดเกม active / แถบ progress = สี active ของธีม ---- */
 [data-theme]:not([data-theme="cosmic"]) .category-nav__chip.is-active,
 [data-theme]:not([data-theme="cosmic"]) .category-nav__chip.is-active .category-nav__icon,
 [data-theme]:not([data-theme="cosmic"]) .category-nav__chip.is-active .category-nav__label {
-  color: var(--t-active-text) !important;
+  color: var(--t-rail-active-fg, var(--t-active-text)) !important;
 }
 
 [data-theme]:not([data-theme="cosmic"]) .category-nav--mobile .category-nav__progress-bar {

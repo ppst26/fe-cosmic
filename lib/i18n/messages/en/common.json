@@ -15,6 +15,16 @@
     "light": "Light themes",
     "darkLabel": "Dark theme",
     "lightLabel": "Light theme",
+    "group": {
+      "solid": "Solid",
+      "gradient": "Gradient"
+    },
+    "style": {
+      "tonal": "Same tone, light & dark",
+      "complementary": "Complementary colors",
+      "mono": "Single hue gradient",
+      "duo": "Color pair gradient"
+    },
     "chat": "Live chat",
     "chatUnavailable": "Live chat isn't connected yet — coming soon"
   },

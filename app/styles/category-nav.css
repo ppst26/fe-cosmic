@@ -78,7 +78,7 @@
     width: 100%;
     max-width: 100%;
     /* พื้นแถบเมนู = ม่วงเข้มอ่อนลงจากเดิม (ผสม hover + mid) — ช่องเมนูใช้ --surface-hover สว่างกว่าอีกขั้น */
-    --lobby-category-bar-bg: color-mix(in srgb, var(--surface-hover) 38%, var(--surface-mid));
+    --lobby-category-bar-bg: var(--t-rail-bg, color-mix(in srgb, var(--surface-hover) 38%, var(--surface-mid)));
     background: var(--lobby-category-bar-bg);
     border: 0;
     top: calc(
@@ -252,8 +252,8 @@
   border-radius: 5px;
   border: 0;
   /* ทุกช่องพื้นเท่ากัน สว่างกว่าแถบเมนู (--lobby-category-bar-bg) เล็กน้อย — active สว่างสุดด้วย --surface-selected */
-  background: var(--surface-hover);
-  color: #bab5d6;
+  background: var(--t-rail-item-bg, var(--surface-hover));
+  color: var(--t-rail-fg, #bab5d6);
   font-size: 13.5px;
   font-weight: 500;
   white-space: nowrap;
@@ -282,8 +282,8 @@
 
 /* active = สี/พื้นเท่านั้น — ขนาดเดียวกับ inactive เพื่อไม่ให้แถบกระตุกตอนกด */
 .category-nav--mobile .category-nav__pill.is-active {
-  background: var(--surface-selected);
-  color: var(--nav-active);
+  background: var(--t-rail-active-bg, var(--surface-selected));
+  color: var(--t-rail-active-fg, var(--nav-active));
   font-weight: 500;
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
 }
