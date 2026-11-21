@@ -173,23 +173,6 @@ export function LobbyDesktopSidebar({
         </nav>
       ))}
 
-      <nav className="lobby-desktop-sidebar__nav lobby-desktop-sidebar__nav--services shrink-0" aria-label={t("desktop.system")}>
-        <p className="lobby-desktop-sidebar__section-label cosmic-type-sidebar-section">{t("desktop.system")}</p>
-        <ul className="lobby-desktop-sidebar__list flex flex-col m-0 p-0">
-          <li>
-            <Link
-              href="/support"
-              className="lobby-desktop-sidebar__link cosmic-type-sidebar-link relative flex w-full items-center border-0 text-left"
-              title={t("desktop.contactUs")}
-            >
-              <span className="lobby-desktop-sidebar__link-icon-wrap flex shrink-0 items-center justify-center" aria-hidden="true">
-                <ContactNavIcon className="h-5 w-5 shrink-0" />
-              </span>
-              <span className="lobby-desktop-sidebar__link-label min-w-0 flex-1 truncate">{t("desktop.contactUs")}</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
 
       </div>
       </div>

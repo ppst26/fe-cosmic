@@ -29,66 +29,7 @@ const SPORT_COVER_META: {
   badges?: SportCardItem["badges"];
   tags?: string[];
 }[] = [
-  {
-    file: "sbobet.avif",
-    title: "SBOBET",
-    provider: "SBOBET",
-    href: "/sport/sbobet",
-    badges: ["EXCLUSIVE", "LIVE"],
-  },
-  {
-    file: "saba.avif",
-    title: "SABA Sports",
-    provider: "SABA Sports",
-    href: "/sport/saba",
-    badges: ["EXCLUSIVE", "LIVE"],
-    tags: ["all-in-one", "all-providers", "basketball"],
-  },
-  {
-    file: "afb88.avif",
-    title: "AFB88",
-    provider: "AFB88",
-    href: "/sport/afb88",
-    badges: ["HOT", "LIVE"],
-  },
-  {
-    file: "ufabet.avif",
-    title: "UFABET",
-    provider: "UFABET",
-    href: "/sport/ufabet",
-    badges: ["EXCLUSIVE", "LIVE"],
-    tags: ["all-in-one", "all-providers", "boxing"],
-  },
-  {
-    file: "amb.avif",
-    title: "AMB Sport",
-    provider: "AMB",
-    href: "/sport/amb",
-    badges: ["LIVE"],
-  },
-  {
-    file: "fb.avif",
-    title: "FB Sports",
-    provider: "FB Sports",
-    href: "/sport/fb",
-    badges: ["HOT", "LIVE"],
-    tags: ["all-in-one", "all-providers", "esports"],
-  },
-  {
-    file: "laliga.avif",
-    title: "La Liga",
-    provider: "La Liga",
-    href: "/sport/laliga",
-    badges: ["HOT", "LIVE"],
-  },
-  {
-    file: "lim.avif",
-    title: "LIM Sport",
-    provider: "LIM",
-    href: "/sport/lim",
-    badges: ["LIVE"],
-    tags: ["all-in-one", "all-providers", "tennis"],
-  },
+  // ค่ายกีฬาทั้งหมดเดิมชี้ไป /sport/<ค่าย> ซึ่งไม่มี route (404) จึงถูกลบ — เพิ่มกลับพร้อม route
 ];
 
 function buildSportCoverItem(meta: (typeof SPORT_COVER_META)[number]): SportCardItem {
