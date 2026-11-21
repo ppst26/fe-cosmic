@@ -9,7 +9,7 @@ import {
 } from "@/app/lib/categoryProviderFromPath";
 import { LobbyProviderGamesView } from "../game/LobbyProviderGamesView";
 import type { CategoryId } from "../../types/lobby";
-import { ChevronLeftIcon } from "../ui/Icons";
+import { ArrowLeftIcon } from "../ui/Icons";
 import { ProviderCategoryToolbar } from "../slots/ProviderCategoryToolbar";
 import { SlotProviderCards, type SlotProviderPick } from "../slots/SlotProviderCards";
 import { CasinoProviderCards } from "../casino/CasinoProviderCards";
@@ -319,43 +319,47 @@ function LobbyCategoryProvidersContent({ categoryId }: LobbyCategoryProvidersPro
       className="lobby-category-providers flex min-w-0 flex-col gap-3"
       aria-label={t("categoryProviders.listAriaLabel")}
     >
-      <ProviderCategoryToolbar
-        searchQuery={searchQuery}
-        onSearchQueryChange={setSearchQuery}
-        searchPlaceholder={
-          categoryId === "casino"
-            ? t("categoryProviders.searchPlaceholder.casino")
-            : categoryId === "fishing"
-              ? t("categoryProviders.searchPlaceholder.fishing")
-              : categoryId === "cards"
-                ? t("categoryProviders.searchPlaceholder.cards")
-                : categoryId === "sports"
-                  ? t("categoryProviders.searchPlaceholder.sports")
-                  : t("categoryProviders.searchPlaceholder.default")
-        }
-      />
-
       <div
         key={categoryId}
         className="lobby-category-providers__swap flex min-w-0 flex-col gap-3"
       >
-        {/* ปุ่มกลับหน้าหลัก · ชื่อหมวดตรงกลางจริง (คอลัมน์ซ้าย/ขวากว้างเท่ากัน) · จำนวนค่ายขวา */}
-        <div className="grid min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-2">
-          <button
-            type="button"
-            onClick={() => router.push("/")}
-            className="inline-flex h-9 min-w-0 items-center gap-1.5 justify-self-start rounded-[var(--radius-pill)] bg-[var(--surface-solid-inner)] py-0 pl-2.5 pr-4 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] active:scale-95"
-            aria-label={t("categoryProviders.backToHome")}
-          >
-            <ChevronLeftIcon className="h-5 w-5 shrink-0 text-[var(--icon-active)]" />
-            <span className="cosmic-type-body truncate">{t("categoryProviders.homeLabel")}</span>
-          </button>
-          <h2 className="min-w-0 truncate text-center text-lg font-medium leading-tight text-[var(--text-primary)] sm:text-xl">
-            {sectionTitle}
-          </h2>
-          <span className="cosmic-type-caption justify-self-end text-[var(--text-muted)]">
-            {t("categoryProviders.providerCount", { count: providerTotal })}
-          </span>
+        {/* แถวหัวหน้า: [ปุ่มกลับ · ชื่อหมวด (จำนวนค่าย)] ชิดซ้ายเป็นกลุ่ม · ช่องค้นหา pill เล็กชิดขวา (justify-between) — เหมือนกันทุกหมวด */}
+        <div className="flex min-w-0 items-center justify-between gap-3 px-3 py-2.5">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              className="cosmic-back-btn shrink-0"
+              aria-label={t("categoryProviders.backToHome")}
+            >
+              <ArrowLeftIcon className="h-5 w-5" />
+            </button>
+            <div className="flex min-w-0 items-baseline gap-1.5">
+              <h2 className="m-0 whitespace-nowrap text-base font-medium text-[var(--text-primary)] sm:text-lg">
+                {sectionTitle}
+              </h2>
+              <span className="whitespace-nowrap text-xs text-[var(--text-muted)]">
+                {t("categoryProviders.providerCount", { count: providerTotal })}
+              </span>
+            </div>
+          </div>
+          <ProviderCategoryToolbar
+            className="provider-category-toolbar--compact !m-0 min-w-0 !w-[38%] shrink-0"
+            searchQuery={searchQuery}
+            onSearchQueryChange={setSearchQuery}
+            searchPlaceholder={
+              categoryId === "casino"
+                ? t("categoryProviders.searchPlaceholder.casino")
+                : categoryId === "fishing"
+                  ? t("categoryProviders.searchPlaceholder.fishing")
+                  : categoryId === "cards"
+                    ? t("categoryProviders.searchPlaceholder.cards")
+                    : categoryId === "sports"
+                      ? t("categoryProviders.searchPlaceholder.sports")
+                      : t("categoryProviders.searchPlaceholder.default")
+            }
+          />
+    
         </div>
 
         {categoryId === "slots" ? (

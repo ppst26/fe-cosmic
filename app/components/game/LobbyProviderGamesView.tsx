@@ -2,9 +2,9 @@
 
 import React, { useMemo, useState } from "react";
 import { useT } from "@/lib/i18n/I18nProvider";
-import { GameSearchBar } from "@/app/components/home/GameSearchBar";
+import { ProviderCategoryToolbar } from "@/app/components/slots/ProviderCategoryToolbar";
 import { ProviderGameGrid } from "@/app/components/slots/ProviderGameGrid";
-import { ChevronLeftIcon } from "@/app/components/ui/Icons";
+import { ArrowLeftIcon } from "@/app/components/ui/Icons";
 import { getGamesByProvider, PROVIDER_INFO_MAP } from "@/app/data/providerGamesData";
 import { resolveCategoryProviderId } from "@/lib/categoryProviderPaths";
 
@@ -53,26 +53,33 @@ export function LobbyProviderGamesView({
 
   return (
     <div className="flex min-w-0 flex-col gap-3">
-      {/* แถวเดียว: ปุ่มกลับ pill (ชื่อหมวด) · ชื่อค่ายตรงกลาง · จำนวนเกมเป็นชิปขวา */}
-      <div className="flex min-w-0 items-center justify-between gap-3">
-        <button
-          type="button"
-          onClick={onBack}
-          className="inline-flex h-9 min-w-0 items-center gap-1.5 rounded-[var(--radius-pill)] bg-[var(--surface-solid-inner)] py-0 pl-2.5 pr-4 text-[var(--text-primary)] transition-colors hover:bg-[var(--surface-hover)] active:scale-95"
-          aria-label={t("providerGames.backToCategory", { category: categoryLabel })}
-        >
-          <ChevronLeftIcon className="h-5 w-5 shrink-0 text-[var(--icon-active)]" />
-          <span className="cosmic-type-body truncate">{categoryLabel}</span>
-        </button>
-        <h1 className="min-w-0 flex-1 truncate text-center text-lg font-medium uppercase leading-tight tracking-tight text-[var(--text-primary)]">
-          {providerInfo.name}
-        </h1>
-        <span className="cosmic-type-caption shrink-0 rounded-[var(--radius-pill)] bg-[var(--surface-solid-inner)] px-3 py-1.5 text-[var(--text-secondary)]">
-          {t("providerGames.gameCountPlain", { count: filteredGames.length })}
-        </span>
+      {/* แถวหัวหน้า (เหมือนหน้ารายการค่าย): [ปุ่มกลับวงกลม · ชื่อค่าย (จำนวนเกม)] ชิดซ้าย · ช่องค้นหา pill เล็กชิดขวา */}
+      <div className="flex min-w-0 items-center justify-between gap-3 px-3 py-2.5">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <button
+            type="button"
+            onClick={onBack}
+            className="cosmic-back-btn shrink-0"
+            aria-label={t("providerGames.backToCategory", { category: categoryLabel })}
+          >
+            <ArrowLeftIcon className="h-5 w-5" />
+          </button>
+          <div className="flex min-w-0 items-baseline gap-1.5">
+            <h1 className="m-0 truncate text-base font-medium uppercase text-[var(--text-primary)] sm:text-lg">
+              {providerInfo.name}
+            </h1>
+            <span className="whitespace-nowrap text-xs text-[var(--text-muted)]">
+              {t("providerGames.gameCount", { count: filteredGames.length })}
+            </span>
+          </div>
+        </div>
+        <ProviderCategoryToolbar
+          className="provider-category-toolbar--compact !m-0 min-w-0 !w-[38%] shrink-0"
+          searchQuery={searchQuery}
+          onSearchQueryChange={setSearchQuery}
+          searchPlaceholder={t("providerGames.searchPlaceholder")}
+        />
       </div>
-
-      <GameSearchBar placeholder={t("providerGames.searchPlaceholder")} onSearch={setSearchQuery} />
 
       <ProviderGameGrid key={providerId} games={filteredGames} />
     </div>

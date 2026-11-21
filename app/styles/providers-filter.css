@@ -10,6 +10,18 @@
   gap: 10px;
 }
 
+/* แถวหัวหน้าหมวด: ช่องค้นหาเล็ก pill เต็มมุม กว้าง ~25% */
+.provider-category-toolbar.provider-category-toolbar--compact .provider-category-toolbar__search-field.glass-card--soft {
+  height: 2.25rem;
+  gap: 6px;
+  padding-inline: 0.65rem;
+  border-radius: 9999px;
+}
+
+.provider-category-toolbar--compact .provider-category-toolbar__search-input {
+  font-size: 0.8125rem;
+}
+
 .provider-category-toolbar .glass-card--soft {
   border-radius: var(--radius-filter);
   box-shadow: none;

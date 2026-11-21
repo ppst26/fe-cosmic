@@ -7,6 +7,8 @@ export interface ProviderCategoryToolbarProps {
   searchQuery: string;
   onSearchQueryChange: (query: string) => void;
   searchPlaceholder?: string;
+  /** คลาสเพิ่มที่ราก (เช่น flex-1 เมื่อวางในแถวเดียวกับหัวข้อ) */
+  className?: string;
 }
 
 /**
@@ -16,11 +18,12 @@ export function ProviderCategoryToolbar({
   searchQuery,
   onSearchQueryChange,
   searchPlaceholder = "Game | Provider",
+  className,
 }: ProviderCategoryToolbarProps) {
   const searchInputId = useId();
 
   return (
-    <div className="provider-category-toolbar w-full min-w-0">
+    <div className={["provider-category-toolbar w-full min-w-0", className].filter(Boolean).join(" ")}>
       <div className="provider-category-toolbar__row">
         <form
           className="provider-category-toolbar__search-field glass-card--soft"
