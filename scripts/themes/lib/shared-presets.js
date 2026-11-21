@@ -166,4 +166,16 @@ function solidFlatTokens(t) {
   ];
 }
 
-module.exports = { loadSharedPresets, extraTokens, solidFlatTokens, contrast, luminance, chroma, NEUTRALS };
+/** selector รวมของ preset ที่ตัวอักษร chrome เป็นสีเข้ม (พื้นสว่าง/พาสเทล) — ใช้สร้างกฎเฉพาะโปรเจกต์ เช่น header ของ lotto/cas */
+function darkChromeSelector(rows) {
+  const keys = rows.filter((r) => r.chromeFg && luminance(r.chromeFg) < 0.4).map((r) => `[data-theme="${r.key}"]`);
+  return keys.length ? `:is(${keys.join(",")})` : ":not(*)";
+}
+
+/** selector รวมของ preset กลุ่ม solid (ปุ่มเรียบสีเดียว) */
+function solidSelector(rows) {
+  const keys = rows.filter((r) => r.group === "solid").map((r) => `[data-theme="${r.key}"]`);
+  return keys.length ? `:is(${keys.join(",")})` : ":not(*)";
+}
+
+module.exports = { loadSharedPresets, extraTokens, solidFlatTokens, darkChromeSelector, solidSelector, contrast, luminance, chroma, NEUTRALS };
