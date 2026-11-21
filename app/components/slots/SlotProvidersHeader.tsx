@@ -41,7 +41,7 @@ export function StandaloneSubHeader({
 
   return (
     <header className={`standalone-sub-header page-sub-header w-full min-w-0 ${className}`}>
-      <div className="standalone-sub-header__inner relative mx-auto flex h-10 w-full max-w-[var(--content-max)] items-center justify-between px-3 sm:px-4">
+      <div className="standalone-sub-header__inner relative mx-auto flex min-h-14 w-full max-w-[var(--content-max)] items-center justify-between px-4 py-2.5 sm:px-5">
         {/* ปุ่มย้อนกลับ — วงกลม (.cosmic-back-btn) */}
         <Link
           href={backHref}

@@ -27,7 +27,7 @@ export function ProviderBreadcrumb({
       className="provider-breadcrumb-nav standalone-sub-header page-sub-header w-full min-w-0"
       aria-label={t("breadcrumb.ariaLabel")}
     >
-      <div className="mx-auto flex h-12 w-full max-w-[var(--content-max)] items-center gap-2 px-[var(--page-gutter)] text-sm sm:text-base">
+      <div className="mx-auto flex min-h-14 w-full max-w-[var(--content-max)] items-center gap-2 px-4 py-2.5 text-sm sm:text-base">
         {/* ปุ่มย้อนกลับ arrow back */}
         <Link
           href={backHref}
