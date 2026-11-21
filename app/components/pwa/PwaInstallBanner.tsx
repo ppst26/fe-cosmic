@@ -114,7 +114,7 @@ export function PwaInstallBanner() {
 
         <Link
           href="/download"
-          className="shrink-0 whitespace-nowrap rounded-lg bg-[var(--t-action,var(--brand,var(--action-solid,#7c3aed)))] px-4 py-2 text-xs font-bold text-white no-underline"
+          className="shrink-0 whitespace-nowrap rounded-lg bg-[var(--t-action,var(--brand,var(--action-solid,#7c3aed)))] px-4 py-2 text-xs font-bold text-[var(--t-action-text,#fff)] no-underline"
         >
           {t("a2hs.addButton")}
         </Link>
