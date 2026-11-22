@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import type { CashbackPanelsData } from "@/lib/api/cashback";
+import { claimCashback, type CashbackPanelsData } from "@/lib/api/cashback";
 import { useCashbackPanels, usePrefetchCashbackTabs } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { TabPanelTransition } from "@/app/components/ui/TabPanelTransition";
@@ -19,6 +19,7 @@ import {
 import { formatCashbackCurrency, formatCashbackPercent } from "@/lib/format";
 import type { CashbackPanelMock, CashbackTabId } from "@/app/types/cashback";
 import { useWallet } from "@/app/hooks/api/account";
+import { useToastOptional } from "@/context/ToastContext";
 import { useT } from "@/lib/i18n/I18nProvider";
 
 interface CashbackPageContentProps {
@@ -62,6 +63,8 @@ function CashbackPanelsView({
   const [tab, setTab] = useState<CashbackTabId>(initialTab);
   const [insightPeriod, setInsightPeriod] = useState<CashbackInsightPeriodId>("all");
   const [refreshing, setRefreshing] = useState(false);
+  const [claiming, setClaiming] = useState(false);
+  const { showToast } = useToastOptional();
   const [playPanel, setPlayPanel] = useState(cashbackPanels.play);
   const [lossPanel, setLossPanel] = useState(cashbackPanels.loss);
 
@@ -77,18 +80,19 @@ function CashbackPanelsView({
     [panel, t],
   );
 
-  const handleClaim = () => {
-    if (!panel.canClaim || panel.claimableThb <= 0) return;
-    const reset = (prev: CashbackPanelMock) => ({
-      ...prev,
-      claimableThb: 0,
-      canClaim: false,
-      statusHintKey: "panel.claimed" as const,
-      claimButtonLabelKey: "panel.claimed" as const,
-    });
-    if (tab === "play") setPlayPanel(reset);
-    else setLossPanel(reset);
-    // TODO(api): POST claim cashback แล้วใช้ panels จาก response · ยอดที่รับเข้ากระเป๋าหลัก
+  /** รับคืนยอด — เรียก claimCashback (mock → POST /api/cashback/claim) แล้วใช้ panel จาก response */
+  const handleClaim = async () => {
+    if (claiming || !panel.canClaim || panel.claimableThb <= 0) return;
+    setClaiming(true);
+    const res = await claimCashback({ kind: tab });
+    setClaiming(false);
+    if (!res.ok) {
+      showToast(res.error, "error");
+      return;
+    }
+    const next: CashbackPanelMock = res.data.panel;
+    if (tab === "play") setPlayPanel(next);
+    else setLossPanel(next);
     wallet.refresh();
   };
 
@@ -121,7 +125,7 @@ function CashbackPanelsView({
             amount={formatCashbackCurrency(panel.claimableThb)}
             statusHint={t(panel.statusHintKey)}
             claimLabel={t(panel.claimButtonLabelKey)}
-            canClaim={panel.canClaim && panel.claimableThb > 0}
+            canClaim={panel.canClaim && panel.claimableThb > 0 && !claiming}
             onClaim={handleClaim}
             onRefresh={handleRefresh}
             refreshing={refreshing}

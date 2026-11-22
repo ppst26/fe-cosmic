@@ -7,7 +7,8 @@ import Link from "@/lib/i18n/navigation";
 // สไตล์วงล้อโหลดเฉพาะหน้า /wheel — ไม่อยู่ใน globals.css แล้ว (ใช้ที่นี่ที่เดียว)
 import "@/app/styles/lucky-wheel.css";
 import { useWheel } from "@/app/hooks/api/member";
-import type { WheelData } from "@/lib/api/wheel";
+import { spinWheel, type WheelData } from "@/lib/api/wheel";
+import { useToastOptional } from "@/context/ToastContext";
 import { ResourceGate } from "../ui/ResourceGate";
 import { ArrowLeftIcon } from "../ui/Icons";
 import { CosmicFortuneWheel } from "./CosmicFortuneWheel";
@@ -38,6 +39,7 @@ export function LuckyWheelPageContent({ embedded = false }: { embedded?: boolean
  */
 function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boolean }) {
   const t = useT("rewards");
+  const { showToast } = useToastOptional();
   const segmentDeg = 360 / wheel.segments.length;
   /** เวลาหมุนจากธีม — ใช้ทั้ง transition ของวงและจังหวะประกาศผล */
   const spinDurationMs = resolveWheelTheme(wheel.theme).spinDurationMs;
@@ -54,10 +56,18 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
   const canAffordGems = gemsBalance >= currentGemsCost;
   const canAffordTicket = ticketCount >= currentTicketCost && ticketCount > 0;
 
-  const handleSpin = useCallback((spinMethod: WheelSpinMethod) => {
+  const handleSpin = useCallback(async (spinMethod: WheelSpinMethod) => {
     if (spinning || !(spinMethod === "gems" ? canAffordGems : canAffordTicket)) return;
 
-    const targetIndex = Math.floor(Math.random() * wheel.segments.length);
+    // ล็อกปุ่มทันทีระหว่างรอผลจาก spinWheel (mock → POST /api/wheel/spin) กันกดซ้ำ
+    setSpinning(true);
+    const res = await spinWheel({ method: spinMethod, segmentCount: wheel.segments.length });
+    if (!res.ok) {
+      setSpinning(false);
+      showToast(res.error, "error");
+      return;
+    }
+    const targetIndex = res.data.segmentIndex;
     const segment: WheelSegment = wheel.segments[targetIndex];
     const extraTurns = 5 * 360;
     const targetAngle = 360 - targetIndex * segmentDeg - segmentDeg / 2;
@@ -68,10 +78,9 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
     if (spinMethod === "gems") {
       setGemsBalance((b) => Math.max(0, b - currentGemsCost));
     } else {
-      setTicketCount((t) => Math.max(0, t - currentTicketCost));
+      setTicketCount((tc) => Math.max(0, tc - currentTicketCost));
     }
 
-    setSpinning(true);
     setRotation(nextRotation);
 
     window.setTimeout(() => {
@@ -87,7 +96,7 @@ function LuckyWheelPlay({ wheel, embedded }: { wheel: WheelData; embedded: boole
       };
       setRecentHistoryRows((prev) => [row, ...prev].slice(0, 5));
     }, spinDurationMs);
-  }, [t, spinDurationMs, canAffordGems, canAffordTicket, currentGemsCost, currentTicketCost, rotation, segmentDeg, spinning, wheel.segments]);
+  }, [t, showToast, spinDurationMs, canAffordGems, canAffordTicket, currentGemsCost, currentTicketCost, rotation, segmentDeg, spinning, wheel.segments]);
 
   return (
     <div className={`lucky-wheel-page ${embedded ? "lucky-wheel-page--embedded" : ""}`}>

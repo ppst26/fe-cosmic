@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { GEMS_STORE_GEM_ASSET } from "@/app/data/gemsStoreMockData";
-import type { GemsStoreData } from "@/lib/api/gemsStore";
+import { redeemGemsPackage, type GemsStoreData } from "@/lib/api/gemsStore";
+import { useToastOptional } from "@/context/ToastContext";
 import { useGemsStore } from "@/app/hooks/api/member";
 import { ResourceGate } from "../ui/ResourceGate";
 import { GemsStoreSummaryCard } from "./GemsStoreSummaryCard";
@@ -56,6 +57,7 @@ function GemsStoreView({
   embedded: boolean;
 }) {
   const t = useT("rewards");
+  const { showToast } = useToastOptional();
   const [gemsBalance, setGemsBalance] = useState(initialBalance ?? gemsStore.balance);
   const [termsOpen, setTermsOpen] = useState(false);
   const [confirmPkg, setConfirmPkg] = useState<GemsStorePackage | null>(null);
@@ -71,6 +73,16 @@ function GemsStoreView({
     if (!confirmPkg || gemsBalance < confirmPkg.gemsCost) return;
     setRedeemLoading(true);
     try {
+      // แลกเครดิต — redeemGemsPackage (mock → POST /api/gems-store/redeem)
+      const res = await redeemGemsPackage({
+        packageId: confirmPkg.id,
+        gemsCost: confirmPkg.gemsCost,
+        credits: confirmPkg.credits,
+      });
+      if (!res.ok) {
+        showToast(res.error, "error");
+        return;
+      }
       setGemsBalance((prev) => prev - confirmPkg.gemsCost);
       setSuccessCredits(confirmPkg.credits);
       setConfirmPkg(null);

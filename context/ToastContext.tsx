@@ -107,3 +107,10 @@ export function useToast(): ToastContextValue {
   }
   return ctx;
 }
+
+/** ใช้ใน component ที่อาจอยู่นอก ToastProvider (เช่น legacy modal) — no-op ถ้าไม่มี provider */
+export function useToastOptional(): ToastContextValue {
+  const ctx = useContext(ToastContext);
+  const noop = useCallback(() => {}, []);
+  return ctx ?? { showToast: noop };
+}

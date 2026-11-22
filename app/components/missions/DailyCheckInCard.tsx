@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { CloseIcon } from "@/app/components/ui/Icons";
 import { responsiveSheetCloseButtonClass } from "@/app/components/ui/responsiveSheetDialog";
-import type { CheckInData } from "@/lib/api/checkIn";
+import { claimCheckInDay, claimCheckInMilestone, type CheckInData } from "@/lib/api/checkIn";
+import { useToastOptional } from "@/context/ToastContext";
 import { useCheckIn } from "@/app/hooks/api/member";
 import { ResourceGate } from "@/app/components/ui/ResourceGate";
 import { cn } from "@/lib/utils";
@@ -47,6 +48,8 @@ function DailyCheckInCardView({
 }: DailyCheckInCardProps & { checkIn: CheckInData }) {
   const t = useT("rewards");
   const fmt = useFormat();
+  const { showToast } = useToastOptional();
+  const [claiming, setClaiming] = useState(false);
   const [days, setDays] = useState<DailyCheckInDayReward[]>(checkIn.days);
   const [justClaimed, setJustClaimed] = useState<number | null>(null);
   const [claimSuccessCredits, setClaimSuccessCredits] = useState<number | null>(
@@ -65,14 +68,22 @@ function DailyCheckInCardView({
   const isTodayClaimed = !todayReward && checkedInCount > 0;
   const daysRemainingForBonus = Math.max(0, 7 - checkedInCount);
 
-  const handleClaim = (dayNum?: number) => {
+  /** รับรางวัลรายวัน — claimCheckInDay (mock → POST /api/missions/check-in/claim) */
+  const handleClaim = async (dayNum?: number) => {
     const targetDay = dayNum ?? todayReward?.day;
-    if (!targetDay) return;
+    if (!targetDay || claiming) return;
 
     const reward = days.find((d) => d.day === targetDay);
     if (!reward || reward.status !== "today") return;
 
     const nextDay = reward.day + 1;
+    setClaiming(true);
+    const res = await claimCheckInDay({ day: reward.day, credits: reward.credits });
+    setClaiming(false);
+    if (!res.ok) {
+      showToast(res.error, "error");
+      return;
+    }
     setDays((prev) =>
       prev.map((item) => {
         if (item.day === targetDay && item.status === "today") {
@@ -101,9 +112,20 @@ function DailyCheckInCardView({
 
   const activeMilestone = checkIn.milestones.find((m) => m.milestoneDay === milestoneDialogDay);
 
-  const handleClaimMilestone = () => {
-    if (!activeMilestone) return;
+  /** รับรางวัลสะสม — claimCheckInMilestone (mock → POST /api/missions/check-in/milestones/claim) */
+  const handleClaimMilestone = async () => {
+    if (!activeMilestone || claiming) return;
     if (claimedMilestones.includes(activeMilestone.milestoneDay) || checkedInCount < activeMilestone.milestoneDay) return;
+    setClaiming(true);
+    const res = await claimCheckInMilestone({
+      milestoneDay: activeMilestone.milestoneDay,
+      gemsReward: activeMilestone.gemsReward,
+    });
+    setClaiming(false);
+    if (!res.ok) {
+      showToast(res.error, "error");
+      return;
+    }
     setClaimedMilestones((prev) => [...prev, activeMilestone.milestoneDay]);
     setMilestoneDialogDay(null);
     setClaimSuccessCredits(activeMilestone.gemsReward);
