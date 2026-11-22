@@ -314,5 +314,6 @@ const vip = useVipPlayer();
 
 - `app/api/*` เป็น mock server (เก็บผู้ใช้ในไฟล์/หน่วยความจำ ไม่ตัดเงิน ไม่เช็กรอบหวย) — **อย่า deploy ขึ้น production**
 - มีเทสต์กันไม่ให้ไฟล์ UI ใหม่ import `app/data/*MockData` ตรง (`lib/api/mockDataImports.test.ts`) — ไฟล์เดิมที่เหลือส่วนใหญ่เป็น config คงที่ (เมนู, footer, ไอคอน, rank helper) ไม่ใช่ข้อมูลจาก backend
+- **ตรา VIP รายระดับ** มาจาก `GET /api/vip/ranks` → `images` (`{ vip0: URL, … vip10: URL }`) — `VipRankEmblem` ใช้ URL นั้นตามที่ส่งมา (ให้ backend คุมการล้างแคชด้วย URL/`?v=` ใหม่) ถ้าไม่ส่งมาใช้ภาพใน `public/rank` · ชื่อระดับ/EXP/สี (`tiers`) ตอนนี้ตารางสิทธิ์ใช้จาก API แล้ว แต่ส่วนอื่นของหน้า VIP (carousel, การ์ดเลื่อนระดับ) ยังอ่านจาก `getVipRankTier()` ในไฟล์ mock
 - สิ่งที่ยังเป็น mock ในฝั่ง UI: `getThaiLottoDrawByRoundId` (เวลาปิด/ออกผลหวยรัฐบาลคำนวณจาก round id ด้วยกฎ 15:00/16:00 — ถ้า backend กำหนดรอบ ให้อ่านจาก `/api/lottery/markets/:slug/rounds`) และ `PendingTransactionProvider` (รายการ pending หลังฝาก/ถอนสร้างจาก mock — เมื่อ backend ส่งข้อมูลรายการกลับมา ให้ขยายผลลัพธ์ของ `submitDeposit`/`submitWithdraw`)
 - ความปลอดภัยที่ backend ต้องทำเอง: ตรวจสิทธิ์ทุก endpoint · validate input · rate limit login/register · ตัดเงิน+เช็กรอบหวยใน transaction เดียว · เพิกถอน token ตอน logout (รายละเอียดดู `README.md` หัวข้อ "ความปลอดภัยที่ทำไว้แล้ว")

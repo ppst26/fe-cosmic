@@ -105,6 +105,7 @@ exports/lottery-kit ชุดย้ายระบบหวยไปโปรเ
 | `design.md` | ต้นฉบับดีไซน์ (tokens, sections, QA) |
 | `AGENTS.md` | แผนที่โปรเจกต์ + กฎสำหรับ AI agent (`agent.md`, `CLAUDE.md` ชี้มาที่นี่) |
 | `.cursor/`, `agent/` | rules + skills ของ agent (เนื้อหาเหมือนกัน) |
+| `docs/architecture.md` | สถาปัตยกรรมทั้งระบบ (โครงโฟลเดอร์ · request lifecycle · i18n · providers · ธีม · วิธีเพิ่มของใหม่) |
 | `docs/api/backend-integration.md` | คู่มือเชื่อมต่อ back-end (ทีม + agent) |
 | `docs/superpowers/` | spec และ plan ของแต่ละฟีเจอร์ |
 

@@ -8,6 +8,7 @@ Stack: Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · shadcn/ui (Radix
 | งาน | อ่านก่อน |
 |-----|----------|
 | ภาพรวมโปรเจกต์ / sync docs | `AGENTS.md` หรือ `agent.md` (ไฟล์นี้) |
+| โครงสร้างระบบ / จะเพิ่มของไว้ตรงไหน | `docs/architecture.md` |
 | ดีไซน์เต็ม (tokens, sections, QA) | `design.md` |
 | บุคลิกการตอบ | `agent/rules/personality.mdc` หรือ `.cursor/rules/personality.mdc` |
 | ภาษา / คอมเมนต์ / commit | `*/rules/communication.mdc` |
