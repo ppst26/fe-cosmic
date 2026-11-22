@@ -230,7 +230,7 @@ const vip = useVipPlayer();
 | `AUTH_SESSION_COOKIE` | ชื่อ cookie session ของ backend (ดู §6) |
 | `NEXT_PUBLIC_IMAGE_HOSTS` | origin รูปจาก CDN สำหรับ `next/image` (คั่น comma) |
 | `NEXT_PUBLIC_SITE_URL` | URL เว็บจริง ใช้สร้างลิงก์ชวนเพื่อนตอน SSR |
-| `AUTH_SESSION_SECRET` · `AUTH_ENABLE_DEMO_USER` | เฉพาะ mock auth — เมื่อใช้ backend จริงไม่ต้องใช้ (ห้ามเปิดเดโมบนเว็บจริง) |
+| `AUTH_SESSION_SECRET` · `AUTH_ENABLE_DEMO_USER` · `AUTH_DEMO_LOGIN_PHONE` · `AUTH_DEMO_LOGIN_PASSWORD` | เฉพาะ mock auth — เมื่อใช้ backend จริงไม่ต้องใช้ (ห้ามเปิดเดโมบนเว็บจริง) |
 
 ### โหมด mock ทำงานอย่างไร
 
@@ -305,6 +305,8 @@ const vip = useVipPlayer();
 
 **ที่ควรเหมือนกันทุกแอป** (เพื่อให้ backend ดูแลง่าย): cookie session · รูป error `{ error }` · 401 = ต้อง login · เวลา ISO-8601 · สถานะ 4 แบบใน UI
 **ที่แต่ละแอปปรับเองได้**: ชื่อ endpoint · รูป response (ใช้ adapter) · สถาปัตยกรรม hook/cache · UI ทั้งหมด
+
+**โปรเจคในเครือที่ใช้มาตรฐานนี้แล้ว**: black-purple · lotto · cas — ชั้นเชื่อม backend (`lib/api` · `lib/auth` · `lib/server` · `lib/domain` · `lib/lottery` · `lib/promotions` · `app/hooks/api` · `app/types` · `app/api` · `proxy.ts`) คัดลอกจาก glass ทุกไฟล์ และเอกสารนี้ถูกคัดลอกไปที่ `docs/api/backend-integration.md` ของแต่ละโปรเจค (ต้นไฟล์มีตารางตำแหน่งไฟล์ที่ต่าง เช่น cas อยู่ใต้ `src/`) · เปลี่ยนสัญญา API ให้แก้ที่ glass ก่อนแล้วซิงก์ออกไป เพื่อให้ต่อ backend พร้อมกันได้ด้วยโค้ดชุดเดียว
 
 ---
 
