@@ -22,6 +22,7 @@ export function fetchVipPlayer(): Promise<ApiResult<VipPlayerData>> {
   return mockResult(vipPlayerMock());
 }
 
+/** images = URL ตราของแต่ละแรงค์ (vip0–vip10) ที่ UI ใช้ตามที่ส่งมา — เปลี่ยนรูปที่ backend ได้โดยไม่ต้อง deploy front-end */
 function vipRanksMock() {
   return { tiers: VIP_RANK_TIERS, images: VIP_RANK_IMAGE };
 }

@@ -85,7 +85,13 @@ export const VIP_RANK_MAINTAIN_TARGETS: Record<
   vip10: { depositTarget: 10_000, turnoverTarget: 10_000 },
 };
 
-export function getVipRankImageSrc(rankId: VipRankId): string | null {
+/**
+ * URL ตราแรงค์ — apiSrc จาก backend (GET /api/vip/ranks → images[rankId]) มาก่อนเสมอ และใช้ตามที่ส่งมา
+ * (backend คุมการล้างแคชเองด้วย URL ใหม่/?v=) · ไม่มีค่าจาก API จึงใช้ภาพในโปรเจกต์
+ */
+export function getVipRankImageSrc(rankId: VipRankId, apiSrc?: string | null): string | null {
+  const fromApi = apiSrc?.trim();
+  if (fromApi) return fromApi;
   const src = VIP_RANK_IMAGE[rankId];
   /** ?v= = ล้างแคช service worker / เบราว์เซอร์ หลังเปลี่ยนชุดภาพตรา (เพิ่มเลขเมื่อเปลี่ยนภาพอีก) */
   return src ? `${src}?v=2` : null;

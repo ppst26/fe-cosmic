@@ -3,6 +3,7 @@
 import React from "react";
 import type { VipRankId } from "@/app/types/vip";
 import { getVipRankImageSrc, getVipRankTier } from "@/app/data/vipMockData";
+import { useVipRanks } from "@/app/hooks/api/member";
 import { LockIcon } from "../ui/Icons";
 import { cn } from "@/lib/utils";
 
@@ -14,7 +15,7 @@ const DIM = {
 } as const;
 
 /**
- * ตราแรงค์ VIP — รูป webp จาก public/rank (VIP 0–10)
+ * ตราแรงค์ VIP — รูปจาก API (GET /api/vip/ranks → images) · ไม่มีค่าจาก API ใช้ webp ใน public/rank (VIP 0–10)
  * ใช้ในหน้า VIP: hero / carousel แร็งค์ / หัวตารางสิทธิประโยชน์
  */
 export function VipRankEmblem({
@@ -27,7 +28,8 @@ export function VipRankEmblem({
   inactive?: boolean;
 }) {
   const tier = getVipRankTier(rankId);
-  const src = getVipRankImageSrc(rankId);
+  const ranks = useVipRanks();
+  const src = getVipRankImageSrc(rankId, ranks.data?.images[rankId]);
   const showLock = inactive && (size === "xl" || size === "lg");
 
   return (
