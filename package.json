@@ -10,7 +10,9 @@
     "lint": "eslint",
     "export:lottery-kit": "node scripts/export-lottery-kit.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test \"lib/**/*.test.ts\" \"app/**/*.test.ts\" \"scripts/**/*.test.ts\""
+    "test": "tsx --test \"lib/**/*.test.ts\" \"app/**/*.test.ts\" \"scripts/**/*.test.ts\"",
+    "backend:check": "node scripts/backend-layer/sync.mjs --check",
+    "backend:sync": "node scripts/backend-layer/sync.mjs --apply"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

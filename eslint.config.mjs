@@ -1,10 +1,13 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import { backendLayerRules } from "./eslint.backend-layer.mjs";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // ขอบเขตชั้นเชื่อม back-end (มาตรฐานร่วมจาก glass) — ดู docs/api/shared-backend-layer.md §4
+  ...backendLayerRules,
   // ลิงก์/redirect ต้องผ่าน lib/i18n เพื่อให้ URL มี prefix ภาษาเสมอ
   {
     files: ["**/*.{ts,tsx}"],
