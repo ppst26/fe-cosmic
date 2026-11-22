@@ -39,6 +39,8 @@ pnpm dev          # http://localhost:3000
 
 ## ข้อมูลตอนนี้เป็น mock — ต่อ API จริงตรงไหน
 
+> คู่มือเชื่อมต่อ back-end ฉบับเต็ม (สถาปัตยกรรม · ขั้นตอน · ตัวอย่างโค้ด · เช็กลิสต์): [`docs/api/backend-integration.md`](docs/api/backend-integration.md)
+
 ทุกหน้าดึงข้อมูลผ่าน **`lib/api/*.ts`** ซึ่งส่วนใหญ่ยังคืน mock จาก `app/data/*MockData.ts`
 
 - `lib/api/endpoints.ts` — แผนที่ฟังก์ชัน → method / path / ต้อง login หรือไม่ (สัญญาที่ backend ต้องทำให้ตรง)
@@ -103,6 +105,7 @@ exports/lottery-kit ชุดย้ายระบบหวยไปโปรเ
 | `design.md` | ต้นฉบับดีไซน์ (tokens, sections, QA) |
 | `AGENTS.md` | แผนที่โปรเจกต์ + กฎสำหรับ AI agent (`agent.md`, `CLAUDE.md` ชี้มาที่นี่) |
 | `.cursor/`, `agent/` | rules + skills ของ agent (เนื้อหาเหมือนกัน) |
+| `docs/api/backend-integration.md` | คู่มือเชื่อมต่อ back-end (ทีม + agent) |
 | `docs/superpowers/` | spec และ plan ของแต่ละฟีเจอร์ |
 
 ## ดึงข้อมูลฝั่ง client (SWR)

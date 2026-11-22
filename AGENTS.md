@@ -16,6 +16,7 @@ Stack: Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · shadcn/ui (Radix
 | สรุป visual rules | `*/rules/design-system.mdc` |
 | โครงสร้าง component | `*/rules/frontend-components.mdc` |
 | สร้าง/แก้หน้า UI | skill `cosmicbet-frontend` |
+| เชื่อมต่อ back-end / API / แทน mock | `docs/api/backend-integration.md` + skill `cosmicbet-backend` |
 | ตรวจก่อนส่ง UI | skill `ui-qa-checklist` |
 
 ## โฟลเดอร์ agent docs
@@ -44,6 +45,7 @@ Stack: Next.js 16 (App Router) · React 19 · Tailwind CSS 4 · shadcn/ui (Radix
 - [ ] `.cursor/rules/frontend-components.mdc` ↔ `agent/rules/frontend-components.mdc`
 - [ ] `.cursor/skills/cosmicbet-frontend/SKILL.md` ↔ `agent/skills/cosmicbet-frontend/SKILL.md`
 - [ ] `.cursor/skills/ui-qa-checklist/SKILL.md` ↔ `agent/skills/ui-qa-checklist/SKILL.md`
+- [ ] `.cursor/skills/cosmicbet-backend/SKILL.md` ↔ `agent/skills/cosmicbet-backend/SKILL.md`
 
 คำสั่งตรวจเร็ว:
 
@@ -54,6 +56,7 @@ for f in personality communication tech-stack shadcn-ui design-system frontend-c
 done
 diff -q .cursor/skills/cosmicbet-frontend/SKILL.md agent/skills/cosmicbet-frontend/SKILL.md
 diff -q .cursor/skills/ui-qa-checklist/SKILL.md agent/skills/ui-qa-checklist/SKILL.md
+diff -q .cursor/skills/cosmicbet-backend/SKILL.md agent/skills/cosmicbet-backend/SKILL.md
 ```
 
 ไม่มีความต่าง = sync ครบ
@@ -64,6 +67,7 @@ diff -q .cursor/skills/ui-qa-checklist/SKILL.md agent/skills/ui-qa-checklist/SKI
 - ยึด `design.md` เป็นต้นฉบับดีไซน์; rules เป็นสรุปเท่านั้น
 - อย่าเพิ่ม UI นอก scope ที่ผู้ใช้ขอ
 - อย่าใช้ skill/path เก่า Monday ChatAi หรือ Go template
+- ข้อมูลจาก backend: component เรียกเฉพาะ hook ใน `app/hooks/api/*` · ต่อ API จริงแก้เฉพาะ body ใน `lib/api/*` ด้วย `apiFetch` (ห้าม `fetch()` ตรง) — ดู `docs/api/backend-integration.md`
 
 <!-- BEGIN:nextjs-agent-rules -->
 
