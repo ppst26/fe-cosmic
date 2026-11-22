@@ -27,8 +27,10 @@ export interface PromoItem {
   subtitle: string;
   href: string;
   accentColor?: string;
-  /** รูปแบนเนอร์เต็มการ์ด — จาก public/HomeProBanner */
+  /** รูปแบนเนอร์เต็มการ์ด (desktop) — จาก public/HomeProBanner */
   bannerSrc?: string;
+  /** รูปแบนเนอร์มือถือ — HeroBanner md:hidden ใช้ก่อน bannerSrc */
+  bannerSrcMobile?: string;
 }
 
 /** สไลด์ Welcome Hero หน้าแรก — WelcomeBanner carousel */
@@ -172,6 +174,16 @@ export interface JackpotWinner {
 export interface HomeLobbyTournamentItem {
   id: string;
   title: string;
+  imageSrc: string;
+  href?: string;
+}
+
+/** การ์ดกิจกรรมรูปเต็ม — ข้อความอยู่ในไฟล์ภาพ; brand/badge/description ใช้กับ aria-label */
+export interface LobbyTournamentSectionItem {
+  id: string;
+  brandLabel: string;
+  badge: string;
+  description: string;
   imageSrc: string;
   href?: string;
 }
