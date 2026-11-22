@@ -66,6 +66,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
   }
   const [copied, setCopied] = useState(false);
   const [slipFileName, setSlipFileName] = useState<string | null>(null);
+  const [slipFile, setSlipFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
   const [finalConfirmOpen, setFinalConfirmOpen] = useState(false);
@@ -77,6 +78,7 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
     setAmountInput(defaultAmount ? String(defaultAmount) : "");
     setCopied(false);
     setSlipFileName(null);
+    setSlipFile(null);
     setSubmitting(false);
     setSubmitMessage(null);
     setFinalConfirmOpen(false);
@@ -152,13 +154,14 @@ export function DepositBottomSheet({ isOpen, onClose, onCompleted }: DepositBott
   const handleSlipChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     setSlipFileName(file?.name ?? null);
+    setSlipFile(file ?? null);
   };
 
   const handleConfirmDeposit = async () => {
     if (amount <= 0) return;
     setSubmitting(true);
     setSubmitMessage(null);
-    const result = await submitDeposit({ amount, methodId: "bank" });
+    const result = await submitDeposit({ amount, methodId: "bank", slip: slipFile });
     setSubmitting(false);
     if (!result.ok) {
       setFinalConfirmOpen(false);
