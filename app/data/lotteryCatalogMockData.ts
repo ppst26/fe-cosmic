@@ -29,7 +29,3 @@ export const LOTTERY_CATALOG_ENTRIES: LotteryCatalogEntry[] = [
   })),
 ];
 
-/** หา catalog จาก slug URL — ใช้ในหน้ารายการรอบ */
-export function getLotteryCatalogEntry(slug: string): LotteryCatalogEntry | undefined {
-  return LOTTERY_CATALOG_ENTRIES.find((entry) => entry.slug === slug);
-}

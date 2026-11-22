@@ -4,7 +4,8 @@ import React from "react";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import type { VipPlayerState } from "@/app/types/vip";
-import { getVipBenefitCellValue, VIP_BENEFIT_COMPARISON_VALUES } from "@/app/data/vipMockData";
+import { getVipBenefitCellValue } from "@/app/data/vipMockData";
+import { useVipBenefits } from "@/app/hooks/api/member";
 import { vipBenefitValueClass } from "@/lib/semanticValue";
 import { useT } from "@/lib/i18n/I18nProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
@@ -21,8 +22,12 @@ const TILES: { id: string; labelKey: MessageKey<"vip">; valueKey?: MessageKey<"v
 /**
  * บล็อกสิทธิประโยชน์ของแรงค์ปัจจุบัน — 4 ช่อง + ปุ่มดูทั้งหมด
  */
+const NO_BENEFIT_VALUES: Record<string, never> = {};
+
 export function VipMyLevelBenefitsCard({ player, onViewAll }: { player: VipPlayerState; onViewAll?: () => void }) {
   const t = useT("vip");
+  /** ค่าสิทธิประโยชน์จาก API (แท็บสิทธิถูกอุ่น cache ไว้แล้ว) — ยังไม่มีข้อมูลแสดง "—" */
+  const benefitValues = useVipBenefits().data?.values ?? NO_BENEFIT_VALUES;
 
   return (
     <section className={s.panel}>
@@ -37,7 +42,7 @@ export function VipMyLevelBenefitsCard({ player, onViewAll }: { player: VipPlaye
       </div>
       <ul className={s.tiles}>
         {TILES.map((tile) => {
-          const cell = getVipBenefitCellValue(tile.id, player.currentRankId, VIP_BENEFIT_COMPARISON_VALUES);
+          const cell = getVipBenefitCellValue(tile.id, player.currentRankId, benefitValues);
           const raw = typeof cell === "string" ? cell : t(cell.labelKey);
           const value = tile.valueKey ? t(tile.valueKey) : raw;
           return (
